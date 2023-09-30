@@ -1,0 +1,28 @@
+﻿@model GenericOrganization
+@inject OrganizationMemberManager memberManager
+@{
+    var members = await this.memberManager.GetMembersAsync(this.Model);
+}
+<p>@members.Count() 个成员。</p>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Title</td>
+            <td>Department</td>
+            <td>Remark</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in members)
+        {
+            <tr>
+                <td><a asp-page="/People/Detail/Index" asp-route-id="@member.PersonId">@member.Person.Name</a></td>
+                <td>@member.Title</td>
+                <td>@member.Department</td>
+                <td>@member.Remark</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

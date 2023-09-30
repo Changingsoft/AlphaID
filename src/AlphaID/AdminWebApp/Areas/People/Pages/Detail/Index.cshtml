@@ -1,0 +1,101 @@
+﻿@page "{id}"
+@model IndexModel
+
+@{
+    this.ViewData["title"] = $"{Model.Data.Name}的资料";
+}
+
+@section breadcrumb
+    {
+    <li class="breadcrumb-item">@Model.Data.Name</li>
+}
+
+<h1>@Model.Data.Name</h1>
+<h2>概要</h2>
+<div class="row">
+    <div class="col-8">
+        <dl class="row">
+            <dt class="col-5">姓氏/名字</dt>
+            <dd class="col-7">@Model.Data.LastName / @Model.Data.FirstName  <a asp-page="EditPersonName" asp-route-id="@this.Model.Data.Id">编辑姓名</a></dd>
+            <dt class="col-5">注音</dt>
+            <dd class="col-7">@Model.Data.PhoneticSurname / @Model.Data.PhoneticGivenName</dd>
+            <dt class="col-5">性别</dt>
+            <dd class="col-7">@Html.DisplayFor(m => m.Data.Sex, "Sex")</dd>
+            <dt class="col-5">出生日期</dt>
+            <dd class="col-7">@this.Model.Data.DateOfBirth?.ToShortDateString()</dd>
+            <dt class="col-5">移动电话号码</dt>
+            <dd class="col-7">@Model.Data.Mobile</dd>
+            <dt class="col-5">电子邮件</dt>
+            <dd class="col-7">@Model.Data.Email</dd>
+            <dt class="col-5">账户名</dt>
+            <dd class="col-7">@Model.Data.UserName</dd>
+            <dt class="col-5">ID</dt>
+            <dd class="col-7">@Model.Data.Id</dd>
+        </dl>
+
+    </div>
+    <div class="col-4">
+        <img src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" class="img-fluid img-thumbnail" />
+    </div>
+</div>
+
+<hr />
+<h2>实名信息</h2>
+<vc:person-chinese-id-card-panel person="@this.Model.Data"></vc:person-chinese-id-card-panel>
+
+
+<hr />
+<h2><a asp-page="MembersOf" asp-route-id="@Model.Data.Id">组织</a></h2>
+<partial name="_MembersOfPart" model="@Model.Data" />
+
+<h2>外部登录</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Provider</td>
+            <td>Key</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var login in Model.ExternalLogins)
+        {
+            <tr>
+                <td>@login.ProviderDisplayName</td>
+                <td>@login.ProviderKey</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2><a asp-page="Security" asp-route-id="@Model.Data.Id">安全性</a></h2>
+
+<hr />
+<h2><a asp-page="DirectoryAccounts" asp-route-id="@this.Model.Data.Id">AD账号</a></h2>
+<vc:person-logon-accounts person-id="@Model.Data.Id"></vc:person-logon-accounts>
+
+<hr />
+<h2><a asp-page="BankAccount" asp-route-id="@Model.Data.Id">银行账号</a></h2>
+<table class="table">
+    <thead>
+        <tr>
+            <td>账号</td>
+            <td>户名</td>
+            <td>银行</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bankAccount in Model.Data.BankAccounts)
+        {
+            <tr>
+                <td>@bankAccount.AccountNumber</td>
+                <td>@bankAccount.AccountName</td>
+                <td>@bankAccount.BankName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<p>创建时间: @Model.Data.WhenCreated</p>
+<p>修改时间: @Model.Data.WhenChanged</p>
+<p><a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">删除自然人</a></p>

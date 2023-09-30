@@ -1,0 +1,20 @@
+﻿@page "{id}"
+@model             CallbackUrisModel
+@{
+}
+<h2>登录回调URL</h2>
+<ul>
+    @foreach (var uri in this.Model.Data.RedirectUris)
+    {
+        <li>@uri.RedirectUri</li>
+    }
+</ul>
+
+<h2>注销登录回调URL</h2>
+<ul>
+    @foreach (var uri in this.Model.Data.PostLogoutRedirectUris)
+    {
+        <li>@uri.PostLogoutRedirectUri</li>
+    }
+</ul>
+

@@ -1,0 +1,41 @@
+﻿@page "{id}"
+@model             AdvancedModel
+@{
+}
+<h3>高级</h3>
+<h4>Client Id Restrictions</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Provider</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var res in this.Model.Data.IdentityProviderRestrictions)
+        {
+            <tr>
+                <td>@res.Provider</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>属性</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Key</td>
+            <td>Value</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prop in this.Model.Data.Properties)
+        {
+            <tr>
+                <td>@prop.Key</td>
+                <td>@prop.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>

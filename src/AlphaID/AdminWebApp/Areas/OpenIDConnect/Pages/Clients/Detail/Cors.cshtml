@@ -1,0 +1,11 @@
+﻿@page "{id}"
+@model             CorsModel
+@{
+}
+<h3>跨域资源共享（CORS）</h3>
+<ul>
+    @foreach (var origin in this.Model.Data.AllowedCorsOrigins)
+    {
+        <li>@origin.Origin</li>
+    }
+</ul>

@@ -1,0 +1,8 @@
+﻿<form method="get" asp-page="/Search">
+    <div class="input-group mb-3">
+        <input type="text" name="q" class="form-control" placeholder="账户名、电子邮件、手机号码、姓名或全拼" aria-label="账户名、电子邮件、手机号码、姓名或全拼" aria-describedby="button-addon2" value="@this.Context.Request.Query["q"]" autocomplete="off">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">搜索</button>
+        </div>
+    </div>
+</form>

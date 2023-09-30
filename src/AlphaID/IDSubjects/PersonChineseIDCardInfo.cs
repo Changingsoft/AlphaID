@@ -1,0 +1,62 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace IDSubjects;
+
+/// <summary>
+/// 中国居民身份证。
+/// </summary>
+[Owned]
+public class PersonChineseIDCardInfo
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    protected PersonChineseIDCardInfo() { }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="cardNumber"></param>
+    /// <param name="name"></param>
+    /// <param name="ethnicity"></param>
+    /// <param name="address"></param>
+    public PersonChineseIDCardInfo(string cardNumber,
+                                 string name,
+                                 string ethnicity,
+                                 string address)
+    {
+        this.CardNumber = cardNumber;
+        this.Name = name;
+        this.Ethnicity = ethnicity;
+        this.Address = address;
+    }
+
+    /// <summary>
+    /// Identifier Value.
+    /// </summary>
+    [MaxLength(18), Unicode(false)]
+    [Required(ErrorMessage = "{0}是必需的")]
+    public string CardNumber { get; set; } = default!;
+
+    /// <summary>
+    /// 姓名
+    /// </summary>
+    [MaxLength(50)]
+    public string Name { get; protected set; } = default!;
+
+
+    /// <summary>
+    /// 民族。
+    /// </summary>
+    [MaxLength(50)]
+    public string? Ethnicity { get; protected set; } = default!;
+
+
+    /// <summary>
+    /// 住址。
+    /// </summary>
+    [MaxLength(100)]
+    public string? Address { get; protected set; } = default!;
+
+}

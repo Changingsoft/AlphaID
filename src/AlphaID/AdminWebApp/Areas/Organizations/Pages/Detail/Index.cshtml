@@ -1,0 +1,48 @@
+﻿@page "{id}"
+@model IndexModel
+@inject OrganizationMemberManager memberManager
+
+@{
+    this.ViewData["Title"] = this.Model.Organization.Name;
+    var members = await this.memberManager.GetMembersAsync(this.Model.Organization);
+}
+
+@section breadcrumb{
+    <li class="breadcrumb-item">@this.Model.Organization.Name</li>
+}
+
+<h1>@Model.Organization.Name</h1>
+@foreach (var usedName in this.Model.Organization.UsedNames.OrderByDescending(p => p.DeprecateTime))
+{
+    <p class="text-muted small">曾用名：@usedName.Name （@(usedName.DeprecateTime.ToShortDateString())前）</p>
+}
+
+<dl class="row">
+    <dt class="col-4">统一社会信用代码</dt>
+    <dd class="col-8">@Model.Organization.USCI</dd>
+    <dt class="col-4">住所</dt>
+    <dd class="col-8">@Model.Organization.Domicile</dd>
+    <dt class="col-4">电话</dt>
+    <dd class="col-8">@Model.Organization.Contact</dd>
+    <dt class="col-4">成立日期</dt>
+    <dd class="col-8">@Model.Organization.EstablishedAt</dd>
+    <dt class="col-4">营业起止</dt>
+    <dd class="col-8">@Model.Organization.TermBegin - @Model.Organization.TermEnd</dd>
+    <dt class="col-4">代表人/负责人</dt>
+    <dd class="col-8">@Model.Organization.LegalPersonName</dd>
+    <dt class="col-4">创建时间</dt>
+    <dd class="col-8">@Model.Organization.WhenCreated</dd>
+    <dt class="col-4">更新时间</dt>
+    <dd class="col-8">@Model.Organization.WhenChanged</dd>
+    <dt class="col-4">启用</dt>
+    <dd class="col-8">@Model.Organization.Enabled</dd>
+    <dt class="col-4">成员数</dt>
+    <dd class="col-8">@members.Count()</dd>
+</dl>
+<p><a asp-page="Edit" asp-route-id="@Model.Organization.Id" class="btn btn-primary">编辑</a></p>
+
+
+<p><a asp-page="ChangeName" asp-route-id="@Model.Organization.Id" class="btn btn-primary">变更名称</a></p>
+
+<hr />
+<p><a asp-page="Delete" asp-route-id="@Model.Organization.Id" class="btn btn-danger">删除组织</a></p>

@@ -1,0 +1,33 @@
+﻿@page
+@model             IndexModel
+@{
+    this.ViewData["Title"] = "标识资源";
+}
+
+<h3>标识资源</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>名称</td>
+            <td>显示名称</td>
+            <td>启用</td>
+            <td>强调</td>
+            <td>在发现文档中显示</td>
+            <td>创建时间</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var idr in Model.Results)
+        {
+            <tr>
+                <td><a asp-page="Detail" asp-route-id="@idr.Id">@idr.Name</a></td>
+                <td>@idr.DisplayName</td>
+                <td>@idr.Enabled</td>
+                <td>@idr.Emphasize</td>
+                <td>@idr.ShowInDiscoveryDocument</td>
+                <td>@idr.Created</td>
+            </tr>
+        }
+    </tbody>
+</table>

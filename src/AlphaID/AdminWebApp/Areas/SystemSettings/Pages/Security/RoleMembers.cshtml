@@ -1,0 +1,101 @@
+@page "{role?}"
+@model RoleMembersModel
+@{
+    this.ViewData["title"] = "角色成员";
+}
+@section head
+    {
+    
+}
+<h3>角色成员</h3>
+
+<div class="row">
+    <div class="col-3">
+        <ul>
+            @foreach (var role in RoleConstants.Roles)
+            {
+                <li><a asp-route-role="@role.Name">@role.DisplayName</a></li>
+            }
+        </ul>
+    </div>
+    <div class="col-9">
+        <h2>成员</h2>
+        @if (this.Model.RoleMembers != null)
+        {
+            if (this.Model.RoleMembers.Any())
+            {
+                <form method="post" asp-page-handler="RemoveMember" asp-route-role="@Model.Role">
+                    <ul>
+                        @foreach (var member in this.Model.RoleMembers)
+                        {
+                            <li>@member.UserName <button type="submit" asp-page-handler="RemoveMember" asp-route-personId="@member.UserId" class="btn btn-outline-danger btn-sm" onclick="return confirm('确实要移除吗？');">移除</button></li>
+                        }
+                    </ul>
+                </form>
+            }
+            else
+            {
+                <p>该角色没有成员</p>
+            }
+            <button type="button" data-toggle="modal" data-target="#memberEditor" class="btn btn-primary">添加成员</button>
+        }
+        else
+        {
+            <p>请在左侧选择一个角色以查看成员。</p>
+        }
+    </div>
+</div>
+<div class="modal fade" id="memberEditor" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">加入组织</div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
+                    <div class="form-group">
+                        <label for="personSearch">搜索用户</label>
+                        <input name="personSearch" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.UserName"></label>
+                        <input asp-for="Input.UserName" class="form-control" readonly />
+                    </div>
+                    <input asp-for="Input.PersonId" type="hidden" />
+                    <input asp-for="Input.PhoneticSearchHint" type="hidden" />
+                    <button type="submit" class="btn btn-primary">添加</button>
+                    <button type="reset" class="btn btn-secondary">清除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+
+    <script>
+        $(function () {
+            $("[name='personSearch']").autocomplete({
+                source: "@(this.Url.Action("SearchPerson", "IdService"))",
+                minLength: 2,
+                appendTo: "#memberEditor",
+                select: function (event, ui) {
+                    $(this).val(ui.item.name);
+                    $("[name='Input.PersonId']").val(ui.item.subjectId);
+                    $("[name='Input.UserName']").val(ui.item.name);
+                    $("[name='Input.PhoneticSearchHint']").val(ui.item.phoneticSearchHint);
+
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    var div = $("<div>");
+                    div.append("<p>" + item.name + "</p>")
+                    div.append("<ul>").append("<li>ddd</li>");
+                    var li = $("<li>").append(div);
+                    return li.appendTo(ul);
+                };
+        });
+
+    </script>
+
+                }

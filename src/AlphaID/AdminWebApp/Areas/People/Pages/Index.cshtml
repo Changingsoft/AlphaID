@@ -1,0 +1,105 @@
+﻿@page
+@model             IndexModel
+@inject NaturalPersonManager personManager
+@{
+    this.ViewData["Title"] = "自然人";
+    var users = this.personManager.Users;
+}
+
+<h2>概要</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">总人数</h5>
+            <p class="card-text">@users.Count() 人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">实名/总数</h5>
+            <p class="card-text">?? / @users.Count() 人 （0%）</p>
+            @*<div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>*@
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">活跃</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">年度活跃</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+</div>
+
+<h2>注册</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">本周注册</h5>
+            <p class="card-text">@users.Where(p => p.WhenCreated > DateTime.Now.AddDays(-7)).Count() 人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">本月注册</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">本年注册</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+</div>
+<p><a asp-page="Register/Index" class="btn btn-primary">登记自然人</a></p>
+
+<h2>登录</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">本地登录</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">员工登录</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">移动登录</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+</div>
+
+<h2>实名认证</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><a asp-page="RealName/Index">待认证</a></h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">N/A</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">N/A</h5>
+            <p class="card-text">0人</p>
+        </div>
+    </div>
+</div>

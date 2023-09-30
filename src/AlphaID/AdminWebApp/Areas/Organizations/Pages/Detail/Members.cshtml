@@ -1,0 +1,111 @@
+﻿@page "{id}"
+@model             MembersModel
+@{
+    this.ViewData["Title"] = $"成员 - {this.Model.Organization.Name}";
+}
+
+<partial name="_OrganizationSummary" model="@Model.Organization"></partial>
+
+<h2>成员</h2>
+<p>@Model.Members.Count() 人</p>
+<table class="table">
+    <thead>
+        <tr>
+            <td>姓名</td>
+            <td>电话</td>
+            <td>职务</td>
+            <td>部门</td>
+            <td>备注</td>
+            <td>操作</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in this.Model.Members)
+        {
+            <tr>
+                <td>@member.Person.Name</td>
+                <td>@member.Person.Mobile</td>
+                <td>@member.Title</td>
+                <td>@member.Department</td>
+                <td>@member.Remark</td>
+                <td>
+                    <a asp-page="EditMember" asp-route-id="@this.ViewContext.RouteData.Values["id"]" asp-route-personId="@member.PersonId">编辑</a>
+                    <form method="post" asp-page-handler="RemoveMember" asp-route-personid="@member.PersonId">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure remove this person?');">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberEditor">
+    添加成员
+</button>
+<div class="modal fade" id="memberEditor">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Add/Edit Member</div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="AddMember">
+                    <div class="form-group">
+                        <label for="personSearch">搜索人员</label>
+                        <input name="personSearch" class="form-control" placeholder="姓名、拼音……" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.PersonId"></label>
+                        <input asp-for="@Model.PersonId" class="form-control" readonly />
+                        <span asp-validation-for="@Model.PersonId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Department"></label>
+                        <input asp-for="@Model.Department" class="form-control" />
+                        <span asp-validation-for="@Model.Department" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Title"></label>
+                        <input asp-for="@Model.Title" class="form-control" />
+                        <span asp-validation-for="@Model.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Remark"></label>
+                        <input asp-for="@Model.Remark" class="form-control" />
+                        <span asp-validation-for="@Model.Remark" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+
+    <script>
+        $(function () {
+            $("[name='personSearch']").autocomplete({
+                source: "@(this.Url.Action("SearchPerson", "IdService"))",
+                minLength: 2,
+                appendTo: "#memberEditor",
+                select: function (event, ui) {
+                    $(this).val(ui.item.name);
+                    $("[name='PersonId']").val(ui.item.subjectId);
+                    //$("[name='Input.UserName']").val(ui.item.name);
+                    //$("[name='Input.PhoneticSearchHint']").val(ui.item.phoneticSearchHint);
+
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    var div = $("<div>");
+                    div.append("<p>" + item.name + "</p>")
+                    div.append("<ul>").append("<li>ddd</li>");
+                    var li = $("<li>").append(div);
+                    return li.appendTo(ul);
+                };
+        });
+
+    </script>
+
+                }

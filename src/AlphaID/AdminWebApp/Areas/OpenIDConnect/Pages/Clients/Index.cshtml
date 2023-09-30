@@ -1,0 +1,62 @@
+﻿@page
+@model IndexModel
+@{
+    this.ViewData["Title"] = "客户端";
+}
+
+<h3>客户端</h3>
+
+<a asp-page="Create" class="btn btn-primary">新客户端</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>名称</td>
+            <td>工作流</td>
+            <td>回调Uri</td>
+            <td>范围</td>
+            <td>密钥</td>
+            <td>PKCE</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in this.Model.Clients)
+        {
+            <tr>
+                <td>
+                    <p><a asp-page="Detail/Index" asp-route-id="@client.Id">@(client.ClientName)</a></p>
+                    <p><span class="text-muted small">@client.ClientId</span></p>
+                    <p>@client.Description</p>
+                </td>
+                <td>
+                    @{
+                        var grants = new StringBuilder();
+                        foreach(var grant in client.AllowedGrantTypes)
+                        {
+                            grants.Append($"{grant.GrantType}, ");
+                        }
+                    }
+                    @grants.ToString().Trim(' ', ',')
+                </td>
+                <td>
+                    @foreach(var uri in client.RedirectUris)
+                    {
+                        <p>@uri.RedirectUri</p>
+                    }
+                </td>
+                <td>
+                    @{
+                        var scopeStringBuilder = new StringBuilder();
+                        foreach(var scope in client.AllowedScopes)
+                        {
+                            scopeStringBuilder.Append($"{scope.Scope} ");
+                        }
+                    }
+                    @scopeStringBuilder.ToString().Trim()
+                </td>
+                <td>@client.RequireClientSecret</td>
+                <td>@client.RequirePkce</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,11 @@
+﻿@page "{id}"
+@model             GrantTypesModel
+@{
+}
+<h3>授权类型</h3>
+<ul>
+    @foreach (var grant in this.Model.Data.AllowedGrantTypes)
+    {
+        <li>@grant.GrantType</li>
+    }
+</ul>

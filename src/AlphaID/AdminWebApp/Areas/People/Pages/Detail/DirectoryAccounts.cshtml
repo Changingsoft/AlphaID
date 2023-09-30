@@ -1,0 +1,27 @@
+﻿@page "{id}"
+@model             DirectoryAccountsModel
+@{
+    this.ViewBag.Title = "Directory Accounts";
+}
+<h1>目录账户</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>LogonId</td>
+            <td>PersonId</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var acc in this.Model.LogonAccounts)
+        {
+            <tr>
+                <td>@acc.LogonId</td>
+                <td>@acc.PersonId</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><a asp-page="CreateDirectoryAccount" asp-route-id="@this.Model.Person.Id">创建新账户</a></p>
+<p><a asp-page="BindDirectoryAccount" asp-route-id="@this.Model.Person.Id">绑定已有账户</a></p>

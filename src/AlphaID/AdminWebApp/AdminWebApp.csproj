@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="Areas\OpenIDConnect\Pages\_Layout.cshtml" />
+	  <Content Remove="Areas\People\Pages\_Layout.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\OperationalEF\OperationalEF.csproj" />
+		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
+		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
+		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
+	</ItemGroup>
+
+</Project>

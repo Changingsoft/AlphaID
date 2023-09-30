@@ -1,0 +1,107 @@
+@page
+@model AuthCenterWebApp.Pages.Consent.Index
+@{
+}
+
+<div class="page-consent">
+    <div class="lead">
+        @if (Model.View.ClientLogoUrl != null)
+        {
+            <div class="client-logo"><img src="@Model.View.ClientLogoUrl"></div>
+        }
+        <h1>
+            @Model.View.ClientName
+            <small class="text-muted">正在请求您的许可</small>
+        </h1>
+        <p>取消选中您不希望授予的权限。</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <partial name="_ValidationSummary" />
+        </div>
+    </div>
+
+    <form asp-page="/Consent/Index">
+        <input type="hidden" asp-for="Input.ReturnUrl" />
+        <div class="row">
+            <div class="col-sm-8">
+                @if (Model.View.IdentityScopes.Any())
+                {
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="glyphicon glyphicon-user"></span>
+                                个人信息
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var scope in Model.View.IdentityScopes)
+                                {
+                                    <partial name="_ScopeListItem" model="@scope" />
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.View.ApiScopes.Any())
+                {
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="glyphicon glyphicon-tasks"></span>
+                                应用程序访问
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var scope in Model.View.ApiScopes)
+                                {
+                                    <partial name="_ScopeListItem" model="scope" />
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            描述
+                        </div>
+                        <div class="card-body">
+                            <input class="form-control" placeholder="此设备的名称或描述" asp-for="Input.Description" autofocus>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.View.AllowRememberConsent)
+                {
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" asp-for="Input.RememberConsent">
+                            <label class="form-check-label" asp-for="Input.RememberConsent">
+                                <strong>记住我的决定</strong>
+                            </label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <button name="Input.button" value="yes" class="btn btn-primary" autofocus>是，允许</button>
+                <button name="Input.button" value="no" class="btn btn-secondary">否，不允许</button>
+            </div>
+            <div class="col-sm-4 col-lg-auto">
+                @if (Model.View.ClientUrl != null)
+                {
+                    <a class="btn btn-outline-info" href="@Model.View.ClientUrl">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <strong>@Model.View.ClientName</strong>
+                    </a>
+                }
+            </div>
+        </div>
+    </form>
+</div>

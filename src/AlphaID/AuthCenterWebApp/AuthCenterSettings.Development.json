@@ -1,0 +1,33 @@
+﻿{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Debug",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "Microsoft.AspNetCore.Authentication": "Debug",
+        "System": "Warning",
+        "AuthCenterWebApp": "Information",
+        "Microsoft.AspNetCore.Identity": "Information"
+      }
+    }
+  },
+  "ConnectionStrings": {
+    "OidcConfigurationDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AuthCenterConfigurationData;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
+    "OidcPersistedGrantDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AuthCenterOperationalData;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
+    "IDSubjectsDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AlphaIDData;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework"
+  },
+  "XinanSSO": {
+    "ClientId": "<ClientId>",
+    "ClientSecret": "<ClientSecret>"
+  },
+  "SystemUrl": {
+    "AdminWebAppUrl": "https://localhost:61315",
+    "WebApiUrl": "https://localhost:61316",
+    "MyIdUrl": "https://localhost:49726",
+    "AuthCenterUrl": "https://localhost:49726"
+  },
+  "IdPConfig": {
+    "IssuerUri": "https://issuer.example.com"
+  }
+}

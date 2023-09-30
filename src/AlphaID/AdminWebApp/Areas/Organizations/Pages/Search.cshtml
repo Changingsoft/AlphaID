@@ -1,0 +1,39 @@
+﻿@page
+@model             SearchModel
+@{
+    this.ViewData["Title"] = "搜索组织";
+}
+<partial name="_SearchInputPart" />
+<h1>搜索结果</h1>
+@if (this.Model.Results != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>名称</td>
+                <td>统一社会信用代码</td>
+                <td>住所</td>
+                <td>代表人</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var org in this.Model.Results)
+            {
+                <tr>
+                    <td>
+                        <h2><a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a></h2>
+                        @foreach(var usedName in org.UsedNames)
+                        {
+                            <p class="text-muted small">曾用名：@usedName.Name</p>
+                        }
+                    </td>
+                    <td>@org.USCI</td>
+                    <td>@org.Domicile</td>
+                    <td>@org.LegalPersonName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}

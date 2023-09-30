@@ -1,0 +1,4 @@
+SET IDENTITY_INSERT [dbo].[DirectoryService] ON 
+INSERT [dbo].[DirectoryService] ([Id], [Name], [ServerAddress], [RootDN], [DefaultUserAccountOU], [UserName], [Password], [UpnSuffix], [SAMDomainPart], [ExternalLoginProvider], [ExternalLoginProviderName]) VALUES (1, N'Active Directory', N'example.com', N'DC=example,DC=com', N'CN=Users,DC=example,DC=com', NULL, NULL, 'example.com', 'EXAMPLE', 'AD FS', N'AD FS')
+SET IDENTITY_INSERT [dbo].[DirectoryService] OFF
+INSERT [dbo].[LogonAccount] ([LogonId], [PersonId], [ServiceId]) VALUES (N'HEKAjnR8akiiuUmaje1rsw==', N'bf16436b-d15f-44b7-bd61-831eacee5063', 1)

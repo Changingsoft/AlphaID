@@ -1,0 +1,26 @@
+﻿@model NaturalPerson
+@inject OrganizationMemberManager mamanger
+@{
+    var members = await this.mamanger.GetMembersOfAsync(this.Model);
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>组织</td>
+            <td>部门</td>
+            <td>职务</td>
+            <td>备注</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in members)
+        {
+            <tr>
+                <td><a asp-page="/Organizations/Detail/Index" asp-route-id="@member.OrganizationId">@member.Organization.Name</a></td>
+                <td>@member.Department</td>
+                <td>@member.Title</td>
+                <td>@member.Remark</td>
+            </tr>
+        }
+    </tbody>
+</table>

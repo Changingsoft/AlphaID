@@ -1,0 +1,83 @@
+﻿@page
+@model CreateModel
+@{
+}
+
+<h2>登记自然人</h2>
+<form method="post">
+    <div class="form-row">
+        <div class="col">
+            <input asp-for="@Model.Input.Surname" class="form-control" />
+            <span class="alert-danger" asp-validation-for="@Model.Input.Surname"></span>
+        </div>
+        <div class="col">
+            <input asp-for="@Model.Input.GivenName" class="form-control" />
+            <span class="alert-danger" asp-validation-for="@Model.Input.GivenName"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <input asp-for="@Model.Input.PhoneticSurname" class="form-control" />
+            <span class="alert-danger" asp-validation-for="@Model.Input.PhoneticSurname"></span>
+        </div>
+        <div class="col">
+            <input asp-for="@Model.Input.PhoneticGivenName" class="form-control" />
+            <span class="alert-danger" asp-validation-for="@Model.Input.PhoneticGivenName"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Input.DisplayName"></label>
+        <input asp-for="@Model.Input.DisplayName" class="form-control" />
+        <span class="alert-danger" asp-validation-for="@Model.Input.DisplayName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Input.PhoneticDisplayName"></label>
+        <input asp-for="@Model.Input.PhoneticDisplayName" class="form-control" />
+        <span class="alert-danger" asp-validation-for="@Model.Input.PhoneticDisplayName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Input.Sex"></label>
+        <select asp-for="@Model.Input.Sex" class="form-control">
+            <option>未选择</option>
+            <option value="Male" label="男"></option>
+            <option value="Female" label="女"></option>
+        </select>
+        <span class="alert-danger" asp-validation-for="@Model.Input.Sex"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Input.DateOfBirth"></label>
+        <input asp-for="@Model.Input.DateOfBirth" class="form-control" />
+        <span class="alert-danger" asp-validation-for="@Model.Input.DateOfBirth"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Input.Mobile"></label>
+        <input asp-for="@Model.Input.Mobile" class="form-control" />
+        <span class="alert-danger" asp-validation-for="@Model.Input.Mobile"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Input.Email"></label>
+        <input asp-for="@Model.Input.Email" class="form-control" />
+        <span class="alert-danger" asp-validation-for="@Model.Input.Email"></span>
+    </div>
+    <div asp-validation-summary="All"></div>
+    <button type="submit" class="btn btn-primary">下一步</button>
+</form>
+
+@section scripts
+    {
+    <script>
+        $("#Input_Surname").on("blur", function () {
+            updateForms();
+        })
+        $("#Input_GivenName").on("blur", function () {
+            updateForms();
+        })
+
+        function updateForms() {
+            $("#Input_DisplayName").val($("#Input_Surname").val() + $("#Input_GivenName").val());
+            $.get("@(this.Url.PageLink(pageHandler: "Pinyin"))", { surname: $("#Input_Surname").val(), givenName: $("#Input_GivenName").val() }, function (data, status, xhr) {
+                $("#Input_PhoneticDisplayName").val(data);
+            });
+        }
+    </script>
+}

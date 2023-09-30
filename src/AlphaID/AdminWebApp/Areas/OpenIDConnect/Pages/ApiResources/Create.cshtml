@@ -1,0 +1,40 @@
+﻿@page
+@model CreateModel
+@{
+}
+
+<h3>创建API资源</h3>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Input.Name" class="font-weight-bold"></label>
+        <input asp-for="Input.Name" class="form-control" />
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.DisplayName" class="font-weight-bold"></label>
+        <input asp-for="Input.DisplayName" class="form-control" />
+        <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Description" class="font-weight-bold"></label>
+        <input asp-for="Input.Description" class="form-control" />
+        <span asp-validation-for="Input.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <input asp-for="Input.RequireResourceIndicator" class="form-check-input" />
+        <label asp-for="Input.RequireResourceIndicator" class="form-check-label"></label>
+    </div>
+    <div class="form-group form-check">
+        <input asp-for="Input.ShowInDiscoveryDocument" class="form-check-input" />
+        <label asp-for="Input.ShowInDiscoveryDocument" class="form-check-label"></label>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.AllowedAccessTokenSigningAlgorithms" class="font-weight-bold"></label>
+        <input asp-for="Input.AllowedAccessTokenSigningAlgorithms" class="form-control" />
+        <span asp-validation-for="Input.AllowedAccessTokenSigningAlgorithms" class="text-danger"></span>
+    </div>
+
+    <div asp-validation-summary="All"></div>
+    <button type="submit" class="btn btn-primary">创建</button>
+</form>

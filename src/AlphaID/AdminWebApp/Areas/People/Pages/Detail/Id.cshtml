@@ -1,0 +1,32 @@
+﻿@page "{id}"
+@model             IdModel
+@{
+}
+<h1>账户资料</h1>
+
+@if(this.Model.OperationResultMessage != null)
+{
+    <div class="alert alert-success">
+        @this.Model.OperationResultMessage
+    </div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Input.UserName"></label>
+        <input asp-for="Input.UserName" class="form-control" />
+        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+    </div>
+    <div asp-validation-summary="All"></div>
+    <button type="submit" class="btn btn-primary">修改</button>
+</form>
+
+<p>本地登录: @(this.Model.HasPassword)</p>
+<p>Two Factor Authentication (TOPT): @(Model.Data.TwoFactorEnabled)</p>
+<p>登录失败计数：@Model.Data.AccessFailedCount</p>
+<p>上一次设置密码时间： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "从未")</p>
+@if (!this.Model.HasPassword)
+{
+        <p><a asp-page="SetPassword" asp-route-id="@Model.Data.Id" class="btn btn-primary">添加本地密码</a></p>
+}
+<p><a asp-page="ResetPassword" asp-route-id="@Model.Data.Id" class="btn btn-primary">重置本地密码</a></p>

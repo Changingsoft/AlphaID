@@ -1,0 +1,60 @@
+﻿@page "{id}"
+@model             DetailModel
+@{
+}
+
+<h3></h3>
+<h4>Summary</h4>
+<dl>
+    <dt>名称</dt>
+    <dd>@Model.Data.Name</dd>
+    <dt>显示名称</dt>
+    <dd>@Model.Data.DisplayName</dd>
+    <dt>启用</dt>
+    <dd>@Model.Data.Enabled</dd>
+    <dt>强调</dt>
+    <dd>@Model.Data.Emphasize</dd>
+    <dt>在发现文档中显示</dt>
+    <dd>@Model.Data.ShowInDiscoveryDocument</dd>
+    <dt>创建时间</dt>
+    <dd>@Model.Data.Created</dd>
+    <dt>修改时间</dt>
+    <dd>@Model.Data.Updated</dd>
+</dl>
+
+<h4>包含的声明</h4>
+<ul>
+    @foreach (var claim in Model.Data.UserClaims)
+    {
+        <li>@claim.Type</li>
+    }
+</ul>
+
+<h4>属性</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <td>键</td>
+            <td>值</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prop in Model.Data.Properties)
+        {
+            <tr>
+                <td>@prop.Key</td>
+                <td>@prop.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>操作</h4>
+@if (this.Model.Data.NonEditable)
+{
+    <p>这是内置标识资源，不能删除。</p>
+}
+else
+{
+    <a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">Delete</a>
+}

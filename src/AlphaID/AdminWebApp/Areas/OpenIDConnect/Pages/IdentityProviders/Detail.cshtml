@@ -1,0 +1,25 @@
+﻿@page "{id}"
+@model             DetailModel
+@{
+}
+
+<h3>Identity Provider: @this.Model.Data.Scheme</h3>
+
+<h4>Summary</h4>
+
+<dl>
+    <dt>Scheme</dt>
+    <dd>@this.Model.Data.Scheme</dd>
+    <dt>Display Name</dt>
+    <dd>@this.Model.Data.DisplayName</dd>
+    <dt>Type</dt>
+    <dd>@this.Model.Data.Type</dd>
+    <dt>Enabled</dt>
+    <dd>@this.Model.Data.Enabled</dd>
+    <dt>Created at</dt>
+    <dd>@this.Model.Data.Created</dd>
+</dl>
+
+<h4>Operations</h4>
+
+<a asp-page="Delete" asp-route-id="@this.Model.Data.Id" class="btn btn-danger">Delete</a>

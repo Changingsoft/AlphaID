@@ -1,0 +1,27 @@
+﻿@page "{id}"
+@model             SecurityModel
+@{
+    this.ViewData["Title"] = "安全选项";
+}
+
+<h2>安全选项</h2>
+@if(!string.IsNullOrEmpty(Model.OperationMessage))
+{
+    <div class="alert alert-success">@Model.OperationMessage</div>
+}
+
+<form method="post">
+    <div class="form-check">
+        <input asp-for="Input.Enabled" class="form-check-input" />
+        <label asp-for="Input.Enabled" class="form-check-label"></label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.TwoFactorEnabled" class="form-check-input" />
+        <label asp-for="Input.TwoFactorEnabled" class="form-check-label"></label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.LockoutEnabled" class="form-check-input" />
+        <label asp-for="Input.LockoutEnabled" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Apply</button>
+</form>

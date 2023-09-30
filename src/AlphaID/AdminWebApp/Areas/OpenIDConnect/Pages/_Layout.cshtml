@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "Shared/_Layout";
+}
+
+
+
+@RenderBody()
+
+@section head{
+    @RenderSection("head", false)
+}
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

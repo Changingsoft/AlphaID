@@ -1,0 +1,11 @@
+﻿@page "{id}"
+@model             ScopesModel
+@{
+}
+<h3>授权范围</h3>
+<ul>
+    @foreach (var scope in this.Model.Data.AllowedScopes)
+    {
+        <li>@scope.Scope</li>
+    }
+</ul>

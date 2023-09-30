@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "../_Layout";
+}
+
+@section head{
+    @RenderSection("head", false)
+}
+@section breadcrumb{
+    <li class="breadcrumb-item">安全性</li>
+}
+@section scripts{
+    @RenderSection("scripts", false)
+}
+<h2>安全性</h2>
+<div class="row">
+    <div class="col-2">
+        <nav class="nav flex-column">
+            <a class="nav-link" asp-page="Index">安全总述</a>
+            <a class="nav-link" asp-page="RoleMembers">角色成员</a>
+        </nav>
+    </div>
+    <div class="col-10">
+
+        @RenderBody()
+    </div>
+</div>

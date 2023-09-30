@@ -1,0 +1,22 @@
+﻿@page "{id}"
+@model             ClaimsModel
+@{
+}
+<h4>包含的声明</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <td>类型</td>
+            <td>值</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in this.Model.Data.Claims)
+        {
+            <tr>
+                <td>@c.Type</td>
+                <td>@c.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>

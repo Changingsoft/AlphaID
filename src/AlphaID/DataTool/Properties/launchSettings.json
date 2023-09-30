@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RunOnce": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": ""
+      }
+    }
+  }
+}

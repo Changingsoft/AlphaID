@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+@{
+    this.ViewData["title"] = "实名认证中心";
+}
+
+<h1>实名认证中心</h1>
+
+@if (this.Model.CurrentValidation != null)
+{
+    <p>您已通过实名认证。</p>
+    if (this.Model.CurrentValidation != null && this.Model.CurrentValidation.ChineseIDCard!.Expires < DateTime.Now.AddDays(30))
+    {
+        if (this.Model.PendingValidation == null)
+        {
+            <p>您的认证信息即将于@((this.Model.CurrentValidation.ChineseIDCard!.Expires.Value - DateTime.Now).Days)天后过期，<a asp-page="UploadChineseIDCard">立即重新认证</a></p>
+        }
+    }
+}
+
+@if(this.Model.PendingValidation != null)
+{
+    if(this.Model.PendingValidation.ChinesePersonName == null)
+    {
+        <p>您的身份资料已提交，但需要确认姓名信息。<a asp-page="ConfirmChineseIDCard">点此确认</a>。</p>
+    }
+    else
+    {
+        <p>您的实名认证信息已提交，请等待审核。</p>
+    }
+}
+
+@if(this.Model.CurrentValidation == null && this.Model.PendingValidation == null)
+{
+    <p>请准备好身份证原件，拍照或扫描成图像文件。然后点击<a asp-page="UploadChineseIDCard">这里</a>开始实名认证。</p>
+}

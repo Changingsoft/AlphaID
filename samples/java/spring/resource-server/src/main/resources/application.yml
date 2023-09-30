@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: dev
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://auth.changingsoft.com
+          jwk-set-uri: https://auth.changingsoft.com/.well-known/openid-configuration/jwks
+
+server:
+  port: 35548

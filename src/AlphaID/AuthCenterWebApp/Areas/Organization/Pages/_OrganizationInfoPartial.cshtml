@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IDSubjects.GenericOrganization
+
+<dl>
+    <dt>组织名称</dt>
+    <dd>@Model.Name</dd>
+    <dt>住所</dt>
+    <dd>@Model.Domicile</dd>
+    <dt>统一社会信用代码</dt>
+    <dd>@Model.USCI</dd>
+    <dt>联系方式</dt>
+    <dd>@Model.Contact</dd>
+    <dt>成立时间</dt>
+    <dd>@Model.EstablishedAt</dd>
+    <dt>代表人</dt>
+    <dd>@Model.LegalPersonName</dd>
+</dl>

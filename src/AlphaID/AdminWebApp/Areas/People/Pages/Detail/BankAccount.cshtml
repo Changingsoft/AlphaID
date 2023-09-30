@@ -1,0 +1,55 @@
+﻿@page "{id}"
+@model BankAccountModel
+@{
+    this.ViewData["Title"] = this.Model.Person.Name + "的银行账号";
+}
+
+<h2><a asp-page="Detail" asp-route-id="@Model.Id">@Model.Person.Name</a>的银行账号</h2>
+
+<partial name="_PersonSummary" model="@Model.Person" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>BankName</td>
+            <td>AccountNumber</td>
+            <td>AccountName</td>
+            <td>Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model.Person.BankAccounts)
+        {
+            <tr>
+                <td>@account.BankName</td>
+                <td>@account.AccountNumber</td>
+                <td>@account.AccountName</td>
+                <td>
+                    <form method="post" asp-page-handler="RemoveBankAccount" asp-route-accountnumber="@account.AccountNumber">
+                        <button type="submit" class="btn btn-primary">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<form method="post" asp-page-handler="AddBankAccount">
+    <div class="form-group">
+        <label asp-for="@Model.AccountNumber"></label>
+        <input asp-for="@Model.AccountNumber" class="form-control" />
+        <span asp-validation-for="@Model.AccountNumber"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.AccountName"></label>
+        <input asp-for="@Model.AccountName" class="form-control" />
+        <span asp-validation-for="@Model.AccountName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.BankName"></label>
+        <input asp-for="@Model.BankName" class="form-control" />
+        <span asp-validation-for="@Model.BankName"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>

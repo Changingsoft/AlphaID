@@ -1,0 +1,13 @@
+﻿@page "{id}"
+@model DeleteModel
+@{
+}
+<h3>Delete @Model.Data.DisplayName</h3>
+<p>删除将不可恢复。请键入名称（@Model.Data.DisplayName）以确认。</p>
+<form method="post">
+    <div class="form-group">
+        <input asp-for="ResourceName" class="form-control" />
+        <span asp-validation-for="ResourceName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>

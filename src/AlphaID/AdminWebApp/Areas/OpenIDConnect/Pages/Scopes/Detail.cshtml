@@ -1,0 +1,32 @@
+﻿@page
+@model DetailModel
+
+<h3>Scope: @Model.Data.Name</h3>
+
+<h4>概要</h4>
+
+<dl class="row">
+    <dt class="col-3">名称</dt>
+    <dd class="col-9">@Model.Data.Name</dd>
+    <dt class="col-3">显示名称</dt>
+    <dd class="col-9">@Model.Data.DisplayName</dd>
+    <dt class="col-3">启用</dt>
+    <dd class="col-9">@Model.Data.Enabled</dd>
+</dl>
+
+<h4>使用该Scope的资源</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Other</td>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+<h4>操作</h4>
+
+<a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">删除Scope</a>

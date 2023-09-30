@@ -1,0 +1,14 @@
+@page
+@model AuthCenterWebApp.Pages.Redirect.IndexModel
+@{
+}
+
+<div class="redirect-page">
+    <div class="lead">
+        <h1>您现在正在返回到应用程序</h1>
+        <p>完成后，您可以关闭此选项卡。</p>
+    </div>
+</div>
+
+<meta http-equiv="refresh" content="0;url=@Model.RedirectUri" data-url="@Model.RedirectUri">
+<script src="~/js/signin-redirect.js"></script>

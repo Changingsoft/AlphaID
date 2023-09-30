@@ -1,0 +1,36 @@
+﻿@page
+@model             IndexModel
+@inject ConfigurationDbContext dbContext
+@{
+    this.ViewData["Title"] = "OAuth/OIDC";
+}
+<h1>概要</h1>
+<h2>客户端</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">总数</h5>
+            <p class="card-text">@this.dbContext.Clients.Count()</p>
+        </div>
+    </div>
+
+</div>
+<h2>范围</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">总数</h5>
+            <p class="card-text">@this.dbContext.ApiScopes.Count()</p>
+        </div>
+    </div>
+</div>
+<h2>API资源</h2>
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">总数</h5>
+            <p class="card-text">@this.dbContext.ApiResources.Count()</p>
+        </div>
+    </div>
+
+</div>

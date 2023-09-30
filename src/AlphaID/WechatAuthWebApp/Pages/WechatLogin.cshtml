@@ -1,0 +1,12 @@
+﻿@page
+@model                         WechatLoginModel
+@{
+    this.ViewData["title"] = "正在处理";
+}
+
+<ul>
+    @foreach (var msg in Model.ErrorMessages)
+    {
+        <li>@msg</li>
+    }
+</ul>

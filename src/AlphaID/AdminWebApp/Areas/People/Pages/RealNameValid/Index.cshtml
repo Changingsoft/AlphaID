@@ -1,0 +1,30 @@
+﻿@page
+@using IDSubjects.RealName;
+@model             IndexModel
+@inject ChineseIDCardManager validator
+@{
+}
+<h2>Pending Real Name Validation List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Current Name(Account)</td>
+            <td>IDCard Name</td>
+            <td>Card Number</td>
+            <td>Commit Time</td>
+            <td>Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var validation in this.validator.PendingValidations)
+        {
+            <tr>
+                <td>@validation.Person.Name（@validation.Person.UserName）</td>
+                <td>@validation.ChineseIDCard!.Name</td>
+                <td>@validation.ChineseIDCard!.CardNumber</td>
+                <td>@validation.CommitTime</td>
+                <td><a asp-page="ValidateChineseIDCard" asp-route-id="@validation.Id" class="btn btn-sm btn-primary">Validate</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

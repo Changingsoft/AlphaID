@@ -1,0 +1,18 @@
+﻿@page
+@model OIDCTestClientApp.Pages.Identity.IndexModel
+@{
+    this.ViewData["title"] = "Identity";
+}
+
+<h1>Access Token</h1>
+<p style="word-wrap:break-word; word-break:break-all;">@Model.AccessToken</p>
+
+<h1>Refresh Token</h1>
+<p style="word-wrap:break-word; word-break:break-all;">@Model.RefreshToken</p>
+
+<h1>ID Token</h1>
+<p style="word-wrap:break-word; word-break:break-all;">@Model.IdToken</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">Log out</button>
+</form>

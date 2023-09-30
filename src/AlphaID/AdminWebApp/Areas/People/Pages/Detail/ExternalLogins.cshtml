@@ -1,0 +1,30 @@
+﻿@page "{id}"
+@model             ExternalLoginsModel
+@{
+}
+<h1>外部登录</h1>
+
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Provider</td>
+                <td>Display Name</td>
+                <td>Key</td>
+                <td>Operations</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var login in this.Model.Logins)
+            {
+                <tr>
+                    <td>@login.LoginProvider</td>
+                    <td>@login.ProviderDisplayName</td>
+                    <td>@login.ProviderKey</td>
+                    <td><button type="submit" class="btn btn-danger btn-sm" asp-page-handler="Remove" asp-route-provider="@login.LoginProvider" asp-route-pkey="@login.ProviderKey" onclick="return confirm('一旦解除绑定，只能由用户本人才能重新绑定。确定要解除吗？');">解除</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+<p>管理须知：请注意，一旦解除绑定，将只能由本人才能再次创建绑定，请小心操作。</p>

@@ -1,0 +1,141 @@
+@page
+@model AuthCenterWebApp.Pages.Device.Index
+@{
+}
+
+@if (Model.Input.UserCode == null)
+{
+    @*We need to collect the user code*@
+    <div class="page-device-code">
+        <div class="lead">
+            <h1>User Code</h1>
+            <p>请输入设备上显示的代码。</p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8">
+                <partial name="_ValidationSummary" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <form asp-page="/Device/Index" method="get">
+                    <div class="form-group">
+                        <label for="userCode">User Code:</label>
+                        <input class="form-control" for="userCode" name="userCode" autofocus />
+                    </div>
+
+                    <button class="btn btn-primary" name="button">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    @*collect consent for the user code provided*@
+    <div class="page-device-confirmation">
+        <div class="lead">
+            @if (Model.View.ClientLogoUrl != null)
+            {
+                <div class="client-logo"><img src="@Model.View.ClientLogoUrl"></div>
+            }
+            <h1>
+                @Model.View.ClientName
+                <small class="text-muted">正在请求您的许可</small>
+            </h1>
+            <p>Please confirm that the authorization request matches the code: <strong>@Model.Input.UserCode</strong>.</p>
+            <p>取消选中您不希望授予的权限。</p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8">
+                <partial name="_ValidationSummary" />
+            </div>
+        </div>
+
+        <form asp-page="/Device/Index">
+            <input asp-for="Input.UserCode" type="hidden" />
+            <div class="row">
+                <div class="col-sm-8">
+                    @if (Model.View.IdentityScopes.Any())
+                    {
+                        <div class="form-group">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    个人信息
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    @foreach (var scope in Model.View.IdentityScopes)
+                                    {
+                                        <partial name="_ScopeListItem" model="@scope" />
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.View.ApiScopes.Any())
+                    {
+                        <div class="form-group">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="glyphicon glyphicon-tasks"></span>
+                                    应用程序访问
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    @foreach (var scope in Model.View.ApiScopes)
+                                    {
+                                        <partial name="_ScopeListItem" model="scope" />
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                描述
+                            </div>
+                            <div class="card-body">
+                                <input class="form-control" placeholder="Description or name of device" asp-for="Input.Description" autofocus>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.View.AllowRememberConsent)
+                    {
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" asp-for="Input.RememberConsent">
+                                <label class="form-check-label" asp-for="Input.RememberConsent">
+                                    <strong>记住我的决定</strong>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <button name="Input.button" value="yes" class="btn btn-primary" autofocus>是，允许</button>
+                    <button name="Input.button" value="no" class="btn btn-secondary">否，不允许</button>
+                </div>
+                <div class="col-sm-4 col-lg-auto">
+                    @if (Model.View.ClientUrl != null)
+                    {
+                        <a class="btn btn-outline-info" href="@Model.View.ClientUrl">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            <strong>@Model.View.ClientName</strong>
+                        </a>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+}

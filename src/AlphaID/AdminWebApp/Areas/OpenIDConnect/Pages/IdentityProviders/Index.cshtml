@@ -1,0 +1,30 @@
+﻿@page
+@model             IndexModel
+@{
+    this.ViewData["Title"] = "标识提供器";
+}
+<h3>标识提供器</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Scheme</td>
+            <td>Enabled</td>
+            <td>DisplayName</td>
+            <td>Type</td>
+            <td>Created at</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var idp in this.Model.Results)
+        {
+            <tr>
+                <td><a asp-page="Detail" asp-route-id="@idp.Id">@idp.Scheme</a></td>
+                <td>@idp.Enabled</td>
+                <td>@idp.DisplayName</td>
+                <td>@idp.Type</td>
+                <td>@idp.Created</td>
+            </tr>
+        }
+    </tbody>
+</table>

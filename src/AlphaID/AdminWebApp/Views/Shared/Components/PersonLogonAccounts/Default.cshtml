@@ -1,0 +1,22 @@
+﻿@using DirectoryLogon;
+@model IEnumerable<LogonAccount>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>LogonId</td>
+            <td>Service</td>
+            <td>UPN</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var account in Model)
+            {
+                <tr>
+                    <td><a asp-page="/LogonAccount/Index" asp-route-PersonId="@account.PersonId">@account.LogonId</a></td>
+                    <td>@account.DirectoryService.Name</td>
+                    <td></td>
+                </tr>
+            }
+    </tbody>
+</table>

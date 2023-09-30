@@ -1,0 +1,18 @@
+@page
+@inject IOptions<ProductInfo> production
+@model AuthCenterWebApp.Pages.Account.Logout.Index
+
+<div class="logout-page">
+    <div class="lead">
+        <h1>注销</h1>
+        <p>您想要从@(this.production.Value.Name)注销吗？</p>
+    </div>
+
+    <form asp-page="/Account/Logout/Index">
+        <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+
+        <div class="form-group">
+            <button class="btn btn-primary">是</button>
+        </div>
+    </form>
+</div>

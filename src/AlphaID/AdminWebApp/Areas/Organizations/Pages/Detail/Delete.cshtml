@@ -1,0 +1,18 @@
+﻿@page "{id}"
+@model                         DeleteModel
+@{
+    this.ViewData["Title"] = "确认删除" + this.Model.Organization.Name + "？";
+}
+<h1>删除</h1>
+
+<p>确认要删除@(Model.Organization.Name)吗？若要删除，请在下方填入该自然人的名字，然后点击“删除”按钮。</p>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Input.Name"></label>
+        <input asp-for="@Model.Input.Name" />
+        <span asp-validation-for="@Model.Input.Name"></span>
+    </div>
+    <div asp-validation-summary="All"></div>
+    <button class="btn btn-warning" type="submit">删除</button>
+</form>

@@ -66,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7714CF67
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealName", "RealName\RealName.csproj", "{F4F56EF1-A0A7-43C0-B65A-804DD84AF237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChineseIDCardRazorLib", "ChineseIDCardRazorLib\ChineseIDCardRazorLib.csproj", "{FD3BF691-0FD9-49F8-85C8-CEDFEB638093}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChineseIDCardRazorLib", "ChineseIDCardRazorLib\ChineseIDCardRazorLib.csproj", "{FD3BF691-0FD9-49F8-85C8-CEDFEB638093}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

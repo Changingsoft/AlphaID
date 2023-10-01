@@ -9,6 +9,7 @@
 	<ItemGroup>
 	  <Content Remove="Areas\OpenIDConnect\Pages\_Layout.cshtml" />
 	  <Content Remove="Areas\People\Pages\_Layout.cshtml" />
+	  <Content Remove="Pages\Shared\_LayoutBase.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,6 +24,18 @@
 		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Shared\_LayoutBase.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Pages\Shared\_LayoutBase.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Pages\Shared\_LayoutBase.cshtml" />
 	</ItemGroup>
 
 </Project>

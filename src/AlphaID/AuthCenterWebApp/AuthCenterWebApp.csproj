@@ -7,12 +7,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Pages\Shared\_LayoutBase.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Areas\Profile\Pages\Logins\Index.cshtml" />
 		<_ContentIncludedByDefault Remove="Areas\Profile\Pages\RealName\ConfirmChineseIDCard.cshtml" />
 		<_ContentIncludedByDefault Remove="Areas\Profile\Pages\RealName\Index.cshtml" />
 		<_ContentIncludedByDefault Remove="Areas\Profile\Pages\RealName\RealNameValidateSuccess.cshtml" />
 		<_ContentIncludedByDefault Remove="Areas\Profile\Pages\RealName\UploadChineseIDCard.cshtml" />
 		<_ContentIncludedByDefault Remove="Areas\Profile\Pages\RealName\_Layout.cshtml" />
+		<_ContentIncludedByDefault Remove="Pages\Shared\_LayoutBase.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -78,5 +83,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Areas\Profile\Pages\RealName\UploadChineseIDCard.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Shared\_LayoutBase.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Pages\Shared\_LayoutBase.cshtml" />
 	</ItemGroup>
 </Project>

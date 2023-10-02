@@ -1,8 +1,6 @@
 ﻿using AlphaIDEntityFramework.EntityFramework;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using OperationalEF;
 using System.Text;
 

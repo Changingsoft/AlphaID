@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChineseIDCardRazorLib.Models;
+﻿namespace ChineseIDCardRazorLib.Models;
 internal class ChineseIDCardModel
 {
     public string Name { get; set; }

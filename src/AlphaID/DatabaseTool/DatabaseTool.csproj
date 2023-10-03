@@ -26,29 +26,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="sql\AdminCenterDbContext\202303281106.sql">
+    <None Update="TestingData\AdminCenterDbContext\202303281106.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="sql\ConfigurationDbContext\202303281102.sql">
+    <None Update="TestingData\ConfigurationDbContext\202303281102.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="sql\DirectoryLogonData\202304211625.sql">
+    <None Update="TestingData\DirectoryLogonData\202304211625.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="sql\IDSubjectsDbContext\202303291105.sql">
+    <None Update="TestingData\IDSubjectsDbContext\202303291105.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="sql\PersistedGrantDbContext\202303281103.sql">
+    <None Update="TestingData\PersistedGrantDbContext\202303281103.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="sql\ConfigurationDbContext\" />
-    <Folder Include="sql\PersistedGrantDbContext\" />
-    <Folder Include="sql\AdminCenterDbContext\" />
-    <Folder Include="sql\DirectoryLogonData\" />
   </ItemGroup>
 
 </Project>

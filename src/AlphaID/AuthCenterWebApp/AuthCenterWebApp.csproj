@@ -64,7 +64,7 @@
 	  </None>
 	</ItemGroup>
 	<ProjectExtensions>
-		<VisualStudio><UserProperties authcentersettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" authcentersettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" authcentersettings_1staging_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio>
+		<VisualStudio><UserProperties authcentersettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" authcentersettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio>
 	</ProjectExtensions>
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Areas\Profile\Pages\Logins\Index.cshtml" />

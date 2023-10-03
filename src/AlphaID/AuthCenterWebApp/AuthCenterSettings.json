@@ -5,8 +5,8 @@
     }
   },
   "ConnectionStrings": {
-    "OidcConfigurationDataConnection": "Data Source=<Database Server>;Initial Catalog=AuthCenterConfigurationData;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
-    "OidcPersistedGrantDataConnection": "Data Source=<Database Server>;Initial Catalog=AuthCenterOperationalData;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
+    "OidcConfigurationDataConnection": "Data Source=<Database Server>;Initial Catalog=<Database Name>;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
+    "OidcPersistedGrantDataConnection": "Data Source=<Database Server>;Initial Catalog=<Database Name>;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
     "IDSubjectsDataConnection": "Data Source=<Database Server>;Initial Catalog=<Database Name>;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"
   },
   "XinanSSO": {

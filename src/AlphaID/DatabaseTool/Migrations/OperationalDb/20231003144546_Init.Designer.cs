@@ -11,7 +11,7 @@ using OperationalEF;
 namespace DatabaseTool.Migrations.OperationalDb
 {
     [DbContext(typeof(OperationalDbContext))]
-    [Migration("20231002161909_Init")]
+    [Migration("20231003144546_Init")]
     partial class Init
     {
         /// <inheritdoc />

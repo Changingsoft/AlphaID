@@ -35,27 +35,27 @@ public class PrepareDevelopmentData
         directoryLogonDbContext.Database.Migrate();
 
         //Apply Example Data
-        var idSubjectsDbSqlFiles = Directory.GetFiles("./sql/IDSubjectsDbContext", "*.sql");
+        var idSubjectsDbSqlFiles = Directory.GetFiles("./TestingData/IDSubjectsDbContext", "*.sql");
         foreach (var file in idSubjectsDbSqlFiles)
         {
             idDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));
         }
-        var configDbSqlFiles = Directory.GetFiles("./sql/ConfigurationDbContext", "*.sql");
+        var configDbSqlFiles = Directory.GetFiles("./TestingData/ConfigurationDbContext", "*.sql");
         foreach (var file in configDbSqlFiles)
         {
             idSvrConfigurationDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));
         }
-        var idserverOperationalSqlFiles = Directory.GetFiles("./sql/PersistedGrantDbContext", "*.sql");
+        var idserverOperationalSqlFiles = Directory.GetFiles("./TestingData/PersistedGrantDbContext", "*.sql");
         foreach (var file in idserverOperationalSqlFiles)
         {
             idSvrOperationalDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));
         }
-        var appSecuritySqlFiles = Directory.GetFiles("./sql/AdminCenterDbContext", "*.sql");
+        var appSecuritySqlFiles = Directory.GetFiles("./TestingData/AdminCenterDbContext", "*.sql");
         foreach (var file in appSecuritySqlFiles)
         {
             adminCenterDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));
         }
-        var directoryLogonDataSqlFiles = Directory.GetFiles("./sql/DirectoryLogonData", "*.sql");
+        var directoryLogonDataSqlFiles = Directory.GetFiles("./TestingData/DirectoryLogonData", "*.sql");
         foreach (var file in directoryLogonDataSqlFiles)
         {
             directoryLogonDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));

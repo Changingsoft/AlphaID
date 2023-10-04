@@ -13,11 +13,12 @@
     "ClientId": "<ClientId>",
     "ClientSecret": "<ClientSecret>"
   },
-  
-  
+
+
   "SmtpMailSenderOptions": {
     "Server": "<SMTP Server>",
     "FromMailAddress": "account-security-noreply@changingsoft.com",
     "FromDisplayName": "Alpha ID 团队"
-  }
+  },
+  "DefaultCulture": "zh-CN"
 }

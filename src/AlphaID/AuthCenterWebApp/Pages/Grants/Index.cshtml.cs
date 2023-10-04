@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Grants;
 
-[SecurityHeaders]
 [Authorize]
 public class Index : PageModel
 {

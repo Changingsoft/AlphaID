@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Ciba;
 
-[SecurityHeaders]
 [Authorize]
 public class AllModel : PageModel
 {

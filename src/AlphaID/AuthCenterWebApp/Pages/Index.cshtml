@@ -7,40 +7,23 @@
 @{
     this.ViewData["Title"] = this.product.Value.Name;
 }
+<div class="page-body">
+    <div class="container-xl">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5 text-center">
+                <h1 class="display-5"><img src="~/logo.png" /></h1>
+                <p>一个账户尽享@(product.Value.TradeMark)服务</p>
+                @if (this.User.Identity!.IsAuthenticated)
+                {
+                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">个人中心</a></p>
+                }
+                else
+                {
+                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">登录</a></p>
+                    <p><a class="btn btn-primary" asp-page="/Account/SignUp">创建你的@(this.product.Value.Name)</a></p>
+                }
 
-<div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5 text-center">
-        <h1 class="display-5"><img src="~/logo.png" /></h1>
-        <p>一个账户尽享@(product.Value.TradeMark)服务</p>
-        @if (this.User.Identity!.IsAuthenticated)
-        {
-            <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">个人中心</a></p>
-        }
-        else
-        {
-            <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">登录</a></p>
-            <p><a class="btn btn-primary" asp-page="/Account/SignUp">创建你的@(this.product.Value.Name)</a></p>
-        }
-
+            </div>
+        </div>
     </div>
 </div>
-
-
-<div class="welcome-page">
-    <ul>
-        <li>
-            点击<a href="~/grants">此处</a>管理您已保存的授权。
-        </li>
-        <li>
-            点击<a href="~/ciba/all">此处</a>查看您待处理的 CIBA 登录请求。
-        </li>
-    </ul>
-</div>
-
-@if (env.IsDevelopment())
-{
-    <div>
-        <p>Development Information</p>
-        <p><a href="~/diagnostics">当前会话的声明</a></p>
-    </div>
-}

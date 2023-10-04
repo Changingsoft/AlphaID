@@ -2,19 +2,9 @@
     Layout = "Shared/_Layout";
 }
 
-<partial name="_SearchInputPart" />
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-page="/Index">首页</a></li>
-        <li class="breadcrumb-item"><a asp-page="/People/Index">自然人</a></li>
-        @RenderSection("breadcrumb", false)
-    </ol>
-</nav>
-
 @RenderBody()
 
-@section scripts
+@section Scripts
 {
-    @RenderSection("scripts", false);
+    @RenderSection("Scripts", false);
 }

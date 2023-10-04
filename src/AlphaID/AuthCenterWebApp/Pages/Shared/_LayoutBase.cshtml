@@ -1,4 +1,4 @@
-﻿@inject IOptions<ProductInfo> product
+@inject IOptions<ProductInfo> product
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/lib/tabler/dist/css/tabler.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AdmissionsPortalWebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true" />
     @RenderSection("Heads", false)
 </head>
 <body>
@@ -42,8 +42,12 @@
                     <div class="row text-center align-items-center flex-row-reverse">
                         <div class="col-lg-auto ms-lg-auto">
                             <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item"><a asp-area="Student" asp-page="/Index" target="_blank" class="link-secondary">Student</a></li>
-                                <li class="list-inline-item"><a asp-area="Teacher" asp-page="/Index" target="_blank" class="link-secondary">Teacher</a></li>
+                                <li class="list-inline-item">
+                                    <a href="~/.well-known/openid-configuration" class="link-secondary" target="_blank">发现文档</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="link-secondary" target="_blank">开发者中心</a>
+                                </li>
                                 @if (this.User.IsInRole("Administrators"))
                                 {
                                     <li class="list-inline-item">

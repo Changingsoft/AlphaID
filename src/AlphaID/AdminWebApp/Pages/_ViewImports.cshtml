@@ -5,6 +5,7 @@
 @using IDSubjects.RealName
 @using IDSubjects.Subjects
 @using DirectoryLogon
+@using Microsoft.AspNetCore.Mvc.Localization;
 @using Microsoft.Extensions.Hosting
 @using AlphaIDPlatform.Security
 @using Duende.IdentityServer.EntityFramework.DbContexts
@@ -15,3 +16,5 @@
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, AdminWebApp
+
+@inject IViewLocalizer localizer

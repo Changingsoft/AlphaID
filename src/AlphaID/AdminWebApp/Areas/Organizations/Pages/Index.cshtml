@@ -3,49 +3,50 @@
 @{
 }
 
-<h2>概要</h2>
-<div class="card-deck">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">总数</h5>
-            <p class="card-text">@this.Model.OrgCount 个</p>
+        <h2>概要</h2>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">总数</h5>
+                    <p class="card-text">@this.Model.OrgCount 个</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">活跃</h5>
+                    <p class="card-text">0 个</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">年度活跃</h5>
+                    <p class="card-text">0人</p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">活跃</h5>
-            <p class="card-text">0 个</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">年度活跃</h5>
-            <p class="card-text">0人</p>
-        </div>
-    </div>
-</div>
 
-<a asp-page="Register" class="btn btn-primary">登记新组织</a>
+        <a asp-page="Register" class="btn btn-primary">登记新组织</a>
 
-<h3>近期更新</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>名称</td>
-            <td>统一社会信用代码</td>
-            <td>住所</td>
-            <td>代表人</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var org in this.Model.Last10Orgs)
-        {
-            <tr>
-                <td><a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a></td>
-                <td>@org.USCI</td>
-                <td>@org.Domicile</td>
-                <td>@org.LegalPersonName</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <h3>近期更新</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>名称</td>
+                    <td>统一社会信用代码</td>
+                    <td>住所</td>
+                    <td>代表人</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var org in this.Model.Last10Orgs)
+                {
+                    <tr>
+                        <td><a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a></td>
+                        <td>@org.USCI</td>
+                        <td>@org.Domicile</td>
+                        <td>@org.LegalPersonName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+

@@ -15,51 +15,56 @@
     
 }
 
-@if(currentCard == null)
-{
-    if(pendingValidation == null)
-    {
-        <div class="alert alert-warning">
-            您尚未实名认证，大多数服务都要求实名认证。<a asp-page="RealName/Index" class="btn btn-sm btn-primary">去认证</a>
+<div class="page-body">
+    <div class="container-xl">
+        @if (currentCard == null)
+        {
+            if (pendingValidation == null)
+            {
+                <div class="alert alert-warning">
+                    您尚未实名认证，大多数服务都要求实名认证。<a asp-page="RealName/Index" class="btn btn-sm btn-primary">去认证</a>
+                </div>
+            }
+            else
+            {
+                if (pendingValidation.ChinesePersonName == null)
+                {
+                    <div class="alert alert-warning">
+                        您的的实名认证需要确认信息。<a asp-page="RealName/ConfirmChineseIDCard">点此确认</a>。
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        您的实名认证正在审核。
+                    </div>
+                }
+
+            }
+        }
+
+        <div class="row">
+            <div class="col-4">
+                <vc:user-profile-main-card></vc:user-profile-main-card>
+            </div>
+            <div class="col-8">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a asp-page="Index" class="nav-link">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+
+                </ul>
+
+                <hr />
+                @RenderBody()
+            </div>
         </div>
-    }
-    else
-    {
-        if(pendingValidation.ChinesePersonName == null)
-        {
-            <div class="alert alert-warning">
-                您的的实名认证需要确认信息。<a asp-page="RealName/ConfirmChineseIDCard">点此确认</a>。
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info">
-                您的实名认证正在审核。
-            </div>
-        }
-        
-    }
-}
-
-<div class="row">
-    <div class="col-4">
-        <vc:user-profile-main-card></vc:user-profile-main-card>
-    </div>
-    <div class="col-8">
-        <ul class="nav">
-            <li class="nav-item">
-                <a asp-page="Index" class="nav-link">Overview</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Applications</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            
-        </ul>
-
-        <hr />
-        @RenderBody()
     </div>
 </div>
+

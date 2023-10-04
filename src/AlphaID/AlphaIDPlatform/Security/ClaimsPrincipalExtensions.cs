@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using System.Security.Claims;
+using System.Text;
 
 namespace AlphaIDPlatform.Security;
 
@@ -16,5 +17,27 @@ public static class ClaimsPrincipalExtensions
     public static string? ProfileUrl(this ClaimsPrincipal principal)
     {
         return principal.FindFirstValue(JwtClaimTypes.Profile);
+    }
+    public static string? SubjectId(this ClaimsPrincipal principal)
+    {
+        var subjectIdValue = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        subjectIdValue ??= principal.FindFirstValue(JwtClaimTypes.Subject);
+        return subjectIdValue;
+    }
+
+    public static string? DisplayRoles(this ClaimsPrincipal principal)
+    {
+        if (principal.Identity is not ClaimsIdentity claimsIdentity)
+        {
+            return null;
+        }
+        var roleClaims = principal.Claims.Where(c => c.Type == claimsIdentity.RoleClaimType).ToArray();
+        var sb = new StringBuilder();
+        foreach (var roleClaim in roleClaims)
+        {
+            sb.Append($", {roleClaim.Value}");
+        }
+        //roleClaims.Select(c => sb.Append($", {c.Value}"));
+        return sb.ToString().Trim(',', ' ');
     }
 }

@@ -97,7 +97,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
             <a href="#" class="dropdown-item">Status</a>
-            <a asp-area="Profile" asp-page="/Index" class="dropdown-item">Profile &amp; Account</a>
+            <a href="@this.User.ProfileUrl()" target="_blank" class="dropdown-item">Profile &amp; Account</a>
             <a href="#" class="dropdown-item">Feedback</a>
             <div class="dropdown-divider"></div>
             <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@localizer["Grants"]</a>

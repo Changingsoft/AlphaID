@@ -1,6 +1,8 @@
 ﻿@page
+@inject IOptions<ProductInfo> product
 @model AlphaIDWebAPI.Pages.IndexModel
 @{
+    this.ViewBag.Title = $"{product.Value.Name} API";
 }
-<h1>@this.Model.ProductionInfo.Name API</h1>
+<h1>@this.ViewBag.Title</h1>
 <p><a href="/docs" target="_blank">API Documention</a></p>

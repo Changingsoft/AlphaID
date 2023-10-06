@@ -42,13 +42,13 @@ public class NaturalPerson
     /// When Created.
     /// </summary>
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime WhenCreated { get; protected set; } = DateTime.Now;
+    public DateTime WhenCreated { get; protected set; } = DateTime.UtcNow;
 
     /// <summary>
     /// When Changed.
     /// </summary>
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime WhenChanged { get; protected internal set; } = DateTime.Now;
+    public DateTime WhenChanged { get; protected internal set; } = DateTime.UtcNow;
 
     /// <summary>
     /// 启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。

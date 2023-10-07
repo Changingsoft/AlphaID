@@ -120,16 +120,4 @@
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
   </data>
-  <data name="Given name" xml:space="preserve">
-    <value>名字</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>密码</value>
-  </data>
-  <data name="Remember me on this device" xml:space="preserve">
-    <value>在此设备上记住我</value>
-  </data>
-  <data name="Surname" xml:space="preserve">
-    <value>姓氏</value>
-  </data>
 </root>

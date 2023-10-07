@@ -40,17 +40,15 @@
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="Input.RememberLogin">
-                                        <label class="form-check-label" asp-for="Input.RememberLogin">
-                                            记住我的登录
-                                        </label>
+                                        <label class="form-check-label" asp-for="Input.RememberLogin"></label>
                                     </div>
                                 </div>
                             }
 
-                            <button type="submit" class="btn btn-primary" name="Input.Button" value="login">登录</button>
-                            <button type="submit" class="btn btn-secondary" name="Input.Button" value="cancel">取消</button>
+                            <button type="submit" class="btn btn-primary" name="Input.Button" value="login">@localizer["Sign in"]</button>
+                            <button type="submit" class="btn btn-secondary" name="Input.Button" value="cancel">@localizer["Cancel"]</button>
 
-                            <p><a asp-page="ForgetPassword">忘记密码？</a></p>
+                            <p><a asp-page="ForgetPassword">@localizer["Forgot your password?"]</a></p>
                         </form>
                     </div>
                 </div>
@@ -70,10 +68,10 @@
                             {
                                 <li class="list-inline-item">
                                     <a class="btn btn-secondary"
-                               asp-page="/ExternalLogin/Challenge"
-                               asp-route-scheme="@provider.AuthenticationScheme"
-                               asp-route-schemeDisplayName="@provider.DisplayName"
-                               asp-route-returnUrl="@Model.Input.ReturnUrl">
+                                       asp-page="/ExternalLogin/Challenge"
+                                       asp-route-scheme="@provider.AuthenticationScheme"
+                                       asp-route-schemeDisplayName="@provider.DisplayName"
+                                       asp-route-returnUrl="@Model.Input.ReturnUrl">
                                         @provider.DisplayName
                                     </a>
                                 </li>

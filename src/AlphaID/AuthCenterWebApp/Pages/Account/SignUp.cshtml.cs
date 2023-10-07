@@ -154,47 +154,47 @@ public class SignUpModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "移动电话号码", Prompt = "1xxxxxxxxxx")]
+        [Display(Name = "Mobile phone number", Prompt = "1xxxxxxxxxx")]
         [Required(ErrorMessage = "{0}是必需的。")]
         [StringLength(14, MinimumLength = 11)]
         public string Mobile { get; set; } = default!;
 
-        [Display(Name = "短信验证码")]
+        [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
         [Required(ErrorMessage = "{0}是必需的。")]
         [StringLength(8, MinimumLength = 4)]
         public string VerificationCode { get; set; } = default!;
 
-        [Display(Name = "姓", Prompt = "姓")]
+        [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "{0}是必需的。")]
         [StringLength(10)]
         public string Surname { get; set; } = default!;
 
-        [Display(Name = "名", Prompt = "名")]
+        [Display(Name = "Given name", Prompt = "Given name")]
         [Required(ErrorMessage = "{0}是必需的。")]
         [StringLength(10)]
         public string GivenName { get; set; } = default!;
 
-        [Display(Name = "性别")]
+        [Display(Name = "Gender")]
         public Sex? Sex { get; set; }
 
-        [Display(Name = "出生日期")]
+        [Display(Name = "Birth date")]
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
-        [Display(Name = "新密码")]
+        [Display(Name = "New password")]
         [Required(ErrorMessage = "{0}是必需的。")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 6)]
         public string NewPassword { get; set; } = default!;
 
-        [Display(Name = "确认密码")]
+        [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "{0}是必需的。")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "新密码和可选密码不一致")]
         [StringLength(32, MinimumLength = 6)]
         public string ConfirmPassword { get; set; } = default!;
 
-        [Display(Name = "电子邮件（可选）", Prompt = "someone@examples.com", Description = "填写邮件地址以便接收邮件消息")]
+        [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]
         [EmailAddress]
         public string? Email { get; set; }
 

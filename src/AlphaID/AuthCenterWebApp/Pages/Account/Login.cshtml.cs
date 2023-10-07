@@ -14,7 +14,7 @@ using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
-[SecurityHeaders]
+//[SecurityHeaders]
 [AllowAnonymous]
 public class LoginModel : PageModel
 {
@@ -259,10 +259,10 @@ public class LoginModel : PageModel
         public string Username { get; set; } = default!;
 
         [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "密码")]
+        [Display(Name = "Password")]
         public string Password { get; set; } = default!;
 
-        [Display(Name = "记住我的登录信息")]
+        [Display(Name = "Remember me on this device")]
         public bool RememberLogin { get; set; }
 
         public string ReturnUrl { get; set; }

@@ -46,7 +46,7 @@
                                     <a href="~/.well-known/openid-configuration" class="link-secondary" target="_blank">发现文档</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="#" class="link-secondary" target="_blank">开发者中心</a>
+                                    <a asp-area="Developer" asp-page="/Index" class="link-secondary" target="_blank">开发者中心</a>
                                 </li>
                                 @if (this.User.IsInRole("Administrators"))
                                 {
@@ -62,10 +62,10 @@
                                     Copyright © 2023 @(product.Value.Organization). All rights reserved.
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="./changelog.html" class="link-secondary">v1.0.0-beta20</a>
+                                    <a asp-area="" asp-page="/Terms" class="link-secondary">@localizer["Terms of Service"]</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a asp-page="Privacy" class="link-secondary">Privacy</a>
+                                    <a asp-area="" asp-page="/Privacy" class="link-secondary">@localizer["Privacy"]</a>
                                 </li>
 
                             </ul>

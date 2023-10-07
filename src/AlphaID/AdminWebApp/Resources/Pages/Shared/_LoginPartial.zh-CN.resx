@@ -117,19 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>首页</value>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="OpenID Connect" xml:space="preserve">
-    <value>OpenID Connect</value>
-  </data>
-  <data name="Organizations" xml:space="preserve">
-    <value>组织</value>
-  </data>
-  <data name="People" xml:space="preserve">
-    <value>自然人</value>
-  </data>
-  <data name="System Settings" xml:space="preserve">
-    <value>系统设置</value>
+  <data name="Sign out" xml:space="preserve">
+    <value>注销登录</value>
   </data>
 </root>

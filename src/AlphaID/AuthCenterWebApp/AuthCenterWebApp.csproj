@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Areas\Profile\Avatar.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Captcha" Version="4.4.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
 		  <PrivateAssets>all</PrivateAssets>
@@ -39,4 +43,13 @@
 	<ProjectExtensions>
 		<VisualStudio><UserProperties authcentersettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" authcentersettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio>
 	</ProjectExtensions>
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Areas\Profile\Avatar.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Areas\Profile\Avatar.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Areas\Profile\Pages\Avatar.cshtml" />
+	</ItemGroup>
 </Project>

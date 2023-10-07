@@ -97,7 +97,7 @@ builder.Services
         //hack 将name声明添加到完全类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name”上。
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, JwtClaimTypes.Name);
         //options.ClaimActions.MapJsonKey("profile", JwtClaimTypes.Profile);
-        options.ClaimActions.MapJsonKey("avator", JwtClaimTypes.Picture);
+        options.ClaimActions.MapJsonKey("picture", JwtClaimTypes.Picture);
 
         options.Events = new OpenIdConnectEvents()
         {

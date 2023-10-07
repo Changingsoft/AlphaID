@@ -18,6 +18,17 @@ public static class ClaimsPrincipalExtensions
     {
         return principal.FindFirstValue(JwtClaimTypes.Profile);
     }
+
+    /// <summary>
+    /// 获取用户的Avatar Url.
+    /// </summary>
+    /// <param name="principal"></param>
+    /// <returns></returns>
+    public static string? AvatarUrl(this ClaimsPrincipal principal)
+    {
+        return principal.FindFirstValue(JwtClaimTypes.Picture);
+    }
+
     public static string? SubjectId(this ClaimsPrincipal principal)
     {
         var subjectIdValue = principal.FindFirstValue(ClaimTypes.NameIdentifier);

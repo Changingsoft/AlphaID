@@ -26,5 +26,10 @@
     "FromMailAddress": "account-security-noreply@changingsoft.com",
     "FromDisplayName": "Alpha ID 团队"
   },
-  "DefaultCulture": "zh-CN"
+  "DefaultCulture": "zh-CN",
+  "SystemUrl": {
+    "AdminWebAppUrl": "<AdminWebAppUrl>",
+    "WebApiUrl": "<WebApiUrl>",
+    "AuthCenterUrl": "<AuthCenterUrl>"
+  }
 }

@@ -84,7 +84,7 @@ public class IndexModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Client Name")]
+        [Display(Name = "Client name")]
         [StringLength(200)]
         public string ClientName { get; set; } = default!;
 
@@ -92,11 +92,11 @@ public class IndexModel : PageModel
         [StringLength(200)]
         public string ClientId { get; set; } = default!;
 
-        [Display(Name = "描述")]
+        [Display(Name = "Description")]
         [StringLength(1000)]
         public string? Description { get; set; }
 
-        [Display(Name = "启用")]
+        [Display(Name = "Enabled")]
         public bool Enabled { get; set; }
 
         [Display(Name = "Logo URI")]
@@ -107,7 +107,7 @@ public class IndexModel : PageModel
         [DataType(DataType.Url)]
         public string? ClientUri { get; set; }
 
-        [Display(Name = "需要客户端密钥")]
+        [Display(Name = "Require client secret")]
         public bool RequireClientSecret { get; set; }
     }
 }

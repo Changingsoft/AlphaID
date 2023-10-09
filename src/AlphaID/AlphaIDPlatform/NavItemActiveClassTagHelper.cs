@@ -7,21 +7,22 @@ namespace AlphaIDPlatform;
 /// <summary>
 /// 根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。
 /// </summary>
-[HtmlTargetElement("li", Attributes = "asp-area")]
-[HtmlTargetElement("li", Attributes = "asp-path-prefix")]
+[HtmlTargetElement("li", Attributes = "asp-path")]
+[HtmlTargetElement("li", Attributes = "asp-match-prefix")]
 public class NavItemActiveClassTagHelper : TagHelper
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    [HtmlAttributeName("asp-area")]
-    public string? Area { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    [HtmlAttributeName("asp-path-prefix")]
-    public string PathPrefix { get; set; } = "/Index";
+    [HtmlAttributeName("asp-path")]
+    public string Path { get; set; } = "/";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [HtmlAttributeName("asp-match-prefix")]
+    public bool MatchPrefix { get; set; } = true;
 
     /// <summary>
     /// 
@@ -42,17 +43,12 @@ public class NavItemActiveClassTagHelper : TagHelper
         var currentAction = routeData["action"] as string;
         var currentArea = routeData["area"] as string ?? "";
         var currentPage = routeData["page"] as string ?? "";
-        var currentPath = this.ViewContext.HttpContext.Request.Path;
-        var result = false;
-
-        if (this.Area != null)
-        {
-            result = string.Equals(this.Area, currentArea, StringComparison.OrdinalIgnoreCase) && currentPage.StartsWith(this.PathPrefix, StringComparison.OrdinalIgnoreCase);
-        }
+        var currentPath = this.ViewContext.HttpContext.Request.Path.Value;
+        bool result = false;
+        if (this.MatchPrefix)
+            result = currentPath.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase);
         else
-        {
-            result = currentPage.StartsWith(this.PathPrefix, StringComparison.OrdinalIgnoreCase);
-        }
+            result = string.Equals(this.Path, currentPath, StringComparison.OrdinalIgnoreCase);
 
         if (result)
         {

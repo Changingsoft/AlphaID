@@ -4,40 +4,48 @@
     this.ViewData["Title"] = "搜索自然人";
 }
 
-@if (this.Model.Results.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <td>姓名</td>
-                <td>性别</td>
-                <td>户名</td>
-                <td>移动电话</td>
-                <td>身份证后4位</td>
-                <td>年龄</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var person in Model.Results)
-            {
-                <tr>
-                    <td>
-                        <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Id = person.Id }))" class="img-fluid img-thumbnail" width="36" />
-                        <a asp-page="Detail/Index" asp-route-id="@person.Id">@person.Name</a>
-                    </td>
-                    <td>@Html.DisplayFor(m => person.Sex, "Sex")</td>
-                    <td>@person.UserName</td>
-                    <td>@person.Mobile</td>
-                    <td>@person.ChineseIDCard?.CardNumber[^4..]</td>
-                    <td>@Html.DisplayFor(m => person.DateOfBirth, "Age")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="page-body">
+    <div class="container-xl">
+        <partial name="_SearchInputPart" />
+
+        @if (this.Model.Results.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Gender</td>
+                        <td>Account name</td>
+                        <td>Mobile phone number</td>
+                        <td>ID card suffix</td>
+                        <td>Age</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var person in Model.Results)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Id = person.Id }))" class="img-fluid img-thumbnail" width="36" />
+                                <a asp-page="Detail/Index" asp-route-id="@person.Id">@person.Name</a>
+                            </td>
+                            <td>@Html.DisplayFor(m => person.Sex, "Sex")</td>
+                            <td>@person.UserName</td>
+                            <td>@person.Mobile</td>
+                            <td>@person.ChineseIDCard?.CardNumber[^4..]</td>
+                            <td>@Html.DisplayFor(m => person.DateOfBirth, "Age")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
 
-}
-else
-{
-    <p>没有符合条件的结果</p>
-}
+        }
+        else
+        {
+            <p>没有符合条件的结果</p>
+        }
+
+    </div>
+</div>
+

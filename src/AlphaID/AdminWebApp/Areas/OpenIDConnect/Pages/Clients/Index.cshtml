@@ -6,17 +6,14 @@
 
 <h3>客户端</h3>
 
-<a asp-page="Create" class="btn btn-primary">新客户端</a>
+<a asp-page="Create" class="btn btn-primary">@localizer["New client"]</a>
 
 <table class="table">
     <thead>
         <tr>
-            <td>名称</td>
-            <td>工作流</td>
-            <td>回调Uri</td>
-            <td>范围</td>
-            <td>密钥</td>
-            <td>PKCE</td>
+            <td>@localizer["Name"]</td>
+            <td>@localizer["Workflow"]</td>
+            <td>@localizer["Scopes"]</td>
         </tr>
     </thead>
     <tbody>
@@ -24,14 +21,25 @@
         {
             <tr>
                 <td>
-                    <p><a asp-page="Detail/Index" asp-route-id="@client.Id">@(client.ClientName)</a></p>
+                    <p>
+                        <a asp-page="Detail/Index" asp-route-id="@client.Id">@(client.ClientName)</a>
+                        @if (client.RequireClientSecret)
+                        {
+                            <span class="badge bg-pink text-pink-fg">机密</span>
+                        }
+
+                        @if (client.RequirePkce)
+                        {
+                            <span class="badge bg-azure text-azure-fg">PKCE</span>
+                        }
+                    </p>
                     <p><span class="text-muted small">@client.ClientId</span></p>
                     <p>@client.Description</p>
                 </td>
                 <td>
                     @{
                         var grants = new StringBuilder();
-                        foreach(var grant in client.AllowedGrantTypes)
+                        foreach (var grant in client.AllowedGrantTypes)
                         {
                             grants.Append($"{grant.GrantType}, ");
                         }
@@ -39,23 +47,15 @@
                     @grants.ToString().Trim(' ', ',')
                 </td>
                 <td>
-                    @foreach(var uri in client.RedirectUris)
-                    {
-                        <p>@uri.RedirectUri</p>
-                    }
-                </td>
-                <td>
                     @{
                         var scopeStringBuilder = new StringBuilder();
-                        foreach(var scope in client.AllowedScopes)
+                        foreach (var scope in client.AllowedScopes)
                         {
                             scopeStringBuilder.Append($"{scope.Scope} ");
                         }
                     }
                     @scopeStringBuilder.ToString().Trim()
                 </td>
-                <td>@client.RequireClientSecret</td>
-                <td>@client.RequirePkce</td>
             </tr>
         }
     </tbody>

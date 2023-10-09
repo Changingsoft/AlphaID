@@ -1,10 +1,36 @@
 ﻿@page "{id}"
-@model             RealNameModel
+@model RealNameModel
 @{
 }
 <h1>实名信息</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Real name Overview</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">Status</div>
+                <div class="datagrid-content">
+                    <span class="badge bg-green text-green-fg">Pass</span>
+                    Real named
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Accepted at</div>
+                <div class="datagrid-content">2023-10-10 14:30</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Expires at</div>
+                <div class="datagrid-content">2043-10-10 14:30</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h2>居民身份证</h2>
-@if(this.Model.Card != null)
+@if (this.Model.Card != null)
 {
     <p>姓名: @Model.Card.ChineseIDCard.Name</p>
     <p>身份证号码: @Model.Card.ChineseIDCard.CardNumber</p>

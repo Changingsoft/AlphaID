@@ -21,6 +21,8 @@ public class ScopesModel : PageModel
     [BindProperty]
     public List<SelectListItem> ScopeItems { get; set; }
 
+    public string? OperationMessage { get; set; }
+
     public IActionResult OnGet(int id)
     {
         var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == id);
@@ -67,6 +69,8 @@ public class ScopesModel : PageModel
         }
         this.dbContext.Clients.Update(this.Data);
         await this.dbContext.SaveChangesAsync();
+        this.OperationMessage = "操作已成功！";
+
 
         return this.Page();
     }

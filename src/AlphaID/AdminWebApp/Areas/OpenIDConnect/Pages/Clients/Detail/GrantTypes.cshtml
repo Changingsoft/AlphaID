@@ -1,20 +1,25 @@
 ﻿@page "{id}"
-@model             GrantTypesModel
+@model GrantTypesModel
 @{
 }
 <h3>授权类型</h3>
-<ul>
-    @foreach (var grant in this.Model.Data.AllowedGrantTypes)
-    {
-        <li>@grant.GrantType</li>
-    }
-</ul>
-<h3>Available grant types</h3>
-<ul>
-    <li>implicit</li>
-    <li>hybrid</li>
-    <li>authorization_code</li>
-    <li>client_credentials</li>
-    <li>password</li>
-    <li>urn:ietf:params:oauth:grant-type:device_code</li>
-</ul>
+
+<form method="post">
+    <ul class="list-group">
+        @for (var i = 0; i < this.Model.AllowedGrantTypes.Count; i++)
+        {
+            <li class="list-group-item">
+                <label asp-for="AllowedGrantTypes[i].Selected" class="form-check">
+                    <input asp-for="AllowedGrantTypes[i].Selected" class="form-check-input">
+                    <span>@this.Model.AllowedGrantTypes[i].Value (@this.Model.AllowedGrantTypes[i].Text)</span>
+                    <input asp-for="AllowedGrantTypes[i].Text" type="hidden">
+                    <input asp-for="AllowedGrantTypes[i].Value" type="hidden">
+                </label>
+            </li>
+        }
+    </ul>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <p class="text-warning">* 某些授权类型的组合是冲突的，更改授权类型会进行验证。</p>
+    <button type="submit" class="btn btn-primary">Apply changes</button>
+    <p>@this.Model.OperationMessage</p>
+</form>

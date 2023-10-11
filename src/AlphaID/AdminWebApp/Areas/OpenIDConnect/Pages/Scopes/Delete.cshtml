@@ -2,7 +2,14 @@
 @model             DeleteModel
 @{
 }
-<h3>删除 @Model.Data.Name</h3>
+<h2>删除 @Model.Data.Name</h2>
+
+<p class="text-warning">请检查与该Scope关联的资源，只有当Scope没有关联资源时，才能删除。</p>
+
+<vc:referenced-clients scope="@Model.Data.Name"></vc:referenced-clients>
+
+<vc:referenced-api-resources scope="@Model.Data.Name"></vc:referenced-api-resources>
+
 
 <p>该Scope将被永久删除。请键入Scope的名称（@Model.Data.Name）以确认。</p>
 
@@ -11,5 +18,6 @@
         <input asp-for="ScopeName" class="form-control" />
         <span asp-validation-for="ScopeName" class="text-danger"></span>
     </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
     <button type="submit" class="btn btn-danger">Delete</button>
 </form>

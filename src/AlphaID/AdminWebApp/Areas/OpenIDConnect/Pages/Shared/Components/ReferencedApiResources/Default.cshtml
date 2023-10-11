@@ -1,0 +1,26 @@
+﻿@using Duende.IdentityServer.EntityFramework.Entities;
+@model IQueryable<ApiResource>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Referenced API resources</h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm card-table">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Id</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var api in this.Model)
+                {
+                    <tr>
+                        <td><a asp-page="/ApiResources/Detail" asp-route-id="@api.Id">@api.DisplayName</a></td>
+                        <td>@api.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

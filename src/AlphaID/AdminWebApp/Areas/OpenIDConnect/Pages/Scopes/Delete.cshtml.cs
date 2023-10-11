@@ -43,6 +43,15 @@ public class DeleteModel : PageModel
         if (this.ScopeName != this.Data.Name)
             this.ModelState.AddModelError(nameof(this.ScopeName), "名称错误。");
 
+
+        var referenced = this.dbContext.Clients.Any(p => p.AllowedScopes.Any(s => s.Scope == this.Data.Name))
+            || this.dbContext.ApiResources.Any(p => p.Scopes.Any(s => s.Scope == this.Data.Name));
+        if (referenced)
+        {
+            this.ModelState.AddModelError("", "仍有客户端或API资源引用该范围，不能删除该范围。");
+        }
+
+
         if (!this.ModelState.IsValid)
             return this.Page();
 

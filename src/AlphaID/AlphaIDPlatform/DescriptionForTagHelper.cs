@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace AuthCenterWebApp.ViewFeatures;
+namespace AlphaIDPlatform;
 
+/// <summary>
+/// 
+/// </summary>
 [HtmlTargetElement("div", Attributes = ForAttributeName)]
 [HtmlTargetElement("p", Attributes = ForAttributeName)]
 [HtmlTargetElement("span", Attributes = ForAttributeName)]

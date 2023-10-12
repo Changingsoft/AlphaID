@@ -1,11 +1,30 @@
 ﻿@page "{id}"
-@model             CorsModel
+@model CorsModel
 @{
 }
 <h3>跨域资源共享（CORS）</h3>
-<ul>
-    @foreach (var origin in this.Model.Data.AllowedCorsOrigins)
-    {
-        <li>@origin.Origin</li>
-    }
-</ul>
+<form method="post" asp-page-handler="Remove">
+    <ul class="list-group">
+        @foreach (var origin in this.Model.Data.AllowedCorsOrigins)
+        {
+            <li class="list-group-item">
+                @origin.Origin
+                <button type="submit" class="btn btn-sm btn-danger" name="originId" value="@origin.Id" onclick="return confirm('Are you sure remove this item?');">Remove</button>
+            </li>
+        }
+    </ul>
+</form>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" asp-page-handler="Add">
+            <h4>Add new origin</h4>
+            <div class="form-group">
+                <label asp-for="NewOrigin"></label>
+                <input asp-for="NewOrigin" class="form-control" />
+                <span asp-validation-for="NewOrigin" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>

@@ -52,4 +52,7 @@
 	<ItemGroup>
 	  <None Include="Areas\Profile\Pages\Avatar.cshtml" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="ViewFeatures\" />
+	</ItemGroup>
 </Project>

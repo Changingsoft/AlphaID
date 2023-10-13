@@ -1,0 +1,44 @@
+﻿@page "{id}"
+@model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.ScopesModel
+@{
+}
+
+<h2>Scopes</h2>
+<form method="post" asp-page-handler="Remove">
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var scope in this.Model.Data.Scopes)
+            {
+                <tr>
+                    <td>@scope.Scope</td>
+                    <td><button type="submit" name="scopeId" value="@scope.Id" class="btn btn-danger" onclick="return confirm('确定要移除吗？');">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Add Scope</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-page-handler="Add">
+            <label asp-for="SelectedScope"></label>
+            <select asp-for="SelectedScope" class="form-control">
+                @foreach(var scope in this.Model.RemainingScopes)
+                {
+                    <option value="@scope">@scope</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>

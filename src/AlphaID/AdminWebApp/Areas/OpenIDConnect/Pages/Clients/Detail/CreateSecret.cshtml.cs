@@ -64,7 +64,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
                 ClientId = this.Client.Id,
                 Type = "SharedSecret",
                 Value = this.Input.Secret.ToSha256(),
-                Created = DateTime.Now,
+                Created = DateTime.UtcNow,
                 Description = this.Input.Description,
             };
             if (this.Input.Expires.HasValue)

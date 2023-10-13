@@ -25,7 +25,7 @@ public class CreateModel : PageModel
         this.Input = new InputModel();
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         var now = DateTime.Now;
         var client = new Duende.IdentityServer.EntityFramework.Entities.Client()
@@ -143,17 +143,17 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "客户端ID")]
+        [Display(Name = "客户端ID", Description="Identifier used by OAuth/OIDC protocol.")]
         [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "Client Id already exists.")]
         public string ClientId { get; set; } = Guid.NewGuid().ToString().ToLower();
 
-        [Display(Name = "名称")]
+        [Display(Name = "名称",Description ="Friendly name for display.")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "需要客户端密钥")]
+        [Display(Name = "需要客户端密钥",Description ="Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;
 
-        [Display(Name = "客户端密钥", Description = "请务必记住该值。")]
+        [Display(Name = "客户端密钥", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
         public string? ClientSecret { get; set; }
 
         [Display(Name = "回调URI", Prompt = "例如：https://example.com/signin-oidc")]
@@ -162,7 +162,7 @@ public class CreateModel : PageModel
         [Display(Name = "默认授权类型（模式）")]
         public string DefaultGrantType { get; set; } = "authorization_code";
 
-        [Display(Name = "描述")]
+        [Display(Name = "描述", Description = "Description for this client.")]
         public string? Description { get; set; }
 
         [Display(Name = "客户端URI", Prompt = "例如：https://example.com")]

@@ -29,7 +29,7 @@ public struct OrganizationCode
     /// </summary>
     public string Code
     {
-        get
+        readonly get
         {
             return this.code;
         }
@@ -54,7 +54,7 @@ public struct OrganizationCode
     /// 已重写，输出组织机构代码的可读形式。
     /// </summary>
     /// <returns></returns>
-    public override string ToString()
+    public override readonly string ToString()
     {
         return this.ToString(false);
     }
@@ -64,7 +64,7 @@ public struct OrganizationCode
     /// </summary>
     /// <param name="AsMachineFormat"></param>
     /// <returns></returns>
-    public string ToString(bool AsMachineFormat)
+    public readonly string ToString(bool AsMachineFormat)
     {
         return AsMachineFormat ? this.code + this.CheckCode.ToString() : this.code + "-" + this.CheckCode.ToString();
     }
@@ -73,7 +73,7 @@ public struct OrganizationCode
     /// 已重写。获取组织机构代码的HashCode.
     /// </summary>
     /// <returns></returns>
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return this.ToString().GetHashCode();
     }
@@ -83,7 +83,7 @@ public struct OrganizationCode
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is OrganizationCode code1 ? this == code1 : base.Equals(obj);
     }

@@ -17,11 +17,14 @@
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">Name</div>
-                <div class="datagrid-content">@Model.Organization.Name</div>
+                <div class="datagrid-title">@localizer["Name"]</div>
+                <div class="datagrid-content">
+                    @Model.Organization.Name
+                    <a asp-page="ChangeName" asp-route-id="@Model.Organization.Id" class="btn btn-sm">变更名称</a>
+                    </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">Used name</div>
+                <div class="datagrid-title">@localizer["Used name"]</div>
                 <div class="datagrid-content">
                     @foreach (var usedName in this.Model.Organization.UsedNames.OrderByDescending(p => p.DeprecateTime))
                     {
@@ -30,15 +33,15 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">USCI</div>
+                <div class="datagrid-title">@localizer["USCI"]</div>
                 <div class="datagrid-content">@Model.Organization.USCI</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">Domicile</div>
+                <div class="datagrid-title">@localizer["Domicile"]</div>
                 <div class="datagrid-content">@Model.Organization.Domicile</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">Contact</div>
+                <div class="datagrid-title">@localizer["Contact"]</div>
                 <div class="datagrid-content">@Model.Organization.Contact</div>
             </div>
             <div class="datagrid-item">
@@ -65,7 +68,7 @@
 <p><a asp-page="Edit" asp-route-id="@Model.Organization.Id" class="btn btn-primary">编辑</a></p>
 
 
-<p><a asp-page="ChangeName" asp-route-id="@Model.Organization.Id" class="btn btn-primary">变更名称</a></p>
+<p></p>
 <dl class="row">
     <dt class="col-4">创建时间</dt>
     <dd class="col-8">@Model.Organization.WhenCreated</dd>

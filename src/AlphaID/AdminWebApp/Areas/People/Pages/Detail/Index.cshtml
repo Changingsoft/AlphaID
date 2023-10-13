@@ -7,30 +7,51 @@
 
 
 <h1>@Model.Data.Name</h1>
-<h2>概要</h2>
 <div class="row">
-    <div class="col-8">
-        <dl class="row">
-            <dt class="col-5">姓氏/名字</dt>
-            <dd class="col-7">@Model.Data.LastName / @Model.Data.FirstName  <a asp-page="EditPersonName" asp-route-id="@this.Model.Data.Id">编辑姓名</a></dd>
-            <dt class="col-5">注音</dt>
-            <dd class="col-7">@Model.Data.PhoneticSurname / @Model.Data.PhoneticGivenName</dd>
-            <dt class="col-5">性别</dt>
-            <dd class="col-7">@Html.DisplayFor(m => m.Data.Sex, "Sex")</dd>
-            <dt class="col-5">出生日期</dt>
-            <dd class="col-7">@this.Model.Data.DateOfBirth?.ToShortDateString()</dd>
-            <dt class="col-5">移动电话号码</dt>
-            <dd class="col-7">@Model.Data.Mobile</dd>
-            <dt class="col-5">电子邮件</dt>
-            <dd class="col-7">@Model.Data.Email</dd>
-            <dt class="col-5">账户名</dt>
-            <dd class="col-7">@Model.Data.UserName</dd>
-            <dt class="col-5">ID</dt>
-            <dd class="col-7">@Model.Data.Id</dd>
-        </dl>
-
+    <div class="col-10">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Base info</h3>
+            </div>
+            <div class="card-body">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">@localizer["Surname"]</div>
+                        <div class="datagrid-content">
+                            @Model.Data.LastName @Model.Data.PhoneticSurname
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">@localizer["Given name"]</div>
+                        <div class="datagrid-content">
+                            @Model.Data.FirstName @Model.Data.PhoneticGivenName
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">@localizer["Gender"]</div>
+                        <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Sex, "Sex")</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">@localizer["Date of birth (Age)"]</div>
+                        <div class="datagrid-content">@(this.Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(this.Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Form control</div>
+                        <div class="datagrid-content">
+                            <input type="text" class="form-control form-control-flush" placeholder="Input placeholder">
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Longer description</div>
+                        <div class="datagrid-content">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-4">
+    <div class="col-2">
         <img src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" class="img-fluid img-thumbnail" />
     </div>
 </div>
@@ -46,95 +67,15 @@
         </div>
     </div>
 </div>
-
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Base info</h3>
-    </div>
-    <div class="card-body">
-        <div class="datagrid">
-            <div class="datagrid-item">
-                <div class="datagrid-title">Registrar</div>
-                <div class="datagrid-content">Third Party</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Nameservers</div>
-                <div class="datagrid-content">Third Party</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Port number</div>
-                <div class="datagrid-content">3306</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Expiration date</div>
-                <div class="datagrid-content">–</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Creator</div>
-                <div class="datagrid-content">
-                    <div class="d-flex align-items-center">
-                        <span class="avatar avatar-xs me-2 rounded" style="background-image: url(./static/avatars/000m.jpg)"></span>
-                        Paweł Kuna
-                    </div>
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Age</div>
-                <div class="datagrid-content">15 days</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Edge network</div>
-                <div class="datagrid-content">
-                    <span class="status status-green">
-                        Active
-                    </span>
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Avatars list</div>
-                <div class="datagrid-content">
-                    <div class="avatar-list avatar-list-stacked">
-                        <span class="avatar avatar-xs rounded" style="background-image: url(./static/avatars/000m.jpg)"></span>
-                        <span class="avatar avatar-xs rounded">JL</span>
-                        <span class="avatar avatar-xs rounded" style="background-image: url(./static/avatars/002m.jpg)"></span>
-                        <span class="avatar avatar-xs rounded" style="background-image: url(./static/avatars/003m.jpg)"></span>
-                        <span class="avatar avatar-xs rounded" style="background-image: url(./static/avatars/000f.jpg)"></span>
-                        <span class="avatar avatar-xs rounded">+3</span>
-                    </div>
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Checkbox</div>
-                <div class="datagrid-content">
-                    <label class="form-check">
-                        <input class="form-check-input" type="checkbox" checked="">
-                        <span class="form-check-label">Click me</span>
-                    </label>
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Icon</div>
-                <div class="datagrid-content">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12l5 5l10 -10"></path></svg>
-                    Checked
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Form control</div>
-                <div class="datagrid-content">
-                    <input type="text" class="form-control form-control-flush" placeholder="Input placeholder">
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Longer description</div>
-                <div class="datagrid-content">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<dl class="row">
+    <dt class="col-5">移动电话号码</dt>
+    <dd class="col-7">@Model.Data.Mobile</dd>
+    <dt class="col-5">电子邮件</dt>
+    <dd class="col-7">@Model.Data.Email</dd>
+    <dt class="col-5">账户名</dt>
+    <dd class="col-7">@Model.Data.UserName</dd>
+</dl>
+<a asp-page="EditPersonName" asp-route-id="@this.Model.Data.Id">编辑姓名</a>
 <hr />
 <h2>实名信息</h2>
 <vc:person-chinese-id-card-panel person="@this.Model.Data"></vc:person-chinese-id-card-panel>

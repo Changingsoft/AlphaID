@@ -6,13 +6,5 @@
 }
 else
 {
-
-    var age = DateTime.Now.Year - Model.Value.Year;
-    var birthMonthDay = new DateTime(DateTime.Now.Year, Model.Value.Month, Model.Value.Day);
-    if (DateTime.Now.Date < birthMonthDay)
-    {
-        age = age - 1;
-    }
-
-    <span>@age</span>
+    <span>@Model.Value.AsAge()</span>
 }

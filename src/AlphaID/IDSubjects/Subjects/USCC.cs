@@ -99,7 +99,7 @@ public struct USCC
     /// <summary>
     /// 获取该统一社会信用代码的编码部分（不包括校验码）。
     /// </summary>
-    public string Code
+    public readonly string Code
     {
         get
         {
@@ -136,7 +136,7 @@ public struct USCC
     /// 已重写，输出统一社会信用代码的字符串形式。
     /// </summary>
     /// <returns></returns>
-    public override string ToString()
+    public override readonly string ToString()
     {
         return this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true) + this.CheckCode.ToString();
     }
@@ -145,7 +145,7 @@ public struct USCC
     /// 已重写，输出统一社会信用代码的哈希。
     /// </summary>
     /// <returns></returns>
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return this.ToString().GetHashCode();
     }
@@ -155,7 +155,7 @@ public struct USCC
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
         return obj is USCC uSCC ? this == uSCC : base.Equals(obj);
     }

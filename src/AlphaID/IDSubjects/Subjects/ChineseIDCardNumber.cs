@@ -5,7 +5,7 @@ namespace IDSubjects.Subjects;
 /// <summary>
 /// 表示一个中华人民共和国居民身份证号。
 /// </summary>
-public struct ChineseIDCardNumber
+public partial struct ChineseIDCardNumber
 {
     private readonly int regionCode;
     private readonly DateTime dateOfBirth;
@@ -41,7 +41,7 @@ public struct ChineseIDCardNumber
     /// <summary>
     /// 获取或设置该身份证号码的版本。
     /// </summary>
-    public int Version
+    public readonly int Version
     {
         get { return this.version; }
     }
@@ -49,7 +49,7 @@ public struct ChineseIDCardNumber
     /// <summary>
     /// 获取或设置行政区划编码。
     /// </summary>
-    public int RegionCode
+    public readonly int RegionCode
     {
         get { return this.regionCode; }
     }
@@ -57,7 +57,7 @@ public struct ChineseIDCardNumber
     /// <summary>
     /// 获取或设置出生日期。
     /// </summary>
-    public DateTime DateOfBirth
+    public readonly DateTime DateOfBirth
     {
         get { return this.dateOfBirth; }
     }
@@ -65,7 +65,7 @@ public struct ChineseIDCardNumber
     /// <summary>
     /// 获取或设置序列号。
     /// </summary>
-    public int Sequence
+    public readonly int Sequence
     {
         get { return this.sequence; }
     }
@@ -73,7 +73,7 @@ public struct ChineseIDCardNumber
     /// <summary>
     /// 获取一个值，指示性别。
     /// </summary>
-    public Sex Sex
+    public readonly Sex Sex
     {
         get
         {
@@ -84,7 +84,7 @@ public struct ChineseIDCardNumber
     /// <summary>
     /// 获取一个值，表示身份证号码。
     /// </summary>
-    public string NumberString
+    public readonly string NumberString
     {
         get
         {
@@ -96,7 +96,7 @@ public struct ChineseIDCardNumber
     /// 已重写，输入身份证号码。
     /// </summary>
     /// <returns></returns>
-    public override string ToString()
+    public override readonly string ToString()
     {
 
         return this.ToString(this.version);
@@ -106,7 +106,7 @@ public struct ChineseIDCardNumber
     /// 已重写。获取用于哈希表的对象哈希。
     /// </summary>
     /// <returns></returns>
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return this.ToString().GetHashCode();
     }
@@ -116,7 +116,7 @@ public struct ChineseIDCardNumber
     /// </summary>
     /// <param name="Version"></param>
     /// <returns></returns>
-    public string ToString(int Version)
+    public readonly string ToString(int Version)
     {
         return Version == ChineseIDCardNumberVersion.V1
             ? this.regionCode.ToString("000000") + this.dateOfBirth.ToString("yyMMdd") + this.sequence.ToString("000")
@@ -152,9 +152,9 @@ public struct ChineseIDCardNumber
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override bool Equals(object? obj)
+    public override readonly bool Equals(object? obj)
     {
-        return obj != null && (obj is ChineseIDCardNumber number && this == number);
+        return obj != null && obj is ChineseIDCardNumber number && this == number;
     }
 
     /// <summary>
@@ -172,12 +172,12 @@ public struct ChineseIDCardNumber
         int ver;
         if (dataStr.Length == 18)
         {
-            match = Regex.Match(dataStr, pattern18);
+            match = CardNumber18().Match(dataStr);
             ver = ChineseIDCardNumberVersion.V2;
         }
         else if (dataStr.Length == 15)
         {
-            match = Regex.Match(dataStr, pattern15);
+            match = CardNumber15().Match(dataStr);
             ver = ChineseIDCardNumberVersion.V1;
         }
         else
@@ -207,12 +207,12 @@ public struct ChineseIDCardNumber
         int ver;
         if (dataStr.Length == 18)
         {
-            match = Regex.Match(dataStr, pattern18);
+            match = CardNumber18().Match(dataStr);
             ver = ChineseIDCardNumberVersion.V2;
         }
         else if (dataStr.Length == 15)
         {
-            match = Regex.Match(dataStr, pattern15);
+            match = CardNumber15().Match(dataStr);
             ver = ChineseIDCardNumberVersion.V1;
         }
         else
@@ -265,4 +265,9 @@ public struct ChineseIDCardNumber
         }
         return CheckCodeSet[sum % 11];
     }
+
+    [GeneratedRegex("^([1-9]\\d{5})(\\d{4})(\\d{2})(\\d{2})(\\d{3})(\\d|X)$")]
+    private static partial Regex CardNumber18();
+    [GeneratedRegex("^([1-9]\\d{5})(\\d{2})(\\d{2})(\\d{2})(\\d{3})$")]
+    private static partial Regex CardNumber15();
 }

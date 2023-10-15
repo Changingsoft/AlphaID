@@ -1,5 +1,4 @@
-﻿@inject IOptions<ProductInfo> production
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8" />
@@ -17,8 +16,8 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
-                    <img src="~/logo.png" title="@this.production.Value.Name" class="icon-banner">
-                    @(this.production.Value.Name)管理中心
+                    <img src="~/logo.png" title="@this.product.Value.Name" class="icon-banner">
+                    @(this.product.Value.Name)管理中心
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +54,7 @@
 
     <footer class="border-top text-muted">
         <div class="container">
-            &copy; 2021 - @this.production.Value.Organization -
+            &copy; 2021 - @this.product.Value.Organization -
             <a asp-area="SystemSettings" asp-page="Index">系统设置</a>
         </div>
     </footer>

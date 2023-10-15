@@ -1,10 +1,9 @@
 ﻿@page
 @using Microsoft.Extensions.Options;
 @inject IWebHostEnvironment env
-@inject IOptions<ProductInfo> production
 @model IndexModel
 @{
-    this.ViewData["Title"] = $"{this.production.Value.Name}管理中心";
+    this.ViewData["Title"] = $"{this.product.Value.Name}管理中心";
 }
 
 <div class="page-body">

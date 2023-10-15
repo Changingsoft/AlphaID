@@ -1,6 +1,5 @@
 @using Duende.IdentityServer.Extensions
 @inject IConfiguration config
-@inject IOptions<ProductInfo> production
 @{
     string? name = null;
     if (!true.Equals(ViewData["signed-out"]))
@@ -11,8 +10,8 @@
 
 <nav class="navbar navbar-dark bg-dark">
     <a href="~/" class="navbar-brand">
-        <img src="@this.production.Value.LogoImagePath" title="@this.production.Value.Name" class="icon-banner">
-        @this.production.Value.Name
+        <img src="@this.product.Value.LogoImagePath" title="@this.product.Value.Name" class="icon-banner">
+        @this.product.Value.Name
     </a>
     @if (this.User.Identity!.IsAuthenticated)
     {

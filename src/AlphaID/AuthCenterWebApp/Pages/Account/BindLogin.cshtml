@@ -1,12 +1,11 @@
 ﻿@page
-@inject IOptions<ProductInfo> production
 @model BindLoginModel
 @{
 }
 <div class="login-page">
     <div class="lead">
-        <h1>关联 @production.Value.Name</h1>
-        <p>您正在从外部登录，我们无法确认您的 @production.Value.Name。请登录 @production.Value.Name 以便建立关联。</p>
+        <h1>关联 @product.Value.Name</h1>
+        <p>您正在从外部登录，我们无法确认您的 @product.Value.Name。请登录 @product.Value.Name 以便建立关联。</p>
     </div>
     <partial name="_ValidationSummary" />
 
@@ -15,7 +14,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
-                    @production.Value.Name 帐户
+                    @product.Value.Name 帐户
                 </div>
 
                 <div class="card-body">
@@ -42,7 +41,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <a asp-page="SignUp" asp-route-returnUrl="@this.Model.Input.ReturnUrl" asp-route-external="external" class="btn btn-primary btn-lg">没有@(production.Value.Name)？创建@(production.Value.Name)</a>
+                    <a asp-page="SignUp" asp-route-returnUrl="@this.Model.Input.ReturnUrl" asp-route-external="external" class="btn btn-primary btn-lg">没有@(product.Value.Name)？创建@(product.Value.Name)</a>
                 </div>
             </div>
         </div>

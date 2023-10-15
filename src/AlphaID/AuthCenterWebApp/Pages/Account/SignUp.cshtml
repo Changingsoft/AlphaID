@@ -1,9 +1,8 @@
 ﻿@page
-@inject IOptions<ProductInfo> production
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewData["title"] = $"创建你的{this.production.Value.Name}";
+    this.ViewData["title"] = $"创建你的{this.product.Value.Name}";
 }
 
 @section Heads
@@ -16,7 +15,7 @@
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-                @production.Value.Name
+                @product.Value.Name
             </a>
         </div>
         @if (this.Model.ExternalLoginMessage != null)

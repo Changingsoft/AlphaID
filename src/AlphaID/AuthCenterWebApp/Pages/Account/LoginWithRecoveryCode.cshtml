@@ -1,25 +1,32 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.LoginWithRecoveryCodeModel
 @{
+    this.Layout = "_AuthenticationLayout";
     ViewData["Title"] = "恢复代码验证";
 }
-
-<h1>@ViewData["Title"]</h1>
-<hr />
-<p>
-    您已请求使用恢复代码登录。在您登录时提供身份验证器应用程序代码或禁用 2FA 并再次登录之前，不会记住此登录名。
-</p>
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off" />
-                <label asp-for="Input.RecoveryCode" class="form-label"></label>
-                <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+                <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+                @(product.Value.Name) @localizer["Account"]
+            </a>
+        </div>
+        <div class="card card-md">
+            <div class="card-body">
+                <h2 class="h2 text-center mb-4">@ViewData["Title"]</h2>
+                <p>您已请求使用恢复代码登录。在您登录时提供身份验证器应用程序代码或禁用 2FA 并再次登录之前，不会记住此登录名。</p>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating">
+                        <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off" />
+                        <label asp-for="Input.RecoveryCode" class="form-label"></label>
+                        <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">登录</button>
+                </form>
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">登录</button>
-        </form>
+        </div>
     </div>
 </div>
 

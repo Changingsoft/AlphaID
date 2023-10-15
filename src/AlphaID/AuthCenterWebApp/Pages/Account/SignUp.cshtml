@@ -28,22 +28,22 @@
         <form method="post" class="card card-md">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">@localizer["Create new account"]</h2>
-                <div asp-validation-summary="All"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="row">
                     <div class="col">
-                        <label asp-for="Input.Surname" class="form-label"></label>
+                        <label asp-for="Input.Surname" class="form-label required"></label>
                         <input asp-for="Input.Surname" class="form-control" />
                         <span asp-validation-for="Input.Surname" class="text-danger"></span>
                     </div>
                     <div class="col">
-                        <label asp-for="Input.GivenName" class="form-label"></label>
+                        <label asp-for="Input.GivenName" class="form-label required"></label>
                         <input asp-for="Input.GivenName" class="form-control" />
                         <span asp-validation-for="Input.GivenName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label asp-for="Input.Sex" class="form-label"></label>
+                        <label asp-for="Input.Sex" class="form-label required"></label>
                         <select asp-for="Input.Sex" class="form-select">
                             <option label="@localizer["Unselected"]"></option>
                             <option label="@localizer["Male"]" value="Male"></option>
@@ -52,46 +52,44 @@
                         <span asp-validation-for="Input.Sex" class="text-danger"></span>
                     </div>
                     <div class="col">
-                        <label asp-for="Input.DateOfBirth" class="form-label"></label>
+                        <label asp-for="Input.DateOfBirth" class="form-label required"></label>
                         <input asp-for="Input.DateOfBirth" class="form-control" />
                         <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Mobile" class="form-label"></label>
-                    <div class="input-group">
+                <div class="mb-3">
+                    <label asp-for="Input.Mobile" class="form-label required"></label>
+                    <div class="input-group mb-2">
                         <input asp-for="Input.Mobile" class="form-control" />
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-outline-secondary" onclick="SendVerificationCode(this);">@localizer["Send code"]</button>
-                        </div>
+                        <button type="button" class="btn" onclick="SendVerificationCode(this);">@localizer["Send code"]</button>
                     </div>
                     <span asp-validation-for="Input.Mobile" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.VerificationCode" class="form-label"></label>
+                <div class="mb-3">
+                    <label asp-for="Input.VerificationCode" class="form-label required"></label>
                     <input asp-for="Input.VerificationCode" class="form-control" />
                     <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.NewPassword" class="form-label"></label>
+                <div class="mb-3">
+                    <label asp-for="Input.NewPassword" class="form-label required"></label>
                     <input asp-for="Input.NewPassword" class="form-control" />
                     <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                <div class="mb-3">
+                    <label asp-for="Input.ConfirmPassword" class="form-label required"></label>
                     <input asp-for="Input.ConfirmPassword" class="form-control" />
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
                 <hr />
-                <div class="form-group">
+                <div class="mb-3">
                     <label asp-for="Input.Email" class="form-label"></label>
                     <input asp-for="Input.Email" class="form-control" />
                     <p asp-description-for="Input.Email"></p>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <hr />
-                <div class="form-group">
-                    <label asp-for="Input.CaptchaCode" class="form-label"></label>
+                <div class="mb-3">
+                    <label asp-for="Input.CaptchaCode" class="form-label required"></label>
                     <captcha id="LoginCaptcha" user-input-id="CaptchaCode" />
                     <input asp-for="Input.CaptchaCode" id="CaptchaCode" class="form-control captchaVal" />
                 </div>
@@ -102,7 +100,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">@localizer["Continue"]</button>
             </div>
-            
+
         </form>
 
 

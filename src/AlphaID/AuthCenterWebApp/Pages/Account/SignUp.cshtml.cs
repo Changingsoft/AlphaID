@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 #nullable enable
@@ -23,18 +24,21 @@ public class SignUpModel : PageModel
     private readonly ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter;
     private readonly ProductInfo production;
     private readonly SignInManager<NaturalPerson> signInManager;
+    IStringLocalizer<SignUpModel> stringLocalizer;
 
     public SignUpModel(NaturalPersonManager naturalPersonManager,
                        IVerificationCodeService verificationCodeService,
                        ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
                        IOptions<ProductInfo> production,
-                       SignInManager<NaturalPerson> signInManager)
+                       SignInManager<NaturalPerson> signInManager,
+                       IStringLocalizer<SignUpModel> stringLocalizer)
     {
         this.naturalPersonManager = naturalPersonManager;
         this.verificationCodeService = verificationCodeService;
         this.chinesePersonNamePinyinConverter = chinesePersonNamePinyinConverter;
         this.production = production.Value;
         this.signInManager = signInManager;
+        this.stringLocalizer = stringLocalizer;
     }
 
     [BindProperty]
@@ -155,22 +159,22 @@ public class SignUpModel : PageModel
     public class InputModel
     {
         [Display(Name = "Mobile phone number", Prompt = "1xxxxxxxxxx")]
-        [Required(ErrorMessage = "{0}是必需的。")]
-        [StringLength(14, MinimumLength = 11)]
+        [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = default!;
 
         [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
-        [Required(ErrorMessage = "{0}是必需的。")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(8, MinimumLength = 4)]
         public string VerificationCode { get; set; } = default!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
-        [Required(ErrorMessage = "{0}是必需的。")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10)]
         public string Surname { get; set; } = default!;
 
         [Display(Name = "Given name", Prompt = "Given name")]
-        [Required(ErrorMessage = "{0}是必需的。")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10)]
         public string GivenName { get; set; } = default!;
 
@@ -182,27 +186,28 @@ public class SignUpModel : PageModel
         public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "New password")]
-        [Required(ErrorMessage = "{0}是必需的。")]
+        [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 6)]
         public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm password")]
-        [Required(ErrorMessage = "{0}是必需的。")]
+        [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
-        [Compare(nameof(NewPassword), ErrorMessage = "新密码和可选密码不一致")]
+        [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [StringLength(32, MinimumLength = 6)]
         public string ConfirmPassword { get; set; } = default!;
 
         [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
         public string? Email { get; set; }
 
-        [Display(Name = "键入图片上看到的字符")]
-        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "验证无效，请重新尝试")]
+        [Display(Name = "Captcha code")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
         public string CaptchaCode { get; set; } = default!;
 
-        [Display(Name = "了解并同意")]
+        [Display(Name = "Agree the")]
         public bool Agree { get; set; }
     }
 }

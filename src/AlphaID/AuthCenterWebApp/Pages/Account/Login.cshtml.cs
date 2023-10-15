@@ -14,7 +14,7 @@ using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
-//[SecurityHeaders]
+[SecurityHeaders]
 [AllowAnonymous]
 public class LoginModel : PageModel
 {
@@ -254,11 +254,11 @@ public class LoginModel : PageModel
     }
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "账号", Prompt = "账户名、电子邮件、手机号或身份证号")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
         public string Username { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; } = default!;

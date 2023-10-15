@@ -117,22 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Agree the" xml:space="preserve">
-    <value>了解并同意</value>
-  </data>
-  <data name="Continue" xml:space="preserve">
-    <value>继续</value>
-  </data>
-  <data name="Create new account" xml:space="preserve">
-    <value>创建新账户</value>
-  </data>
-  <data name="Female" xml:space="preserve">
-    <value>女</value>
-  </data>
-  <data name="Male" xml:space="preserve">
-    <value>男</value>
-  </data>
-  <data name="Terms of service" xml:space="preserve">
-    <value>服务条款</value>
+  <data name="Invalid mobile phone number." xml:space="preserve">
+    <value>无效的移动电话号码。</value>
   </data>
 </root>

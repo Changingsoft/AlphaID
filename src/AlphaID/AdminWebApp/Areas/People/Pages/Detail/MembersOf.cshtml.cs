@@ -25,23 +25,23 @@ public class MembersOfModel : PageModel
     public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = default!;
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
-    [Display(Name = "组织Id")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Organization ID")]
     public string OrganizationId { get; set; } = default!;
 
     [BindProperty]
     [MaxLength(50)]
-    [Display(Name = "部门")]
+    [Display(Name = "Department")]
     public string? Department { get; set; }
 
     [BindProperty]
     [MaxLength(50)]
-    [Display(Name = "职务")]
+    [Display(Name = "Title")]
     public string? Title { get; set; }
 
     [BindProperty]
     [MaxLength(50)]
-    [Display(Name = "备注")]
+    [Display(Name = "Remark")]
     public string? Remark { get; set; }
 
     public async Task<IActionResult> OnGetAsync()

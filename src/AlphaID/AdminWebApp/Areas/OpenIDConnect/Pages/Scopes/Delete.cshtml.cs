@@ -15,7 +15,7 @@ public class DeleteModel : PageModel
     }
 
     [BindProperty]
-    [Display(Name = "ScopeÃû³Æ")]
+    [Display(Name = "Scope name")]
     public string ScopeName { get; set; } = default!;
 
     public ApiScope Data { get; set; } = default!;

@@ -81,15 +81,15 @@ public class SignInModel : PageModel
 
     public class SignInFormModel
     {
-        [Display(Name = "手机号码")]
-        [Required(ErrorMessage = "{0}是必需的")]
-        [StringLength(11)]
+        [Display(Name = "Mobile phone number")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(11, ErrorMessage = "Validate_StringLength")]
         [RegularExpression(@"^\d{11}$")]
         public string Mobile { get; set; } = default!;
 
-        [Display(Name = "手机验证码")]
-        [Required(ErrorMessage = "{0}是必需的")]
-        [StringLength(6)]
+        [Display(Name = "Verification code")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(6, ErrorMessage = "Validate_StringLength")]
         public string VerificationCode { get; set; } = default!;
     }
 

@@ -143,136 +143,136 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "客户端ID", Description="Identifier used by OAuth/OIDC protocol.")]
+        [Display(Name = "Client ID", Description="Identifier used by OAuth/OIDC protocol.")]
         [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "Client Id already exists.")]
         public string ClientId { get; set; } = Guid.NewGuid().ToString().ToLower();
 
-        [Display(Name = "名称",Description ="Friendly name for display.")]
+        [Display(Name = "Client name",Description ="Friendly name for display.")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "需要客户端密钥",Description ="Specifies the client is a credential client.")]
+        [Display(Name = "Require Client Secret", Description ="Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;
 
-        [Display(Name = "客户端密钥", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
+        [Display(Name = "Client Secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
         public string? ClientSecret { get; set; }
 
-        [Display(Name = "回调URI", Prompt = "例如：https://example.com/signin-oidc")]
+        [Display(Name = "Redirect URI", Prompt = "https://example.com/signin-oidc")]
         public string? RedirectUri { get; set; }
 
-        [Display(Name = "默认授权类型（模式）")]
+        [Display(Name = "Default grant type")]
         public string DefaultGrantType { get; set; } = "authorization_code";
 
-        [Display(Name = "描述", Description = "Description for this client.")]
+        [Display(Name = "Description", Description = "Description for this client.")]
         public string? Description { get; set; }
 
-        [Display(Name = "客户端URI", Prompt = "例如：https://example.com")]
+        [Display(Name = "Client URI", Prompt = "https://example.com")]
         public string? ClientUri { get; set; }
 
-        [Display(Name = "Logo URI", Prompt = "例如：https://example.com/logo.jpg")]
+        [Display(Name = "Logo URI", Prompt = "https://example.com/logo.jpg")]
         public string? LogoUri { get; set; }
 
-        [Display(Name = "需要用户同意")]
+        [Display(Name = "Require consent")]
         public bool RequireConsent { get; set; } = false;
 
-        [Display(Name = "允许记住同意")]
+        [Display(Name = "Allow remember consent")]
         public bool AllowRememberConsent { get; set; } = true;
 
-        [Display(Name = "在Id Token中始终包含用户声明")]
+        [Display(Name = "Always include user claims in Id Token")]
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
 
-        [Display(Name = "需要PKCE")]
+        [Display(Name = "Require PKCE")]
         public bool RequirePkce { get; set; } = true;
 
-        [Display(Name = "允许明文PKCE")]
+        [Display(Name = "Allow plain text PKCE")]
         public bool AllowPlainTextPkce { get; set; }
 
-        [Display(Name = "需要请求对象")]
+        [Display(Name = "Require request object")]
         public bool RequireRequestObject { get; set; }
 
-        [Display(Name = "Allow Access Tokens Via Browser")]
+        [Display(Name = "Allow access tokens via browser")]
         public bool AllowAccessTokensViaBrowser { get; set; }
 
-        [Display(Name = "Front Channel Logout Uri")]
+        [Display(Name = "Front channel logout URI")]
         [DataType(DataType.Url)]
         public string? FrontChannelLogoutUri { get; set; }
 
-        [Display(Name = "Front Channel Logout Session Required")]
+        [Display(Name = "Front channel logout session required")]
         public bool FrontChannelLogoutSessionRequired { get; set; }
 
-        [Display(Name = "Back Channel Logout Uri")]
+        [Display(Name = "Back channel logout URI")]
         [DataType(DataType.Url)]
         public string? BackChannelLogoutUri { get; set; }
 
-        [Display(Name = "Back Channel Logout Session Required")]
+        [Display(Name = "Back channel logout session required")]
         public bool BackChannelLogoutSessionRequired { get; set; }
 
-        [Display(Name = "允许离线访问")]
+        [Display(Name = "Allow offline Access")]
         public bool AllowOfflineAccess { get; set; }
 
-        [Display(Name = "Identity Token的生存期（秒）")]
+        [Display(Name = "Identity Token lifetime (secends)")]
         public int IdentityTokenLifetime { get; set; } = 300;
 
-        [Display(Name = "允许的Identity Token签名算法")]
+        [Display(Name = "Allowed identity token signing algorithms")]
         public string? AllowedIdentityTokenSigningAlgorithms { get; set; }
 
-        [Display(Name = "Access Token生存期（秒）")]
+        [Display(Name = "Access Token lifetime (secends)")]
         public int AccessTokenLifetime { get; set; } = 3600;
 
-        [Display(Name = "授权码生存期（秒）")]
+        [Display(Name = "Authorization code lifetime (secends)")]
         public int AuthorizationCodeLifetime { get; set; } = 300;
 
-        [Display(Name = "ConsentLifetime")]
+        [Display(Name = "Consent lifetime")]
         public int? ConsentLifetime { get; set; } = null;
 
-        [Display(Name = "绝对刷新令牌生存期（秒）")]
+        [Display(Name = "Absolute refresh token lifetime (secends)")]
         public int AbsoluteRefreshTokenLifetime { get; set; } = 2592000;
 
-        [Display(Name = "滑动刷新令牌生存期（秒）")]
+        [Display(Name = "Sliding refresh token lifetime (secends)")]
         public int SlidingRefreshTokenLifetime { get; set; } = 1296000;
 
-        [Display(Name = "刷新令牌用法（0：可重用，1：一次性）")]
+        [Display(Name = "Refresh token usage (0:Reuse, 1:One time)")]
         public int RefreshTokenUsage { get; set; } = (int)TokenUsage.OneTimeOnly;
 
-        [Display(Name = "刷新时更新Access Token中的声明")]
+        [Display(Name = "Update access token claims on refresh")]
         public bool UpdateAccessTokenClaimsOnRefresh { get; set; }
 
-        [Display(Name = "刷新令牌时效（0：滑动，1：绝对）")]
+        [Display(Name = "Refresh token expiration (0:Sliding, 1:Absolute)")]
         public int RefreshTokenExpiration { get; set; } = (int)TokenExpiration.Absolute;
 
-        [Display(Name = "Access Token类型")]
+        [Display(Name = "Access token type")]
         public int AccessTokenType { get; set; } = 0; // AccessTokenType.Jwt;
 
-        [Display(Name = "启用本地登录")]
+        [Display(Name = "Enable local login")]
         public bool EnableLocalLogin { get; set; } = true;
 
-        [Display(Name = "包括JWT ID")]
+        [Display(Name = "Include JWT ID")]
         public bool IncludeJwtId { get; set; }
 
-        [Display(Name = "始终发送客户端声明")]
+        [Display(Name = "Always send client claims")]
         public bool AlwaysSendClientClaims { get; set; }
 
-        [Display(Name = "客户端声明前缀")]
+        [Display(Name = "Client claims prefix")]
         public string? ClientClaimsPrefix { get; set; } = "client_";
 
-        [Display(Name = "PairWiseSubjectSalt")]
+        [Display(Name = "Pair wise subject salt")]
         public string? PairWiseSubjectSalt { get; set; }
 
-        [Display(Name = "UserSsoLifetime")]
+        [Display(Name = "User SSO lifetime")]
         public int? UserSsoLifetime { get; set; }
 
-        [Display(Name = "User Code Type")]
+        [Display(Name = "User code type")]
         public string? UserCodeType { get; set; }
 
-        [Display(Name = "Device Code Lifetime")]
+        [Display(Name = "Device code lifetime")]
         public int DeviceCodeLifetime { get; set; } = 300;
 
-        [Display(Name = "Ciba Lifetime")]
+        [Display(Name = "CIBA lifetime")]
         public int? CibaLifetime { get; set; }
 
-        [Display(Name = "Polling Interval")]
+        [Display(Name = "Polling interval")]
         public int? PollingInterval { get; set; }
 
-        [Display(Name = "Coordinate Lifetime With User Session")]
+        [Display(Name = "Coordinate lifetime with user session")]
         public bool? CoordinateLifetimeWithUserSession { get; set; }
     }
 }

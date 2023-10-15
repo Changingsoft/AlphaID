@@ -130,6 +130,6 @@
     <value>The {0} field is required.</value>
   </data>
   <data name="Validate_StringLength" xml:space="preserve">
-    <value>You can enter up to "{1}" in "{0}".</value>
+    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
   </data>
 </root>

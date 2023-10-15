@@ -71,9 +71,9 @@ public class FindPasswordByEmailModel : PageModel
 
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress]
-        [Display(Name = "电子邮件地址")]
+        [Display(Name = "Email")]
         public string Email { get; set; } = default!;
     }
 }

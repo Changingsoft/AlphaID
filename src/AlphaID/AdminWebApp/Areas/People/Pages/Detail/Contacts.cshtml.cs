@@ -81,13 +81,13 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public class InputModel
         {
-            [Display(Name = "移动电话号码")]
-            [StringLength(15)]
+            [Display(Name = "Phone number")]
+            [StringLength(15, ErrorMessage = "Validate_StringLength")]
             [DataType(DataType.PhoneNumber)]
             public string? PhoneNumber { get; set; }
 
-            [Display(Name = "电子邮件地址")]
-            [StringLength(100)]
+            [Display(Name = "Email")]
+            [StringLength(100, ErrorMessage = "Validate_StringLength")]
             [EmailAddress]
             public string? Email { get; set; }
         }

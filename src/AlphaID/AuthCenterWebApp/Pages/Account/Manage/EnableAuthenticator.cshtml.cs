@@ -47,8 +47,8 @@ public class EnableAuthenticatorModel : PageModel
 
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
-        [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(7, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Text)]
         [Display(Name = "Verification Code")]
         public string Code { get; set; }

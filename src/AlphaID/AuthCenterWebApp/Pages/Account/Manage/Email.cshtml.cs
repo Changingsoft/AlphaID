@@ -28,7 +28,7 @@ public class EmailModel : PageModel
         this.production = production.Value;
     }
 
-    [Display(Name = "电子邮件地址")]
+    [Display(Name = "Email")]
     public string Email { get; set; }
 
     public bool IsEmailConfirmed { get; set; }
@@ -42,9 +42,9 @@ public class EmailModel : PageModel
     /// </summary>
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress]
-        [Display(Name = "新邮件地址")]
+        [Display(Name = "New email")]
         public string NewEmail { get; set; }
     }
 

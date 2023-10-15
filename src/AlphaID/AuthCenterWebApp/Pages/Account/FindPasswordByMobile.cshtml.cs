@@ -21,8 +21,8 @@ public class FindPasswordByMobileModel : PageModel
         this.verificationCodeService = verificationCodeService;
     }
 
-    [Display(Name = "移动电话号码")]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Display(Name = "Mobile phone number")]
+    [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
     public string Mobile { get; set; } = default!;
 

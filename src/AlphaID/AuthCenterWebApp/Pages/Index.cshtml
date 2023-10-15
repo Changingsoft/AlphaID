@@ -12,15 +12,15 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5 text-center">
                 <h1 class="display-5"><img src="~/logo.png" /></h1>
-                <p>一个账户尽享@(product.Value.Trademark)服务</p>
+                <p>One account, serving anywhere.</p>
                 @if (this.User.Identity!.IsAuthenticated)
                 {
                     <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">个人中心</a></p>
                 }
                 else
                 {
-                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">登录</a></p>
-                    <p><a class="btn btn-primary" asp-page="/Account/SignUp">创建你的@(this.product.Value.Name)</a></p>
+                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">@localizer["Sign in"]</a></p>
+                    <p><a class="btn btn-primary" asp-page="/Account/SignUp">@localizer["Create your"] @(this.product.Value.Name)</a></p>
                 }
 
             </div>

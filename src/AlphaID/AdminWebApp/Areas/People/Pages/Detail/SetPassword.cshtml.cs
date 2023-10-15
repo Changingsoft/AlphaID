@@ -13,12 +13,12 @@ public class SetPasswordModel : PageModel
         this.userManager = userManager;
     }
 
-    [StringLength(30)]
+    [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [DataType(DataType.Password)]
     [BindProperty]
     public string NewPassword { get; set; } = default!;
 
-    [StringLength(30)]
+    [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [Compare(nameof(NewPassword))]
     [DataType(DataType.Password)]
     [BindProperty]

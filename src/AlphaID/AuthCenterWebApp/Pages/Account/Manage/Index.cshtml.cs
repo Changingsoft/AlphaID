@@ -21,7 +21,7 @@ public class IndexModel : PageModel
         this._signInManager = signInManager;
     }
 
-    [Display(Name = "当前用户名")]
+    [Display(Name = "Current user name")]
     public string Username { get; set; }
 
     [TempData]
@@ -32,8 +32,8 @@ public class IndexModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "新用户名")]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Display(Name = "New user name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string NewUserName { get; set; }
     }
 

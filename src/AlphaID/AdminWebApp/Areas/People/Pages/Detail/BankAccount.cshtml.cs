@@ -19,17 +19,17 @@ public class BankAccountModel : PageModel
     public string Id { get; set; } = default!;
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     [MaxLength(50)]
     public string AccountNumber { get; set; } = default!;
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     [MaxLength(150)]
     public string AccountName { get; set; } = default!;
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     [MaxLength(150)]
     public string BankName { get; set; } = default!;
 

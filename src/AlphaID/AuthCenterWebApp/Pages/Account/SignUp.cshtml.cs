@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,7 @@ public class SignUpModel : PageModel
     private readonly ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter;
     private readonly ProductInfo production;
     private readonly SignInManager<NaturalPerson> signInManager;
-    IStringLocalizer<SignUpModel> stringLocalizer;
+    private readonly IStringLocalizer<SignUpModel> stringLocalizer;
 
     public SignUpModel(NaturalPersonManager naturalPersonManager,
                        IVerificationCodeService verificationCodeService,
@@ -92,7 +93,7 @@ public class SignUpModel : PageModel
 
         if (!MobilePhoneNumber.TryParse(this.Input.Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError("Input.Mobile", "移动电话号码格式错误");
+            this.ModelState.AddModelError("Input.Mobile", this.stringLocalizer["Invalid mobile phone number."]);
         }
         if (!this.ModelState.IsValid)
             return this.Page();
@@ -165,17 +166,17 @@ public class SignUpModel : PageModel
 
         [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
         [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(8, MinimumLength = 4)]
+        [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string VerificationCode { get; set; } = default!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(10)]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string Surname { get; set; } = default!;
 
         [Display(Name = "Given name", Prompt = "Given name")]
         [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(10)]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string GivenName { get; set; } = default!;
 
         [Display(Name = "Gender")]
@@ -188,14 +189,14 @@ public class SignUpModel : PageModel
         [Display(Name = "New password")]
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
-        [StringLength(32, MinimumLength = 6)]
+        [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
         public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        [StringLength(32, MinimumLength = 6)]
+        [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
         public string ConfirmPassword { get; set; } = default!;
 
         [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]

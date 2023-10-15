@@ -16,8 +16,8 @@ public class DeleteModel : PageModel
     public DirectoryService Data { get; set; } = default!;
 
     [BindProperty]
-    [Display(Name = "·þÎñÃû³Æ")]
-    [StringLength(50)]
+    [Display(Name = "Service name")]
+    [StringLength(50, ErrorMessage = "Validate_StringLength")]
     public string ServiceName { get; set; } = default!;
 
     public async Task<IActionResult> OnGet(int id)

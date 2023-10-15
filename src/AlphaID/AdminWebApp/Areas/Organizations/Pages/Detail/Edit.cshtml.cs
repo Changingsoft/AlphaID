@@ -71,24 +71,24 @@ public class EditModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "住所")]
+        [Display(Name = "Domicile")]
         public string? Domicile { get; set; }
 
-        [Display(Name = "联系电话")]
+        [Display(Name = "Contact")]
         public string? Contact { get; set; }
 
-        [Display(Name = "法定代表人")]
+        [Display(Name = "Legal person name")]
         public string? LegalPersonName { get; set; }
 
-        [Display(Name = "成立日期")]
+        [Display(Name = "Established at")]
         [DataType(DataType.Date)]
         public DateTime? EstablishedAt { get; set; }
 
-        [Display(Name = "营业期起")]
+        [Display(Name = "Term begin")]
         [DataType(DataType.Date)]
         public DateTime? TermBegin { get; set; }
 
-        [Display(Name = "营业期止")]
+        [Display(Name = "Term end")]
         [DataType(DataType.Date)]
         public DateTime? TermEnd { get; set; }
     }

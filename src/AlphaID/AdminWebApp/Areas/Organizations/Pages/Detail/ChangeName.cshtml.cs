@@ -53,21 +53,21 @@ public class ChangeNameModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "当前名称")]
+        [Display(Name = "Current name")]
         public string CurrentName { get; set; } = default!;
 
-        [Display(Name = "新名称")]
-        [StringLength(100, MinimumLength = 4)]
+        [Display(Name = "New name")]
+        [StringLength(100, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string NewName { get; set; } = default!;
 
         [DataType(DataType.Date)]
-        [Display(Name = "更名日期")]
+        [Display(Name = "When changed")]
         public DateTime ChangeDate { get; set; } = DateTime.Now.Date;
 
-        [Display(Name = "当前名称计入曾用名")]
+        [Display(Name = "Record used name")]
         public bool RecordUsedName { get; set; } = true;
 
-        [Display(Name = "即使名称重复也要变更")]
+        [Display(Name = "Apply changes when name duplicated")]
         public bool ApplyChangeWhenNameDuplicated { get; set; } = false;
     }
 }

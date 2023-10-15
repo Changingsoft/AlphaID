@@ -159,6 +159,9 @@
   <data name="Validate_Required" xml:space="preserve">
     <value>{0}是必需的。</value>
   </data>
+  <data name="Validate_StringLength" xml:space="preserve">
+    <value>{0}的长度介于{2}到{1}个字符。</value>
+  </data>
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>

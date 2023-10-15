@@ -41,9 +41,9 @@ public class LoginWithRecoveryCodeModel : PageModel
     public class InputModel
     {
         [BindProperty]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Text)]
-        [Display(Name = "恢复代码")]
+        [Display(Name = "Recovery code")]
         public string RecoveryCode { get; set; }
     }
 

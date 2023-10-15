@@ -36,7 +36,7 @@ public class PersonChineseIDCardInfo
     /// Identifier Value.
     /// </summary>
     [MaxLength(18), Unicode(false)]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string CardNumber { get; set; } = default!;
 
     /// <summary>

@@ -29,9 +29,9 @@ public class DeletePersonalDataModel : PageModel
 
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
-        [Display(Name = "密码")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
     }
 

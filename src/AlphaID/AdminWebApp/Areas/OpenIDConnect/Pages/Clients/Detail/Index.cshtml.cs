@@ -85,15 +85,15 @@ public class IndexModel : PageModel
     public class InputModel
     {
         [Display(Name = "Client name")]
-        [StringLength(200)]
+        [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientName { get; set; } = default!;
 
         [Display(Name = "Client Id")]
-        [StringLength(200)]
+        [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientId { get; set; } = default!;
 
         [Display(Name = "Description")]
-        [StringLength(1000)]
+        [StringLength(1000, ErrorMessage = "Validate_StringLength")]
         public string? Description { get; set; }
 
         [Display(Name = "Enabled")]

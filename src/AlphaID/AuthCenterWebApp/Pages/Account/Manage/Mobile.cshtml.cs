@@ -19,19 +19,19 @@ public class MobileModel : PageModel
         this.verificationCodeService = verificationCodeService;
     }
 
-    [Display(Name = "移动电话号码")]
+    [Display(Name = "Mobile phone number")]
     public string Mobile { get; set; } = default!;
 
     public bool MobileValid { get; set; }
 
-    [Display(Name = "新移动电话号码")]
+    [Display(Name = "New mobile phone number")]
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string NewMobile { get; set; } = default!;
 
-    [Display(Name = "短信验证码")]
+    [Display(Name = "Verification code")]
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string VerificationCode { get; set; } = default!;
 
     public bool VerificationCodeSent { get; set; }

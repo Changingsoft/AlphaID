@@ -18,9 +18,9 @@ public class RemovePasswordModel : PageModel
     [TempData]
     public string? StatusMessage { get; set; }
 
-    [Display(Name = "密码")]
+    [Display(Name = "Password")]
     [DataType(DataType.Password)]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
     public string Password { get; set; } = default!;
 

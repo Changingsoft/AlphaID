@@ -8,9 +8,9 @@ namespace AuthCenterWebApp.Pages.Consent;
 public class InputModel
 {
     public string Button { get; set; } = default!;
-    public IEnumerable<string> ScopesConsented { get; set; }
+    public IEnumerable<string> ScopesConsented { get; set; } = default!;
 
-    [Display(Name = "记住我的决定")]
+    [Display(Name = "Remember my decision")]
     public bool RememberConsent { get; set; } = true;
     public string ReturnUrl { get; set; } = default!;
     public string Description { get; set; } = default!;

@@ -124,7 +124,7 @@ public class CreateModel : PageModel
         [Display(Name = "Mobile phone number")]
         [PageRemote(PageHandler = "CheckMobile", HttpMethod = "post", AdditionalFields = "__RequestVerificationToken")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-        public string Mobile { get; set; }
+        public string Mobile { get; set; } = default!;
 
         public string? Email { get; set; }
     }

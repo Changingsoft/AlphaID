@@ -64,7 +64,7 @@ public class Index : PageModel
         var request = await this._interaction.GetAuthorizationContextAsync(this.Input.UserCode);
         if (request == null) return this.RedirectToPage("/Home/Error/LoginModel");
 
-        ConsentResponse grantedConsent = null;
+        ConsentResponse grantedConsent = default!;
 
         // user clicked 'no' - send back the standard 'access_denied' response
         if (this.Input.Button == "no")
@@ -124,13 +124,13 @@ public class Index : PageModel
     }
 
 
-    private async Task<ViewModel> BuildViewModelAsync(string userCode, InputModel model = null)
+    private async Task<ViewModel?> BuildViewModelAsync(string userCode, InputModel? model = null)
     {
         var request = await this._interaction.GetAuthorizationContextAsync(userCode);
         return request != null ? this.CreateConsentViewModel(model, request) : null;
     }
 
-    private ViewModel CreateConsentViewModel(InputModel model, DeviceFlowAuthorizationRequest request)
+    private ViewModel CreateConsentViewModel(InputModel? model, DeviceFlowAuthorizationRequest request)
     {
         var vm = new ViewModel
         {

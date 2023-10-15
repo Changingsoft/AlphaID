@@ -13,9 +13,19 @@ public sealed class DescriptionForTagHelper : TagHelper
 {
     private const string ForAttributeName = "asp-description-for";
 
+    /// <summary>
+    /// 
+    /// </summary>
     [HtmlAttributeName(ForAttributeName)]
     public ModelExpression For { get; set; } = default!;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         if (context == null)

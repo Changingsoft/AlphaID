@@ -27,7 +27,7 @@ public class FindPasswordByEmailModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
     public void OnGet()
     {

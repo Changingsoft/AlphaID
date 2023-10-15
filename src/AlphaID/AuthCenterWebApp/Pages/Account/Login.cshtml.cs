@@ -25,10 +25,10 @@ public class LoginModel : PageModel
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
 
-    public ViewModel View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
     public LoginModel(
         IIdentityServerInteractionService interaction,

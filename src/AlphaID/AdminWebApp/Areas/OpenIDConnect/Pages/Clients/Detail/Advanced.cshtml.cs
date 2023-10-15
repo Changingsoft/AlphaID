@@ -22,7 +22,7 @@ public class AdvancedModel : PageModel
     public InputModel Input { get; set; } = default!;
 
     [BindProperty]
-    public AddPropertyModel AddProperty { get; set; }
+    public AddPropertyModel AddProperty { get; set; } = default!;
 
     public IActionResult OnGet(int id)
     {

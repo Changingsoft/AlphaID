@@ -31,7 +31,7 @@ public class Index : PageModel
     public ViewModel View { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
     public async Task<IActionResult> OnGet(string returnUrl)
     {
@@ -55,7 +55,7 @@ public class Index : PageModel
         var request = await this._interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
         if (request == null) return this.RedirectToPage("/Home/Error/LoginModel");
 
-        ConsentResponse grantedConsent = null;
+        ConsentResponse grantedConsent = default!;
 
         // user clicked 'no' - send back the standard 'access_denied' response
         if (this.Input?.Button == "no")
@@ -127,7 +127,7 @@ public class Index : PageModel
         }
         else
         {
-            this._logger.LogError("No consent request matching request: {0}", returnUrl);
+            this._logger.LogError("No consent request matching request: {returnUrl}", returnUrl);
         }
         return null;
     }

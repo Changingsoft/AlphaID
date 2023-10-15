@@ -29,6 +29,11 @@ public static class ClaimsPrincipalExtensions
         return principal.FindFirstValue(JwtClaimTypes.Picture);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="principal"></param>
+    /// <returns></returns>
     public static string? SubjectId(this ClaimsPrincipal principal)
     {
         var subjectIdValue = principal.FindFirstValue(ClaimTypes.NameIdentifier);

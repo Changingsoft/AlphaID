@@ -19,7 +19,7 @@ public class ScopesModel : PageModel
     public Client Data { get; set; } = default!;
 
     [BindProperty]
-    public List<SelectListItem> ScopeItems { get; set; }
+    public List<SelectListItem> ScopeItems { get; set; } = default!;
 
     public string? OperationMessage { get; set; }
 

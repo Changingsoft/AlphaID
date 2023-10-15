@@ -260,6 +260,7 @@ public class LoginModel : PageModel
 
         [Required(ErrorMessage = "{0}是必需的")]
         [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; } = default!;
 
         [Display(Name = "Remember me on this device")]

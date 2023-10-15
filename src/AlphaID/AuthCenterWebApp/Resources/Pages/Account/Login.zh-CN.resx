@@ -117,13 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>账户</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="Forgot your password?" xml:space="preserve">
-    <value>忘记密码？</value>
+  <data name="Don't have account yet?" xml:space="preserve">
+    <value>还没有账户吗？</value>
+  </data>
+  <data name="I forgot password" xml:space="preserve">
+    <value>忘记密码</value>
+  </data>
+  <data name="Login to your account" xml:space="preserve">
+    <value>登录到您的账户</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Remember me on this device" xml:space="preserve">
+    <value>在这个设备上记住我</value>
   </data>
   <data name="Sign in" xml:space="preserve">
     <value>登录</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>注册账户</value>
   </data>
 </root>

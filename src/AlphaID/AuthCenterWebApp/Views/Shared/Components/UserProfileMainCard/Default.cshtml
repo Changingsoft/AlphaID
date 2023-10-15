@@ -13,7 +13,7 @@
         card = await this.chineseIDCardManager.GetCurrentAsync(this.Model);
     }
 }
-<img src="~/avator.png" title="Avator" />
+<img src="@this.User.AvatarUrl()" title="Avator" />
 <p>@Model.Name (@(Model.UserName)) 
     @{
         if(card != null)

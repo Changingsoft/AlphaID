@@ -27,18 +27,3 @@
         </div>
     </div>
 </div>
-
-@{
-    var routeData = this.ViewContext.RouteData.Values;
-}
-<table class="table">
-    <tbody>
-        @foreach(var data in routeData)
-        {
-            <tr>
-                <td>@data.Key</td>
-                <td>@data.Value</td>
-            </tr>
-        }
-    </tbody>
-</table>

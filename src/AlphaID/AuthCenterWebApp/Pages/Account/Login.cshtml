@@ -2,92 +2,94 @@
 @inject IOptions<ProductInfo> production
 @model AuthCenterWebApp.Pages.Account.LoginModel
 @{
+    this.Layout = "_AuthenticationLayout";
     this.ViewBag.Title = this.localizer["Sign in"];
 }
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+                <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+                @(this.production.Value.Name) @localizer["Account"]
+            </a>
+        </div>
+        <div class="card card-md">
+            <div class="card-body">
+                @if (Model.View.EnableLocalLogin)
+                {
+                    <h2 class="h2 text-center mb-4">@localizer["Login to your account"]</h2>
+                    <form method="post">
+                        <input type="hidden" asp-for="Input.ReturnUrl" />
 
-<div class="login-page">
-    <div class="lead">
-        <h1>@localizer["Sign in"] @this.production.Value.Name</h1>
-    </div>
-
-    <partial name="_ValidationSummary" />
-
-    <div class="row">
-
-        @if (Model.View.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        @(this.production.Value.Name) @localizer["Account"]
-                    </div>
-
-                    <div class="card-body">
-                        <form asp-page="/Account/Login/Index">
-                            <input type="hidden" asp-for="Input.ReturnUrl" />
-
-                            <div class="form-group">
-                                <label asp-for="Input.Username"></label>
-                                <input class="form-control" asp-for="Input.Username" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Password"></label>
-                                <input type="password" class="form-control" placeholder="密码" asp-for="Input.Password" autocomplete="off">
-                            </div>
-
-                            @if (Model.View.AllowRememberLogin)
+                        <div class="mb-3">
+                            <label asp-for="Input.Username" class="form-label"></label>
+                            <input asp-for="Input.Username" class="form-control" autofocus>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" asp-for="Input.Password">
+                                @localizer["Password"]
+                                <span class="form-label-description">
+                                    <a href="./forgot-password.html">@localizer["I forgot password"]</a>
+                                </span>
+                            </label>
+                            <input asp-for="Input.Password" class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            @if (this.Model.View.AllowRememberLogin)
                             {
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" asp-for="Input.RememberLogin">
-                                        <label class="form-check-label" asp-for="Input.RememberLogin"></label>
-                                    </div>
+                                <label asp-for="Input.RememberLogin" class="form-check">
+                                    <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">
+                                    <span class="form-check-label">@localizer["Remember me on this device"]</span>
+                                </label>
+                            }
+                        </div>
+                        <div class="form-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@localizer["Sign in"]</button>
                                 </div>
-                            }
-
-                            <button type="submit" class="btn btn-primary" name="Input.Button" value="login">@localizer["Sign in"]</button>
-                            <button type="submit" class="btn btn-secondary" name="Input.Button" value="cancel">@localizer["Cancel"]</button>
-
-                            <p><a asp-page="ForgetPassword">@localizer["Forgot your password?"]</a></p>
-                        </form>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@localizer["Cancel"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+            @if (Model.View.VisibleExternalProviders.Any())
+            {
+                <div class="hr-text">@localizer["or"]</div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var provider in Model.View.VisibleExternalProviders)
+                        {
+                            <div class="col">
+                                <a class="btn"
+                                   asp-page="/ExternalLogin/Challenge"
+                                   asp-route-scheme="@provider.AuthenticationScheme"
+                                   asp-route-schemeDisplayName="@provider.DisplayName"
+                                   asp-route-returnUrl="@Model.Input.ReturnUrl">
+                                    @provider.DisplayName
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
-        }
 
-        @if (Model.View.VisibleExternalProviders.Any())
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        @localizer["External Logins"]
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.View.VisibleExternalProviders)
-                            {
-                                <li class="list-inline-item">
-                                    <a class="btn btn-secondary"
-                                       asp-page="/ExternalLogin/Challenge"
-                                       asp-route-scheme="@provider.AuthenticationScheme"
-                                       asp-route-schemeDisplayName="@provider.DisplayName"
-                                       asp-route-returnUrl="@Model.Input.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
-
-        @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>无效的登录请求</strong>
-                没有为此请求配置登录方案。
-            </div>
-        }
+            }
+        </div>
+        <div class="text-center text-secondary mt-3">
+            @localizer["Don't have account yet?"] <a asp-page="SignUp" tabindex="-1">@localizer["Sign up"]</a>
+        </div>
     </div>
 </div>
+
+<partial name="_ValidationSummary" />
+
+@if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
+{
+    <div class="alert alert-warning">
+        <strong>无效的登录请求</strong>
+        没有为此请求配置登录方案。
+    </div>
+}

@@ -150,7 +150,7 @@ public class AdvancedModel : PageModel
             return this.NotFound();
         this.Data = data;
 
-        if(this.Data.Properties.Any(p => p.Key == this.AddProperty.Key && p.Value == this.AddProperty.Value))
+        if(this.Data.Properties.Any(p => p.Key == this.AddProperty.Key))
         {
             this.ModelState.AddModelError("", "指定的Key和Value已存在。");
         }

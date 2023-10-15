@@ -5,16 +5,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Content Remove="Areas\Profile\Avatar.cshtml" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Captcha" Version="4.4.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
@@ -36,23 +31,13 @@
 		<InternalsVisibleTo Include="AlphaIDWebAPITests" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="BotDetectSounds\Pronunciation_Mandarin_CN.bdsp">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Update="BotDetectSounds\Pronunciation_Mandarin_CN.bdsp">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 	<ProjectExtensions>
-		<VisualStudio><UserProperties authcentersettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" authcentersettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio>
+		<VisualStudio>
+			<UserProperties authcentersettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" authcentersettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" />
+		</VisualStudio>
 	</ProjectExtensions>
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Areas\Profile\Avatar.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Areas\Profile\Avatar.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Include="Areas\Profile\Pages\Avatar.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="ViewFeatures\" />
-	</ItemGroup>
 </Project>

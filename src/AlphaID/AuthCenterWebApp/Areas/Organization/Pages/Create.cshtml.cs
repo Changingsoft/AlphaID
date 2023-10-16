@@ -87,33 +87,33 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "组织名称", Description = "请填写组织的正式、完整的全称", Prompt = "请填写组织的正式、完整的全称")]
-        [StringLength(50)]
+        [Display(Name = "Name", Description = "Registered full name of organization.")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string Name { get; set; } = default!;
 
-        [Display(Name = "统一社会信用代码")]
-        [StringLength(18, MinimumLength = 18, ErrorMessage = "统一社会信用代码必须是18位")]
+        [Display(Name = "Unified social credit code")]
+        [StringLength(18, MinimumLength = 18, ErrorMessage = "Validate_StringLength")]
         [PageRemote(PageHandler = "ValidateUSCI", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post")]
         public string? USCI { get; set; }
 
-        [Display(Name = "住所")]
-        [StringLength(50)]
+        [Display(Name = "Domicile", Description = "Postal address of organization.")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Domicile { get; set; }
 
-        [Display(Name = "代表人")]
-        [StringLength(20)]
+        [Display(Name = "Representative")]
+        [StringLength(20, ErrorMessage = "Validate_StringLength")]
         public string? Representative { get; set; }
 
-        [Display(Name = "职务", Description = "您在该组织内的职务或称呼")]
-        [StringLength(50)]
+        [Display(Name = "Title")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Title { get; set; }
 
-        [Display(Name = "部门", Description = "您在该组织的部门或办公室")]
-        [StringLength(50)]
+        [Display(Name = "Department")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Department { get; set; }
 
-        [Display(Name = "备注", Description = "您在该组织的备注事项")]
-        [StringLength(50)]
+        [Display(Name = "Remark")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Remark { get; set; }
     }
 }

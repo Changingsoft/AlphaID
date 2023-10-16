@@ -69,24 +69,24 @@ public class ResetPasswordModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "邮箱")]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress(ErrorMessage = "{0}的格式错误")]
         public string Email { get; set; } = default!;
 
-        [Display(Name = "新密码")]
+        [Display(Name = "New password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "{0}是必需的")]
-        [StringLength(32, MinimumLength = 8, ErrorMessage = "{0}的长度介于{2}到{1}个字符")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         public string Password { get; set; } = default!;
 
-        [Display(Name = "确认密码")]
+        [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
-        [StringLength(32, MinimumLength = 8, ErrorMessage = "{0}的长度介于{2}到{1}个字符")]
-        [Compare("Password", ErrorMessage = "确认密码与新密码不一致。")]
+        [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
+        [Compare("Password", ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string Code { get; set; } = default!;
 
     }

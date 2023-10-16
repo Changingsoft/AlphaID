@@ -56,7 +56,7 @@ public struct MobilePhoneNumber
     /// 已重写。按E.164格式输出移动电话号码。
     /// </summary>
     /// <returns></returns>
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"+{this.CountryCode}{this.PhoneNumber}";
     }

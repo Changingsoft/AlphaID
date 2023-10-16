@@ -1,10 +1,8 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewData["Title"] = "个人资料";
+    this.ViewBag.Title = this.localizer["Profile"];
 }
-
-
 
 <h2>Claims</h2>
 <table class="table">
@@ -24,3 +22,5 @@
         }
     </tbody>
 </table>
+
+

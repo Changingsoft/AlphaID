@@ -64,7 +64,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
                 ClientId = this.Client.Id,
                 Type = "SharedSecret",
                 Value = this.Input.Secret.ToSha256(),
-                Created = DateTime.Now,
+                Created = DateTime.UtcNow,
                 Description = this.Input.Description,
             };
             if (this.Input.Expires.HasValue)
@@ -77,13 +77,13 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public class InputModel
         {
-            [Display(Name = "密钥值")]
+            [Display(Name = "Secret")]
             public string Secret { get; set; } = default!;
 
-            [Display(Name = "失效时间")]
+            [Display(Name = "Expires")]
             public DateTime? Expires { get; set; }
 
-            [Display(Name = "描述")]
+            [Display(Name = "Description")]
             public string? Description { get; internal set; }
         }
     }

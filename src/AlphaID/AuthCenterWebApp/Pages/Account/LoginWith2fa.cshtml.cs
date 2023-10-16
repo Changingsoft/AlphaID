@@ -44,13 +44,13 @@ public class LoginWith2faModel : PageModel
 
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
-        [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(7, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Text)]
-        [Display(Name = "身份验证器代码")]
+        [Display(Name = "Two-factor code")]
         public string TwoFactorCode { get; set; }
 
-        [Display(Name = "记住这台机器")]
+        [Display(Name = "Remember this device")]
         public bool RememberMachine { get; set; }
     }
 

@@ -13,18 +13,18 @@
         card = await this.chineseIDCardManager.GetCurrentAsync(this.Model);
     }
 }
-<img src="~/avator.png" title="Avator" />
+<img src="@this.User.AvatarUrl()" title="Avator" />
 <p>@Model.Name (@(Model.UserName)) 
     @{
         if(card != null)
         {
-            <a asp-page="/Profile/RealName/Index"><img src="~/images/RealNameValid.png" alt="已通过实名认证" title="已通过实名认证" class="img-fluid" width="32"></a>
+            <a asp-page="/Profile/RealName/Index"><img src="~/images/RealNameValid.png" alt="@localizer["Realname valid"]" title="@localizer["Realname valid"]" class="img-fluid" width="32"></a>
         }
     }
 </p>
-<p><a asp-page="/Account/Manage/Index" class="btn btn-sm btn-secondary">管理我的账户</a></p>
+<p><a asp-area="MyAccount" asp-page="/Index" class="btn btn-sm btn-secondary">@localizer["Manage my account"]</a></p>
 <hr />
-<h2><a asp-page="/Organizations/Index">您的组织</a></h2>
+<h2><a asp-page="/Organizations/Index">@localizer["Your organizations"]</a></h2>
 <ul>
     @foreach(var member in members)
     {

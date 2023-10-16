@@ -66,8 +66,8 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public class InputModel
         {
-            [Display(Name = "ÕË»§Ãû")]
-            [StringLength(50)]
+            [Display(Name = "User name")]
+            [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string UserName { get; set; } = default!;
         }
     }

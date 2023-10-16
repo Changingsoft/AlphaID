@@ -88,20 +88,20 @@ public class ConfirmChineseIDCardModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "–’ œ")]
-        [StringLength(10)]
+        [Display(Name = "Surname")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string? Surname { get; set; } = default!;
 
-        [Display(Name = "√˚◊÷")]
-        [StringLength(10)]
+        [Display(Name = "Given name")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string GivenName { get; set; } = default!;
 
-        [Display(Name = "–’ œ∆¥“Ù")]
-        [StringLength(30)]
+        [Display(Name = "Phonetic surname")]
+        [StringLength(30, ErrorMessage = "Validate_StringLength")]
         public string? PinyinSurname { get; set; } = default!;
 
-        [Display(Name = "√˚◊÷∆¥“Ù")]
-        [StringLength(30)]
+        [Display(Name = "Phonetic given name")]
+        [StringLength(30, ErrorMessage = "Validate_StringLength")]
         public string PinyinGivenName { get; set; } = default!;
     }
 }

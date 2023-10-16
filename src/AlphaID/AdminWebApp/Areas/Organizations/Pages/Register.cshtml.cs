@@ -17,39 +17,39 @@ public class RegisterModel : PageModel
         this.organizationStore = organizationStore;
     }
 
-    [Display(Name = "统一社会信用代码")]
+    [Display(Name = "Unified social credit code")]
     public string? USCI { get; set; }
 
-    [Display(Name = "名称")]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Display(Name = "Name")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string Name { get; set; } = default!;
 
-    [Required(ErrorMessage = "{0}是必需的")]
-    [Display(Name = "即使名称相同，也要注册")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Register with same name anyway")]
     public bool RegisterWithSameNameAnyway { get; set; }
 
-    [Display(Name = "住所")]
+    [Display(Name = "Domicile")]
     public string? Domicile { get; set; }
 
-    [Display(Name = "联系电话")]
+    [Display(Name = "Contact")]
     public string? Contact { get; set; }
 
-    [Display(Name = "法定代表人")]
+    [Display(Name = "Legal person name")]
     public string? LegalPersonName { get; set; }
 
-    [Display(Name = "成立日期")]
+    [Display(Name = "Established at")]
     [DataType(DataType.Date)]
     public DateTime? EstablishedAt { get; set; }
 
-    [Display(Name = "营业期起")]
+    [Display(Name = "Term begin")]
     [DataType(DataType.Date)]
     public DateTime? TermBegin { get; set; }
 
-    [Display(Name = "营业期至", Prompt = "dd", Description = "weew")]
+    [Display(Name = "Term end", Prompt = "dd", Description = "weew")]
     [DataType(DataType.Date)]
     public DateTime? TermEnd { get; set; }
 
-    [Display(Name = "创建人")]
+    [Display(Name = "Creator ID")]
     public string? CreatorId { get; set; }
 
 

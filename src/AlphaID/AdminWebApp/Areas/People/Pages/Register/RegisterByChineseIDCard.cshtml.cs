@@ -32,11 +32,11 @@ public class RegisterByChineseIDCardModel : PageModel
     [BindProperty]
     public string IDCardBackBase64 { get; set; } = default!;
 
-    [Display(Name = "移动电话号码")]
+    [Display(Name = "Mobile phone number")]
     [BindProperty]
     public string Mobile { get; set; } = default!;
 
-    [Display(Name = "电子邮件地址")]
+    [Display(Name = "Email")]
     [EmailAddress]
     [BindProperty]
     public string? Email { get; set; }

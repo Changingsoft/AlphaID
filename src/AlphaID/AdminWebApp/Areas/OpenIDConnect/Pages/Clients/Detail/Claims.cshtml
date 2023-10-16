@@ -3,11 +3,14 @@
 @{
 }
 <h4>包含的声明</h4>
+<form method="post" asp-page-handler="RemoveClaim">
+
 <table class="table">
     <thead>
         <tr>
             <td>类型</td>
             <td>值</td>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -16,7 +19,37 @@
             <tr>
                 <td>@c.Type</td>
                 <td>@c.Value</td>
+                <td><button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('确认要删除吗？');">Remove</button></td>
             </tr>
         }
     </tbody>
 </table>
+</form>
+
+<form class="card" method="post" asp-page-handler="AddClaim">
+    <div class="card-body">
+        <h3 class="card-title">Add claim</h3>
+        <div class="row row-cards">
+            <div class="col-5">
+                <div class="mb-3">
+                    <label asp-for="Input.Type" class="form-label"></label>
+                    <input asp-for="Input.Type" class="form-control">
+                    <span asp-validation-for="Input.Type" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="mb-5">
+                    <label asp-for="Input.Value" class="form-label"></label>
+                    <input asp-for="Input.Value" class="form-control">
+                    <span asp-validation-for="Input.Value" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="mb-3">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <button type="submit" class="btn btn-primary" name="su" value="1">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

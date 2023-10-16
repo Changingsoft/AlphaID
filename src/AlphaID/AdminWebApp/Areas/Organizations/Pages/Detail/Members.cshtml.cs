@@ -26,18 +26,18 @@ public class MembersModel : PageModel
 
 
     [BindProperty]
-    [Display(Name = "部门名称")]
+    [Display(Name = "Department")]
     public string? Department { get; set; }
 
     [BindProperty]
-    [Display(Name = "职务")]
+    [Display(Name = "Title")]
     public string? Title { get; set; }
 
     [BindProperty]
-    [Display(Name = "备注")]
+    [Display(Name = "Remark")]
     public string? Remark { get; set; }
 
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
     public string PersonId { get; set; } = default!;
 

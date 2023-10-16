@@ -1,3 +1,4 @@
+using AdminWebApp;
 using AdminWebApp.Services;
 using AlphaIDEntityFramework.EntityFramework;
 using AlphaIDEntityFramework.EntityFramework.Identity;
@@ -14,9 +15,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OperationalEF;
+using System.Globalization;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,12 +28,37 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
 
+//程序资源
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+
+//区域和本地化
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("zh-CN"),
+                };
+    options.DefaultRequestCulture = new RequestCulture(culture: builder.Configuration["DefaultCulture"]!, uiCulture: builder.Configuration["DefaultCulture"]!);
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+
 //配置RazorPages.
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/", "RequireAdminRole");
     options.Conventions.AuthorizeFolder("/Account");
 })
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+    })
     .AddSessionStateTempDataProvider();
 
 //启用API Controller
@@ -69,7 +97,7 @@ builder.Services
         //hack 将name声明添加到完全类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name”上。
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, JwtClaimTypes.Name);
         //options.ClaimActions.MapJsonKey("profile", JwtClaimTypes.Profile);
-        options.ClaimActions.MapJsonKey("avator", JwtClaimTypes.Picture);
+        options.ClaimActions.MapJsonKey("picture", JwtClaimTypes.Picture);
 
         options.Events = new OpenIdConnectEvents()
         {
@@ -210,6 +238,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseRequestLocalization();
 app.UseStaticFiles();
 app.UseRouting();
 

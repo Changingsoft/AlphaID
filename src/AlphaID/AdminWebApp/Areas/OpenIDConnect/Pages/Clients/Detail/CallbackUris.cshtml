@@ -1,20 +1,46 @@
 ﻿@page "{id}"
-@model             CallbackUrisModel
+@model CallbackUrisModel
 @{
 }
+
+<p class="text-warning">如果域名发生了变化，您可能还需要调整CORS设置以便客户端能正确工作。</p>
 <h2>登录回调URL</h2>
-<ul>
-    @foreach (var uri in this.Model.Data.RedirectUris)
-    {
-        <li>@uri.RedirectUri</li>
-    }
-</ul>
+<form method="post">
+    <ul class="list-group">
+        @foreach (var uri in this.Model.Data.RedirectUris)
+        {
+            <li class="list-group-item">
+                @uri.RedirectUri
+                <button type="submit" asp-page-handler="RemoveCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-rid="@uri.Id">Delete</button>
+            </li>
+        }
+    </ul>
+</form>
+<form method="post">
+    <div class="form-group">
+        <label for="callback-uri">New callback URI</label>
+        <input name="callback_uri" type="text" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="AddCallBackUrl">Add</button>
+</form>
 
 <h2>注销登录回调URL</h2>
-<ul>
-    @foreach (var uri in this.Model.Data.PostLogoutRedirectUris)
-    {
-        <li>@uri.PostLogoutRedirectUri</li>
-    }
-</ul>
+<form method="post">
+    <ul class="list-group list-group-flush">
+        @foreach (var uri in this.Model.Data.PostLogoutRedirectUris)
+        {
+            <li class="list-group-item">
+                @uri.PostLogoutRedirectUri
+                <button type="submit" asp-page-handler="RemoveSignOutCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-srid="@uri.Id">Delete</button>
+            </li>
+        }
+    </ul>
+</form>
+<form method="post">
+    <div class="form-group">
+        <label for="callback-uri">New sign out callback URI</label>
+        <input name="callback_uri" type="text" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="AddSignOutCallbackUrl">Add</button>
+</form>
 

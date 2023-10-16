@@ -2,19 +2,18 @@
 using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
-using AuthCenterWebApp.Services.XinAn;
 using BotDetect.Web;
-using Duende.IdentityServer;
 using IDSubjects;
 using IDSubjects.RealName;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.Json;
 using Serilog;
+using System.Globalization;
 
 Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
@@ -40,13 +39,41 @@ try
     {
         config.ConfigureServices((context, services) =>
         {
+            //程序资源
+            services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
+
+            //区域和本地化
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("zh-CN"),
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: context.Configuration["DefaultCulture"]!, uiCulture: context.Configuration["DefaultCulture"]!);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.Configure<ProductInfo>(context.Configuration.GetSection("ProductInfo"));
             services.Configure<SystemUrlOptions>(context.Configuration.GetSection("SystemUrl"));
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeFolder("/");
+                options.Conventions.AuthorizeAreaFolder("Profile", "/");
                 //options.Conventions.AllowAnonymousToFolder("/Account");
+            })
+            .AddViewLocalization()
+            .AddDataAnnotationsLocalization(options =>
+            {
+                options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
             });
+
+
+
 
             services.AddDbContext<IDSubjectsDbContext>(options =>
             {
@@ -116,55 +143,12 @@ try
 
             //启用身份验证
             services.AddAuthentication()
-                .AddOpenIdConnect("federal.changingsoft.com", "员工登录", options =>
-                {
-                    options.MetadataAddress = "https://federal.changingsoft.com/adfs/.well-known/openid-configuration";
-                    options.ClientId = "8cdd4862-37bd-462f-a1cc-698c59a0c7fe";
-                    options.ClientSecret = "f7myF3915f9rPrARsDH21OeX70BxSRkp6CI2tNm7";
-                    //options.ResponseType = ResponseTypes.Code;
-                    //options.ResponseMode = ResponseModes.Query;
-                    //options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    options.CallbackPath = "/signin-adfs";
-                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.Resource = "https://auth.changingsoft.com/resource"; //提示Resource以便将其他声明添加到id_token中
-                                                                              //options.Scope.Add("allatclaims");
-                                                                              //options.Scope.Add("email");
-
-                    options.SaveTokens = true;
-                    //在调用注销的参数中添加id_token_hint，以便注销时能够回到本应用。适用于AD FS。
-                    options.Events = new OpenIdConnectEvents
-                    {
-                        OnRedirectToIdentityProviderForSignOut = async context =>
-                        {
-                            context.ProtocolMessage.SetParameter("id_token_hint", await context.HttpContext.GetTokenAsync("id_token"));
-                        }
-                    };
-                })
-                .AddXinAn("netauth.changingsoft.com", "信安世纪SSO", options =>
-                {
-                    //添加信安世纪的单点登录节点。
-                    //节点管理人 信安世纪 夏文良 18595462619
-                    options.ClientId = context.Configuration["XinanSSO:ClientId"]!;
-                    options.ClientSecret = context.Configuration["XinanSSO:ClientSecret"]!;
-                    options.UsePkce = false;
-                    options.SaveTokens = true;
-                })
                 //添加必须修改密码cookie。
                 .AddCookie(AuthCenterIdentitySchemes.MustChangePasswordScheme, o =>
                 {
                     o.Cookie.Name = AuthCenterIdentitySchemes.MustChangePasswordScheme;
                     o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 });
-
-            //短信服务
-            services.AddScoped<IShortMessageService, SimpleShortMessageService>();
-            services.AddScoped<IVerificationCodeService, SimpleShortMessageService>();
-            services.Configure<SimpleShortMessageServiceOptions>(options =>
-            {
-                options.ClientId = "bbb867eb-f1e2-4deb-8a21-832f963b4a74";
-                options.ClientSecret = "XIKHAcDO6oVYIAQQs8cewfaJwGxVV5u5x-6Yi-lu";
-            });
 
             //短信服务
             services.AddScoped<IShortMessageService, SimpleShortMessageService>();
@@ -217,6 +201,7 @@ try
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRequestLocalization();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseIdentityServer(); //内部会调用UseAuthentication。
@@ -229,6 +214,7 @@ try
             });
         });
     });
+
     hostBuilder.UseSerilog((ctx, lc) => lc
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .WriteTo.EventLog(".NET Runtime", manageEventSource: true)

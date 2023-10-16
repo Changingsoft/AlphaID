@@ -25,10 +25,10 @@ public class LoginModel : PageModel
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
 
-    public ViewModel View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
     public LoginModel(
         IIdentityServerInteractionService interaction,
@@ -254,15 +254,16 @@ public class LoginModel : PageModel
     }
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "账号", Prompt = "账户名、电子邮件、手机号或身份证号")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
         public string Username { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "密码")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; } = default!;
 
-        [Display(Name = "记住我的登录信息")]
+        [Display(Name = "Remember me on this device")]
         public bool RememberLogin { get; set; }
 
         public string ReturnUrl { get; set; }

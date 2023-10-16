@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Pages.Diagnostics;
 
-[SecurityHeaders]
 [Authorize]
 public class Index : PageModel
 {

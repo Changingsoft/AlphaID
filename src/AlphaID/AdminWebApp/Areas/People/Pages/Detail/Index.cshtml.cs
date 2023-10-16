@@ -35,8 +35,8 @@ public class IndexModel : PageModel
     {
         var person = await this.userManager.FindByIdAsync(id);
         if (person == null)
-            return this.File("~/images/avator.png", "image/png");
+            return this.File("~/img/no-picture-avatar.png", "image/png");
         var img = await this.imageStore.GetPhotoAsync(person);
-        return img == null ? this.File("~/images/avator.png", "image/png") : this.File(img.Value.ImageContent, img.Value.MimeType);
+        return img == null ? this.File("~/img/no-picture-avatar.png", "image/png") : this.File(img.Value.ImageContent, img.Value.MimeType);
     }
 }

@@ -1,0 +1,50 @@
+﻿@page "{id}"
+@model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.AdvancedModel
+@{
+}
+<h2>Advanced</h2>
+
+<h3>Properties</h3>
+<form method="post" asp-page-handler="Remove">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Key</td>
+                <td>Value</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var prop in this.Model.Data.Properties)
+            {
+                <tr>
+                    <td>@prop.Key</td>
+                    <td>@prop.Value</td>
+                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId" value="@prop.Id" onclick="return confirm('Are you sure you want remove it?');">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Add property</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-page-handler="Add">
+            <div class="form-group">
+                <label asp-for="NewKey"></label>
+                <input asp-for="NewKey" class="form-control" />
+                <span asp-validation-for="NewKey"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewValue"></label>
+                <input asp-for="NewValue" class="form-control" />
+                <span asp-validation-for="NewValue"></span>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>

@@ -58,22 +58,22 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "名称")]
+        [Display(Name = "Name")]
         public string Name { get; set; } = default!;
 
-        [Display(Name = "显示名称")]
+        [Display(Name = "Display name")]
         public string? DisplayName { get; set; }
 
-        [Display(Name = "描述")]
+        [Display(Name = "Description")]
         public string? Description { get; set; }
 
-        [Display(Name = "必需的", Description = "必需")]
+        [Display(Name = "Required", Description = "Required.")]
         public bool Required { get; set; }
 
-        [Display(Name = "Emphasize", Description = "强调")]
+        [Display(Name = "Emphasize", Description = "Emphasize.")]
         public bool Emphasize { get; set; }
 
-        [Display(Name = "在发现文档中列出")]
+        [Display(Name = "Show in discovery document")]
         public bool ShowInDiscoveryDocument { get; set; }
 
     }

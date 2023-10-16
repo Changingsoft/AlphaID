@@ -62,8 +62,8 @@ public class DeleteModel : PageModel
 
     public class DeleteForm
     {
-        [Display(Name = "名称")]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string Name { get; set; } = default!;
 
     }

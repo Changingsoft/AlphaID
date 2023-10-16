@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "Shared/_Layout";
+}
+
+<div class="card">
+    <div class="row g-0">
+        <div class="col-12 col-md-3 border-end">
+            <div class="card-body">
+                <partial name="_ManageNav" />
+            </div>
+        </div>
+        <div class="col-12 col-md-9 d-flex flex-column">
+            <div class="card-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

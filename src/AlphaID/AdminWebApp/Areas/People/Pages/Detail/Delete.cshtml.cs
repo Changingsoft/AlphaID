@@ -70,8 +70,8 @@ public class DeleteModel : PageModel
     public class DeletePersonForm
     {
 
-        [Display(Name = "姓名")]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Display(Name = "Display name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string DisplayName { get; set; } = default!;
     }
 }

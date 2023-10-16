@@ -13,9 +13,17 @@ public class ProductInfo
     /// <summary>
     /// 运营者组织。
     /// </summary>
-    public string Organization { get; set; } = "Changingsoft";
+    public string Organization { get; set; } = "Your Organization";
 
-    public string TradeMark { get; set; } = "Changingsoft";
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Copyright { get; set; } = "2023 Your Organization, All rights reserved.";
+
+    /// <summary>
+    /// Trademark
+    /// </summary>
+    public string Trademark { get; set; } = "Your Trademark";
 
     /// <summary>
     /// Favicon path.

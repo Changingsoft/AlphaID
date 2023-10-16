@@ -47,34 +47,34 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "名称")]
-        [StringLength(50)]
+        [Display(Name = "Name")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string Name { get; set; } = default!;
 
-        [Display(Name = "服务地址", Prompt = "ldap.example.com")]
-        [StringLength(50)]
+        [Display(Name = "Server", Prompt = "ldap.example.com")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string ServerAddress { get; set; } = default!;
 
-        [Display(Name = "用户名（可选）")]
-        [StringLength(50)]
+        [Display(Name = "User name")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         public string? UserName { get; set; }
 
-        [Display(Name = "密码（可选）")]
-        [StringLength(50)]
+        [Display(Name = "Password")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
 
-        [Display(Name = "根DN", Prompt = "DC=example,DC=com")]
-        [StringLength(150)]
+        [Display(Name = "Root DN", Prompt = "DC=example,DC=com")]
+        [StringLength(150, ErrorMessage = "Validate_StringLength")]
         public string RootDN { get; set; } = default!;
 
         [Display(Name = "User OU", Prompt = "OU=Users,DC=example,DC=com")]
-        [StringLength(150)]
+        [StringLength(150, ErrorMessage = "Validate_StringLength")]
         public string DefaultUserOU { get; set; } = default!;
 
-        [Display(Name = "UPN后缀", Prompt = "example.com")]
-        [StringLength(20)]
+        [Display(Name = "UPN suffix", Prompt = "example.com")]
+        [StringLength(20, ErrorMessage = "Validate_StringLength")]
         public string UpnSuffix { get; set; } = default!;
     }
 }

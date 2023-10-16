@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Grants;
 
-[SecurityHeaders]
 [Authorize]
 public class Index : PageModel
 {
@@ -67,7 +66,7 @@ public class Index : PageModel
     }
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string ClientId { get; set; }
 
     public async Task<IActionResult> OnPost()

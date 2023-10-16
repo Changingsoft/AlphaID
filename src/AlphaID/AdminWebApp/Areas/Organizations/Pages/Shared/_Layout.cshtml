@@ -1,21 +1,20 @@
 ﻿@{
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
-@section head{
-    @RenderSection("head", false)
+@section Heads{
+    @RenderSection("Heads", false)
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-page="/Index">组织</a></li>
-        @RenderSection("breadcrumb", false)
-    </ol>
-</nav>
-<partial name="_SearchInputPart" />
+<div class="page-body">
+    <div class="container-xl">
+
+        <partial name="_SearchInputPart" />
 
 
-@RenderBody()
+        @RenderBody()
+    </div>
+</div>
 
-@section scripts{
-    @RenderSection("scripts", false)
+@section Scripts{
+    @RenderSection("Scripts", false)
 }

@@ -18,11 +18,6 @@ public class SystemUrlOptions
     /// <summary>
     /// 
     /// </summary>
-    public Uri MyIdUrl { get; set; } = new Uri("https://localhost:61313");
-
-    /// <summary>
-    /// 
-    /// </summary>
     public Uri AuthCenterUrl { get; set; } = new Uri("https://localhost:49726");
 
 }

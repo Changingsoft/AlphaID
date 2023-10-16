@@ -23,9 +23,7 @@ public class ADFSIdTokenSubGenerateTest
             .Concat(Encoding.Unicode.GetBytes(anchorValue))
             .Concat(Convert.FromBase64String(ppidPrivacyEntropy))
             .ToArray();
-
-        var sha = SHA256.Create();
-        var result = Convert.ToBase64String(sha.ComputeHash(originBytes));
+        var result = Convert.ToBase64String(SHA256.HashData(originBytes));
 
         Assert.Equal(expected, result);
     }

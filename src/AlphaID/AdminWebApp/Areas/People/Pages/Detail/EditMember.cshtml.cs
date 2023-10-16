@@ -66,16 +66,16 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public class InputModel
         {
-            [Display(Name = "职务")]
-            [StringLength(50)]
+            [Display(Name = "Title")]
+            [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Title { get; set; }
 
-            [Display(Name = "部门")]
-            [StringLength(50)]
+            [Display(Name = "Department")]
+            [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Department { get; set; }
 
-            [Display(Name = "备注")]
-            [StringLength(50)]
+            [Display(Name = "Remark")]
+            [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Remark { get; set; }
         }
     }

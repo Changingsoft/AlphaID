@@ -20,7 +20,7 @@ internal class PinyinCorrectionWork : BackgroundService
         using var scope = this.factory.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<IDSubjectsDbContext>();
         var count = 0;
-        foreach (var person in db.People.Where(p => p.Name.Contains("洋")))
+        foreach (var person in db.People.Where(p => p.Name.Contains('洋')))
         {
             count++;
             if (person.LastName != null && person.FirstName != null)

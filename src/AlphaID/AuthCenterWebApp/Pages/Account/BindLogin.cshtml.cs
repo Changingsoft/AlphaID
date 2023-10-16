@@ -293,15 +293,15 @@ public class BindLoginModel : PageModel
 
     public class InputModel
     {
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "账号", Prompt = "账户名、电子邮件、手机号或身份证号")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
         public string Username { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "密码")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "Password")]
         public string Password { get; set; } = default!;
 
-        [Display(Name = "记住我的登录信息")]
+        [Display(Name = "Remember my login")]
         public bool RememberLogin { get; set; }
 
         public string ReturnUrl { get; set; }
@@ -318,9 +318,9 @@ public class BindLoginModel : PageModel
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders?.Count() == 1;
-        public string ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders?.SingleOrDefault()?.AuthenticationScheme : null;
+        public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders?.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders?.SingleOrDefault()?.DisplayName : null;
+        public string? EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders?.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {

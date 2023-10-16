@@ -1,0 +1,16 @@
+﻿@{
+    this.Layout = "Shared/_Layout";
+}
+
+@section Heads{
+    @await RenderSectionAsync("Heads", false)
+}
+
+<div class="page-body">
+    <div class="container-xl">
+        @RenderBody()
+    </div>
+</div>
+@section Scripts{
+    @await RenderSectionAsync("Scripts", false)
+}

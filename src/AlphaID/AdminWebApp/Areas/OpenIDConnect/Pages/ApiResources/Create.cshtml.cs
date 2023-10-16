@@ -53,25 +53,25 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "资源ID")]
+        [Display(Name = "Resource ID")]
         public string Name { get; set; } = default!;
 
-        [Display(Name = "显示名称")]
+        [Display(Name = "Display name")]
         public string? DisplayName { get; set; }
 
-        [Display(Name = "描述")]
+        [Display(Name = "Description")]
         public string? Description { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [Display(Name = "允许的访问令牌签名算法")]
+        [Display(Name = "Allowed access token signing algorithms")]
         public string? AllowedAccessTokenSigningAlgorithms { get; set; }
 
-        [Display(Name = "在发现文档中显示")]
+        [Display(Name = "Show in discovery document")]
         public bool ShowInDiscoveryDocument { get; set; } = true;
 
-        [Display(Name = "需要资源指示器")]
+        [Display(Name = "Require resource indicator")]
         public bool RequireResourceIndicator { get; set; }
 
     }

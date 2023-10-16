@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "Shared/_Layout";
+}
+@section Heads{
+    @RenderSection("Heads", false)
+}
+@section Scripts
+    {
+    @RenderSection("Scripts", false)
+}
+<hr />
+<div class="row">
+    <div class="col-2">
+        <nav class="nav flex-column">
+            <a class="nav-link" asp-page="Index" asp-route-id="@this.ViewContext.RouteData.Values["id"]">概要</a>
+            <a class="nav-link" asp-page="Secrets" asp-route-id="@this.ViewContext.RouteData.Values["id"]">密钥</a>
+            <a class="nav-link" asp-page="Scopes" asp-route-id="@this.ViewContext.RouteData.Values["id"]">范围</a>
+            <a class="nav-link" asp-page="Claims" asp-route-id="@this.ViewContext.RouteData.Values["id"]">用户声明</a>
+            <a class="nav-link" asp-page="Advanced" asp-route-id="@this.ViewContext.RouteData.Values["id"]">高级</a>
+        </nav>
+    </div>
+    <div class="col-10">
+        @RenderBody()
+    </div>
+</div>

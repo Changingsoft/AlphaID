@@ -10,15 +10,13 @@
 <table class="table">
     <thead>
         <tr>
-            <td>名称</td>
+            <td>@localizer["Name"]</td>
             <td>启用</td>
-            <td>显示名称</td>
-            <td>描述</td>
+            <td>@localizer["Display name"]</td>
+            <td>@localizer["Description"]</td>
             <td>必需的</td>
             <td>Emphasize</td>
             <td>在发现文档中列出</td>
-            <td>创建时间</td>
-            <td>修改时间</td>
         </tr>
     </thead>
     <tbody>
@@ -32,8 +30,6 @@
                 <td>@scope.Required</td>
                 <td>@scope.Emphasize</td>
                 <td>@scope.ShowInDiscoveryDocument</td>
-                <td>@scope.Created</td>
-                <td>@scope.Updated</td>
             </tr>
         }
     </tbody>

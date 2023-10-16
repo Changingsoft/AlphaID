@@ -1,6 +1,9 @@
 ﻿@using System.Text
 @using Duende.IdentityServer.EntityFramework.DbContexts
+@using Microsoft.AspNetCore.Mvc.Localization;
 
 @namespace AdminWebApp.Areas.OpenIDConnect.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, AdminWebApp
+@addTagHelper *, AlphaIDPlatform
+
+@inject IViewLocalizer localizer

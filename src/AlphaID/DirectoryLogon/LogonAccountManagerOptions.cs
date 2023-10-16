@@ -34,8 +34,6 @@ public class LogonAccountManagerOptions
             .Concat(Encoding.Unicode.GetBytes(anchorValue))
             .Concat(Convert.FromBase64String(this.PpidPrivacyEntropy))
             .ToArray();
-
-        var sha = SHA256.Create();
-        return Convert.ToBase64String(sha.ComputeHash(originBytes));
+        return Convert.ToBase64String(SHA256.HashData(originBytes));
     }
 }

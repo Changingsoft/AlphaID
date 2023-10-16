@@ -86,19 +86,19 @@ public class ValidateChineseIDCardModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Í¨¹ıÉóºË")]
+        [Display(Name = "Accepted")]
         public bool Accepted { get; set; }
 
-        [Display(Name = "ĞÕÊÏ")]
+        [Display(Name = "Surname")]
         public string? Surname { get; set; } = default!;
 
-        [Display(Name = "Ãû×Ö")]
+        [Display(Name = "Given name")]
         public string GivenName { get; set; } = default!;
 
-        [Display(Name = "ĞÕÊÏÆ´Òô")]
+        [Display(Name = "Phonetic surname")]
         public string? PinyinSurname { get; set; } = default!;
 
-        [Display(Name = "Ãû×ÖÆ´Òô")]
+        [Display(Name = "Phonetic given name")]
         public string PinyinGivenName { get; set; } = default!;
     }
 }

@@ -55,10 +55,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public class InputModel
         {
-            [Display(Name = "需要用户同意")]
+            [Display(Name = "Require consent")]
             public bool RequireConsent { get; set; }
 
-            [Display(Name = "记住用户的同意")]
+            [Display(Name = "Allow remember consent")]
             public bool AllowRememberConsent { get; internal set; }
         }
     }

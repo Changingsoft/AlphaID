@@ -114,20 +114,20 @@ public class ChangePasswordModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "当前密码")]
+        [Display(Name = "Current password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string OldPassword { get; set; } = default!;
 
-        [Display(Name = "新密码")]
+        [Display(Name = "New password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string NewPassword { get; set; } = default!;
 
-        [Display(Name = "确认密码")]
+        [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
-        [Compare(nameof(NewPassword))]
-        [Required(ErrorMessage = "{0}是必需的")]
+        [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string ConfirmPassword { get; set; } = default!;
     }
 }

@@ -13,9 +13,9 @@
     }
   },
   "ConnectionStrings": {
-    "OidcConfigurationDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AuthCenterConfigurationData;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
-    "OidcPersistedGrantDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AuthCenterOperationalData;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
-    "IDSubjectsDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AlphaIDData;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework"
+    "OidcConfigurationDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AuthCenterConfigurationData-acaac5f3-32df-4900-a45a-bd4223f626a1;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
+    "OidcPersistedGrantDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AuthCenterOperationalData-acaac5f3-32df-4900-a45a-bd4223f626a1;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework",
+    "IDSubjectsDataConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AlphaIDData-acaac5f3-32df-4900-a45a-bd4223f626a1;Trusted_Connection=True;MultipleActiveResultSets=True;Application Name=EntityFramework"
   },
   "XinanSSO": {
     "ClientId": "<ClientId>",

@@ -84,19 +84,19 @@ public class IndexModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Client Name")]
-        [StringLength(200)]
+        [Display(Name = "Client name")]
+        [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientName { get; set; } = default!;
 
         [Display(Name = "Client Id")]
-        [StringLength(200)]
+        [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientId { get; set; } = default!;
 
-        [Display(Name = "描述")]
-        [StringLength(1000)]
+        [Display(Name = "Description")]
+        [StringLength(1000, ErrorMessage = "Validate_StringLength")]
         public string? Description { get; set; }
 
-        [Display(Name = "启用")]
+        [Display(Name = "Enabled")]
         public bool Enabled { get; set; }
 
         [Display(Name = "Logo URI")]
@@ -107,7 +107,7 @@ public class IndexModel : PageModel
         [DataType(DataType.Url)]
         public string? ClientUri { get; set; }
 
-        [Display(Name = "需要客户端密钥")]
+        [Display(Name = "Require client secret")]
         public bool RequireClientSecret { get; set; }
     }
 }

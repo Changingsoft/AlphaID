@@ -93,38 +93,38 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "姓氏")]
-        [StringLength(10)]
+        [Display(Name = "Surname")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string Surname { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "名字")]
-        [StringLength(10, MinimumLength = 1, ErrorMessage = "{0}的长度介于{2}到{1}个字符")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "Given name")]
+        [StringLength(10, MinimumLength = 1, ErrorMessage = "Validate_StringLength")]
         public string GivenName { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "显示名称")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "Display name")]
         public string DisplayName { get; set; } = default!;
 
         public string PhoneticSurname { get; set; } = default!;
 
         public string PhoneticGivenName { get; set; } = default!;
 
-        [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "拼音")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "Phonetic display name")]
         public string PhoneticDisplayName { get; set; } = default!;
 
-        [Display(Name = "性别")]
+        [Display(Name = "Gender")]
         public Sex Sex { get; set; }
 
-        [Display(Name = "出生日期")]
+        [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
-        [Display(Name = "移动电话号码")]
+        [Display(Name = "Mobile phone number")]
         [PageRemote(PageHandler = "CheckMobile", HttpMethod = "post", AdditionalFields = "__RequestVerificationToken")]
-        [StringLength(14, MinimumLength = 11, ErrorMessage = "{0}的长度介于{2}到{1}个字符")]
-        public string Mobile { get; set; }
+        [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+        public string Mobile { get; set; } = default!;
 
         public string? Email { get; set; }
     }

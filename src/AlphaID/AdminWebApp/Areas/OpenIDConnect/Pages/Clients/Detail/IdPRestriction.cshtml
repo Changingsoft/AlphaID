@@ -1,0 +1,37 @@
+﻿@page "{id}"
+@model AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail.IdPRestrictionModel
+@{
+}
+<h2>Id Provider Restrictions</h2>
+<p>Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.</p>
+
+<form method="post" asp-page-handler="Remove">
+    <ul class="list-group">
+        @foreach(var idpr in this.Model.Data.IdentityProviderRestrictions)
+        {
+            <li class="list-group-item">
+                @idpr.Provider
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm();" name="itemId" value="@idpr.Id">Remove</button>
+            </li>
+        }
+    </ul>
+</form>
+
+<div class="card">
+    <div class="card-header">
+        <p>Add Id Provider</p>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-page-handler="Add">
+            <div class="form-group">
+                <label asp-for="SelectedProvider"></label>
+                <select asp-for="SelectedProvider">
+                    @foreach(var item in this.Model.IdProviders)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+</div>

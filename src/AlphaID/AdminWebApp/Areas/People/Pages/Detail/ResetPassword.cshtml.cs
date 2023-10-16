@@ -166,21 +166,21 @@ public class ResetPasswordModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "新密码")]
+        [Display(Name = "New password")]
         [DataType(DataType.Password)]
-        [StringLength(30)]
+        [StringLength(30, ErrorMessage = "Validate_StringLength")]
         public string NewPassword { get; set; } = default!;
 
-        [Display(Name = "确认密码")]
+        [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
-        [StringLength(30)]
-        [Compare(nameof(NewPassword))]
+        [StringLength(30, ErrorMessage = "Validate_StringLength")]
+        [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; } = default!;
 
-        [Display(Name = "用户下次登录必须更改密码")]
+        [Display(Name = "User must change password on next login")]
         public bool UserMustChangePasswordOnNextLogin { get; set; } = true;
 
-        [Display(Name = "解锁用户登录（如果被锁定的话）")]
+        [Display(Name = "Unlock user (if locked)")]
         public bool UnlockUser { get; set; } = true;
     }
 }

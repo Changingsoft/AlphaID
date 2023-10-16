@@ -1,68 +1,69 @@
 ﻿@page
 @using Microsoft.Extensions.Options;
 @inject IWebHostEnvironment env
-@inject IOptions<ProductInfo> production
 @model IndexModel
 @{
-    this.ViewData["Title"] = $"{this.production.Value.Name}管理中心";
+    this.ViewData["Title"] = $"{this.product.Value.Name} {localizer["Management Center"].Value}";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@($"{this.production.Value.Name}管理中心")</h1>
+<div class="page-body">
+    <div class="container-xl">
+            <h1>@localizer["Dashboard"]</h1>
 
-</div>
-<div class="row">
-    <div class="col-3">
-        <vc:people-nav-panel></vc:people-nav-panel>
+        <div class="row">
+            <div class="col-3">
+                <vc:people-nav-panel></vc:people-nav-panel>
+            </div>
+            <div class="col-3">
+                <vc:organization-nav-panel></vc:organization-nav-panel>
+            </div>
+        </div>
+
+        @if (this.env.IsDevelopment())
+        {
+            <hr />
+            <h2>Debug Information</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Type</td>
+                        <td>Value</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>access_token</td>
+                        <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("access_token"))</code></td>
+                    </tr>
+                    <tr>
+                        <td>id_token</td>
+                        <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("id_token"))</code></td>
+                    </tr>
+                    <tr>
+                        <td>refresh_token</td>
+                        <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("refresh_token"))</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Type</td>
+                        <td>Value</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in this.User.Claims)
+                    {
+                        <tr>
+                            <td>@c.Type</td>
+                            <td>@c.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
-    <div class="col-3">
-        <vc:organization-nav-panel></vc:organization-nav-panel>
-    </div>
 </div>
 
-@if (this.env.IsDevelopment())
-{
-    <hr />
-    <h2>Debug Information</h2>
-    <p>这些信息只会在开发阶段被显示。</p>
-    <table class="table">
-        <thead>
-            <tr>
-                <td>Type</td>
-                <td>Value</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>access_token</td>
-                <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("access_token"))</code></td>
-            </tr>
-            <tr>
-                <td>id_token</td>
-                <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("id_token"))</code></td>
-            </tr>
-            <tr>
-                <td>refresh_token</td>
-                <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("refresh_token"))</code></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <td>Type</td>
-                <td>Value</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var c in this.User.Claims)
-            {
-                <tr>
-                    <td>@c.Type</td>
-                    <td>@c.Value</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}

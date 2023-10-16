@@ -1,6 +1,7 @@
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources;
 
@@ -16,6 +17,7 @@ public class DeleteModel : PageModel
     public ApiResource Data { get; set; } = default!;
 
     [BindProperty]
+    [Display(Name = "Resources name")]
     public string ResourceName { get; set; } = default!;
 
     public async Task<IActionResult> OnGet(int id)

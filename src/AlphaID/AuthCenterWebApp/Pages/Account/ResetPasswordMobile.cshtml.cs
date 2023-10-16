@@ -25,26 +25,26 @@ public class ResetPasswordMobileModel : PageModel
     public string Code { get; set; }
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
-    [Display(Name = "移动电话号码")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Mobile phone number")]
     public string PhoneNumber { get; set; }
 
     [BindProperty]
-    [Required(ErrorMessage = "{0}是必需的")]
-    [Display(Name = "短信验证码")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Verification code")]
     public string VerificationCode { get; set; }
 
     [BindProperty]
     [DataType(DataType.Password)]
-    [Required(ErrorMessage = "{0}是必需的")]
-    [Display(Name = "新密码")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "New password")]
     public string NewPassword { get; set; }
 
     [BindProperty]
     [DataType(DataType.Password)]
-    [Required(ErrorMessage = "{0}是必需的")]
-    [Compare(nameof(NewPassword))]
-    [Display(Name = "确认密码")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
+    [Display(Name = "Confirm password")]
     public string ConfirmPassword { get; set; }
 
     public IActionResult OnGet(string code, string phone)

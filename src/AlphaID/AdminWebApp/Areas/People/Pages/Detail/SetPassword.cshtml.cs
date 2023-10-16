@@ -19,7 +19,7 @@ public class SetPasswordModel : PageModel
     public string NewPassword { get; set; } = default!;
 
     [StringLength(30, ErrorMessage = "Validate_StringLength")]
-    [Compare(nameof(NewPassword))]
+    [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
     [DataType(DataType.Password)]
     [BindProperty]
     public string ConfirmPassword { get; set; } = default!;

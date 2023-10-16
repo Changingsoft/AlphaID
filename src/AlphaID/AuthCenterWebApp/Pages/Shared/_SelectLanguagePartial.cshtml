@@ -17,6 +17,6 @@
 <!-- @localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name -->
 <form id="selectLanguage" asp-page="/SetLanguage" asp-area="" asp-route-returnUrl="@returnUrl" method="post" class="form-horizontal" role="form">
     @* <label asp-for="@requestCulture!.RequestCulture.UICulture.Name">@localizer["Language:"]</label> *@
-    <select name="culture" onchange="this.form.submit();" asp-for="@requestCulture!.RequestCulture.UICulture.Name" asp-items="cultureItems" class="form-select">
+    <select name="culture" onchange="this.form.submit();" asp-for="@requestCulture!.RequestCulture.UICulture.Name" asp-items="cultureItems" class="form-select form-select-sm">
     </select>
 </form>

@@ -49,7 +49,7 @@ public class ChangePasswordModel : PageModel
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("NewPassword", ErrorMessage = "新密码和确认密码不匹配。")]
+        [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; }
     }
 

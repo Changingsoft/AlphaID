@@ -1,17 +1,17 @@
 ﻿@page
 @model             IndexModel
 @{
-    this.ViewData["Title"] = "API资源";
+    this.ViewBag.Title = localizer["API Resources"];
 }
-<h3>API资源</h3>
+<h3>@localizer["API Resources"]</h3>
 
-<a asp-page="Create" class="btn btn-primary">创建API资源</a>
+<a asp-page="Create" class="btn btn-primary">@localizer["Create API resource"]</a>
 
 <table class="table">
     <thead>
         <tr>
-            <td>名称</td>
-            <td>资源ID</td>
+            <td>@localizer["Name"]</td>
+            <td>@localizer["Resource ID"]</td>
         </tr>
     </thead>
     <tbody>

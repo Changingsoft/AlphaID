@@ -117,14 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Agree the" xml:space="preserve">
+    <value>同意</value>
+  </data>
   <data name="Birth date" xml:space="preserve">
     <value>生日</value>
+  </data>
+  <data name="Captcha code" xml:space="preserve">
+    <value>验证码</value>
   </data>
   <data name="Captcha_Invalid" xml:space="preserve">
     <value>验证码无效。</value>
   </data>
   <data name="Confirm password" xml:space="preserve">
     <value>确认密码</value>
+  </data>
+  <data name="Current password" xml:space="preserve">
+    <value>当前密码</value>
+  </data>
+  <data name="Current user name" xml:space="preserve">
+    <value>当前用户名</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>部门</value>
+  </data>
+  <data name="Domicile" xml:space="preserve">
+    <value>住所</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
@@ -138,17 +156,56 @@
   <data name="Mobile phone number" xml:space="preserve">
     <value>移动电话号码</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="New email" xml:space="preserve">
+    <value>新电子邮件</value>
+  </data>
+  <data name="New mobile phone number" xml:space="preserve">
+    <value>新移动电话号码</value>
+  </data>
   <data name="New password" xml:space="preserve">
     <value>新密码</value>
+  </data>
+  <data name="New user name" xml:space="preserve">
+    <value>新用户名</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="Recovery code" xml:space="preserve">
+    <value>恢复代码</value>
+  </data>
+  <data name="Remark" xml:space="preserve">
+    <value>备注</value>
+  </data>
   <data name="Remember me on this device" xml:space="preserve">
     <value>在此设备上记住我</value>
   </data>
+  <data name="Remember my decision" xml:space="preserve">
+    <value>记住我的决定</value>
+  </data>
+  <data name="Remember this device" xml:space="preserve">
+    <value>记住这台设备</value>
+  </data>
+  <data name="Representative" xml:space="preserve">
+    <value>责任人</value>
+  </data>
   <data name="Surname" xml:space="preserve">
     <value>姓氏</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>职务</value>
+  </data>
+  <data name="Two-factor code" xml:space="preserve">
+    <value>双因素代码</value>
+  </data>
+  <data name="Unified social credit code" xml:space="preserve">
+    <value>统一社会信用代码</value>
+  </data>
+  <data name="User name" xml:space="preserve">
+    <value>用户名</value>
   </data>
   <data name="Validate_EmailAddress" xml:space="preserve">
     <value>不是有效的电子邮件格式。</value>

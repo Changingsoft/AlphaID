@@ -150,10 +150,10 @@ public class CreateModel : PageModel
         [Display(Name = "Client name",Description ="Friendly name for display.")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "Require Client Secret", Description ="Specifies the client is a credential client.")]
+        [Display(Name = "Require client secret", Description ="Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;
 
-        [Display(Name = "Client Secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
+        [Display(Name = "Client secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
         public string? ClientSecret { get; set; }
 
         [Display(Name = "Redirect URI", Prompt = "https://example.com/signin-oidc")]

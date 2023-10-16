@@ -42,15 +42,15 @@
                         <div class="col-lg-auto ms-lg-auto">
                             <ul class="list-inline list-inline-dots mb-0">
                                 <li class="list-inline-item">
-                                    <a href="~/.well-known/openid-configuration" class="link-secondary" target="_blank">发现文档</a>
+                                    <a href="~/.well-known/openid-configuration" class="link-secondary" target="_blank">@localizer["Discovery Document"]</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a asp-area="Developer" asp-page="/Index" class="link-secondary" target="_blank">开发者中心</a>
+                                    <a asp-area="Developer" asp-page="/Index" class="link-secondary" target="_blank">@localizer["Developer Center"]</a>
                                 </li>
                                 @if (this.User.IsInRole("Administrators"))
                                 {
                                     <li class="list-inline-item">
-                                        <a asp-area="Admin" asp-page="/Index" class="link-secondary">System Management</a>
+                                        <a asp-area="Admin" asp-page="/Index" class="link-secondary">@localizer["System Management"]</a>
                                     </li>
                                 }
                             </ul>
@@ -58,7 +58,7 @@
                         <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                             <ul class="list-inline list-inline-dots mb-0">
                                 <li class="list-inline-item">
-                                    Copyright © 2023 @(product.Value.Organization). All rights reserved.
+                                    Copyright © 2023 @(product.Value.Copyright)
                                 </li>
                                 <li class="list-inline-item">
                                     <a asp-area="" asp-page="/Terms" class="link-secondary">@localizer["Terms of Service"]</a>

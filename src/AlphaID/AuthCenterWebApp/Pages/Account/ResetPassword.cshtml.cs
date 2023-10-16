@@ -83,7 +83,7 @@ public class ResetPasswordModel : PageModel
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-        [Compare("Password", ErrorMessage = "确认密码与新密码不一致。")]
+        [Compare("Password", ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]

@@ -117,136 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Allowed access token signing algorithms" xml:space="preserve">
-    <value>可用的 Access token 签名算法</value>
+  <data name="CIBA Requests" xml:space="preserve">
+    <value>CIBA请求</value>
   </data>
-  <data name="Client ID" xml:space="preserve">
-    <value>客户端ID</value>
+  <data name="Diagnostics" xml:space="preserve">
+    <value>诊断</value>
   </data>
-  <data name="Client name" xml:space="preserve">
-    <value>客户端名称</value>
+  <data name="Feedback" xml:space="preserve">
+    <value>反馈</value>
   </data>
-  <data name="Confirm password" xml:space="preserve">
-    <value>确认密码</value>
+  <data name="Grants" xml:space="preserve">
+    <value>授权</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>联系信息</value>
+  <data name="Profile &amp;amp; Account" xml:space="preserve">
+    <value>个人配置 &amp; 账户</value>
   </data>
-  <data name="Department" xml:space="preserve">
-    <value>部门</value>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>描述</value>
+  <data name="Sign out" xml:space="preserve">
+    <value>注销</value>
   </data>
-  <data name="Directory service" xml:space="preserve">
-    <value>目录服务</value>
-  </data>
-  <data name="Display name" xml:space="preserve">
-    <value>显示名称</value>
-  </data>
-  <data name="Domicile" xml:space="preserve">
-    <value>住所</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>电子邮件</value>
-  </data>
-  <data name="Enabled" xml:space="preserve">
-    <value>启用的</value>
-  </data>
-  <data name="Expires" xml:space="preserve">
-    <value>过期时间</value>
-  </data>
-  <data name="Gender" xml:space="preserve">
-    <value>性别</value>
-  </data>
-  <data name="Given name" xml:space="preserve">
-    <value>名字</value>
-  </data>
-  <data name="Key" xml:space="preserve">
-    <value>键</value>
-  </data>
-  <data name="Mobile phone number" xml:space="preserve">
-    <value>移动电话号码</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
-  </data>
-  <data name="New claim type" xml:space="preserve">
-    <value>新声明类型</value>
-  </data>
-  <data name="New password" xml:space="preserve">
-    <value>新密码</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>密码</value>
-  </data>
-  <data name="Phonetic given name" xml:space="preserve">
-    <value>名字读音</value>
-  </data>
-  <data name="Phonetic surname" xml:space="preserve">
-    <value>姓氏读音</value>
-  </data>
-  <data name="Remark" xml:space="preserve">
-    <value>备注</value>
-  </data>
-  <data name="Require resource indicator" xml:space="preserve">
-    <value>需要资源指示器</value>
-  </data>
-  <data name="Resource name" xml:space="preserve">
-    <value>资源名称</value>
-  </data>
-  <data name="Root DN" xml:space="preserve">
-    <value>根DN</value>
-  </data>
-  <data name="Secret" xml:space="preserve">
-    <value>秘密</value>
-  </data>
-  <data name="Server" xml:space="preserve">
-    <value>服务器</value>
-  </data>
-  <data name="Show in discovery document" xml:space="preserve">
-    <value>在发现文档中显示</value>
-  </data>
-  <data name="Surname" xml:space="preserve">
-    <value>姓氏</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>职务</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>类型</value>
-  </data>
-  <data name="Unified social credit code" xml:space="preserve">
-    <value>统一社会信用代码</value>
-  </data>
-  <data name="UPN suffix" xml:space="preserve">
-    <value>UPN后缀</value>
-  </data>
-  <data name="User DN" xml:space="preserve">
-    <value>用户DN</value>
-  </data>
-  <data name="User must change password on next login" xml:space="preserve">
-    <value>用户下次登录必须修改密码</value>
-  </data>
-  <data name="User name" xml:space="preserve">
-    <value>用户名称</value>
-  </data>
-  <data name="Validate_EmailAddress" xml:space="preserve">
-    <value>不是有效的电子邮件格式。</value>
-  </data>
-  <data name="Validate_PasswordConfirm" xml:space="preserve">
-    <value>两次输入的密码不一致。</value>
-  </data>
-  <data name="Validate_Required" xml:space="preserve">
-    <value>{0}是必需的。</value>
-  </data>
-  <data name="Validate_StringLength" xml:space="preserve">
-    <value>{0}的长度介于{2}到{1}个字符。</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>值</value>
-  </data>
-  <data name="Verification code" xml:space="preserve">
-    <value>短信验证码</value>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
   </data>
 </root>

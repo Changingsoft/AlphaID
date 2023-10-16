@@ -137,7 +137,7 @@ public class CreateDirectoryAccountModel : PageModel
         [Display(Name = "Confirm Password")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        [Compare(nameof(NewPassword))]
+        [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; } = default!;
     }
 }

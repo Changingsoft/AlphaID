@@ -14,7 +14,7 @@
                 <p>One account, serving anywhere.</p>
                 @if (this.User.Identity!.IsAuthenticated)
                 {
-                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">个人中心</a></p>
+                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">@localizer["My profile"]</a></p>
                 }
                 else
                 {

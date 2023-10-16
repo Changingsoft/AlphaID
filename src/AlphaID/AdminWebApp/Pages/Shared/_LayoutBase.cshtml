@@ -19,7 +19,7 @@
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                     <a href="/">
                         <img src="/static/logo-small.svg" width="32" height="32" alt="Tabler" class="navbar-brand-image me-3">
-                        @product.Value.Name 管理中心
+                        @product.Value.Name @localizer["Management Center"]
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
@@ -43,7 +43,7 @@
                                 @if (this.User.IsInRole("Administrators"))
                                 {
                                     <li class="list-inline-item">
-                                        <a asp-area="SystemSettings" asp-page="/Index" class="link-secondary">System Management</a>
+                                        <a asp-area="SystemSettings" asp-page="/Index" class="link-secondary">@localizer["System Management"]</a>
                                     </li>
                                 }
                             </ul>
@@ -54,7 +54,8 @@
                                     Copyright © @(product.Value.Copyright)
                                 </li>
                                 <li class="list-inline-item">
-                                    <a asp-page="Privacy" class="link-secondary">Privacy</a>
+                                    <a asp-page="/Terms" class="link-secondary">@localizer["Terms of service"]</a>
+                                    <a asp-page="/Privacy" class="link-secondary">@localizer["Privacy"]</a>
                                 </li>
 
                             </ul>

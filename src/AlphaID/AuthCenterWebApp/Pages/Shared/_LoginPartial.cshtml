@@ -93,16 +93,16 @@
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="#" class="dropdown-item">Status</a>
-            <a asp-area="Profile" asp-page="/Index" class="dropdown-item">Profile &amp; Account</a>
-            <a href="#" class="dropdown-item">Feedback</a>
+            <a href="#" class="dropdown-item">@localizer["Status"]</a>
+            <a asp-area="Profile" asp-page="/Index" class="dropdown-item">@localizer["Profile &amp; Account"]</a>
+            <a href="#" class="dropdown-item">@localizer["Feedback"]</a>
             <div class="dropdown-divider"></div>
             <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@localizer["Grants"]</a>
-            <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@localizer["Ciba Requests"]</a>
+            <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@localizer["CIBA Requests"]</a>
             <a asp-area="" asp-page="/Diagnostics/Index" class="dropdown-item">@localizer["Diagnostics"]</a>
             <div class="dropdown-divider"></div>
-            <a href="./settings.html" class="dropdown-item">Settings</a>
-            <a asp-area="" asp-page="/Account/Logout/Index" class="dropdown-item">@localizer["Log out"]</a>
+            <a href="./settings.html" class="dropdown-item">@localizer["Settings"]</a>
+            <a asp-area="" asp-page="/Account/Logout/Index" class="dropdown-item">@localizer["Sign out"]</a>
         </div>
     </div>
 }

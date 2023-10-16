@@ -126,7 +126,7 @@ public class ChangePasswordModel : PageModel
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
-        [Compare(nameof(NewPassword))]
+        [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [Required(ErrorMessage = "Validate_Required")]
         public string ConfirmPassword { get; set; } = default!;
     }

@@ -174,7 +174,7 @@ public class ResetPasswordModel : PageModel
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        [Compare(nameof(NewPassword))]
+        [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; } = default!;
 
         [Display(Name = "User must change password on next login")]

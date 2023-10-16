@@ -3,7 +3,7 @@
 @inject IWebHostEnvironment env
 @model IndexModel
 @{
-    this.ViewData["Title"] = $"{this.product.Value.Name}管理中心";
+    this.ViewData["Title"] = $"{this.product.Value.Name} {localizer["Management Center"]}";
 }
 
 <div class="page-body">

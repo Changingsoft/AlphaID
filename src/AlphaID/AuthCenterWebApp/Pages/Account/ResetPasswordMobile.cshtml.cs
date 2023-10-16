@@ -43,7 +43,7 @@ public class ResetPasswordMobileModel : PageModel
     [BindProperty]
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Validate_Required")]
-    [Compare(nameof(NewPassword))]
+    [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
     [Display(Name = "Confirm password")]
     public string ConfirmPassword { get; set; }
 

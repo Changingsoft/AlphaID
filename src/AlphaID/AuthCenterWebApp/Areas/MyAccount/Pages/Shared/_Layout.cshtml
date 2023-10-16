@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @localizer["Account Settings"]
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        @RenderBody()
+    </div>
+</div>
+
+@section Scripts
+    {
+    @RenderSection("Scripts", false)
+}

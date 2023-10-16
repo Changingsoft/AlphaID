@@ -1,0 +1,16 @@
+﻿@inject SignInManager<NaturalPerson> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link" asp-page="/Index" asp-path="/MyAccount" asp-match-prefix="false">账号</a></li>
+    <li class="nav-item"><a class="nav-link" asp-page="/Email" asp-path="/MyAccount/Email">电子邮件</a></li>
+    <li class="nav-item"><a class="nav-link" asp-page="/Mobile" asp-path="/MyAccount/Mobile">移动电话</a></li>
+    <li class="nav-item"><a class="nav-link" asp-page="/ChangePassword" asp-path="/MyAccount/ChangePassword">密码</a></li>
+    @if (hasExternalLogins)
+    {
+        <li class="nav-item"><a class="nav-link" asp-page="/ExternalLogins" asp-path="/MyAccount/ExternalLogins">外部登录</a></li>
+    }
+    <li class="nav-item"><a class="nav-link" asp-page="/TwoFactorAuthentication" asp-path="/MyAccount/TwoFactorAuthentication">双因素身份验证</a></li>
+    <li class="nav-item"><a class="nav-link" asp-page="/PersonalData" asp-path="/MyAccount/PersonalData">个人数据</a></li>
+</ul>

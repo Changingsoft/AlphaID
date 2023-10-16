@@ -41,6 +41,11 @@ public static class ClaimsPrincipalExtensions
         return subjectIdValue;
     }
 
+    /// <summary>
+    /// 将用户的角色显示为逗号分隔的字符串
+    /// </summary>
+    /// <param name="principal"></param>
+    /// <returns></returns>
     public static string? DisplayRoles(this ClaimsPrincipal principal)
     {
         if (principal.Identity is not ClaimsIdentity claimsIdentity)
@@ -48,12 +53,8 @@ public static class ClaimsPrincipalExtensions
             return null;
         }
         var roleClaims = principal.Claims.Where(c => c.Type == claimsIdentity.RoleClaimType).ToArray();
-        var sb = new StringBuilder();
-        foreach (var roleClaim in roleClaims)
-        {
-            sb.Append($", {roleClaim.Value}");
-        }
-        //roleClaims.Select(c => sb.Append($", {c.Value}"));
-        return sb.ToString().Trim(',', ' ');
+        if (roleClaims.Length == 0)
+            return string.Empty;
+        return roleClaims.Select(p => p.Value).Aggregate((x, y) => $"{x},{y}");
     }
 }

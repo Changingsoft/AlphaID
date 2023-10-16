@@ -9,6 +9,8 @@ namespace AlphaIDPlatform;
 /// </summary>
 [HtmlTargetElement("li", Attributes = "asp-path")]
 [HtmlTargetElement("li", Attributes = "asp-match-prefix")]
+[HtmlTargetElement("a", Attributes = "asp-path")]
+[HtmlTargetElement("a", Attributes = "asp-match-prefix")]
 public class NavItemActiveClassTagHelper : TagHelper
 {
 

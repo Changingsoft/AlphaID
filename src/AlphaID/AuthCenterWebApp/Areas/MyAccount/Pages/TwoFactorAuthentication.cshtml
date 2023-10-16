@@ -1,0 +1,69 @@
+﻿@page
+@model TwoFactorAuthenticationModel
+@{
+    ViewData["Title"] = "双因素身份验证 （2FA）";
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["Title"]</h3>
+@{
+    var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+    @if (consentFeature?.CanTrack ?? true)
+    {
+        @if (Model.Is2faEnabled)
+        {
+            if (Model.RecoveryCodesLeft == 0)
+            {
+                <div class="alert alert-danger">
+                    <strong>您还没有恢复代码。</strong>
+                    <p>您需要<a asp-page="./GenerateRecoveryCodes">生成一组新的恢复代码</a>以便可以使用它登录。</p>
+                </div>
+            }
+            else if (Model.RecoveryCodesLeft == 1)
+            {
+                <div class="alert alert-danger">
+                    <strong>You have 1 recovery code left.</strong>
+                    <p>You can <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+                </div>
+            }
+            else if (Model.RecoveryCodesLeft <= 3)
+            {
+                <div class="alert alert-warning">
+                    <strong>您有 @Model.RecoveryCodesLeft 个恢复代码。</strong>
+                    <p>您可以<a asp-page="./GenerateRecoveryCodes">生成一组新的恢复代码</a>。</p>
+                </div>
+            }
+
+            if (Model.IsMachineRemembered)
+            {
+                <form method="post" style="display: inline-block">
+                    <button type="submit" class="btn btn-primary">忘记这个浏览器</button>
+                </form>
+            }
+            <a asp-page="./Disable2fa" class="btn btn-primary">禁用双因素身份验证</a>
+            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">重置恢复代码</a>
+        }
+
+        <h4>身份验证器应用</h4>
+        @if (!Model.HasAuthenticator)
+        {
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">添加身份验证器应用</a>
+        }
+        else
+        {
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">设置身份验证器应用</a>
+            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">重置身份验证器应用</a>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>隐私和 Cookie 政策尚未被接受。</strong>
+            <p>您必须先接受该策略，然后才能启用双因素身份验证。</p>
+        </div>
+    }
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

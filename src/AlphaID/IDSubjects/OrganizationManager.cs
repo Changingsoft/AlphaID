@@ -204,7 +204,7 @@ public class OrganizationManager
     /// <returns></returns>
     public async Task UpdateAsync(GenericOrganization org)
     {
-        org.WhenChanged = DateTime.Now;
+        org.WhenChanged = DateTime.UtcNow;
         await this.OrganizationStore.UpdateAsync(org);
     }
 

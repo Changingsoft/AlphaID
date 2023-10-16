@@ -1,7 +1,7 @@
 ﻿@page "{id}"
 @model BankAccountModel
 @{
-    this.ViewData["Title"] = this.Model.Person.Name + "的银行账号";
+    this.ViewBag.Title = this.Model.Person.Name + "的银行账号";
 }
 
 <h2><a asp-page="Detail" asp-route-id="@Model.Id">@Model.Person.Name</a>的银行账号</h2>

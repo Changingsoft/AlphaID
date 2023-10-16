@@ -55,7 +55,7 @@ public class ResetPasswordModel : PageModel
         var result = await this._userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
         if (result.Succeeded)
         {
-            user.PasswordLastSet = DateTime.Now;
+            user.PasswordLastSet = DateTime.UtcNow;
             await this._userManager.UpdateAsync(user);
             return this.RedirectToPage("./ResetPasswordConfirmation");
         }

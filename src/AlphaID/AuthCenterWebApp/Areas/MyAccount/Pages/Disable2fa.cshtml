@@ -1,11 +1,11 @@
 ﻿@page
 @model             Disable2faModel
 @{
-    ViewData["Title"] = "Disable two-factor authentication (2FA)";
+    this.ViewBag.Title = "Disable two-factor authentication (2FA)";
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
+<h3>@ViewBag.Title</h3>
 
 <div class="alert alert-warning" role="alert">
     <p>

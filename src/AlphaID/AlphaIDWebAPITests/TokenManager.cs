@@ -17,7 +17,7 @@ public class TokenManager
 
     private async Task<Token> EnsureTokenAsync()
     {
-        if (token == null || token.Expires < DateTime.Now)
+        if (token == null || token.Expires < DateTime.UtcNow)
         {
             token = await this.GrantTokenFromIdP();
         }
@@ -45,6 +45,6 @@ public class TokenManager
 
         var authResult = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(await authResponse.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应消息中取得令牌结果");
         int expiresin = (int)authResult.expires_in;
-        return new Token((string)authResult.access_token, DateTime.Now.AddSeconds(expiresin));
+        return new Token((string)authResult.access_token, DateTime.UtcNow.AddSeconds(expiresin));
     }
 }

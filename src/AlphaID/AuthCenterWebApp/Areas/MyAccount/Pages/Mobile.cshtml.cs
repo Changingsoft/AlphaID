@@ -72,7 +72,6 @@ public class MobileModel : PageModel
         if (result.Succeeded)
         {
             person.PhoneNumberConfirmed = true;
-            await this.userManager.UpdateAsync(person);
             this.OperationMessage = "移动电话号码已变更。";
             return this.Page();
         }

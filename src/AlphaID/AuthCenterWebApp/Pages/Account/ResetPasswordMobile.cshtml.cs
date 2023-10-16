@@ -84,7 +84,7 @@ public class ResetPasswordMobileModel : PageModel
         var result = await this._userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
         if (result.Succeeded)
         {
-            person.PasswordLastSet = DateTime.Now;
+            person.PasswordLastSet = DateTime.UtcNow;
             await this._userManager.UpdateAsync(person);
             return this.RedirectToPage("ResetPasswordConfirmation");
         }

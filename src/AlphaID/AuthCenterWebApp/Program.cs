@@ -5,6 +5,7 @@ using AlphaIDPlatform.Platform;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
 using BotDetect.Web;
+using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
@@ -139,7 +140,7 @@ try
                 //使用AspNetIdentity.
                 .AddAspNetIdentity<NaturalPerson>()
                 .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
-                .AddServerSideSessions();
+                .AddServerSideSessions<ServerSideSessionStore>();
 
             //启用身份验证
             services.AddAuthentication()

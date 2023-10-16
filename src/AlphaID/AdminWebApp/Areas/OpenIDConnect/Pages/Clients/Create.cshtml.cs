@@ -27,7 +27,7 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
         var client = new Duende.IdentityServer.EntityFramework.Entities.Client()
         {
             Enabled = true,

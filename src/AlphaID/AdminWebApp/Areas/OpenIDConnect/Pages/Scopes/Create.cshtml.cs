@@ -26,7 +26,7 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
         var scope = new Duende.IdentityServer.EntityFramework.Entities.ApiScope()
         {
             Enabled = true,

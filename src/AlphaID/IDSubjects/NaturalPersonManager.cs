@@ -109,4 +109,27 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         person.SetName(chinesePersonName);
         await this.UpdateAsync(person);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public override Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
+    {
+        user.WhenCreated = DateTime.UtcNow;
+        return base.CreateAsync(user, password);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    protected override Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
+    {
+        user.WhenChanged = DateTime.UtcNow;
+        return base.UpdateUserAsync(user);
+    }
 }

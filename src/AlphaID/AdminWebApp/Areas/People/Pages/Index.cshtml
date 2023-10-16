@@ -2,7 +2,7 @@
 @model IndexModel
 @inject NaturalPersonManager personManager
 @{
-    this.ViewData["Title"] = "自然人";
+    this.ViewBag.Title = "自然人";
     var users = this.personManager.Users;
 }
 

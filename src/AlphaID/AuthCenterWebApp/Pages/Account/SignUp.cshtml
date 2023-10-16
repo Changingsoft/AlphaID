@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewData["title"] = $"创建你的{this.product.Value.Name}";
+    this.ViewBag.Title = $"创建你的{this.product.Value.Name}";
 }
 
 @section Heads

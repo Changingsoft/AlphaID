@@ -1,10 +1,13 @@
 @page
 @model AuthCenterWebApp.Pages.Account.AccessDeniedModel
 @{
+    this.Layout = "_AuthenticationLayout";
 }
-<div class="row">
-    <div class="col">
-        <h1>访问被拒绝</h1>
-        <p>您无权访问该资源。</p>
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <h1>访问被拒绝</h1>
+            <p>您无权访问该资源。</p>
+        </div>
     </div>
 </div>

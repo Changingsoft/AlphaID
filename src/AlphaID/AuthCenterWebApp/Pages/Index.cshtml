@@ -4,7 +4,7 @@
 @inject IConfiguration config
 @inject IOptions<SystemUrlOptions> systemUrl
 @{
-    this.ViewData["Title"] = this.product.Value.Name;
+    this.ViewBag.Title = this.product.Value.Name;
 }
 <div class="page-body">
     <div class="container-xl">

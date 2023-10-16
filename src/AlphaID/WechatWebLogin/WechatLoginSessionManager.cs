@@ -99,7 +99,7 @@ public class WechatLoginSessionManager
         session.WechatOAuthToken = accessToken;
         session.OpenId = (string)result.openid;
         session.WechatOAuthTokenExpiresIn = (int)result.expires_in;
-        session.WechatOauthTokenExpires = DateTime.Now.AddSeconds((double)result.expires_in);
+        session.WechatOauthTokenExpires = DateTime.UtcNow.AddSeconds((double)result.expires_in);
 
         await this.UpdateAsync(session);
 

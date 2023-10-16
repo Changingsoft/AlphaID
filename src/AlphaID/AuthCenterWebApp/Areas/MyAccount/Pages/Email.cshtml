@@ -1,10 +1,10 @@
 ﻿@page
 @model             EmailModel
 @{
-    ViewData["Title"] = "管理电子邮件";
+    this.ViewBag.Title = "管理电子邮件";
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3>@ViewBag.Title</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">

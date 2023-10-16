@@ -31,7 +31,7 @@ public class WechatLoginSession
         this.Resource = resource;
         this.RedirectUri = redirectUri;
         this.Id = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-        this.WhenExpires = DateTime.Now.AddMinutes(10.0D);
+        this.WhenExpires = DateTime.UtcNow.AddMinutes(10.0D);
     }
 
     /// <summary>

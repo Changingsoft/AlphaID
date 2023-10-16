@@ -41,13 +41,11 @@ public class NaturalPerson
     /// <summary>
     /// When Created.
     /// </summary>
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime WhenCreated { get; protected set; } = DateTime.UtcNow;
+    public DateTime WhenCreated { get; protected internal set; } = DateTime.UtcNow;
 
     /// <summary>
     /// When Changed.
     /// </summary>
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime WhenChanged { get; protected internal set; } = DateTime.UtcNow;
 
     /// <summary>
@@ -115,12 +113,6 @@ public class NaturalPerson
     [PersonalData]
     [MaxLength(100)]
     public virtual string? Email { get; set; }
-
-    /// <summary>
-    /// Chinese ID Card
-    /// </summary>
-    [Obsolete]
-    public virtual PersonChineseIDCardInfo? ChineseIDCard { get; set; }
 
     /// <summary>
     /// 用户名。
@@ -191,17 +183,6 @@ public class NaturalPerson
     /// </summary>
     public virtual ICollection<PersonBankAccount> BankAccounts { get; protected set; } = default!;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [Obsolete]
-    public DateTime? RealNameValidTime { get; internal set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [Obsolete]
-    public DateTime? NextRealNameValidTime { get; internal set; }
 
     /// <summary>
     /// Overrided.

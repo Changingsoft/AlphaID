@@ -24,7 +24,7 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
         var resource = new ApiResource
         {
             Name = this.Input.Name,

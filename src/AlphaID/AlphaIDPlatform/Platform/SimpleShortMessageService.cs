@@ -105,14 +105,13 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
 
     private async Task EnsureAccessTokenAsync()
     {
-        if (!AccessTokenExpires.HasValue || AccessTokenExpires.Value < DateTime.Now.AddMinutes(3))
+        if (!AccessTokenExpires.HasValue || AccessTokenExpires.Value < DateTime.UtcNow.AddMinutes(3))
         {
             using var authClient = new HttpClient
             {
                 BaseAddress = new Uri("https://federal.changingsoft.com")
             };
 
-            //TODO 从设置信息获取这些参数。
             var form = new Dictionary<string, string>
             {
                 {"client_id",  this.options.ClientId},
@@ -129,7 +128,7 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
             var result = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync()) as dynamic;
 
             AccessToken = (string)result!.access_token;
-            AccessTokenExpires = DateTime.Now.AddSeconds((int)result.expires_in);
+            AccessTokenExpires = DateTime.UtcNow.AddSeconds((int)result.expires_in);
         }
     }
 

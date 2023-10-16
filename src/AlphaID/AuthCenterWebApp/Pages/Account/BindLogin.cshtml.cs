@@ -140,7 +140,7 @@ public class BindLoginModel : PageModel
 
                 await this._events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
 
-                if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.Now.AddDays(-365.0))
+                if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
                 {
                     var principal = this.GenerateMustChangePasswordPrincipal(user);
                     await this._signInManager.SignOutAsync();

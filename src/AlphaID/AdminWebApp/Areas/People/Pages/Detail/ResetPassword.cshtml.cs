@@ -103,7 +103,7 @@ public class ResetPasswordModel : PageModel
             if (await this.userManager.IsLockedOutAsync(this.Person))
                 await this.userManager.SetLockoutEndDateAsync(this.Person, DateTime.UtcNow);
         }
-        this.Person.PasswordLastSet = this.Input.UserMustChangePasswordOnNextLogin ? null : DateTime.Now;
+        this.Person.PasswordLastSet = this.Input.UserMustChangePasswordOnNextLogin ? null : DateTime.UtcNow;
         await this.userManager.UpdateAsync(this.Person);
 
         this.OperationResult = "操作已成功。";

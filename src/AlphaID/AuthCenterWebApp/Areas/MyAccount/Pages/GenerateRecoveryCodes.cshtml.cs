@@ -1,6 +1,5 @@
 ﻿#nullable disable
 
-using AuthCenterWebApp;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

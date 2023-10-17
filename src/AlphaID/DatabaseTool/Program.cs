@@ -1,5 +1,4 @@
-﻿using AdminWebApp.Infrastructure;
-using AlphaIDEntityFramework.EntityFramework;
+﻿using AlphaIDEntityFramework.EntityFramework;
 using DatabaseTool;
 using Microsoft.EntityFrameworkCore;
 

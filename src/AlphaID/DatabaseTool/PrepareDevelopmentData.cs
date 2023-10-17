@@ -1,5 +1,4 @@
-﻿using AdminWebApp.Infrastructure;
-using AlphaIDEntityFramework.EntityFramework;
+﻿using AlphaIDEntityFramework.EntityFramework;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Text;

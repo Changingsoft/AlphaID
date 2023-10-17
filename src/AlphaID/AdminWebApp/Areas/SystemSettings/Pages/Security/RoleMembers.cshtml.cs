@@ -1,4 +1,4 @@
-using AlphaIDPlatform.Security;
+using AdminWebApp.Domain.Security;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

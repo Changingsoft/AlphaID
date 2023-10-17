@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using OperationalEF;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -119,11 +118,6 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"));
-    options.UseLazyLoadingProxies();
-});
-builder.Services.AddDbContext<OperationalDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OperationalDataConnection"));
     options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>

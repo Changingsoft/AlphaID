@@ -1,7 +1,7 @@
-﻿using AlphaIDPlatform.Security;
+﻿using AdminWebApp.Domain.Security;
 using Microsoft.EntityFrameworkCore;
 
-namespace OperationalEF;
+namespace AdminWebApp.Infrastructure.DataStores;
 
 public class OperationalDbContext : DbContext
 {

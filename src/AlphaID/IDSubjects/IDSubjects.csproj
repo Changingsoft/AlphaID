@@ -14,8 +14,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="IdentityModel" Version="6.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.11" />
-		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.12" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.12" />
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
 	</ItemGroup>
 

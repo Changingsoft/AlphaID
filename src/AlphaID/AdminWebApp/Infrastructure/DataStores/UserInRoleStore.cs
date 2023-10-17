@@ -1,6 +1,6 @@
-﻿using AlphaIDPlatform.Security;
+﻿using AdminWebApp.Domain.Security;
 
-namespace OperationalEF;
+namespace AdminWebApp.Infrastructure.DataStores;
 public class UserInRoleStore : IUserInRoleStore
 {
     private readonly OperationalDbContext dbContext;

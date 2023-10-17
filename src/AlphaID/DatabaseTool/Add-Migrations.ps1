@@ -9,5 +9,4 @@ $args[0]
 dotnet ef migrations add $args[0] -c IDSubjectsDbContext -o Migrations/IDSubjectsDb
 dotnet ef migrations add $args[0] -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
 dotnet ef migrations add $args[0] -c ConfigurationDbContext -o Migrations/ConfigurationDb
-dotnet ef migrations add $args[0] -c OperationalDbContext -o Migrations/OperationalDb
 dotnet ef migrations add $args[0] -c PersistedGrantDbContext -o Migrations/PersistedGrantDb

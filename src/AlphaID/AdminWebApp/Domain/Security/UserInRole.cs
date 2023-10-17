@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AlphaIDPlatform.Security;
+namespace AdminWebApp.Domain.Security;
 
 /// <summary>
 /// 表示在角色中的用户。

@@ -179,6 +179,11 @@ public class NaturalPerson
     public virtual DateTime? PasswordLastSet { get; set; }
 
     /// <summary>
+    /// User head image data.
+    /// </summary>
+    public virtual BinaryDataInfo? Avatar { get; set; }
+
+    /// <summary>
     /// Gets bank accounts of the person.
     /// </summary>
     public virtual ICollection<PersonBankAccount> BankAccounts { get; protected set; } = default!;

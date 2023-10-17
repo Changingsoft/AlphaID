@@ -1,1 +1,0 @@
-INSERT [dbo].[UserInRole] ([UserId], [RoleName], [UserName], [UserSearchHint]) VALUES ('bf16436b-d15f-44b7-bd61-831eacee5063', 'Administrators', N'刘备', 'LIUBEI');

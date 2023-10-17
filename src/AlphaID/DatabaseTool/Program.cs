@@ -1,7 +1,7 @@
-﻿using AlphaIDEntityFramework.EntityFramework;
+﻿using AdminWebApp.Infrastructure;
+using AlphaIDEntityFramework.EntityFramework;
 using DatabaseTool;
 using Microsoft.EntityFrameworkCore;
-using OperationalEF;
 
 
 var builder = Host.CreateDefaultBuilder(args);
@@ -24,11 +24,7 @@ builder
                 options.UseSqlServer(hostContext.Configuration.GetConnectionString("DirectoryLogonDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
                 options.UseLazyLoadingProxies();
             });
-            services.AddDbContext<OperationalDbContext>(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("OperationalDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
-                options.UseLazyLoadingProxies();
-            });
+
             services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {

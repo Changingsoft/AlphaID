@@ -16,10 +16,6 @@ public class IDSubjectsDbContext : DbContext
     /// </summary>
     public DbSet<NaturalPerson> People { get; protected set; } = default!;
 
-    /// <summary>
-    /// 自然人的图像。
-    /// </summary>
-    internal DbSet<NaturalPersonImage> PersonImages { get; set; } = default!;
 
     //public DbSet<IdentityRole> IdentityRoles { get; protected set; } = default!;
 

@@ -3,7 +3,6 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Numerics;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 

@@ -1,10 +1,11 @@
 using AdminWebApp;
+using AdminWebApp.Domain.Security;
+using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
 using AlphaIDEntityFramework.EntityFramework;
 using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
-using AlphaIDPlatform.Security;
 using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
@@ -18,7 +19,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using OperationalEF;
 using System.Globalization;
 using System.Security.Claims;
 
@@ -39,9 +39,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
     {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("zh-CN"),
-                };
+        new CultureInfo("en-US"),
+        new CultureInfo("zh-CN"),
+    };
     options.DefaultRequestCulture = new RequestCulture(culture: builder.Configuration["DefaultCulture"]!, uiCulture: builder.Configuration["DefaultCulture"]!);
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
@@ -157,7 +157,6 @@ builder.Services.AddIdentityCore<NaturalPerson>(options =>
     .AddUserStore<NaturalPersonStore>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<INaturalPersonImageStore, NaturalPersonImageStore>();
 
 //实名身份验证器。
 builder.Services.AddScoped<ChineseIDCardManager>()
@@ -248,6 +247,20 @@ app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
+
+var startAction = app.Configuration["StartAction"];
+if(startAction != null)
+{
+    switch(startAction.ToLower())
+    {
+        case "migration":
+            using (var db = app.Services.GetRequiredService<OperationalDbContext>())
+            {
+                db.Database.Migrate();
+            }
+            break;
+    }
+}
 
 //Run
 app.Run();

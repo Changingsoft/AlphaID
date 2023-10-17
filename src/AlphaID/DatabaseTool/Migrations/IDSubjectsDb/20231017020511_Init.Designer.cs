@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.IDSubjectsDb
 {
     [DbContext(typeof(IDSubjectsDbContext))]
-    [Migration("20231003144509_Init")]
+    [Migration("20231017020511_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -27,28 +27,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AlphaIDEntityFramework.EntityFramework.NaturalPersonImage", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<byte[]>("Photo")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("PhotoMimeType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NaturalPersonImage");
-                });
 
             modelBuilder.Entity("IDSubjects.GenericOrganization", b =>
                 {
@@ -164,9 +142,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime?>("NextRealNameValidTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("PasswordHash")
                         .HasMaxLength(100)
                         .IsUnicode(false)
@@ -193,9 +168,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTime?>("RealNameValidTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("SecurityStamp")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -216,11 +188,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("WhenChanged")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("WhenCreated")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -497,42 +467,22 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.ToTable("RealNameValidation");
                 });
 
-            modelBuilder.Entity("AlphaIDEntityFramework.EntityFramework.NaturalPersonImage", b =>
-                {
-                    b.HasOne("IDSubjects.NaturalPerson", "Person")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("IDSubjects.NaturalPerson", b =>
                 {
-                    b.OwnsOne("IDSubjects.PersonChineseIDCardInfo", "ChineseIDCard", b1 =>
+                    b.OwnsOne("IDSubjects.BinaryDataInfo", "Avatar", b1 =>
                         {
                             b1.Property<string>("NaturalPersonId")
                                 .HasColumnType("varchar(50)");
 
-                            b1.Property<string>("Address")
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("MimeType")
+                                .IsRequired()
                                 .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<string>("CardNumber")
-                                .IsRequired()
-                                .HasMaxLength(18)
                                 .IsUnicode(false)
-                                .HasColumnType("varchar(18)");
-
-                            b1.Property<string>("Ethnicity")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
+                                .HasColumnType("varchar(100)");
 
                             b1.HasKey("NaturalPersonId");
 
@@ -542,7 +492,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .HasForeignKey("NaturalPersonId");
                         });
 
-                    b.Navigation("ChineseIDCard");
+                    b.Navigation("Avatar");
                 });
 
             modelBuilder.Entity("IDSubjects.NaturalPersonClaim", b =>

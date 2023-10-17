@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Security;
+﻿namespace AdminWebApp.Domain.Security;
 
 /// <summary>
 /// 角色常量。

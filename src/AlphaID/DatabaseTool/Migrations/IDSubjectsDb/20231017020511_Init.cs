@@ -29,10 +29,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
                     Mobile = table.Column<string>(type: "varchar(14)", unicode: false, maxLength: 14, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ChineseIDCard_CardNumber = table.Column<string>(type: "varchar(18)", unicode: false, maxLength: 18, nullable: true),
-                    ChineseIDCard_Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ChineseIDCard_Ethnicity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ChineseIDCard_Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     UserName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
@@ -44,8 +40,8 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     PasswordLastSet = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RealNameValidTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NextRealNameValidTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Avatar_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    Avatar_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,25 +86,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     table.ForeignKey(
                         name: "FK_NaturalPersonClaim_NaturalPerson_UserId",
                         column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NaturalPersonImage",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    PhotoMimeType = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NaturalPersonImage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NaturalPersonImage_NaturalPerson_Id",
-                        column: x => x.Id,
                         principalTable: "NaturalPerson",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -405,9 +382,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
         {
             migrationBuilder.DropTable(
                 name: "NaturalPersonClaim");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPersonImage");
 
             migrationBuilder.DropTable(
                 name: "NaturalPersonLogin");

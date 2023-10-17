@@ -1,9 +1,8 @@
 ﻿using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 
-namespace AlphaIDPlatform.Security;
+namespace AdminWebApp.Domain.Security;
 
 /// <summary>
 /// Claim transformation for role-based claims.

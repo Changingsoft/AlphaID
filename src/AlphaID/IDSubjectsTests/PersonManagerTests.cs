@@ -34,4 +34,15 @@ public class PersonManagerTests
         Assert.Equal("SAN", person.PhoneticGivenName);
         Assert.Equal("ZHANGSAN", person.PhoneticSearchHint);
     }
+
+    [Fact]
+    public async Task SetTimeZone()
+    {
+        using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var person = await this.naturalPersonMocker.CreateDefaultMockPersonAsync(manager);
+
+        var result = await manager.SetTimeZone(person, "Asia/Shanghai");
+        Assert.True(result.Succeeded);
+    }
 }

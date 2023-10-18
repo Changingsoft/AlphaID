@@ -185,6 +185,12 @@ public class NaturalPerson
     public virtual BinaryDataInfo? Avatar { get; set; }
 
     /// <summary>
+    /// 用户所选择的时区。存储为IANA Time zone database名称。
+    /// </summary>
+    [MaxLength(50), Unicode(false)]
+    public virtual string? TimeZone { get; protected internal set; }
+
+    /// <summary>
     /// Gets bank accounts of the person.
     /// </summary>
     public virtual ICollection<PersonBankAccount> BankAccounts { get; protected set; } = default!;

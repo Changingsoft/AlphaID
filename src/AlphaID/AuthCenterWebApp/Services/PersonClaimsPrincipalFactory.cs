@@ -25,7 +25,8 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
         id.AddClaim(new Claim(JwtClaimTypes.Profile, new Uri(this.systemUrlOptions.AuthCenterUrl, "Profile").ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrlOptions.AuthCenterUrl, "Profile/Avatar").ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.Locale, "zh-CN")); //todo 从保存用户加载区域选项
-        id.AddClaim(new Claim(JwtClaimTypes.ZoneInfo, "Asia/Shanghai")); //todo 从保存用户加载时区信息
+        if (user.TimeZone != null)
+            id.AddClaim(new Claim(JwtClaimTypes.ZoneInfo, user.TimeZone));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.FirstName != null)
             id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.FirstName));

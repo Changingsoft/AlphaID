@@ -18,6 +18,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.12" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.12" />
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+		<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>

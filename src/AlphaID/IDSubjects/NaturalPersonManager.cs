@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TimeZoneConverter;
 
 namespace IDSubjects;
 
@@ -131,5 +132,21 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     {
         user.WhenChanged = DateTime.UtcNow;
         return base.UpdateUserAsync(user);
+    }
+
+    /// <summary>
+    /// 尝试设置时区。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="tzName"></param>
+    /// <returns></returns>
+    public virtual Task<IdentityResult> SetTimeZone(NaturalPerson user, string tzName)
+    {
+        if(TZConvert.KnownIanaTimeZoneNames.Any(p => p == tzName))
+        {
+            user.TimeZone = tzName;
+            return Task.FromResult(IdentityResult.Success);
+        }
+        return Task.FromResult(IdentityResult.Failed(new IdentityError() { Code = "Invalid_TzInfo", Description = "Invalid time zone name." }));
     }
 }

@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 
-[IgnoreAntiforgeryToken]  //hack 由于使用InputModel类作为输入模型，导致AddionalFields标记被添加模型属性名前缀，导致AntiForgery失效。
 public class CreateModel : PageModel
 {
     private readonly ConfigurationDbContext context;
@@ -20,6 +19,11 @@ public class CreateModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
+    [BindProperty]
+    [Display(Name = "Client ID", Description = "Identifier used by OAuth/OIDC protocol.")]
+    [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "Client Id already exists.")]
+    public string ClientId { get; set; } = Guid.NewGuid().ToString().ToLower();
+
     public void OnGet()
     {
         this.Input = new InputModel();
@@ -31,7 +35,7 @@ public class CreateModel : PageModel
         var client = new Duende.IdentityServer.EntityFramework.Entities.Client()
         {
             Enabled = true,
-            ClientId = this.Input.ClientId,
+            ClientId = this.ClientId,
             ProtocolType = "oidc", //Default to "oidc"
             RequireClientSecret = this.Input.RequireClientSecret,
             ClientName = this.Input.ClientName,
@@ -143,10 +147,6 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Client ID", Description="Identifier used by OAuth/OIDC protocol.")]
-        [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "Client Id already exists.")]
-        public string ClientId { get; set; } = Guid.NewGuid().ToString().ToLower();
-
         [Display(Name = "Client name",Description ="Friendly name for display.")]
         public string ClientName { get; set; } = default!;
 

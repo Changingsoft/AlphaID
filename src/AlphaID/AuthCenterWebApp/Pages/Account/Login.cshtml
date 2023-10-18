@@ -23,6 +23,7 @@
                         <div class="mb-3">
                             <label asp-for="Input.Username" class="form-label"></label>
                             <input asp-for="Input.Username" class="form-control" autofocus>
+                            <span asp-validation-for="Input.Username" class="text-danger"></span>
                         </div>
                         <div class="mb-2">
                             <label class="form-label" asp-for="Input.Password">
@@ -32,6 +33,7 @@
                                 </span>
                             </label>
                             <input asp-for="Input.Password" class="form-control">
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
                         <div class="mb-2">
                             @if (this.Model.View.AllowRememberLogin)

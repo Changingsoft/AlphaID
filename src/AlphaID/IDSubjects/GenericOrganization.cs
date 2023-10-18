@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -105,6 +106,12 @@ public class GenericOrganization
     /// </summary>
     [MaxLength(20)]
     public virtual string? LegalPersonName { get; set; }
+
+    /// <summary>
+    /// 标示该组织的地理位置。
+    /// </summary>
+    [Column(TypeName = "geography")]
+    public virtual Geometry? Location { get; set; } = default!;
 
     /// <summary>
     /// 曾用名。

@@ -78,7 +78,10 @@ try
 
             services.AddDbContext<IDSubjectsDbContext>(options =>
             {
-                options.UseSqlServer(context.Configuration.GetConnectionString("IDSubjectsDataConnection"));
+                options.UseSqlServer(context.Configuration.GetConnectionString("IDSubjectsDataConnection"),sqlOptions =>
+                {
+                    sqlOptions.UseNetTopologySuite();
+                });
                 options.UseLazyLoadingProxies();
             });
 

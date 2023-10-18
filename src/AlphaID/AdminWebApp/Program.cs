@@ -98,6 +98,8 @@ builder.Services
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, JwtClaimTypes.Name);
         //options.ClaimActions.MapJsonKey("profile", JwtClaimTypes.Profile);
         options.ClaimActions.MapJsonKey("picture", JwtClaimTypes.Picture);
+        options.ClaimActions.MapJsonKey("locale", JwtClaimTypes.Locale);
+        options.ClaimActions.MapJsonKey("zoneinfo", JwtClaimTypes.ZoneInfo);
 
         options.Events = new OpenIdConnectEvents()
         {
@@ -124,7 +126,10 @@ builder.Services
 //×¢²áIDSubjects DbContext.
 builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
+    {
+        sqlOptions.UseNetTopologySuite();
+    });
     options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>

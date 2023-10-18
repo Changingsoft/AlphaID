@@ -117,7 +117,10 @@ builder.Services.AddAuthorization(options =>
 //³Ö¾Ã»¯
 builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),sqlOptions =>
+    {
+        sqlOptions.UseNetTopologySuite();
+    });
     options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>

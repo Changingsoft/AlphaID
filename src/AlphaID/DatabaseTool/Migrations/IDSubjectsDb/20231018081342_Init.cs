@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using NetTopologySuite.Geometries;
 
 #nullable disable
 
@@ -20,13 +22,15 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     WhenChanged = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    NickName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     PhoneticSurname = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     PhoneticGivenName = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: true),
                     PhoneticSearchHint = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: true),
                     Sex = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
                     DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    Mobile = table.Column<string>(type: "varchar(14)", unicode: false, maxLength: 14, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(14)", unicode: false, maxLength: 14, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     UserName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
@@ -40,7 +44,20 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     PasswordLastSet = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Avatar_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
-                    Avatar_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    Avatar_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Locale = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
+                    TimeZone = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    Address_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Street1 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Street2 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Street3 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Company = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Receiver = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Contact = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    Address_PostalCode = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    WebSite = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,7 +79,8 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     EstablishedAt = table.Column<DateTime>(type: "date", nullable: true),
                     TermBegin = table.Column<DateTime>(type: "date", nullable: true),
                     TermEnd = table.Column<DateTime>(type: "date", nullable: true),
-                    LegalPersonName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
+                    LegalPersonName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Location = table.Column<Geometry>(type: "geography", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -286,16 +304,16 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_Mobile",
+                name: "IX_NaturalPerson_Name",
+                table: "NaturalPerson",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NaturalPerson_PhoneNumber",
                 table: "NaturalPerson",
                 column: "PhoneNumber",
                 unique: true,
                 filter: "[PhoneNumber] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_Name",
-                table: "NaturalPerson",
-                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_PhoneticSearchHint",

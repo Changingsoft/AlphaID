@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NetTopologySuite.Geometries;
 
 #nullable disable
 
@@ -17,7 +18,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -49,6 +50,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Property<string>("LegalPersonName")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<Geometry>("Location")
+                        .HasColumnType("geography");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -123,19 +127,27 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("Locale")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(14)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(14)");
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("NickName")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -146,6 +158,11 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.Property<DateTime?>("PasswordLastSet")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(14)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(14)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -175,6 +192,11 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasColumnType("varchar(6)")
                         .HasComment("性别");
 
+                    b.Property<string>("TimeZone")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -183,6 +205,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("WebSite")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("WhenChanged")
                         .HasColumnType("datetime2");
@@ -196,11 +221,11 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
+                    b.HasIndex("Name");
+
                     b.HasIndex("PhoneNumber")
                         .IsUnique()
                         .HasFilter("[PhoneNumber] IS NOT NULL");
-
-                    b.HasIndex("Name");
 
                     b.HasIndex("PhoneticSearchHint");
 
@@ -466,6 +491,66 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("IDSubjects.NaturalPerson", b =>
                 {
+                    b.OwnsOne("IDSubjects.AddressInfo", "Address", b1 =>
+                        {
+                            b1.Property<string>("NaturalPersonId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Company")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Contact")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(20)");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("PostalCode")
+                                .HasMaxLength(20)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(20)");
+
+                            b1.Property<string>("Receiver")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("State")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Street1")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Street2")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Street3")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.HasKey("NaturalPersonId");
+
+                            b1.ToTable("NaturalPerson");
+
+                            b1.WithOwner()
+                                .HasForeignKey("NaturalPersonId");
+                        });
+
                     b.OwnsOne("IDSubjects.BinaryDataInfo", "Avatar", b1 =>
                         {
                             b1.Property<string>("NaturalPersonId")
@@ -488,6 +573,8 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                             b1.WithOwner()
                                 .HasForeignKey("NaturalPersonId");
                         });
+
+                    b.Navigation("Address");
 
                     b.Navigation("Avatar");
                 });

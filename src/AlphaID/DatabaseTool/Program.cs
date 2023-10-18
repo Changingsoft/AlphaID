@@ -15,7 +15,11 @@ builder
         {
             services.AddDbContext<IDSubjectsDbContext>(options =>
             {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
+                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+                {
+                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    sql.UseNetTopologySuite();
+                });
                 options.UseLazyLoadingProxies();
             });
             services.AddDbContext<DirectoryLogonDbContext>(options =>

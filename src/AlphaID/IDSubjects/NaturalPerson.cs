@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.NetworkInformation;
 
 namespace IDSubjects;
 
@@ -62,11 +63,25 @@ public class NaturalPerson
     public virtual string? FirstName { get; protected set; }
 
     /// <summary>
+    /// Middle name.
+    /// </summary>
+    [PersonalData]
+    [MaxLength(50)]
+    public virtual string? MiddleName { get; set; }
+
+    /// <summary>
     /// LastName 或姓氏。
     /// </summary>
     [PersonalData]
     [MaxLength(10)]
     public virtual string? LastName { get; protected set; }
+
+    /// <summary>
+    /// 昵称。
+    /// </summary>
+    [PersonalData]
+    [MaxLength(20)]
+    public virtual string? NickName { get; set; }
 
     /// <summary>
     /// 姓氏拼音
@@ -185,11 +200,26 @@ public class NaturalPerson
     public virtual BinaryDataInfo? Avatar { get; set; }
 
     /// <summary>
+    /// 区域和语言选项
+    /// </summary>
+    [MaxLength(10),Unicode(false)]
+    public virtual string? Locale { get; set; }
+
+    /// <summary>
     /// 用户所选择的时区。存储为IANA Time zone database名称。
     /// </summary>
     [MaxLength(50), Unicode(false)]
     public virtual string? TimeZone { get; protected internal set; }
 
+    /// <summary>
+    /// 地址。
+    /// </summary>
+    public virtual AddressInfo? Address { get; set; }
+
+    /// <summary>
+    /// 个人主页。
+    /// </summary>
+    public virtual string? WebSite { get; set; }
     /// <summary>
     /// Gets bank accounts of the person.
     /// </summary>

@@ -24,23 +24,23 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
         id.AddClaim(new Claim(JwtClaimTypes.Name, user.Name));
         id.AddClaim(new Claim(JwtClaimTypes.Profile, new Uri(this.systemUrlOptions.AuthCenterUrl, "Profile").ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrlOptions.AuthCenterUrl, "Profile/Avatar").ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.Locale, "zh-CN")); //todo 从保存用户加载区域选项
+        id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
+        if (user.Locale != null)
+            id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));
         if (user.TimeZone != null)
             id.AddClaim(new Claim(JwtClaimTypes.ZoneInfo, user.TimeZone));
-        id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.FirstName != null)
             id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.FirstName));
         if (user.LastName != null)
             id.AddClaim(new Claim(JwtClaimTypes.FamilyName, user.LastName));
-
-        //todo middle name
-        //id.AddClaim(new Claim(JwtClaimTypes.MiddleName, ""));
-        //todo nick name
-        //id.AddClaim(new Claim(JwtClaimTypes.NickName, ""));
-        //todo address
-        //id.AddClaim(new Claim(JwtClaimTypes.Address, ""));
-        //todo website
-        //id.AddClaim(new Claim(JwtClaimTypes.WebSite, ""));
+        if (user.MiddleName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.MiddleName, user.MiddleName));
+        if (user.NickName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.NickName, user.NickName));
+        if (user.Address != null)
+            id.AddClaim(new Claim(JwtClaimTypes.Address, $"{user.Address.Country},{user.Address.State},{user.Address.City},{user.Address.PostalCode},{user.Address.Street1},{user.Address.Street2},{user.Address.Street3},{user.Address.Company},{user.Address.Receiver},{user.Address.Contact}"));
+        if (user.WebSite != null)
+            id.AddClaim(new Claim(JwtClaimTypes.WebSite, user.WebSite));
 
         //Custom claim type phonetic_search_hint.
         if (user.PhoneticSearchHint != null)

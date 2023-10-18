@@ -44,7 +44,7 @@ public class IDSubjectsDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<NaturalPerson>().HasIndex(p => p.Email).IsUnique(true).HasFilter(@"[Email] IS NOT NULL");
-        builder.Entity<NaturalPerson>().HasIndex(p => p.Mobile).IsUnique(true).HasFilter(@"[Mobile] IS NOT NULL");
+        builder.Entity<NaturalPerson>().HasIndex(p => p.PhoneNumber).IsUnique(true).HasFilter(@"[PhoneNumber] IS NOT NULL");
         builder.Entity<NaturalPerson>().HasIndex(p => p.WhenCreated);
         builder.Entity<NaturalPerson>().HasIndex(p => p.WhenChanged);
         builder.Entity<GenericOrganization>().HasIndex(p => p.USCI).IsUnique(true).HasFilter(@"[USCI] IS NOT NULL");

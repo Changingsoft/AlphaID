@@ -288,9 +288,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_Mobile",
                 table: "NaturalPerson",
-                column: "Mobile",
+                column: "PhoneNumber",
                 unique: true,
-                filter: "[Mobile] IS NOT NULL");
+                filter: "[PhoneNumber] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_Name",

@@ -28,7 +28,7 @@ public class PersonBuilder
     /// <returns></returns>
     public PersonBuilder SetMobile(MobilePhoneNumber mobilePhoneNumber, bool confirmed = false)
     {
-        this.Person.Mobile = mobilePhoneNumber.ToString();
+        this.Person.PhoneNumber = mobilePhoneNumber.ToString();
         this.Person.PhoneNumberConfirmed = confirmed;
         return this;
     }

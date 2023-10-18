@@ -154,7 +154,7 @@ public class NaturalPersonStore : INaturalPersonStore //, INaturalPersonChineseI
     public Task<string?> GetPhoneNumberAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return Task.FromResult(user.Mobile);
+        return Task.FromResult(user.PhoneNumber);
     }
 
     public Task<bool> GetPhoneNumberConfirmedAsync(NaturalPerson user, CancellationToken cancellationToken)
@@ -336,7 +336,7 @@ public class NaturalPersonStore : INaturalPersonStore //, INaturalPersonChineseI
 
     public Task SetPhoneNumberAsync(NaturalPerson user, string? phoneNumber, CancellationToken cancellationToken)
     {
-        user.Mobile = phoneNumber;
+        user.PhoneNumber = phoneNumber;
         return Task.CompletedTask;
     }
 

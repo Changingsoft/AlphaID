@@ -36,7 +36,7 @@ public class CreateAccountRequest
     public string DisplayName { get; set; } = default!;
 
     /// <summary>
-    /// E164 Mobile.
+    /// E164 PhoneNumber.
     /// </summary>
     public string? E164Mobile { get; set; }
 

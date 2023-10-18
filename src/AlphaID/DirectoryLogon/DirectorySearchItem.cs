@@ -9,7 +9,7 @@
 /// <param name="ObjectGUID"> Object GUID. </param>
 /// <param name="DN"> Distinguished Name. </param>
 /// <param name="DisplayName"> Display Name </param>
-/// <param name="Mobile"> Mobile phone number with E.164 format. </param>
+/// <param name="Mobile"> PhoneNumber phone number with E.164 format. </param>
 /// <param name="Company"> Company name. </param>
 /// <param name="Department"> Department name. </param>
 /// <param name="Title"> Title name. </param>

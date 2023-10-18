@@ -63,7 +63,7 @@ public class MembersModel : PageModel
         var person = await this.personManager.FindByIdAsync(this.PersonId);
         if (person == null)
         {
-            this.ModelState.AddModelError("Mobile", "找不到人员");
+            this.ModelState.AddModelError("PhoneNumber", "找不到人员");
             return this.Page();
         }
 

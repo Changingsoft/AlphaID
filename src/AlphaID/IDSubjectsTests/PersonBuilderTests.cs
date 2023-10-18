@@ -12,7 +12,7 @@ public class PersonBuilderTests
         var builder = new PersonBuilder("PersonName");
         builder.SetMobile(MobilePhoneNumber.Parse("15912341234"));
         var person = builder.Person;
-        Assert.Equal("+8615912341234", person.Mobile);
+        Assert.Equal("+8615912341234", person.PhoneNumber);
 
     }
 

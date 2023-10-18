@@ -55,7 +55,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
             return Task.FromResult(default(NaturalPerson));
         var phoneNumberString = phoneNumber.ToString();
-        var person = this.Users.SingleOrDefault(p => p.Mobile == phoneNumberString);
+        var person = this.Users.SingleOrDefault(p => p.PhoneNumber == phoneNumberString);
         return Task.FromResult(person);
     }
 

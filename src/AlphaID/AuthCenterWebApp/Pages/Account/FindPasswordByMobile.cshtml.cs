@@ -21,7 +21,7 @@ public class FindPasswordByMobileModel : PageModel
         this.verificationCodeService = verificationCodeService;
     }
 
-    [Display(Name = "Mobile phone number")]
+    [Display(Name = "PhoneNumber phone number")]
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
     public string Mobile { get; set; } = default!;
@@ -43,7 +43,7 @@ public class FindPasswordByMobileModel : PageModel
         var code = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         var normalPhoneNumber = phoneNumber.ToString();
 
-        var person = this.userManager.Users.FirstOrDefault(p => p.Mobile == normalPhoneNumber);
+        var person = this.userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
         if (person == null || !person.PhoneNumberConfirmed)
         {
             //²»Ö´ÐÐ²Ù×÷

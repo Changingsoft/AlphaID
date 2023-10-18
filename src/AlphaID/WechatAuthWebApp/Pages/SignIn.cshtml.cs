@@ -81,7 +81,7 @@ public class SignInModel : PageModel
 
     public class SignInFormModel
     {
-        [Display(Name = "Mobile phone number")]
+        [Display(Name = "PhoneNumber phone number")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(11, ErrorMessage = "Validate_StringLength")]
         [RegularExpression(@"^\d{11}$")]

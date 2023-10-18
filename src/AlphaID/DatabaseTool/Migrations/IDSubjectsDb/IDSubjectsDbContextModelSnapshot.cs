@@ -129,7 +129,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Mobile")
+                    b.Property<string>("PhoneNumber")
                         .HasMaxLength(14)
                         .IsUnicode(false)
                         .HasColumnType("varchar(14)");
@@ -196,9 +196,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.HasIndex("Mobile")
+                    b.HasIndex("PhoneNumber")
                         .IsUnique()
-                        .HasFilter("[Mobile] IS NOT NULL");
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.HasIndex("Name");
 

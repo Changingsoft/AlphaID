@@ -106,7 +106,7 @@ public class NaturalPerson
     [PersonalData]
     [MaxLength(14)]
     [Unicode(false)]
-    public virtual string? Mobile { get; set; }
+    public virtual string? PhoneNumber { get; set; }
 
     /// <summary>
     /// 电子邮件。

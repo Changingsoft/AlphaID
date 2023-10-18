@@ -47,8 +47,8 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
             id.AddClaim(new Claim("phonetic_search_hint", user.PhoneticSearchHint));
         if (user.DateOfBirth.HasValue)
             id.AddClaim(new Claim(JwtClaimTypes.BirthDate, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
-        if (user.Mobile != null)
-            id.AddClaim(new Claim(JwtClaimTypes.PhoneNumber, user.Mobile));
+        if (user.PhoneNumber != null)
+            id.AddClaim(new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber));
         id.AddClaim(new Claim(JwtClaimTypes.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()));
         if (user.Sex.HasValue)
             id.AddClaim(new Claim(JwtClaimTypes.Gender, user.Sex.Value.ToString().ToLower()));

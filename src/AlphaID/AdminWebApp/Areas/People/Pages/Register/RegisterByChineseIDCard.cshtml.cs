@@ -32,7 +32,7 @@ public class RegisterByChineseIDCardModel : PageModel
     [BindProperty]
     public string IDCardBackBase64 { get; set; } = default!;
 
-    [Display(Name = "Mobile phone number")]
+    [Display(Name = "PhoneNumber phone number")]
     [BindProperty]
     public string Mobile { get; set; } = default!;
 
@@ -83,7 +83,7 @@ public class RegisterByChineseIDCardModel : PageModel
             return this.Page();
         }
 
-        var exists = this.personManager.Users.Where(p => p.Mobile == phoneNumber.ToString()
+        var exists = this.personManager.Users.Where(p => p.PhoneNumber == phoneNumber.ToString()
                                                          || p.UserName == phoneNumber.PhoneNumber);
         if (!string.IsNullOrEmpty(this.Email))
             exists = exists.Where(p => p.Email == this.Email

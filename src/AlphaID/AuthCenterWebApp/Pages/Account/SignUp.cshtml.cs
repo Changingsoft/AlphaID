@@ -92,7 +92,7 @@ public class SignUpModel : PageModel
 
         if (!MobilePhoneNumber.TryParse(this.Input.Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError("Input.Mobile", this.stringLocalizer["Invalid mobile phone number."]);
+            this.ModelState.AddModelError("Input.PhoneNumber", this.stringLocalizer["Invalid mobile phone number."]);
         }
         if (!this.ModelState.IsValid)
             return this.Page();
@@ -158,7 +158,7 @@ public class SignUpModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Mobile phone number", Prompt = "1xxxxxxxxxx")]
+        [Display(Name = "PhoneNumber phone number", Prompt = "1xxxxxxxxxx")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = default!;

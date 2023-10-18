@@ -33,7 +33,7 @@ public record PersonModel(string SubjectId,
         : this(person.Id,
                person.Name,
                person.Sex.ToString(),
-               person.Mobile?.MobileSuffix(),
+               person.PhoneNumber?.MobileSuffix(),
                realNameValid,
                person.PhoneticSearchHint,
                members?.Select(p => $"{p.Title} {p.Department} {p.Organization.Name}".Trim()))

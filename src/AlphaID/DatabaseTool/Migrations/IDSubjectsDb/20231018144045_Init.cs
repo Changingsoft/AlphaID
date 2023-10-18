@@ -30,18 +30,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     PhoneticSearchHint = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: true),
                     Sex = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
                     DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "varchar(14)", unicode: false, maxLength: 14, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    UserName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
-                    SecurityStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    ConcurrencyStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     PasswordLastSet = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Avatar_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     Avatar_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
@@ -57,7 +45,21 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     Address_Receiver = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Contact = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     Address_PostalCode = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
-                    WebSite = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    WebSite = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    SecurityStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,67 +87,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organization", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NaturalPersonClaim",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    ClaimType = table.Column<string>(type: "varchar(200)", unicode: false, maxLength: 200, nullable: false),
-                    ClaimValue = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NaturalPersonClaim", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NaturalPersonClaim_NaturalPerson_UserId",
-                        column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NaturalPersonLogin",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(128)", unicode: false, maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NaturalPersonLogin", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_NaturalPersonLogin_NaturalPerson_UserId",
-                        column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NaturalPersonToken",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Value = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NaturalPersonToken", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_NaturalPersonToken_NaturalPerson_UserId",
-                        column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,6 +144,67 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     table.ForeignKey(
                         name: "FK_RealNameValidation_NaturalPerson_PersonId",
                         column: x => x.PersonId,
+                        principalTable: "NaturalPerson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserClaim",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "varchar(50)", nullable: false),
+                    ClaimType = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClaim", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserClaim_NaturalPerson_UserId",
+                        column: x => x.UserId,
+                        principalTable: "NaturalPerson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserExternalLogin",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserExternalLogin", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_UserExternalLogin_NaturalPerson_UserId",
+                        column: x => x.UserId,
+                        principalTable: "NaturalPerson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserToken",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Value = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserToken", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_UserToken_NaturalPerson_UserId",
+                        column: x => x.UserId,
                         principalTable: "NaturalPerson",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -297,23 +299,14 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_Email",
+                name: "EmailIndex",
                 table: "NaturalPerson",
-                column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
+                column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_Name",
                 table: "NaturalPerson",
                 column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_PhoneNumber",
-                table: "NaturalPerson",
-                column: "PhoneNumber",
-                unique: true,
-                filter: "[PhoneNumber] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_PhoneticSearchHint",
@@ -324,7 +317,8 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 name: "IX_NaturalPerson_UserName",
                 table: "NaturalPerson",
                 column: "UserName",
-                unique: true);
+                unique: true,
+                filter: "[UserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_WhenChanged",
@@ -337,14 +331,11 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 column: "WhenCreated");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPersonClaim_UserId",
-                table: "NaturalPersonClaim",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NaturalPersonLogin_UserId",
-                table: "NaturalPersonLogin",
-                column: "UserId");
+                name: "UserNameIndex",
+                table: "NaturalPerson",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organization_Name",
@@ -392,20 +383,21 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 name: "IX_RealNameValidation_PersonId",
                 table: "RealNameValidation",
                 column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClaim_UserId",
+                table: "UserClaim",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserExternalLogin_UserId",
+                table: "UserExternalLogin",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "NaturalPersonClaim");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPersonLogin");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPersonToken");
-
             migrationBuilder.DropTable(
                 name: "OrganizationAdministrator");
 
@@ -423,6 +415,15 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             migrationBuilder.DropTable(
                 name: "RealNameValidation");
+
+            migrationBuilder.DropTable(
+                name: "UserClaim");
+
+            migrationBuilder.DropTable(
+                name: "UserExternalLogin");
+
+            migrationBuilder.DropTable(
+                name: "UserToken");
 
             migrationBuilder.DropTable(
                 name: "Organization");

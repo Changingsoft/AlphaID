@@ -45,7 +45,7 @@ builder.Services.AddScoped<IVerificationCodeService, SimpleShortMessageService>(
 builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
 
 //³Ö¾Ã»¯
-builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
+//builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
 builder.Services.AddScoped<IWechatUserIdentifierStore, WechatUserIdentifierStore>();
 

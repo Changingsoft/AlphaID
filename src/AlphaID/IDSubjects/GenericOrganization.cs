@@ -11,6 +11,7 @@ namespace IDSubjects;
 [Table("Organization")]
 [Index(nameof(Name))]
 [Index(nameof(WhenCreated))]
+[Index(nameof(WhenChanged))]
 public class GenericOrganization
 {
     /// <summary>

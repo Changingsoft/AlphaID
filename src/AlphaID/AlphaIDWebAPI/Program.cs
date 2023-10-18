@@ -134,7 +134,7 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 }).AddScoped<ConfigurationStoreOptions>();
 
 
-builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
+//builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
 builder.Services.AddScoped<IOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();

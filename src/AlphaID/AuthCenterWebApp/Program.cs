@@ -94,7 +94,7 @@ try
                 .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
                 .AddUserValidator<NaturalPersonValidator>()
                 .AddDefaultTokenProviders();
-            services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
+            //services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
 
             //添加邮件发送器。
             services.AddScoped<IEmailSender, SmtpMailSender>()

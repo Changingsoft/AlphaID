@@ -29,9 +29,7 @@ public class HomePageTest : IClassFixture<AdminWebAppFactory>
     [Fact]
     public async Task AuthenticatedUserOK()
     {
-        var client = this.factory.CreateClient();
-        
-        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
+        var client = this.factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("/");
         Assert.True(response.IsSuccessStatusCode);

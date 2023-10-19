@@ -15,7 +15,7 @@ public class HomePageTest : IClassFixture<AuthCenterWebAppFactory>
     [InlineData("/Index")]
     public async Task ShouldBeOK(string url)
     {
-        var client = this.factory.CreateClient();
+        var client = this.factory.CreateAuthenticatedClient();
         var response = await client.GetAsync(url);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }

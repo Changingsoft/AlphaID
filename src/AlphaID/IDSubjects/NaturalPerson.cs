@@ -147,6 +147,7 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     /// 个人主页。
     /// </summary>
+    [MaxLength(256)]
     public virtual string? WebSite { get; set; }
     /// <summary>
     /// Gets bank accounts of the person.

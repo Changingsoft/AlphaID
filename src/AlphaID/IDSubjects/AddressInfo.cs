@@ -61,11 +61,20 @@ public class AddressInfo
     /// 收件人联系方式。
     /// </summary>
     [MaxLength(20), Unicode(false)]
-    public string Contact { get; set; } = default!;
+    public string? Contact { get; set; }
 
     /// <summary>
     /// 邮政编号。
     /// </summary>
     [MaxLength(20), Unicode(false)]
     public string? PostalCode { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"{Receiver} {Company},{Street3},{Street2},{Street1},{City},{Country},{PostalCode}";
+    }
 }

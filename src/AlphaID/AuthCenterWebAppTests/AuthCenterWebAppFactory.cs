@@ -33,7 +33,8 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<AuthCenterWebApp.Pr
     protected override IHost CreateHost(IHostBuilder builder)
     {
         var host = base.CreateHost(builder);
-
+        //hack bypass database init process.
+        return host;
 #if DEBUG
         var workDir = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\..\DatabaseTool\bin\Debug\net7.0\";
         var process = new Process();
@@ -53,23 +54,5 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<AuthCenterWebApp.Pr
 
 
         return host;
-    }
-
-    private static AuthCenterWebAppFactory instance = default!;
-    private static readonly object _lock = new();
-
-    public static AuthCenterWebAppFactory Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                lock (_lock)
-                {
-                    instance ??= new AuthCenterWebAppFactory();
-                }
-            }
-            return instance;
-        }
     }
 }

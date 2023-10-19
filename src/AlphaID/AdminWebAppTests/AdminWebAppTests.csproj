@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AdminWebApp\AdminWebApp.csproj" />
-    <ProjectReference Include="..\AuthCenterWebAppTests\AuthCenterWebAppTests.csproj" />
   </ItemGroup>
 
 </Project>

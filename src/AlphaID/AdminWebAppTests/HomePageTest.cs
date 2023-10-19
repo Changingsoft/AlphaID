@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 
 namespace AdminWebAppTests;
@@ -23,9 +27,13 @@ public class HomePageTest : IClassFixture<AdminWebAppFactory>
     }
 
     [Fact]
-    public Task AuthenticatedUserOK()
+    public async Task AuthenticatedUserOK()
     {
-        //todo how to obtain token via oidc authorization code workflow?
-        return Task.CompletedTask;
+        var client = this.factory.CreateClient();
+        
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
+
+        var response = await client.GetAsync("/");
+        Assert.True(response.IsSuccessStatusCode);
     }
 }

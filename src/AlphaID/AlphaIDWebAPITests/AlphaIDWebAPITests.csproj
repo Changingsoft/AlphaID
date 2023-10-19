@@ -24,7 +24,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaIDWebAPI\AlphaIDWebAPI.csproj" />
-		<ProjectReference Include="..\AuthCenterWebAppTests\AuthCenterWebAppTests.csproj" />
 	</ItemGroup>
 
 </Project>

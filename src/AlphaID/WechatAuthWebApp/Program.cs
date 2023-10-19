@@ -3,6 +3,8 @@ using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDEntityFramework.EntityFramework.Wechat;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatformServices.Aliyun;
+using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
 using IDSubjects;
 using Microsoft.EntityFrameworkCore;

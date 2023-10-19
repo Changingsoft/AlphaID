@@ -6,6 +6,8 @@ using AlphaIDEntityFramework.EntityFramework;
 using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatformServices.Aliyun;
+using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;

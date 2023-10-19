@@ -18,9 +18,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaIDPlatformServices.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
+		<ProjectReference Include="..\XinAnAuth\XinAnAuth.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

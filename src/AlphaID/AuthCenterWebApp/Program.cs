@@ -2,6 +2,8 @@
 using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatformServices.Aliyun;
+using AlphaIDPlatformServices.Primitives;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
 using BotDetect.Web;
@@ -42,10 +44,7 @@ try
         config.ConfigureServices((context, services) =>
         {
             //程序资源
-            services.AddLocalization(options =>
-            {
-                options.ResourcesPath = "Resources";
-            });
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             //区域和本地化
             services.Configure<RequestLocalizationOptions>(options =>
@@ -73,9 +72,6 @@ try
             {
                 options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
             });
-
-
-
 
             services.AddDbContext<IDSubjectsDbContext>(options =>
             {
@@ -134,56 +130,54 @@ try
                 .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
                 .AddUserValidator<NaturalPersonValidator>()
                 .AddDefaultTokenProviders();
-            //services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
 
             //添加邮件发送器。
             services.AddScoped<IEmailSender, SmtpMailSender>()
                 .Configure<SmtpMailSenderOptions>(context.Configuration.GetSection("SmtpMailSenderOptions"));
 
             //添加IdentityServer
-            services
-                .AddIdentityServer(options =>
+            services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+
+                // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
+                options.EmitStaticAudienceClaim = true;
+
+                //配置IdP标识
+                options.IssuerUri = context.Configuration["IdPConfig:IssuerUri"];
+
+                //hack 将外部登录的方案修改为AspNetCoreIdentity的默认值？
+                options.DynamicProviders.SignInScheme = IdentityConstants.ExternalScheme;
+            })
+            //配置IdentityServer的配置存储
+            .AddConfigurationStore(options =>
+            {
+                options.ConfigureDbContext = builder =>
                 {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
-
-                    // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                    options.EmitStaticAudienceClaim = true;
-
-                    //配置IdP标识
-                    options.IssuerUri = context.Configuration["IdPConfig:IssuerUri"];
-
-                    //hack 将外部登录的方案修改为AspNetCoreIdentity的默认值？
-                    options.DynamicProviders.SignInScheme = IdentityConstants.ExternalScheme;
-                })
-                //配置IdentityServer的配置存储
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(context.Configuration.GetConnectionString("OidcConfigurationDataConnection"), o =>
                     {
-                        builder.UseSqlServer(context.Configuration.GetConnectionString("OidcConfigurationDataConnection"), o =>
-                        {
-                            o.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-                        });
-                    };
-                })
-                //操作记录存储
-                .AddOperationalStore(options =>
+                        o.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    });
+                };
+            })
+            //操作记录存储
+            .AddOperationalStore(options =>
+            {
+                options.ConfigureDbContext = builder =>
                 {
-                    options.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(context.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"), o =>
                     {
-                        builder.UseSqlServer(context.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"), o =>
-                        {
-                            o.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-                        });
-                    };
-                })
-                //使用AspNetIdentity.
-                .AddAspNetIdentity<NaturalPerson>()
-                .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
-                .AddServerSideSessions<ServerSideSessionStore>();
+                        o.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    });
+                };
+            })
+            //使用AspNetIdentity.
+            .AddAspNetIdentity<NaturalPerson>()
+            .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
+            .AddServerSideSessions<ServerSideSessionStore>();
 
             //短信服务
             services.AddScoped<IShortMessageService, SimpleShortMessageService>();

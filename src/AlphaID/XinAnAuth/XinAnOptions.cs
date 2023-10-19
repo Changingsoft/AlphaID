@@ -2,10 +2,16 @@
 using Microsoft.AspNetCore.Authentication.OAuth;
 using System.Security.Claims;
 
-namespace AuthCenterWebApp.Services.XinAn;
+namespace XinAnAuth;
 
+/// <summary>
+/// 
+/// </summary>
 public class XinAnOptions : OAuthOptions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public XinAnOptions()
     {
         this.CallbackPath = "/signin-xinan";
@@ -19,5 +25,8 @@ public class XinAnOptions : OAuthOptions
         this.ClaimActions.MapJsonKey("openid", "openid");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string UserDetailInformationEndpoint { get; set; }
 }

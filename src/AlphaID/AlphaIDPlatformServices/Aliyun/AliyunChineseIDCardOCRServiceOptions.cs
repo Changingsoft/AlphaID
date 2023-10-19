@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIDPlatformServices.Aliyun;
 
 /// <summary>
 /// 阿里云身份证OCR识别服务选项。

@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaIDPlatformServices.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
 	</ItemGroup>

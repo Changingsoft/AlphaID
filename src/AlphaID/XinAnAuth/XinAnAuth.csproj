@@ -2,18 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+
 	<ItemGroup>
-		<InternalsVisibleTo Include="AlphaIDPlatformTests" />
+	  <Compile Remove="JsonDocumentAuthExtensions.cs" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 	</ItemGroup>
 
 </Project>

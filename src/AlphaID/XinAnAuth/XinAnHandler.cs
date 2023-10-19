@@ -1,18 +1,44 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 
-namespace AuthCenterWebApp.Services.XinAn;
+namespace XinAnAuth;
 
+/// <summary>
+/// 
+/// </summary>
 public class XinAnHandler : OAuthHandler<XinAnOptions>
 {
-    public XinAnHandler(IOptionsMonitor<XinAnOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
-    {
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="logger"></param>
+    /// <param name="encoder"></param>
+    /// <param name="clock"></param>
+    public XinAnHandler(IOptionsMonitor<XinAnOptions> options,
+                        ILoggerFactory logger,
+                        UrlEncoder encoder,
+                        ISystemClock clock)
+        : base(options,
+               logger,
+               encoder,
+               clock)
+    { }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="identity"></param>
+    /// <param name="properties"></param>
+    /// <param name="tokens"></param>
+    /// <returns></returns>
+    /// <exception cref="HttpRequestException"></exception>
     protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
     {
         var endpoint = QueryHelpers.AddQueryString(this.Options.UserInformationEndpoint, "access_token", tokens.AccessToken);
@@ -31,7 +57,7 @@ public class XinAnHandler : OAuthHandler<XinAnOptions>
             {"oauth_consumer_key", this.Options.ClientId },
             {"openid", payload.RootElement.GetString("openid") },
         });
-
+        
         var detailInfoResponse = await this.Options.Backchannel.GetAsync(detailInfoEndpoint, this.Context.RequestAborted);
         if (!detailInfoResponse.IsSuccessStatusCode)
         {

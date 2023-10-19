@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using AlphaIDPlatform.Platform;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace AlphaIDPlatform.Platform;
+namespace AlphaIDPlatformServices.Tianyancha;
 
 /// <summary>
 /// 天眼查工商信息服务。

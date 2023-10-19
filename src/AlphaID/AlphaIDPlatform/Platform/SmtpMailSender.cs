@@ -60,7 +60,7 @@ public class SmtpMailSender : IEmailSender
         }
         catch (Exception ex)
         {
-            this.logger?.LogError("发送邮件时发生异常，消息是{message}", ex.Message);
+            this.logger?.LogError(ex, "发送邮件时发生异常，消息是{message}", ex.Message);
             throw;
         }
 

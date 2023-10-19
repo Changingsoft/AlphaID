@@ -8,6 +8,7 @@ using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
 using IDSubjects.RealName;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -78,19 +79,58 @@ try
 
             services.AddDbContext<IDSubjectsDbContext>(options =>
             {
-                options.UseSqlServer(context.Configuration.GetConnectionString("IDSubjectsDataConnection"),sqlOptions =>
+                options.UseSqlServer(context.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
                 {
                     sqlOptions.UseNetTopologySuite();
                 });
                 options.UseLazyLoadingProxies();
             });
 
-            //启用AspNetCore.Identity
-            services.AddIdentity<NaturalPerson, IdentityRole>()
-                .AddUserStore<NaturalPersonStore>()
-                .AddRoleStore<FakeRoleStore>() //不起作用的RoleStore.
+            //启用AspNetCore.IdentityCore
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+            .AddCookie(IdentityConstants.ApplicationScheme, o =>
+            {
+                o.LoginPath = new PathString("/Account/Login");
+                o.Events = new CookieAuthenticationEvents
+                {
+                    OnValidatePrincipal = SecurityStampValidator.ValidatePrincipalAsync
+                };
+            })
+            .AddCookie(IdentityConstants.ExternalScheme, o =>
+            {
+                o.Cookie.Name = IdentityConstants.ExternalScheme;
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            })
+            .AddCookie(IdentityConstants.TwoFactorRememberMeScheme, o =>
+            {
+                o.Cookie.Name = IdentityConstants.TwoFactorRememberMeScheme;
+                o.Events = new CookieAuthenticationEvents
+                {
+                    OnValidatePrincipal = SecurityStampValidator.ValidateAsync<ITwoFactorSecurityStampValidator>
+                };
+            })
+            .AddCookie(IdentityConstants.TwoFactorUserIdScheme, o =>
+            {
+                o.Cookie.Name = IdentityConstants.TwoFactorUserIdScheme;
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            })
+            //添加必须修改密码cookie。
+            .AddCookie(AuthCenterIdentitySchemes.MustChangePasswordScheme, o =>
+            {
+                o.Cookie.Name = AuthCenterIdentitySchemes.MustChangePasswordScheme;
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            });
+
+            services.AddHttpContextAccessor();
+            services.AddIdentityCore<NaturalPerson>()
                 .AddUserManager<NaturalPersonManager>()
                 .AddSignInManager<PersonSignInManager>()
+                .AddUserStore<NaturalPersonStore>()
                 .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
                 .AddUserValidator<NaturalPersonValidator>()
                 .AddDefaultTokenProviders();
@@ -144,15 +184,6 @@ try
                 .AddAspNetIdentity<NaturalPerson>()
                 .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
                 .AddServerSideSessions<ServerSideSessionStore>();
-
-            //启用身份验证
-            services.AddAuthentication()
-                //添加必须修改密码cookie。
-                .AddCookie(AuthCenterIdentitySchemes.MustChangePasswordScheme, o =>
-                {
-                    o.Cookie.Name = AuthCenterIdentitySchemes.MustChangePasswordScheme;
-                    o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                });
 
             //短信服务
             services.AddScoped<IShortMessageService, SimpleShortMessageService>();

@@ -36,45 +36,43 @@ public class IDSubjectsDbContext : IdentityUserContext<NaturalPerson>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<NaturalPerson>(b =>
+        builder.Entity<NaturalPerson>(e =>
         {
-            b.ToTable("NaturalPerson");
-            b.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.PasswordHash).HasMaxLength(100).IsUnicode(false);
-            b.Property(p => p.SecurityStamp).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.ConcurrencyStamp).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
+            e.ToTable("NaturalPerson");
+            e.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.PasswordHash).HasMaxLength(100).IsUnicode(false);
+            e.Property(p => p.SecurityStamp).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.ConcurrencyStamp).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
         });
 
-        builder.Entity<IdentityUserLogin<string>>(b =>
+        builder.Entity<IdentityUserLogin<string>>(e =>
         {
-            b.ToTable("UserExternalLogin");
-            b.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.ProviderKey).HasMaxLength(256).IsUnicode(false);
-            b.Property(p => p.ProviderDisplayName).HasMaxLength(50);
-            b.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
+            e.ToTable("UserExternalLogin");
+            e.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.ProviderKey).HasMaxLength(256).IsUnicode(false);
+            e.Property(p => p.ProviderDisplayName).HasMaxLength(50);
+            e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
         });
-        builder.Entity<IdentityUserToken<string>>(b =>
+        builder.Entity<IdentityUserToken<string>>(e =>
         {
-            b.ToTable("UserToken");
-            b.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.Name).HasMaxLength(50);
-            b.Property(p => p.Value).HasMaxLength(256).IsUnicode(false);
+            e.ToTable("UserToken");
+            e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.Name).HasMaxLength(50);
+            e.Property(p => p.Value).HasMaxLength(256).IsUnicode(false);
 
         });
-        builder.Entity<IdentityUserClaim<string>>(b =>
+        builder.Entity<IdentityUserClaim<string>>(e =>
         {
-            b.ToTable("UserClaim");
-            b.Property(p => p.ClaimType).HasMaxLength(256).IsUnicode(false);
-            b.Property(p => p.ClaimValue).HasMaxLength(50);
+            e.ToTable("UserClaim");
+            e.Property(p => p.ClaimType).HasMaxLength(256).IsUnicode(false);
+            e.Property(p => p.ClaimValue).HasMaxLength(50);
         });
 
         builder.Entity<GenericOrganization>(e =>
         {
             e.HasIndex(p => p.USCI).IsUnique(true).HasFilter(@"[USCI] IS NOT NULL");
-            //e.HasIndex(p => p.WhenCreated);
-            //e.HasIndex(p => p.WhenChanged);
         });
     }
 }

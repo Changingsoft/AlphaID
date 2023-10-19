@@ -5,9 +5,9 @@
 }
 
 $args[0]
+dotnet build
 
-dotnet ef migrations add $args[0] -c IDSubjectsDbContext -o Migrations/IDSubjectsDb
-dotnet ef migrations add $args[0] -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
-dotnet ef migrations add $args[0] -c ConfigurationDbContext -o Migrations/ConfigurationDb
-dotnet ef migrations add $args[0] -c OperationalDbContext -o Migrations/OperationalDb
-dotnet ef migrations add $args[0] -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
+dotnet ef migrations add $args[0] -c IDSubjectsDbContext -o Migrations/IDSubjectsDb --no-build
+dotnet ef migrations add $args[0] -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb --no-build
+dotnet ef migrations add $args[0] -c ConfigurationDbContext -o Migrations/ConfigurationDb --no-build
+dotnet ef migrations add $args[0] -c PersistedGrantDbContext -o Migrations/PersistedGrantDb --no-build

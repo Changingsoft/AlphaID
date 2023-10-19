@@ -16,11 +16,11 @@ namespace AuthCenterWebApp.Areas.Profile.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             var person = await this.personManager.GetUserAsync(User);
-            if(person != null)
-            {
-                //todo 获取用户头像输出到响应。
-            }
+            if (person == null)
+                return this.NotFound();
 
+            if (person.Avatar != null)
+                return this.File(person.Avatar.Data, person.Avatar.MimeType);
             return this.File("~/img/no-picture-avatar.png", "image/png");
         }
     }

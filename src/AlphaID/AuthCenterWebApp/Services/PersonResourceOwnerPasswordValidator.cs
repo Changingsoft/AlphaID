@@ -21,7 +21,7 @@ public class PersonResourceOwnerPasswordValidator : ResourceOwnerPasswordValidat
         var user = await this.userManager.FindByNameAsync(context.UserName);
         if (user != null)
         {
-            if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.Now.AddDays(-365.0))
+            if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
             {
                 this.logger.LogInformation("Authentication failed for username: {username}, reason: User must change password before first login.", context.UserName);
                 context.Result = new GrantValidationResult(Duende.IdentityServer.Models.TokenRequestErrors.InvalidGrant);

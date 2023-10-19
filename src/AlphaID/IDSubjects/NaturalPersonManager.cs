@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TimeZoneConverter;
 
 namespace IDSubjects;
 
@@ -54,7 +55,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
             return Task.FromResult(default(NaturalPerson));
         var phoneNumberString = phoneNumber.ToString();
-        var person = this.Users.SingleOrDefault(p => p.Mobile == phoneNumberString);
+        var person = this.Users.SingleOrDefault(p => p.PhoneNumber == phoneNumberString);
         return Task.FromResult(person);
     }
 
@@ -108,5 +109,44 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     {
         person.SetName(chinesePersonName);
         await this.UpdateAsync(person);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public override Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
+    {
+        user.WhenCreated = DateTime.UtcNow;
+        return base.CreateAsync(user, password);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    protected override Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
+    {
+        user.WhenChanged = DateTime.UtcNow;
+        return base.UpdateUserAsync(user);
+    }
+
+    /// <summary>
+    /// 尝试设置时区。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="tzName"></param>
+    /// <returns></returns>
+    public virtual Task<IdentityResult> SetTimeZone(NaturalPerson user, string tzName)
+    {
+        if(TZConvert.KnownIanaTimeZoneNames.Any(p => p == tzName))
+        {
+            user.TimeZone = tzName;
+            return Task.FromResult(IdentityResult.Success);
+        }
+        return Task.FromResult(IdentityResult.Failed(new IdentityError() { Code = "Invalid_TzInfo", Description = "Invalid time zone name." }));
     }
 }

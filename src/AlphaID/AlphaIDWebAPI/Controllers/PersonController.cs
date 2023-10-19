@@ -89,7 +89,7 @@ public class PersonController : ControllerBase
 
         if (MobilePhoneNumber.TryParse(keywords, out MobilePhoneNumber number))
         {
-            var result = this.personManager.Users.SingleOrDefault(p => p.Mobile == number.ToString());
+            var result = this.personManager.Users.SingleOrDefault(p => p.PhoneNumber == number.ToString());
             if (result == null)
                 return new PersonSearchResult(Enumerable.Empty<PersonModel>());
 

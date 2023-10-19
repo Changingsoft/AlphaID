@@ -7,12 +7,10 @@ namespace AdminWebApp.Areas.People.Pages.Detail;
 public class IndexModel : PageModel
 {
     private readonly NaturalPersonManager userManager;
-    private readonly INaturalPersonImageStore imageStore;
 
-    public IndexModel(NaturalPersonManager userManager, INaturalPersonImageStore imageStore)
+    public IndexModel(NaturalPersonManager userManager)
     {
         this.userManager = userManager;
-        this.imageStore = imageStore;
     }
 
     public NaturalPerson Data { get; set; } = default!;
@@ -35,8 +33,10 @@ public class IndexModel : PageModel
     {
         var person = await this.userManager.FindByIdAsync(id);
         if (person == null)
-            return this.File("~/img/no-picture-avatar.png", "image/png");
-        var img = await this.imageStore.GetPhotoAsync(person);
-        return img == null ? this.File("~/img/no-picture-avatar.png", "image/png") : this.File(img.Value.ImageContent, img.Value.MimeType);
+            return this.NotFound();
+
+        if (person.Avatar != null)
+            return this.File(person.Avatar.Data, person.Avatar.MimeType);
+        return this.File("~/img/no-picture-avatar.png", "image/png");
     }
 }

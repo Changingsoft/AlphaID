@@ -26,7 +26,7 @@ public partial struct ChineseIDCardNumber
             throw new OverflowException("Version Overflow.");
         if (RegionCode is < 100000 or > 999999)
             throw new OverflowException("Region code overflow.");
-        if (DateOfBirth > DateTime.Now)
+        if (DateOfBirth > DateTime.UtcNow)
             throw new ArgumentException("Date of Birth in the future.");
         if (Sequence > 999)
             throw new OverflowException("Sequence out of range.");
@@ -234,7 +234,7 @@ public partial struct ChineseIDCardNumber
         catch
         { return false; }
 
-        if (dateOfBirth > DateTime.Now) return false;
+        if (dateOfBirth > DateTime.UtcNow) return false;
 
         number = new ChineseIDCardNumber(ver, int.Parse(match.Groups[1].Value), dateOfBirth, int.Parse(match.Groups[5].Value));
         return ver != ChineseIDCardNumberVersion.V2 || number.checkcode == dataStr[17];

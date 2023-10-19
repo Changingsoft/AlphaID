@@ -1,6 +1,5 @@
 ﻿using IdentityModel;
 using System.Security.Claims;
-using System.Text;
 
 namespace AlphaIDPlatform.Security;
 

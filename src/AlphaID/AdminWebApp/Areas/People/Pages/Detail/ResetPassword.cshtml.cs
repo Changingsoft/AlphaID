@@ -49,7 +49,7 @@ public class ResetPasswordModel : PageModel
 
         this.Person = person;
 
-        if (string.IsNullOrEmpty(this.Person.Mobile))
+        if (string.IsNullOrEmpty(this.Person.PhoneNumber))
         {
             this.OperationResult = "无法通过短信重置密码。因为用户没有留下移动电话号码。";
             return this.Page();
@@ -67,7 +67,7 @@ public class ResetPasswordModel : PageModel
             this.Person.PasswordLastSet = null;
             await this.userManager.UpdateAsync(this.Person);
 
-            await this.shortMessageService.SendAsync(this.Person.Mobile, $"您的初始密码是[{password}]（不包括方括号）");
+            await this.shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
             this.OperationResult = "密码已重置并告知用户。";
             return this.Page();
         }
@@ -103,7 +103,7 @@ public class ResetPasswordModel : PageModel
             if (await this.userManager.IsLockedOutAsync(this.Person))
                 await this.userManager.SetLockoutEndDateAsync(this.Person, DateTime.UtcNow);
         }
-        this.Person.PasswordLastSet = this.Input.UserMustChangePasswordOnNextLogin ? null : DateTime.Now;
+        this.Person.PasswordLastSet = this.Input.UserMustChangePasswordOnNextLogin ? null : DateTime.UtcNow;
         await this.userManager.UpdateAsync(this.Person);
 
         this.OperationResult = "操作已成功。";

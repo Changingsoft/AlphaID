@@ -1,7 +1,6 @@
 ﻿using AlphaIDEntityFramework.EntityFramework;
 using DatabaseTool;
 using Microsoft.EntityFrameworkCore;
-using OperationalEF;
 
 
 var builder = Host.CreateDefaultBuilder(args);
@@ -16,7 +15,11 @@ builder
         {
             services.AddDbContext<IDSubjectsDbContext>(options =>
             {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
+                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+                {
+                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    sql.UseNetTopologySuite();
+                });
                 options.UseLazyLoadingProxies();
             });
             services.AddDbContext<DirectoryLogonDbContext>(options =>
@@ -24,11 +27,7 @@ builder
                 options.UseSqlServer(hostContext.Configuration.GetConnectionString("DirectoryLogonDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
                 options.UseLazyLoadingProxies();
             });
-            services.AddDbContext<OperationalDbContext>(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("OperationalDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
-                options.UseLazyLoadingProxies();
-            });
+
             services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {

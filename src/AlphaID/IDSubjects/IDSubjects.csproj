@@ -8,15 +8,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="PersonalDataAttribute.cs" />
 	  <Compile Remove="RealName\INaturalPersonChineseIDCardStore.cs" />
 	</ItemGroup>
 
 
 	<ItemGroup>
 		<PackageReference Include="IdentityModel" Version="6.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.11" />
-		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.12" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.12" />
+		<PackageReference Include="NetTopologySuite" Version="2.5.0" />
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+		<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>

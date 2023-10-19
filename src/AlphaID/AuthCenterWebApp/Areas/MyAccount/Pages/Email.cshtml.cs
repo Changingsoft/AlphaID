@@ -96,12 +96,12 @@ public class EmailModel : PageModel
             var callbackUrl = this.Url.Page(
                 "/Account/ConfirmEmailChange",
                 pageHandler: null,
-                values: new { userId, email = this.Input.NewEmail, code },
+                values: new { area="", userId, email = this.Input.NewEmail, code },
                 protocol: this.Request.Scheme);
             await this._emailSender.SendEmailAsync(
                 this.Input.NewEmail,
                 "确认您的邮件地址",
-                $"<p>您已请求更改电子邮件地址，请单击<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>这里</a>以确认您的邮件地址。</p>" +
+                $"<p>您已请求更改电子邮件地址，请单击<a href='{callbackUrl}'>这里</a>以确认您的邮件地址。</p>" +
                 $"<p>{this.production.Name}团队</p>");
 
             this.StatusMessage = "变更电子邮件的确认链接已发至您的新邮箱，请到您的邮箱查收邮件并完成变更确认。";

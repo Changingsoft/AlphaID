@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using OperationalEF;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -118,12 +117,10 @@ builder.Services.AddAuthorization(options =>
 //³Ö¾Ã»¯
 builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"));
-    options.UseLazyLoadingProxies();
-});
-builder.Services.AddDbContext<OperationalDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OperationalDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),sqlOptions =>
+    {
+        sqlOptions.UseNetTopologySuite();
+    });
     options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>
@@ -137,7 +134,7 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 }).AddScoped<ConfigurationStoreOptions>();
 
 
-builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
+//builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
 builder.Services.AddScoped<IOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();

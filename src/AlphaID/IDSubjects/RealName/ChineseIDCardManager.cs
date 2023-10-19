@@ -89,7 +89,7 @@ public class ChineseIDCardManager
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        validation.Result = new ValidationResult(validator, DateTime.Now, accepted);
+        validation.Result = new ValidationResult(validator, DateTime.UtcNow, accepted);
 
         await this.store.UpdateAsync(validation);
 
@@ -108,7 +108,7 @@ public class ChineseIDCardManager
         validation.Person = person;
         validation.PersonId = person.Id;
 
-        validation.CommitTime = DateTime.Now;
+        validation.CommitTime = DateTime.UtcNow;
         await this.store.CreateAsync(validation);
     }
 

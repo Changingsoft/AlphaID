@@ -204,7 +204,7 @@ public class OrganizationManager
     /// <returns></returns>
     public async Task UpdateAsync(GenericOrganization org)
     {
-        org.WhenChanged = DateTime.Now;
+        org.WhenChanged = DateTime.UtcNow;
         await this.OrganizationStore.UpdateAsync(org);
     }
 
@@ -241,6 +241,21 @@ public class OrganizationManager
         }
         org.Name = newName;
         await this.UpdateAsync(org);
+        return OperationResult.Success;
+    }
+
+    /// <summary>
+    /// 为组织设置其地理坐标位置，采用WGS-84。
+    /// </summary>
+    /// <param name="organization"></param>
+    /// <param name="lon"></param>
+    /// <param name="lat"></param>
+    /// <returns></returns>
+    public virtual async Task<OperationResult> SetLocation(GenericOrganization organization, double lon, double lat)
+    {
+        var factory = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326);
+        organization.Location = factory.CreatePoint(new NetTopologySuite.Geometries.Coordinate(lon, lat));
+        await this.OrganizationStore.UpdateAsync(organization);
         return OperationResult.Success;
     }
 }

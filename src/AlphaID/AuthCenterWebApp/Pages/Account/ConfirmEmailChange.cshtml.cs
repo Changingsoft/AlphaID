@@ -49,12 +49,12 @@ public class ConfirmEmailChangeModel : PageModel
 
         // In our UI email and user name are one and the same, so when we update the email
         // we need to update the user name.
-        var setUserNameResult = await this._userManager.SetUserNameAsync(user, email);
-        if (!setUserNameResult.Succeeded)
-        {
-            this.StatusMessage = "更改账户名称时出现错误。";
-            return this.Page();
-        }
+        //var setUserNameResult = await this._userManager.SetUserNameAsync(user, email);
+        //if (!setUserNameResult.Succeeded)
+        //{
+        //    this.StatusMessage = "更改账户名称时出现错误。";
+        //    return this.Page();
+        //}
 
         await this._signInManager.RefreshSignInAsync(user);
         this.StatusMessage = "感谢您确认电子邮件变更。";

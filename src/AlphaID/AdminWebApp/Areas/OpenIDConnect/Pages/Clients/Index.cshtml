@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewData["Title"] = "客户端";
+    this.ViewBag.Title = "客户端";
 }
 
 <h3>客户端</h3>
@@ -37,24 +37,10 @@
                     <p>@client.Description</p>
                 </td>
                 <td>
-                    @{
-                        var grants = new StringBuilder();
-                        foreach (var grant in client.AllowedGrantTypes)
-                        {
-                            grants.Append($"{grant.GrantType}, ");
-                        }
-                    }
-                    @grants.ToString().Trim(' ', ',')
+                    @Html.Raw(client.AllowedGrantTypes.Select(p => p.GrantType).Aggregate((x,y) => $"{x}<br />{y}"))
                 </td>
                 <td>
-                    @{
-                        var scopeStringBuilder = new StringBuilder();
-                        foreach (var scope in client.AllowedScopes)
-                        {
-                            scopeStringBuilder.Append($"{scope.Scope} ");
-                        }
-                    }
-                    @scopeStringBuilder.ToString().Trim()
+                    @Html.Raw(client.AllowedScopes.Select(p => p.Scope).Aggregate((x,y) => $"{x}<br />{y}"))
                 </td>
             </tr>
         }

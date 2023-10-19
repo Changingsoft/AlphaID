@@ -1,10 +1,10 @@
 ﻿@page
 @model             IndexModel
 @{
-    ViewData["Title"] = "账号";
+    this.ViewBag.Title = "账号";
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3>@ViewBag.Title</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">

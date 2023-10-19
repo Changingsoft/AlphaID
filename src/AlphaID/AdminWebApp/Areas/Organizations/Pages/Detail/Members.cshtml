@@ -1,7 +1,7 @@
 ﻿@page "{id}"
 @model             MembersModel
 @{
-    this.ViewData["Title"] = $"成员 - {this.Model.Organization.Name}";
+    this.ViewBag.Title = $"成员 - {this.Model.Organization.Name}";
 }
 
 <partial name="_OrganizationSummary" model="@Model.Organization"></partial>
@@ -27,7 +27,7 @@
                     <a href="#" class="card-btn">
                         <!-- Download SVG icon from http://tabler-icons.io/i/phone -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path></svg>
-                        @member.Person.Mobile
+                        @member.Person.PhoneNumber
                     </a>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         {
             <tr>
                 <td>@member.Person.Name</td>
-                <td>@member.Person.Mobile</td>
+                <td>@member.Person.PhoneNumber</td>
                 <td>@member.Title</td>
                 <td>@member.Department</td>
                 <td>@member.Remark</td>

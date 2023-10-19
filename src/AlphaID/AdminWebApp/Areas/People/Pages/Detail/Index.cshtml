@@ -2,16 +2,17 @@
 @model IndexModel
 
 @{
-    this.ViewData["title"] = $"{Model.Data.Name}的资料";
+    this.ViewBag.Title = $"{Model.Data.Name}的资料";
 }
 
 
 <h1>@Model.Data.Name</h1>
-<div class="row">
+<div class="row mb-3">
     <div class="col-10">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Base info</h3>
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="card-title">@localizer["Base info"]</h3>
+                <a asp-page="EditPersonName" asp-route-id="@this.Model.Data.Id" class="btn">@localizer["Change name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
@@ -36,103 +37,145 @@
                         <div class="datagrid-content">@(this.Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(this.Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">Form control</div>
-                        <div class="datagrid-content">
-                            <input type="text" class="form-control form-control-flush" placeholder="Input placeholder">
-                        </div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">Longer description</div>
-                        <div class="datagrid-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        </div>
+                        <div class="datagrid-title">@localizer["Website"]</div>
+                        <div class="datagrid-content">@Model.Data.WebSite</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-2">
+    <div class="col-2 text-center">
         <img src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" class="img-fluid img-thumbnail" />
+        <a href="#" class="btn btn-sm">@localizer["Change Avatar"]</a>
     </div>
 </div>
-<div class="card">
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">Account</h3>
+    </div>
     <div class="card-body">
-        <h3 class="card-title">ID</h3>
-        <div class="input-icon">
-            <input type="text" value="@Model.Data.Id" class="form-control" placeholder="Search…" readonly="">
-            <span class="input-icon-addon">
-                <!-- Download SVG icon from http://tabler-icons.io/i/files -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 3v4a1 1 0 0 0 1 1h4"></path><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z"></path><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2"></path></svg>
-            </span>
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["User name"]</div>
+                <div class="datagrid-content">@Model.Data.UserName</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Email"]</div>
+                <div class="datagrid-content"><a href="mailto:@Model.Data.Email">@Model.Data.Email</a></div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Phone number"]</div>
+                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Status"]</div>
+                <div class="datagrid-content">@Model.Data.Enabled LocalLogin? 2Fa? PhoneCheck?</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Authentication statistics"]</div>
+                <div class="datagrid-content">10 falied:2 lock:1</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Person ID"]</div>
+                <div class="datagrid-content">
+                    <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["External Logins"]</div>
+                <div class="datagrid-content">@Model.ExternalLogins.Count</div>
+            </div>
         </div>
     </div>
 </div>
-<dl class="row">
-    <dt class="col-5">移动电话号码</dt>
-    <dd class="col-7">@Model.Data.Mobile</dd>
-    <dt class="col-5">电子邮件</dt>
-    <dd class="col-7">@Model.Data.Email</dd>
-    <dt class="col-5">账户名</dt>
-    <dd class="col-7">@Model.Data.UserName</dd>
-</dl>
-<a asp-page="EditPersonName" asp-route-id="@this.Model.Data.Id">编辑姓名</a>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">@localizer["Contacts"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Phone number"]</div>
+                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Email"]</div>
+                <div class="datagrid-content">@Model.Data.Email</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["QQ"]</div>
+                <div class="datagrid-content">N/A</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@localizer["Address"]</div>
+                <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">@localizer["Real name validation"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title"></div>
+                <div class="datagrid-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">@localizer["Payments"]</h3>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>账号</td>
+                    <td>户名</td>
+                    <td>银行</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bankAccount in Model.Data.BankAccounts)
+                {
+                    <tr>
+                        <td>@bankAccount.AccountNumber</td>
+                        <td>@bankAccount.AccountName</td>
+                        <td>@bankAccount.BankName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">@localizer["Organizations"]</h3>
+    </div>
+    <div class="card-body">
+        <partial name="_MembersOfPart" model="@Model.Data" />
+    </div>
+</div>
+
 <hr />
 <h2>实名信息</h2>
 <vc:person-chinese-id-card-panel person="@this.Model.Data"></vc:person-chinese-id-card-panel>
 
 
 <hr />
-<h2><a asp-page="MembersOf" asp-route-id="@Model.Data.Id">组织</a></h2>
-<partial name="_MembersOfPart" model="@Model.Data" />
-
-<h2>外部登录</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Provider</td>
-            <td>Key</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var login in Model.ExternalLogins)
-        {
-            <tr>
-                <td>@login.ProviderDisplayName</td>
-                <td>@login.ProviderKey</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h2><a asp-page="Security" asp-route-id="@Model.Data.Id">安全性</a></h2>
-
-<hr />
 <h2><a asp-page="DirectoryAccounts" asp-route-id="@this.Model.Data.Id">AD账号</a></h2>
 <vc:person-logon-accounts person-id="@Model.Data.Id"></vc:person-logon-accounts>
 
 <hr />
-<h2><a asp-page="BankAccount" asp-route-id="@Model.Data.Id">银行账号</a></h2>
-<table class="table">
-    <thead>
-        <tr>
-            <td>账号</td>
-            <td>户名</td>
-            <td>银行</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var bankAccount in Model.Data.BankAccounts)
-        {
-            <tr>
-                <td>@bankAccount.AccountNumber</td>
-                <td>@bankAccount.AccountName</td>
-                <td>@bankAccount.BankName</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<hr />
-<p>创建时间: @Model.Data.WhenCreated</p>
-<p>修改时间: @Model.Data.WhenChanged</p>
-<p><a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">删除自然人</a></p>
+<p>@localizer["Created at"] : @Model.Data.WhenCreated</p>
+<p>@localizer["Changed at"] : @Model.Data.WhenChanged</p>
+<p><a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>

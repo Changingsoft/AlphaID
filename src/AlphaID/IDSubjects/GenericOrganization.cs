@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ namespace IDSubjects;
 [Table("Organization")]
 [Index(nameof(Name))]
 [Index(nameof(WhenCreated))]
+[Index(nameof(WhenChanged))]
 public class GenericOrganization
 {
     /// <summary>
@@ -52,12 +54,12 @@ public class GenericOrganization
     /// <summary>
     /// 创建记录的时间。
     /// </summary>
-    public virtual DateTime WhenCreated { get; protected set; } = DateTime.Now;
+    public virtual DateTime WhenCreated { get; protected set; } = DateTime.UtcNow;
 
     /// <summary>
     /// 记录修改的时间。
     /// </summary>
-    public virtual DateTime WhenChanged { get; protected internal set; } = DateTime.Now;
+    public virtual DateTime WhenChanged { get; protected internal set; } = DateTime.UtcNow;
 
     /// <summary>
     /// 是否有效。
@@ -105,6 +107,12 @@ public class GenericOrganization
     /// </summary>
     [MaxLength(20)]
     public virtual string? LegalPersonName { get; set; }
+
+    /// <summary>
+    /// 标示该组织的地理位置。
+    /// </summary>
+    [Column(TypeName = "geography")]
+    public virtual Geometry? Location { get; set; } = default!;
 
     /// <summary>
     /// 曾用名。

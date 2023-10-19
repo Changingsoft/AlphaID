@@ -1,7 +1,7 @@
 ﻿@page "{id}"
 @model MembersOfModel
 @{
-    this.ViewData["Title"] = this.Model.Person.Name + "所属的组织";
+    this.ViewBag.Title = this.Model.Person.Name + "所属的组织";
 }
 
 <partial name="_PersonSummary" model="@Model.Person" />

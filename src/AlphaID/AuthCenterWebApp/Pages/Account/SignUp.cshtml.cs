@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -93,7 +92,7 @@ public class SignUpModel : PageModel
 
         if (!MobilePhoneNumber.TryParse(this.Input.Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError("Input.Mobile", this.stringLocalizer["Invalid mobile phone number."]);
+            this.ModelState.AddModelError("Input.PhoneNumber", this.stringLocalizer["Invalid mobile phone number."]);
         }
         if (!this.ModelState.IsValid)
             return this.Page();
@@ -120,7 +119,7 @@ public class SignUpModel : PageModel
             personBuilder.SetEmail(this.Input.Email);
 
         var person = personBuilder.Person;
-        person.PasswordLastSet = DateTime.Now;
+        person.PasswordLastSet = DateTime.UtcNow;
         person.DateOfBirth = this.Input.DateOfBirth;
         person.Sex = this.Input.Sex;
 
@@ -159,7 +158,7 @@ public class SignUpModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Mobile phone number", Prompt = "1xxxxxxxxxx")]
+        [Display(Name = "PhoneNumber phone number", Prompt = "1xxxxxxxxxx")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = default!;

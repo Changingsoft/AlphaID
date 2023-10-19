@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 
@@ -8,6 +11,21 @@ namespace AuthCenterWebAppTests;
 
 public class AuthCenterWebAppFactory : WebApplicationFactory<AuthCenterWebApp.Program>
 {
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        base.ConfigureWebHost(builder);
+        builder.ConfigureTestServices(services =>
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "TestScheme";
+                options.DefaultScheme = "TestScheme";
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options => { });
+        });
+    }
+
     protected override TestServer CreateServer(IWebHostBuilder builder)
     {
         var server = base.CreateServer(builder);
@@ -33,7 +51,8 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<AuthCenterWebApp.Pr
     protected override IHost CreateHost(IHostBuilder builder)
     {
         var host = base.CreateHost(builder);
-
+        //hack bypass database init process.
+        return host;
 #if DEBUG
         var workDir = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\..\DatabaseTool\bin\Debug\net7.0\";
         var process = new Process();
@@ -55,21 +74,15 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<AuthCenterWebApp.Pr
         return host;
     }
 
-    private static AuthCenterWebAppFactory instance = default!;
-    private static readonly object _lock = new();
-
-    public static AuthCenterWebAppFactory Instance
+    public virtual HttpClient CreateAuthenticatedClient(WebApplicationFactoryClientOptions? options = null)
     {
-        get
-        {
-            if (instance == null)
-            {
-                lock (_lock)
-                {
-                    instance ??= new AuthCenterWebAppFactory();
-                }
-            }
-            return instance;
-        }
+        HttpClient client;
+        if (options != null)
+            client = this.CreateClient(options);
+        else
+            client = this.CreateClient();
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
+        return client;
     }
+
 }

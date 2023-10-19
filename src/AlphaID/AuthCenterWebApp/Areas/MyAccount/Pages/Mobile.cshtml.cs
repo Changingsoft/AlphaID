@@ -19,7 +19,7 @@ public class MobileModel : PageModel
         this.verificationCodeService = verificationCodeService;
     }
 
-    [Display(Name = "Mobile phone number")]
+    [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = default!;
 
     public bool MobileValid { get; set; }
@@ -45,8 +45,8 @@ public class MobileModel : PageModel
             return this.BadRequest("无法处理用户Id.");
 
         this.MobileValid = person.PhoneNumberConfirmed;
-        this.Mobile = person.Mobile ?? "";
-        this.NewMobile = person.Mobile ?? "";
+        this.Mobile = person.PhoneNumber ?? "";
+        this.NewMobile = person.PhoneNumber ?? "";
 
         return this.Page();
     }
@@ -72,7 +72,6 @@ public class MobileModel : PageModel
         if (result.Succeeded)
         {
             person.PhoneNumberConfirmed = true;
-            await this.userManager.UpdateAsync(person);
             this.OperationMessage = "移动电话号码已变更。";
             return this.Page();
         }

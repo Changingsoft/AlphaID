@@ -7,19 +7,16 @@ namespace AlphaIDWebAPITests.Controllers;
 public class OrganizationControllerTest
 {
     private readonly AlphaIDAPIFactory factory;
-    private readonly TokenManager tokenManager;
 
-    public OrganizationControllerTest(AlphaIDAPIFactory factory, TokenManager tokenManager)
+    public OrganizationControllerTest(AlphaIDAPIFactory factory)
     {
         this.factory = factory;
-        this.tokenManager = tokenManager;
     }
 
     [Fact]
     public async Task GetExistsOrganization()
     {
-        var client = this.factory.CreateClient();
-        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await this.tokenManager.GetAccessTokenAsync());
+        var client = this.factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("/api/Organization/1c86b543-0c92-4cd8-bcd5-b4e462847e59");
         response.EnsureSuccessStatusCode();
@@ -31,8 +28,7 @@ public class OrganizationControllerTest
     [Fact]
     public async Task GetOrganizationMemberAsync()
     {
-        var client = this.factory.CreateClient();
-        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await this.tokenManager.GetAccessTokenAsync());
+        var client = this.factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("/api/Organization/5288b813-e1f4-4fd3-a342-6f21a4c3fef7/Members");
         response.EnsureSuccessStatusCode();

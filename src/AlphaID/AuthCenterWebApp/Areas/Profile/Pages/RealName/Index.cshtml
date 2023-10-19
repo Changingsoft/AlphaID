@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewData["title"] = "实名认证中心";
+    this.ViewBag.Title = "实名认证中心";
 }
 
 <h1>实名认证中心</h1>
@@ -9,11 +9,11 @@
 @if (this.Model.CurrentValidation != null)
 {
     <p>您已通过实名认证。</p>
-    if (this.Model.CurrentValidation != null && this.Model.CurrentValidation.ChineseIDCard!.Expires < DateTime.Now.AddDays(30))
+    if (this.Model.CurrentValidation != null && this.Model.CurrentValidation.ChineseIDCard!.Expires < DateTime.UtcNow.AddDays(30))
     {
         if (this.Model.PendingValidation == null)
         {
-            <p>您的认证信息即将于@((this.Model.CurrentValidation.ChineseIDCard!.Expires.Value - DateTime.Now).Days)天后过期，<a asp-page="UploadChineseIDCard">立即重新认证</a></p>
+            <p>您的认证信息即将于@((this.Model.CurrentValidation.ChineseIDCard!.Expires.Value - DateTime.UtcNow).Days)天后过期，<a asp-page="UploadChineseIDCard">立即重新认证</a></p>
         }
     }
 }

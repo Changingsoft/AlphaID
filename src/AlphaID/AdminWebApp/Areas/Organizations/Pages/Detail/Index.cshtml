@@ -3,7 +3,7 @@
 @inject OrganizationMemberManager memberManager
 
 @{
-    this.ViewData["Title"] = this.Model.Organization.Name;
+    this.ViewBag.Title = this.Model.Organization.Name;
     var members = await this.memberManager.GetMembersAsync(this.Model.Organization);
 }
 

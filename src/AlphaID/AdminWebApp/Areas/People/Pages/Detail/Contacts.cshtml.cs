@@ -30,7 +30,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             this.Data = data;
             this.Input = new InputModel
             {
-                PhoneNumber = this.Data.Mobile,
+                PhoneNumber = this.Data.PhoneNumber,
                 Email = this.Data.Email,
             };
             return this.Page();
@@ -51,7 +51,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
                 return this.Page();
             }
 
-            if (this.manager.Users.Any(p => p.Id != id && p.Mobile == phoneNumber.ToString()))
+            if (this.manager.Users.Any(p => p.Id != id && p.PhoneNumber == phoneNumber.ToString()))
             {
                 this.ModelState.AddModelError("", "移动电话号码已被注册。");
             }

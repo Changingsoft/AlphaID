@@ -27,8 +27,7 @@ public class PersonSignInManager : SignInManager<NaturalPerson>
     }
 
     /// <summary>
-    /// 已重写。
-    /// 当使用密码登录成功时，记录登录成功信息。
+    /// 重写。当使用密码登录成功时，记录登录成功信息。
     /// </summary>
     /// <param name="user"></param>
     /// <param name="password"></param>

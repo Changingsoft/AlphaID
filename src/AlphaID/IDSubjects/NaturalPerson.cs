@@ -1,7 +1,9 @@
 ﻿using IDSubjects.Subjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.NetworkInformation;
 
 namespace IDSubjects;
 
@@ -12,24 +14,26 @@ namespace IDSubjects;
 [Index(nameof(Name))]
 [Index(nameof(UserName), IsUnique = true)]
 [Index(nameof(PhoneticSearchHint))]
-public class NaturalPerson
+[Index(nameof(WhenCreated))]
+[Index(nameof(WhenChanged))]
+public class NaturalPerson : IdentityUser
 {
     /// <summary>
     /// 
     /// </summary>
-    protected internal NaturalPerson()
+    public NaturalPerson():base()
     {
         this.BankAccounts = new HashSet<PersonBankAccount>();
     }
 
     /// <summary>
-    /// 序列号。
+    /// 
     /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string Id { get; protected internal set; } = default!;
+    /// <param name="userName"></param>
+    public NaturalPerson(string userName):base(userName)
+    {
+        this.BankAccounts = new HashSet<PersonBankAccount>();
+    }
 
     /// <summary>
     /// Name.
@@ -41,14 +45,12 @@ public class NaturalPerson
     /// <summary>
     /// When Created.
     /// </summary>
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime WhenCreated { get; protected set; } = DateTime.UtcNow;
+    public DateTime WhenCreated { get; protected internal set; } = DateTime.UtcNow;
 
     /// <summary>
     /// When Changed.
     /// </summary>
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime WhenChanged { get; protected internal set; } = DateTime.UtcNow;
+    public DateTime WhenChanged { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// 启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
@@ -63,11 +65,25 @@ public class NaturalPerson
     public virtual string? FirstName { get; protected set; }
 
     /// <summary>
+    /// Middle name.
+    /// </summary>
+    [PersonalData]
+    [MaxLength(50)]
+    public virtual string? MiddleName { get; set; }
+
+    /// <summary>
     /// LastName 或姓氏。
     /// </summary>
     [PersonalData]
     [MaxLength(10)]
     public virtual string? LastName { get; protected set; }
+
+    /// <summary>
+    /// 昵称。
+    /// </summary>
+    [PersonalData]
+    [MaxLength(20)]
+    public virtual string? NickName { get; set; }
 
     /// <summary>
     /// 姓氏拼音
@@ -102,106 +118,42 @@ public class NaturalPerson
     public virtual DateTime? DateOfBirth { get; set; }
 
     /// <summary>
-    /// 移动电话号码（全局唯一）。
-    /// </summary>
-    [PersonalData]
-    [MaxLength(14)]
-    [Unicode(false)]
-    public virtual string? Mobile { get; set; }
-
-    /// <summary>
-    /// 电子邮件。
-    /// </summary>
-    [PersonalData]
-    [MaxLength(100)]
-    public virtual string? Email { get; set; }
-
-    /// <summary>
-    /// Chinese ID Card
-    /// </summary>
-    [Obsolete]
-    public virtual PersonChineseIDCardInfo? ChineseIDCard { get; set; }
-
-    /// <summary>
-    /// 用户名。
-    /// </summary>
-    [PersonalData]
-    [Unicode(false)]
-    [MaxLength(50)]
-    public virtual string UserName { get; set; } = default!;
-
-    /// <summary>
-    /// 邮件确认。
-    /// </summary>
-    public virtual bool EmailConfirmed { get; set; }
-
-    /// <summary>
-    /// 密码哈希。
-    /// </summary>
-    [MaxLength(100)]
-    [Unicode(false)]
-    public virtual string? PasswordHash { get; set; }
-
-    /// <summary>
-    /// 安全戳
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public virtual string SecurityStamp { get; set; } = default!;
-
-    /// <summary>
-    /// 并发检测戳
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public virtual string? ConcurrencyStamp { get; set; }
-
-    /// <summary>
-    /// 移动电话号码是否已确认。
-    /// </summary>
-    public virtual bool PhoneNumberConfirmed { get; set; }
-
-    /// <summary>
-    /// 是否启用双因子认证。
-    /// </summary>
-    public virtual bool TwoFactorEnabled { get; set; }
-
-    /// <summary>
-    /// 锁定结束时间。
-    /// </summary>
-    public virtual DateTimeOffset? LockoutEnd { get; set; }
-
-    /// <summary>
-    /// 是否启用账户锁定。
-    /// </summary>
-    public virtual bool LockoutEnabled { get; set; }
-
-    /// <summary>
-    /// 访问失败计数器。
-    /// </summary>
-    public virtual int AccessFailedCount { get; set; }
-
-    /// <summary>
     /// 获取一个值，指示用户上一次设置密码的时间。如果该值为null，或超过设定的最大更改密码期限，则用户在登录时必须强制更改密码。
     /// </summary>
     public virtual DateTime? PasswordLastSet { get; set; }
 
     /// <summary>
+    /// User head image data.
+    /// </summary>
+    public virtual BinaryDataInfo? Avatar { get; set; }
+
+    /// <summary>
+    /// 区域和语言选项
+    /// </summary>
+    [MaxLength(10),Unicode(false)]
+    public virtual string? Locale { get; set; }
+
+    /// <summary>
+    /// 用户所选择的时区。存储为IANA Time zone database名称。
+    /// </summary>
+    [MaxLength(50), Unicode(false)]
+    public virtual string? TimeZone { get; protected internal set; }
+
+    /// <summary>
+    /// 地址。
+    /// </summary>
+    public virtual AddressInfo? Address { get; set; }
+
+    /// <summary>
+    /// 个人主页。
+    /// </summary>
+    [MaxLength(256)]
+    public virtual string? WebSite { get; set; }
+    /// <summary>
     /// Gets bank accounts of the person.
     /// </summary>
     public virtual ICollection<PersonBankAccount> BankAccounts { get; protected set; } = default!;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [Obsolete]
-    public DateTime? RealNameValidTime { get; internal set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [Obsolete]
-    public DateTime? NextRealNameValidTime { get; internal set; }
 
     /// <summary>
     /// Overrided.

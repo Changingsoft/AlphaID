@@ -26,7 +26,7 @@ public class ResetPasswordMobileModel : PageModel
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
-    [Display(Name = "Mobile phone number")]
+    [Display(Name = "PhoneNumber phone number")]
     public string PhoneNumber { get; set; }
 
     [BindProperty]
@@ -70,7 +70,7 @@ public class ResetPasswordMobileModel : PageModel
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = this._userManager.Users.FirstOrDefault(p => p.Mobile == normalPhoneNumber);
+        var person = this._userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
         if (person == null || !person.PhoneNumberConfirmed)
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
@@ -84,7 +84,7 @@ public class ResetPasswordMobileModel : PageModel
         var result = await this._userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
         if (result.Succeeded)
         {
-            person.PasswordLastSet = DateTime.Now;
+            person.PasswordLastSet = DateTime.UtcNow;
             await this._userManager.UpdateAsync(person);
             return this.RedirectToPage("ResetPasswordConfirmation");
         }

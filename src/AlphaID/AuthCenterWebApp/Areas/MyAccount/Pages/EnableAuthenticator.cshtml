@@ -1,11 +1,11 @@
 ﻿@page
 @model             EnableAuthenticatorModel
 @{
-    ViewData["Title"] = "配置身份验证器应用";
+    this.ViewBag.Title = "配置身份验证器应用";
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
+<h3>@ViewBag.Title</h3>
 <div>
     <p>To use an authenticator app go through the following steps:</p>
     <ol class="list">

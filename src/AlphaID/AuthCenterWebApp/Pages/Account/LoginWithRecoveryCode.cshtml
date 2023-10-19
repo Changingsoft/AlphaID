@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.LoginWithRecoveryCodeModel
 @{
     this.Layout = "_AuthenticationLayout";
-    ViewData["Title"] = "恢复代码验证";
+    this.ViewBag.Title = "恢复代码验证";
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -14,7 +14,7 @@
         </div>
         <div class="card card-md">
             <div class="card-body">
-                <h2 class="h2 text-center mb-4">@ViewData["Title"]</h2>
+                <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
                 <p>您已请求使用恢复代码登录。在您登录时提供身份验证器应用程序代码或禁用 2FA 并再次登录之前，不会记住此登录名。</p>
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

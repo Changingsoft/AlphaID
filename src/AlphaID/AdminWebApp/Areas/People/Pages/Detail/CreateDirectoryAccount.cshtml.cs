@@ -53,7 +53,7 @@ public class CreateDirectoryAccountModel : PageModel
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName,
             PinyinDisplayName = person.PhoneticSurname + person.PhoneticGivenName,
-            Mobile = person.Mobile!,
+            Mobile = person.PhoneNumber!,
             Email = person.Email,
         };
         return this.Page();
@@ -123,7 +123,7 @@ public class CreateDirectoryAccountModel : PageModel
 
         public string? PinyinDisplayName { get; set; }
 
-        [Display(Name = "Mobile Phone Number")]
+        [Display(Name = "PhoneNumber Phone Number")]
         public string Mobile { get; set; } = default!;
 
         [Display(Name = "Email Address")]

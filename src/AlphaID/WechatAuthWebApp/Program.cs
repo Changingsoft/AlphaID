@@ -3,6 +3,8 @@ using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDEntityFramework.EntityFramework.Wechat;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatformServices.Aliyun;
+using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
 using IDSubjects;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +47,7 @@ builder.Services.AddScoped<IVerificationCodeService, SimpleShortMessageService>(
 builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
 
 //³Ö¾Ã»¯
-builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
+//builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
 builder.Services.AddScoped<IWechatUserIdentifierStore, WechatUserIdentifierStore>();
 

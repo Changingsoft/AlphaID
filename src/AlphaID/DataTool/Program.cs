@@ -33,7 +33,6 @@ internal class Program
                 });
 
                 //依赖项
-                services.AddScoped<INaturalPersonImageStore, NaturalPersonImageStore>();
                 services.AddScoped<ChinesePersonNameFactory>();
                 services.AddScoped<ChinesePersonNamePinyinConverter>();
 

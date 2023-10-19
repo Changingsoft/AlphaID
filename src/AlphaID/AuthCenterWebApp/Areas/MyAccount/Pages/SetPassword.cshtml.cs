@@ -1,6 +1,5 @@
 ﻿#nullable disable
 
-using AuthCenterWebApp;
 using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -78,7 +77,7 @@ public class SetPasswordModel : PageModel
             return this.Page();
         }
 
-        user.PasswordLastSet = DateTime.Now;
+        user.PasswordLastSet = DateTime.UtcNow;
         await this._userManager.UpdateAsync(user);
 
         await this._signInManager.RefreshSignInAsync(user);

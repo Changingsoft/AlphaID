@@ -14,7 +14,7 @@ public class WechatLoginSessionStore : IWechatLoginSessionStore
 
     public async Task CleanExpiredSessionsAsync()
     {
-        var expires = this.dbContext.WechatLoginSessions.Where(p => p.WhenExpires < DateTime.Now).ToArray();
+        var expires = this.dbContext.WechatLoginSessions.Where(p => p.WhenExpires < DateTime.UtcNow).ToArray();
         this.dbContext.WechatLoginSessions.RemoveRange(expires);
         _ = await this.dbContext.SaveChangesAsync();
     }

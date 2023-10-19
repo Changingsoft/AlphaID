@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @product.Value.Name</title>
+    <title>@(ViewBag.Title == null ? product.Value.Name : $"{ViewBag.Title} - {product.Value.Name}")</title>
     @RenderSection("Heads", false)
 </head>
 <body>

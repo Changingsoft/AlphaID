@@ -17,11 +17,11 @@ public class NaturalPersonValidator : UserValidator<NaturalPerson>
     public override async Task<IdentityResult> ValidateAsync(UserManager<NaturalPerson> manager, NaturalPerson user)
     {
         var errors = new List<IdentityError>();
-        if (user.Mobile != null)
+        if (user.PhoneNumber != null)
         {
-            if (MobilePhoneNumber.TryParse(user.Mobile, out var phoneNumber))
+            if (MobilePhoneNumber.TryParse(user.PhoneNumber, out var phoneNumber))
             {
-                if (manager.Users.Any(p => p.Mobile == phoneNumber.ToString() && p.Id != user.Id))
+                if (manager.Users.Any(p => p.PhoneNumber == phoneNumber.ToString() && p.Id != user.Id))
                 {
                     errors.Add(new IdentityError()
                     {

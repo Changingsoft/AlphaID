@@ -62,7 +62,7 @@ public class ChangeNameModel : PageModel
 
         [DataType(DataType.Date)]
         [Display(Name = "When changed")]
-        public DateTime ChangeDate { get; set; } = DateTime.Now.Date;
+        public DateTime ChangeDate { get; set; } = DateTime.UtcNow.Date;
 
         [Display(Name = "Record used name")]
         public bool RecordUsedName { get; set; } = true;

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthCenterWebApp\AuthCenterWebApp.csproj" />
+    <ProjectReference Include="..\IntegrationTestUtilities\IntegrationTestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

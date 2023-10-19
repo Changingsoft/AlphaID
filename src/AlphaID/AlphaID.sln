@@ -64,9 +64,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7714CF67
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealName", "RealName\RealName.csproj", "{F4F56EF1-A0A7-43C0-B65A-804DD84AF237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaIDPlatformServices", "AlphaIDPlatformServices\AlphaIDPlatformServices.csproj", "{023D269C-A84C-4E73-BEF1-5D721B73ADC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaIDPlatformServices", "AlphaIDPlatformServices\AlphaIDPlatformServices.csproj", "{023D269C-A84C-4E73-BEF1-5D721B73ADC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XinAnAuth", "XinAnAuth\XinAnAuth.csproj", "{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XinAnAuth", "XinAnAuth\XinAnAuth.csproj", "{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTestUtilities", "IntegrationTestUtilities\IntegrationTestUtilities.csproj", "{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +164,10 @@ Global
 		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +198,7 @@ Global
 		{F4F56EF1-A0A7-43C0-B65A-804DD84AF237} = {D92B699A-567D-4D77-B830-F9FE537BCC59}
 		{023D269C-A84C-4E73-BEF1-5D721B73ADC9} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
+		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E} = {9B67AD0F-EC27-4983-81EF-B493110821FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}

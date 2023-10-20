@@ -19,7 +19,6 @@ public class OidcControllerTests
     public async Task GetClientNameByClientId()
     {
         var client = this.factory.CreateAuthenticatedClient();
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestBearer");
 
         var response = await client.GetAsync($"api/Oidc/Client/{WebUtility.UrlEncode("d70700eb-c4d8-4742-a79a-6ecf2064b27c")}");
         Assert.True(response.IsSuccessStatusCode);

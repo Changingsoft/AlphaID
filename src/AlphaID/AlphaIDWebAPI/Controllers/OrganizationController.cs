@@ -67,7 +67,7 @@ public partial class OrganizationController : ControllerBase
     [AllowAnonymous]
     public OrganizationSearchResult Search(string keywords)
     {
-        var searchResults = this.organizationStore.Organizations.Where(p => p.Name.Contains(keywords));
+        var searchResults = this.organizationStore.Organizations.Where(p => p.Name.Contains(keywords) && p.Enabled);
 
         var result = new OrganizationSearchResult(searchResults.Take(50).Select(p => new OrganizationModel(p)), searchResults.Count() > 50);
         return result;

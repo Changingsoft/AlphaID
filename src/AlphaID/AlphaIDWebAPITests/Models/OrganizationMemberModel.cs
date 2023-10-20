@@ -1,5 +1,6 @@
-﻿namespace AlphaIDWebAPITests.Controllers;
-internal class OrganizationMemberModel
+﻿namespace AlphaIDWebAPITests.Models;
+
+internal record OrganizationMemberModel(string? Title, string? Department, string? Remark)
 {
     public string PersonId { get; set; } = default!;
 
@@ -8,10 +9,4 @@ internal class OrganizationMemberModel
     public string OrganizationId { get; set; } = default!;
 
     public string OrganizationName { get; set; } = default!;
-
-    public string? Title { get; set; }
-
-    public string? Department { get; set; }
-
-    public string? Remark { get; set; }
 }

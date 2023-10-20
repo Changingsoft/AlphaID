@@ -120,6 +120,7 @@ try
         .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
         .AddUserValidator<NaturalPersonValidator>()
         .AddDefaultTokenProviders();
+    builder.Services.AddScoped<IQueryableUserStore<NaturalPerson>, NaturalPersonStore>();
 
     //添加邮件发送器。
     builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
@@ -217,12 +218,10 @@ try
     var app = builder.Build();
 
     app.UseSerilogRequestLogging();
-
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
     }
-
     app.UseRequestLocalization();
     app.UseStaticFiles();
     app.UseRouting();
@@ -232,12 +231,7 @@ try
     app.UseCaptcha(app.Configuration);
     app.MapRazorPages();
 
-
-
-
     await app.RunAsync();
-
-
 }
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException") // https://github.com/dotnet/runtime/issues/60600
 {

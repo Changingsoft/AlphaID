@@ -7,6 +7,7 @@ namespace IDSubjects;
 /// <summary>
 /// 组织的信息管理员
 /// </summary>
+[Obsolete("组织的管理员将来合并到组织的成员管理中，不再单独设置管理员。")]
 [Table("OrganizationAdministrator")]
 [PrimaryKey(nameof(OrganizationId), nameof(PersonId))]
 public class OrganizationAdministrator

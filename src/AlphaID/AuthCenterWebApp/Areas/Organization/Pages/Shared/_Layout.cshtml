@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "/Pages/Shared/_Layout.cshtml";
+    var IsOwner = true;
 }
 
 @section header{
@@ -32,18 +33,21 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item" asp-path="/Organization/Settings">
-                            <a class="nav-link" asp-page="/Settings/Index" asp-route-id="@ViewContext.RouteData.Values["id"]">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-building"></use>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @localizer["Settings"]
-                                </span>
-                            </a>
-                        </li>
+                        @if(IsOwner)
+                        {
+                            <li class="nav-item" asp-path="/Organization/Settings">
+                                <a class="nav-link" asp-page="/Settings/Index" asp-route-id="@ViewContext.RouteData.Values["id"]">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-building"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        @localizer["Settings"]
+                                    </span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                     <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                     </div>
@@ -57,6 +61,6 @@
 @RenderBody()
 
 @section Scripts
-{
+    {
     @RenderSection("Scripts", false)
 }

@@ -8,6 +8,11 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// </summary>
 public static class IDSubjectsServiceCollectionExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IDSubjectsBuilder AddIDSubjects(this IServiceCollection services)
     {
         services.TryAddScoped<NaturalPersonManager>();

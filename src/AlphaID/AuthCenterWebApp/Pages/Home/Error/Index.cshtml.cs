@@ -11,7 +11,7 @@ public class Index : PageModel
     private readonly IIdentityServerInteractionService _interaction;
     private readonly IWebHostEnvironment _environment;
 
-    public ViewModel View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     public Index(IIdentityServerInteractionService interaction, IWebHostEnvironment environment)
     {

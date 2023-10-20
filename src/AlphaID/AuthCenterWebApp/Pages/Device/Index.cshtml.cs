@@ -28,12 +28,12 @@ public class Index : PageModel
         this._logger = logger;
     }
 
-    public ViewModel View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet(string userCode)
+    public async Task<IActionResult> OnGet(string? userCode)
     {
         if (string.IsNullOrWhiteSpace(userCode))
         {
@@ -42,8 +42,8 @@ public class Index : PageModel
             return this.Page();
         }
 
-        this.View = await this.BuildViewModelAsync(userCode);
-        if (this.View == null)
+        var view = await this.BuildViewModelAsync(userCode);
+        if(view == null)
         {
             this.ModelState.AddModelError("", DeviceOptions.InvalidUserCode);
             this.View = new ViewModel();
@@ -51,6 +51,7 @@ public class Index : PageModel
             return this.Page();
         }
 
+        this.View = view;
         this.Input = new InputModel
         {
             UserCode = userCode,
@@ -119,7 +120,7 @@ public class Index : PageModel
         }
 
         // we need to redisplay the consent UI
-        this.View = await this.BuildViewModelAsync(this.Input.UserCode, this.Input);
+        this.View = (await this.BuildViewModelAsync(this.Input.UserCode, this.Input))!;
         return this.Page();
     }
 

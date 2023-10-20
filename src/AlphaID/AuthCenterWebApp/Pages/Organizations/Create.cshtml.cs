@@ -20,6 +20,11 @@ public class CreateModel : PageModel
     }
 
     [BindProperty]
+    [Display(Name = "Name", Description = "Registered full name of organization.")]
+    [StringLength(50, ErrorMessage = "Validate_StringLength")]
+    public string Name { get; set; } = default!;
+
+    [BindProperty]
     public InputModel Input { get; set; } = default!;
 
     [BindProperty]
@@ -38,7 +43,7 @@ public class CreateModel : PageModel
         {
             return this.Page();
         }
-        var name = this.Input.Name.Trim().Trim('\r', '\n').Replace(" ", string.Empty);
+        var name = this.Name.Trim().Trim('\r', '\n').Replace(" ", string.Empty);
         if (this.manager.Organizations.Any(p => p.Name == name))
         {
             this.ModelState.AddModelError("", "已存在此名称的组织");
@@ -92,9 +97,7 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Name", Description = "Registered full name of organization.")]
-        [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string Name { get; set; } = default!;
+        
 
         
 

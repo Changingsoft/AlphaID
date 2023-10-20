@@ -58,10 +58,10 @@ public class Consent : PageModel
             return this.RedirectToPage("/Home/Error/LoginModel");
         }
 
-        CompleteBackchannelLoginRequest result = null;
+        CompleteBackchannelLoginRequest? result = null;
 
         // user clicked 'no' - send back the standard 'access_denied' response
-        if (this.Input?.Button == "no")
+        if (this.Input.Button == "no")
         {
             result = new CompleteBackchannelLoginRequest(this.Input.Id);
 
@@ -69,7 +69,7 @@ public class Consent : PageModel
             await this._events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
         }
         // user clicked 'yes' - validate the data
-        else if (this.Input?.Button == "yes")
+        else if (this.Input.Button == "yes")
         {
             // if the user consented to some scope, build the response model
             if (this.Input.ScopesConsented != null && this.Input.ScopesConsented.Any())

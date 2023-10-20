@@ -30,7 +30,7 @@
 </div>
 
 <h2>居民身份证</h2>
-@if (this.Model.Card != null)
+@if (this.Model.Card?.ChineseIDCard != null)
 {
     <p>姓名: @Model.Card.ChineseIDCard.Name</p>
     <p>身份证号码: @Model.Card.ChineseIDCard.CardNumber</p>

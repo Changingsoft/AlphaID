@@ -46,7 +46,7 @@ public class LoginModel : PageModel
         this._events = events;
     }
 
-    public async Task<IActionResult> OnGet(string returnUrl)
+    public async Task<IActionResult> OnGet(string? returnUrl)
     {
         await this.BuildModelAsync(returnUrl);
 
@@ -79,10 +79,10 @@ public class LoginModel : PageModel
                 {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
-                    return this.LoadingPage(this.Input.ReturnUrl);
+                    return this.LoadingPage(this.Input.ReturnUrl!);
                 }
 
-                return this.Redirect(this.Input.ReturnUrl);
+                return this.Redirect(this.Input.ReturnUrl!);
             }
             else
             {
@@ -118,11 +118,11 @@ public class LoginModel : PageModel
                         {
                             // The client is native, so this change in how to
                             // return the response is for better UX for the end user.
-                            return this.LoadingPage(this.Input.ReturnUrl);
+                            return this.LoadingPage(this.Input.ReturnUrl!);
                         }
 
                         // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        return this.Redirect(this.Input.ReturnUrl);
+                        return this.Redirect(this.Input.ReturnUrl!);
                     }
 
                     // request for a local page
@@ -170,7 +170,7 @@ public class LoginModel : PageModel
         return this.Page();
     }
 
-    private async Task BuildModelAsync(string returnUrl)
+    private async Task BuildModelAsync(string? returnUrl)
     {
         this.Input = new InputModel
         {
@@ -190,7 +190,7 @@ public class LoginModel : PageModel
                 EnableLocalLogin = local,
             };
 
-            this.Input.Username = context?.LoginHint;
+            this.Input.Username = context?.LoginHint ?? "";
 
             if (!local)
             {
@@ -198,8 +198,8 @@ public class LoginModel : PageModel
                 {
                     new ViewModel.ExternalProvider()
                     {
-                        AuthenticationScheme = context.IdP,
-                        DisplayName = scheme.DisplayName,
+                        AuthenticationScheme = context!.IdP,
+                        DisplayName = scheme!.DisplayName!,
                     }
                 };
             }
@@ -222,7 +222,7 @@ public class LoginModel : PageModel
             .Select(x => new ViewModel.ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
-                DisplayName = x.DisplayName
+                DisplayName = x.DisplayName ?? "",
             });
         providers.AddRange(dyanmicSchemes);
 
@@ -266,7 +266,7 @@ public class LoginModel : PageModel
         [Display(Name = "Remember me on this device")]
         public bool RememberLogin { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
         public string Button { get; set; } = default!;
     }
@@ -280,14 +280,14 @@ public class LoginModel : PageModel
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders?.Count() == 1;
-        public string ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders?.SingleOrDefault()?.AuthenticationScheme : null;
+        public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders?.SingleOrDefault()?.DisplayName : null;
+        public string? EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {
-            public string DisplayName { get; set; }
-            public string AuthenticationScheme { get; set; }
+            public string DisplayName { get; set; } = default!;
+            public string AuthenticationScheme { get; set; } = default!;
         }
     }
 

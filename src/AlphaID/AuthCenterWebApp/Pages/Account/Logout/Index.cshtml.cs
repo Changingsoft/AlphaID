@@ -20,7 +20,7 @@ public class Index : PageModel
     private readonly IEventService _events;
 
     [BindProperty]
-    public string LogoutId { get; set; }
+    public string? LogoutId { get; set; }
 
     public Index(SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction, IEventService events)
     {
@@ -29,13 +29,13 @@ public class Index : PageModel
         this._events = events;
     }
 
-    public async Task<IActionResult> OnGet(string logoutId)
+    public async Task<IActionResult> OnGet(string? logoutId)
     {
         this.LogoutId = logoutId;
 
         var showLogoutPrompt = LogoutOptions.ShowLogoutPrompt;
 
-        if (this.User?.Identity.IsAuthenticated != true)
+        if (this.User.Identity!.IsAuthenticated != true)
         {
             // if the user is not authenticated, then just show logged out page
             showLogoutPrompt = false;
@@ -62,7 +62,7 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        if (this.User?.Identity.IsAuthenticated == true)
+        if (this.User.Identity!.IsAuthenticated == true)
         {
             // if there's no current logout context, we need to create one
             // this captures necessary info from the current logged in user

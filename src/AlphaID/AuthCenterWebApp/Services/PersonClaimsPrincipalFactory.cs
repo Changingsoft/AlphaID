@@ -55,7 +55,8 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
         if (user.Email != null)
             id.AddClaim(new Claim(JwtClaimTypes.Email, user.Email));
         id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName));
+        if (user.UserName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName));
         return id;
     }
 }

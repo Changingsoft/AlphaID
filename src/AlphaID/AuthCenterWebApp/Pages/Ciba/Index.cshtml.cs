@@ -13,7 +13,7 @@ namespace AuthCenterWebApp.Pages.Ciba;
 [SecurityHeaders]
 public class IndexModel : PageModel
 {
-    public BackchannelUserLoginRequest LoginRequest { get; set; }
+    public BackchannelUserLoginRequest? LoginRequest { get; set; }
 
     private readonly IBackchannelAuthenticationInteractionService _backchannelAuthenticationInteraction;
     private readonly ILogger<IndexModel> _logger;

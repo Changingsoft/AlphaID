@@ -40,15 +40,10 @@ public class NavItemActiveClassTagHelper : TagHelper
     /// <param name="output"></param>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        var routeData = this.ViewContext.RouteData.Values;
-        var currentController = routeData["controller"] as string;
-        var currentAction = routeData["action"] as string;
-        var currentArea = routeData["area"] as string ?? "";
-        var currentPage = routeData["page"] as string ?? "";
         var currentPath = this.ViewContext.HttpContext.Request.Path.Value;
-        bool result = false;
+        bool result;
         if (this.MatchPrefix)
-            result = currentPath.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase);
+            result = currentPath!.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase);
         else
             result = string.Equals(this.Path, currentPath, StringComparison.OrdinalIgnoreCase);
 

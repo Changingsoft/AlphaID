@@ -28,7 +28,7 @@ public class Index : PageModel
         this._events = events;
     }
 
-    public ViewModel View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     public async Task OnGet()
     {
@@ -67,7 +67,7 @@ public class Index : PageModel
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
-    public string ClientId { get; set; }
+    public string ClientId { get; set; } = default!;
 
     public async Task<IActionResult> OnPost()
     {

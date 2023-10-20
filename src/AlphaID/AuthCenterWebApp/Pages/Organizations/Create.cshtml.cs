@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthCenterWebApp.Areas.Organization.Pages;
+namespace AuthCenterWebApp.Pages.Organizations;
 
-[IgnoreAntiforgeryToken]
 public class CreateModel : PageModel
 {
     private readonly OrganizationManager manager;
@@ -23,6 +22,12 @@ public class CreateModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
+    [BindProperty]
+    [Display(Name = "Unified social credit code")]
+    [StringLength(18, MinimumLength = 18, ErrorMessage = "Validate_StringLength")]
+    [PageRemote(PageHandler = "ValidateUSCI", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post")]
+    public string? USCI { get; set; }
+
     public void OnGet()
     {
     }
@@ -38,15 +43,15 @@ public class CreateModel : PageModel
         {
             this.ModelState.AddModelError("", "已存在此名称的组织");
         }
-        if (!string.IsNullOrEmpty(this.Input.USCI) && this.manager.Organizations.Any(p => p.USCI == this.Input.USCI))
+        if (!string.IsNullOrEmpty(this.USCI) && this.manager.Organizations.Any(p => p.USCI == this.USCI))
             this.ModelState.AddModelError("", "统一社会信用代码已被注册");
 
         if (!this.ModelState.IsValid)
             return this.Page();
 
         OrganizationBuilder builder = new(name);
-        if (!string.IsNullOrEmpty(this.Input.USCI))
-            builder.SetUSCI(USCC.Parse(this.Input.USCI));
+        if (!string.IsNullOrEmpty(this.USCI))
+            builder.SetUSCI(USCC.Parse(this.USCI));
 
         var organization = builder.Organization;
         organization.Domicile = this.Input.Domicile;
@@ -82,7 +87,7 @@ public class CreateModel : PageModel
 
     public IActionResult OnPostValidateUSCI(string usci)
     {
-        return USCC.TryParse(this.Input.USCI!, out _) ? new JsonResult(true) : (IActionResult)new JsonResult("统一社会信用代码无效");
+        return USCC.TryParse(usci, out _) ? new JsonResult(true) : (IActionResult)new JsonResult("Invalid USCI.");
     }
 
     public class InputModel
@@ -91,10 +96,7 @@ public class CreateModel : PageModel
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string Name { get; set; } = default!;
 
-        [Display(Name = "Unified social credit code")]
-        [StringLength(18, MinimumLength = 18, ErrorMessage = "Validate_StringLength")]
-        [PageRemote(PageHandler = "ValidateUSCI", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post")]
-        public string? USCI { get; set; }
+        
 
         [Display(Name = "Domicile", Description = "Postal address of organization.")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]

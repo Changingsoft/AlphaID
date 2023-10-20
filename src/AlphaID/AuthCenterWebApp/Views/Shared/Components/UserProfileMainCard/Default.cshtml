@@ -28,6 +28,6 @@
 <ul>
     @foreach(var member in members)
     {
-        <li><a asp-page="/Organizations/Detail" asp-route-id="@member.OrganizationId">@member.Title @member.Department @member.Organization.Name</a></li>
+        <li><a asp-area="Organization" asp-page="/Index" asp-route-id="@member.OrganizationId">@member.Title @member.Department @member.Organization.Name</a></li>
     }
 </ul>

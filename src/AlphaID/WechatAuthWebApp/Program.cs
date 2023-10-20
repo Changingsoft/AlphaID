@@ -1,5 +1,4 @@
 using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDEntityFramework.EntityFramework.Wechat;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;

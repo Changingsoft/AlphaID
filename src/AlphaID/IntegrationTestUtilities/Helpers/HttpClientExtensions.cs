@@ -1,5 +1,4 @@
 ﻿using AngleSharp.Html.Dom;
-using IntegrationTestUtilities.Helpers;
 
 namespace IntegrationTestUtilities.Helpers;
 public static class HttpClientExtensions

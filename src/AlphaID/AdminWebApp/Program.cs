@@ -3,7 +3,6 @@ using AdminWebApp.Domain.Security;
 using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
 using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatformServices.Aliyun;
@@ -147,7 +146,7 @@ builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
     options.UseLazyLoadingProxies();
-});
+}).AddScoped<OperationalStoreOptions>();
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
@@ -164,6 +163,9 @@ builder.Services.AddIdentityCore<NaturalPerson>(options =>
     .AddUserStore<NaturalPersonStore>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddIDSubjects()
+    .AddDefaultStores();
+builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 
 //实名身份验证器。
 builder.Services.AddScoped<ChineseIDCardManager>()
@@ -172,16 +174,6 @@ builder.Services.AddScoped<ChineseIDCardManager>()
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
 
-//组织管理器
-builder.Services.AddScoped<OrganizationManager>()
-    .AddScoped<IQueryableOrganizationStore, OrganizationStore>()
-    .AddScoped<IOrganizationStore, OrganizationStore>()
-    .AddScoped<IQueryableOrganizationUsedNameStore, OrganizationUsedNameStore>();
-builder.Services.AddScoped<OrganizationSearcher>();
-
-//组织成员
-builder.Services.AddScoped<OrganizationMemberManager>()
-    .AddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();

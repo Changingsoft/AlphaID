@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace AlphaIDEntityFramework.EntityFramework.Identity;
+namespace AlphaIDEntityFramework.EntityFramework;
 
 public class NaturalPersonStore : UserStore<NaturalPerson>
 {

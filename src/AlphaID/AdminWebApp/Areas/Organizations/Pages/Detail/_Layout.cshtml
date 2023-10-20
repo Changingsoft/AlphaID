@@ -5,11 +5,12 @@
 <div class="row">
     <div class="col-2">
         <nav class="nav flex-column">
-            <a class="nav-link" asp-page="Index" asp-route-id="@this.ViewContext.RouteData.Values["id"]">概要</a>
-            <a class="nav-link" asp-page="Financial" asp-route-id="@this.ViewContext.RouteData.Values["id"]">财务</a>
-            <a class="nav-link" asp-page="Members" asp-route-id="@this.ViewContext.RouteData.Values["id"]">成员</a>
-            <a class="nav-link" asp-page="Administrators" asp-route-id="@this.ViewContext.RouteData.Values["id"]">管理人</a>
-            <a class="nav-link">附件</a>
+            <a class="nav-link" asp-page="Index" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Overview"]</a>
+            <a class="nav-link" asp-page="Financial" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Financial"]</a>
+            <a class="nav-link" asp-page="Members" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Members"]</a>
+            <a class="nav-link" asp-page="Administrators" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Administrators"]</a>
+            <a class="nav-link" href="#">@localizer["Attachments"]</a>
+            <a class="nav-link" href="#">@localizer["Advanced"]</a>
         </nav>
     </div>
     <div class="col-10">

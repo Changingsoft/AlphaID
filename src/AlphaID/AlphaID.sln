@@ -68,7 +68,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaIDPlatformServices", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XinAnAuth", "XinAnAuth\XinAnAuth.csproj", "{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTestUtilities", "IntegrationTestUtilities\IntegrationTestUtilities.csproj", "{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestUtilities", "IntegrationTestUtilities\IntegrationTestUtilities.csproj", "{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

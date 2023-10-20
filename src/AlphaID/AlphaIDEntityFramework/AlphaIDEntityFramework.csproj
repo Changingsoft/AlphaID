@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\WechatWebLogin\WechatWebLogin.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="EntityFramework\Identity\" />
+	</ItemGroup>
+
 </Project>

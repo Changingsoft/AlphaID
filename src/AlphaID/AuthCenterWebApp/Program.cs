@@ -1,5 +1,4 @@
 ﻿using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatformServices.Aliyun;
@@ -198,6 +197,10 @@ try
     //组织成员
     builder.Services.AddScoped<OrganizationMemberManager>()
         .AddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
+
+    //Organizations
+    builder.Services.AddScoped<OrganizationManager>()
+        .AddScoped<IOrganizationStore, OrganizationStore>();
 
     //todo 由于BotDetect Captcha需要支持同步流，应改进此配置。
     builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)

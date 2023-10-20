@@ -48,7 +48,7 @@ public class ChangeNameModel : PageModel
             return this.Page();
         }
 
-        return this.RedirectToPage("Detail", new { id = this.Id });
+        return this.RedirectToPage("Index", new { id = this.Id });
     }
 
     public class InputModel

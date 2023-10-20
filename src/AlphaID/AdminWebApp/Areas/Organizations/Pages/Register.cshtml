@@ -1,71 +1,71 @@
 ﻿@page
-@model             RegisterModel
+@model RegisterModel
 @{
     this.ViewBag.Title = "登记新组织";
 }
 
-@section breadcrumb
-{
-    <li class="breadcrumb-item">登记组织</li>
-}
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Name"></label>
+                <input asp-for="@Model.Name" class="form-control" autofocus />
+                <span asp-validation-for="@Model.Name"></span>
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="@Model.Name"></label>
-        <input asp-for="@Model.Name" class="form-control" autofocus />
-        <span asp-validation-for="@Model.Name"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.USCI"></label>
+                <input asp-for="@Model.USCI" class="form-control" />
+                <span asp-validation-for="@Model.USCI"></span>
+            </div>
+            <div class="mb-3 custom-control custom-checkbox">
+                <input asp-for="@Model.RegisterWithSameNameAnyway" class="formc" />
+                <label asp-for="@Model.RegisterWithSameNameAnyway"></label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Domicile"></label>
+                <input asp-for="@Model.Domicile" class="form-control" />
+                <span asp-validation-for="@Model.Domicile"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Contact"></label>
+                <input asp-for="@Model.Contact" class="form-control" />
+                <span asp-validation-for="@Model.Contact"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.LegalPersonName"></label>
+                <input asp-for="@Model.LegalPersonName" class="form-control" />
+                <span asp-validation-for="@Model.LegalPersonName"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.EstablishedAt"></label>
+                <input asp-for="@Model.EstablishedAt" class="form-control" />
+                <span asp-validation-for="@Model.EstablishedAt"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.TermBegin"></label>
+                <input asp-for="@Model.TermBegin" class="form-control" />
+                <span asp-validation-for="@Model.TermBegin"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.TermEnd"></label>
+                <input asp-for="@Model.TermEnd" class="form-control" />
+                <span asp-validation-for="@Model.TermEnd"></span>
+            </div>
+            <div class="mb-3">
+                <label for="">指派创建者</label>
+                <input type="text" id="personSearch" class="form-control" placeholder="姓名或拼音……" />
+                <input asp-for="CreatorId" class="form-control" readonly />
+            </div>
+            <div asp-validation-summary="All"></div>
+            <button type="submit" class="btn btn-primary">登记</button>
+        </form>
 
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.USCI"></label>
-        <input asp-for="@Model.USCI" class="form-control" />
-        <span asp-validation-for="@Model.USCI"></span>
-    </div>
-    <div class="form-group custom-control custom-checkbox">
-        <input asp-for="@Model.RegisterWithSameNameAnyway" class="formc" />
-        <label asp-for="@Model.RegisterWithSameNameAnyway"></label>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Domicile"></label>
-        <input asp-for="@Model.Domicile" class="form-control" />
-        <span asp-validation-for="@Model.Domicile"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Contact"></label>
-        <input asp-for="@Model.Contact" class="form-control" />
-        <span asp-validation-for="@Model.Contact"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.LegalPersonName"></label>
-        <input asp-for="@Model.LegalPersonName" class="form-control" />
-        <span asp-validation-for="@Model.LegalPersonName"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.EstablishedAt"></label>
-        <input asp-for="@Model.EstablishedAt" class="form-control" />
-        <span asp-validation-for="@Model.EstablishedAt"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.TermBegin"></label>
-        <input asp-for="@Model.TermBegin" class="form-control" />
-        <span asp-validation-for="@Model.TermBegin"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.TermEnd"></label>
-        <input asp-for="@Model.TermEnd" class="form-control" />
-        <span asp-validation-for="@Model.TermEnd"></span>
-    </div>
-    <div class="form-group">
-        <label for="">指派创建者</label>
-        <input type="text" id="personSearch" class="form-control" placeholder="姓名或拼音……" />
-        <input asp-for="CreatorId" class="form-control" readonly />
-    </div>
-    <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">登记</button>
-</form>
+</div>
 
-@section scripts
-    {
+@section Scripts{
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
             $("#personSearch").autocomplete({
@@ -92,4 +92,4 @@
             });
         });
     </script>
-        }
+    }

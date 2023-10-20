@@ -29,7 +29,6 @@ public class GenericOrganization
     {
         this.Name = name;
         this.Id = Guid.NewGuid().ToString();
-        this.Enabled = true;
     }
 
     /// <summary>
@@ -64,7 +63,7 @@ public class GenericOrganization
     /// <summary>
     /// 是否有效。
     /// </summary>
-    public virtual bool Enabled { get; protected internal set; }
+    public virtual bool Enabled { get; protected internal set; } = true;
 
     /// <summary>
     /// 银行账号。
@@ -113,6 +112,12 @@ public class GenericOrganization
     /// </summary>
     [Column(TypeName = "geography")]
     public virtual Geometry? Location { get; set; } = default!;
+
+    /// <summary>
+    /// 组织的网站。
+    /// </summary>
+    [MaxLength(256)]
+    public virtual string? Website { get; set; } = default!;
 
     /// <summary>
     /// 曾用名。

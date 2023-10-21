@@ -1,4 +1,5 @@
-﻿@using AlphaIDPlatform.Security
+﻿@using System.Net
+@using AlphaIDPlatform.Security
 @using AlphaIDPlatform
 @using Microsoft.AspNetCore.Mvc.Localization;
 
@@ -8,3 +9,4 @@
 @addTagHelper *, AuthCenterWebApp
 
 @inject IViewLocalizer localizer
+@inject IOptions<ProductInfo> product

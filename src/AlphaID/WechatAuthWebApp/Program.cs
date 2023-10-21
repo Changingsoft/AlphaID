@@ -12,7 +12,7 @@ using WechatWebLogin;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 builder.Services.AddRazorPages();
 
 //启用注入HttpContext支持

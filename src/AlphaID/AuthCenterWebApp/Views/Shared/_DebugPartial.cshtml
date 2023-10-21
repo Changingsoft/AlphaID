@@ -1,0 +1,20 @@
+﻿@inject IHostEnvironment env
+@inject IOptions<SystemUrlInfo> systemUrl
+@if(env.IsDevelopment())
+{
+    <hr />
+    <div class="card border-blue">
+        <div class="card-body">
+            <h1>Debug Panel</h1>
+            <h2>Useful links</h2>
+            <ul>
+                <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">Liubei's profile page</a></li>
+            </ul>
+            <h2>Product information</h2>
+            @Html.DisplayFor(m => product.Value)
+
+            <h2>Access user</h2>
+            @Html.DisplayFor(m => this.User.Claims)
+        </div>
+    </div>
+}

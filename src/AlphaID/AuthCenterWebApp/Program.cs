@@ -5,6 +5,7 @@ using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
+using Azure.Identity;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
@@ -12,9 +13,11 @@ using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Diagnostics;
 using System.Globalization;
 
 Log.Logger = new LoggerConfiguration()
@@ -50,11 +53,33 @@ try
     });
 
     builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-    builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+    builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
     builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AuthorizeFolder("/");
         options.Conventions.AuthorizeAreaFolder("Profile", "/");
+        options.Conventions.AddAreaFolderRouteModelConvention("People", "/", model =>
+        {
+            var viewPath = model.ViewEnginePath;
+            var endPart = viewPath.LastIndexOf("/index", StringComparison.OrdinalIgnoreCase);
+            if (endPart >= 0)
+                viewPath = viewPath[..endPart];
+
+            var template = $"/{model.AreaName}/{{userAnchor}}{viewPath}";
+
+            var metadata = new PageRouteMetadata($"/{model.AreaName}{viewPath}", template);
+            var selector = new SelectorModel
+            {
+                AttributeRouteModel = new AttributeRouteModel()
+                {
+                    Order = 2,
+                    Template = template,
+                }
+            };
+            selector.EndpointMetadata.Add(metadata);
+
+            model.Selectors.Add(selector);
+        });
         //options.Conventions.AllowAnonymousToFolder("/Account");
     })
     .AddViewLocalization()

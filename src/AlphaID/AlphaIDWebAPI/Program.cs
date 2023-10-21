@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Configuration Services
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 //ÆôÓÃController
 builder.Services.AddControllers(o =>
 {

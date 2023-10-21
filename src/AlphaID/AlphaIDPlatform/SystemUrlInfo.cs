@@ -3,7 +3,7 @@
 /// <summary>
 /// 系统URL选项。
 /// </summary>
-public class SystemUrlOptions
+public class SystemUrlInfo
 {
     /// <summary>
     /// 

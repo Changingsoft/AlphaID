@@ -93,9 +93,7 @@
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="#" class="dropdown-item">@localizer["Status"]</a>
-            <a asp-area="Profile" asp-page="/Index" class="dropdown-item">@localizer["Profile &amp; Account"]</a>
-            <a href="#" class="dropdown-item">@localizer["Feedback"]</a>
+            <a href="@User.ProfileUrl()" class="dropdown-item">@localizer["Profile &amp; Account"]</a>
             <div class="dropdown-divider"></div>
             <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@localizer["Grants"]</a>
             <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@localizer["CIBA Requests"]</a>
@@ -109,6 +107,15 @@
 else
 {
     <div class="nav-item">
-        
+        <div class="btn-list">
+            <a asp-page="/Account/Login" asp-route-returnUrl="@ViewContext.HttpContext.Request.Path" class="btn">
+                <span class="avatar avatar-sm">?</span>
+                @localizer["Sign in"]
+            </a>
+            <a asp-page="/Account/SignUp" class="btn">
+                @localizer["Sign up"]
+            </a>
+        </div>
+
     </div>
 }

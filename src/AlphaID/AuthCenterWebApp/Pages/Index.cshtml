@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Index
 @inject IWebHostEnvironment env
 @inject IConfiguration config
-@inject IOptions<SystemUrlOptions> systemUrl
+@inject IOptions<SystemUrlInfo> systemUrl
 @{
 }
 <div class="page-body">
@@ -13,11 +13,11 @@
                 <p>One account, serving anywhere.</p>
                 @if (this.User.Identity!.IsAuthenticated)
                 {
-                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">@localizer["My profile"]</a></p>
+                    <p><a class="btn btn-primary" href="@User.ProfileUrl()">@localizer["My profile"]</a></p>
                 }
                 else
                 {
-                    <p><a class="btn btn-primary" asp-area="Profile" asp-page="/Index">@localizer["Sign in"]</a></p>
+                    <p><a class="btn btn-primary" asp-page="Account/Login">@localizer["Sign in"]</a></p>
                     <p><a class="btn btn-primary" asp-page="/Account/SignUp">@localizer["Create your"] @(this.product.Value.Name)</a></p>
                 }
 

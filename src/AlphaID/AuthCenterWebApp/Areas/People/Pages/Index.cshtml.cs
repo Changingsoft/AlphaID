@@ -17,9 +17,11 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public NaturalPerson Person { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string username)
+        public async Task<IActionResult> OnGetAsync(string userAnchor)
         {
-            var person = await this.personManager.FindByNameAsync(username);
+            //Support both userAnchor and user ID.
+            var person = await this.personManager.FindByNameAsync(userAnchor)
+                ?? await this.personManager.FindByIdAsync(userAnchor);
             if (person == null)
                 return this.NotFound();
             this.Person = person;

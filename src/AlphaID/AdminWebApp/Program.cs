@@ -27,7 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //ConfigServices
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
 //³ÌÐò×ÊÔ´
 builder.Services.AddLocalization(options =>

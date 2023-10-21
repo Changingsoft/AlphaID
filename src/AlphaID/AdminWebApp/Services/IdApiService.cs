@@ -7,11 +7,11 @@ namespace AdminWebApp.Services;
 
 public class IdApiService
 {
-    private readonly SystemUrlOptions options;
+    private readonly SystemUrlInfo options;
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly HttpClient client = new();
 
-    public IdApiService(IOptions<SystemUrlOptions> options, IHttpContextAccessor httpContextAccessor)
+    public IdApiService(IOptions<SystemUrlInfo> options, IHttpContextAccessor httpContextAccessor)
     {
         this.options = options.Value;
         this.httpContextAccessor = httpContextAccessor;

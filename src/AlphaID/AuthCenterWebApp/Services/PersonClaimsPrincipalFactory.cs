@@ -8,22 +8,23 @@ namespace AuthCenterWebApp.Services;
 
 public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPerson>
 {
-    private readonly SystemUrlOptions systemUrlOptions;
+    private readonly SystemUrlInfo systemUrl;
 
     public PersonClaimsPrincipalFactory(NaturalPersonManager userManager,
                                         IOptions<IdentityOptions> optionsAccessor,
-                                        IOptions<SystemUrlOptions> systemUrlOptions)
+                                        IOptions<SystemUrlInfo> systemUrlOptions)
         : base(userManager, optionsAccessor)
     {
-        this.systemUrlOptions = systemUrlOptions.Value;
+        this.systemUrl = systemUrlOptions.Value;
     }
 
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)
     {
         var id = await base.GenerateClaimsAsync(user);
         id.AddClaim(new Claim(JwtClaimTypes.Name, user.Name));
-        id.AddClaim(new Claim(JwtClaimTypes.Profile, new Uri(this.systemUrlOptions.AuthCenterUrl, "Profile").ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrlOptions.AuthCenterUrl, "Profile/Avatar").ToString()));
+        var userAnchor = user.UserName ?? user.Id;
+        id.AddClaim(new Claim(JwtClaimTypes.Profile, new Uri(this.systemUrl.AuthCenterUrl, "/People/" + userAnchor).ToString()));
+        id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrl.AuthCenterUrl, $"/People/{userAnchor}/Avatar").ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.Locale != null)
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));

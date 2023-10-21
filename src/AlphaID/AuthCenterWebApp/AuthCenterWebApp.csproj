@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="1.0.5" />
 		<PackageReference Include="Captcha" Version="4.4.2" />

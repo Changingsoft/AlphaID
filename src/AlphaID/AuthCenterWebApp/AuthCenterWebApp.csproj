@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Areas\Organization\Test.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="1.0.5" />
 		<PackageReference Include="Captcha" Version="4.4.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
@@ -38,4 +42,13 @@
 	<ProjectExtensions>
 		<VisualStudio><UserProperties /></VisualStudio>
 	</ProjectExtensions>
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Areas\Organization\Test.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Areas\Organization\Test.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Areas\Organization\Pages\Test.cshtml" />
+	</ItemGroup>
 </Project>

@@ -10,7 +10,7 @@
                 <div class="container-xl">
                     <ul class="navbar-nav">
                         <li class="nav-item" asp-path="/Organization" asp-match-prefix="false">
-                            <a class="nav-link" asp-page="/Index" asp-route-id="@ViewContext.RouteData.Values["id"]">
+                            <a class="nav-link" asp-page="/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-home-2"></use>
@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li class="nav-item" asp-path="/Organization/People">
-                            <a class="nav-link" asp-page="/People/Index" asp-route-id="@ViewContext.RouteData.Values["id"]">
+                            <a class="nav-link" asp-page="/People/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-user"></use>
@@ -36,7 +36,7 @@
                         @if(IsOwner)
                         {
                             <li class="nav-item" asp-path="/Organization/Settings">
-                                <a class="nav-link" asp-page="/Settings/Index" asp-route-id="@ViewContext.RouteData.Values["id"]">
+                                <a class="nav-link" asp-page="/Settings/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-building"></use>

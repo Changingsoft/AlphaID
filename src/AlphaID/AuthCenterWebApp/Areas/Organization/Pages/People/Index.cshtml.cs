@@ -23,24 +23,22 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public IEnumerable<OrganizationMember> Members { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var org = await this.organizationManager.FindByIdAsync(id);
+            var orgs = await this.organizationManager.SearchByNameAsync(anchor);
+            if (orgs.Count() > 1)
+                return this.BadRequest("ÖØÃû");
+            GenericOrganization? org;
+            if (orgs.Any())
+                org = orgs.Single();
+            else
+                org = await this.organizationManager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
+
             this.Organization = org;
             this.Members = await this.organizationMemberManager.GetMembersAsync(this.Organization);
             return this.Page();
-        }
-
-        public IActionResult OnGetAvatar(string pid)
-        {
-            var avatar = (from person in this.naturalPersonStore.Users.AsNoTracking()
-                          where person.Id == pid
-                          select person.Avatar).FirstOrDefault();
-            if (avatar != null)
-                return this.File(avatar.Data, avatar.MimeType);
-            return this.File("~/img/no-picture-avatar.png", "image/png");
         }
     }
 }

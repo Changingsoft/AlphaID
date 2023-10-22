@@ -1,0 +1,11 @@
+﻿@page "/{area}/{anchor}/{page}"
+@model TestModel
+@{
+}
+
+<ul>
+    @foreach(var r in ViewContext.RouteData.Values)
+    {
+        <li>@r.Key : @r.Value</li>
+    }
+</ul>

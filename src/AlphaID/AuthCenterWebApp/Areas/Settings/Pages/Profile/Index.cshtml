@@ -1,0 +1,28 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.Profile.IndexModel
+@{
+    this.ViewBag.Title = this.localizer["Profile"].Value;
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2>@localizer["Profile"]</h2>
+    <a href="@User.ProfileUrl()" class="btn btn-sm">@localizer["Go to your profile"]</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-9">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.Bio" class="form-label"></label>
+                <input asp-for="Input.Bio" class="form-control" />
+                <span asp-description-for="Input.Bio"></span>
+                <span asp-validation-for="Input.Bio" class="text-danger"></span>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <button type="submit" class="btn">@localizer["Update profile"]</button>
+        </form>
+    </div>
+    <div class="col-3">
+        <img src="@User.AvatarUrl()" />
+    </div>
+</div>

@@ -1,3 +1,4 @@
+using AlphaIDPlatform.Security;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,13 +10,20 @@ namespace AuthCenterWebApp.Areas.People.Pages
     public class IndexModel : PageModel
     {
         NaturalPersonManager personManager;
+        OrganizationMemberManager organizationMemberManager;
 
-        public IndexModel(NaturalPersonManager personManager)
+
+        public IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
         {
             this.personManager = personManager;
+            this.organizationMemberManager = organizationMemberManager;
         }
 
         public NaturalPerson Person { get; set; } = default!;
+
+        public bool UserIsOwner { get; set; } = false;
+
+        public IEnumerable<OrganizationMember> Members { get; set; } = Enumerable.Empty<OrganizationMember>();
 
         public async Task<IActionResult> OnGetAsync(string userAnchor)
         {
@@ -25,6 +33,15 @@ namespace AuthCenterWebApp.Areas.People.Pages
             if (person == null)
                 return this.NotFound();
             this.Person = person;
+
+            this.Members = await this.organizationMemberManager.GetMembersOfAsync(person);
+
+            if(this.User.Identity!.IsAuthenticated)
+            {
+                if (this.User.SubjectId() == this.Person.Id)
+                    this.UserIsOwner = true;
+            }
+
             return this.Page();
         }
     }

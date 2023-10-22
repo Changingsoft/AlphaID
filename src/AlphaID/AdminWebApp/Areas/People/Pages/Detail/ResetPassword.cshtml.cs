@@ -64,7 +64,7 @@ public class ResetPasswordModel : PageModel
                 await this.userManager.SetLockoutEndDateAsync(this.Person, DateTime.UtcNow); //unlock user
 
             //设置用户首次登录必须更改密码。
-            this.Person.PasswordLastSet = null;
+            this.Person.PasswordLastSet = null; //todo 重置密码后要求用户首次必须修改密码。
             await this.userManager.UpdateAsync(this.Person);
 
             await this.shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");

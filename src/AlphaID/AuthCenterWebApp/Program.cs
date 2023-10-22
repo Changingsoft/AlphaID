@@ -58,6 +58,7 @@ try
     {
         options.Conventions.AuthorizeFolder("/");
         options.Conventions.AuthorizeAreaFolder("Profile", "/");
+        options.Conventions.AuthorizeAreaFolder("Settings", "/");
         options.Conventions.AddAreaFolderRouteModelConvention("People", "/", model =>
         {
             var viewPath = model.ViewEnginePath;

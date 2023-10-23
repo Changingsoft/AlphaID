@@ -76,6 +76,19 @@ public class OrganizationMemberManager
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="member"></param>
+    /// <returns></returns>
+    public async Task<OperationResult> CreateAsync(OrganizationMember member)
+    {
+        if (this.store.OrganizationMembers.Any(p => p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
+            return OperationResult.Error("Member already exists.");
+        await this.store.CreateAsync(member);
+        return OperationResult.Success;
+    }
+
+    /// <summary>
     /// Take person leave out the organization.
     /// </summary>
     /// <param name="person"></param>

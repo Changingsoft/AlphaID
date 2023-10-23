@@ -30,11 +30,14 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) => lc
-        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-        .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
-        .Enrich.FromLogContext()
-        .ReadFrom.Configuration(ctx.Configuration));
+    builder.Host.UseSerilog((ctx, lc) =>
+    {
+        lc
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+                .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+                .Enrich.FromLogContext()
+                .ReadFrom.Configuration(ctx.Configuration);
+    });
 
     //程序资源
     builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");

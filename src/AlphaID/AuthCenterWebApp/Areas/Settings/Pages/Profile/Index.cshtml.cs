@@ -50,7 +50,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
         public class InputModel
         {
-            [Display(Name = "Bio", Description = "Short description about youself.")]
+            [Display(Name = "Bio", Description = "Short description about yourself.")]
             [StringLength(200)]
             public string? Bio { get; set; }
         }

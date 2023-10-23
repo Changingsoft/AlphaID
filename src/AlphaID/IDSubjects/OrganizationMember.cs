@@ -21,7 +21,7 @@ public class OrganizationMember
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="person"></param>
-    internal OrganizationMember(GenericOrganization organization, NaturalPerson person)
+    public OrganizationMember(GenericOrganization organization, NaturalPerson person)
     {
         this.OrganizationId = organization.Id;
         this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));

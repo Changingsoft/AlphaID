@@ -38,23 +38,12 @@ public class OrganizationManager
     /// <param name="org"></param>
     /// <param name="creator"></param>
     /// <returns></returns>
-    public async Task<OperationResult> CreateAsync(GenericOrganization org, PersonInfo? creator = null)
+    public async Task<OperationResult> CreateAsync(GenericOrganization org)
     {
+        var utcNow = DateTime.UtcNow;
+        org.WhenCreated = utcNow;
+        org.WhenChanged = utcNow;
         await this.OrganizationStore.CreateAsync(org);
-        if (this.OrganizationStore is IOrganizationAdministratorStore administratorStore)
-        {
-            if (creator != null)
-            {
-                OrganizationAdministrator administrator = new()
-                {
-                    OrganizationId = org.Id,
-                    PersonId = creator.Id,
-                    Name = creator.Name,
-                    IsOrganizationCreator = true
-                };
-                await administratorStore.AddAdministrator(org, administrator);
-            }
-        }
         return OperationResult.Success;
     }
 

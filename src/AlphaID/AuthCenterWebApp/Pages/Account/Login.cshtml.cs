@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Serilog;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
@@ -24,6 +25,7 @@ public class LoginModel : PageModel
     private readonly IEventService _events;
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
+    ILogger<LoginModel>? _logger;
 
     public ViewModel View { get; set; } = default!;
 
@@ -36,7 +38,8 @@ public class LoginModel : PageModel
         IIdentityProviderStore identityProviderStore,
         IEventService events,
         NaturalPersonManager userManager,
-        SignInManager<NaturalPerson> signInManager)
+        SignInManager<NaturalPerson> signInManager,
+        ILogger<LoginModel>? logger)
     {
         this._userManager = userManager;
         this._signInManager = signInManager;
@@ -44,12 +47,12 @@ public class LoginModel : PageModel
         this._schemeProvider = schemeProvider;
         this._identityProviderStore = identityProviderStore;
         this._events = events;
+        this._logger = logger;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
     {
         await this.BuildModelAsync(returnUrl);
-
         if (this.View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider

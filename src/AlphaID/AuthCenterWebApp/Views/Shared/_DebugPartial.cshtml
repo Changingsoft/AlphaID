@@ -1,4 +1,6 @@
-﻿@inject IHostEnvironment env
+﻿@using System.Web;
+@using System.Text;
+@inject IHostEnvironment env
 @inject IOptions<SystemUrlInfo> systemUrl
 @if(env.IsDevelopment())
 {
@@ -11,6 +13,7 @@
                 <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">Liubei's profile page</a></li>
                 <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu@sanguo.net")}"))">Guanyu's profile page</a></li>
                 <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("汉王事业集团")}"))">汉王事业集团 profile page</a></li>
+                <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏实业集团")}"))">北魏实业集团 profile page</a></li>
             </ul>
             <h2>Product information</h2>
             @Html.DisplayFor(m => product.Value)

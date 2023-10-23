@@ -70,4 +70,9 @@ public class OrganizationMember
     /// </summary>
     [MaxLength(50)]
     public string? Remark { get; set; } = default!;
+
+    /// <summary>
+    /// Is Owner of the organization.
+    /// </summary>
+    public bool IsOwner { get; set; }
 }

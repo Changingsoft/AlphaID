@@ -1,5 +1,46 @@
-﻿@page "{id}"
+﻿@page
 @model AuthCenterWebApp.Areas.Organization.Pages.Settings.IndexModel
 @{
+    this.ViewBag.Title = this.localizer["General"].Value;
 }
-<h1>@localizer["General"]</h1>
+<h2>@ViewBag.Title</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.Description" class="form-label"></label>
+        <input asp-for="Input.Description" class="form-control" />
+        <span asp-description-for="Input.Description"></span>
+        <span asp-validation-for="Input.Description" class="text-danger"></span>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn">@localizer["Apply changes"]</button>
+    <partial name="_OperationResultPartial" model="Model.OperationResult" />
+</form>
+
+<h3>@localizer["Danger zone"]</h3>
+<div class="card border-danger">
+    <div class="list-group list-group-flush">
+        <div class="list-group-item">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h4>@localizer["Rename organization"]</h4>
+                    <p>@localizer["enaming your organization can have unintended side effects."]</p>
+                </div>
+                <div class="col-auto ms-auto">
+                    <a href="#" class="btn btn-danger">@localizer["Rename organization"]</a>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h4>@localizer["Delete this organization"]</h4>
+                    <p>@localizer["Once deleted, it will be gone forever. Please be certain."]</p>
+                </div>
+                <div class="col-auto ms-auto">
+                    <a href="#" class="btn btn-danger">@localizer["Delete this organization"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

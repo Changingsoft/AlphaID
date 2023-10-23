@@ -123,4 +123,10 @@ public class GenericOrganization
     /// 曾用名。
     /// </summary>
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = default!;
+
+    /// <summary>
+    /// Description of organization.
+    /// </summary>
+    [MaxLength(200)]
+    public virtual string? Description { get; set; }
 }

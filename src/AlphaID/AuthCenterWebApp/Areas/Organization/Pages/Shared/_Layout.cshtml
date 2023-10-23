@@ -1,6 +1,27 @@
-﻿@{
+﻿@inject OrganizationMemberManager memberManager
+@inject OrganizationManager organizationManager
+@{
     Layout = "/Pages/Shared/_Layout.cshtml";
-    var IsOwner = true;
+    var IsOwner = false;
+    var anchor = this.ViewContext.RouteData.Values["anchor"]?.ToString();
+    if (this.User.Identity!.IsAuthenticated)
+    {
+        var subjectId = this.User.SubjectId();
+        if (anchor != null && subjectId != null)
+        {
+            var orgs = await organizationManager.FindByAnchorAsync(anchor);
+            if (orgs.Count() == 1)
+            {
+                var org = orgs.First();
+                IsOwner = (await memberManager.GetMembersAsync(org)).Any(m => m.PersonId == subjectId && m.IsOwner);
+            }
+        }
+
+    }
+}
+
+@section Heads{
+    @await RenderSectionAsync("Heads", false)
 }
 
 @section header{
@@ -33,7 +54,7 @@
                                 </span>
                             </a>
                         </li>
-                        @if(IsOwner)
+                        @if (IsOwner)
                         {
                             <li class="nav-item" asp-path="/Organization/Settings">
                                 <a class="nav-link" asp-page="/Settings/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">

@@ -107,7 +107,7 @@ else
 {
     <div class="nav-item">
         <div class="btn-list">
-            <a asp-page="/Account/Login" asp-route-returnUrl="@ViewContext.HttpContext.Request.Path" class="btn">
+            <a asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path" class="btn">
                 <span class="avatar avatar-sm">?</span>
                 @localizer["Sign in"]
             </a>

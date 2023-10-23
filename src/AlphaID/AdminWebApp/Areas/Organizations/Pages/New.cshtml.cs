@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations;
 namespace AdminWebApp.Areas.Organizations.Pages;
 
 [BindProperties]
-public class RegisterModel : PageModel
+public class NewModel : PageModel
 {
     private readonly OrganizationManager manager;
     private readonly IQueryableOrganizationStore organizationStore;
 
-    public RegisterModel(OrganizationManager manager, IQueryableOrganizationStore organizationStore)
+    public NewModel(OrganizationManager manager, IQueryableOrganizationStore organizationStore)
     {
         this.manager = manager;
         this.organizationStore = organizationStore;

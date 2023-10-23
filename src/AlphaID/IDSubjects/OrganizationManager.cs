@@ -28,11 +28,6 @@ public class OrganizationManager
     protected IOrganizationStore OrganizationStore { get; set; }
 
     /// <summary>
-    /// 获取一个值，指示是否支持组织的管理人管理功能。
-    /// </summary>
-    public bool SupportOrganizationAdministratorManagement => this.OrganizationStore is IOrganizationAdministratorStore;
-
-    /// <summary>
     /// 创建一个组织。
     /// </summary>
     /// <param name="org"></param>
@@ -44,113 +39,6 @@ public class OrganizationManager
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
         await this.OrganizationStore.CreateAsync(org);
-        return OperationResult.Success;
-    }
-
-    /// <summary>
-    /// 获取某组织的管理者。
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <returns></returns>
-    /// <exception cref="NotSupportedException"></exception>
-    public Task<IEnumerable<OrganizationAdministrator>> GetAdministratorsAsync(GenericOrganization organization)
-    {
-        return this.OrganizationStore is not IOrganizationAdministratorStore administratorStore
-            ? throw new NotSupportedException("不支持该功能")
-            : administratorStore.GetAdministrators(organization);
-    }
-
-    /// <summary>
-    /// 向组织添加一个管理员。
-    /// 如果指示了asCreator，那么除了添加为管理员，也会将其设置为组织的创建者。
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <param name="person"></param>
-    /// <param name="asCreator"></param>
-    /// <returns></returns>
-    public async Task<OperationResult> AddAdministratorAsync(GenericOrganization organization, PersonInfo person, bool asCreator = false)
-    {
-        if (this.OrganizationStore is not IOrganizationAdministratorStore administratorStore)
-            throw new NotSupportedException("不支持该功能");
-
-        List<string> errors = new();
-        if ((await administratorStore.GetAdministrators(organization)).Any(p => p.PersonId == person.Id))
-            errors.Add("当前用户已经是组织的管理人");
-
-        if (errors.Any())
-            return new OperationResult(errors);
-
-        OrganizationAdministrator administrator = new()
-        {
-            OrganizationId = organization.Id,
-            PersonId = person.Id,
-            Name = person.Name,
-            IsOrganizationCreator = asCreator,
-        };
-
-        using TransactionScope trans = new(TransactionScopeAsyncFlowOption.Enabled);
-        if (asCreator)
-        {
-            var currentCreators = (await administratorStore.GetAdministrators(organization)).Where(p => p.IsOrganizationCreator);
-            foreach (var creator in currentCreators)
-            {
-                creator.IsOrganizationCreator = false;
-                await administratorStore.UpdateAdministrator(creator);
-            }
-        }
-
-        await administratorStore.AddAdministrator(organization, administrator);
-        trans.Complete();
-        return OperationResult.Success;
-    }
-
-    /// <summary>
-    /// 将指定的用户从组织管理人中移除
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <param name="administrator"></param>
-    /// <returns></returns>
-    /// <exception cref="NotSupportedException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
-    public async Task<OperationResult> RemoveAdministratorAsync(GenericOrganization organization, OrganizationAdministrator administrator)
-    {
-        if (this.OrganizationStore is not IOrganizationAdministratorStore administratorStore)
-            throw new NotSupportedException("不支持该功能");
-
-        List<string> errors = new();
-        if (administrator.IsOrganizationCreator)
-        {
-            errors.Add("此人是组织的创建者，必须现将组织的创建者转移给其他管理人，才能将该管理人移除");
-        }
-        if (errors.Any())
-            return new OperationResult(errors);
-
-        await administratorStore.RemoveAdministrator(organization, administrator);
-        return OperationResult.Success;
-    }
-
-    /// <summary>
-    /// 将某个组织管理人设置为创建者。
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <param name="administrator"></param>
-    /// <returns></returns>
-    /// <exception cref="NotSupportedException"></exception>
-    public async Task<OperationResult> SetCreatorAsync(GenericOrganization organization, OrganizationAdministrator administrator)
-    {
-        if (this.OrganizationStore is not IOrganizationAdministratorStore administratorStore)
-            throw new NotSupportedException("不支持该功能");
-
-        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var administrators = await administratorStore.GetAdministrators(organization);
-        foreach (var oldCreator in administrators.Where(p => p.IsOrganizationCreator))
-        {
-            oldCreator.IsOrganizationCreator = false;
-            await administratorStore.UpdateAdministrator(oldCreator);
-        }
-        administrator.IsOrganizationCreator = true;
-        await administratorStore.UpdateAdministrator(administrator);
-        trans.Complete();
         return OperationResult.Success;
     }
 
@@ -211,8 +99,6 @@ public class OrganizationManager
     {
         var orgId = org.Id;
         newName = newName.Trim().Trim('\r', '\n');
-        if (string.IsNullOrEmpty(newName))
-            return OperationResult.Error("新名称无效");
         if (newName == org.Name)
             return OperationResult.Error("名称相同");
 

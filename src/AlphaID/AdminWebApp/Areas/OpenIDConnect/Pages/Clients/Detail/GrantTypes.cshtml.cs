@@ -82,7 +82,7 @@ public class GrantTypesModel : PageModel
         return this.Page();
     }
 
-    static readonly List<GrantTypeItem> GrantTypes = new()
+    private static readonly List<GrantTypeItem> GrantTypes = new()
     {
         new GrantTypeItem(GrantType.Implicit, "ÒşÊ½"),
         new GrantTypeItem(GrantType.AuthorizationCode, "ÊÚÈ¨Âë"),

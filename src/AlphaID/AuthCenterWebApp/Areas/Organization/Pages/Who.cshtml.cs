@@ -6,7 +6,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages
 {
     public class WhoModel : PageModel
     {
-        OrganizationManager organizationManager;
+        private readonly OrganizationManager organizationManager;
 
         public WhoModel(OrganizationManager organizationManager)
         {

@@ -4,9 +4,8 @@ namespace AuthCenterWebApp.Areas.People;
 
 public class PeopleFolderRouteModelConvention : IPageRouteModelConvention
 {
-    const string areaName = "People";
-
-    const string folderPath = "/";
+    private const string areaName = "People";
+    private const string folderPath = "/";
 
     public void Apply(PageRouteModel model)
     {
@@ -17,7 +16,7 @@ public class PeopleFolderRouteModelConvention : IPageRouteModelConvention
         }
     }
 
-    void ApplyRoute(PageRouteModel model)
+    private void ApplyRoute(PageRouteModel model)
     {
         //todo 重写路由
     }

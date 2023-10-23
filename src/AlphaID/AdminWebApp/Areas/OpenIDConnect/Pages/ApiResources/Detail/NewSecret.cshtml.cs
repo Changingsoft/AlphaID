@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
     public class NewSecretModel : PageModel
     {
-        readonly ConfigurationDbContext dbContext;
+        private readonly ConfigurationDbContext dbContext;
 
         public NewSecretModel(ConfigurationDbContext dbContext)
         {

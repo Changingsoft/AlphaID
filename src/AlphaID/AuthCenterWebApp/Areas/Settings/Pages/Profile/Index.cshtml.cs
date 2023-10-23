@@ -8,7 +8,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 {
     public class IndexModel : PageModel
     {
-        NaturalPersonManager personManager;
+        private readonly NaturalPersonManager personManager;
 
         public IndexModel(NaturalPersonManager personManager)
         {

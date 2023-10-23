@@ -9,7 +9,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 {
     public class IdPRestrictionModel : PageModel
     {
-        readonly ConfigurationDbContext dbContext;
+        private readonly ConfigurationDbContext dbContext;
 
         public IdPRestrictionModel(ConfigurationDbContext dbContext)
         {

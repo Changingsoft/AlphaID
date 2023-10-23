@@ -23,7 +23,7 @@ public class ServiceProviderFixture : IDisposable
 
     public void Dispose()
     {
-
+        
     }
 
     public IServiceProvider RootServiceProvider { get; }

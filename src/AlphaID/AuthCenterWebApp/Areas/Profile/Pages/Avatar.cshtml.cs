@@ -6,7 +6,7 @@ namespace AuthCenterWebApp.Areas.Profile.Pages
 {
     public class AvatarModel : PageModel
     {
-        readonly NaturalPersonManager personManager;
+        private readonly NaturalPersonManager personManager;
 
         public AvatarModel(NaturalPersonManager personManager)
         {

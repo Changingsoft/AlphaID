@@ -6,14 +6,10 @@ namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly OrganizationMemberManager memberManager;
-    private readonly NaturalPersonManager naturalPersonManager;
     private readonly OrganizationManager organizationManager;
 
-    public IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager, OrganizationManager organizationManager)
+    public IndexModel(OrganizationManager organizationManager)
     {
-        this.memberManager = memberManager;
-        this.naturalPersonManager = naturalPersonManager;
         this.organizationManager = organizationManager;
     }
 

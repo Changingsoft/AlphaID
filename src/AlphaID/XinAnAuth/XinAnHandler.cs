@@ -41,13 +41,12 @@ public class XinAnHandler : OAuthHandler<XinAnOptions>
     /// <exception cref="HttpRequestException"></exception>
     protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
     {
+        if (tokens.AccessToken == null)
+            throw new InvalidOperationException("Access token not exists.");
         var endpoint = QueryHelpers.AddQueryString(this.Options.UserInformationEndpoint, "access_token", tokens.AccessToken);
 
         var response = await this.Options.Backchannel.GetAsync(endpoint, this.Context.RequestAborted);
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new HttpRequestException($"获取信安世纪SSO用户信息时发生错误，HTTP响应码：{response.StatusCode}。请检查身份验证信息是否正确。");
-        }
+        response.EnsureSuccessStatusCode();
 
         using var payload = JsonDocument.Parse(await response.Content.ReadAsStringAsync(this.Context.RequestAborted));
 

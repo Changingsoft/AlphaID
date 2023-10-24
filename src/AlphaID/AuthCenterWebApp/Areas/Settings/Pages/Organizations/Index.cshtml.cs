@@ -7,8 +7,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 {
     public class IndexModel : PageModel
     {
-        NaturalPersonManager personManager;
-        readonly OrganizationMemberManager memberManager;
+        private readonly NaturalPersonManager personManager;
+        private readonly OrganizationMemberManager memberManager;
 
         public IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager personManager)
         {

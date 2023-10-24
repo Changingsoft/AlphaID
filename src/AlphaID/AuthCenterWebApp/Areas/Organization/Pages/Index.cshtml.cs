@@ -19,11 +19,11 @@ public class IndexModel : PageModel
     public async Task<IActionResult> OnGet(string anchor)
     {
         var orgs = await this.organizationManager.SearchByNameAsync(anchor);
-        if(orgs.Count() > 1)
+        if (orgs.Count() > 1)
         {
             return this.RedirectToPage("Who");
         }
-        if(orgs.Any())
+        if (orgs.Any())
         {
             this.Organization = orgs.First();
             return this.Page();

@@ -75,6 +75,6 @@ public class AddressInfo
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{Receiver} {Company},{Street3},{Street2},{Street1},{City},{Country},{PostalCode}";
+        return $"{this.Receiver} {this.Company},{this.Street3},{this.Street2},{this.Street1},{this.City},{this.Country},{this.PostalCode}";
     }
 }

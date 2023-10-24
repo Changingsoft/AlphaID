@@ -2,8 +2,6 @@ using AlphaIDPlatform.Security;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Threading.Tasks;
 
 namespace AuthCenterWebApp.Areas.People.Pages
 {
@@ -36,7 +34,7 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
             this.Members = await this.organizationMemberManager.GetMembersOfAsync(person);
 
-            if(this.User.Identity!.IsAuthenticated)
+            if (this.User.Identity!.IsAuthenticated)
             {
                 if (this.User.SubjectId() == this.Person.Id)
                     this.UserIsOwner = true;

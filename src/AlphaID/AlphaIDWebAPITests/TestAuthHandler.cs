@@ -7,14 +7,14 @@ using System.Text.Encodings.Web;
 namespace AlphaIDWebAPITests;
 internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) 
+    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
         : base(options, logger, encoder, clock)
     {
     }
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if(this.Request.Headers.Authorization.Contains("Bearer"))
+        if (this.Request.Headers.Authorization.Contains("Bearer"))
         {
             var claims = new List<Claim>()
             {

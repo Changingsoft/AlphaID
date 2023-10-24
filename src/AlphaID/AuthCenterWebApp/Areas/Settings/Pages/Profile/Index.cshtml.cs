@@ -40,7 +40,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             person.Bio = this.Input.Bio;
 
             var result = await this.personManager.UpdateAsync(person);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                     this.ModelState.AddModelError("", error.Description);

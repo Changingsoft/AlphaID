@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Serilog;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
@@ -25,7 +24,7 @@ public class LoginModel : PageModel
     private readonly IEventService _events;
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
-    ILogger<LoginModel>? _logger;
+    private readonly ILogger<LoginModel>? _logger;
 
     public ViewModel View { get; set; } = default!;
 

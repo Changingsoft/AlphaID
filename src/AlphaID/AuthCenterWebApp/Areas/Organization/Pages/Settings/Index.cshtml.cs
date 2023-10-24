@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 {
     public class IndexModel : PageModel
     {
-        readonly OrganizationManager manager;
+        private readonly OrganizationManager manager;
 
         public IndexModel(OrganizationManager manager)
         {
@@ -24,8 +24,8 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
             var orgs = await this.manager.FindByAnchorAsync(anchor);
             if (!orgs.Any())
                 return this.NotFound();
-            if(orgs.Count() > 1)
-                return this.RedirectToPage("/Who", new {anchor});
+            if (orgs.Count() > 1)
+                return this.RedirectToPage("/Who", new { anchor });
             var org = orgs.First();
 
             this.Input = new InputModel()

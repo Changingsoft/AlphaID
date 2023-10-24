@@ -43,7 +43,7 @@ public class Index : PageModel
         }
 
         var view = await this.BuildViewModelAsync(userCode);
-        if(view == null)
+        if (view == null)
         {
             this.ModelState.AddModelError("", DeviceOptions.InvalidUserCode);
             this.View = new ViewModel();

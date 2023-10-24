@@ -38,7 +38,7 @@ public class CorsModel : PageModel
         this.Data = data;
 
         var item = this.Data.AllowedCorsOrigins.FirstOrDefault(p => p.Id == originId);
-        if(item != null)
+        if (item != null)
         {
             this.Data.AllowedCorsOrigins.Remove(item);
             this.dbContext.Clients.Update(this.Data);
@@ -55,9 +55,9 @@ public class CorsModel : PageModel
         this.Data = data;
 
         if (this.Data.AllowedCorsOrigins.Any(p => p.Origin == this.NewOrigin))
-            this.ModelState.AddModelError(nameof(NewOrigin), "The Origin has been existed.");
+            this.ModelState.AddModelError(nameof(this.NewOrigin), "The Origin has been existed.");
 
-        if(!this.ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
             return this.Page();
         }

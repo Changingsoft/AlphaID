@@ -41,7 +41,7 @@ internal class StubNaturalPersonStore : UserStoreBase<NaturalPerson, string, Ide
         {
             LoginProvider = login.LoginProvider,
             ProviderDisplayName = login.ProviderDisplayName,
-            ProviderKey=login.ProviderKey,
+            ProviderKey = login.ProviderKey,
             UserId = user.Id,
         });
         return Task.CompletedTask;
@@ -352,7 +352,7 @@ internal class StubNaturalPersonStore : UserStoreBase<NaturalPerson, string, Ide
         }
     }
 
-    protected  override Task<IdentityUserToken<string>?> FindTokenAsync(NaturalPerson user, string loginProvider, string name, CancellationToken cancellationToken)
+    protected override Task<IdentityUserToken<string>?> FindTokenAsync(NaturalPerson user, string loginProvider, string name, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(this.tokens.FirstOrDefault(p => p.LoginProvider == loginProvider && p.Name == name && p.UserId == user.Id));

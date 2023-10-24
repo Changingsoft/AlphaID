@@ -147,10 +147,10 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Client name",Description ="Friendly name for display.")]
+        [Display(Name = "Client name", Description = "Friendly name for display.")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "Require client secret", Description ="Specifies the client is a credential client.")]
+        [Display(Name = "Require client secret", Description = "Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;
 
         [Display(Name = "Client secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]

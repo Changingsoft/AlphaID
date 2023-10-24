@@ -46,7 +46,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
             this.Data = resource;
 
             var item = this.Data.Properties.FirstOrDefault(p => p.Id == propId);
-            if(item != null)
+            if (item != null)
             {
                 this.Data.Properties.Remove(item);
                 this.dbContext.ApiResources.Update(this.Data);

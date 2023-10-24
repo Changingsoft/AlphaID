@@ -15,7 +15,7 @@ namespace AuthCenterWebApp.Areas.Profile.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await this.personManager.GetUserAsync(User);
+            var person = await this.personManager.GetUserAsync(this.User);
             if (person == null)
                 return this.NotFound();
 

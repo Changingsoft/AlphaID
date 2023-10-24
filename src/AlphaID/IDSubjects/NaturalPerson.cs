@@ -20,7 +20,7 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     /// 
     /// </summary>
-    public NaturalPerson():base()
+    public NaturalPerson() : base()
     {
         this.BankAccounts = new HashSet<PersonBankAccount>();
     }
@@ -29,7 +29,7 @@ public class NaturalPerson : IdentityUser
     /// 
     /// </summary>
     /// <param name="userName"></param>
-    public NaturalPerson(string userName):base(userName)
+    public NaturalPerson(string userName) : base(userName)
     {
         this.BankAccounts = new HashSet<PersonBankAccount>();
     }
@@ -129,7 +129,7 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     /// 区域和语言选项
     /// </summary>
-    [MaxLength(10),Unicode(false)]
+    [MaxLength(10), Unicode(false)]
     public virtual string? Locale { get; protected internal set; }
 
     /// <summary>

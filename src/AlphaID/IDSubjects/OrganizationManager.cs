@@ -1,6 +1,4 @@
-﻿using System.Transactions;
-
-namespace IDSubjects;
+﻿namespace IDSubjects;
 
 /// <summary>
 /// GenericOrganization Manager

@@ -9,10 +9,10 @@ public static class OrganizationManagerExtensions
         //Find by name first.
         var orgs = (await manager.SearchByNameAsync(anchor)).ToList();
         //Find by ID if list is empty.
-        if(!orgs.Any())
+        if (!orgs.Any())
         {
             var org = await manager.FindByIdAsync(anchor);
-            if(org != null)
+            if (org != null)
                 orgs.Add(org);
         }
         return orgs;

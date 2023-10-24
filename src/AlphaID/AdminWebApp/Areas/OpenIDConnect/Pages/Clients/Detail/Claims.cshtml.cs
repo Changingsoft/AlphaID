@@ -36,7 +36,7 @@ public class ClaimsModel : PageModel
             return this.NotFound();
         this.Data = data;
 
-        if(this.Data.Claims.Any(p => p.Type == this.Input.Type && p.Value == this.Input.Value))
+        if (this.Data.Claims.Any(p => p.Type == this.Input.Type && p.Value == this.Input.Value))
         {
             this.ModelState.AddModelError("", "已经存在一个具有相同类型和值的声明。");
         }
@@ -65,7 +65,7 @@ public class ClaimsModel : PageModel
         this.Data = data;
 
         var item = this.Data.Claims.FirstOrDefault(p => p.Id == claimId);
-        if(item != null)
+        if (item != null)
         {
             this.Data.Claims.Remove(item);
             this.dbContext.Clients.Update(this.Data);

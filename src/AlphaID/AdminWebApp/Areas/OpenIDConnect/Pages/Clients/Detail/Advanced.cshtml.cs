@@ -131,7 +131,7 @@ public class AdvancedModel : PageModel
         this.Data = data;
 
         var item = this.Data.Properties.FirstOrDefault(p => p.Id == propId);
-        if(item != null)
+        if (item != null)
         {
             this.Data.Properties.Remove(item);
             this.dbContext.Clients.Update(this.Data);
@@ -149,7 +149,7 @@ public class AdvancedModel : PageModel
             return this.NotFound();
         this.Data = data;
 
-        if(this.Data.Properties.Any(p => p.Key == this.AddProperty.Key))
+        if (this.Data.Properties.Any(p => p.Key == this.AddProperty.Key))
         {
             this.ModelState.AddModelError("", "指定的Key和Value已存在。");
         }

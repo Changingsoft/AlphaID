@@ -2,7 +2,6 @@ using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {

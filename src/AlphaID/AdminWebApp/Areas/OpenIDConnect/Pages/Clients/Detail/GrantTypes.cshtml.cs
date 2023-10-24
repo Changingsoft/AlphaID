@@ -30,7 +30,7 @@ public class GrantTypesModel : PageModel
             return this.NotFound();
         this.Data = data;
 
-        this.AllowedGrantTypes = GrantTypes.Select(g => new SelectListItem(g.DisplayName,g.Name,this.Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
+        this.AllowedGrantTypes = GrantTypes.Select(g => new SelectListItem(g.DisplayName, g.Name, this.Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
 
         return this.Page();
     }
@@ -54,11 +54,11 @@ public class GrantTypesModel : PageModel
             return this.Page();
         }
 
-        foreach(var grantType in this.AllowedGrantTypes)
+        foreach (var grantType in this.AllowedGrantTypes)
         {
-            if(grantType.Selected)
+            if (grantType.Selected)
             {
-                if(!this.Data.AllowedGrantTypes.Any(p => p.GrantType == grantType.Value))
+                if (!this.Data.AllowedGrantTypes.Any(p => p.GrantType == grantType.Value))
                 {
                     this.Data.AllowedGrantTypes.Add(new ClientGrantType()
                     {
@@ -70,7 +70,7 @@ public class GrantTypesModel : PageModel
             else
             {
                 var existsGrantType = this.Data.AllowedGrantTypes.FirstOrDefault(p => p.GrantType == grantType.Value);
-                if(existsGrantType != null)
+                if (existsGrantType != null)
                 {
                     this.Data.AllowedGrantTypes.Remove(existsGrantType);
                 }

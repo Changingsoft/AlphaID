@@ -9,7 +9,7 @@ public class PeopleFolderRouteModelConvention : IPageRouteModelConvention
 
     public void Apply(PageRouteModel model)
     {
-        if(string.Equals(areaName, model.AreaName, StringComparison.OrdinalIgnoreCase) &&
+        if (string.Equals(areaName, model.AreaName, StringComparison.OrdinalIgnoreCase) &&
             PathBelongsToFolder(folderPath, model.ViewEnginePath))
         {
             this.ApplyRoute(model);

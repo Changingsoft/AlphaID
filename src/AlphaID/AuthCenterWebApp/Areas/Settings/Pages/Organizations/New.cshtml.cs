@@ -10,9 +10,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 {
     public class NewModel : PageModel
     {
-        OrganizationManager organizationManager;
-        OrganizationMemberManager memberManager;
-        NaturalPersonManager personManager;
+        private readonly OrganizationManager organizationManager;
+        private readonly OrganizationMemberManager memberManager;
+        private readonly NaturalPersonManager personManager;
 
         public NewModel(OrganizationManager organizationManager, OrganizationMemberManager memberManager, NaturalPersonManager personManager)
         {
@@ -90,7 +90,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
                 return this.Page();
             }
             trans.Complete();
-            
+
             return this.RedirectToPage("Index");
         }
 

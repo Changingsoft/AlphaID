@@ -116,7 +116,7 @@ builder.Services.AddAuthorization(options =>
 //³Ö¾Ã»¯
 builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),sqlOptions =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
         sqlOptions.UseNetTopologySuite();
     });

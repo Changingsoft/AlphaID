@@ -21,7 +21,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages
             if (!this.Organizations.Any())
                 return this.NotFound();
 
-            if(this.Organizations.Count() == 1)
+            if (this.Organizations.Count() == 1)
             {
                 return this.RedirectToPage("Index", new { anchor = this.Organizations.Single().Name });
             }

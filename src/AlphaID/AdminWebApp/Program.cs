@@ -248,9 +248,9 @@ app.MapRazorPages();
 app.MapControllers();
 
 var startAction = app.Configuration["StartAction"];
-if(startAction != null)
+if (startAction != null)
 {
-    switch(startAction.ToLower())
+    switch (startAction.ToLower())
     {
         case "migration":
             using (var db = app.Services.GetRequiredService<OperationalDbContext>())

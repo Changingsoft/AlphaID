@@ -5,7 +5,6 @@ using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
-using Azure.Identity;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
@@ -17,7 +16,6 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using System.Diagnostics;
 using System.Globalization;
 
 Log.Logger = new LoggerConfiguration()

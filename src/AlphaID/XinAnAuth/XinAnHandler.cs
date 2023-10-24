@@ -56,7 +56,7 @@ public class XinAnHandler : OAuthHandler<XinAnOptions>
             {"oauth_consumer_key", this.Options.ClientId },
             {"openid", payload.RootElement.GetString("openid") },
         });
-        
+
         var detailInfoResponse = await this.Options.Backchannel.GetAsync(detailInfoEndpoint, this.Context.RequestAborted);
         if (!detailInfoResponse.IsSuccessStatusCode)
         {

@@ -1,10 +1,15 @@
 ﻿@page
-@model             SearchModel
+@model SearchModel
 @{
     this.ViewBag.Title = "搜索组织";
 }
-<partial name="_SearchInputPart" />
-<h1>搜索结果</h1>
+
+<div class="row">
+    <div class="col-5">
+        <partial name="_SearchInputPart" />
+    </div>
+</div>
+<h2>搜索结果</h2>
 @if (this.Model.Results != null)
 {
     <table class="table">
@@ -21,10 +26,10 @@
             {
                 <tr>
                     <td>
-                        <h2><a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a></h2>
-                        @foreach(var usedName in org.UsedNames)
+                        <a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a>
+                        @foreach (var usedName in org.UsedNames)
                         {
-                            <p class="text-muted small">曾用名：@usedName.Name</p>
+                            <span class="text-muted small">曾用名：@usedName.Name</span>
                         }
                     </td>
                     <td>@org.USCI</td>

@@ -1,73 +1,42 @@
 ﻿@page "{id}"
-@model             MembersModel
+@model MembersModel
 @{
     this.ViewBag.Title = $"成员 - {this.Model.Organization.Name}";
 }
 
-<partial name="_OrganizationSummary" model="@Model.Organization"></partial>
-
-<h2>成员</h2>
 <p>@Model.Members.Count() 人</p>
-
-<div class="row row-cards">
-    @foreach(var member in this.Model.Members)
-    {
-        <div class="col-md-6 col-lg-3">
-            <div class="card">
-                <div class="card-body p-4 text-center">
-                    <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg)"></span>
-                    <h3 class="m-0 mb-1"><a href="#">@member.Person.Name</a></h3>
-                    <div class="text-secondary">@member.Title</div>
-                    <div class="text-secondary">@member.Department</div>
-                    <div class="mt-3">
-                        
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <a href="#" class="card-btn">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/phone -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path></svg>
-                        @member.Person.PhoneNumber
-                    </a>
-                </div>
-            </div>
-        </div>
-
-    }
-</div>
-<table class="table">
-    <thead>
-        <tr>
-            <td>姓名</td>
-            <td>电话</td>
-            <td>职务</td>
-            <td>部门</td>
-            <td>备注</td>
-            <td>操作</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var member in this.Model.Members)
-        {
+<form method="post" asp-page-handler="RemoveMember">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@member.Person.Name</td>
-                <td>@member.Person.PhoneNumber</td>
-                <td>@member.Title</td>
-                <td>@member.Department</td>
-                <td>@member.Remark</td>
-                <td>
-                    <a asp-page="EditMember" asp-route-id="@this.ViewContext.RouteData.Values["id"]" asp-route-personId="@member.PersonId">编辑</a>
-                    <form method="post" asp-page-handler="RemoveMember" asp-route-personid="@member.PersonId">
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure remove this person?');">Remove</button>
-                    </form>
-                </td>
+                <td>@localizer["Person"]</td>
+                <td>@localizer["Title"]</td>
+                <td>@localizer["Department"]</td>
+                <td>@localizer["Remark"]</td>
+                <td>@localizer["Owner"]</td>
+                <td>@localizer["Operations"]</td>
             </tr>
-        }
-    </tbody>
-</table>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberEditor">
-    添加成员
+        </thead>
+        <tbody>
+            @foreach (var member in this.Model.Members)
+            {
+                <tr>
+                    <td>@member.Person.Name</td>
+                    <td>@member.Title</td>
+                    <td>@member.Department</td>
+                    <td>@member.Remark</td>
+                    <td><input type="checkbox" class="form-check-input" asp-for="@member.IsOwner" disabled /></td>
+                    <td>
+                        <a asp-page="EditMember" asp-route-id="@this.ViewContext.RouteData.Values["id"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@localizer["Edit"]</a>
+                        <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@localizer["Remove"]</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberEditor">
+    @localizer["Add member"]
 </button>
 <div class="modal fade" id="memberEditor">
     <div class="modal-dialog">
@@ -106,9 +75,9 @@
     </div>
 </div>
 
-@section scripts
+@section Scripts
     {
-
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
             $("[name='personSearch']").autocomplete({

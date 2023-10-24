@@ -18,52 +18,6 @@
                 <vc:organization-nav-panel></vc:organization-nav-panel>
             </div>
         </div>
-
-        @if (this.env.IsDevelopment())
-        {
-            <hr />
-            <h2>Debug Information</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>access_token</td>
-                        <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("access_token"))</code></td>
-                    </tr>
-                    <tr>
-                        <td>id_token</td>
-                        <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("id_token"))</code></td>
-                    </tr>
-                    <tr>
-                        <td>refresh_token</td>
-                        <td style="word-break:break-all;"><code>@(await this.HttpContext.GetTokenAsync("refresh_token"))</code></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var c in this.User.Claims)
-                    {
-                        <tr>
-                            <td>@c.Type</td>
-                            <td>@c.Value</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
     </div>
 </div>
 

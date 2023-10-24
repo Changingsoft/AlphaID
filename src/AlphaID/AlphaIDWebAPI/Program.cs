@@ -74,8 +74,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services
     .AddAuthentication(options =>
     {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
     //ÃÌº”JWT—È÷§°£

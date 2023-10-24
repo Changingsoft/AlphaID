@@ -80,7 +80,7 @@ public class MembersModel : PageModel
         return this.RedirectToPage();
     }
 
-    public async Task<IActionResult> OnPostRemoveMemberAsync(string personId)
+    public async Task<IActionResult> OnPostRemoveMemberAsync(string id, string personId)
     {
         var org = await this.organizationManager.FindByIdAsync(this.Id);
         if (org == null)

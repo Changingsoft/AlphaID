@@ -9,7 +9,7 @@
         @for (var i = 0; i < this.Model.AllowedGrantTypes.Count; i++)
         {
             <li class="list-group-item">
-                <label asp-for="AllowedGrantTypes[i].Selected" class="form-check">
+                <label asp-for="AllowedGrantTypes[i].Selected" class="form-check-label">
                     <input asp-for="AllowedGrantTypes[i].Selected" class="form-check-input">
                     <span>@this.Model.AllowedGrantTypes[i].Value (@this.Model.AllowedGrantTypes[i].Text)</span>
                     <input asp-for="AllowedGrantTypes[i].Text" type="hidden">

@@ -13,14 +13,14 @@
 
 <p>当前移动电话号码</p>
 <div class="form-group">
-    <label asp-for="Mobile"></label>
+    <label asp-for="Mobile" class="form-label"></label>
     <input asp-for="Mobile" class="form-control" disabled />
 </div>
 
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="NewMobile"></label>
+        <label asp-for="NewMobile" class="form-label"></label>
         <input asp-for="NewMobile" class="form-control" />
         <span asp-validation-for="NewMobile" class="text-danger"></span>
     </div>
@@ -30,7 +30,7 @@
         <span>验证码已发送</span>
     }
     <div class="form-group">
-        <label asp-for="VerificationCode"></label>
+        <label asp-for="VerificationCode" class="form-label"></label>
         <input asp-for="VerificationCode" class="form-control" />
         <span asp-validation-for="VerificationCode" class="text-danger"></span>
     </div>

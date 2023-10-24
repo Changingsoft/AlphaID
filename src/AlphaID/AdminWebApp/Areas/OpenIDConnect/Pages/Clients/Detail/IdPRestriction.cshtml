@@ -23,8 +23,8 @@
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
-            <div class="form-group">
-                <label asp-for="SelectedProvider"></label>
+            <div class="mb-3">
+                <label asp-for="SelectedProvider" class="form-label"></label>
                 <select asp-for="SelectedProvider">
                     @foreach(var item in this.Model.IdProviders)
                     {

@@ -48,12 +48,12 @@
             <div class="modal-header">加入组织</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
-                    <div class="form-group">
-                        <label for="personSearch">搜索用户</label>
+                    <div class="mb-3">
+                        <label for="personSearch" class="form-label">搜索用户</label>
                         <input name="personSearch" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Input.UserName"></label>
+                    <div class="mb-3">
+                        <label asp-for="Input.UserName" class="form-label"></label>
                         <input asp-for="Input.UserName" class="form-control" readonly />
                     </div>
                     <input asp-for="Input.PersonId" type="hidden" />

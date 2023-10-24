@@ -29,27 +29,27 @@
 </div>
 
 <form method="post">
-    <div class="form-group">
-        <input asp-for="Input.Accepted" class="form-checkbox-input" />
-        <label asp-for="Input.Accepted" class="form-checkbox-label"></label>
+    <div class="form-check">
+        <input asp-for="Input.Accepted" class="form-check-input" />
+        <label asp-for="Input.Accepted" class="form-check-label"></label>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.Surname"></label>
+    <div class="mb-3">
+        <label asp-for="Input.Surname" class="form-label"></label>
         <input asp-for="Input.Surname" class="form-control" />
         <span asp-validation-for="Input.Surname" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.GivenName"></label>
+    <div class="mb-3">
+        <label asp-for="Input.GivenName" class="form-label"></label>
         <input asp-for="Input.GivenName" class="form-control" />
         <span asp-validation-for="Input.GivenName" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.PinyinSurname"></label>
+    <div class="mb-3">
+        <label asp-for="Input.PinyinSurname" class="form-label"></label>
         <input asp-for="Input.PinyinSurname" class="form-control" />
         <span asp-validation-for="Input.PinyinSurname" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.PinyinGivenName"></label>
+    <div class="mb-3">
+        <label asp-for="Input.PinyinGivenName" class="form-label"></label>
         <input asp-for="Input.PinyinGivenName" class="form-control" />
         <span asp-validation-for="Input.PinyinGivenName" class="text-danger"></span>
     </div>

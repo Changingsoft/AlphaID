@@ -1,5 +1,5 @@
 @page
-@model             AuthCenterWebApp.Pages.Grants.Index
+@model AuthCenterWebApp.Pages.Grants.Index
 @{
 }
 
@@ -49,16 +49,16 @@
                             @if (grant.Description != null)
                             {
                                 <li class="list-group-item">
-                                    <label>描述：</label> @grant.Description
+                                    <label>@localizer["Description"]：</label> @grant.Description
                                 </li>
                             }
                             <li class="list-group-item">
-                                <label>创建于：</label> @grant.Created.ToString("yyyy-MM-dd HH:mm:ss")
+                                <label>@localizer["Created"]：</label> @grant.Created.ToString("yyyy-MM-dd HH:mm:ss")
                             </li>
                             @if (grant.Expires.HasValue)
                             {
                                 <li class="list-group-item">
-                                    <label>有效期至：</label> @grant.Expires.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                                    <label>@localizer["Expires"]：</label> @grant.Expires.Value.ToString("yyyy-MM-dd HH:mm:ss")
                                 </li>
                             }
                             @if (grant.IdentityGrantNames.Any())

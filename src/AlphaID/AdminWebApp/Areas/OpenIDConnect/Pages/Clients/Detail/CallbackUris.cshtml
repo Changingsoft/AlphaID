@@ -17,8 +17,8 @@
     </ul>
 </form>
 <form method="post">
-    <div class="form-group">
-        <label for="callback-uri">New callback URI</label>
+    <div class="mb-3">
+        <label for="callback-uri" class="form-label">New callback URI</label>
         <input name="callback_uri" type="text" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="AddCallBackUrl">Add</button>
@@ -37,8 +37,8 @@
     </ul>
 </form>
 <form method="post">
-    <div class="form-group">
-        <label for="callback-uri">New sign out callback URI</label>
+    <div class="mb-3">
+        <label for="callback-uri" class="form-label">New sign out callback URI</label>
         <input name="callback_uri" type="text" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="AddSignOutCallbackUrl">Add</button>

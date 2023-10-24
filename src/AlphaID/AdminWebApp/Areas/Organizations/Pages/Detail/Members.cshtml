@@ -75,27 +75,27 @@
             <div class="modal-header">Add/Edit Member</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="AddMember">
-                    <div class="form-group">
-                        <label for="personSearch">搜索人员</label>
+                    <div class="mb-3">
+                        <label for="personSearch" class="form-label">搜索人员</label>
                         <input name="personSearch" class="form-control" placeholder="姓名、拼音……" />
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.PersonId"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.PersonId" class="form-label"></label>
                         <input asp-for="@Model.PersonId" class="form-control" readonly />
                         <span asp-validation-for="@Model.PersonId" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Department"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Department" class="form-label"></label>
                         <input asp-for="@Model.Department" class="form-control" />
                         <span asp-validation-for="@Model.Department" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Title"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Title" class="form-label"></label>
                         <input asp-for="@Model.Title" class="form-control" />
                         <span asp-validation-for="@Model.Title" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Remark"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Remark" class="form-label"></label>
                         <input asp-for="@Model.Remark" class="form-control" />
                         <span asp-validation-for="@Model.Remark" class="text-danger"></span>
                     </div>

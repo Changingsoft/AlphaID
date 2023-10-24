@@ -44,27 +44,27 @@
             <div class="modal-header">加入组织</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="JoinOrganization">
-                    <div class="form-group">
-                        <label for="organizationSearch">搜索组织</label>
+                    <div class="mb-3">
+                        <label for="organizationSearch" class="form-label">搜索组织</label>
                         <input name="organizationSearch" type="text" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.OrganizationId"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.OrganizationId" class="form-label"></label>
                         <input asp-for="@Model.OrganizationId" class="form-control" readonly />
                         <span asp-validation-for="@Model.OrganizationId"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Department"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Department" class="form-label"></label>
                         <input asp-for="@Model.Department" class="form-control" />
                         <span asp-validation-for="@Model.Department"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Title"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Title" class="form-label"></label>
                         <input asp-for="@Model.Title" class="form-control" />
                         <span asp-validation-for="@Model.Title"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.Remark"></label>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Remark" class="form-label"></label>
                         <input asp-for="@Model.Remark" class="form-control" />
                         <span asp-validation-for="@Model.Remark"></span>
                     </div>

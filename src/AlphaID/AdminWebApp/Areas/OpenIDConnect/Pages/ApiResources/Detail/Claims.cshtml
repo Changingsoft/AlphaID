@@ -30,8 +30,8 @@
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
-            <div class="form-group">
-                <label asp-for="NewClaim"></label>
+            <div class="mb-3">
+                <label asp-for="NewClaim" class="form-label"></label>
                 <input asp-for="NewClaim" class="form-control" />
                 <span asp-validation-for="NewClaim" class="text-danger"></span>
             </div>

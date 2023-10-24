@@ -3,34 +3,36 @@
 @{
     this.ViewBag.Title = "范围";
 }
+
 <h3>范围</h3>
 
 <a asp-page="Create" class="btn btn-primary">新建Scope</a>
-
-<table class="table">
-    <thead>
-        <tr>
-            <td>@localizer["Name"]</td>
-            <td>启用</td>
-            <td>@localizer["Display name"]</td>
-            <td>@localizer["Description"]</td>
-            <td>必需的</td>
-            <td>Emphasize</td>
-            <td>在发现文档中列出</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var scope in this.Model.Results)
-        {
+<div class="card">
+    <table class="table">
+        <thead>
             <tr>
-                <td><a asp-page="Detail" asp-route-id="@scope.Id">@scope.Name</a></td>
-                <td>@scope.Enabled</td>
-                <td>@scope.DisplayName</td>
-                <td>@scope.Description</td>
-                <td>@scope.Required</td>
-                <td>@scope.Emphasize</td>
-                <td>@scope.ShowInDiscoveryDocument</td>
+                <td>@localizer["Name"]</td>
+                <td>启用</td>
+                <td>@localizer["Display name"]</td>
+                <td>@localizer["Description"]</td>
+                <td>必需的</td>
+                <td>Emphasize</td>
+                <td>在发现文档中列出</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var scope in this.Model.Results)
+            {
+                <tr>
+                    <td><a asp-page="Detail" asp-route-id="@scope.Id">@scope.Name</a></td>
+                    <td><input asp-for="@scope.Enabled" class="form-check-input" disabled /></td>
+                    <td>@scope.DisplayName</td>
+                    <td>@scope.Description</td>
+                    <td><input asp-for="@scope.Required" class="form-check-input" disabled /></td>
+                    <td><input asp-for="@scope.Emphasize" class="form-check-input" disabled /></td>
+                    <td><input asp-for="@scope.ShowInDiscoveryDocument" class="form-check-input" disabled /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

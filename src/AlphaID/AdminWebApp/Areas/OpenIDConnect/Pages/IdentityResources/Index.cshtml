@@ -11,6 +11,7 @@
         <tr>
             <td>@localizer["Name"]</td>
             <td>@localizer["Display name"]</td>
+            <td>@localizer["Description"]</td>
             <td>@localizer["Enabled"]</td>
             <td>@localizer["Emphasize"]</td>
             <td>@localizer["Show in discovery doc"]</td>
@@ -23,9 +24,10 @@
             <tr>
                 <td><a asp-page="Detail" asp-route-id="@idr.Id">@idr.Name</a></td>
                 <td>@idr.DisplayName</td>
-                <td>@idr.Enabled</td>
-                <td>@idr.Emphasize</td>
-                <td>@idr.ShowInDiscoveryDocument</td>
+                <td>@idr.Description</td>
+                <td><input asp-for="@idr.Enabled" class="form-check-input" disabled /></td>
+                <td><input asp-for="@idr.Emphasize" class="form-check-input" disabled /></td>
+                <td><input asp-for="@idr.ShowInDiscoveryDocument" class="form-check-input" disabled /></td>
                 <td>@idr.Created</td>
             </tr>
         }

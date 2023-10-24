@@ -5,7 +5,7 @@
 <h3>@localizer["Delete"] @Model.Data.DisplayName</h3>
 <p>@localizer["This reources will be permanently deleted. typing display name below to confirm."]（@Model.Data.DisplayName）</p>
 <form method="post">
-    <div class="form-group">
+    <div class="mb-3">
         <input asp-for="ResourceName" class="form-control" />
         <span asp-validation-for="ResourceName" class="text-danger"></span>
     </div>

@@ -36,18 +36,18 @@
 
 <hr />
 <form method="post" asp-page-handler="AddBankAccount">
-    <div class="form-group">
-        <label asp-for="@Model.AccountNumber"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.AccountNumber" class="form-label"></label>
         <input asp-for="@Model.AccountNumber" class="form-control" />
         <span asp-validation-for="@Model.AccountNumber"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.AccountName"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.AccountName" class="form-label"></label>
         <input asp-for="@Model.AccountName" class="form-control" />
         <span asp-validation-for="@Model.AccountName"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.BankName"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.BankName" class="form-label"></label>
         <input asp-for="@Model.BankName" class="form-control" />
         <span asp-validation-for="@Model.BankName"></span>
     </div>

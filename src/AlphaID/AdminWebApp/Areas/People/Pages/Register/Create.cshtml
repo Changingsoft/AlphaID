@@ -25,18 +25,18 @@
             <span class="alert-danger" asp-validation-for="@Model.Input.PhoneticGivenName"></span>
         </div>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Input.DisplayName"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.Input.DisplayName" class="form-label"></label>
         <input asp-for="@Model.Input.DisplayName" class="form-control" />
         <span class="alert-danger" asp-validation-for="@Model.Input.DisplayName"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Input.PhoneticDisplayName"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.Input.PhoneticDisplayName" class="form-label"></label>
         <input asp-for="@Model.Input.PhoneticDisplayName" class="form-control" />
         <span class="alert-danger" asp-validation-for="@Model.Input.PhoneticDisplayName"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Input.Sex"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.Input.Sex" class="form-label"></label>
         <select asp-for="@Model.Input.Sex" class="form-control">
             <option>未选择</option>
             <option value="Male" label="男"></option>
@@ -44,18 +44,18 @@
         </select>
         <span class="alert-danger" asp-validation-for="@Model.Input.Sex"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Input.DateOfBirth"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.Input.DateOfBirth" class="form-label"></label>
         <input asp-for="@Model.Input.DateOfBirth" class="form-control" />
         <span class="alert-danger" asp-validation-for="@Model.Input.DateOfBirth"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Input.Mobile"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.Input.Mobile" class="form-label"></label>
         <input asp-for="@Model.Input.Mobile" class="form-control" />
         <span class="alert-danger" asp-validation-for="@Model.Input.Mobile"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.Input.Email"></label>
+    <div class="mb-3">
+        <label asp-for="@Model.Input.Email" class="form-label"></label>
         <input asp-for="@Model.Input.Email" class="form-control" />
         <span class="alert-danger" asp-validation-for="@Model.Input.Email"></span>
     </div>

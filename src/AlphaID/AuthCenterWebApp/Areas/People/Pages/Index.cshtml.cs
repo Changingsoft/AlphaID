@@ -32,7 +32,9 @@ namespace AuthCenterWebApp.Areas.People.Pages
                 return this.NotFound();
             this.Person = person;
 
-            this.Members = await this.organizationMemberManager.GetMembersOfAsync(person);
+            NaturalPerson? visitor = await this.personManager.GetUserAsync(this.User);
+
+            this.Members = await this.organizationMemberManager.GetVisibleMembersOfAsync(person, visitor);
 
             if (this.User.Identity!.IsAuthenticated)
             {

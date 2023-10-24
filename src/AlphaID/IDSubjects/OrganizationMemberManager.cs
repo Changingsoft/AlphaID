@@ -1,4 +1,7 @@
-﻿namespace IDSubjects;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+
+namespace IDSubjects;
 
 /// <summary>
 /// GenericOrganization Member Manager.
@@ -6,14 +9,17 @@
 public class OrganizationMemberManager
 {
     private readonly IOrganizationMemberStore store;
+    readonly ILogger<OrganizationMemberManager>? logger;
 
     /// <summary>
     /// Init GenericOrganization Member Mamager via GenericOrganization Member store.
     /// </summary>
     /// <param name="store"></param>
-    public OrganizationMemberManager(IOrganizationMemberStore store)
+    /// <param name="logger"></param>
+    public OrganizationMemberManager(IOrganizationMemberStore store, ILogger<OrganizationMemberManager>? logger = null)
     {
         this.store = store;
+        this.logger = logger;
     }
 
     /// <summary>
@@ -32,22 +38,52 @@ public class OrganizationMemberManager
     /// Get members of the organization.
     /// </summary>
     /// <param name="organization">A organization that members to get.</param>
+    /// <param name="visitor">The person who access this system. null if anonymous access.</param>
     /// <returns></returns>
+    public Task<IEnumerable<OrganizationMember>> GetVisibleMembersAsync(GenericOrganization organization, NaturalPerson? visitor)
+    {
+        var members = this.store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
+        Debug.Assert(members != null);
+        var visibilityLevel = MembershipVisibility.Public;
+        if(visitor != null)
+        {
+            visibilityLevel = MembershipVisibility.AuthenticatedUser;
+            if (members.Any(m => m.PersonId == visitor.Id))
+                visibilityLevel = MembershipVisibility.Private; //Visitor is a member of the organization.
+        }
+        return Task.FromResult(members.Where(m => m.Visibility >= visibilityLevel).AsEnumerable());
+    }
+
     public Task<IEnumerable<OrganizationMember>> GetMembersAsync(GenericOrganization organization)
     {
-        var result = this.store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
-        return Task.FromResult(result.AsEnumerable());
+        var members = this.store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
+        return Task.FromResult(members.AsEnumerable());
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="person"></param>
+    /// <param name="visitor">The person who access this system, null if anonymous access.</param>
     /// <returns></returns>
+    public Task<IEnumerable<OrganizationMember>> GetVisibleMembersOfAsync(NaturalPerson person, NaturalPerson? visitor)
+    {
+        var members = this.store.OrganizationMembers.Where(p => p.PersonId == person.Id);
+        Debug.Assert(members != null);
+        var visibilityLevel = MembershipVisibility.Public;
+        if(visitor != null)
+        {
+            visibilityLevel = MembershipVisibility.AuthenticatedUser;
+            if(members.Any(m => m.PersonId == visitor.Id))
+                visibilityLevel = MembershipVisibility.Private; //Visitor is a member of the organization.
+        }
+        return Task.FromResult(members.Where(m => m.Visibility >= visibilityLevel).AsEnumerable());
+    }
+
     public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(NaturalPerson person)
     {
-        var result = this.store.OrganizationMembers.Where(p => p.PersonId == person.Id);
-        return Task.FromResult(result.AsEnumerable());
+        var members = this.store.OrganizationMembers.Where(p => p.PersonId == person.Id);
+        return Task.FromResult(members.AsEnumerable());
     }
 
     /// <summary>

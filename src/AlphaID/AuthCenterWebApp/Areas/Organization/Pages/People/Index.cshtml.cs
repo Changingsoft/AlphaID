@@ -1,5 +1,4 @@
 using IDSubjects;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,18 +8,18 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
     {
         private readonly OrganizationMemberManager organizationMemberManager;
         private readonly OrganizationManager organizationManager;
-        private readonly IQueryableUserStore<NaturalPerson> naturalPersonStore;
+        private readonly NaturalPersonManager personManager;
 
-        public IndexModel(OrganizationMemberManager organizationMemberManager, OrganizationManager organizationManager, IQueryableUserStore<NaturalPerson> naturalPersonStore)
+        public IndexModel(OrganizationMemberManager organizationMemberManager, OrganizationManager organizationManager, NaturalPersonManager personManager)
         {
             this.organizationMemberManager = organizationMemberManager;
             this.organizationManager = organizationManager;
-            this.naturalPersonStore = naturalPersonStore;
+            this.personManager = personManager;
         }
 
         public GenericOrganization Organization { get; set; } = default!;
 
-        public IEnumerable<OrganizationMember> Members { get; set; } = default!;
+        public IEnumerable<OrganizationMember> Members { get; set; } = Enumerable.Empty<OrganizationMember>();
 
         public async Task<IActionResult> OnGetAsync(string anchor)
         {
@@ -36,7 +35,10 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
                 return this.NotFound();
 
             this.Organization = org;
-            this.Members = await this.organizationMemberManager.GetMembersAsync(this.Organization);
+
+            var visitor = await this.personManager.GetUserAsync(this.User);
+
+            this.Members = await this.organizationMemberManager.GetVisibleMembersAsync(this.Organization, visitor);
             return this.Page();
         }
     }

@@ -75,4 +75,9 @@ public class OrganizationMember
     /// Is Owner of the organization.
     /// </summary>
     public bool IsOwner { get; set; }
+
+    /// <summary>
+    /// Membership visibility.
+    /// </summary>
+    public virtual MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
 }

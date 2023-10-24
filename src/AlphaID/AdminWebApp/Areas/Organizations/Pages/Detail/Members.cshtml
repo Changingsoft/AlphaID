@@ -14,6 +14,7 @@
                 <td>@localizer["Department"]</td>
                 <td>@localizer["Remark"]</td>
                 <td>@localizer["Owner"]</td>
+                <td>@localizer["Membership"]</td>
                 <td>@localizer["Operations"]</td>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                     <td>@member.Department</td>
                     <td>@member.Remark</td>
                     <td><input type="checkbox" class="form-check-input" asp-for="@member.IsOwner" disabled /></td>
+                    <td>@member.Visibility</td>
                     <td>
                         <a asp-page="EditMember" asp-route-id="@this.ViewContext.RouteData.Values["id"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@localizer["Edit"]</a>
                         <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@localizer["Remove"]</button>

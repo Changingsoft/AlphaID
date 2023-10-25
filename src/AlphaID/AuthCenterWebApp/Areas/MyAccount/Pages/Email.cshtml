@@ -13,7 +13,7 @@
             @if (Model.IsEmailConfirmed)
             {
                 <label asp-for="Email" class="form-label"></label>
-                <div class="form-floating input-group">
+                <div class="mb-3 input-group">
                     <input asp-for="Email" class="form-control" disabled />
                     <div class="input-group-append">
                         <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
@@ -22,13 +22,13 @@
             }
             else
             {
-                <div class="form-floating">
+                <div class="mb-3">
                     <label asp-for="Email" class="form-label"></label>
                     <input asp-for="Email" class="form-control" disabled />
                     <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">@localizer["Send verification email"]</button>
                 </div>
             }
-            <div class="form-floating">
+            <div class="mb-3">
                 <label asp-for="Input.NewEmail" class="form-label"></label>
                 <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" />
                 <span asp-validation-for="Input.NewEmail" class="text-danger"></span>

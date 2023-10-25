@@ -4,7 +4,7 @@
 
     var id = this.ViewContext.RouteData.Values["id"]?.ToString();
     GenericOrganization? org = null;
-    if(id != null)
+    if (id != null)
     {
         org = await this.manager.FindByIdAsync(id);
     }

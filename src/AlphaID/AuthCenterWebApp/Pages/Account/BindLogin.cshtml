@@ -15,7 +15,7 @@
         </div>
         <div class="card card-md">
             <div class="card-body">
-                <p>您正在从外部登录，我们无法确认您的 @product.Value.Name。请登录 @product.Value.Name 以便建立关联。</p>
+                <p>@localizer["You are now signing in from external, sign in {0} for binding to external login.", product.Value.Name]</p>
                 <form method="post">
                     <input type="hidden" asp-for="Input.ReturnUrl" />
 
@@ -28,8 +28,8 @@
                         <input type="password" class="form-control" placeholder="密码" asp-for="Input.Password" autocomplete="off">
                     </div>
                     <partial name="_ValidationSummary" />
-                    <button class="btn btn-primary" name="Input.Button" value="login">登录</button>
-                    <button class="btn btn-secondary" name="Input.Button" value="cancel">取消</button>
+                    <button class="btn btn-primary" name="Input.Button" value="login">@localizer["Sign in"]</button>
+                    <button class="btn btn-secondary" name="Input.Button" value="cancel">@localizer["Cancel"]</button>
 
                     <p><a asp-page="ForgetPassword">忘记密码？</a></p>
                 </form>

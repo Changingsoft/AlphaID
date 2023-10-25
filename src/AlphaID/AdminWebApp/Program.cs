@@ -110,7 +110,7 @@ builder.Services
         options.ResponseType = OpenIdConnectResponseType.Code;
         options.SaveTokens = true;
         options.GetClaimsFromUserInfoEndpoint = true; //从UserInfoEndPoint取得更多用户信息。
-        
+
         //hack 将name声明添加到完全类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name”上。
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, JwtClaimTypes.Name);
         //options.ClaimActions.MapJsonKey("profile", JwtClaimTypes.Profile);
@@ -252,8 +252,8 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseRequestLocalization();
 app.UseStaticFiles();
+app.UseRequestLocalization();
 app.UseRouting();
 
 app.UseAuthentication();

@@ -1,28 +1,28 @@
 ﻿@page "{id}"
-@model             DetailModel
+@model DetailModel
 @{
 }
 
 <h3></h3>
-<h4>Summary</h4>
+<h4>@localizer["Summary"]</h4>
 <dl>
-    <dt>名称</dt>
+    <dt>@localizer["Name"]</dt>
     <dd>@Model.Data.Name</dd>
-    <dt>显示名称</dt>
+    <dt>@localizer["Display name"]</dt>
     <dd>@Model.Data.DisplayName</dd>
-    <dt>启用</dt>
+    <dt>@localizer["Enabled"]</dt>
     <dd>@Model.Data.Enabled</dd>
-    <dt>强调</dt>
+    <dt>@localizer["Emphasize"]</dt>
     <dd>@Model.Data.Emphasize</dd>
-    <dt>在发现文档中显示</dt>
+    <dt>@localizer["Show in discovery document"]</dt>
     <dd>@Model.Data.ShowInDiscoveryDocument</dd>
-    <dt>创建时间</dt>
+    <dt>@localizer["Created"]</dt>
     <dd>@Model.Data.Created</dd>
-    <dt>修改时间</dt>
+    <dt>@localizer["Updated"]</dt>
     <dd>@Model.Data.Updated</dd>
 </dl>
 
-<h4>包含的声明</h4>
+<h4>@localizer["User Claims"]</h4>
 <ul>
     @foreach (var claim in Model.Data.UserClaims)
     {
@@ -30,12 +30,12 @@
     }
 </ul>
 
-<h4>属性</h4>
+<h4>@localizer["Properties"]</h4>
 <table class="table">
     <thead>
         <tr>
-            <td>键</td>
-            <td>值</td>
+            <td>@localizer["Key"]</td>
+            <td>@localizer["Value"]</td>
         </tr>
     </thead>
     <tbody>
@@ -49,10 +49,10 @@
     </tbody>
 </table>
 
-<h4>操作</h4>
+<h4>@localizer["Operations"]</h4>
 @if (this.Model.Data.NonEditable)
 {
-    <p>这是内置标识资源，不能删除。</p>
+    <p>@localizer["System resource, can not be delete."]</p>
 }
 else
 {

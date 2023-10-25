@@ -1,17 +1,17 @@
 ﻿@page "{id}"
-@model             ExternalLoginsModel
+@model ExternalLoginsModel
 @{
 }
-<h1>外部登录</h1>
+<h1>@localizer["External Logins"]</h1>
 
 <form method="post">
     <table class="table">
         <thead>
             <tr>
-                <td>Provider</td>
-                <td>Display Name</td>
-                <td>Key</td>
-                <td>Operations</td>
+                <td>@localizer["Provider"]</td>
+                <td>@localizer["Display Name"]</td>
+                <td>@localizer["Key"]</td>
+                <td>@localizer["Operations"]</td>
             </tr>
         </thead>
         <tbody>
@@ -27,4 +27,4 @@
         </tbody>
     </table>
 </form>
-<p>管理须知：请注意，一旦解除绑定，将只能由本人才能再次创建绑定，请小心操作。</p>
+<p>@localizer["Notes that person will only rebind external login by itself that if unbind."]</p>

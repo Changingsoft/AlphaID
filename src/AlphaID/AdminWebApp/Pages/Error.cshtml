@@ -1,11 +1,11 @@
 ﻿@page
 @model ErrorModel
 @{
-    this.ViewBag.Title = "出错了！";
+    this.ViewBag.Title = "Error!";
 }
 
-<h1 class="text-danger">出错了！:-(</h1>
-<h2 class="text-danger">处理请求期间发生了错误。</h2>
+<h1 class="text-danger">Error！:-(</h1>
+<h2 class="text-danger">Errors occured when process requests.</h2>
 
 @if (Model.ShowRequestId)
 {
@@ -14,4 +14,4 @@
     </p>
 }
 
-<p>您可以与管理员联系，提供Request ID帮助排查问题，或稍等片刻再尝试访问。</p>
+<p>Contact administrator, or retry again later.</p>

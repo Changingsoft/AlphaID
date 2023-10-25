@@ -3,9 +3,9 @@
 @inject ConfigurationDbContext dbContext
 @inject PersistedGrantDbContext persistedGrantDbContext
 @{
-    this.ViewBag.Title = "OAuth/OIDC";
+    this.ViewBag.Title = this.localizer["OAuth/OIDC"];
 }
-<h1>概要</h1>
+<h1>@localizer["Overview"]</h1>
 <div class="row">
     <div class="col-sm-6 col-lg-3">
         <div class="card">

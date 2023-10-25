@@ -1,10 +1,10 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = "客户端";
+    this.ViewBag.Title = "Clients";
 }
 
-<h3>客户端</h3>
+<h3>Clients</h3>
 
 <a asp-page="Create" class="btn btn-primary">@localizer["New client"]</a>
 
@@ -25,7 +25,7 @@
                         <a asp-page="Detail/Index" asp-route-id="@client.Id">@(client.ClientName)</a>
                         @if (client.RequireClientSecret)
                         {
-                            <span class="badge bg-pink text-pink-fg">机密</span>
+                            <span class="badge bg-pink text-pink-fg">credentials</span>
                         }
 
                         @if (client.RequirePkce)

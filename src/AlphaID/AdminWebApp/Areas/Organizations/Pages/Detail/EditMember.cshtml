@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model             EditMemberModel
+@model EditMemberModel
 @{
 }
 
@@ -19,5 +19,5 @@
         <input asp-for="Input.Remark" class="form-control" />
         <span asp-validation-for="Input.Remark" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">应用</button>
+    <button type="submit" class="btn btn-primary">@localizer["Apply"]</button>
 </form>

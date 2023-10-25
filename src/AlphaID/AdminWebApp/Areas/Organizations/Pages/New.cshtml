@@ -1,7 +1,7 @@
 ﻿@page
 @model NewModel
 @{
-    this.ViewBag.Title = "登记新组织";
+    this.ViewBag.Title = this.localizer["New organization"].Value;
 }
 
 <div class="card">
@@ -52,13 +52,8 @@
                 <input asp-for="@Model.TermEnd" class="form-control" />
                 <span asp-validation-for="@Model.TermEnd"></span>
             </div>
-            <div class="mb-3">
-                <label for="" class="form-label">指派创建者</label>
-                <input type="text" id="personSearch" class="form-control" placeholder="姓名或拼音……" />
-                <input asp-for="CreatorId" class="form-control" readonly />
-            </div>
             <div asp-validation-summary="All"></div>
-            <button type="submit" class="btn btn-primary">登记</button>
+            <button type="submit" class="btn btn-primary">@localizer["Create"]</button>
         </form>
 
     </div>

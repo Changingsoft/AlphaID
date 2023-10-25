@@ -1,10 +1,10 @@
 ﻿@page
-@model             EditPersonNameModel
+@model EditPersonNameModel
 @{
-    this.ViewBag.Title = "编辑姓名";
+    this.ViewBag.Title = this.localizer["Edit name"].Value;
 }
-<h1>编辑姓名</h1>
-<p>管理员可以编辑该自然人姓名信息，无论自然人是否通过实名认证。</p>
+<h1>@ViewBag.Title</h1>
+<p>@localizer["A mamager can edit person name even through person passed real-name validation."]</p>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Surname" class="form-label"></label>
@@ -26,5 +26,5 @@
         <input asp-for="Input.PinyinGivenName" class="form-control" />
         <span asp-validation-for="Input.PinyinGivenName" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">应用</button>
+    <button type="submit" class="btn btn-primary">@localizer["Apply"]</button>
 </form>

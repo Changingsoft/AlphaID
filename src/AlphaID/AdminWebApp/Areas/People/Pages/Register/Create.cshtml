@@ -4,7 +4,7 @@
     this.ViewBag.Title = localizer["Create person"].Value;
 }
 
-<h2>登记自然人</h2>
+<h2>Create person</h2>
 <div class="card">
     <div class="card-body">
         <form method="post">
@@ -47,9 +47,9 @@
             <div class="mb-3">
                 <label asp-for="Input.Sex" class="form-label"></label>
                 <select asp-for="Input.Sex" class="form-control">
-                    <option>未选择</option>
-                    <option value="Male" label="男"></option>
-                    <option value="Female" label="女"></option>
+                    <option>Unselected</option>
+                    <option value="Male" label="Male"></option>
+                    <option value="Female" label="Female"></option>
                 </select>
                 <span asp-description-for="Input.Sex"></span>
                 <span class="alert-danger" asp-validation-for="Input.Sex"></span>
@@ -73,7 +73,7 @@
                 <span class="alert-danger" asp-validation-for="Input.Email"></span>
             </div>
             <div asp-validation-summary="All"></div>
-            <button type="submit" class="btn btn-primary">下一步</button>
+            <button type="submit" class="btn btn-primary">Next</button>
         </form>
     </div>
 </div>

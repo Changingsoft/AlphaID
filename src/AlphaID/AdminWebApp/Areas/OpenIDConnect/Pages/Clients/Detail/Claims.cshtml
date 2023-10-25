@@ -2,14 +2,14 @@
 @model             ClaimsModel
 @{
 }
-<h4>包含的声明</h4>
+<h4>Claims</h4>
 <form method="post" asp-page-handler="RemoveClaim">
 
 <table class="table">
     <thead>
         <tr>
-            <td>类型</td>
-            <td>值</td>
+            <td>Type</td>
+            <td>Value</td>
             <td></td>
         </tr>
     </thead>
@@ -19,7 +19,7 @@
             <tr>
                 <td>@c.Type</td>
                 <td>@c.Value</td>
-                <td><button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('确认要删除吗？');">Remove</button></td>
+                <td><button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('Are you sure you want to remove this cliam?');">Remove</button></td>
             </tr>
         }
     </tbody>

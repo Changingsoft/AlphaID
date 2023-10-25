@@ -1,8 +1,8 @@
 ﻿@page "{id}"
-@model             ContactsModel
+@model ContactsModel
 @{
 }
-<h1>联络信息</h1>
+<h1>@localizer["Contacts"]</h1>
 
 <form method="post">
     <div class="mb-3">
@@ -16,6 +16,6 @@
         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">修改</button>
+    <button type="submit" class="btn btn-primary">@localizer["Update"]</button>
     <p>@this.Model.OperationMessage</p>
 </form>

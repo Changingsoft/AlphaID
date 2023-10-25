@@ -7,16 +7,16 @@
         <div class="row">
             <div class="col-2">
                 <nav class="nav flex-column">
-                    <a class="nav-link" asp-page="Index" asp-route-id="@this.ViewContext.RouteData.Values["id"]">概要</a>
-                    <a class="nav-link" asp-page="Id" asp-route-id="@this.ViewContext.RouteData.Values["id"]">ID</a>
-                    <a class="nav-link" asp-page="RealName" asp-route-id="@this.ViewContext.RouteData.Values["id"]">实名</a>
-                    <a class="nav-link" asp-page="MembersOf" asp-route-id="@this.ViewContext.RouteData.Values["id"]">组织</a>
-                    <a class="nav-link" asp-page="Contacts" asp-route-id="@this.ViewContext.RouteData.Values["id"]">联络</a>
-                    <a class="nav-link" asp-page="BankAccount" asp-route-id="@this.ViewContext.RouteData.Values["id"]">财务</a>
-                    <a class="nav-link" asp-page="ExternalLogins" asp-route-id="@this.ViewContext.RouteData.Values["id"]">外部登录</a>
-                    <a class="nav-link" asp-page="DirectoryAccounts" asp-route-id="@this.ViewContext.RouteData.Values["id"]">目录账号</a>
-                    <a class="nav-link" asp-page="Security" asp-route-id="@this.ViewContext.RouteData.Values["id"]">安全性</a>
-                    <a class="nav-link" asp-page="Advanced" asp-route-id="@this.ViewContext.RouteData.Values["id"]">高级</a>
+                    <a class="nav-link" asp-page="Index" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Overview"]</a>
+                    <a class="nav-link" asp-page="Id" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["ID"]</a>
+                    <a class="nav-link" asp-page="RealName" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Real Name"]</a>
+                    <a class="nav-link" asp-page="MembersOf" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Organizations"]</a>
+                    <a class="nav-link" asp-page="Contacts" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Contacts"]</a>
+                    <a class="nav-link" asp-page="BankAccount" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Finacial"]</a>
+                    <a class="nav-link" asp-page="ExternalLogins" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["External Logins"]</a>
+                    <a class="nav-link" asp-page="DirectoryAccounts" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Directory Accounts"]</a>
+                    <a class="nav-link" asp-page="Security" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Security"]</a>
+                    <a class="nav-link" asp-page="Advanced" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@localizer["Advanced"]</a>
                 </nav>
             </div>
             <div class="col-10">
@@ -29,6 +29,6 @@
 
 
 @section Scripts
-{
+    {
     @RenderSection("Scripts", false);
 }

@@ -1,11 +1,11 @@
 ﻿@page "{id}"
-@model             SecurityModel
+@model SecurityModel
 @{
-    this.ViewBag.Title = "安全选项";
+    this.ViewBag.Title = "Security Options";
 }
 
-<h2>安全选项</h2>
-@if(!string.IsNullOrEmpty(Model.OperationMessage))
+<h2>Security Options</h2>
+@if (!string.IsNullOrEmpty(Model.OperationMessage))
 {
     <div class="alert alert-success">@Model.OperationMessage</div>
 }

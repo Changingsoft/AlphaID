@@ -1,7 +1,7 @@
 ﻿@page
 @model SearchModel
 @{
-    this.ViewBag.Title = "搜索组织";
+    this.ViewBag.Title = this.localizer["Searching organizations"].Value;
 }
 
 <div class="row">
@@ -9,16 +9,16 @@
         <partial name="_SearchInputPart" />
     </div>
 </div>
-<h2>搜索结果</h2>
+<h2>@localizer["Searching results"]</h2>
 @if (this.Model.Results != null)
 {
     <table class="table">
         <thead>
             <tr>
-                <td>名称</td>
-                <td>统一社会信用代码</td>
-                <td>住所</td>
-                <td>代表人</td>
+                <td>@localizer["Name"]</td>
+                <td>@localizer["USCI"]</td>
+                <td>@localizer["Domicile"]</td>
+                <td>@localizer["Representative"]</td>
             </tr>
         </thead>
         <tbody>

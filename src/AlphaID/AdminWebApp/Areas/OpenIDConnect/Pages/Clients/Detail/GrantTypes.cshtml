@@ -2,7 +2,7 @@
 @model GrantTypesModel
 @{
 }
-<h3>授权类型</h3>
+<h3>Grant types</h3>
 
 <form method="post">
     <ul class="list-group">
@@ -19,7 +19,7 @@
         }
     </ul>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <p class="text-warning">* 某些授权类型的组合是冲突的，更改授权类型会进行验证。</p>
+    <p class="text-warning">* Some grant type combined is conflicted, system will check conflic before apllying changes.</p>
     <button type="submit" class="btn btn-primary">Apply changes</button>
     <p>@this.Model.OperationMessage</p>
 </form>

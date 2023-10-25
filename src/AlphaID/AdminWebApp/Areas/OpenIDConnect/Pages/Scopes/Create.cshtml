@@ -1,8 +1,9 @@
 ﻿@page
-@model             CreateModel
+@model CreateModel
 @{
+    this.ViewBag.Title = this.localizer["Create scope"].Value;
 }
-<h3>创建Scope</h3>
+<h3>@ViewBag.Title</h3>
 
 <form method="post">
     <div class="mb-3">
@@ -32,5 +33,5 @@
         <input asp-for="Input.ShowInDiscoveryDocument" class="form-check-input" />
         <label asp-for="Input.ShowInDiscoveryDocument" class="form-check-label"></label>
     </div>
-    <button type="submit" class="btn btn-primary">创建</button>
+    <button type="submit" class="btn btn-primary">@localizer["Create"]</button>
 </form>

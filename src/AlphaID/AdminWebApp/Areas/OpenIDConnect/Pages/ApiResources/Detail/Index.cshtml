@@ -4,17 +4,17 @@
 }
 <h3>@Model.Data.DisplayName</h3>
 
-<h4>概要</h4>
+<h4>Overview</h4>
 <dl class="row">
-    <dt class="col-3">资源ID</dt>
+    <dt class="col-3">Resource ID</dt>
     <dd class="col-9">@Model.Data.Id</dd>
-    <dt class="col-3">创建时间</dt>
+    <dt class="col-3">Created at</dt>
     <dd class="col-9">@Model.Data.Created</dd>
-    <dt class="col-3">更新时间</dt>
+    <dt class="col-3">Last update at</dt>
     <dd class="col-9">@Model.Data.Updated</dd>
     <dt class="col-3">允许的Access Token签名算法</dt>
     <dd class="col-9">@Model.Data.AllowedAccessTokenSigningAlgorithms</dd>
-    <dt class="col-3">在发现文档中显示</dt>
+    <dt class="col-3">Show in discovery document</dt>
     <dd class="col-9">@Model.Data.ShowInDiscoveryDocument</dd>
     <dt class="col-3">Require Resource Indicator</dt>
     <dd class="col-9">@Model.Data.RequireResourceIndicator</dd>
@@ -25,11 +25,11 @@
 <table class="table">
     <thead>
         <tr>
-            <td>类型</td>
-            <td>哈希</td>
-            <td>描述</td>
-            <td>创建时间</td>
-            <td>过期时间</td>
+            <td>Type</td>
+            <td>Hash</td>
+            <td>Description</td>
+            <td>Created</td>
+            <td>Expires</td>
         </tr>
     </thead>
     <tbody>
@@ -40,7 +40,7 @@
                 <td>@secret.Value.Substring(secret.Value.Length - 5)</td>
                 <td>@secret.Description</td>
                 <td>@secret.Created</td>
-                <td>@(secret.Expiration.HasValue ? secret.Expiration.Value : "长期")</td>
+                <td>@(secret.Expiration.HasValue ? secret.Expiration.Value : "N/A")</td>
             </tr>
         }
     </tbody>
@@ -72,7 +72,7 @@
     </tbody>
 </table>
 
-<h4>属性</h4>
+<h4>Properties</h4>
 
 <table class="table">
     <thead>
@@ -93,10 +93,10 @@
 </table>
 
 
-<h4>操作</h4>
+<h4>Operations</h4>
 @if (this.Model.Data.NonEditable)
 {
-    <p>这是一个系统资源，不允许删除</p>
+    <p>This is a system resource, can not be delete.</p>
 }
 else
 {

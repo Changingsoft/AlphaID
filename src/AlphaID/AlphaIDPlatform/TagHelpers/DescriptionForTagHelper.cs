@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace AlphaIDPlatform;
+namespace AlphaIDPlatform.TagHelpers;
 
 /// <summary>
 /// 

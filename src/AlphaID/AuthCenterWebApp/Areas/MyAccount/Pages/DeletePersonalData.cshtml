@@ -1,14 +1,14 @@
 ﻿@page
-@model             DeletePersonalDataModel
+@model DeletePersonalDataModel
 @{
-    this.ViewBag.Title = "删除个人数据";
+    this.ViewBag.Title = this.localizer["Delete Personal Data"].Value;
 }
 
 <h3>@ViewBag.Title</h3>
 
 <div class="alert alert-warning" role="alert">
     <p>
-        <strong>删除此数据将永久删除您的帐户，并且无法恢复。</strong>
+        <strong>@localizer["Deleting this data will permanently remove your account, and this cannot be recovered."]</strong>
     </p>
 </div>
 
@@ -23,7 +23,7 @@
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
         }
-        <button class="w-100 btn btn-lg btn-danger" type="submit">删除数据并关闭我的帐户</button>
+        <button class="w-100 btn btn-lg btn-danger" type="submit">@localizer["Delete data and close my account"]</button>
     </form>
 </div>
 

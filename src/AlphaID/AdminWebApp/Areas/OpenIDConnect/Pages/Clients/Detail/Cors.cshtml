@@ -2,7 +2,7 @@
 @model CorsModel
 @{
 }
-<h3>跨域资源共享（CORS）</h3>
+<h3>CORS</h3>
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
         @foreach (var origin in this.Model.Data.AllowedCorsOrigins)

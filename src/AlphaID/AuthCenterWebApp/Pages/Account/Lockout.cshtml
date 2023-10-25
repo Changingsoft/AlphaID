@@ -1,10 +1,10 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.LockoutModel
 @{
-    this.ViewBag.Title = "帐户已被锁定";
+    this.ViewBag.Title = this.localizer["Locked out"];
 }
 
 <header>
     <h1 class="text-danger">@ViewBag.Title</h1>
-    <p class="text-danger">此帐户已被锁定，请稍后重试。</p>
+    <p class="text-danger">@localizer["Your account was locked out, please try again later."]</p>
 </header>

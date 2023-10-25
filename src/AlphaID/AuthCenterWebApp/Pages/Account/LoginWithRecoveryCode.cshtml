@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.LoginWithRecoveryCodeModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = "恢复代码验证";
+    this.ViewBag.Title = this.localizer["Recovery code verification"].Value;
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -15,7 +15,7 @@
         <div class="card card-md">
             <div class="card-body">
                 <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
-                <p>您已请求使用恢复代码登录。在您登录时提供身份验证器应用程序代码或禁用 2FA 并再次登录之前，不会记住此登录名。</p>
+                <p>@localizer["You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again."]</p>
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-floating">
@@ -23,7 +23,7 @@
                         <label asp-for="Input.RecoveryCode" class="form-label"></label>
                         <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="w-100 btn btn-lg btn-primary">登录</button>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">@localizer["Sign in"]</button>
                 </form>
             </div>
         </div>

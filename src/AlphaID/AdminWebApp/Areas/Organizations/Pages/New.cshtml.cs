@@ -49,10 +49,6 @@ public class NewModel : PageModel
     [DataType(DataType.Date)]
     public DateTime? TermEnd { get; set; }
 
-    [Display(Name = "Creator ID")]
-    public string? CreatorId { get; set; }
-
-
     public void OnGet()
     {
 

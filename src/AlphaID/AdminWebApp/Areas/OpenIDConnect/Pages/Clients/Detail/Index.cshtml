@@ -4,7 +4,7 @@
 }
 <h3>@Model.Client.ClientName</h3>
 
-<h4>概要</h4>
+<h4>Overview</h4>
 @* <dl class="row">
     <dt class="col-3">协议类型</dt>
     <dd class="col-9">@Model.Client.ProtocolType</dd>
@@ -52,13 +52,13 @@
 </form>
 
 
-<h4>删除</h4>
+<h4>Danger zone</h4>
 
 @if (this.Model.Client.NonEditable)
 {
-    <p>这是系统内置客户端，不允许删除。</p>
+    <p>System client, do not delete.</p>
 }
 else
 {
-    <a asp-page="Delete" asp-route-id="@Model.Client.Id" class="btn btn-danger">删除客户端</a>
+    <a asp-page="Delete" asp-route-id="@Model.Client.Id" class="btn btn-danger">Delete client</a>
 }

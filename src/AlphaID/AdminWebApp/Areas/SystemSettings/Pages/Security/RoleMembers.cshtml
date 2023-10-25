@@ -1,10 +1,10 @@
 @page "{role?}"
 @model RoleMembersModel
 @{
-    this.ViewBag.Title = "角色成员";
+    this.ViewBag.Title = "Role Members";
 }
 
-<h3>角色成员</h3>
+<h3>Role Members</h3>
 
 <div class="row">
     <div class="col-3">
@@ -16,7 +16,7 @@
         </ul>
     </div>
     <div class="col-9">
-        <h2>成员</h2>
+        <h2>Members</h2>
         @if (this.Model.RoleMembers != null)
         {
             if (this.Model.RoleMembers.Any())
@@ -32,24 +32,24 @@
             }
             else
             {
-                <p>该角色没有成员</p>
+                <p>No members</p>
             }
-            <button type="button" data-toggle="modal" data-target="#memberEditor" class="btn btn-primary">添加成员</button>
+            <button type="button" data-toggle="modal" data-target="#memberEditor" class="btn btn-primary">Add member</button>
         }
         else
         {
-            <p>请在左侧选择一个角色以查看成员。</p>
+            <p>Select one role to view members.</p>
         }
     </div>
 </div>
 <div class="modal fade" id="memberEditor" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">加入组织</div>
+            <div class="modal-header">Add member</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
                     <div class="mb-3">
-                        <label for="personSearch" class="form-label">搜索用户</label>
+                        <label for="personSearch" class="form-label">Search person</label>
                         <input name="personSearch" class="form-control" />
                     </div>
                     <div class="mb-3">
@@ -58,8 +58,8 @@
                     </div>
                     <input asp-for="Input.PersonId" type="hidden" />
                     <input asp-for="Input.PhoneticSearchHint" type="hidden" />
-                    <button type="submit" class="btn btn-primary">添加</button>
-                    <button type="reset" class="btn btn-secondary">清除</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="reset" class="btn btn-secondary">Clear</button>
                 </form>
             </div>
         </div>

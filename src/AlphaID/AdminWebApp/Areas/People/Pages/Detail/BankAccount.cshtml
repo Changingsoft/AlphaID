@@ -1,20 +1,20 @@
 ﻿@page "{id}"
 @model BankAccountModel
 @{
-    this.ViewBag.Title = this.Model.Person.Name + "的银行账号";
+    this.ViewBag.Title = this.localizer["Bank accounts of {0}", this.Model.Person.Name].Value;
 }
 
-<h2><a asp-page="Detail" asp-route-id="@Model.Id">@Model.Person.Name</a>的银行账号</h2>
+<h2><a asp-page="Detail" asp-route-id="@Model.Id">@ViewBag.Title</a></h2>
 
 <partial name="_PersonSummary" model="@Model.Person" />
 
 <table class="table">
     <thead>
         <tr>
-            <td>BankName</td>
-            <td>AccountNumber</td>
-            <td>AccountName</td>
-            <td>Operations</td>
+            <td>@localizer["BankName"]</td>
+            <td>@localizer["AccountNumber"]</td>
+            <td>@localizer["AccountName"]</td>
+            <td>@localizer["Operations"]</td>
         </tr>
     </thead>
     <tbody>
@@ -51,5 +51,5 @@
         <input asp-for="@Model.BankName" class="form-control" />
         <span asp-validation-for="@Model.BankName"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary">@localizer["Add"]</button>
 </form>

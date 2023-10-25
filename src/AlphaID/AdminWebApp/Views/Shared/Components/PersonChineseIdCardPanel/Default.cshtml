@@ -1,15 +1,15 @@
 ﻿@using IDSubjects.RealName;
 @model ChineseIDCardValidation?
 
-@if(Model != null)
+@if (Model != null)
 {
-    <p>身份证号码: @Model.ChineseIDCard?.CardNumber</p>
-    <p>签发时间: @Model.ChineseIDCard?.IssueDate</p>
-    <p>民族: @Model.ChineseIDCard?.Ethnicity</p>
-    <p>住址: @Model.ChineseIDCard?.Address</p>
-    <p>签发机关: @Model.ChineseIDCard?.Issuer</p>
+    <p>Card number: @Model.ChineseIDCard?.CardNumber</p>
+    <p>Issued at: @Model.ChineseIDCard?.IssueDate</p>
+    <p>Ethnicity: @Model.ChineseIDCard?.Ethnicity</p>
+    <p>Address: @Model.ChineseIDCard?.Address</p>
+    <p>Issuer: @Model.ChineseIDCard?.Issuer</p>
 }
 else
 {
-    <p>没有身份证信息。</p>
+    <p>No identity info.</p>
 }

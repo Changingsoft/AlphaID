@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = $"创建你的{this.product.Value.Name}";
+    this.ViewBag.Title = this.localizer["Create your {0}", this.product.Value.Name].Value;
 }
 
 @section Heads
@@ -148,11 +148,11 @@
             var code = $(obj);
             if (countdown == 0) {
                 code.removeAttr('disabled');
-                code.text("获取验证码");
+                code.text("Send code");
                 countdown = 60;
                 return;
             } else {
-                code.text("重新发送(" + countdown + ")");
+                code.text("Resend (" + countdown + ")");
                 code.attr('disabled', true);
                 countdown--;
             }

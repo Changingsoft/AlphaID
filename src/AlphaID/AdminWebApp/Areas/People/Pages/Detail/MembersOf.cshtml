@@ -1,19 +1,19 @@
 ﻿@page "{id}"
 @model MembersOfModel
 @{
-    this.ViewBag.Title = this.Model.Person.Name + "所属的组织";
+    this.ViewBag.Title = this.Model.Person.Name + " Membership";
 }
 
 <partial name="_PersonSummary" model="@Model.Person" />
-<h2>所属的组织</h2>
+<h2>Membership</h2>
 <table class="table">
     <thead>
         <tr>
-            <td>组织</td>
-            <td>部门</td>
-            <td>职务</td>
-            <td>备注</td>
-            <td>操作</td>
+            <td>Organization</td>
+            <td>Department</td>
+            <td>Title</td>
+            <td>Remark</td>
+            <td>Operations</td>
         </tr>
     </thead>
     <tbody>
@@ -25,9 +25,9 @@
                 <td>@member.Title</td>
                 <td>@member.Remark</td>
                 <td>
-                    <a asp-page="EditMember" asp-route-id="@this.ViewContext.RouteData.Values["id"]" asp-route-orgId="@member.OrganizationId">编辑</a>
+                    <a asp-page="EditMember" asp-route-id="@this.ViewContext.RouteData.Values["id"]" asp-route-orgId="@member.OrganizationId">Edit</a>
                     <form method="post" asp-page-handler="LeaveOrganization" asp-route-organizationid="@member.OrganizationId">
-                        <button type="submit" class="btn btn-danger btn-sm">移出</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -36,16 +36,16 @@
 </table>
 
 <hr />
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberEditor">加入组织</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberEditor">Join organization</button>
 
 <div class="modal fade" id="memberEditor">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">加入组织</div>
+            <div class="modal-header">Join organization</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="JoinOrganization">
                     <div class="mb-3">
-                        <label for="organizationSearch" class="form-label">搜索组织</label>
+                        <label for="organizationSearch" class="form-label">Search organization</label>
                         <input name="organizationSearch" type="text" class="form-control" />
                     </div>
                     <div class="mb-3">

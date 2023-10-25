@@ -1,15 +1,15 @@
 ﻿@page "{id}"
-@model             CreateDirectoryAccountModel
+@model CreateDirectoryAccountModel
 @{
 }
 
-<h1>Create Directory Service Account</h1>
+<h1>@localizer["Create Directory Service Account"]</h1>
 
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.ServiceId" class="form-label"></label>
         <select asp-for="Input.ServiceId" class="form-control">
-            @foreach(var service in this.Model.DirectoryServices)
+            @foreach (var service in this.Model.DirectoryServices)
             {
                 <option value="@service.Id" label="@service.Name"></option>
             }
@@ -82,5 +82,6 @@
     </div>
 
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">@localizer["Create"]</button>
+
 </form>

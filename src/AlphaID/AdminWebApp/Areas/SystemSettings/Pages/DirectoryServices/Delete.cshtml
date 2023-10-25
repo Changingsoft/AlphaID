@@ -3,15 +3,16 @@
 @{
 }
 
-<h1>删除 @this.Model.Data.Name</h1>
-<p>确定要删除目录服务吗？与此目录服务关联的自然人账户绑定关系也将删除，该操作不会影响目录服务中已创建的账户，也不会删除自然人档案。</p>
-<p>请键入服务名称（@(this.Model.Data.Name)）以确认删除。</p>
+<h1>Deleting @this.Model.Data.Name</h1>
+<p>Are you sure you want to delete this directory service?</p>
+<p>Relationship will be deleted, but related resources (person, directory account) will not be taken any effectives.</p>
+<p>Please enter the service name (@(this.Model.Data.Name)) to confirm.</p>
 <form method="post">
     <div class="mb-3">
         <label asp-for="ServiceName" class="form-label"></label>
         <input asp-for="ServiceName" class="form-control" />
         <span asp-validation-for="ServiceName" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-danger">删除</button>
-    <a asp-page="Index" class="btn btn-secondary">取消</a>
+    <button type="submit" class="btn btn-danger">DELETE</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
 </form>

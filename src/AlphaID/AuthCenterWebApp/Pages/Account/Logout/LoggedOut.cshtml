@@ -16,6 +16,12 @@
                     <a class="PostLogoutRedirectUri btn" href="@Model.View.PostLogoutRedirectUri">@localizer["Return back to"] @Model.View.ClientName</a>
                 </div>
             }
+            else
+            {
+                <div>
+                    <a class="btn" href="@Model.ReturnUrl">@localizer["OK"]</a>
+                </div>
+            }
 
             @if (Model.View.SignOutIframeUrl != null)
             {

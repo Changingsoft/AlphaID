@@ -20,10 +20,26 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Serilog;
 using System.Globalization;
 using System.Security.Claims;
 
+Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
+
+Log.Information("Starting up");
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    lc
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    .Enrich.FromLogContext()
+    .ReadFrom.Configuration(ctx.Configuration);
+});
 
 //ConfigServices
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));

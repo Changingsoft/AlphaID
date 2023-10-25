@@ -14,9 +14,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Reflection;
 
+Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
+
+Log.Information("Starting up");
+
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    lc
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    .Enrich.FromLogContext()
+    .ReadFrom.Configuration(ctx.Configuration);
+});
 
 //Configuration Services
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));

@@ -4,10 +4,10 @@
 {
     if (Model.IsSuccess)
     {
-        <span class="alert alert-success">@localizer["Operation success"]</span>
+        <div class="alert alert-success">@localizer["Operation success"]</div>
     }
     else
     {
-        <span class="alert alert-danger">@Model.Errors.Aggregate((x,y) => $"{x}, {y}")</span>
+        <div class="alert alert-danger">@Model.Errors.Aggregate((x,y) => $"{x}, {y}")</div>
     }
 }

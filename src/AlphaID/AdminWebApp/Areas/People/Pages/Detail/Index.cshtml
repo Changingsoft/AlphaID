@@ -5,13 +5,12 @@
     this.ViewBag.Title = $"{Model.Data.Name}";
 }
 
-
-<h1>@Model.Data.Name</h1>
+<h2>@localizer["Overview"]</h2>
 <div class="row mb-3">
     <div class="col-10">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@localizer["Base info"]</h3>
+                <h3 class="card-title">@localizer["Person Name"]</h3>
                 <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn">@localizer["Change name"]</a>
             </div>
             <div class="card-body">
@@ -26,6 +25,12 @@
                         <div class="datagrid-title">@localizer["Given name"]</div>
                         <div class="datagrid-content">
                             @Model.Data.FirstName @Model.Data.PhoneticGivenName
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">@localizer["Display"]</div>
+                        <div class="datagrid-content">
+                            @Model.Data.Name @Model.Data.PhoneticSearchHint
                         </div>
                     </div>
                     <div class="datagrid-item">
@@ -57,15 +62,30 @@
         <div class="datagrid">
             <div class="datagrid-item">
                 <div class="datagrid-title">@localizer["User name"]</div>
-                <div class="datagrid-content">@Model.Data.UserName</div>
+                <div class="datagrid-content">
+                    @Model.Data.UserName
+                    <a href="#" class="btn btn-sm">@localizer["Change"]</a>
+                </div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@localizer["Email"]</div>
-                <div class="datagrid-content"><a href="mailto:@Model.Data.Email">@Model.Data.Email</a></div>
+                <div class="datagrid-content">
+                    <a href="mailto:@Model.Data.Email">@Model.Data.Email</a>
+                    @if (Model.Data.EmailConfirmed)
+                    {
+                        <span class="badge badge-outline text-green">Confirmed</span>
+                    }
+                </div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@localizer["Phone number"]</div>
-                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
+                <div class="datagrid-content">
+                    @Model.Data.PhoneNumber
+                    @if (Model.Data.PhoneNumberConfirmed)
+                    {
+                        <span class="badge badge-outline text-green">Confirmed</span>
+                    }
+                </div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@localizer["Status"]</div>
@@ -117,20 +137,6 @@
 
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">@localizer["Real name validation"]</h3>
-    </div>
-    <div class="card-body">
-        <div class="datagrid">
-            <div class="datagrid-item">
-                <div class="datagrid-title"></div>
-                <div class="datagrid-content"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card mb-3">
-    <div class="card-header">
         <h3 class="card-title">@localizer["Payments"]</h3>
     </div>
     <div class="card-body">
@@ -156,26 +162,14 @@
 
     </div>
 </div>
-
-<div class="card mb-3">
-    <div class="card-header">
-        <h3 class="card-title">@localizer["Organizations"]</h3>
-    </div>
-    <div class="card-body">
-        <partial name="_MembersOfPart" model="@Model.Data" />
-    </div>
-</div>
-
-<hr />
-<h2>实名信息</h2>
-<vc:person-chinese-id-card-panel person="@this.Model.Data"></vc:person-chinese-id-card-panel>
-
-
-<hr />
-<h2><a asp-page="DirectoryAccounts" asp-route-anchor="@this.Model.Data.Id">AD账号</a></h2>
-<vc:person-logon-accounts person-id="@Model.Data.Id"></vc:person-logon-accounts>
-
-<hr />
+<h3>@localizer["Misc"]</h3>
 <p>@localizer["Created at"] : @Model.Data.WhenCreated</p>
 <p>@localizer["Changed at"] : @Model.Data.WhenChanged</p>
-<p><a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>
+
+<h3>@localizer["Danger zone"]</h3>
+<div class="card">
+    <div class="card-status-top bg-danger"></div>
+    <div class="card-body">
+        <a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>
+    </div>
+</div>

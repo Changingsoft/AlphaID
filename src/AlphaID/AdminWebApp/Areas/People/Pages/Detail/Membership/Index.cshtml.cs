@@ -2,15 +2,15 @@ using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.People.Pages.Detail;
+namespace AdminWebApp.Areas.People.Pages.Detail.Membership;
 
-public class MembersOfModel : PageModel
+public class IndexModel : PageModel
 {
     private readonly NaturalPersonManager personMamager;
     private readonly OrganizationManager organizationManager;
     private readonly OrganizationMemberManager memberManager;
 
-    public MembersOfModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager)
+    public IndexModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager)
     {
         this.personMamager = personManager;
         this.organizationManager = organizationManager;

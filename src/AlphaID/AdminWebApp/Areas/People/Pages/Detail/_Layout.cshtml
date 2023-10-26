@@ -1,31 +1,47 @@
-﻿@{
+﻿@inject NaturalPersonManager manager
+@{
     Layout = "Shared/_Layout";
+
+    var id = this.ViewContext.RouteData.Values["anchor"]?.ToString();
+    NaturalPerson? person = null;
+    if (id != null)
+    {
+        person = await this.manager.FindByIdAsync(id);
+    }
 }
 
-<div class="page-body">
-    <div class="container-xl">
-        <div class="row">
-            <div class="col-2">
-                <nav class="nav flex-column">
-                    <a class="nav-link" asp-page="Index" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Overview"]</a>
-                    <a class="nav-link" asp-page="Id" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["ID"]</a>
-                    <a class="nav-link" asp-page="RealName" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Real Name"]</a>
-                    <a class="nav-link" asp-page="MembersOf" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Organizations"]</a>
-                    <a class="nav-link" asp-page="Contacts" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Contacts"]</a>
-                    <a class="nav-link" asp-page="BankAccount" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Finacial"]</a>
-                    <a class="nav-link" asp-page="ExternalLogins" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["External Logins"]</a>
-                    <a class="nav-link" asp-page="DirectoryAccounts" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Directory Accounts"]</a>
-                    <a class="nav-link" asp-page="Security" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Security"]</a>
-                    <a class="nav-link" asp-page="Advanced" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Advanced"]</a>
-                </nav>
+<div class="row g-2 align-items-center mb-3">
+    <div class="col">
+        <h2 class="page-title">
+            @person?.Name
+        </h2>
+    </div>
+</div>
+<div class="card">
+    <div class="row g-0">
+        <div class="col-12 col-md-2 border-end">
+            <div class="card-body">
+                <div class="list-group list-group-transparent">
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Id" asp-page="/Detail/Id" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["ID"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/RealName" asp-page="/Detail/RealName" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Real Name"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Membership" asp-page="/Detail/Membership/Index" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Memberships"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Contacts" asp-page="/Detail/Contacts" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Contacts"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/BankAccount" asp-page="/Detail/BankAccount" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Finacial"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/ExternalLogins" asp-page="/Detail/ExternalLogins" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["External Logins"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/DirectoryAccounts" asp-page="/Detail/DirectoryAccounts" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Directory Accounts"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Security" asp-page="/Detail/Security" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Security"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Advanced" asp-page="/Detail/Advanced" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@localizer["Advanced"]</a>
+                </div>
             </div>
-            <div class="col-10">
+        </div>
+        <div class="col-12 col-md-10 d-flex flex-column">
+            <div class="card-body">
                 @RenderBody()
             </div>
         </div>
     </div>
 </div>
-
 
 
 @section Scripts

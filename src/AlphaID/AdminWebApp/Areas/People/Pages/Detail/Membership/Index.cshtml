@@ -1,42 +1,47 @@
 ﻿@page
-@model MembersOfModel
+@model IndexModel
 @{
     this.ViewBag.Title = this.Model.Person.Name + " Membership";
 }
 
-<partial name="_PersonSummary" model="@Model.Person" />
-<h2>Membership</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Organization</td>
-            <td>Department</td>
-            <td>Title</td>
-            <td>Remark</td>
-            <td>Operations</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var member in this.Model.OrganizationMembers)
-        {
+<h2>@localizer["Memberships"]</h2>
+<form method="post" asp-page-handler="LeaveOrganization">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@member.Organization.Name</td>
-                <td>@member.Department</td>
-                <td>@member.Title</td>
-                <td>@member.Remark</td>
-                <td>
-                    <a asp-page="EditMember" asp-route-anchor="@this.ViewContext.RouteData.Values["id"]" asp-route-orgId="@member.OrganizationId">Edit</a>
-                    <form method="post" asp-page-handler="LeaveOrganization" asp-route-organizationid="@member.OrganizationId">
-                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                    </form>
-                </td>
+                <td>@localizer["Organization"]</td>
+                <td>@localizer["Department"]</td>
+                <td>@localizer["Title"]</td>
+                <td>@localizer["Remark"]</td>
+                <td>@localizer["Visibility"]</td>
+                <td>@localizer["Operations"]</td>
             </tr>
-        }
-    </tbody>
-</table>
-
-<hr />
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberEditor">Join organization</button>
+        </thead>
+        <tbody>
+            @foreach (var member in this.Model.OrganizationMembers)
+            {
+                <tr>
+                    <td>
+                        @member.Organization.Name
+                        @if(member.IsOwner)
+                        {
+                            <span class="badge">@localizer["Owner"]</span>
+                        }
+                    </td>
+                    <td>@member.Department</td>
+                    <td>@member.Title</td>
+                    <td>@member.Remark</td>
+                    <td>@member.Visibility</td>
+                    <td>
+                        <a asp-page="Of" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">Edit</a>
+                        <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@localizer["Are you sure you want leave person from organization?"]');">@localizer["Leave"]</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberEditor">Join organization</button>
 
 <div class="modal fade" id="memberEditor">
     <div class="modal-dialog">
@@ -77,7 +82,7 @@
 
 @section scripts
     {
-
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
             $("[name='organizationSearch']").autocomplete({

@@ -21,9 +21,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public string? OperationMessage { get; set; }
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int anchor)
         {
-            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -35,9 +35,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPost(int id)
+        public async Task<IActionResult> OnPost(int anchor)
         {
-            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;

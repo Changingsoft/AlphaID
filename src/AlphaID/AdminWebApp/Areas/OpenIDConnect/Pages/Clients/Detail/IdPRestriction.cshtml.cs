@@ -24,18 +24,18 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         [Display(Name = "Selected Provider")]
         public string SelectedProvider { get; set; } = default!;
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int anchor)
         {
-            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == id);
+            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Data = client;
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveAsync(int id, int itemId)
+        public async Task<IActionResult> OnPostRemoveAsync(int anchor, int itemId)
         {
-            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == id);
+            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Data = client;
@@ -49,9 +49,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync(int id)
+        public async Task<IActionResult> OnPostAddAsync(int anchor)
         {
-            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == id);
+            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Data = client;

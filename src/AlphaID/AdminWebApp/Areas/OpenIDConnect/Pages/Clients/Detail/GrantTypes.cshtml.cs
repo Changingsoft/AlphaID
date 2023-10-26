@@ -23,9 +23,9 @@ public class GrantTypesModel : PageModel
 
     public string? OperationMessage { get; set; }
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -35,9 +35,9 @@ public class GrantTypesModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPost(int id)
+    public async Task<IActionResult> OnPost(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;

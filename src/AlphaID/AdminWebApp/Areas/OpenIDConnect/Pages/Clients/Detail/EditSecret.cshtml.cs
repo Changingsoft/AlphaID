@@ -22,15 +22,15 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public IActionResult OnGet(int id, int secretId)
+        public IActionResult OnGet(int anchor, int secretId)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
             var secret = client.ClientSecrets.FirstOrDefault(p => p.Id == secretId);
             if (secret == null)
-                return this.NotFound(id);
+                return this.NotFound(anchor);
             this.Secret = secret;
             this.Input = new InputModel
             {
@@ -40,15 +40,15 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id, int secretId)
+        public async Task<IActionResult> OnPostAsync(int anchor, int secretId)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
             var secret = client.ClientSecrets.FirstOrDefault(p => p.Id == secretId);
             if (secret == null)
-                return this.NotFound(id);
+                return this.NotFound(anchor);
             this.Secret = secret;
 
             if (!this.ModelState.IsValid)
@@ -58,24 +58,24 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             this.Secret.Description = this.Input.Description;
             this.configurationDbContext.Clients.Update(this.Client);
             await this.configurationDbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { id });
+            return this.RedirectToPage("Secrets", new { anchor });
         }
 
-        public async Task<IActionResult> OnPostRemoveSecret(int id, int secretId)
+        public async Task<IActionResult> OnPostRemoveSecret(int anchor, int secretId)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
             var secret = client.ClientSecrets.FirstOrDefault(p => p.Id == secretId);
             if (secret == null)
-                return this.NotFound(id);
+                return this.NotFound(anchor);
             this.Secret = secret;
 
             this.Client.ClientSecrets.Remove(this.Secret);
             this.configurationDbContext.Clients.Update(this.Client);
             await this.configurationDbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { id });
+            return this.RedirectToPage("Secrets", new { anchor });
         }
         public class InputModel
         {

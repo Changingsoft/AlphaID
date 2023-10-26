@@ -21,18 +21,18 @@ public class CorsModel : PageModel
     [Display(Name = "New origin")]
     public string NewOrigin { get; set; } = default!;
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostRemoveAsync(int id, int originId)
+    public async Task<IActionResult> OnPostRemoveAsync(int anchor, int originId)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -47,9 +47,9 @@ public class CorsModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAddAsync(int id)
+    public async Task<IActionResult> OnPostAddAsync(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;

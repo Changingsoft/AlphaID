@@ -22,7 +22,7 @@
             <tr>
                 <td>
                     <p>
-                        <a asp-page="Detail/Index" asp-route-id="@client.Id">@(client.ClientName)</a>
+                        <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
                         @if (client.RequireClientSecret)
                         {
                             <span class="badge bg-pink text-pink-fg">credentials</span>

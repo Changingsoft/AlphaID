@@ -23,11 +23,11 @@ public class AdvancedModel : PageModel
     [BindProperty]
     public AddPropertyModel AddProperty { get; set; } = default!;
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
         var data = this.dbContext.Clients
             .Include(p => p.Properties)
-            .FirstOrDefault(p => p.Id == id);
+            .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -69,11 +69,11 @@ public class AdvancedModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(int id)
+    public async Task<IActionResult> OnPostAsync(int anchor)
     {
         var data = this.dbContext.Clients
             .Include(p => p.Properties)
-            .FirstOrDefault(p => p.Id == id);
+            .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -121,11 +121,11 @@ public class AdvancedModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostRemoveAsync(int id, int propId)
+    public async Task<IActionResult> OnPostRemoveAsync(int anchor, int propId)
     {
         var data = this.dbContext.Clients
             .Include(p => p.Properties)
-            .FirstOrDefault(p => p.Id == id);
+            .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -140,11 +140,11 @@ public class AdvancedModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAddAsync(int id)
+    public async Task<IActionResult> OnPostAddAsync(int anchor)
     {
         var data = this.dbContext.Clients
             .Include(p => p.Properties)
-            .FirstOrDefault(p => p.Id == id);
+            .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -165,7 +165,7 @@ public class AdvancedModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Always Include User Claims In Anchor Token", Description = "When requesting both an id token and access token, should the user claims always be added to the id token instead of requiring the client to use the userinfo endpoint. Default is false.")]
+        [Display(Name = "Always Include User Claims In Anchor Token", Description = "When requesting both an anchor token and access token, should the user claims always be added to the anchor token instead of requiring the client to use the userinfo endpoint. Default is false.")]
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
 
         [Display(Name = "Require Request Object", Description = "Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)")]
@@ -186,13 +186,13 @@ public class AdvancedModel : PageModel
         [Display(Name = "Front Channel Logout URI", Description = "Specifies logout URI at client for HTTP based front-channel logout.")]
         public string? FrontChannelLogoutUri { get; set; }
 
-        [Display(Name = "Front Channel Logout Session Required", Description = "Specifies if the user¡¯s session id should be sent to the FrontChannelLogoutUri. Defaults to true.")]
+        [Display(Name = "Front Channel Logout Session Required", Description = "Specifies if the user¡¯s session anchor should be sent to the FrontChannelLogoutUri. Defaults to true.")]
         public bool FrontChannelLogoutSessionRequired { get; set; } = true;
 
         [Display(Name = "Back Channel Logout URI", Description = "Specifies logout URI at client for HTTP based back-channel logout.")]
         public string? BackChannelLogoutUri { get; set; }
 
-        [Display(Name = "Back Channel Logout Session Required", Description = "Specifies if the user¡¯s session id should be sent in the request to the BackChannelLogoutUri. Defaults to true.")]
+        [Display(Name = "Back Channel Logout Session Required", Description = "Specifies if the user¡¯s session anchor should be sent in the request to the BackChannelLogoutUri. Defaults to true.")]
         public bool BackChannelLogoutSessionRequired { get; set; } = true;
 
         [Display(Name = "Allow Offline Access", Description = "Specifies whether this client can request refresh tokens (be requesting the offline_access scope)")]

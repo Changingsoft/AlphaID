@@ -22,9 +22,9 @@ public class IndexModel : PageModel
 
     public string? OperationMessage { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(int id)
+    public async Task<IActionResult> OnGetAsync(int anchor)
     {
-        var data = await this.GetClient(id);
+        var data = await this.GetClient(anchor);
         if (data == null)
             return this.NotFound();
         this.Client = data;
@@ -41,9 +41,9 @@ public class IndexModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(int id)
+    public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = await this.GetClient(id);
+        var data = await this.GetClient(anchor);
         if (data == null)
             return this.NotFound();
         this.Client = data;
@@ -68,7 +68,7 @@ public class IndexModel : PageModel
         return this.Page();
     }
 
-    private async Task<Client?> GetClient(int id)
+    private async Task<Client?> GetClient(int anchor)
     {
         return await this.dbContext.Clients
             .Include(p => p.AllowedScopes)
@@ -79,7 +79,7 @@ public class IndexModel : PageModel
             .Include(p => p.IdentityProviderRestrictions)
             .Include(p => p.Properties)
             .AsSingleQuery()
-            .SingleOrDefaultAsync(p => p.Id == id);
+            .SingleOrDefaultAsync(p => p.Id == anchor);
     }
 
     public class InputModel

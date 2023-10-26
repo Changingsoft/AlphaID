@@ -4,9 +4,17 @@
     this.ViewBag.Title = "Clients";
 }
 
-<h3>Clients</h3>
+@section PageHeader{
+    <div class="row">
+        <div class="col">
+            <h1>Clients</h1>
+        </div>
+        <div class="col-auto">
+            <a asp-page="Create" class="btn btn-primary">@localizer["New client"]</a>
+        </div>
+    </div>
+}
 
-<a asp-page="Create" class="btn btn-primary">@localizer["New client"]</a>
 
 <table class="table">
     <thead>

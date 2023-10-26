@@ -21,9 +21,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public string? OperationMessage { get; set; }
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGet(string anchor)
         {
-            var data = await this.manager.FindByIdAsync(id);
+            var data = await this.manager.FindByIdAsync(anchor);
             if (data == null)
                 return this.NotFound();
 
@@ -36,9 +36,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var data = await this.manager.FindByIdAsync(id);
+            var data = await this.manager.FindByIdAsync(anchor);
             if (data == null)
                 return this.NotFound();
 
@@ -51,11 +51,11 @@ namespace AdminWebApp.Areas.People.Pages.Detail
                 return this.Page();
             }
 
-            if (this.manager.Users.Any(p => p.Id != id && p.PhoneNumber == phoneNumber.ToString()))
+            if (this.manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == phoneNumber.ToString()))
             {
                 this.ModelState.AddModelError("", "移动电话号码已被注册。");
             }
-            if (this.manager.Users.Any(p => p.Id != id && p.Email == this.Input.Email))
+            if (this.manager.Users.Any(p => p.Id != anchor && p.Email == this.Input.Email))
             {
                 this.ModelState.AddModelError("", "电子邮件地址已被注册。");
             }

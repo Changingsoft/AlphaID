@@ -18,9 +18,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
         public NaturalPerson Data { get; set; } = default!;
         public ChineseIDCardValidation? Card { get; set; }
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGet(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(id);
+            var person = await this.userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 

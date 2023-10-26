@@ -1,6 +1,7 @@
 ﻿using AlphaIDEntityFramework.EntityFramework;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatform.RazorPages;
 using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using AuthCenterWebApp;
@@ -60,50 +61,8 @@ try
         options.Conventions.AuthorizeFolder("/");
         options.Conventions.AuthorizeAreaFolder("Profile", "/");
         options.Conventions.AuthorizeAreaFolder("Settings", "/");
-        options.Conventions.AddAreaFolderRouteModelConvention("People", "/", model =>
-        {
-            var viewPath = model.ViewEnginePath;
-            var endPart = viewPath.LastIndexOf("/index", StringComparison.OrdinalIgnoreCase);
-            if (endPart >= 0)
-                viewPath = viewPath[..endPart];
-
-            var template = $"/{model.AreaName}/{{userAnchor}}{viewPath}";
-
-            var metadata = new PageRouteMetadata($"/{model.AreaName}{viewPath}/{{userAnchor}}", template);
-            var selector = new SelectorModel
-            {
-                AttributeRouteModel = new AttributeRouteModel()
-                {
-                    //Order = 2,
-                    Template = template,
-                }
-            };
-            selector.EndpointMetadata.Add(metadata);
-            model.Selectors.Clear();
-            model.Selectors.Add(selector);
-        });
-        options.Conventions.AddAreaFolderRouteModelConvention("Organization", "/", model =>
-        {
-            var viewPath = model.ViewEnginePath;
-            var endPart = viewPath.LastIndexOf("/index", StringComparison.OrdinalIgnoreCase);
-            if (endPart >= 0)
-                viewPath = viewPath[..endPart];
-
-            var template = $"/{model.AreaName}/{{anchor}}{viewPath}";
-
-            var metadata = new PageRouteMetadata($"/{model.AreaName}{viewPath}/{{anchor}}", template);
-            var selector = new SelectorModel
-            {
-                AttributeRouteModel = new AttributeRouteModel()
-                {
-                    //Order = 2,
-                    Template = template,
-                }
-            };
-            selector.EndpointMetadata.Add(metadata);
-            model.Selectors.Clear();
-            model.Selectors.Add(selector);
-        });
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People", "{userAnchor}"));
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));
     })
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>

@@ -16,7 +16,7 @@ public class BankAccountModel : PageModel
     public NaturalPerson Person { get; set; } = default!;
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
@@ -35,7 +35,7 @@ public class BankAccountModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var result = await this.personManager.FindByIdAsync(this.Id.ToString());
+        var result = await this.personManager.FindByIdAsync(this.Anchor.ToString());
         if (result == null)
             return this.NotFound();
         this.Person = result;
@@ -44,7 +44,7 @@ public class BankAccountModel : PageModel
 
     public async Task<IActionResult> OnPostAddBankAccountAsync()
     {
-        var person = await this.personManager.FindByIdAsync(this.Id.ToString());
+        var person = await this.personManager.FindByIdAsync(this.Anchor.ToString());
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -63,7 +63,7 @@ public class BankAccountModel : PageModel
 
     public async Task<IActionResult> OnPostRemoveBankAccountAsync()
     {
-        var person = await this.personManager.FindByIdAsync(this.Id.ToString());
+        var person = await this.personManager.FindByIdAsync(this.Anchor.ToString());
         if (person == null)
             return this.NotFound();
         this.Person = person;

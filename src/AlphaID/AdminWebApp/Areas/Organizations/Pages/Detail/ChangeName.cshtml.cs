@@ -14,14 +14,14 @@ public class ChangeNameModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await this.manager.FindByIdAsync(this.Id);
+        var org = await this.manager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
 
@@ -34,7 +34,7 @@ public class ChangeNameModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await this.manager.FindByIdAsync(this.Id);
+        var org = await this.manager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
 
@@ -48,7 +48,7 @@ public class ChangeNameModel : PageModel
             return this.Page();
         }
 
-        return this.RedirectToPage("Index", new { id = this.Id });
+        return this.RedirectToPage("Index", new { id = this.Anchor });
     }
 
     public class InputModel

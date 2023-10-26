@@ -26,7 +26,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a>
+                        <a asp-page="Detail/Index" asp-route-anchor="@org.Id">@org.Name</a>
                         @foreach (var usedName in org.UsedNames)
                         {
                             <span class="text-muted small">曾用名：@usedName.Name</span>

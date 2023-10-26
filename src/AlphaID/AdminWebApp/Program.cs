@@ -5,6 +5,7 @@ using AdminWebApp.Services;
 using AlphaIDEntityFramework.EntityFramework;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatform.RazorPages;
 using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
@@ -70,6 +71,9 @@ builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/", "RequireAdminRole");
     options.Conventions.AuthorizeFolder("/Account");
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "People"));
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "Organizations"));
+    
 })
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>

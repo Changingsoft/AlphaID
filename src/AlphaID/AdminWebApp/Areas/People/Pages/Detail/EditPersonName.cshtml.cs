@@ -15,9 +15,9 @@ public class EditPersonNameModel : PageModel
 
     public InputModel Input { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet(string id)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(id);
+        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
         {
             return this.NotFound();
@@ -32,9 +32,9 @@ public class EditPersonNameModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(string id)
+    public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(id);
+        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
         if (person == null) { return this.NotFound(); }
 
         if (!this.ModelState.IsValid)

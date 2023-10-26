@@ -22,9 +22,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public string? OperationResultMessage { get; set; }
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGet(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(id);
+            var person = await this.userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 
@@ -37,9 +37,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(id);
+            var person = await this.userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 

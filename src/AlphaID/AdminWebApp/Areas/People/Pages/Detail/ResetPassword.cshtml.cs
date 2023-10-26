@@ -29,9 +29,9 @@ public class ResetPasswordModel : PageModel
     public string? OperationResult { get; set; }
 
 
-    public async Task<IActionResult> OnGet(string id)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
         {
             return this.NotFound();
@@ -41,9 +41,9 @@ public class ResetPasswordModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAutoReset(string id)
+    public async Task<IActionResult> OnPostAutoReset(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -81,9 +81,9 @@ public class ResetPasswordModel : PageModel
         }
     }
 
-    public async Task<IActionResult> OnPostManualReset(string id)
+    public async Task<IActionResult> OnPostManualReset(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

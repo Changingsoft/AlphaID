@@ -45,7 +45,7 @@
         @foreach (var org in this.Model.Last10Orgs)
         {
             <tr>
-                <td><a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a></td>
+                <td><a asp-page="Detail/Index" asp-route-anchor="@org.Id">@org.Name</a></td>
                 <td>@org.Domicile</td>
                 <td>@org.LegalPersonName</td>
                 <td>@org.USCI</td>

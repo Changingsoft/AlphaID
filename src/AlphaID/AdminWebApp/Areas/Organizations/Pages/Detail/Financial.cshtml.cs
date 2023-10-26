@@ -20,16 +20,16 @@ public class FinancialModel : PageModel
     public InputModel Input { get; set; } = default!;
 
 
-    public async Task<IActionResult> OnGet(string id)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var data = await this.organizationManager.FindByIdAsync(id);
+        var data = await this.organizationManager.FindByIdAsync(anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
         return this.Page();
     }
 
-    public IActionResult OnPost(string id)
+    public IActionResult OnPost(string anchor)
     {
         return this.Page();
     }

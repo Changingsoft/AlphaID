@@ -18,7 +18,7 @@ public class MembersOfModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     public NaturalPerson Person { get; set; } = default!;
 
@@ -46,7 +46,7 @@ public class MembersOfModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Id.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -56,7 +56,7 @@ public class MembersOfModel : PageModel
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Id.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -83,7 +83,7 @@ public class MembersOfModel : PageModel
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await this.personMamager.FindByIdAsync(this.Id.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
         if (person == null)
             return this.NotFound();
         this.Person = person;

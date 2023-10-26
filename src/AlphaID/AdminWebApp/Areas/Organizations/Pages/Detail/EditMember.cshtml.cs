@@ -20,9 +20,9 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string id, string personId)
+        public async Task<IActionResult> OnGet(string anchor, string personId)
         {
-            var org = await this.organizationManager.FindByIdAsync(id);
+            var org = await this.organizationManager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
             var members = await this.memberManager.GetMembersAsync(org);
@@ -39,9 +39,9 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id, string personId)
+        public async Task<IActionResult> OnPostAsync(string anchor, string personId)
         {
-            var org = await this.organizationManager.FindByIdAsync(id);
+            var org = await this.organizationManager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
             var members = await this.memberManager.GetMembersAsync(org);
@@ -56,7 +56,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             var result = await this.memberManager.UpdateAsync(member);
             if (result.IsSuccess)
             {
-                return this.RedirectToPage("Members", new { id });
+                return this.RedirectToPage("Members", new { anchor });
             }
 
             foreach (var error in result.Errors)

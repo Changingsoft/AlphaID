@@ -23,7 +23,7 @@
                 <td>@validation.ChineseIDCard!.Name</td>
                 <td>@validation.ChineseIDCard!.CardNumber</td>
                 <td>@validation.CommitTime</td>
-                <td><a asp-page="ValidateChineseIDCard" asp-route-id="@validation.Id" class="btn btn-sm btn-primary">Validate</a></td>
+                <td><a asp-page="ValidateChineseIDCard" asp-route-anchor="@validation.Id" class="btn btn-sm btn-primary">Validate</a></td>
             </tr>
         }
     </tbody>

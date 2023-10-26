@@ -14,7 +14,7 @@ public class DeleteModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     public NaturalPerson Person { get; set; } = default!;
 
@@ -23,7 +23,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.Id.ToString());
+        var person = await this.userManager.FindByIdAsync(this.Anchor.ToString());
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -32,7 +32,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.Id);
+        var person = await this.userManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

@@ -1,11 +1,11 @@
-﻿@page "{id}"
+﻿@page
 @model AdminWebApp.Areas.Organizations.Pages.Detail.GeneralModel
 @{
 }
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
-        <input asp-for="Input.Name" class="form-control" disabled />
+        <input asp-for="Input.Name" class="form-control disabled" readonly />
     </div>
     <div class="mb-3">
         <label asp-for="Input.USCI" class="form-label"></label>
@@ -58,3 +58,6 @@
     <button type="submit" class="btn">@localizer["Apply changes"]</button>
     <partial name="_OperationResultPartial" model="Model.OperationResult" />
 </form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

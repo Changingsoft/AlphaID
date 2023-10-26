@@ -14,7 +14,7 @@ public class DeleteModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     public GenericOrganization Organization { get; set; } = default!;
 
@@ -23,7 +23,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Id);
+        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -32,7 +32,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Id);
+        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;

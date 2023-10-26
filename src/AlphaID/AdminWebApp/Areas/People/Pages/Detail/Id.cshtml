@@ -1,4 +1,4 @@
-﻿@page "{id}"
+﻿@page
 @model IdModel
 @{
 }
@@ -27,6 +27,6 @@
 <p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
 @if (!this.Model.HasPassword)
 {
-    <p><a asp-page="SetPassword" asp-route-id="@Model.Data.Id" class="btn btn-primary">Add local password</a></p>
+    <p><a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a></p>
 }
-<p><a asp-page="ResetPassword" asp-route-id="@Model.Data.Id" class="btn btn-primary">Reset local password</a></p>
+<p><a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Reset local password</a></p>

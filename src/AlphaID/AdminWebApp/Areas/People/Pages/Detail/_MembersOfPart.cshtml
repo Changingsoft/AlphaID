@@ -16,7 +16,7 @@
         @foreach (var member in members)
         {
             <tr>
-                <td><a asp-page="/Organizations/Detail/Index" asp-route-id="@member.OrganizationId">@member.Organization.Name</a></td>
+                <td><a asp-page="/Organizations/Detail/Index" asp-route-anchor="@member.OrganizationId">@member.Organization.Name</a></td>
                 <td>@member.Department</td>
                 <td>@member.Title</td>
                 <td>@member.Remark</td>

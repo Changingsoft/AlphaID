@@ -24,17 +24,17 @@ public class SetPasswordModel : PageModel
     [BindProperty]
     public string ConfirmPassword { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(string id)
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         return person == null
             ? this.NotFound()
             : await this.userManager.HasPasswordAsync(person) ? throw new InvalidOperationException("用户已具有密码，无法手动添加密码") : (IActionResult)this.Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(string id)
+    public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
         {
             return this.NotFound();
@@ -48,7 +48,7 @@ public class SetPasswordModel : PageModel
         var result = await this.userManager.AddPasswordAsync(person, this.NewPassword);
         if (result.Succeeded)
         {
-            return this.RedirectToPage("SetPasswordSuccess", new { id });
+            return this.RedirectToPage("SetPasswordSuccess", new { anchor });
         }
 
         foreach (var error in result.Errors)

@@ -19,9 +19,9 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public OperationResult? OperationResult { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var org = await this.manager.FindByIdAsync(id);
+            var org = await this.manager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
 
@@ -40,9 +40,9 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var org = await this.manager.FindByIdAsync(id);
+            var org = await this.manager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
 

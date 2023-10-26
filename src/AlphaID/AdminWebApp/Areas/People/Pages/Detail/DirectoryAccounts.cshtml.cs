@@ -19,9 +19,9 @@ public class DirectoryAccountsModel : PageModel
 
     public IEnumerable<LogonAccount> LogonAccounts { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet(string id)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var person = await this.personManager.FindByIdAsync(id);
+        var person = await this.personManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 

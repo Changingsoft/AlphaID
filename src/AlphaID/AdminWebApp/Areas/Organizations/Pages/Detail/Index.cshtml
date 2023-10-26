@@ -1,4 +1,4 @@
-﻿@page "{id}"
+﻿@page
 @model IndexModel
 @inject OrganizationMemberManager memberManager
 
@@ -18,7 +18,7 @@
                 <div class="datagrid-title">@localizer["Name"]</div>
                 <div class="datagrid-content">
                     @Model.Organization.Name
-                    <a asp-page="ChangeName" asp-route-id="@Model.Organization.Id" class="btn btn-sm">@localizer["Change name"]</a>
+                    <a asp-page="ChangeName" asp-route-anchor="@Model.Organization.Id" class="btn btn-sm">@localizer["Change name"]</a>
                 </div>
             </div>
             <div class="datagrid-item">
@@ -99,7 +99,7 @@
         </div>
     </div>
 </div>
-<p><a asp-page="Edit" asp-route-id="@Model.Organization.Id" class="btn btn-primary">@localizer["Edit"]</a></p>
+<p><a asp-page="Edit" asp-route-anchor="@Model.Organization.Id" class="btn btn-primary">@localizer["Edit"]</a></p>
 
 
 <p></p>
@@ -111,4 +111,4 @@
 </dl>
 
 <hr />
-<p><a asp-page="Delete" asp-route-id="@Model.Organization.Id" class="btn btn-danger">@localizer["Delete organization"]</a></p>
+<p><a asp-page="Delete" asp-route-anchor="@Model.Organization.Id" class="btn btn-danger">@localizer["Delete organization"]</a></p>

@@ -1,25 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace AuthCenterWebApp.Areas.People;
+namespace AlphaIDPlatform.RazorPages;
 
-public class PeopleFolderRouteModelConvention : IPageRouteModelConvention
+public abstract class FolderRouteModelConvention : IPageRouteModelConvention
 {
-    private const string areaName = "People";
-    private const string folderPath = "/";
+    public FolderRouteModelConvention(string folderPath, string? areaName = null)
+    {
+        this.AreaName = areaName;
+        this.FolderPath = folderPath.TrimEnd('/');
+    }
+
+    public string? AreaName { get; }
+    public string FolderPath { get; }
 
     public void Apply(PageRouteModel model)
     {
-        if (string.Equals(areaName, model.AreaName, StringComparison.OrdinalIgnoreCase) &&
-            PathBelongsToFolder(folderPath, model.ViewEnginePath))
+        if (string.Equals(this.AreaName, model.AreaName, StringComparison.OrdinalIgnoreCase) &&
+            PathBelongsToFolder(this.FolderPath, model.ViewEnginePath))
         {
             this.ApplyRoute(model);
         }
     }
-
-    private void ApplyRoute(PageRouteModel model)
-    {
-        //todo 重写路由
-    }
+    public abstract void ApplyRoute(PageRouteModel model);
 
     internal static bool PathBelongsToFolder(string folderPath, string viewEnginePath)
     {

@@ -18,7 +18,13 @@
                 <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("汉王事业集团")}"))">汉王事业集团 profile page</a></li>
                 <li><a href="@(new Uri(systemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏实业集团")}"))">北魏实业集团 profile page</a></li>
             </ul>
-
+            <h2>Route Data</h2>
+            <ul>
+                @foreach(var routeValue in ViewContext.RouteData.Values)
+                {
+                    <li>@routeValue.Key : @routeValue.Value</li>
+                }
+            </ul>
             <h2>Access user</h2>
             <table class="table table-sm">
                 <thead>

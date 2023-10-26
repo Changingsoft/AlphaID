@@ -18,9 +18,9 @@ public class IndexModel : PageModel
     public IList<UserLoginInfo> ExternalLogins { get; set; } = default!;
 
 
-    public async Task<IActionResult> OnGetAsync(string id)
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -29,9 +29,9 @@ public class IndexModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnGetPhotoAsync(string id)
+    public async Task<IActionResult> OnGetPhotoAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 

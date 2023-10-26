@@ -1,4 +1,4 @@
-﻿@page "{id}"
+﻿@page
 @model IndexModel
 
 @{
@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h3 class="card-title">@localizer["Base info"]</h3>
-                <a asp-page="EditPersonName" asp-route-id="@this.Model.Data.Id" class="btn">@localizer["Change name"]</a>
+                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn">@localizer["Change name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
@@ -172,10 +172,10 @@
 
 
 <hr />
-<h2><a asp-page="DirectoryAccounts" asp-route-id="@this.Model.Data.Id">AD账号</a></h2>
+<h2><a asp-page="DirectoryAccounts" asp-route-anchor="@this.Model.Data.Id">AD账号</a></h2>
 <vc:person-logon-accounts person-id="@Model.Data.Id"></vc:person-logon-accounts>
 
 <hr />
 <p>@localizer["Created at"] : @Model.Data.WhenCreated</p>
 <p>@localizer["Changed at"] : @Model.Data.WhenChanged</p>
-<p><a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>
+<p><a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>

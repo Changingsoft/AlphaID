@@ -25,8 +25,8 @@
                     {
                         <tr>
                             <td>
-                                <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Id = person.Id }))" class="img-fluid img-thumbnail" width="36" />
-                                <a asp-page="Detail/Index" asp-route-id="@person.Id">@person.Name</a>
+                                <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Anchor = person.Id }))" class="img-fluid img-thumbnail" width="36" />
+                                <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person.Name</a>
                             </td>
                             <td>@Html.DisplayFor(m => person.Sex)</td>
                             <td>@person.UserName</td>

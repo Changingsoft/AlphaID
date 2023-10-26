@@ -13,7 +13,7 @@ public class SecurityModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -24,7 +24,7 @@ public class SecurityModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.manager.FindByIdAsync(this.Id.ToString());
+        var person = await this.manager.FindByIdAsync(this.Anchor.ToString());
         if (person == null) { return this.NotFound(); }
 
         this.Data = person;
@@ -39,7 +39,7 @@ public class SecurityModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await this.manager.FindByIdAsync(this.Id.ToString());
+        var person = await this.manager.FindByIdAsync(this.Anchor.ToString());
         if (person == null) { return this.NotFound(); }
 
         this.Data = person;

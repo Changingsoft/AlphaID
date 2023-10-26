@@ -1,3 +1,4 @@
+using AlphaIDPlatform.Helpers;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,7 +24,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
 
         public OperationResult? OperationResult { get; set; }
 
-        public IEnumerable<SelectListItem> MembershipVisibilties { get; set; } = Enum.GetNames<MembershipVisibility>().Select(v => new SelectListItem(v, v));
+        public IEnumerable<SelectListItem> MembershipVisibilties { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
 
         public async Task<IActionResult> OnGet(string anchor, string orgId)
         {

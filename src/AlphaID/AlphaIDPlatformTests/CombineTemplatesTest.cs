@@ -24,8 +24,9 @@ public class CombineTemplatesTest
     [Theory]
     [InlineData("", "/Home", "/Home")]
     [InlineData("Area", "", "Area")]
-    [InlineData("Area", "/", "Area")]
+    [InlineData("Area", "/", "Area/")]
     [InlineData("Area", "/Home", "Area/Home")]
+    [InlineData("Area", "/Home/", "Area/Home/")]
     public void JoinPath(string a, string b, string expected)
     {
         var result = Path.Join(a, b);

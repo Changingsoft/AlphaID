@@ -6,17 +6,17 @@
 <table class="table">
     <thead>
         <tr>
-            <td>组织</td>
-            <td>部门</td>
-            <td>职务</td>
-            <td>备注</td>
+            <td>@localizer["Organization"]</td>
+            <td>@localizer["Department"]</td>
+            <td>@localizer["Title"]</td>
+            <td>@localizer["Remark"]</td>
         </tr>
     </thead>
     <tbody>
         @foreach (var member in members)
         {
             <tr>
-                <td><a asp-page="/Organizations/Detail/Index" asp-route-id="@member.OrganizationId">@member.Organization.Name</a></td>
+                <td><a asp-page="/Organizations/Detail/Index" asp-route-anchor="@member.OrganizationId">@member.Organization.Name</a></td>
                 <td>@member.Department</td>
                 <td>@member.Title</td>
                 <td>@member.Remark</td>

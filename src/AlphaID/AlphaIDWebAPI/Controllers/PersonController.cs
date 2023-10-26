@@ -33,12 +33,12 @@ public class PersonController : ControllerBase
     }
 
     /// <summary>
-    /// 获取自然人基本信息。
+    /// Get people base information by ID.
     /// </summary>
-    /// <param name="id">自然人的SubjectId</param>
+    /// <param name="id">Subject ID</param>
     /// <returns></returns>
-    /// <response code="200">返回自然人的基本信息。</response>
-    /// <response code="204">没有找到信息。</response>
+    /// <response code="200">Base info of person.</response>
+    /// <response code="204">Person not found.</response>
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,7 +74,7 @@ public class PersonController : ControllerBase
     /// 查找某个自然人。
     /// </summary>
     /// <param name="keywords">关键词。可以通过手机号码、姓名汉字、姓名全拼</param>
-    /// <returns>返回匹配的自然人信息。如果匹配数量超过50条，则只返回前50条。</returns>
+    /// <returns>Return matched peoples, up to 50 records.</returns>
     [HttpGet("Search/{keywords}")]
     public async Task<PersonSearchResult> Search(string keywords)
     {

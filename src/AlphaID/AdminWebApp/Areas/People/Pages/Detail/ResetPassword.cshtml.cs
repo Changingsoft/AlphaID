@@ -29,9 +29,9 @@ public class ResetPasswordModel : PageModel
     public string? OperationResult { get; set; }
 
 
-    public async Task<IActionResult> OnGet(string id)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
         {
             return this.NotFound();
@@ -41,9 +41,9 @@ public class ResetPasswordModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAutoReset(string id)
+    public async Task<IActionResult> OnPostAutoReset(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -64,7 +64,7 @@ public class ResetPasswordModel : PageModel
                 await this.userManager.SetLockoutEndDateAsync(this.Person, DateTime.UtcNow); //unlock user
 
             //设置用户首次登录必须更改密码。
-            this.Person.PasswordLastSet = null;
+            this.Person.PasswordLastSet = null; //todo 重置密码后要求用户首次必须修改密码。
             await this.userManager.UpdateAsync(this.Person);
 
             await this.shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
@@ -81,9 +81,9 @@ public class ResetPasswordModel : PageModel
         }
     }
 
-    public async Task<IActionResult> OnPostManualReset(string id)
+    public async Task<IActionResult> OnPostManualReset(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(id);
+        var person = await this.userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

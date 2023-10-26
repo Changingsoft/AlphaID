@@ -1,6 +1,6 @@
 ﻿@page
 @using IDSubjects.RealName;
-@model             IndexModel
+@model IndexModel
 @inject ChineseIDCardManager validator
 @{
 }
@@ -16,14 +16,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var validation in this.validator.PendingValidations)
+        @foreach (var validation in this.validator.PendingValidations)
         {
             <tr>
                 <td>@validation.Person.Name（@validation.Person.UserName）</td>
                 <td>@validation.ChineseIDCard!.Name</td>
                 <td>@validation.ChineseIDCard!.CardNumber</td>
                 <td>@validation.CommitTime</td>
-                <td><a asp-page="ValidateChineseIDCard" asp-route-id="@validation.Id" class="btn btn-sm btn-primary">Validate</a></td>
+                <td><a asp-page="ValidateChineseIDCard" asp-route-anchor="@validation.Id" class="btn btn-sm btn-primary">Validate</a></td>
             </tr>
         }
     </tbody>

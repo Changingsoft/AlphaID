@@ -1,0 +1,21 @@
+﻿@model Sex?
+
+@if (Model.HasValue)
+{
+    switch (Model)
+    {
+        case Sex.Female:
+            <span>Female</span>
+            break;
+        case Sex.Male:
+            <span>Male</span>
+            break;
+        case Sex.Other:
+            <span>Other</span>
+            break;
+    }
+}
+else
+{
+    <span>N/A</span>
+}

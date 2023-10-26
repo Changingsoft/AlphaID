@@ -1,5 +1,5 @@
 @page
-@model             AuthCenterWebApp.Pages.Grants.Index
+@model AuthCenterWebApp.Pages.Grants.Index
 @{
 }
 
@@ -7,8 +7,8 @@
     <div class="container-xl">
         <div class="grants-page">
             <div class="lead">
-                <h1>客户端应用程序权限</h1>
-                <p>以下是您授予权限的应用程序列表以及它们有权访问的资源。</p>
+                <h1>@localizer["Client Application Permissions"]</h1>
+                <p>@localizer["Below is the list of applications you have given permission to and the resources they have access to."]</p>
             </div>
 
             @if (Model.View.Grants.Any() == false)
@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="alert alert-info">
-                            您尚未授予对任何应用程序的访问权限
+                            @localizer["You have not given access to any applications"]
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                                 <div class="col-sm-2">
                                     <form asp-page="/Grants/Index">
                                         <input type="hidden" name="clientId" value="@grant.ClientId">
-                                        <button class="btn btn-danger">撤销访问权限</button>
+                                        <button class="btn btn-danger">@localizer["Revoke Access"]</button>
                                     </form>
                                 </div>
                             </div>
@@ -49,22 +49,22 @@
                             @if (grant.Description != null)
                             {
                                 <li class="list-group-item">
-                                    <label>描述：</label> @grant.Description
+                                    <label>@localizer["Description"]：</label> @grant.Description
                                 </li>
                             }
                             <li class="list-group-item">
-                                <label>创建于：</label> @grant.Created.ToString("yyyy-MM-dd HH:mm:ss")
+                                <label>@localizer["Created"]：</label> @grant.Created.ToString("yyyy-MM-dd HH:mm:ss")
                             </li>
                             @if (grant.Expires.HasValue)
                             {
                                 <li class="list-group-item">
-                                    <label>有效期至：</label> @grant.Expires.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                                    <label>@localizer["Expires"]：</label> @grant.Expires.Value.ToString("yyyy-MM-dd HH:mm:ss")
                                 </li>
                             }
                             @if (grant.IdentityGrantNames.Any())
                             {
                                 <li class="list-group-item">
-                                    <label>身份授予</label>
+                                    <label>@localizer["Identity Grants"]</label>
                                     <ul>
                                         @foreach (var name in grant.IdentityGrantNames)
                                         {
@@ -76,7 +76,7 @@
                             @if (grant.ApiGrantNames.Any())
                             {
                                 <li class="list-group-item">
-                                    <label>API接口授权</label>
+                                    <label>@localizer["API Grants"]</label>
                                     <ul>
                                         @foreach (var name in grant.ApiGrantNames)
                                         {

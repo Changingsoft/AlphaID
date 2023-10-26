@@ -6,26 +6,33 @@ namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly OrganizationMemberManager memberManager;
-    private readonly NaturalPersonManager naturalPersonManager;
+    private readonly OrganizationManager organizationManager;
 
-    public IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager)
+    public IndexModel(OrganizationManager organizationManager)
     {
-        this.memberManager = memberManager;
-        this.naturalPersonManager = naturalPersonManager;
+        this.organizationManager = organizationManager;
     }
 
-    public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet()
+    public GenericOrganization Organization { get; set; } = default!;
+
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var user = await this.naturalPersonManager.GetUserAsync(this.User);
-        if (user == null)
+        var orgs = await this.organizationManager.SearchByNameAsync(anchor);
+        if (orgs.Count() > 1)
         {
-            return this.NotFound();
+            return this.RedirectToPage("Who");
         }
-        this.OrganizationMembers = await this.memberManager.GetMembersOfAsync(user);
-        //
+        if (orgs.Any())
+        {
+            this.Organization = orgs.First();
+            return this.Page();
+        }
+        var org = await this.organizationManager.FindByIdAsync(anchor);
+        if (org == null)
+            return this.NotFound();
+
+        this.Organization = org;
         return this.Page();
     }
 }

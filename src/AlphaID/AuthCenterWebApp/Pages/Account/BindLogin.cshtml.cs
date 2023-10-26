@@ -43,10 +43,10 @@ public class BindLoginModel : PageModel
         this._events = events;
     }
 
-    public ViewModel View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
     public async Task<IActionResult> OnGet(string returnUrl)
     {
@@ -206,7 +206,7 @@ public class BindLoginModel : PageModel
                 EnableLocalLogin = local,
             };
 
-            this.Input.Username = context.LoginHint;
+            this.Input.Username = context.LoginHint ?? "";
 
             if (!local)
             {
@@ -304,9 +304,9 @@ public class BindLoginModel : PageModel
         [Display(Name = "Remember my login")]
         public bool RememberLogin { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; } = default!;
 
-        public string Button { get; set; }
+        public string Button { get; set; } = default!;
     }
 
     public class ViewModel

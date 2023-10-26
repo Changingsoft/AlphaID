@@ -1,0 +1,13 @@
+﻿@{
+    this.Layout = "Shared/_Layout";
+}
+
+@section Heads{
+    @await RenderSectionAsync("Heads", false)
+}
+
+@RenderBody()
+
+@section Scripts{
+    @await RenderSectionAsync("Scripts", false)
+}

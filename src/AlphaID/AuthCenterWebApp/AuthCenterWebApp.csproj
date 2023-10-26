@@ -5,8 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="1.0.5" />
 		<PackageReference Include="Captcha" Version="4.4.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
@@ -35,6 +35,8 @@
 		</None>
 	</ItemGroup>
 	<ProjectExtensions>
-		<VisualStudio><UserProperties /></VisualStudio>
+		<VisualStudio>
+			<UserProperties />
+		</VisualStudio>
 	</ProjectExtensions>
 </Project>

@@ -219,7 +219,7 @@ public struct USCC
     public static USCC Parse(string s)
     {
         if (string.IsNullOrWhiteSpace(s))
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(nameof(s));
 
         s = s.Trim().ToUpper();
         if (s.Length != 18)

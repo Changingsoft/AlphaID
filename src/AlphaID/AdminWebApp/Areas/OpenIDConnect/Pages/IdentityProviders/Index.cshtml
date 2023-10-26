@@ -1,9 +1,9 @@
 ﻿@page
-@model             IndexModel
+@model IndexModel
 @{
-    this.ViewBag.Title = "标识提供器";
+    this.ViewBag.Title = this.localizer["Identity Providers"].Value;
 }
-<h3>标识提供器</h3>
+<h3>@ViewBag.Title</h3>
 
 <table class="table">
     <thead>
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var idp in this.Model.Results)
+        @foreach (var idp in this.Model.Results)
         {
             <tr>
                 <td><a asp-page="Detail" asp-route-id="@idp.Id">@idp.Scheme</a></td>

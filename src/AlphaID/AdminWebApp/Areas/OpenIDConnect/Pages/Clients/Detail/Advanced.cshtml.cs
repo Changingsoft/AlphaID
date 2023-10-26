@@ -131,7 +131,7 @@ public class AdvancedModel : PageModel
         this.Data = data;
 
         var item = this.Data.Properties.FirstOrDefault(p => p.Id == propId);
-        if(item != null)
+        if (item != null)
         {
             this.Data.Properties.Remove(item);
             this.dbContext.Clients.Update(this.Data);
@@ -149,7 +149,7 @@ public class AdvancedModel : PageModel
             return this.NotFound();
         this.Data = data;
 
-        if(this.Data.Properties.Any(p => p.Key == this.AddProperty.Key))
+        if (this.Data.Properties.Any(p => p.Key == this.AddProperty.Key))
         {
             this.ModelState.AddModelError("", "指定的Key和Value已存在。");
         }
@@ -165,7 +165,7 @@ public class AdvancedModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Always Include User Claims In Id Token", Description = "When requesting both an id token and access token, should the user claims always be added to the id token instead of requiring the client to use the userinfo endpoint. Default is false.")]
+        [Display(Name = "Always Include User Claims In Anchor Token", Description = "When requesting both an id token and access token, should the user claims always be added to the id token instead of requiring the client to use the userinfo endpoint. Default is false.")]
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
 
         [Display(Name = "Require Request Object", Description = "Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)")]
@@ -231,7 +231,7 @@ public class AdvancedModel : PageModel
         [Display(Name = "Enable Local Login", Description = "Specifies if this client can use local accounts, or external IdPs only. Defaults to true.")]
         public bool EnableLocalLogin { get; set; } = true;
 
-        [Display(Name = "Include Jwt Id", Description = "Specifies whether JWT access tokens should have an embedded unique ID (via the jti claim). Defaults to true.")]
+        [Display(Name = "Include Jwt Anchor", Description = "Specifies whether JWT access tokens should have an embedded unique ID (via the jti claim). Defaults to true.")]
         public bool IncludeJwtId { get; set; }
 
         [Display(Name = "Client Claims Prefix", Description = "If set, the prefix client claim types will be prefixed with. Defaults to client_. The intent is to make sure they don’t accidentally collide with user claims.")]

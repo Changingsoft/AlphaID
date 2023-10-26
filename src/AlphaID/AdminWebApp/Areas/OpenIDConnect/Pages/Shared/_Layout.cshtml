@@ -7,13 +7,6 @@
 
 <div class="page-body">
     <div class="container-xl">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-page="/Index">OIDC</a></li>
-                @RenderSection("breadcrumb", false)
-            </ol>
-        </nav>
-
 
         <nav class="nav">
             <a class="nav-link" asp-page="/Index">@localizer["Overview"]</a>
@@ -23,6 +16,7 @@
             <a class="nav-link" asp-page="/IdentityResources/Index">@localizer["Identity Resources"]</a>
             <a class="nav-link" asp-page="/IdentityProviders/Index">@localizer["Identity Providers"]</a>
             <a class="nav-link" asp-page="/Advanced">@localizer["Advanced"]</a>
+            <a class="nav-link" asp-page="/ActiveSessions">@localizer["Active Sessions"]</a>
         </nav>
         <hr />
 

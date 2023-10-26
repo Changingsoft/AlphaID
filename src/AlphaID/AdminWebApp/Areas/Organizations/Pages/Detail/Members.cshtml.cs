@@ -18,7 +18,7 @@ public class MembersModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     public GenericOrganization Organization { get; set; } = default!;
 
@@ -43,7 +43,7 @@ public class MembersModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Id);
+        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -54,7 +54,7 @@ public class MembersModel : PageModel
 
     public async Task<IActionResult> OnPostAddMemberAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Id);
+        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -80,9 +80,9 @@ public class MembersModel : PageModel
         return this.RedirectToPage();
     }
 
-    public async Task<IActionResult> OnPostRemoveMemberAsync(string personId)
+    public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Id);
+        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;

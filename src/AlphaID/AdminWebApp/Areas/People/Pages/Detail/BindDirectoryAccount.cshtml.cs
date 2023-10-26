@@ -23,18 +23,18 @@ public class BindDirectoryAccountModel : PageModel
 
     public IEnumerable<DirectorySearchItem> SearchItems { get; set; } = Array.Empty<DirectorySearchItem>();
 
-    public async Task<IActionResult> OnGet(string id)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var person = await this.personManager.FindByIdAsync(id);
+        var person = await this.personManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostSearchAsync(string id, int serviceId, string keywords)
+    public async Task<IActionResult> OnPostSearchAsync(string anchor, int serviceId, string keywords)
     {
-        var person = await this.personManager.FindByIdAsync(id);
+        var person = await this.personManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -47,9 +47,9 @@ public class BindDirectoryAccountModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostBindAsync(string id, int serviceId, Guid entryGuid)
+    public async Task<IActionResult> OnPostBindAsync(string anchor, int serviceId, Guid entryGuid)
     {
-        var person = await this.personManager.FindByIdAsync(id);
+        var person = await this.personManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -61,7 +61,7 @@ public class BindDirectoryAccountModel : PageModel
         try
         {
             await this.logonAccountManager.BindExistsAccount(directoryService, person, entryGuid);
-            return this.RedirectToPage("DirectoryAccounts", new { id });
+            return this.RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception)
         {

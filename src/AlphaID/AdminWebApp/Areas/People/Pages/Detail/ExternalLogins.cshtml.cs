@@ -15,9 +15,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public IEnumerable<UserLoginInfo> Logins { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGet(string anchor)
         {
-            var person = await this.personManager.FindByIdAsync(id);
+            var person = await this.personManager.FindByIdAsync(anchor);
             if (person == null) { return this.NotFound(); }
 
             this.Logins = await this.personManager.GetLoginsAsync(person);
@@ -25,9 +25,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveAsync(string id, string provider, string pkey)
+        public async Task<IActionResult> OnPostRemoveAsync(string anchor, string provider, string pkey)
         {
-            var person = await this.personManager.FindByIdAsync(id);
+            var person = await this.personManager.FindByIdAsync(anchor);
             if (person == null) { return this.NotFound(); }
 
             var result = await this.personManager.RemoveLoginAsync(person, provider, pkey);

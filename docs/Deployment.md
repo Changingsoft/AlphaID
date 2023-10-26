@@ -20,3 +20,8 @@ Alpha ID 支持多实例部署。
 
 HTTP代理或负载均衡器可以使用根目录下的 /Heart，检测实例是否处于工作状态。
 
+## Limitations
+
+### 与Active Directory结合使用时的限制
+
+当Alpha ID计划与Microsoft Active Directory结合使用时，下列系统组件需要部署在加入域环境的Windows Server服务器上，因为操作Active Directory的部分组件目前不支持其他操作系统。

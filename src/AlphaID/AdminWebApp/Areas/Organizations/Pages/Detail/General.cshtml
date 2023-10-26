@@ -1,0 +1,63 @@
+﻿@page
+@model AdminWebApp.Areas.Organizations.Pages.Detail.GeneralModel
+@{
+}
+@Html.DisplayFor(m => m.OperationResult)
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.Name" class="form-label"></label>
+        <input asp-for="Input.Name" class="form-control disabled" readonly />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.USCI" class="form-label"></label>
+        <input asp-for="Input.USCI" class="form-control" />
+        <span asp-description-for="Input.USCI"></span>
+        <span asp-validation-for="Input.USCI" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Domicile" class="form-label"></label>
+        <input asp-for="Input.Domicile" class="form-control" />
+        <span asp-description-for="Input.Domicile"></span>
+        <span asp-validation-for="Input.Domicile" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Contact" class="form-label"></label>
+        <input asp-for="Input.Contact" class="form-control" />
+        <span asp-description-for="Input.Contact"></span>
+        <span asp-validation-for="Input.Contact" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Representative" class="form-label"></label>
+        <input asp-for="Input.Representative" class="form-control" />
+        <span asp-description-for="Input.Representative"></span>
+        <span asp-validation-for="Input.Representative" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Website" class="form-label"></label>
+        <input asp-for="Input.Website" class="form-control" />
+        <span asp-description-for="Input.Website"></span>
+        <span asp-validation-for="Input.Website" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.EstablishedAt" class="form-label"></label>
+        <input asp-for="Input.EstablishedAt" class="form-control" />
+        <span asp-description-for="Input.EstablishedAt"></span>
+        <span asp-validation-for="Input.EstablishedAt" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.TermBegin" class="form-label"></label>
+        <input asp-for="Input.TermBegin" class="form-control" />
+        <span asp-description-for="Input.TermBegin"></span>
+        <span asp-validation-for="Input.TermBegin" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.TermEnd" class="form-label"></label>
+        <input asp-for="Input.TermEnd" class="form-control" />
+        <span asp-description-for="Input.TermEnd"></span>
+        <span asp-validation-for="Input.TermEnd" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn">@localizer["Apply changes"]</button>
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

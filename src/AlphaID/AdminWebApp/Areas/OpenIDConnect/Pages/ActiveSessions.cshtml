@@ -1,0 +1,35 @@
+﻿@page
+@model AdminWebApp.Areas.OpenIDConnect.Pages.ActiveSessionsModel
+@inject PersistedGrantDbContext dbContext;
+@{
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>@localizer["Session ID"]</td>
+            <td>@localizer["Scheme"]</td>
+            <td>@localizer["Subject ID"]</td>
+            <td>@localizer["Created"]</td>
+            <td>@localizer["Renewed"]</td>
+            <td>@localizer["Expires"]</td>
+            <td>@localizer["Display name"]</td>
+            <td>@localizer["Key part"]</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var a in this.dbContext.ServerSideSessions)
+        {
+            <tr>
+                <td>@a.SessionId</td>
+                <td>@a.Scheme</td>
+                <td>@a.SubjectId</td>
+                <td>@a.Created</td>
+                <td>@a.Renewed</td>
+                <td>@a.Expires</td>
+                <td>@a.DisplayName</td>
+                <td>@a.Key[0..4]</td>
+            </tr>
+        }
+    </tbody>
+</table>

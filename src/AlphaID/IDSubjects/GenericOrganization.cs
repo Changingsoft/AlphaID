@@ -19,7 +19,6 @@ public class GenericOrganization
     /// </summary>
     protected internal GenericOrganization()
     {
-        this.BankAccounts = new HashSet<OrganizationBankAccount>();
     }
 
     /// <summary>
@@ -28,8 +27,6 @@ public class GenericOrganization
     public GenericOrganization(string name) : this()
     {
         this.Name = name;
-        this.Id = Guid.NewGuid().ToString();
-        this.Enabled = true;
     }
 
     /// <summary>
@@ -49,12 +46,12 @@ public class GenericOrganization
     /// 统一社会信用代码。
     /// </summary>
     [MaxLength(18), Column(TypeName = "char(18)")]
-    public string? USCI { get; protected internal set; }
+    public string? USCI { get; set; }
 
     /// <summary>
     /// 创建记录的时间。
     /// </summary>
-    public virtual DateTime WhenCreated { get; protected set; } = DateTime.UtcNow;
+    public virtual DateTime WhenCreated { get; protected internal set; } = DateTime.UtcNow;
 
     /// <summary>
     /// 记录修改的时间。
@@ -64,12 +61,12 @@ public class GenericOrganization
     /// <summary>
     /// 是否有效。
     /// </summary>
-    public virtual bool Enabled { get; protected internal set; }
+    public virtual bool Enabled { get; protected internal set; } = true;
 
     /// <summary>
     /// 银行账号。
     /// </summary>
-    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; protected set; } = default!;
+    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; protected set; } = new HashSet<OrganizationBankAccount>();
 
     /// <summary>
     /// 住所。
@@ -112,10 +109,22 @@ public class GenericOrganization
     /// 标示该组织的地理位置。
     /// </summary>
     [Column(TypeName = "geography")]
-    public virtual Geometry? Location { get; set; } = default!;
+    public virtual Geometry? Location { get; set; }
+
+    /// <summary>
+    /// 组织的网站。
+    /// </summary>
+    [MaxLength(256)]
+    public virtual string? Website { get; set; }
 
     /// <summary>
     /// 曾用名。
     /// </summary>
-    public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = default!;
+    public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = new HashSet<OrganizationUsedName>();
+
+    /// <summary>
+    /// Description of organization.
+    /// </summary>
+    [MaxLength(200)]
+    public virtual string? Description { get; set; }
 }

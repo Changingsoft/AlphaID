@@ -1,7 +1,7 @@
 ﻿@page
 @model             EnableAuthenticatorModel
 @{
-    this.ViewBag.Title = "配置身份验证器应用";
+    this.ViewBag.Title = this.localizer["Configure authenticator app"].Value;
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <form id="send-code" method="post">
-                        <div class="form-floating">
+                        <div class="mb-3">
                             <input asp-for="Input.Code" class="form-control" autocomplete="off" />
                             <label asp-for="Input.Code" class="control-label form-label">Verification Code</label>
                             <span asp-validation-for="Input.Code" class="text-danger"></span>

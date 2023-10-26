@@ -9,7 +9,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 {
     public class IdPRestrictionModel : PageModel
     {
-        readonly ConfigurationDbContext dbContext;
+        private readonly ConfigurationDbContext dbContext;
 
         public IdPRestrictionModel(ConfigurationDbContext dbContext)
         {
@@ -40,7 +40,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
                 return this.NotFound();
             this.Data = client;
             var item = this.Data.IdentityProviderRestrictions.FirstOrDefault(p => p.Id == itemId);
-            if(item != null)
+            if (item != null)
             {
                 this.Data.IdentityProviderRestrictions.Remove(item);
                 this.dbContext.Clients.Update(this.Data);
@@ -57,7 +57,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             this.Data = client;
 
             if (this.Data.IdentityProviderRestrictions.Any(p => p.Provider == this.SelectedProvider))
-                this.ModelState.AddModelError(nameof(SelectedProvider), "选择的Id Provider已经在列表中。");
+                this.ModelState.AddModelError(nameof(this.SelectedProvider), "选择的Id Provider已经在列表中。");
 
             if (!this.ModelState.IsValid)
                 return this.Page();

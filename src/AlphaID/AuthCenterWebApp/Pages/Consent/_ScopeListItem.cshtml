@@ -23,7 +23,7 @@
     </label>
     @if (Model.Required)
     {
-        <span><em>（必需）</em></span>
+        <span><em>@localizer["(Required)"]</em></span>
     }
     @if (Model.Description != null)
     {
@@ -34,7 +34,7 @@
     @if (Model.Resources?.Any() == true)
     {
         <div class="consent-description">
-            <label>将可用于以下资源服务器：</label>
+            <label>@localizer["Will be available to these resource servers:"]</label>
             <ul>
                 @foreach (var resource in Model.Resources)
                 {

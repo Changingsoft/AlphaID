@@ -33,13 +33,13 @@
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
-            <div class="form-group">
-                <label asp-for="NewKey"></label>
+            <div class="mb-3">
+                <label asp-for="NewKey" class="form-label"></label>
                 <input asp-for="NewKey" class="form-control" />
                 <span asp-validation-for="NewKey"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NewValue"></label>
+            <div class="mb-3">
+                <label asp-for="NewValue" class="form-label"></label>
                 <input asp-for="NewValue" class="form-control" />
                 <span asp-validation-for="NewValue"></span>
             </div>

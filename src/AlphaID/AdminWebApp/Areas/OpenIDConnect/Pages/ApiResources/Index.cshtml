@@ -1,5 +1,5 @@
 ﻿@page
-@model             IndexModel
+@model IndexModel
 @{
     this.ViewBag.Title = localizer["API Resources"];
 }
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var data in this.Model.Results)
+        @foreach (var data in this.Model.Results)
         {
             <tr>
                 <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>

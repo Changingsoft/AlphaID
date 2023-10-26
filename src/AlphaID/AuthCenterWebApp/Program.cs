@@ -1,7 +1,7 @@
 ﻿using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatform.RazorPages;
 using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using AuthCenterWebApp;
@@ -13,6 +13,7 @@ using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -28,11 +29,14 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) => lc
-        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-        .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
-        .Enrich.FromLogContext()
-        .ReadFrom.Configuration(ctx.Configuration));
+    builder.Host.UseSerilog((ctx, lc) =>
+    {
+        lc
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+                .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+                .Enrich.FromLogContext()
+                .ReadFrom.Configuration(ctx.Configuration);
+    });
 
     //程序资源
     builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -51,12 +55,14 @@ try
     });
 
     builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-    builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+    builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
     builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AuthorizeFolder("/");
         options.Conventions.AuthorizeAreaFolder("Profile", "/");
-        //options.Conventions.AllowAnonymousToFolder("/Account");
+        options.Conventions.AuthorizeAreaFolder("Settings", "/");
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People", "{userAnchor}"));
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));
     })
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>
@@ -121,6 +127,7 @@ try
         .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
         .AddUserValidator<NaturalPersonValidator>()
         .AddDefaultTokenProviders();
+    builder.Services.AddScoped<IQueryableUserStore<NaturalPerson>, NaturalPersonStore>();
 
     //添加邮件发送器。
     builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
@@ -199,6 +206,10 @@ try
     builder.Services.AddScoped<OrganizationMemberManager>()
         .AddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
 
+    //Organizations
+    builder.Services.AddScoped<OrganizationManager>()
+        .AddScoped<IOrganizationStore, OrganizationStore>();
+
     //todo 由于BotDetect Captcha需要支持同步流，应改进此配置。
     builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
         .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
@@ -214,12 +225,10 @@ try
     var app = builder.Build();
 
     app.UseSerilogRequestLogging();
-
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
     }
-
     app.UseRequestLocalization();
     app.UseStaticFiles();
     app.UseRouting();
@@ -229,12 +238,7 @@ try
     app.UseCaptcha(app.Configuration);
     app.MapRazorPages();
 
-
-
-
     await app.RunAsync();
-
-
 }
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException") // https://github.com/dotnet/runtime/issues/60600
 {

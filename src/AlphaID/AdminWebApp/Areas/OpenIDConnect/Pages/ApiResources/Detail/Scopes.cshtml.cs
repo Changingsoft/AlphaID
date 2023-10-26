@@ -22,7 +22,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
         public IEnumerable<string> AllScopes { get; set; }
 
-        public IEnumerable<string> RemainingScopes { get; set; } = new string[0];
+        public IEnumerable<string> RemainingScopes { get; set; } = Array.Empty<string>();
 
         public async Task<IActionResult> OnGet(int id)
         {
@@ -50,7 +50,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
             this.Data = resource;
             var item = this.Data.Scopes.FirstOrDefault(p => p.Id == scopeId);
             if (item != null)
-            { 
+            {
                 this.Data.Scopes.Remove(item);
                 this.dbContext.ApiResources.Update(this.Data);
                 await this.dbContext.SaveChangesAsync();

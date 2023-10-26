@@ -1,19 +1,19 @@
-﻿@page "{id}"
-@model             DirectoryAccountsModel
+﻿@page
+@model DirectoryAccountsModel
 @{
-    this.ViewBag.Title = "Directory Accounts";
+    this.ViewBag.Title = this.localizer["Directory Accounts"].Value;
 }
-<h1>目录账户</h1>
+<h1>@ViewBag.Title</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <td>LogonId</td>
-            <td>PersonId</td>
+            <td>@localizer["Logon ID"]</td>
+            <td>@localizer["Person ID"]</td>
         </tr>
     </thead>
     <tbody>
-        @foreach(var acc in this.Model.LogonAccounts)
+        @foreach (var acc in this.Model.LogonAccounts)
         {
             <tr>
                 <td>@acc.LogonId</td>
@@ -23,5 +23,5 @@
     </tbody>
 </table>
 
-<p><a asp-page="CreateDirectoryAccount" asp-route-id="@this.Model.Person.Id">创建新账户</a></p>
-<p><a asp-page="BindDirectoryAccount" asp-route-id="@this.Model.Person.Id">绑定已有账户</a></p>
+<p><a asp-page="CreateDirectoryAccount" asp-route-anchor="@this.Model.Person.Id">@localizer["Create new account"]</a></p>
+<p><a asp-page="BindDirectoryAccount" asp-route-anchor="@this.Model.Person.Id">@localizer["Bind exists account"]</a></p>

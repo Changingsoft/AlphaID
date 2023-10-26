@@ -28,7 +28,7 @@ public class Index : PageModel
         this._logger = logger;
     }
 
-    public ViewModel View { get; set; }
+    public ViewModel? View { get; set; }
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -58,7 +58,7 @@ public class Index : PageModel
         ConsentResponse grantedConsent = default!;
 
         // user clicked 'no' - send back the standard 'access_denied' response
-        if (this.Input?.Button == "no")
+        if (this.Input.Button == "no")
         {
             grantedConsent = new ConsentResponse { Error = AuthorizationError.AccessDenied };
 
@@ -66,7 +66,7 @@ public class Index : PageModel
             await this._events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
         }
         // user clicked 'yes' - validate the data
-        else if (this.Input?.Button == "yes")
+        else if (this.Input.Button == "yes")
         {
             // if the user consented to some scope, build the response model
             if (this.Input.ScopesConsented != null && this.Input.ScopesConsented.Any())

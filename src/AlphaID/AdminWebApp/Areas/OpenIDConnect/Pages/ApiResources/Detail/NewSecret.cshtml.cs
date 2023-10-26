@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
     public class NewSecretModel : PageModel
     {
-        readonly ConfigurationDbContext dbContext;
+        private readonly ConfigurationDbContext dbContext;
 
         public NewSecretModel(ConfigurationDbContext dbContext)
         {
@@ -51,7 +51,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
             });
             this.dbContext.ApiResources.Update(data);
             await this.dbContext.SaveChangesAsync();
-            return RedirectToPage("Secrets", new { id });
+            return this.RedirectToPage("Secrets", new { id });
         }
         private string GeneratePassword()
         {

@@ -26,9 +26,9 @@ public class CreateDirectoryAccountModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(string id)
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(id);
+        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         var card = await this.chineseIDCardManager.GetCurrentAsync(person);
@@ -59,9 +59,9 @@ public class CreateDirectoryAccountModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(string id)
+    public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(id);
+        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -88,7 +88,7 @@ public class CreateDirectoryAccountModel : PageModel
         try
         {
             await this.logonAccountManager.CreateAsync(person, request);
-            return this.RedirectToPage("DirectoryAccounts", new { id });
+            return this.RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception ex)
         {

@@ -1,15 +1,15 @@
 @page
-@model                         AuthCenterWebApp.Pages.Home.Error.Index
+@model AuthCenterWebApp.Pages.Home.Error.Index
 
 <div class="error-page">
     <div class="lead">
-        <h1>´íÎó</h1>
+        <h1>@localizer["Error"]</h1>
     </div>
 
     <div class="row">
         <div class="col-sm-6">
             <div class="alert alert-danger">
-                ±§Ç¸£¬³öÏÖ´íÎó
+                @localizer["An error occurred while processing your request."]
 
                 @if (Model.View.Error != null)
                 {

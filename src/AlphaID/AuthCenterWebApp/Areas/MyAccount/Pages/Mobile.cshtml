@@ -1,8 +1,9 @@
 ﻿@page
 @model MobileModel
 @{
+    this.ViewBag.Title = this.localizer["Manage your phone number"].Value;
 }
-<h2>管理移动电话号码</h2>
+<h2>@ViewBag.Title</h2>
 
 @if(!string.IsNullOrEmpty(this.Model.OperationMessage))
 {
@@ -11,28 +12,28 @@
     </div>
 }
 
-<p>当前移动电话号码</p>
+<p>@localizer["Current phone number"]</p>
 <div class="form-group">
-    <label asp-for="Mobile"></label>
+    <label asp-for="Mobile" class="form-label"></label>
     <input asp-for="Mobile" class="form-control" disabled />
 </div>
 
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="NewMobile"></label>
+        <label asp-for="NewMobile" class="form-label"></label>
         <input asp-for="NewMobile" class="form-control" />
         <span asp-validation-for="NewMobile" class="text-danger"></span>
     </div>
-    <button class="btn btn-secondary" type="submit" asp-page-handler="SendVerificationCode" formnovalidate>发送验证码</button>
+    <button class="btn btn-secondary" type="submit" asp-page-handler="SendVerificationCode" formnovalidate>@localizer["Send code"]</button>
     @if(this.Model.VerificationCodeSent)
     {
-        <span>验证码已发送</span>
+        <span>@localizer["Code has been sent"]</span>
     }
     <div class="form-group">
-        <label asp-for="VerificationCode"></label>
+        <label asp-for="VerificationCode" class="form-label"></label>
         <input asp-for="VerificationCode" class="form-control" />
         <span asp-validation-for="VerificationCode" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="">修改移动电话</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="">@localizer["Update phone number"]</button>
 </form>

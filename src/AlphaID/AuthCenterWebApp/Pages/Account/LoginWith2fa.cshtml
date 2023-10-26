@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.LoginWith2faModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = "双因素身份验证";
+    this.ViewBag.Title = this.localizer["Two-fact authentication"];
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -15,11 +15,11 @@
         <div class="card card-md">
             <div class="card-body">
                 <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
-                <p>您的登录受到身份验证器应用程序的保护。在下面输入您的身份验证器代码。</p>
+                <p>@localizer["Your login is protected with an authenticator app. Enter your authenticator code below."]</p>
                 <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
                     <input asp-for="RememberMe" type="hidden" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-floating">
+                    <div class="mb-3">
                         <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" autofocus />
                         <label asp-for="Input.TwoFactorCode" class="form-label"></label>
                         <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span>
@@ -33,12 +33,12 @@
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">登录</button>
+                        <button type="submit" class="w-100 btn btn-lg btn-primary">@localizer["Sign in"]</button>
                     </div>
                 </form>
                 <p>
-                    无法访问您的身份验证器设备？您可以
-                    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">使用恢复代码登录</a>.
+                    @localizer["Don't have access to your authenticator device? You can"]
+                    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@localizer["log in with a recovery code"]</a>.
                 </p>
             </div>
         </div>

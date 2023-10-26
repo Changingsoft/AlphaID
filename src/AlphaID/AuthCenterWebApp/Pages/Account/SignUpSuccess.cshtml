@@ -1,8 +1,8 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.SignUpSuccessModel
 @{
-    this.ViewBag.Title = "注册成功";
+    this.ViewBag.Title = this.localizer["Register confirmation"];
 }
-<h1>注册成功</h1>
+<h1>@ViewBag.Title</h1>
 
-<p><a href="@this.User.ProfileUrl()" class="btn btn-primary">继续</a></p>
+<p><a href="@this.User.ProfileUrl()" class="btn btn-primary">@localizer["Continue"]</a></p>

@@ -28,9 +28,6 @@ public class IDSubjectsDbContext : IdentityUserContext<NaturalPerson>
 
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = default!;
 
-    public DbSet<OrganizationAdministrator> OrganizationAdministrators { get; protected set; } = default!;
-
-
     public DbSet<OrganizationUsedName> OrganizationUsedNames { get; protected set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)

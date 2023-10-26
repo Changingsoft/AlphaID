@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.LoginModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.localizer["Sign in"];
+    this.ViewBag.Title = this.localizer["Sign in"].Value;
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -90,7 +90,7 @@
 @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
 {
     <div class="alert alert-warning">
-        <strong>无效的登录请求</strong>
-        没有为此请求配置登录方案。
+        <strong>@localizer["Invalid login scheme"]</strong>
+        @localizer["No schemes set for this request"]
     </div>
 }

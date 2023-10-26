@@ -67,7 +67,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
             this.Data = resource;
             var item = this.Data.UserClaims.FirstOrDefault(p => p.Id == claimId);
-            if(item != null)
+            if (item != null)
             {
                 this.Data.UserClaims.Remove(item);
                 this.dbContext.ApiResources.Update(this.Data);

@@ -1,5 +1,5 @@
 ﻿@page
-@model             DetailModel
+@model DetailModel
 @{
     this.ViewBag.Title = $"Detail of {this.Model.Data.Name}";
 }
@@ -7,13 +7,13 @@
 <h1>@this.Model.Data.Name</h1>
 
 <dl>
-    <dt>服务地址</dt>
+    <dt>Server</dt>
     <dd>@this.Model.Data.ServerAddress</dd>
-    <dt>根DN</dt>
+    <dt>Root DN</dt>
     <dd>@this.Model.Data.RootDN</dd>
-    <dt>默认用户账户OU</dt>
+    <dt>Default User OU</dt>
     <dd>@this.Model.Data.DefaultUserAccountOU</dd>
-    <dt>UPN后缀</dt>
+    <dt>UPN suffix</dt>
     <dd>@this.Model.Data.UpnSuffix</dd>
     <dt>SAM Domain Part</dt>
     <dd>@this.Model.Data.SAMDomainPart</dd>
@@ -21,4 +21,4 @@
     <dd>@this.Model.Data.ExternalLoginProviderName (@(this.Model.Data.ExternalLoginProvider))</dd>
 </dl>
 
-<a asp-page="Delete" asp-route-id="@this.Model.Data.Id" class="btn btn-danger">删除服务</a>
+<a asp-page="Delete" asp-route-id="@this.Model.Data.Id" class="btn btn-danger">Delete service</a>

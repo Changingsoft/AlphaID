@@ -11,9 +11,9 @@
         }
         <h1>
             @Model.View.ClientName
-            <small class="text-muted">正在请求您的许可</small>
+            <small class="text-muted">@localizer["is requesting your permission"]</small>
         </h1>
-        <p>取消选中您不希望授予的权限。</p>
+        <p>@localizer["Uncheck the permissions you do not wish to grant."]</p>
     </div>
 
     <div class="row">
@@ -32,7 +32,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-user"></span>
-                                个人信息
+                                @localizer["Personal Information"]
                             </div>
                             <ul class="list-group list-group-flush">
                                 @foreach (var scope in Model.View.IdentityScopes)
@@ -50,7 +50,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-tasks"></span>
-                                应用程序访问
+                                @localizer["Application Access"]
                             </div>
                             <ul class="list-group list-group-flush">
                                 @foreach (var scope in Model.View.ApiScopes)
@@ -66,10 +66,10 @@
                     <div class="card">
                         <div class="card-header">
                             <span class="glyphicon glyphicon-pencil"></span>
-                            描述
+                            @localizer["Description"]
                         </div>
                         <div class="card-body">
-                            <input class="form-control" placeholder="此设备的名称或描述" asp-for="Input.Description" autofocus>
+                            <input class="form-control" placeholder="@localizer["Description or name of device"]" asp-for="Input.Description" autofocus>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                         <div class="form-check">
                             <input class="form-check-input" asp-for="Input.RememberConsent">
                             <label class="form-check-label" asp-for="Input.RememberConsent">
-                                <strong>记住我的决定</strong>
+                                <strong>@localizer["Remember My Decision"]</strong>
                             </label>
                         </div>
                     </div>
@@ -90,8 +90,8 @@
 
         <div class="row">
             <div class="col-sm-4">
-                <button name="Input.button" value="yes" class="btn btn-primary" autofocus>是，允许</button>
-                <button name="Input.button" value="no" class="btn btn-secondary">否，不允许</button>
+                <button name="Input.button" value="yes" class="btn btn-primary" autofocus>@localizer["Yes, Allow"]</button>
+                <button name="Input.button" value="no" class="btn btn-secondary">@localizer["No, Do Not Allow"]</button>
             </div>
             <div class="col-sm-4 col-lg-auto">
                 @if (Model.View.ClientUrl != null)

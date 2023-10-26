@@ -13,7 +13,7 @@ public class IndexModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public string Id { get; set; } = default!;
+    public string Anchor { get; set; } = default!;
 
     public GenericOrganization Organization { get; set; } = default!;
 
@@ -22,7 +22,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Id);
+        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;

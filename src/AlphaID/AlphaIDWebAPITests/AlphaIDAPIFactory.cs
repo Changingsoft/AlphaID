@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -26,22 +25,8 @@ public class AlphaIDAPIFactory : WebApplicationFactory<AlphaIDWebAPI.Program>
         {
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = "TestBearer";
-                options.DefaultAuthenticateScheme = "TestBearer";
-            })
-            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestBearer", options => { });
-
-            services.AddAuthorization(options =>
-            {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder("TestBearer")
-                .RequireClaim("scope", "openid")
-                .Build();
-
-                options.AddPolicy("RealNameScopeRequired", builder =>
-                {
-                    builder.AuthenticationSchemes.Add("TestBearer");
-                    builder.RequireClaim("scope", "realname");
-                });
+                //Replace AuthenticationHandler of Bearer scheme for testing.
+                options.Schemes.First(s => s.Name == JwtBearerDefaults.AuthenticationScheme).HandlerType = typeof(TestAuthHandler);
             });
         });
 
@@ -77,7 +62,7 @@ public class AlphaIDAPIFactory : WebApplicationFactory<AlphaIDWebAPI.Program>
             client = this.CreateClient(options);
         else
             client = this.CreateClient();
-        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestBearer");
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme);
         return client;
     }
 }

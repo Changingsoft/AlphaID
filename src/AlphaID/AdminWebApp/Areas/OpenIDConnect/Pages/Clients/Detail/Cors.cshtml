@@ -2,7 +2,7 @@
 @model CorsModel
 @{
 }
-<h3>跨域资源共享（CORS）</h3>
+<h3>CORS</h3>
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
         @foreach (var origin in this.Model.Data.AllowedCorsOrigins)
@@ -19,8 +19,8 @@
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
             <h4>Add new origin</h4>
-            <div class="form-group">
-                <label asp-for="NewOrigin"></label>
+            <div class="mb-3">
+                <label asp-for="NewOrigin" class="form-label"></label>
                 <input asp-for="NewOrigin" class="form-control" />
                 <span asp-validation-for="NewOrigin" class="text-danger"></span>
             </div>

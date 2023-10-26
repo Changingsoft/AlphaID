@@ -1,7 +1,7 @@
 ﻿@page
 @model SearchModel
 @{
-    this.ViewBag.Title = "搜索自然人";
+    this.ViewBag.Title = "Search People";
 }
 
 <div class="page-body">
@@ -25,10 +25,10 @@
                     {
                         <tr>
                             <td>
-                                <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Id = person.Id }))" class="img-fluid img-thumbnail" width="36" />
-                                <a asp-page="Detail/Index" asp-route-id="@person.Id">@person.Name</a>
+                                <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Anchor = person.Id }))" class="img-fluid img-thumbnail" width="36" />
+                                <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person.Name</a>
                             </td>
-                            <td>@Html.DisplayFor(m => person.Sex, "Sex")</td>
+                            <td>@Html.DisplayFor(m => person.Sex)</td>
                             <td>@person.UserName</td>
                             <td>@person.PhoneNumber</td>
                             <td>@Html.DisplayFor(m => person.DateOfBirth, "Age")</td>
@@ -41,7 +41,7 @@
         }
         else
         {
-            <p>没有符合条件的结果</p>
+            <p>No results.</p>
         }
 
     </div>

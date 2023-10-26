@@ -4,7 +4,7 @@
 }
 <h3>@localizer["Create new client"]</h3>
 <form method="post">
-    <h4>基本信息</h4>
+    <h4>Base</h4>
     <div class="mb-3">
         <label asp-for="ClientId" class="form-label required"></label>
         <input asp-for="ClientId" class="form-control" />
@@ -15,22 +15,22 @@
         <input asp-for="Input.ClientName" class="form-control" />
         <span asp-validation-for="Input.ClientName" class="text-danger"></span>
     </div>
-    <div class="mb-3 form-check">
+    <div class="form-check">
         <input asp-for="Input.RequireClientSecret" class="form-check-input" />
         <label asp-for="Input.RequireClientSecret" class="form-check-label"></label>
     </div>
     <div class="mb-3">
-        <label asp-for="Input.ClientSecret"></label>
+        <label asp-for="Input.ClientSecret" class="form-label"></label>
         <input asp-for="Input.ClientSecret" class="form-control" />
         <span asp-validation-for="Input.ClientSecret" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Input.Description"></label>
+        <label asp-for="Input.Description" class="form-label"></label>
         <input asp-for="Input.Description" class="form-control" />
         <span asp-validation-for="Input.Description" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Input.RedirectUri"></label>
+        <label asp-for="Input.RedirectUri" class="form-label"></label>
         <input asp-for="Input.RedirectUri" class="form-control" />
         <span asp-validation-for="Input.RedirectUri" class="text-danger"></span>
     </div>
@@ -39,25 +39,25 @@
         <input asp-for="Input.DefaultGrantType" class="form-control" />
         <span asp-validation-for="Input.DefaultGrantType" class="text-danger"></span>
     </div>
-    <div class="mb-3 form-check">
+    <div class="form-check">
         <input asp-for="Input.RequireConsent" class="form-check-input" />
         <label asp-for="Input.RequireConsent" class="form-check-label"></label>
     </div>
-    <div class="mb-3 form-check">
+    <div class="form-check">
         <input asp-for="Input.AllowRememberConsent" class="form-check-input" />
         <label asp-for="Input.AllowRememberConsent" class="form-check-label"></label>
     </div>
 
-    <h4>安全性</h4>
-    <div class="mb-3 form-check">
+    <h4>Security</h4>
+    <div class="form-check">
         <input asp-for="Input.RequirePkce" class="form-check-input" />
         <label asp-for="Input.RequirePkce" class="form-check-label"></label>
     </div>
-    <div class="mb-3 form-check">
+    <div class="form-check">
         <input asp-for="Input.AllowPlainTextPkce" class="form-check-input" />
         <label asp-for="Input.AllowPlainTextPkce" class="form-check-label"></label>
     </div>
-    <div class="mb-3 form-check">
+    <div class="form-check">
         <input asp-for="Input.AllowOfflineAccess" class="form-check-input" />
         <label asp-for="Input.AllowOfflineAccess" class="form-check-label"></label>
     </div>
@@ -84,7 +84,7 @@
     </div>
 
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">创建</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

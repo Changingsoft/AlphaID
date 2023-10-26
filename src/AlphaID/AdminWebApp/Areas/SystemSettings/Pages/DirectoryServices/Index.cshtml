@@ -1,23 +1,23 @@
 ﻿@page
-@model             IndexModel
+@model IndexModel
 @{
     this.ViewBag.Title = "Directory Services Management";
 }
-<h1>目录服务</h1>
+<h1>Directory service</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <td>名称</td>
-            <td>服务地址</td>
-            <td>根DN</td>
-            <td>UPN后缀</td>
+            <td>Name</td>
+            <td>Server</td>
+            <td>Root DN</td>
+            <td>UPN suffix</td>
             <td>SAM Domain Part</td>
             <td>External Login Provider</td>
         </tr>
     </thead>
     <tbody>
-        @foreach(var service in this.Model.DirectoryServices)
+        @foreach (var service in this.Model.DirectoryServices)
         {
             <tr>
                 <td><a asp-page="Detail" asp-route-id="@service.Id">@service.Name</a></td>
@@ -31,4 +31,4 @@
     </tbody>
 </table>
 
-<a asp-page="Create">创建目录服务</a>
+<a asp-page="Create">Add directory service</a>

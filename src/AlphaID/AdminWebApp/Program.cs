@@ -3,9 +3,9 @@ using AdminWebApp.Domain.Security;
 using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
 using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
+using AlphaIDPlatform.RazorPages;
 using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
@@ -21,14 +21,30 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Serilog;
 using System.Globalization;
 using System.Security.Claims;
 
+Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
+
+Log.Information("Starting up");
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    lc
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    .Enrich.FromLogContext()
+    .ReadFrom.Configuration(ctx.Configuration);
+});
 
 //ConfigServices
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
 //程序资源
 builder.Services.AddLocalization(options =>
@@ -55,6 +71,9 @@ builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/", "RequireAdminRole");
     options.Conventions.AuthorizeFolder("/Account");
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "People"));
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "Organizations"));
+    
 })
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>
@@ -147,7 +166,7 @@ builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
     options.UseLazyLoadingProxies();
-});
+}).AddScoped<OperationalStoreOptions>();
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
@@ -164,6 +183,9 @@ builder.Services.AddIdentityCore<NaturalPerson>(options =>
     .AddUserStore<NaturalPersonStore>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddIDSubjects()
+    .AddDefaultStores();
+builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 
 //实名身份验证器。
 builder.Services.AddScoped<ChineseIDCardManager>()
@@ -172,16 +194,6 @@ builder.Services.AddScoped<ChineseIDCardManager>()
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
 
-//组织管理器
-builder.Services.AddScoped<OrganizationManager>()
-    .AddScoped<IQueryableOrganizationStore, OrganizationStore>()
-    .AddScoped<IOrganizationStore, OrganizationStore>()
-    .AddScoped<IQueryableOrganizationUsedNameStore, OrganizationUsedNameStore>();
-builder.Services.AddScoped<OrganizationSearcher>();
-
-//组织成员
-builder.Services.AddScoped<OrganizationMemberManager>()
-    .AddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
@@ -244,8 +256,8 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseRequestLocalization();
 app.UseStaticFiles();
+app.UseRequestLocalization();
 app.UseRouting();
 
 app.UseAuthentication();
@@ -256,9 +268,9 @@ app.MapRazorPages();
 app.MapControllers();
 
 var startAction = app.Configuration["StartAction"];
-if(startAction != null)
+if (startAction != null)
 {
-    switch(startAction.ToLower())
+    switch (startAction.ToLower())
     {
         case "migration":
             using (var db = app.Services.GetRequiredService<OperationalDbContext>())

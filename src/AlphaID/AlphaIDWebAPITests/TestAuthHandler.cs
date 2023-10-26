@@ -7,14 +7,14 @@ using System.Text.Encodings.Web;
 namespace AlphaIDWebAPITests;
 internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) 
+    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
         : base(options, logger, encoder, clock)
     {
     }
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if(this.Request.Headers.Authorization.Contains("TestBearer"))
+        if (this.Request.Headers.Authorization.Contains("Bearer"))
         {
             var claims = new List<Claim>()
             {
@@ -25,6 +25,7 @@ internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
                 new Claim("aud", "https://example.com"),
                 new Claim("scope", "openid"),
                 new Claim("scope", "profile"),
+                new Claim("scope", "realname"),
                 new Claim("http://schemas.microsoft.com/claims/authnmethodsreferences", "pwd"),
                 new Claim("client_id", "d70700eb-c4d8-4742-a79a-6ecf2064b27c"),
                 new Claim(ClaimTypes.NameIdentifier, "d2480421-8a15-4292-8e8f-06985a1f645b"),

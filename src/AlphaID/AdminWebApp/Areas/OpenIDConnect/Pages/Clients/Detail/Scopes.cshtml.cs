@@ -32,7 +32,7 @@ public class ScopesModel : PageModel
         this.ScopeItems = this.dbContext.IdentityResources.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
             .Union(this.dbContext.ApiScopes.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
             .ToList();
-            
+
         return this.Page();
     }
 
@@ -48,7 +48,7 @@ public class ScopesModel : PageModel
             switch (scope.Selected)
             {
                 case true:
-                    if(!this.Data.AllowedScopes.Any(p => p.Scope == scope.Value))
+                    if (!this.Data.AllowedScopes.Any(p => p.Scope == scope.Value))
                     {
                         this.Data.AllowedScopes.Add(new ClientScope()
                         {
@@ -59,7 +59,7 @@ public class ScopesModel : PageModel
                     break;
                 case false:
                     var item = this.Data.AllowedScopes.FirstOrDefault(p => p.Scope == scope.Value);
-                    if(item != null)
+                    if (item != null)
                     {
                         this.Data.AllowedScopes.Remove(item);
                     }

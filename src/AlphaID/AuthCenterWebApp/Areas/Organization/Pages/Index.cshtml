@@ -1,32 +1,21 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = "您所在组织";
+    this.ViewBag.Title = this.Model.Organization.Name;
 }
-<h1>您所在组织</h1>
 
-
-<div class="row row-cols-1 row-cols-md-2">
-    @foreach (var member in this.Model.OrganizationMembers)
-    {
-        <div class="col mb-4">
-            <div class="card">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#6c757d"></rect>
-                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                </svg>
-                <div class="card-body">
-                    <h5 class="card-title">@member.Organization.Name</h5>
-                    <p class="card-text">您所在部门：@member.Department</p>
-                    <p class="card-text">您的职务：@member.Title</p>
-                    <p>*您是该组织的资料管理者</p>
-                    <a asp-page="Detail" asp-route-id="@member.OrganizationId" class="btn btn-primary">进入</a>
-                </div>
-            </div>
-        </div>
-    }
+<div class="page-header">
+    <div class="container-xl">
+        <h1>@Model.Organization.Name</h1>
+        <p>@Model.Organization.Description</p>
+    </div>
 </div>
-
-
-<a asp-page="Create" class="btn btn-primary">加入或创建组织</a>
+<div class="page-body">
+    <div class="container-xl">
+        <h2>Activities</h2>
+        <button class="btn">
+            Start
+            <span class="badge ms-2">123</span>
+        </button>
+    </div>
+</div>

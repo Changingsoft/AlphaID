@@ -1,11 +1,14 @@
 ﻿@page
 @model DetailModel
+@{
+    this.ViewBag.Title = this.localizer["Overview"].Value;
+}
 
-<h2>概要</h2>
+<h2>@ViewBag.Title</h2>
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Base info</h3>
+        <h3 class="card-title">@localizer["Base info"]</h3>
     </div>
     <div class="card-body">
         <div class="datagrid">
@@ -37,11 +40,11 @@
     </div>
 </div>
 
-<h2>关联资源</h2>
+<h2>@localizer["Related resources"]</h2>
 <vc:referenced-clients scope="@Model.Data.Name"></vc:referenced-clients>
 
 <vc:referenced-api-resources scope="@Model.Data.Name"></vc:referenced-api-resources>
 
-<h2>操作</h2>
+<h2>@localizer["Operations"]</h2>
 
-<a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">删除Scope</a>
+<a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">@localizer["Delete scope"]</a>

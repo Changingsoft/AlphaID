@@ -21,7 +21,7 @@ public class CreateModel : PageModel
 
     [BindProperty]
     [Display(Name = "Client ID", Description = "Identifier used by OAuth/OIDC protocol.")]
-    [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "Client Id already exists.")]
+    [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "Client Anchor already exists.")]
     public string ClientId { get; set; } = Guid.NewGuid().ToString().ToLower();
 
     public void OnGet()
@@ -147,10 +147,10 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Client name",Description ="Friendly name for display.")]
+        [Display(Name = "Client name", Description = "Friendly name for display.")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "Require client secret", Description ="Specifies the client is a credential client.")]
+        [Display(Name = "Require client secret", Description = "Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;
 
         [Display(Name = "Client secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
@@ -177,7 +177,7 @@ public class CreateModel : PageModel
         [Display(Name = "Allow remember consent")]
         public bool AllowRememberConsent { get; set; } = true;
 
-        [Display(Name = "Always include user claims in Id Token")]
+        [Display(Name = "Always include user claims in Anchor Token")]
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
 
         [Display(Name = "Require PKCE")]

@@ -1,0 +1,57 @@
+﻿@inject NaturalPersonManager userManager
+@{
+    this.Layout = "/Pages/Shared/_Layout.cshtml";
+    var person = await this.userManager.GetUserAsync(this.User);
+}
+
+@section Heads{
+    @await RenderSectionAsync("Heads", false)
+}
+
+@section header{
+    @await RenderSectionAsync("header", false)
+}
+
+<div class="page-header">
+    <div class="container-xl">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <span class="avatar avatar-lg rounded" style="background-image: url('@User.AvatarUrl()')"></span>
+            </div>
+            <div class="col">
+                <h1 class="fw-bold">@person?.Name</h1>
+                <p>@localizer["Your personal account"]</p>
+            </div>
+            <div class="col-auto ms-auto">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-12 col-md-3 border-end">
+                    <div class="card-body">
+                        <div class="list-group list-group-transparent">
+                            <a asp-page="/Profile/Index" asp-path="/Settings/Profile" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Profile"]</a>
+                            <a asp-page="/Account/Index" asp-path="/Settings/Account" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Account"]</a>
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Password and authentication"]</a>
+                            <a asp-page="/Organizations/Index" asp-path="/Settings/Organizations" class="list-group-item list-group-item-action d-flex align-items-center">Organizations</a>
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Billing &amp; Invoices</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9 d-flex flex-column">
+                    <div class="card-body">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @await RenderSectionAsync("Scripts", false)
+}

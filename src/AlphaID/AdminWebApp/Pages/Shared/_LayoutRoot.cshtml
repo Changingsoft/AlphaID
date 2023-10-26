@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewBag.Title - @product.Value.Name</title>
+    <title>@(ViewBag.Title == null ? $"{product.Value.Name} Management Center" : $"{ViewBag.Title} - {product.Value.Name} Management Center")</title>
     @RenderSection("Heads", false)
 </head>
 <body>

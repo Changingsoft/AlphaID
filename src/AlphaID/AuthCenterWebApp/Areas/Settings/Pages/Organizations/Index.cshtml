@@ -1,0 +1,34 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.Organizations.IndexModel
+@{
+    this.ViewBag.Title = this.localizer["Your organizations"].Value;
+}
+<h2>@localizer["Organizations"]</h2>
+
+
+<div class="list-group list-group-hoverable">
+    @foreach (var member in Model.Members)
+    {
+        <div class="list-group-item">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <span class="avatar" style="background-image: url('/img/no-picture-avatar.png')"></span>
+                </div>
+                <div class="col text-truncate">
+                    <h3>
+                        <a asp-area="Organization" asp-page="/Index" asp-route-anchor="@member.Organization.Name">@member.Organization.Name</a>
+                        @if (member.IsOwner)
+                        {
+                            <span class="badge badge-pill" title="@localizer["You are the owner of this organization."]">@localizer["Owner"]</span>
+                        }
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <a asp-page="Leave" class="btn text-danger list-group-item-actions">@localizer["Leave"]</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<hr />
+<a asp-page="New" class="btn">New organization</a>

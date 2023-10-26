@@ -5,8 +5,8 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 
 public class LoggedOutViewModel
 {
-    public string PostLogoutRedirectUri { get; set; }
-    public string ClientName { get; set; } = default!;
-    public string SignOutIframeUrl { get; set; }
+    public string? PostLogoutRedirectUri { get; set; }
+    public string? ClientName { get; set; } = default!;
+    public string? SignOutIframeUrl { get; set; }
     public bool AutomaticRedirectAfterSignOut { get; set; }
 }

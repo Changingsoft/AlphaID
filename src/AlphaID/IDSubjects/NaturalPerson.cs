@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Net.NetworkInformation;
 
 namespace IDSubjects;
 
@@ -21,7 +20,7 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     /// 
     /// </summary>
-    public NaturalPerson():base()
+    public NaturalPerson() : base()
     {
         this.BankAccounts = new HashSet<PersonBankAccount>();
     }
@@ -30,7 +29,7 @@ public class NaturalPerson : IdentityUser
     /// 
     /// </summary>
     /// <param name="userName"></param>
-    public NaturalPerson(string userName):base(userName)
+    public NaturalPerson(string userName) : base(userName)
     {
         this.BankAccounts = new HashSet<PersonBankAccount>();
     }
@@ -130,8 +129,8 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     /// 区域和语言选项
     /// </summary>
-    [MaxLength(10),Unicode(false)]
-    public virtual string? Locale { get; set; }
+    [MaxLength(10), Unicode(false)]
+    public virtual string? Locale { get; protected internal set; }
 
     /// <summary>
     /// 用户所选择的时区。存储为IANA Time zone database名称。
@@ -149,6 +148,13 @@ public class NaturalPerson : IdentityUser
     /// </summary>
     [MaxLength(256)]
     public virtual string? WebSite { get; set; }
+
+    /// <summary>
+    /// 个人经历。
+    /// </summary>
+    [MaxLength(200)]
+    public virtual string? Bio { get; set; }
+
     /// <summary>
     /// Gets bank accounts of the person.
     /// </summary>

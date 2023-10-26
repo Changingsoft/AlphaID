@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Register;
 
-[IgnoreAntiforgeryToken]
 public class CreateModel : PageModel
 {
     private readonly ChinesePersonNamePinyinConverter pinyinConverter;
@@ -18,6 +17,13 @@ public class CreateModel : PageModel
     }
 
     [BindProperty]
+    [Display(Name = "Phone number")]
+    [PageRemote(PageHandler = "CheckMobile", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
+    [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+    public string Mobile { get; set; } = default!;
+
+
+    [BindProperty]
     public InputModel Input { get; set; } = default!;
 
 
@@ -27,7 +33,7 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (MobilePhoneNumber.TryParse(this.Input.Mobile, out var phoneNumber))
+        if (MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
         {
             this.ModelState.AddModelError("", "移动电话号码无效。");
         }
@@ -65,7 +71,7 @@ public class CreateModel : PageModel
     /// </summary>
     /// <param name="mobile"></param>
     /// <returns></returns>
-    public async Task<IActionResult> OnPostCheckMobileAsync(string mobile)
+    public IActionResult OnPostCheckMobile(string mobile)
     {
         if (string.IsNullOrEmpty(mobile))
             return new JsonResult(true);
@@ -73,8 +79,11 @@ public class CreateModel : PageModel
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
             return new JsonResult($"移动电话号码无效");
 
-        var person = await this.manager.FindByMobileAsync(mobilePhoneNumber.ToString());
-        return person != null ? new JsonResult("此移动电话已注册") : (IActionResult)new JsonResult(true);
+        if (this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
+        {
+            return new JsonResult(true);
+        }
+        return new JsonResult("此移动电话已注册");
     }
 
     /// <summary>
@@ -121,10 +130,6 @@ public class CreateModel : PageModel
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
-        [Display(Name = "PhoneNumber phone number")]
-        [PageRemote(PageHandler = "CheckMobile", HttpMethod = "post", AdditionalFields = "__RequestVerificationToken")]
-        [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-        public string Mobile { get; set; } = default!;
 
         public string? Email { get; set; }
     }

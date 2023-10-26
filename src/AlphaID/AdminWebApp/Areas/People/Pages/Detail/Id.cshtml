@@ -1,10 +1,10 @@
-﻿@page "{id}"
-@model             IdModel
+﻿@page
+@model IdModel
 @{
 }
-<h1>账户资料</h1>
+<h2>@localizer["ID"]</h2>
 
-@if(this.Model.OperationResultMessage != null)
+@if (this.Model.OperationResultMessage != null)
 {
     <div class="alert alert-success">
         @this.Model.OperationResultMessage
@@ -12,21 +12,21 @@
 }
 
 <form method="post">
-    <div class="form-group">
-        <label asp-for="Input.UserName"></label>
+    <div class="mb-3">
+        <label asp-for="Input.UserName" class="form-label"></label>
         <input asp-for="Input.UserName" class="form-control" />
         <span asp-validation-for="Input.UserName" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">修改</button>
+    <button type="submit" class="btn btn-primary">@localizer["Update"]</button>
 </form>
 
-<p>本地登录: @(this.Model.HasPassword)</p>
+<p>Local login: @(this.Model.HasPassword)</p>
 <p>Two Factor Authentication (TOPT): @(Model.Data.TwoFactorEnabled)</p>
-<p>登录失败计数：@Model.Data.AccessFailedCount</p>
-<p>上一次设置密码时间： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "从未")</p>
+<p>Login failed counter：@Model.Data.AccessFailedCount</p>
+<p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
 @if (!this.Model.HasPassword)
 {
-        <p><a asp-page="SetPassword" asp-route-id="@Model.Data.Id" class="btn btn-primary">添加本地密码</a></p>
+    <p><a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a></p>
 }
-<p><a asp-page="ResetPassword" asp-route-id="@Model.Data.Id" class="btn btn-primary">重置本地密码</a></p>
+<p><a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Reset local password</a></p>

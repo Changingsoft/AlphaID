@@ -38,7 +38,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
             this.Data = resource;
             var item = this.Data.Secrets.FirstOrDefault(p => p.Id == secretId);
-            if(item != null)
+            if (item != null)
             {
                 this.Data.Secrets.Remove(item);
                 this.dbContext.ApiResources.Update(this.Data);

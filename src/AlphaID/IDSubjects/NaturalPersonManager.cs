@@ -142,7 +142,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public virtual Task<IdentityResult> SetTimeZone(NaturalPerson user, string tzName)
     {
-        if(TZConvert.KnownIanaTimeZoneNames.Any(p => p == tzName))
+        if (TZConvert.KnownIanaTimeZoneNames.Any(p => p == tzName))
         {
             user.TimeZone = tzName;
             return Task.FromResult(IdentityResult.Success);

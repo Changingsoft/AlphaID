@@ -1,5 +1,4 @@
 using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Identity;
 using AlphaIDWebAPI;
 using AlphaIDWebAPI.Middlewares;
 using DirectoryLogon;
@@ -15,13 +14,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Reflection;
 
+Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
+
+Log.Information("Starting up");
+
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    lc
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    .Enrich.FromLogContext()
+    .ReadFrom.Configuration(ctx.Configuration);
+});
 
 //Configuration Services
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
-builder.Services.Configure<SystemUrlOptions>(builder.Configuration.GetSection("SystemUrl"));
+builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 //启用Controller
 builder.Services.AddControllers(o =>
 {
@@ -75,8 +90,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services
     .AddAuthentication(options =>
     {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
     //添加JWT验证。
@@ -117,7 +133,7 @@ builder.Services.AddAuthorization(options =>
 //持久化
 builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),sqlOptions =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
         sqlOptions.UseNetTopologySuite();
     });

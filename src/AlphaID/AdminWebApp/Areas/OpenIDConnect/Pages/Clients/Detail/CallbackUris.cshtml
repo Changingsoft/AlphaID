@@ -3,8 +3,8 @@
 @{
 }
 
-<p class="text-warning">如果域名发生了变化，您可能还需要调整CORS设置以便客户端能正确工作。</p>
-<h2>登录回调URL</h2>
+<p class="text-warning">If your domain has been changed, you may change CORS settings for correct client behavior.</p>
+<h2>Callback URI</h2>
 <form method="post">
     <ul class="list-group">
         @foreach (var uri in this.Model.Data.RedirectUris)
@@ -17,14 +17,14 @@
     </ul>
 </form>
 <form method="post">
-    <div class="form-group">
-        <label for="callback-uri">New callback URI</label>
+    <div class="mb-3">
+        <label for="callback-uri" class="form-label">New callback URI</label>
         <input name="callback_uri" type="text" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="AddCallBackUrl">Add</button>
 </form>
 
-<h2>注销登录回调URL</h2>
+<h2>Post logout redirect URIs</h2>
 <form method="post">
     <ul class="list-group list-group-flush">
         @foreach (var uri in this.Model.Data.PostLogoutRedirectUris)
@@ -37,8 +37,8 @@
     </ul>
 </form>
 <form method="post">
-    <div class="form-group">
-        <label for="callback-uri">New sign out callback URI</label>
+    <div class="mb-3">
+        <label for="callback-uri" class="form-label">New sign out callback URI</label>
         <input name="callback_uri" type="text" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="AddSignOutCallbackUrl">Add</button>

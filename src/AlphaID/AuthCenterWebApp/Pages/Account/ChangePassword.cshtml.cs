@@ -53,12 +53,12 @@ public class ChangePasswordModel : PageModel
     public async Task<IActionResult> OnPostAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var authResult = await this.HttpContext.AuthenticateAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme);
-        if (authResult.Principal == null)
+        var authMustChangePasswordResult = await this.HttpContext.AuthenticateAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme);
+        if (authMustChangePasswordResult.Principal == null)
         {
             throw new InvalidOperationException($"Unable to load must change password authentication user.");
         }
-        string personId = authResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
+        string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
         var person = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
         var identityResult = await this.userManager.ChangePasswordAsync(person, this.Input.OldPassword, this.Input.NewPassword);
         if (identityResult.Succeeded)
@@ -81,11 +81,11 @@ public class ChangePasswordModel : PageModel
                 {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
-                    return this.LoadingPage(returnUrl);
+                    return this.LoadingPage(returnUrl!);
                 }
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                return this.Redirect(returnUrl);
+                return this.Redirect(returnUrl!);
             }
 
             // request for a local page

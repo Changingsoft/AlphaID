@@ -96,7 +96,7 @@ public class EmailModel : PageModel
             var callbackUrl = this.Url.Page(
                 "/Account/ConfirmEmailChange",
                 pageHandler: null,
-                values: new { area="", userId, email = this.Input.NewEmail, code },
+                values: new { area = "", userId, email = this.Input.NewEmail, code },
                 protocol: this.Request.Scheme);
             await this._emailSender.SendEmailAsync(
                 this.Input.NewEmail,

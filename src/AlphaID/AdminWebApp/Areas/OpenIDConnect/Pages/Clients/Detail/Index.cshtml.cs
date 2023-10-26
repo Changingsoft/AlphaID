@@ -49,7 +49,7 @@ public class IndexModel : PageModel
         this.Client = data;
 
         if (this.Input.ClientId != this.Client.ClientId && this.dbContext.Clients.Any(p => p.ClientId == this.Input.ClientId))
-            this.ModelState.AddModelError("", "Client Id 已存在。");
+            this.ModelState.AddModelError("", "Client Anchor 已存在。");
 
         if (!this.ModelState.IsValid)
             return this.Page();
@@ -88,7 +88,7 @@ public class IndexModel : PageModel
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "Client Id")]
+        [Display(Name = "Client Anchor")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientId { get; set; } = default!;
 

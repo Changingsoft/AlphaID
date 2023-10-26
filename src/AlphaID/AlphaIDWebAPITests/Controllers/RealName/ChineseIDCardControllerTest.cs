@@ -18,7 +18,7 @@ public class ChineseIDCardControllerTest
     {
         using var client = this.webAPIFactory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/api/RealName/ChineseIDCardInfo/12345");
+        var response = await client.GetAsync("/api/RealName/ChineseIDCard/12345");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 

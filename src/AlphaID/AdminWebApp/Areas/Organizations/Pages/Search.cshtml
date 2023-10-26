@@ -1,19 +1,24 @@
 ﻿@page
-@model             SearchModel
+@model SearchModel
 @{
-    this.ViewBag.Title = "搜索组织";
+    this.ViewBag.Title = this.localizer["Searching organizations"].Value;
 }
-<partial name="_SearchInputPart" />
-<h1>搜索结果</h1>
+
+<div class="row">
+    <div class="col-5">
+        <partial name="_SearchInputPart" />
+    </div>
+</div>
+<h2>@localizer["Searching results"]</h2>
 @if (this.Model.Results != null)
 {
     <table class="table">
         <thead>
             <tr>
-                <td>名称</td>
-                <td>统一社会信用代码</td>
-                <td>住所</td>
-                <td>代表人</td>
+                <td>@localizer["Name"]</td>
+                <td>@localizer["USCI"]</td>
+                <td>@localizer["Domicile"]</td>
+                <td>@localizer["Representative"]</td>
             </tr>
         </thead>
         <tbody>
@@ -21,10 +26,10 @@
             {
                 <tr>
                     <td>
-                        <h2><a asp-page="Detail/Index" asp-route-id="@org.Id">@org.Name</a></h2>
-                        @foreach(var usedName in org.UsedNames)
+                        <a asp-page="Detail/Index" asp-route-anchor="@org.Id">@org.Name</a>
+                        @foreach (var usedName in org.UsedNames)
                         {
-                            <p class="text-muted small">曾用名：@usedName.Name</p>
+                            <span class="text-muted small">曾用名：@usedName.Name</span>
                         }
                     </td>
                     <td>@org.USCI</td>

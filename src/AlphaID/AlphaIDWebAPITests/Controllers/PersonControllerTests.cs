@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AlphaIDWebAPITests.Models;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -53,7 +54,7 @@ public class PersonControllerTests
     {
         var client = this.factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/api/Person/Search/liubei");
+        var response = await client.GetAsync($"/api/Person/Search/{WebUtility.UrlEncode("关羽")}");
         _ = await response.Content.ReadAsStringAsync();
         response.EnsureSuccessStatusCode();
         var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());

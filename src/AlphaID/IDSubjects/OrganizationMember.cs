@@ -21,7 +21,7 @@ public class OrganizationMember
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="person"></param>
-    internal OrganizationMember(GenericOrganization organization, NaturalPerson person)
+    public OrganizationMember(GenericOrganization organization, NaturalPerson person)
     {
         this.OrganizationId = organization.Id;
         this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
@@ -70,4 +70,14 @@ public class OrganizationMember
     /// </summary>
     [MaxLength(50)]
     public string? Remark { get; set; } = default!;
+
+    /// <summary>
+    /// Is Owner of the organization.
+    /// </summary>
+    public bool IsOwner { get; set; }
+
+    /// <summary>
+    /// Membership visibility.
+    /// </summary>
+    public virtual MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
 }

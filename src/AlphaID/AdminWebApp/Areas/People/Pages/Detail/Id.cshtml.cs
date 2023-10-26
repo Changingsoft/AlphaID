@@ -22,25 +22,24 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public string? OperationResultMessage { get; set; }
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGet(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(id);
+            var person = await this.userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 
             this.Data = person;
             this.HasPassword = await this.userManager.HasPasswordAsync(this.Data);
-            this.Input = new()
-            {
-                UserName = this.Data.UserName,
-            };
+            this.Input = new();
+            if (this.Data.UserName != null)
+                this.Input.UserName = this.Data.UserName;
 
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(id);
+            var person = await this.userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 

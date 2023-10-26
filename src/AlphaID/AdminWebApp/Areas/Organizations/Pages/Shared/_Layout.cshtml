@@ -4,13 +4,16 @@
 @section Heads{
     @RenderSection("Heads", false)
 }
-
+<div class="page-header">
+    <div class="container-xl">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Organizations</a></li>
+            <li class="breadcrumb-item">Detail</li>
+        </ul>
+    </div>
+</div>
 <div class="page-body">
     <div class="container-xl">
-
-        <partial name="_SearchInputPart" />
-
-
         @RenderBody()
     </div>
 </div>

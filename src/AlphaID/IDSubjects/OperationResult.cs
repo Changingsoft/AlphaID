@@ -3,6 +3,7 @@
 /// <summary>
 /// 表示操作的结果。
 /// </summary>
+[Obsolete("应使用 IdentityResult。")]
 public class OperationResult
 {
     /// <summary>

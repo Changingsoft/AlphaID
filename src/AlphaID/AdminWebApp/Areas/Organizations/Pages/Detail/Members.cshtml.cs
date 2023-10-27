@@ -41,6 +41,8 @@ public class MembersModel : PageModel
     [BindProperty]
     public string PersonId { get; set; } = default!;
 
+    public IdOperationResult? Result { get; set; }
+
     public async Task<IActionResult> OnGetAsync()
     {
         var org = await this.organizationManager.FindByIdAsync(this.Anchor);
@@ -69,7 +71,7 @@ public class MembersModel : PageModel
 
 
         var result = await this.memberManager.JoinOrganizationAsync(person, this.Organization, this.Title, this.Department, this.Remark);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
@@ -92,16 +94,12 @@ public class MembersModel : PageModel
         if (person == null)
             return this.NotFound();
 
-        var result = await this.memberManager.LeaveOrganizationAsync(person, this.Organization);
-        if (!result.Succeeded)
+        this.Result = await this.memberManager.LeaveOrganizationAsync(person, this.Organization);
+        if(this.Result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error.Description);
-            }
+            this.Members = await this.memberManager.GetMembersAsync(org);
         }
-        return this.RedirectToPage();
-
+        return this.Page();
     }
 
 }

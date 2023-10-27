@@ -32,7 +32,7 @@ public class DirectoryServiceManager
     /// </summary>
     /// <param name="directoryService"></param>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public async Task<OperationResult> CreateAsync(DirectoryService directoryService)
+    public async Task<IdOperationResult> CreateAsync(DirectoryService directoryService)
     {
         using var entry = directoryService.GetRootEntry();
         try
@@ -41,12 +41,12 @@ public class DirectoryServiceManager
 
             //没有异常，说明访问成功，可以持久化DirectoryService配置。
             await this.directoryServiceStore.CreateAsync(directoryService);
-            return OperationResult.Success;
+            return IdOperationResult.Success;
         }
         catch (Exception)
         {
             this.logger?.LogInformation("创建目录服务时出错，测试目录服务连接没有成功。");
-            return OperationResult.Error("创建目录服务时出错，测试目录服务连接没有成功。");
+            return IdOperationResult.Failed("创建目录服务时出错，测试目录服务连接没有成功。");
         }
         finally
         {
@@ -59,10 +59,10 @@ public class DirectoryServiceManager
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public async Task<OperationResult> DeleteAsync(DirectoryService data)
+    public async Task<IdOperationResult> DeleteAsync(DirectoryService data)
     {
         await this.directoryServiceStore.DeleteAsync(data);
-        return OperationResult.Success;
+        return IdOperationResult.Success;
     }
 
     /// <summary>

@@ -123,6 +123,9 @@
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>无效的移动电话号码。</value>
   </data>
+  <data name="LastOwnerCannotLeave" xml:space="preserve">
+    <value>您是该组织最后一个所有者，若要离开组织，请将您的所有权转移给组织内的其他成员。</value>
+  </data>
   <data name="MembershipExists" xml:space="preserve">
     <value>组织成员身份已存在。</value>
   </data>

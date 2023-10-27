@@ -14,6 +14,6 @@ public class DirectoryServiceManagerTest
             RootDN = "DC=qjyc,DC=cn",
         };
         var result = await manager.CreateAsync(directoryService);
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
     }
 }

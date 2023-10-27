@@ -39,7 +39,7 @@ public class ChangeNameModel : PageModel
             return this.NotFound();
 
         var result = await this.manager.ChangeNameAsync(org, this.Input.NewName, this.Input.ChangeDate, this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {

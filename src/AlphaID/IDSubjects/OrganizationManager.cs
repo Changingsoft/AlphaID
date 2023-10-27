@@ -32,7 +32,7 @@ public class OrganizationManager
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> CreateAsync(GenericOrganization org)
+    public async Task<IdOperationResult> CreateAsync(GenericOrganization org)
     {
         var utcNow = DateTime.UtcNow;
         org.WhenCreated = utcNow;
@@ -56,7 +56,7 @@ public class OrganizationManager
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> DeleteAsync(GenericOrganization organization)
+    public async Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
     {
         return await this.OrganizationStore.DeleteAsync(organization);
     }
@@ -76,10 +76,10 @@ public class OrganizationManager
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public async Task UpdateAsync(GenericOrganization org)
+    public async Task<IdOperationResult> UpdateAsync(GenericOrganization org)
     {
         org.WhenChanged = DateTime.UtcNow;
-        await this.OrganizationStore.UpdateAsync(org);
+        return await this.OrganizationStore.UpdateAsync(org);
     }
 
     /// <summary>
@@ -92,16 +92,16 @@ public class OrganizationManager
     /// <param name="applyChangeWhenDuplicated">即便名称重复也要更改。默认为false。</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<OperationResult> ChangeNameAsync(GenericOrganization org, string newName, DateTime changeDate, bool recordUsedName, bool applyChangeWhenDuplicated = false)
+    public async Task<IdOperationResult> ChangeNameAsync(GenericOrganization org, string newName, DateTime changeDate, bool recordUsedName, bool applyChangeWhenDuplicated = false)
     {
         var orgId = org.Id;
         newName = newName.Trim().Trim('\r', '\n');
         if (newName == org.Name)
-            return OperationResult.Error("名称相同");
+            return IdOperationResult.Failed("名称相同");
 
-        var checkDuplicate = this.OrganizationStore.Organizations.Any(p => p.Name == newName);
-        if (applyChangeWhenDuplicated && checkDuplicate)
-            return OperationResult.Error("存在重复名称");
+        var nameExists = this.OrganizationStore.Organizations.Any(p => p.Name == newName);
+        if (!applyChangeWhenDuplicated && nameExists)
+            return IdOperationResult.Failed("存在重复名称");
 
         if (recordUsedName)
         {
@@ -113,7 +113,7 @@ public class OrganizationManager
         }
         org.Name = newName;
         await this.UpdateAsync(org);
-        return OperationResult.Success;
+        return IdOperationResult.Success;
     }
 
     /// <summary>
@@ -123,11 +123,11 @@ public class OrganizationManager
     /// <param name="lon"></param>
     /// <param name="lat"></param>
     /// <returns></returns>
-    public virtual async Task<OperationResult> SetLocation(GenericOrganization organization, double lon, double lat)
+    public virtual async Task<IdOperationResult> SetLocation(GenericOrganization organization, double lon, double lat)
     {
         var factory = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326);
         organization.Location = factory.CreatePoint(new NetTopologySuite.Geometries.Coordinate(lon, lat));
         await this.OrganizationStore.UpdateAsync(organization);
-        return OperationResult.Success;
+        return IdOperationResult.Success;
     }
 }

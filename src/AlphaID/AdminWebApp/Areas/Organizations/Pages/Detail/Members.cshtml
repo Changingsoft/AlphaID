@@ -3,7 +3,10 @@
 @{
     this.ViewBag.Title = this.localizer["Members of {0}", this.Model.Organization.Name].Value;
 }
-
+@Html.DisplayFor(m => m.Result)
+<h2>
+    @localizer["Members of {0}", this.Model.Organization.Name]
+</h2>
 <p>@Model.Members.Count() 人</p>
 <form method="post" asp-page-handler="RemoveMember">
     <table class="table">

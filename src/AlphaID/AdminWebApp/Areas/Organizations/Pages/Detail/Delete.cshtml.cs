@@ -22,7 +22,7 @@ public class DeleteModel : PageModel
     [BindProperty]
     public DeleteForm Input { get; set; } = default!;
 
-    public IdentityResult? Result { get; set; }
+    public IdOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {

@@ -1,4 +1,4 @@
-﻿@model IdentityResult?
+﻿@model IdOperationResult?
 
 @if (Model != null)
 {
@@ -36,7 +36,7 @@
                         <ul>
                             @foreach (var error in Model.Errors)
                             {
-                                <li>@error.Description</li>
+                                <li>@error</li>
                             }
                         </ul>
                     </div>

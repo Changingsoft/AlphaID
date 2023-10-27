@@ -7,10 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="Areas\OpenIDConnect\Pages\Clients\Detail\General.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.12" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
 			<PrivateAssets>all</PrivateAssets>
@@ -43,17 +39,5 @@
 			<UserProperties />
 		</VisualStudio>
 	</ProjectExtensions>
-
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Areas\OpenIDConnect\Pages\Clients\Detail\General.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Areas\OpenIDConnect\Pages\Clients\Detail\General.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="Areas\OpenIDConnect\Pages\Clients\Detail\General.cshtml" />
-	</ItemGroup>
 
 </Project>

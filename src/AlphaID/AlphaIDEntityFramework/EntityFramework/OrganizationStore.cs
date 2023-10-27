@@ -14,18 +14,18 @@ public class OrganizationStore : IOrganizationStore
 
     public IQueryable<GenericOrganization> Organizations => this.dbContext.Organizations;
 
-    public async Task<IdentityResult> CreateAsync(GenericOrganization organization)
+    public async Task<IdOperationResult> CreateAsync(GenericOrganization organization)
     {
         this.dbContext.Organizations.Add(organization);
         _ = await this.dbContext.SaveChangesAsync();
-        return IdentityResult.Success;
+        return IdOperationResult.Success;
     }
 
-    public async Task<IdentityResult> DeleteAsync(GenericOrganization organization)
+    public async Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
     {
         this.dbContext.Organizations.Remove(organization);
         _ = await this.dbContext.SaveChangesAsync();
-        return IdentityResult.Success;
+        return IdOperationResult.Success;
     }
 
     public async Task<GenericOrganization?> FindByIdAsync(string id)
@@ -45,9 +45,10 @@ public class OrganizationStore : IOrganizationStore
         return Task.FromResult(organization);
     }
 
-    public async Task UpdateAsync(GenericOrganization organization)
+    public async Task<IdOperationResult> UpdateAsync(GenericOrganization organization)
     {
         this.dbContext.Entry(organization).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         _ = await this.dbContext.SaveChangesAsync();
+        return IdOperationResult.Success;
     }
 }

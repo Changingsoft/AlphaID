@@ -23,7 +23,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public IdentityResult? OperationResult { get; set; }
+        public IdOperationResult? OperationResult { get; set; }
 
         public IEnumerable<SelectListItem> MembershipVisibilties { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
 

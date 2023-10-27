@@ -17,7 +17,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public OperationResult OperationResult { get; set; } = default!;
+        public IdOperationResult OperationResult { get; set; } = default!;
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -50,7 +50,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
             org.Description = this.Input.Description;
             await this.manager.UpdateAsync(org);
-            this.OperationResult = OperationResult.Success;
+            this.OperationResult = IdOperationResult.Success;
             return this.Page();
         }
 

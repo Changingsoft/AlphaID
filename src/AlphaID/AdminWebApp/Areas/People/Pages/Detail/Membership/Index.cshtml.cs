@@ -70,7 +70,7 @@ public class IndexModel : PageModel
         }
 
         var result = await this.memberManager.JoinOrganizationAsync(person, org, this.Department, this.Title, this.Remark);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
@@ -100,7 +100,7 @@ public class IndexModel : PageModel
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error.Description);
+                this.ModelState.AddModelError("", error);
             }
         }
         return this.RedirectToPage();

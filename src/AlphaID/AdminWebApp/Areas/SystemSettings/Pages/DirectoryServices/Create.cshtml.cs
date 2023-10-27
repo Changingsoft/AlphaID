@@ -34,7 +34,7 @@ public class CreateModel : PageModel
         };
 
         var result = await this.directoryServiceManager.CreateAsync(directoryService);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {

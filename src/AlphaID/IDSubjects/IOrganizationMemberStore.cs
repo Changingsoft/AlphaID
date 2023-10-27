@@ -17,19 +17,19 @@ public interface IOrganizationMemberStore
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    Task CreateAsync(OrganizationMember item);
+    Task<IdOperationResult> CreateAsync(OrganizationMember item);
 
     /// <summary>
     /// Update member.
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    Task<IdentityResult> UpdateAsync(OrganizationMember item);
+    Task<IdOperationResult> UpdateAsync(OrganizationMember item);
 
     /// <summary>
     /// Delete member.
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    Task<IdentityResult> DeleteAsync(OrganizationMember item);
+    Task<IdOperationResult> DeleteAsync(OrganizationMember item);
 }

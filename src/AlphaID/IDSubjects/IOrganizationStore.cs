@@ -19,19 +19,19 @@ public interface IOrganizationStore : IQueryableOrganizationStore
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task<IdentityResult> CreateAsync(GenericOrganization organization);
+    Task<IdOperationResult> CreateAsync(GenericOrganization organization);
 
     /// <summary>
     /// Update organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task UpdateAsync(GenericOrganization organization);
+    Task<IdOperationResult> UpdateAsync(GenericOrganization organization);
 
     /// <summary>
     /// Delete organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task<IdentityResult> DeleteAsync(GenericOrganization organization);
+    Task<IdOperationResult> DeleteAsync(GenericOrganization organization);
 }

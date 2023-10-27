@@ -17,7 +17,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public OperationResult? OperationResult { get; set; }
+        public IdOperationResult? OperationResult { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string anchor)
         {
@@ -63,7 +63,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             org.TermEnd = this.Input.TermEnd;
 
             await this.manager.UpdateAsync(org);
-            this.OperationResult = OperationResult.Success;
+            this.OperationResult = IdOperationResult.Success;
             return this.Page();
         }
 

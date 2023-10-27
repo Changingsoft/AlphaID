@@ -61,7 +61,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error.Description);
+                this.ModelState.AddModelError("", error);
             }
             return this.Page();
         }

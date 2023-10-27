@@ -14,23 +14,24 @@ public class OrganizationMemberStore : IOrganizationMemberStore
 
     public IQueryable<OrganizationMember> OrganizationMembers => this.dbContext.OrganizationMembers;
 
-    public async Task CreateAsync(OrganizationMember item)
+    public async Task<IdOperationResult> CreateAsync(OrganizationMember item)
     {
         this.dbContext.OrganizationMembers.Add(item);
         await this.dbContext.SaveChangesAsync();
+        return IdOperationResult.Success;
     }
 
-    public async Task<IdentityResult> DeleteAsync(OrganizationMember item)
+    public async Task<IdOperationResult> DeleteAsync(OrganizationMember item)
     {
         this.dbContext.OrganizationMembers.Remove(item);
         await this.dbContext.SaveChangesAsync();
-        return IdentityResult.Success;
+        return IdOperationResult.Success;
     }
 
-    public async Task<IdentityResult> UpdateAsync(OrganizationMember item)
+    public async Task<IdOperationResult> UpdateAsync(OrganizationMember item)
     {
         this.dbContext.OrganizationMembers.Update(item);
         await this.dbContext.SaveChangesAsync();
-        return IdentityResult.Success;
+        return IdOperationResult.Success;
     }
 }

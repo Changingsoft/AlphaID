@@ -50,7 +50,7 @@ public class NewModel : PageModel
     [DataType(DataType.Date)]
     public DateTime? TermEnd { get; set; }
 
-    public IdentityResult? OperationResult { get; set; }
+    public IdOperationResult? OperationResult { get; set; }
     public void OnGet()
     {
 

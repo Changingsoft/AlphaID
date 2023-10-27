@@ -11,18 +11,15 @@ public class OrganizationMemberManager
 {
     private readonly IOrganizationMemberStore store;
     private readonly ILogger<OrganizationMemberManager>? logger;
-    private readonly IDSubjectsErrorDescriber errors;
 
     /// <summary>
     /// Init GenericOrganization Member Mamager via GenericOrganization Member store.
     /// </summary>
     /// <param name="store"></param>
-    /// <param name="errors"></param>
     /// <param name="logger"></param>
-    public OrganizationMemberManager(IOrganizationMemberStore store, IDSubjectsErrorDescriber errors, ILogger<OrganizationMemberManager>? logger = null)
+    public OrganizationMemberManager(IOrganizationMemberStore store, ILogger<OrganizationMemberManager>? logger = null)
     {
         this.store = store;
-        this.errors = errors;
         this.logger = logger;
     }
 
@@ -110,11 +107,11 @@ public class OrganizationMemberManager
     /// <param name="remark"></param>
     /// <returns></returns>
     [Obsolete]
-    public async Task<OperationResult> JoinOrganizationAsync(NaturalPerson person, GenericOrganization organization, string? title = null, string? department = null, string? remark = null)
+    public async Task<IdOperationResult> JoinOrganizationAsync(NaturalPerson person, GenericOrganization organization, string? title = null, string? department = null, string? remark = null)
     {
         var member = await this.GetMemberAsync(person, organization);
         if (member != null)
-            return OperationResult.Error("自然人已是该组织的成员。");
+            return IdOperationResult.Failed("自然人已是该组织的成员。");
 
         member = new(organization, person)
         {
@@ -123,7 +120,7 @@ public class OrganizationMemberManager
             Remark = remark,
         };
         await this.store.CreateAsync(member);
-        return OperationResult.Success;
+        return IdOperationResult.Success;
     }
 
     /// <summary>
@@ -131,12 +128,12 @@ public class OrganizationMemberManager
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> CreateAsync(OrganizationMember member)
+    public async Task<IdOperationResult> CreateAsync(OrganizationMember member)
     {
         if (this.store.OrganizationMembers.Any(p => p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
-            return IdentityResult.Failed(this.errors.MembershipExists());
+            return IdOperationResult.Failed(Resources.MembershipExists);
         await this.store.CreateAsync(member);
-        return IdentityResult.Success;
+        return IdOperationResult.Success;
     }
 
     /// <summary>
@@ -145,17 +142,17 @@ public class OrganizationMemberManager
     /// <param name="person"></param>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> LeaveOrganizationAsync(NaturalPerson person, GenericOrganization organization)
+    public async Task<IdOperationResult> LeaveOrganizationAsync(NaturalPerson person, GenericOrganization organization)
     {
         var members = await this.GetMembersAsync(organization);
         var member = members.FirstOrDefault(m => m.PersonId == person.Id);
         if (member != null)
         {
             if (member.IsOwner && members.Count(m => m.IsOwner) <= 1)
-                return IdentityResult.Failed(this.errors.LastOwnerCannotLeave());
+                return IdOperationResult.Failed(Resources.LastOwnerCannotLeave);
             return await this.store.DeleteAsync(member);
         }
-        return IdentityResult.Success;
+        return IdOperationResult.Success;
     }
 
     /// <summary>
@@ -163,7 +160,7 @@ public class OrganizationMemberManager
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> UpdateAsync(OrganizationMember member)
+    public async Task<IdOperationResult> UpdateAsync(OrganizationMember member)
     {
         return await this.store.UpdateAsync(member);
     }

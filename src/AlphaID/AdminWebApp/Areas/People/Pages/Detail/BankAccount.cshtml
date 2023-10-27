@@ -1,7 +1,7 @@
 ﻿@page
 @model BankAccountModel
 @{
-    this.ViewBag.Title = this.localizer["Bank accounts of {0}", this.Model.Person.Name].Value;
+    this.ViewBag.Title = this.localizer["Bank accounts of {0}", this.Model.Person.Name];
 }
 
 <h2><a asp-page="Index" asp-route-anchor="@Model.Anchor">@ViewBag.Title</a></h2>

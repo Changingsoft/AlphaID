@@ -3,7 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@(ViewBag.Title == null ? product.Value.Name : $"{ViewBag.Title} - {product.Value.Name}")</title>
+    @if (ViewBag.Title != null)
+    {
+        <title>@ViewBag.Title - @product.Value.Name</title>
+    }
+    else
+    {
+        <title>@product.Value.Name @product.Value.Name</title>
+    }
     @RenderSection("Heads", false)
 </head>
 <body>

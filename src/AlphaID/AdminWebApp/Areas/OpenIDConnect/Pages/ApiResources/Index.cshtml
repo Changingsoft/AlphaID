@@ -3,24 +3,39 @@
 @{
     this.ViewBag.Title = localizer["API Resources"];
 }
-<h3>@localizer["API Resources"]</h3>
 
-<a asp-page="Create" class="btn btn-primary">@localizer["Create API resource"]</a>
+@section PageHeader{
+    <div class="row">
+        <div class="col">
+            <h1>@localizer["API Resources"]</h1>
+        </div>
+        <div class="col-auto">
+            <a asp-page="Create" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
+                </svg>
+                @localizer["New API resource"]
+            </a>
+        </div>
+    </div>
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <td>@localizer["Name"]</td>
-            <td>@localizer["Resource ID"]</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var data in this.Model.Results)
-        {
+<div class="card">
+    <table class="table card-table">
+        <thead>
             <tr>
-                <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>
-                <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.Name</a></td>
+                <td>@localizer["Name"]</td>
+                <td>@localizer["Resource ID"]</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var data in this.Model.Results)
+            {
+                <tr>
+                    <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>
+                    <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.Name</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -4,9 +4,22 @@
     this.ViewBag.Title = this.localizer["Scopes"];
 }
 
-<h3>@ViewBag.Title</h3>
+@section PageHeader{
+    <div class="row">
+        <div class="col">
+            <h1>@ViewBag.Title</h1>
+        </div>
+        <div class="col-auto">
+            <a asp-page="Create" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
+                </svg>
+                @localizer["New scope"]
+            </a>
+        </div>
+    </div>
+}
 
-<a asp-page="Create" class="btn btn-primary">@localizer["Create scope"]</a>
 <div class="card">
     <table class="table">
         <thead>

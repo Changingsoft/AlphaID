@@ -4,12 +4,14 @@
 @section Heads{
     @RenderSection("Heads", false)
 }
+
 <div class="page-header">
     <div class="container-xl">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Organizations</a></li>
-            <li class="breadcrumb-item">Detail</li>
+            <li class="breadcrumb-item"><a asp-page="/Index">Organizations</a></li>
+            @await RenderSectionAsync("Breadcrumb", false)
         </ul>
+        @await RenderSectionAsync("PageHeader", false)
     </div>
 </div>
 <div class="page-body">

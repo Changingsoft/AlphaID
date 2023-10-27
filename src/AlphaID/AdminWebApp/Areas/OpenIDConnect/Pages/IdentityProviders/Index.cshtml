@@ -3,28 +3,43 @@
 @{
     this.ViewBag.Title = this.localizer["Identity Providers"];
 }
-<h3>@ViewBag.Title</h3>
-
-<table class="table">
-    <thead>
-        <tr>
-            <td>@localizer["Scheme"]</td>
-            <td>@localizer["Enabled"]</td>
-            <td>@localizer["DisplayName"]</td>
-            <td>@localizer["Type"]</td>
-            <td>@localizer["Created at"]</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var idp in this.Model.Results)
-        {
+@section PageHeader{
+    <div class="row">
+        <div class="col">
+            <h1>@localizer["Identity Providers"]</h1>
+        </div>
+        <div class="col-auto">
+            <a asp-page="Create" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
+                </svg>
+                @localizer["New identity provider"]
+            </a>
+        </div>
+    </div>
+}
+<div class="card">
+    <table class="table card-table">
+        <thead>
             <tr>
-                <td><a asp-page="Detail" asp-route-id="@idp.Id">@idp.Scheme</a></td>
-                <td>@idp.Enabled</td>
-                <td>@idp.DisplayName</td>
-                <td>@idp.Type</td>
-                <td>@idp.Created</td>
+                <td>@localizer["Scheme"]</td>
+                <td>@localizer["Enabled"]</td>
+                <td>@localizer["DisplayName"]</td>
+                <td>@localizer["Type"]</td>
+                <td>@localizer["Created at"]</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var idp in this.Model.Results)
+            {
+                <tr>
+                    <td><a asp-page="Detail" asp-route-id="@idp.Id">@idp.Scheme</a></td>
+                    <td>@idp.Enabled</td>
+                    <td>@idp.DisplayName</td>
+                    <td>@idp.Type</td>
+                    <td>@idp.Created</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

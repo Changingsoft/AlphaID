@@ -7,32 +7,34 @@
 @section PageHeader{
     <h1>@localizer["Active Sessions"]</h1>
 }
-<table class="table">
-    <thead>
-        <tr>
-            <td>@localizer["Session ID"]</td>
-            <td>@localizer["Scheme"]</td>
-            <td>@localizer["Subject ID"]</td>
-            <td>@localizer["Created"]</td>
-            <td>@localizer["Renewed"]</td>
-            <td>@localizer["Expires"]</td>
-            <td>@localizer["Display name"]</td>
-            <td>@localizer["Key part"]</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var a in this.dbContext.ServerSideSessions)
-        {
+<div class="card">
+    <table class="table card-table">
+        <thead>
             <tr>
-                <td>@a.SessionId</td>
-                <td>@a.Scheme</td>
-                <td>@a.SubjectId</td>
-                <td>@a.Created</td>
-                <td>@a.Renewed</td>
-                <td>@a.Expires</td>
-                <td>@a.DisplayName</td>
-                <td>@a.Key[0..4]</td>
+                <td>@localizer["Session ID"]</td>
+                <td>@localizer["Scheme"]</td>
+                <td>@localizer["Subject ID"]</td>
+                <td>@localizer["Created"]</td>
+                <td>@localizer["Renewed"]</td>
+                <td>@localizer["Expires"]</td>
+                <td>@localizer["Display name"]</td>
+                <td>@localizer["Key part"]</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var a in this.dbContext.ServerSideSessions)
+            {
+                <tr>
+                    <td>@a.SessionId</td>
+                    <td>@a.Scheme</td>
+                    <td>@a.SubjectId</td>
+                    <td>@a.Created</td>
+                    <td>@a.Renewed</td>
+                    <td>@a.Expires</td>
+                    <td>@a.DisplayName</td>
+                    <td>@a.Key[0..4]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

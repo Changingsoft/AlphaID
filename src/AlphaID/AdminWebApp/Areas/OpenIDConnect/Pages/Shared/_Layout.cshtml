@@ -32,7 +32,7 @@
                             <a class="nav-link" asp-page="/IdentityProviders/Index">@localizer["Identity Providers"]</a>
                         </li>
                         <li class="nav-item" asp-path="/OpenIDConnect/Advanced">
-                            <a class="nav-link" asp-page="/Advanced">@localizer["Advanced"]</a>
+                            <a class="nav-link" asp-page="/Advanced/Index">@localizer["Advanced"]</a>
                         </li>
                         <li class="nav-item" asp-path="/OpenIDConnect/ActiveSessions">
                             <a class="nav-link" asp-page="/ActiveSessions">@localizer["Active Sessions"]</a>
@@ -47,7 +47,7 @@
 <div class="page-header">
     <div class="container-xl">
         <ul class="breadcrumb mb-1">
-            <li class="breadcrumb-item"><a asp-page="/Index">Overview</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Index">OIDC</a></li>
             @await RenderSectionAsync("Breadcrumb", false)
         </ul>
         @await RenderSectionAsync("PageHeader", false)

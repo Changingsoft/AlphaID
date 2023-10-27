@@ -10,47 +10,59 @@
             <h1>Clients</h1>
         </div>
         <div class="col-auto">
-            <a asp-page="Create" class="btn btn-primary">@localizer["New client"]</a>
+            <a asp-page="Create" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
+                </svg>
+                @localizer["New client"]
+            </a>
         </div>
     </div>
 }
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <td>@localizer["Name"]</td>
-            <td>@localizer["Workflow"]</td>
-            <td>@localizer["Scopes"]</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var client in this.Model.Clients)
-        {
+<div class="card">
+    <table class="table table-vcenter card-table">
+        <thead>
             <tr>
-                <td>
-                    <p>
-                        <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
-                        @if (client.RequireClientSecret)
-                        {
-                            <span class="badge bg-pink text-pink-fg">credentials</span>
-                        }
-
-                        @if (client.RequirePkce)
-                        {
-                            <span class="badge bg-azure text-azure-fg">PKCE</span>
-                        }
-                    </p>
-                    <p><span class="text-muted small">@client.ClientId</span></p>
-                    <p>@client.Description</p>
-                </td>
-                <td>
-                    @Html.Raw(client.AllowedGrantTypes.Select(p => p.GrantType).Aggregate((x,y) => $"{x}<br />{y}"))
-                </td>
-                <td>
-                    @Html.Raw(client.AllowedScopes.Select(p => p.Scope).Aggregate((x,y) => $"{x}<br />{y}"))
-                </td>
+                <td>@localizer["Name"]</td>
+                <td>@localizer["Grant types"]</td>
+                <td>@localizer["Scopes"]</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var client in this.Model.Clients)
+            {
+                <tr>
+                    <td>
+                        <div class="d-flex py-1 align-items-center">
+                            <span class="avatar me-2"></span>
+                            <div class="flex-fill">
+                                <div class="font-weight-medium">
+                                    <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
+                                    @if (client.RequireClientSecret)
+                                    {
+                                        <span class="badge bg-pink text-pink-fg">Credentials</span>
+                                    }
+
+                                    @if (client.RequirePkce)
+                                    {
+                                        <span class="badge bg-azure text-azure-fg">PKCE</span>
+                                    }
+                                </div>
+                                <div class="text-secondary">
+                                    @client.Description
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.Raw(client.AllowedGrantTypes.Select(p => p.GrantType).Aggregate((x,y) => $"{x}, {y}"))
+                    </td>
+                    <td>
+                        @Html.Raw(client.AllowedScopes.Select(p => p.Scope).Aggregate((x,y) => $"{x}, {y}"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

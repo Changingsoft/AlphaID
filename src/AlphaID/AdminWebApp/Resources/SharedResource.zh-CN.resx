@@ -156,6 +156,9 @@
   <data name="Expires" xml:space="preserve">
     <value>过期时间</value>
   </data>
+  <data name="Front Channel Logout URI" xml:space="preserve">
+    <value>前端通道注销URI</value>
+  </data>
   <data name="Gender" xml:space="preserve">
     <value>性别</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="Show in discovery document" xml:space="preserve">
     <value>在发现文档中显示</value>
+  </data>
+  <data name="Specifies logout URI at client for HTTP based front-channel logout." xml:space="preserve">
+    <value>指定客户端用于HTTP前端通道的注销URI。</value>
   </data>
   <data name="Surname" xml:space="preserve">
     <value>姓氏</value>

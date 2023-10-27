@@ -1,5 +1,5 @@
 ﻿<form method="get" asp-page="/Search">
-    <div class="input-group mb-3">
+    <div class="input-group">
         <input type="text" name="q" class="form-control" placeholder="@localizer["Username, email, full name, phone number..."]" aria-label="@localizer["Username, email, full name, phone number..."]" aria-describedby="button-addon2" value="@this.Context.Request.Query["q"]" autocomplete="off">
         <button class="btn" type="submit" id="button-addon2">@localizer["Search"]</button>
     </div>

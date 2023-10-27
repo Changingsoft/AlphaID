@@ -2,53 +2,43 @@
 @model IndexModel
 @inject NaturalPersonManager personManager
 @{
-    this.ViewBag.Title = "People";
+    this.ViewBag.Title = this.localizer["People"];
     var users = this.personManager.Users;
 }
-
-<div class="page-header">
-    <div class="container-xl">
-        <div class="row g-2 align-items-center">
-            <div class="col">
-                <!-- Page pre-title -->
-                <div class="page-pretitle">
-                    Overview
-                </div>
-                <h2 class="page-title">
-                    Dashboard
-                </h2>
-            </div>
-            <!-- Page title actions -->
-            <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                    <a asp-page="/Register/Index" class="btn btn-primary d-none d-sm-inline-block">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                        Create new person
-                    </a>
-                </div>
+@section PageHeader{
+    <div class="row align-items-center">
+        <div class="col">
+            <h1>@localizer["Overview"]</h1>
+        </div>
+        <div class="col">
+            <partial name="_SearchInputPart" />
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto">
+            <div class="btn-list">
+                <a asp-page="/Register/Index" class="btn btn-primary d-none d-sm-inline-block">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                    Create new person
+                </a>
             </div>
         </div>
     </div>
-</div>
-<div class="page-body">
-    <div class="container-xl">
-        <partial name="_SearchInputPart" />
+}
 
-        <div class="row row-deck wor-cards">
-            <div class="col-sm-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="subheader">Registered People</div>
-                            <div class="ms-auto lh-1">
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-baseline">
-                            <div class="h1 mb-3 me-2">@users.Count() People</div>
 
-                        </div>
+<div class="row row-deck wor-cards">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="subheader">Registered People</div>
+                    <div class="ms-auto lh-1">
                     </div>
+                </div>
+                <div class="d-flex align-items-baseline">
+                    <div class="h1 mb-3 me-2">@users.Count() People</div>
+
                 </div>
             </div>
         </div>

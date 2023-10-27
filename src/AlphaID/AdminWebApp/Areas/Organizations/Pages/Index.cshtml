@@ -3,13 +3,16 @@
 @{
     this.ViewBag.Title = this.localizer["Organizations"];
 }
-
-<div class="row align-items-center">
-    <div class="col"><h2>@localizer["Overview"]</h2></div>
-    <div class="col-auto">
-        <a asp-page="New" class="btn btn-green">@localizer["New organization"]</a>
+@section PageHeader{
+    <div class="row align-items-center">
+        <div class="col"><h1>@localizer["Overview"]</h1></div>
+        <div class="col-auto"><partial name="_SearchInputPart" /></div>
+        <div class="col-auto">
+            <a asp-page="New" class="btn btn-green">@localizer["New organization"]</a>
+        </div>
     </div>
-</div>
+}
+
 <div class="row row-deck row-cards mb-3">
     <div class="col-sm-6 col-lg-3">
         <div class="card">
@@ -22,12 +25,6 @@
                 <div class="h1 mb-3">@this.Model.OrgCount</div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-5">
-        <partial name="_SearchInputPart" />
     </div>
 </div>
 

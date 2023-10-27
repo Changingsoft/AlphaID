@@ -123,4 +123,7 @@
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>无效的移动电话号码。</value>
   </data>
+  <data name="MembershipExists" xml:space="preserve">
+    <value>组织成员身份已存在。</value>
+  </data>
 </root>

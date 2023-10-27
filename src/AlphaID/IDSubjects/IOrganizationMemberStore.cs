@@ -1,4 +1,6 @@
-﻿namespace IDSubjects;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace IDSubjects;
 
 /// <summary>
 /// 提供组织成员信息的持久化能力。
@@ -22,12 +24,12 @@ public interface IOrganizationMemberStore
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    Task UpdateAsync(OrganizationMember item);
+    Task<IdentityResult> UpdateAsync(OrganizationMember item);
 
     /// <summary>
     /// Delete member.
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    Task DeleteAsync(OrganizationMember item);
+    Task<IdentityResult> DeleteAsync(OrganizationMember item);
 }

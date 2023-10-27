@@ -96,11 +96,11 @@ public class IndexModel : PageModel
         }
 
         var result = await this.memberManager.LeaveOrganizationAsync(person, org);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                this.ModelState.AddModelError("", error.Description);
             }
         }
         return this.RedirectToPage();

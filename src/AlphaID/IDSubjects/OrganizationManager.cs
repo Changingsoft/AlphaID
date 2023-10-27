@@ -1,4 +1,6 @@
-﻿namespace IDSubjects;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace IDSubjects;
 
 /// <summary>
 /// GenericOrganization Manager
@@ -29,15 +31,13 @@ public class OrganizationManager
     /// 创建一个组织。
     /// </summary>
     /// <param name="org"></param>
-    /// <param name="creator"></param>
     /// <returns></returns>
-    public async Task<OperationResult> CreateAsync(GenericOrganization org)
+    public async Task<IdentityResult> CreateAsync(GenericOrganization org)
     {
         var utcNow = DateTime.UtcNow;
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
-        await this.OrganizationStore.CreateAsync(org);
-        return OperationResult.Success;
+        return await this.OrganizationStore.CreateAsync(org);
     }
 
     /// <summary>
@@ -56,10 +56,9 @@ public class OrganizationManager
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public async Task<OperationResult> DeleteAsync(GenericOrganization organization)
+    public async Task<IdentityResult> DeleteAsync(GenericOrganization organization)
     {
-        await this.OrganizationStore.DeleteAsync(organization);
-        return OperationResult.Success;
+        return await this.OrganizationStore.DeleteAsync(organization);
     }
 
     /// <summary>

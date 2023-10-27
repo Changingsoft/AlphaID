@@ -19,6 +19,7 @@ public static class IDSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
+        services.TryAddScoped<IDSubjectsErrorDescriber>();
         var builder = new IDSubjectsBuilder(services);
         return builder;
     }

@@ -123,4 +123,10 @@
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>Phone number is invalid.</value>
   </data>
+  <data name="LastOwnerCannotLeave" xml:space="preserve">
+    <value>You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization.</value>
+  </data>
+  <data name="MembershipExists" xml:space="preserve">
+    <value>The membership already exists.</value>
+  </data>
 </root>

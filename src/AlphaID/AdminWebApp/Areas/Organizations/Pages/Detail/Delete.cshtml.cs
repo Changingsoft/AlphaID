@@ -1,4 +1,5 @@
 using IDSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,6 +21,8 @@ public class DeleteModel : PageModel
 
     [BindProperty]
     public DeleteForm Input { get; set; } = default!;
+
+    public IdentityResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -50,8 +53,11 @@ public class DeleteModel : PageModel
 
         try
         {
-            await this.organizationManager.DeleteAsync(this.Organization);
-            return this.RedirectToPage("DeleteSuccess");
+            var result = await this.organizationManager.DeleteAsync(this.Organization);
+            if (result.Succeeded)
+                return this.RedirectToPage("DeleteSuccess");
+            this.Result = result;
+            return this.Page();
         }
         catch (Exception ex)
         {

@@ -77,5 +77,23 @@ namespace IDSubjects {
                 return ResourceManager.GetString("InvalidPhoneNumber", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization. 的本地化字符串。
+        /// </summary>
+        internal static string LastOwnerCannotLeave {
+            get {
+                return ResourceManager.GetString("LastOwnerCannotLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The membership already exists. 的本地化字符串。
+        /// </summary>
+        internal static string MembershipExists {
+            get {
+                return ResourceManager.GetString("MembershipExists", resourceCulture);
+            }
+        }
     }
 }

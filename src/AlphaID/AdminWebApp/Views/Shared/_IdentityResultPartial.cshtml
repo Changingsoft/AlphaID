@@ -1,0 +1,13 @@
+﻿@model IdentityResult?
+
+@if (Model != null)
+{
+    if (Model.Succeeded)
+    {
+        <div class="alert alert-success">@localizer["Operation Succeeded"]</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">@Model.Errors.Select(e => e.Description).Aggregate((x,y) => $"{x}, {y}")</div>
+    }
+}

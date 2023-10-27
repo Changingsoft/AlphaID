@@ -93,11 +93,11 @@ public class MembersModel : PageModel
             return this.NotFound();
 
         var result = await this.memberManager.LeaveOrganizationAsync(person, this.Organization);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                this.ModelState.AddModelError("", error.Description);
             }
         }
         return this.RedirectToPage();

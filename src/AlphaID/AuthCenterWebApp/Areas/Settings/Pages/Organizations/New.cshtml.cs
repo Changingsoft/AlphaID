@@ -67,9 +67,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             };
 
             var result = await this.organizationManager.CreateAsync(organization);
-            if (!result.IsSuccess)
+            if (!result.Succeeded)
             {
-                this.ModelState.AddModelError("", result.Errors.Aggregate((x, y) => $"{x}, {y}"));
+                this.ModelState.AddModelError("", result.Errors.Select(e => e.Description).Aggregate((x, y) => $"{x}, {y}"));
                 return this.Page();
             }
             //Add current person as owner.
@@ -84,9 +84,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
                 IsOwner = true,
             };
             var joinOrgResult = await this.memberManager.CreateAsync(member);
-            if (!joinOrgResult.IsSuccess)
+            if (!joinOrgResult.Succeeded)
             {
-                this.ModelState.AddModelError("", joinOrgResult.Errors.Aggregate((x, y) => $"{x}, {y}"));
+                this.ModelState.AddModelError("", joinOrgResult.Errors.Select(e => e.Description).Aggregate((x, y) => $"{x}, {y}"));
                 return this.Page();
             }
             trans.Complete();

@@ -54,14 +54,14 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             member.Remark = this.Input.Remark;
 
             var result = await this.memberManager.UpdateAsync(member);
-            if (result.IsSuccess)
+            if (result.Succeeded)
             {
                 return this.RedirectToPage("Members", new { anchor });
             }
 
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                this.ModelState.AddModelError("", error.Description);
             }
             return this.Page();
         }

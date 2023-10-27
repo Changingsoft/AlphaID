@@ -1,5 +1,6 @@
 using AlphaIDPlatform.Helpers;
 using IDSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
@@ -22,7 +23,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public OperationResult? OperationResult { get; set; }
+        public IdentityResult? OperationResult { get; set; }
 
         public IEnumerable<SelectListItem> MembershipVisibilties { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
 

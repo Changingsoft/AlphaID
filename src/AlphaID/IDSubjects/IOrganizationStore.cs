@@ -1,4 +1,6 @@
-﻿namespace IDSubjects;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace IDSubjects;
 
 /// <summary>
 /// Provide CURD for organization.
@@ -17,7 +19,7 @@ public interface IOrganizationStore : IQueryableOrganizationStore
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task CreateAsync(GenericOrganization organization);
+    Task<IdentityResult> CreateAsync(GenericOrganization organization);
 
     /// <summary>
     /// Update organization.
@@ -31,5 +33,5 @@ public interface IOrganizationStore : IQueryableOrganizationStore
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task DeleteAsync(GenericOrganization organization);
+    Task<IdentityResult> DeleteAsync(GenericOrganization organization);
 }

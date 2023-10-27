@@ -3,6 +3,8 @@
 @{
     this.ViewBag.Title = $"{localizer["Deleting"].Value} {this.Model.Organization.Name}";
 }
+
+@Html.DisplayFor(m => m.Result)
 <h1>@this.ViewBag.Title</h1>
 
 <p>@localizer["Are you sure you want to delete this organization?"]</p>

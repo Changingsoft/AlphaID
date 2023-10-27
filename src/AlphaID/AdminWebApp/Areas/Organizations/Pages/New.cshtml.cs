@@ -1,5 +1,6 @@
 using IDSubjects;
 using IDSubjects.Subjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -49,6 +50,7 @@ public class NewModel : PageModel
     [DataType(DataType.Date)]
     public DateTime? TermEnd { get; set; }
 
+    public IdentityResult? OperationResult { get; set; }
     public void OnGet()
     {
 
@@ -107,7 +109,11 @@ public class NewModel : PageModel
         try
         {
             var result = await this.manager.CreateAsync(org);
-            return this.RedirectToPage("Detail/Index", new { id = org.Id });
+            if (result.Succeeded)
+                return this.RedirectToPage("Detail/Index", new { anchor = org.Id });
+
+            this.OperationResult = result;
+            return this.Page();
         }
         catch (Exception ex)
         {

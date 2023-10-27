@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace IDSubjects;
@@ -9,16 +10,19 @@ namespace IDSubjects;
 public class OrganizationMemberManager
 {
     private readonly IOrganizationMemberStore store;
-    readonly ILogger<OrganizationMemberManager>? logger;
+    private readonly ILogger<OrganizationMemberManager>? logger;
+    private readonly IDSubjectsErrorDescriber errors;
 
     /// <summary>
     /// Init GenericOrganization Member Mamager via GenericOrganization Member store.
     /// </summary>
     /// <param name="store"></param>
+    /// <param name="errors"></param>
     /// <param name="logger"></param>
-    public OrganizationMemberManager(IOrganizationMemberStore store, ILogger<OrganizationMemberManager>? logger = null)
+    public OrganizationMemberManager(IOrganizationMemberStore store, IDSubjectsErrorDescriber errors, ILogger<OrganizationMemberManager>? logger = null)
     {
         this.store = store;
+        this.errors = errors;
         this.logger = logger;
     }
 
@@ -45,7 +49,7 @@ public class OrganizationMemberManager
         var members = this.store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
         Debug.Assert(members != null);
         var visibilityLevel = MembershipVisibility.Public;
-        if(visitor != null)
+        if (visitor != null)
         {
             visibilityLevel = MembershipVisibility.AuthenticatedUser;
             if (members.Any(m => m.PersonId == visitor.Id))
@@ -54,6 +58,11 @@ public class OrganizationMemberManager
         return Task.FromResult(members.Where(m => m.Visibility >= visibilityLevel).AsEnumerable());
     }
 
+    /// <summary>
+    /// Get organization members.
+    /// </summary>
+    /// <param name="organization">Organization</param>
+    /// <returns></returns>
     public Task<IEnumerable<OrganizationMember>> GetMembersAsync(GenericOrganization organization)
     {
         var members = this.store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
@@ -71,15 +80,20 @@ public class OrganizationMemberManager
         var members = this.store.OrganizationMembers.Where(p => p.PersonId == person.Id);
         Debug.Assert(members != null);
         var visibilityLevel = MembershipVisibility.Public;
-        if(visitor != null)
+        if (visitor != null)
         {
             visibilityLevel = MembershipVisibility.AuthenticatedUser;
-            if(members.Any(m => m.PersonId == visitor.Id))
+            if (members.Any(m => m.PersonId == visitor.Id))
                 visibilityLevel = MembershipVisibility.Private; //Visitor is a member of the organization.
         }
         return Task.FromResult(members.Where(m => m.Visibility >= visibilityLevel).AsEnumerable());
     }
 
+    /// <summary>
+    /// 获取个人的组织成员身份。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns></returns>
     public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(NaturalPerson person)
     {
         var members = this.store.OrganizationMembers.Where(p => p.PersonId == person.Id);
@@ -95,6 +109,7 @@ public class OrganizationMemberManager
     /// <param name="department"></param>
     /// <param name="remark"></param>
     /// <returns></returns>
+    [Obsolete]
     public async Task<OperationResult> JoinOrganizationAsync(NaturalPerson person, GenericOrganization organization, string? title = null, string? department = null, string? remark = null)
     {
         var member = await this.GetMemberAsync(person, organization);
@@ -116,12 +131,12 @@ public class OrganizationMemberManager
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<OperationResult> CreateAsync(OrganizationMember member)
+    public async Task<IdentityResult> CreateAsync(OrganizationMember member)
     {
         if (this.store.OrganizationMembers.Any(p => p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
-            return OperationResult.Error("Member already exists.");
+            return IdentityResult.Failed(this.errors.MembershipExists());
         await this.store.CreateAsync(member);
-        return OperationResult.Success;
+        return IdentityResult.Success;
     }
 
     /// <summary>
@@ -130,14 +145,17 @@ public class OrganizationMemberManager
     /// <param name="person"></param>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public async Task<OperationResult> LeaveOrganizationAsync(NaturalPerson person, GenericOrganization organization)
+    public async Task<IdentityResult> LeaveOrganizationAsync(NaturalPerson person, GenericOrganization organization)
     {
-        var member = await this.GetMemberAsync(person, organization);
+        var members = await this.GetMembersAsync(organization);
+        var member = members.FirstOrDefault(m => m.PersonId == person.Id);
         if (member != null)
         {
-            await this.store.DeleteAsync(member);
+            if (member.IsOwner && members.Count(m => m.IsOwner) <= 1)
+                return IdentityResult.Failed(this.errors.LastOwnerCannotLeave());
+            return await this.store.DeleteAsync(member);
         }
-        return OperationResult.Success;
+        return IdentityResult.Success;
     }
 
     /// <summary>
@@ -145,9 +163,8 @@ public class OrganizationMemberManager
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<OperationResult> UpdateAsync(OrganizationMember member)
+    public async Task<IdentityResult> UpdateAsync(OrganizationMember member)
     {
-        await this.store.UpdateAsync(member);
-        return OperationResult.Success;
+        return await this.store.UpdateAsync(member);
     }
 }

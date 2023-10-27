@@ -1,4 +1,5 @@
 ﻿using IDSubjects;
+using Microsoft.AspNetCore.Identity;
 
 namespace AlphaIDEntityFramework.EntityFramework;
 
@@ -13,16 +14,18 @@ public class OrganizationStore : IOrganizationStore
 
     public IQueryable<GenericOrganization> Organizations => this.dbContext.Organizations;
 
-    public async Task CreateAsync(GenericOrganization organization)
+    public async Task<IdentityResult> CreateAsync(GenericOrganization organization)
     {
         this.dbContext.Organizations.Add(organization);
         _ = await this.dbContext.SaveChangesAsync();
+        return IdentityResult.Success;
     }
 
-    public async Task DeleteAsync(GenericOrganization organization)
+    public async Task<IdentityResult> DeleteAsync(GenericOrganization organization)
     {
         this.dbContext.Organizations.Remove(organization);
         _ = await this.dbContext.SaveChangesAsync();
+        return IdentityResult.Success;
     }
 
     public async Task<GenericOrganization?> FindByIdAsync(string id)

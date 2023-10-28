@@ -156,6 +156,9 @@
   <data name="Expires" xml:space="preserve">
     <value>过期时间</value>
   </data>
+  <data name="Female" xml:space="preserve">
+    <value>女</value>
+  </data>
   <data name="Front Channel Logout URI" xml:space="preserve">
     <value>前端通道注销URI</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="Key" xml:space="preserve">
     <value>键</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>男</value>
   </data>
   <data name="Mobile phone number" xml:space="preserve">
     <value>移动电话号码</value>

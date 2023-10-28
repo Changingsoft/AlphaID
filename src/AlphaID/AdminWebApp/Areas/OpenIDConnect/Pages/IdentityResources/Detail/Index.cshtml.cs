@@ -3,13 +3,13 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources;
+namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources.Detail;
 
-public class DetailModel : PageModel
+public class IndexModel : PageModel
 {
     private readonly ConfigurationDbContext dbContext;
 
-    public DetailModel(ConfigurationDbContext dbContext)
+    public IndexModel(ConfigurationDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

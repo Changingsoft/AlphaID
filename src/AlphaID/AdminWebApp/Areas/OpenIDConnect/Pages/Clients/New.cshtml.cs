@@ -7,11 +7,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 
-public class CreateModel : PageModel
+public class NewModel : PageModel
 {
     private readonly ConfigurationDbContext context;
 
-    public CreateModel(ConfigurationDbContext context)
+    public NewModel(ConfigurationDbContext context)
     {
         this.context = context;
     }
@@ -130,7 +130,7 @@ public class CreateModel : PageModel
         {
             this.context.Clients.Add(client);
             await this.context.SaveChangesAsync();
-            return this.RedirectToPage("Index");
+            return this.RedirectToPage("Detail/Index", new { id = client.Id });
         }
         catch (Exception ex)
         {

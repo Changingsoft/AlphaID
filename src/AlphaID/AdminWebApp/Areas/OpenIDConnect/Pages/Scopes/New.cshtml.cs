@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes;
 
-public class CreateModel : PageModel
+public class NewModel : PageModel
 {
     private readonly ConfigurationDbContext dbContext;
 
-    public CreateModel(ConfigurationDbContext dbContext)
+    public NewModel(ConfigurationDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
@@ -35,7 +35,7 @@ public class CreateModel : PageModel
             Description = this.Input.Description,
             Required = this.Input.Required,
             Emphasize = this.Input.Emphasize,
-            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument,
+            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument, //todo 该属性已停用。
             Created = now,
             Updated = now,
         };
@@ -47,7 +47,7 @@ public class CreateModel : PageModel
         {
             this.dbContext.ApiScopes.Add(scope);
             await this.dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Index");
+            return this.RedirectToPage("Detail/Index", new { id = scope.Id });
         }
         catch (Exception ex)
         {

@@ -22,7 +22,7 @@ namespace AdminWebApp.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SharedResource {
+    public class SharedResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AdminWebApp.Resources {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AdminWebApp.Resources.SharedResource", typeof(SharedResource).Assembly);
@@ -51,7 +51,7 @@ namespace AdminWebApp.Resources {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace AdminWebApp.Resources {
         /// <summary>
         ///   查找类似 It isn&apos;t look like an email address. 的本地化字符串。
         /// </summary>
-        internal static string Validate_EmailAddress {
+        public static string Validate_EmailAddress {
             get {
                 return ResourceManager.GetString("Validate_EmailAddress", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace AdminWebApp.Resources {
         /// <summary>
         ///   查找类似 Confirm password is not same as new password. 的本地化字符串。
         /// </summary>
-        internal static string Validate_PasswordConfirm {
+        public static string Validate_PasswordConfirm {
             get {
                 return ResourceManager.GetString("Validate_PasswordConfirm", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace AdminWebApp.Resources {
         /// <summary>
         ///   查找类似 The {0} field is required. 的本地化字符串。
         /// </summary>
-        internal static string Validate_Required {
+        public static string Validate_Required {
             get {
                 return ResourceManager.GetString("Validate_Required", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace AdminWebApp.Resources {
         /// <summary>
         ///   查找类似 The field {0} must be a string with a minimum length of {2} and a maximum length of {1}. 的本地化字符串。
         /// </summary>
-        internal static string Validate_StringLength {
+        public static string Validate_StringLength {
             get {
                 return ResourceManager.GetString("Validate_StringLength", resourceCulture);
             }

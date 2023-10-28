@@ -35,7 +35,7 @@ public class DeleteModel : PageModel
         var client = this.dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
         if (client == null)
         {
-            return this.RedirectToPage("Index");
+            return this.RedirectToPage("../Index");
         }
         this.Data = client;
 
@@ -47,7 +47,7 @@ public class DeleteModel : PageModel
 
         this.dbContext.Clients.Remove(client);
         await this.dbContext.SaveChangesAsync();
-        return this.RedirectToPage("Index");
+        return this.RedirectToPage("../Index");
 
     }
 }

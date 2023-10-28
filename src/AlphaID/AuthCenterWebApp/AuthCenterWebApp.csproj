@@ -31,20 +31,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\SharedResource.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>SharedResource.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <EmbeddedResource Update="Resources\SharedResource.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\SharedResource.zh-CN.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>

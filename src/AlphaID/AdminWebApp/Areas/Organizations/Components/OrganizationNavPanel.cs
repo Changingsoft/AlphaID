@@ -1,7 +1,7 @@
 ﻿using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Components;
+namespace AdminWebApp.Areas.Organizations.Components;
 
 public class OrganizationNavPanel : ViewComponent
 {

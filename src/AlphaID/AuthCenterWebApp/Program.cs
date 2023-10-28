@@ -5,7 +5,6 @@ using AlphaIDPlatform.RazorPages;
 using AlphaIDPlatformServices.Aliyun;
 using AlphaIDPlatformServices.Primitives;
 using AuthCenterWebApp;
-using AuthCenterWebApp.Resources;
 using AuthCenterWebApp.Services;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;

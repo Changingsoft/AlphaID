@@ -2,7 +2,7 @@ using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders;
+namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders.Detail;
 
 public class DeleteModel : PageModel
 {
@@ -48,6 +48,6 @@ public class DeleteModel : PageModel
 
         this.dbContext.IdentityProviders.Remove(this.Data);
         await this.dbContext.SaveChangesAsync();
-        return this.RedirectToPage("Index");
+        return this.RedirectToPage("../Index");
     }
 }

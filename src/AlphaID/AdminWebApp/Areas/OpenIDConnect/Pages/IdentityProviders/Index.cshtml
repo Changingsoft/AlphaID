@@ -33,7 +33,7 @@
             @foreach (var idp in this.Model.Results)
             {
                 <tr>
-                    <td><a asp-page="Detail" asp-route-id="@idp.Id">@idp.Scheme</a></td>
+                    <td><a asp-page="Detail/Index" asp-route-id="@idp.Id">@idp.Scheme</a></td>
                     <td>@idp.Enabled</td>
                     <td>@idp.DisplayName</td>
                     <td>@idp.Type</td>

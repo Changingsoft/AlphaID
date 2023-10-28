@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources;
 
-public class CreateModel : PageModel
+public class NewModel : PageModel
 {
     private readonly ConfigurationDbContext dbContext;
 
-    public CreateModel(ConfigurationDbContext dbContext)
+    public NewModel(ConfigurationDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
@@ -42,7 +42,7 @@ public class CreateModel : PageModel
         {
             this.dbContext.ApiResources.Add(resource);
             await this.dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Index");
+            return this.RedirectToPage("Detail/Index", new { id = resource.Id });
         }
         catch (Exception ex)
         {
@@ -53,7 +53,7 @@ public class CreateModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Resource ID")]
+        [Display(Name = "Resource ID", Description = "Unique identifier for resource in OIDC workflow.")]
         public string Name { get; set; } = default!;
 
         [Display(Name = "Display name")]
@@ -71,7 +71,7 @@ public class CreateModel : PageModel
         [Display(Name = "Show in discovery document")]
         public bool ShowInDiscoveryDocument { get; set; } = true;
 
-        [Display(Name = "Require resource indicator")]
+        [Display(Name = "Require resource indicator", Description = "Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.")]
         public bool RequireResourceIndicator { get; set; }
 
     }

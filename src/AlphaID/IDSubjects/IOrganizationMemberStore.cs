@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace IDSubjects;
+﻿namespace IDSubjects;
 
 /// <summary>
 /// 提供组织成员信息的持久化能力。

@@ -1,4 +1,4 @@
-﻿using AlphaIDEntityFramework.EntityFramework;
+﻿using AlphaID.EntityFramework;
 using IDSubjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

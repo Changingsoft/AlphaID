@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace IDSubjects;
+﻿namespace IDSubjects;
 
 /// <summary>
 /// Provide CURD for organization.

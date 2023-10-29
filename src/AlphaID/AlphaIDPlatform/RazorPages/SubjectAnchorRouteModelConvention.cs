@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Diagnostics;
 
 namespace AlphaIDPlatform.RazorPages;

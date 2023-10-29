@@ -2,12 +2,13 @@ using AdminWebApp;
 using AdminWebApp.Domain.Security;
 using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
-using AlphaIDEntityFramework.EntityFramework;
+using AlphaID.DirectoryLogon.EntityFramework;
+using AlphaID.EntityFramework;
+using AlphaID.PlatformServices.Aliyun;
+using AlphaID.PlatformServices.Primitives;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatform.RazorPages;
-using AlphaIDPlatformServices.Aliyun;
-using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
@@ -268,21 +269,6 @@ app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
 
-var startAction = app.Configuration["StartAction"];
-if (startAction != null)
-{
-    switch (startAction.ToLower())
-    {
-        case "migration":
-            using (var db = app.Services.GetRequiredService<OperationalDbContext>())
-            {
-                db.Database.Migrate();
-            }
-            break;
-    }
-}
-
-//Run
 app.Run();
 
 namespace AdminWebApp

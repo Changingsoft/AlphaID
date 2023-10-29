@@ -63,7 +63,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             {
                 USCI = this.USCI != null ? usci.ToString() : null,
                 Domicile = this.Input.Domicile,
-                LegalPersonName = this.Input.Representative,
+                Representative = this.Input.Representative,
             };
 
             var result = await this.organizationManager.CreateAsync(organization);

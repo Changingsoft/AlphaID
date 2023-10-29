@@ -1,4 +1,5 @@
-using AlphaIDEntityFramework.EntityFramework;
+using AlphaID.DirectoryLogon.EntityFramework;
+using AlphaID.EntityFramework;
 using AlphaIDWebAPI;
 using AlphaIDWebAPI.Middlewares;
 using DirectoryLogon;

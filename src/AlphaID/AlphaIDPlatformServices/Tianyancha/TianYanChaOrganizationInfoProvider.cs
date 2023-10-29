@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace AlphaIDPlatformServices.Tianyancha;
+namespace AlphaID.PlatformServices.Tianyancha;
 
 /// <summary>
 /// 天眼查工商信息服务。

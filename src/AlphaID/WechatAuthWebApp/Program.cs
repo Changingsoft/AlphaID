@@ -1,9 +1,10 @@
-using AlphaIDEntityFramework.EntityFramework;
-using AlphaIDEntityFramework.EntityFramework.Wechat;
+using AlphaID.DirectoryLogon.EntityFramework;
+using AlphaID.EntityFramework;
+using AlphaID.PlatformServices.Aliyun;
+using AlphaID.PlatformServices.Primitives;
+using AlphaID.WechatWebLogin.EntityFramework;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
-using AlphaIDPlatformServices.Aliyun;
-using AlphaIDPlatformServices.Primitives;
 using DirectoryLogon;
 using IDSubjects;
 using Microsoft.EntityFrameworkCore;

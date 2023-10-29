@@ -8,9 +8,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="Captcha" Version="4.4.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.13" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
@@ -19,9 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaIDPlatformServices.csproj" />
+		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaID.PlatformServices.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
-		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
 	</ItemGroup>
 

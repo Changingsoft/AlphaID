@@ -100,10 +100,10 @@ public class GenericOrganization
     public virtual DateTime? TermEnd { get; set; }
 
     /// <summary>
-    /// 法定代表人名称。
+    /// 组织的代表人。
     /// </summary>
     [MaxLength(20)]
-    public virtual string? LegalPersonName { get; set; }
+    public virtual string? Representative { get; set; }
 
     /// <summary>
     /// 标示该组织的地理位置。

@@ -8,18 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-    <PackageReference Include="Oracle.EntityFrameworkCore" Version="7.21.12" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
-    <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
-    <ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
+    <ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>

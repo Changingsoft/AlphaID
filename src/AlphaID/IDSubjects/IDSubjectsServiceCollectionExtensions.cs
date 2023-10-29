@@ -1,7 +1,7 @@
-﻿using IDSubjects;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace IDSubjects;
 
 /// <summary>
 /// Extensions for IDSubjects service injection.

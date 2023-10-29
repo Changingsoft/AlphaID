@@ -1,6 +1,4 @@
-﻿using IDSubjects;
-
-namespace AdminWebApp.Areas.OpenIDConnect;
+﻿namespace AdminWebApp.Areas.OpenIDConnect;
 
 public class OidcOperationResult
 {

@@ -1,6 +1,5 @@
 using IDSubjects;
 using IDSubjects.Subjects;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -96,7 +95,7 @@ public class NewModel : PageModel
 
         var org = factory.Organization;
         org.Domicile = this.Domicile;
-        org.LegalPersonName = this.LegalPersonName;
+        org.Representative = this.LegalPersonName;
         org.EstablishedAt = this.EstablishedAt;
         org.TermBegin = this.TermBegin;
         org.TermEnd = this.TermEnd;

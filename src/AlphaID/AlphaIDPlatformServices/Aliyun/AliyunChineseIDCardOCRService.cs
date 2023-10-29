@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
-namespace AlphaIDPlatformServices.Aliyun;
+namespace AlphaID.PlatformServices.Aliyun;
 
 /// <summary>
 /// 阿里云身份证识别服务。

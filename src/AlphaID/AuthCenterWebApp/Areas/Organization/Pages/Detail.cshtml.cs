@@ -1,4 +1,4 @@
-using AlphaIDEntityFramework.EntityFramework;
+using AlphaID.EntityFramework;
 using AlphaIDPlatform.Security;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;

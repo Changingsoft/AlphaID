@@ -29,7 +29,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             {
                 Contact = org.Contact,
                 Domicile = org.Domicile,
-                Representative = org.LegalPersonName,
+                Representative = org.Representative,
                 USCI = org.USCI,
                 Website = org.Website,
                 EstablishedAt = org.EstablishedAt,
@@ -55,7 +55,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
             org.Contact = this.Input.Contact;
             org.Domicile = this.Input.Domicile;
-            org.LegalPersonName = this.Input.Representative;
+            org.Representative = this.Input.Representative;
             org.USCI = this.Input.USCI != null ? usci.ToString() : null;
             org.Website = this.Input.Website;
             org.EstablishedAt = this.Input.EstablishedAt;

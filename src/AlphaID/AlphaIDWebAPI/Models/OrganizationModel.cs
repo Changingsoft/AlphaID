@@ -23,7 +23,7 @@ public record OrganizationModel(string? Domicile,
     public OrganizationModel(GenericOrganization organization)
         : this(organization.Domicile,
                organization.Contact,
-               organization.LegalPersonName,
+               organization.Representative,
                organization.USCI,
                organization.TermEnd)
     {

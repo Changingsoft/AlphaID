@@ -44,6 +44,7 @@
                                 </label>
                             }
                         </div>
+                        <partial name="_ValidationSummary" />
                         <div class="form-footer">
                             <div class="row">
                                 <div class="col">
@@ -85,7 +86,6 @@
     </div>
 </div>
 
-<partial name="_ValidationSummary" />
 
 @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
 {

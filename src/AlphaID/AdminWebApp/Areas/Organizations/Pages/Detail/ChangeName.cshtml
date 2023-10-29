@@ -1,7 +1,7 @@
 ﻿@page
 @model ChangeNameModel
 @{
-    this.ViewBag.Title = this.localizer["Change name"];
+    this.ViewBag.Title = this.L["Change name"];
 }
 
 <h2>@ViewBag.Title</h2>
@@ -30,5 +30,5 @@
         <label asp-for="Input.ApplyChangeWhenNameDuplicated" class="form-check-label"></label>
     </div>
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">@localizer["Change"]</button>
+    <button type="submit" class="btn btn-primary">@L["Change"]</button>
 </form>

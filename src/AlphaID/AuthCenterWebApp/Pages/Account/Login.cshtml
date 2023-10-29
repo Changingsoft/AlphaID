@@ -2,21 +2,21 @@
 @model AuthCenterWebApp.Pages.Account.LoginModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.localizer["Sign in"];
+    this.ViewBag.Title = this.L["Sign in"];
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-                @(this.product.Value.Name) @localizer["Account"]
+                @(this.product.Value.Name) @L["Account"]
             </a>
         </div>
         <div class="card card-md">
             <div class="card-body">
                 @if (Model.View.EnableLocalLogin)
                 {
-                    <h2 class="h2 text-center mb-4">@localizer["Login to your account"]</h2>
+                    <h2 class="h2 text-center mb-4">@L["Login to your account"]</h2>
                     <form method="post">
                         <input type="hidden" asp-for="Input.ReturnUrl" />
 
@@ -27,9 +27,9 @@
                         </div>
                         <div class="mb-2">
                             <label class="form-label" asp-for="Input.Password">
-                                @localizer["Password"]
+                                @L["Password"]
                                 <span class="form-label-description">
-                                    <a href="./forgot-password.html">@localizer["I forgot password"]</a>
+                                    <a href="./forgot-password.html">@L["I forgot password"]</a>
                                 </span>
                             </label>
                             <input asp-for="Input.Password" class="form-control">
@@ -40,7 +40,7 @@
                             {
                                 <label asp-for="Input.RememberLogin" class="form-check">
                                     <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">
-                                    <span class="form-check-label">@localizer["Remember me on this device"]</span>
+                                    <span class="form-check-label">@L["Remember me on this device"]</span>
                                 </label>
                             }
                         </div>
@@ -48,10 +48,10 @@
                         <div class="form-footer">
                             <div class="row">
                                 <div class="col">
-                                    <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@localizer["Sign in"]</button>
+                                    <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@L["Sign in"]</button>
                                 </div>
                                 <div class="col">
-                                    <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@localizer["Cancel"]</button>
+                                    <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@L["Cancel"]</button>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
             </div>
             @if (Model.View.VisibleExternalProviders.Any())
             {
-                <div class="hr-text">@localizer["or"]</div>
+                <div class="hr-text">@L["or"]</div>
                 <div class="card-body">
                     <div class="row">
                         @foreach (var provider in Model.View.VisibleExternalProviders)
@@ -81,7 +81,7 @@
             }
         </div>
         <div class="text-center text-secondary mt-3">
-            @localizer["Don't have account yet?"] <a asp-page="SignUp" tabindex="-1">@localizer["Sign up"]</a>
+            @L["Don't have account yet?"] <a asp-page="SignUp" tabindex="-1">@L["Sign up"]</a>
         </div>
     </div>
 </div>
@@ -90,7 +90,7 @@
 @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
 {
     <div class="alert alert-warning">
-        <strong>@localizer["Invalid login scheme"]</strong>
-        @localizer["No schemes set for this request"]
+        <strong>@L["Invalid login scheme"]</strong>
+        @L["No schemes set for this request"]
     </div>
 }

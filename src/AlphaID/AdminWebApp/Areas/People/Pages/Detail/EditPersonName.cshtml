@@ -1,10 +1,10 @@
 ﻿@page
 @model EditPersonNameModel
 @{
-    this.ViewBag.Title = this.localizer["Edit name"];
+    this.ViewBag.Title = this.L["Edit name"];
 }
 <h1>@ViewBag.Title</h1>
-<p>@localizer["A mamager can edit person name even through person passed real-name validation."]</p>
+<p>@L["A mamager can edit person name even through person passed real-name validation."]</p>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Surname" class="form-label"></label>
@@ -26,5 +26,5 @@
         <input asp-for="Input.PinyinGivenName" class="form-control" />
         <span asp-validation-for="Input.PinyinGivenName" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">@localizer["Apply"]</button>
+    <button type="submit" class="btn btn-primary">@L["Apply"]</button>
 </form>

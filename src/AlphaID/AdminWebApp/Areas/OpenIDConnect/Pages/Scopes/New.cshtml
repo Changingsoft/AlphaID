@@ -1,7 +1,7 @@
 ﻿@page
 @model NewModel
 @{
-    this.ViewBag.Title = this.localizer["Create scope"];
+    this.ViewBag.Title = this.L["Create scope"];
 }
 <h3>@ViewBag.Title</h3>
 
@@ -33,5 +33,5 @@
         <input asp-for="Input.ShowInDiscoveryDocument" class="form-check-input" />
         <label asp-for="Input.ShowInDiscoveryDocument" class="form-check-label"></label>
     </div>
-    <button type="submit" class="btn btn-primary">@localizer["Create"]</button>
+    <button type="submit" class="btn btn-primary">@L["Create"]</button>
 </form>

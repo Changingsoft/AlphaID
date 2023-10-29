@@ -1,7 +1,7 @@
 ﻿@page
 @model             Disable2faModel
 @{
-    this.ViewBag.Title = this.localizer["Disable two-factor authentication (2FA)"];
+    this.ViewBag.Title = this.L["Disable two-factor authentication (2FA)"];
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -9,15 +9,15 @@
 
 <div class="alert alert-warning" role="alert">
     <p>
-        <strong>@localizer["This action only disables 2FA."]</strong>
+        <strong>@L["This action only disables 2FA."]</strong>
     </p>
     <p>
-        @localizer["Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should"] <a asp-page="./ResetAuthenticator">@localizer["reset your authenticator keys."]</a>
+        @L["Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should"] <a asp-page="./ResetAuthenticator">@L["reset your authenticator keys."]</a>
     </p>
 </div>
 
 <div>
     <form method="post">
-        <button class="btn btn-danger" type="submit">@localizer["Disable 2FA"]</button>
+        <button class="btn btn-danger" type="submit">@L["Disable 2FA"]</button>
     </form>
 </div>

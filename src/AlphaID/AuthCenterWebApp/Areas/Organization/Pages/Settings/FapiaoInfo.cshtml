@@ -1,10 +1,10 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Organization.Pages.Settings.FapiaoInfoModel
 @{
-    this.ViewBag.Title = this.localizer["Fapiao info"];
+    this.ViewBag.Title = this.L["Fapiao info"];
 }
 <h2>@ViewBag.Title</h2>
-<p>@localizer["Fapiao info will be public and be used by other sallers."]</p>
+<p>@L["Fapiao info will be public and be used by other sallers."]</p>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
@@ -47,6 +47,6 @@
         </div>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
-    <button type="submit" class="btn btn-danger" asp-page-handler="Clear">@localizer["Clear"]</button>
+    <button type="submit" class="btn btn-primary">@L["Save"]</button>
+    <button type="submit" class="btn btn-danger" asp-page-handler="Clear">@L["Clear"]</button>
 </form>

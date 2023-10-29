@@ -1,7 +1,7 @@
 ﻿@page
 @model NewModel
 @{
-    this.ViewBag.Title = this.localizer["New organization"];
+    this.ViewBag.Title = this.L["New organization"];
 }
 
 @Html.DisplayFor(m => m.OperationResult)
@@ -54,7 +54,7 @@
                 <span asp-validation-for="@Model.TermEnd"></span>
             </div>
             <div asp-validation-summary="All"></div>
-            <button type="submit" class="btn btn-primary">@localizer["Create"]</button>
+            <button type="submit" class="btn btn-primary">@L["Create"]</button>
         </form>
 
     </div>

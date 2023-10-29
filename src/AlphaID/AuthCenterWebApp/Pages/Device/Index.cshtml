@@ -8,8 +8,8 @@
     @*We need to collect the user code*@
     <div class="page-device-code">
         <div class="lead">
-            <h1>@localizer["User Code"]</h1>
-            <p>@localizer["Please enter the code displayed on your device."]</p>
+            <h1>@L["User Code"]</h1>
+            <p>@L["Please enter the code displayed on your device."]</p>
         </div>
 
         <div class="row">
@@ -26,7 +26,7 @@
                         <input class="form-control" for="userCode" name="userCode" autofocus />
                     </div>
 
-                    <button class="btn btn-primary" name="button">@localizer["Submit"]</button>
+                    <button class="btn btn-primary" name="button">@L["Submit"]</button>
                 </form>
             </div>
         </div>
@@ -43,15 +43,15 @@ else
             }
             <h1>
                 @Model.View.ClientName
-                <small class="text-muted">@localizer["is requesting your permission"]</small>
+                <small class="text-muted">@L["is requesting your permission"]</small>
             </h1>
             <p>
-                @localizer["Please confirm that the authorization request matches the code:"]
+                @L["Please confirm that the authorization request matches the code:"]
                 <strong>
                     @Model.Input.UserCode
                 </strong>.
             </p>
-            <p>@localizer["Uncheck the permissions you do not wish to grant."]</p>
+            <p>@L["Uncheck the permissions you do not wish to grant."]</p>
         </div>
 
         <div class="row">
@@ -70,7 +70,7 @@ else
                             <div class="card">
                                 <div class="card-header">
                                     <span class="glyphicon glyphicon-user"></span>
-                                    @localizer["Personal Information"]
+                                    @L["Personal Information"]
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.IdentityScopes)
@@ -88,7 +88,7 @@ else
                             <div class="card">
                                 <div class="card-header">
                                     <span class="glyphicon glyphicon-tasks"></span>
-                                    @localizer["Application Access"]
+                                    @L["Application Access"]
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.ApiScopes)
@@ -104,7 +104,7 @@ else
                         <div class="card">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                @localizer["Description"]
+                                @L["Description"]
                             </div>
                             <div class="card-body">
                                 <input class="form-control" placeholder="Description or name of device" asp-for="Input.Description" autofocus>
@@ -118,7 +118,7 @@ else
                             <div class="form-check">
                                 <input class="form-check-input" asp-for="Input.RememberConsent">
                                 <label class="form-check-label" asp-for="Input.RememberConsent">
-                                    <strong>@localizer["Remember My Decision"]</strong>
+                                    <strong>@L["Remember My Decision"]</strong>
                                 </label>
                             </div>
                         </div>
@@ -128,8 +128,8 @@ else
 
             <div class="row">
                 <div class="col-sm-4">
-                    <button name="Input.button" value="yes" class="btn btn-primary" autofocus>@localizer["Yes, Allow"]</button>
-                    <button name="Input.button" value="no" class="btn btn-secondary">@localizer["No, Do Not Allow"]</button>
+                    <button name="Input.button" value="yes" class="btn btn-primary" autofocus>@L["Yes, Allow"]</button>
+                    <button name="Input.button" value="no" class="btn btn-secondary">@L["No, Do Not Allow"]</button>
                 </div>
                 <div class="col-sm-4 col-lg-auto">
                     @if (Model.View.ClientUrl != null)

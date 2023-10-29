@@ -1,25 +1,25 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = localizer["Financial"];
+    this.ViewBag.Title = L["Financial"];
 }
-<h2>@localizer["Financial"]</h2>
+<h2>@L["Financial"]</h2>
 <div class="row align-items-center">
     <div class="col">
-        <h2>@localizer["Bank accounts"]</h2>
+        <h2>@L["Bank accounts"]</h2>
     </div>
     <div class="col-auto">
-        <a href="#" class="btn">@localizer["Add account"]</a>
+        <a href="#" class="btn">@L["Add account"]</a>
     </div>
 </div>
 <table class="table">
     <thead>
         <tr>
-            <td>@localizer["Name"]</td>
-            <td>@localizer["Account ID"]</td>
-            <td>@localizer["Bank"]</td>
-            <td>@localizer["Usage"]</td>
-            <td>@localizer["Default"]</td>
+            <td>@L["Name"]</td>
+            <td>@L["Account ID"]</td>
+            <td>@L["Bank"]</td>
+            <td>@L["Usage"]</td>
+            <td>@L["Default"]</td>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +37,7 @@
 </table>
 
 <hr />
-<h2>@localizer["Fapiao info"]</h2>
+<h2>@L["Fapiao info"]</h2>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
@@ -80,6 +80,6 @@
         </div>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
-    <button type="submit" class="btn btn-danger" asp-page-handler="Clear">@localizer["Clear"]</button>
+    <button type="submit" class="btn btn-primary">@L["Save"]</button>
+    <button type="submit" class="btn btn-danger" asp-page-handler="Clear">@L["Clear"]</button>
 </form>

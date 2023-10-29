@@ -1,19 +1,19 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Identity Providers"];
+    this.ViewBag.Title = this.L["Identity Providers"];
 }
 @section PageHeader{
     <div class="row">
         <div class="col">
-            <h1>@localizer["Identity Providers"]</h1>
+            <h1>@L["Identity Providers"]</h1>
         </div>
         <div class="col-auto">
             <a asp-page="Create" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
                 </svg>
-                @localizer["New identity provider"]
+                @L["New identity provider"]
             </a>
         </div>
     </div>
@@ -22,11 +22,11 @@
     <table class="table card-table">
         <thead>
             <tr>
-                <td>@localizer["Scheme"]</td>
-                <td>@localizer["Enabled"]</td>
-                <td>@localizer["DisplayName"]</td>
-                <td>@localizer["Type"]</td>
-                <td>@localizer["Created at"]</td>
+                <td>@L["Scheme"]</td>
+                <td>@L["Enabled"]</td>
+                <td>@L["DisplayName"]</td>
+                <td>@L["Type"]</td>
+                <td>@L["Created at"]</td>
             </tr>
         </thead>
         <tbody>

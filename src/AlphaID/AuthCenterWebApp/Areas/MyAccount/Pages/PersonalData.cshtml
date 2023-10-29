@@ -1,22 +1,22 @@
 ﻿@page
 @model PersonalDataModel
 @{
-    this.ViewBag.Title = this.localizer["Personal Data"];
+    this.ViewBag.Title = this.L["Personal Data"];
 }
 
 <h3>@ViewBag.Title</h3>
 
 <div class="row">
     <div class="col-md-6">
-        <p>@localizer["Your account contains personal data that you have given us. This page allows you to download or delete that data."]</p>
+        <p>@L["Your account contains personal data that you have given us. This page allows you to download or delete that data."]</p>
         <p>
-            <strong>@localizer["Deleting this data will permanently remove your account, and this cannot be recovered."]</strong>
+            <strong>@L["Deleting this data will permanently remove your account, and this cannot be recovered."]</strong>
         </p>
         <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="btn btn-primary" type="submit">@localizer["Download"]</button>
+            <button class="btn btn-primary" type="submit">@L["Download"]</button>
         </form>
         <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">@localizer["Delete"]</a>
+            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">@L["Delete"]</a>
         </p>
     </div>
 </div>

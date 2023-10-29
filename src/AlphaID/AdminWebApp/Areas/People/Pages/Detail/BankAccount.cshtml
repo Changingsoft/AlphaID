@@ -1,7 +1,7 @@
 ﻿@page
 @model BankAccountModel
 @{
-    this.ViewBag.Title = this.localizer["Bank accounts of {0}", this.Model.Person.Name];
+    this.ViewBag.Title = this.L["Bank accounts of {0}", this.Model.Person.Name];
 }
 
 <h2><a asp-page="Index" asp-route-anchor="@Model.Anchor">@ViewBag.Title</a></h2>
@@ -11,10 +11,10 @@
 <table class="table">
     <thead>
         <tr>
-            <td>@localizer["BankName"]</td>
-            <td>@localizer["AccountNumber"]</td>
-            <td>@localizer["AccountName"]</td>
-            <td>@localizer["Operations"]</td>
+            <td>@L["BankName"]</td>
+            <td>@L["AccountNumber"]</td>
+            <td>@L["AccountName"]</td>
+            <td>@L["Operations"]</td>
         </tr>
     </thead>
     <tbody>
@@ -51,5 +51,5 @@
         <input asp-for="@Model.BankName" class="form-control" />
         <span asp-validation-for="@Model.BankName"></span>
     </div>
-    <button type="submit" class="btn btn-primary">@localizer["Add"]</button>
+    <button type="submit" class="btn btn-primary">@L["Add"]</button>
 </form>

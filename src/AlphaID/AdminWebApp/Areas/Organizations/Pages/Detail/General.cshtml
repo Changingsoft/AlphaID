@@ -3,7 +3,7 @@
 @{
 }
 @Html.DisplayFor(m => m.OperationResult)
-<h2>@localizer["General"]</h2>
+<h2>@L["General"]</h2>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
@@ -57,7 +57,7 @@
         <span asp-description-for="Input.TermEnd"></span>
         <span asp-validation-for="Input.TermEnd" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn">@localizer["Apply changes"]</button>
+    <button type="submit" class="btn">@L["Apply changes"]</button>
 </form>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

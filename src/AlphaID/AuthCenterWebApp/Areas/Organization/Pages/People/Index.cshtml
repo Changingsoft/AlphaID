@@ -1,18 +1,18 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Organization.Pages.People.IndexModel
 @{
-    this.ViewBag.Title = localizer["People"];
+    this.ViewBag.Title = L["People"];
 }
 <div class="page-body">
     <div class="container-xl">
-        <h1>@localizer["People"]</h1>
+        <h1>@L["People"]</h1>
         <div class="d-flex mb-3">
             <div class="input-icon">
                 <span class="input-icon-addon">
                     <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path></svg>
                 </span>
-                <input type="text" value="" class="form-control" placeholder="@localizer["Find members"]">
+                <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
             </div>
             <a class="btn ms-auto">Export</a>
             <a class="btn ms-3">Invite member</a>

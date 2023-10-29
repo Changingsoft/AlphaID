@@ -2,13 +2,13 @@
 @model IndexModel
 @inject NaturalPersonManager personManager
 @{
-    this.ViewBag.Title = this.localizer["People"];
+    this.ViewBag.Title = this.L["People"];
     var users = this.personManager.Users;
 }
 @section PageHeader{
     <div class="row align-items-center">
         <div class="col">
-            <h1>@localizer["Overview"]</h1>
+            <h1>@L["Overview"]</h1>
         </div>
         <div class="col">
             <partial name="_SearchInputPart" />

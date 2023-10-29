@@ -4,25 +4,25 @@
 }
 
 <h3></h3>
-<h4>@localizer["Summary"]</h4>
+<h4>@L["Summary"]</h4>
 <dl>
-    <dt>@localizer["Name"]</dt>
+    <dt>@L["Name"]</dt>
     <dd>@Model.Data.Name</dd>
-    <dt>@localizer["Display name"]</dt>
+    <dt>@L["Display name"]</dt>
     <dd>@Model.Data.DisplayName</dd>
-    <dt>@localizer["Enabled"]</dt>
+    <dt>@L["Enabled"]</dt>
     <dd>@Model.Data.Enabled</dd>
-    <dt>@localizer["Emphasize"]</dt>
+    <dt>@L["Emphasize"]</dt>
     <dd>@Model.Data.Emphasize</dd>
-    <dt>@localizer["Show in discovery document"]</dt>
+    <dt>@L["Show in discovery document"]</dt>
     <dd>@Model.Data.ShowInDiscoveryDocument</dd>
-    <dt>@localizer["Created"]</dt>
+    <dt>@L["Created"]</dt>
     <dd>@Model.Data.Created</dd>
-    <dt>@localizer["Updated"]</dt>
+    <dt>@L["Updated"]</dt>
     <dd>@Model.Data.Updated</dd>
 </dl>
 
-<h4>@localizer["User Claims"]</h4>
+<h4>@L["User Claims"]</h4>
 <ul>
     @foreach (var claim in Model.Data.UserClaims)
     {
@@ -30,12 +30,12 @@
     }
 </ul>
 
-<h4>@localizer["Properties"]</h4>
+<h4>@L["Properties"]</h4>
 <table class="table">
     <thead>
         <tr>
-            <td>@localizer["Key"]</td>
-            <td>@localizer["Value"]</td>
+            <td>@L["Key"]</td>
+            <td>@L["Value"]</td>
         </tr>
     </thead>
     <tbody>
@@ -49,10 +49,10 @@
     </tbody>
 </table>
 
-<h4>@localizer["Operations"]</h4>
+<h4>@L["Operations"]</h4>
 @if (this.Model.Data.NonEditable)
 {
-    <p>@localizer["System resource, can not be delete."]</p>
+    <p>@L["System resource, can not be delete."]</p>
 }
 else
 {

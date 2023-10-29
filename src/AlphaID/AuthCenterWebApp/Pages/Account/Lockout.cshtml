@@ -1,10 +1,10 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.LockoutModel
 @{
-    this.ViewBag.Title = this.localizer["Locked out"];
+    this.ViewBag.Title = this.L["Locked out"];
 }
 
 <header>
     <h1 class="text-danger">@ViewBag.Title</h1>
-    <p class="text-danger">@localizer["Your account was locked out, please try again later."]</p>
+    <p class="text-danger">@L["Your account was locked out, please try again later."]</p>
 </header>

@@ -1,12 +1,12 @@
 ﻿@page
 @model SignedOutModel
 @{
-    this.ViewBag.Title = this.localizer["Signed out"];
+    this.ViewBag.Title = this.L["Signed out"];
 }
 
 <div class="page-body">
     <div class="container-xl">
-        <h1>@localizer["Signed out"]</h1>
-        <p>@localizer["Close the browser or reenter this system."] <a asp-page="/Index">@localizer["Enter in"]</a></p>
+        <h1>@L["Signed out"]</h1>
+        <p>@L["Close the browser or reenter this system."] <a asp-page="/Index">@L["Enter in"]</a></p>
     </div>
 </div>

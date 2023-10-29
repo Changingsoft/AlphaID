@@ -38,7 +38,7 @@
         <label asp-for="Input.Visibility" class="form-label"></label>
         <select asp-for="Input.Visibility" asp-items="@Model.MembershipVisibilties" class="form-select"></select>
     </div>
-    <button type="submit" class="btn btn-primary">@localizer["Apply"]</button>
+    <button type="submit" class="btn btn-primary">@L["Apply"]</button>
 </form>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

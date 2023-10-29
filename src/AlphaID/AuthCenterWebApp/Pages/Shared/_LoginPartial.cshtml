@@ -13,13 +13,13 @@
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="@User.ProfileUrl()" class="dropdown-item">@localizer["Profile"]</a>
+            <a href="@User.ProfileUrl()" class="dropdown-item">@L["Profile"]</a>
             <div class="dropdown-divider"></div>
-            <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@localizer["Grants"]</a>
-            <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@localizer["CIBA Requests"]</a>
+            <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@L["Grants"]</a>
+            <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@L["CIBA Requests"]</a>
             <div class="dropdown-divider"></div>
-            <a asp-area="Settings" asp-page="/Profile/Index" class="dropdown-item">@localizer["Settings"]</a>
-            <a asp-area="" asp-page="/Account/Logout/Index" asp-route-returnUrl="@Context.Request.Path" class="dropdown-item">@localizer["Sign out"]</a>
+            <a asp-area="Settings" asp-page="/Profile/Index" class="dropdown-item">@L["Settings"]</a>
+            <a asp-area="" asp-page="/Account/Logout/Index" asp-route-returnUrl="@Context.Request.Path" class="dropdown-item">@L["Sign out"]</a>
         </div>
     </div>
 }
@@ -29,10 +29,10 @@ else
         <div class="btn-list">
             <a asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path" class="btn">
                 <span class="avatar avatar-sm">?</span>
-                @localizer["Sign in"]
+                @L["Sign in"]
             </a>
             <a asp-page="/Account/SignUp" class="btn">
-                @localizer["Sign up"]
+                @L["Sign up"]
             </a>
         </div>
 

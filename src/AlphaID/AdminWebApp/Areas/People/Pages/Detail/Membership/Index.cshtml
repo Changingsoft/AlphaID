@@ -4,17 +4,17 @@
     this.ViewBag.Title = this.Model.Person.Name + " Membership";
 }
 
-<h2>@localizer["Memberships"]</h2>
+<h2>@L["Memberships"]</h2>
 <form method="post" asp-page-handler="LeaveOrganization">
     <table class="table">
         <thead>
             <tr>
-                <td>@localizer["Organization"]</td>
-                <td>@localizer["Department"]</td>
-                <td>@localizer["Title"]</td>
-                <td>@localizer["Remark"]</td>
-                <td>@localizer["Visibility"]</td>
-                <td>@localizer["Operations"]</td>
+                <td>@L["Organization"]</td>
+                <td>@L["Department"]</td>
+                <td>@L["Title"]</td>
+                <td>@L["Remark"]</td>
+                <td>@L["Visibility"]</td>
+                <td>@L["Operations"]</td>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
                         @member.Organization.Name
                         @if(member.IsOwner)
                         {
-                            <span class="badge">@localizer["Owner"]</span>
+                            <span class="badge">@L["Owner"]</span>
                         }
                     </td>
                     <td>@member.Department</td>
@@ -34,7 +34,7 @@
                     <td>@member.Visibility</td>
                     <td>
                         <a asp-page="Of" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">Edit</a>
-                        <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@localizer["Are you sure you want leave person from organization?"]');">@localizer["Leave"]</button>
+                        <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@L["Are you sure you want leave person from organization?"]');">@L["Leave"]</button>
                     </td>
                 </tr>
             }

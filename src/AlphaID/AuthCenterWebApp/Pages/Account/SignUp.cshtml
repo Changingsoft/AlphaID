@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.localizer["Create your {0}", this.product.Value.Name];
+    this.ViewBag.Title = this.L["Create your {0}", this.product.Value.Name];
 }
 
 @section Heads
@@ -26,7 +26,7 @@
         }
         <form method="post" class="card card-md">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">@localizer["Create new account"]</h2>
+                <h2 class="card-title text-center mb-4">@L["Create new account"]</h2>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="row">
                     <div class="col">
@@ -44,9 +44,9 @@
                     <div class="col">
                         <label asp-for="Input.Sex" class="form-label required"></label>
                         <select asp-for="Input.Sex" class="form-select">
-                            <option label="@localizer["Unselected"]"></option>
-                            <option label="@localizer["Male"]" value="Male"></option>
-                            <option label="@localizer["Female"]" value="Female"></option>
+                            <option label="@L["Unselected"]"></option>
+                            <option label="@L["Male"]" value="Male"></option>
+                            <option label="@L["Female"]" value="Female"></option>
                         </select>
                         <span asp-validation-for="Input.Sex" class="text-danger"></span>
                     </div>
@@ -60,7 +60,7 @@
                     <label asp-for="Input.Mobile" class="form-label required"></label>
                     <div class="input-group mb-2">
                         <input asp-for="Input.Mobile" class="form-control" />
-                        <button type="button" class="btn" onclick="SendVerificationCode(this);">@localizer["Send code"]</button>
+                        <button type="button" class="btn" onclick="SendVerificationCode(this);">@L["Send code"]</button>
                     </div>
                     <span asp-validation-for="Input.Mobile" class="text-danger"></span>
                 </div>
@@ -95,16 +95,16 @@
                 <hr />
                 <div class="form-check">
                     <input asp-for="Input.Agree" class="form-check-input" />
-                    <label asp-for="Input.Agree" class="form-check-label">@localizer["Agree the"] <a href="#" target="_blank">@localizer["Terms of service"]</a></label>
+                    <label asp-for="Input.Agree" class="form-check-label">@L["Agree the"] <a href="#" target="_blank">@L["Terms of service"]</a></label>
                 </div>
-                <button type="submit" class="btn btn-primary">@localizer["Continue"]</button>
+                <button type="submit" class="btn btn-primary">@L["Continue"]</button>
             </div>
 
         </form>
 
 
         <div class="text-center text-secondary mt-3">
-            @localizer["Already have account?"] <a asp-page="Login" tabindex="-1">@localizer["Sign in"]</a>
+            @L["Already have account?"] <a asp-page="Login" tabindex="-1">@L["Sign in"]</a>
         </div>
     </div>
 </div>

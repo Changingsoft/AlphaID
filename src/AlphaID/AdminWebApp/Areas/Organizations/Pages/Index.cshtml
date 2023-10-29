@@ -1,14 +1,14 @@
 ﻿@page
 @model AdminWebApp.Areas.Organizations.Pages.IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Organizations"];
+    this.ViewBag.Title = this.L["Organizations"];
 }
 @section PageHeader{
     <div class="row align-items-center">
-        <div class="col"><h1>@localizer["Overview"]</h1></div>
+        <div class="col"><h1>@L["Overview"]</h1></div>
         <div class="col-auto"><partial name="_SearchInputPart" /></div>
         <div class="col-auto">
-            <a asp-page="New" class="btn btn-green">@localizer["New organization"]</a>
+            <a asp-page="New" class="btn btn-green">@L["New organization"]</a>
         </div>
     </div>
 }
@@ -18,7 +18,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Organizations"]</div>
+                    <div class="subheader">@L["Organizations"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
@@ -28,14 +28,14 @@
     </div>
 </div>
 
-<h3>@localizer["Last 10 updates"]</h3>
+<h3>@L["Last 10 updates"]</h3>
 <table class="table">
     <thead>
         <tr>
-            <td>@localizer["Name"]</td>
-            <td>@localizer["Domicile"]</td>
-            <td>@localizer["Representative"]</td>
-            <td>@localizer["USCI"]</td>
+            <td>@L["Name"]</td>
+            <td>@L["Domicile"]</td>
+            <td>@L["Representative"]</td>
+            <td>@L["USCI"]</td>
         </tr>
     </thead>
     <tbody>

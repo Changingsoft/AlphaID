@@ -1,19 +1,19 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Identity Resources"];
+    this.ViewBag.Title = this.L["Identity Resources"];
 }
 @section PageHeader{
     <div class="row">
         <div class="col">
-            <h1>@localizer["Identity Resources"]</h1>
+            <h1>@L["Identity Resources"]</h1>
         </div>
         <div class="col-auto">
             <a asp-page="Create" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
                 </svg>
-                @localizer["New identity resource"]
+                @L["New identity resource"]
             </a>
         </div>
     </div>
@@ -23,13 +23,13 @@
     <table class="table card-table">
         <thead>
             <tr>
-                <td>@localizer["Name"]</td>
-                <td>@localizer["Display name"]</td>
-                <td>@localizer["Description"]</td>
-                <td>@localizer["Enabled"]</td>
-                <td>@localizer["Emphasize"]</td>
-                <td>@localizer["Show in discovery doc"]</td>
-                <td>@localizer["Created at"]</td>
+                <td>@L["Name"]</td>
+                <td>@L["Display name"]</td>
+                <td>@L["Description"]</td>
+                <td>@L["Enabled"]</td>
+                <td>@L["Emphasize"]</td>
+                <td>@L["Show in discovery doc"]</td>
+                <td>@L["Created at"]</td>
             </tr>
         </thead>
         <tbody>

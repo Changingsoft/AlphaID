@@ -1,20 +1,20 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = localizer["API Resources"];
+    this.ViewBag.Title = L["API Resources"];
 }
 
 @section PageHeader{
     <div class="row">
         <div class="col">
-            <h1>@localizer["API Resources"]</h1>
+            <h1>@L["API Resources"]</h1>
         </div>
         <div class="col-auto">
             <a asp-page="New" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
                 </svg>
-                @localizer["New API resource"]
+                @L["New API resource"]
             </a>
         </div>
     </div>
@@ -24,8 +24,8 @@
     <table class="table card-table">
         <thead>
             <tr>
-                <td>@localizer["Name"]</td>
-                <td>@localizer["Resource ID"]</td>
+                <td>@L["Name"]</td>
+                <td>@L["Resource ID"]</td>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
             else
             {
                 <tr>
-                    <td colspan="2">@localizer["No results found."]</td>
+                    <td colspan="2">@L["No results found."]</td>
                 </tr>
             }
         </tbody>

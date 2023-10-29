@@ -3,11 +3,11 @@
 @inject ConfigurationDbContext dbContext
 @inject PersistedGrantDbContext persistedGrantDbContext
 @{
-    this.ViewBag.Title = this.localizer["OAuth/OIDC"];
+    this.ViewBag.Title = this.L["OAuth/OIDC"];
 }
 
 @section PageHeader{
-    <h1>@localizer["Overview"]</h1>
+    <h1>@L["Overview"]</h1>
 }
 
 
@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Clients"]</div>
+                    <div class="subheader">@L["Clients"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
@@ -28,7 +28,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Scopes"]</div>
+                    <div class="subheader">@L["Scopes"]</div>
                     <div class="ms-auto lh-1">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -56,7 +56,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["API Resources"]</div>
+                    <div class="subheader">@L["API Resources"]</div>
                     <div class="ms-auto lh-1">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -85,7 +85,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["ID Providers"]</div>
+                    <div class="subheader">@L["ID Providers"]</div>
                     <div class="ms-auto lh-1">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -113,7 +113,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Active Sessions"]</div>
+                    <div class="subheader">@L["Active Sessions"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
@@ -125,7 +125,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Keys"]</div>
+                    <div class="subheader">@L["Keys"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 @model IdModel
 @{
 }
-<h2>@localizer["ID"]</h2>
+<h2>@L["ID"]</h2>
 
 @if (this.Model.OperationResultMessage != null)
 {
@@ -18,7 +18,7 @@
         <span asp-validation-for="Input.UserName" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">@localizer["Update"]</button>
+    <button type="submit" class="btn btn-primary">@L["Update"]</button>
 </form>
 
 <p>Local login: @(this.Model.HasPassword)</p>

@@ -1,7 +1,7 @@
 ﻿@page
 @model ExternalLoginsModel
 @{
-    this.ViewBag.Title = this.localizer["Manage your external logins"];
+    this.ViewBag.Title = this.L["Manage your external logins"];
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -21,7 +21,7 @@
                                 <div>
                                     <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
                                     <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
-                                    <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">@localizer["Remove"]</button>
+                                    <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">@L["Remove"]</button>
                                 </div>
                             </form>
                         }
@@ -37,7 +37,7 @@
 }
 @if (Model.OtherLogins?.Count > 0)
 {
-    <h4>@localizer["Add another service to log in."]</h4>
+    <h4>@L["Add another service to log in."]</h4>
     <hr />
     <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
         <div id="socialLoginList">

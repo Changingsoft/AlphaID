@@ -20,7 +20,7 @@
             </div>
             <div class="col">
                 <h1 class="fw-bold">@person?.Name</h1>
-                <p>@localizer["Your personal account"]</p>
+                <p>@L["Your personal account"]</p>
             </div>
             <div class="col-auto ms-auto">
             </div>
@@ -34,9 +34,9 @@
                 <div class="col-12 col-md-3 border-end">
                     <div class="card-body">
                         <div class="list-group list-group-transparent">
-                            <a asp-page="/Profile/Index" asp-path="/Settings/Profile" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Profile"]</a>
-                            <a asp-page="/Account/Index" asp-path="/Settings/Account" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Account"]</a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Password and authentication"]</a>
+                            <a asp-page="/Profile/Index" asp-path="/Settings/Profile" class="list-group-item list-group-item-action d-flex align-items-center">@L["Profile"]</a>
+                            <a asp-page="/Account/Index" asp-path="/Settings/Account" class="list-group-item list-group-item-action d-flex align-items-center">@L["Account"]</a>
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">@L["Password and authentication"]</a>
                             <a asp-page="/Organizations/Index" asp-path="/Settings/Organizations" class="list-group-item list-group-item-action d-flex align-items-center">Organizations</a>
                             <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Billing &amp; Invoices</a>
                         </div>

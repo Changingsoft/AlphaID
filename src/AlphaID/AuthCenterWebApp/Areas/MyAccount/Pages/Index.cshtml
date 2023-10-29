@@ -1,7 +1,7 @@
 ﻿@page
 @model             IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Account"];
+    this.ViewBag.Title = this.L["Account"];
 }
 
 <h3>@ViewBag.Title</h3>
@@ -19,7 +19,7 @@
                 <input asp-for="Input.NewUserName" class="form-control" />
                 <span asp-validation-for="Input.NewUserName" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">@localizer["Save"]</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">@L["Save"]</button>
         </form>
     </div>
 </div>

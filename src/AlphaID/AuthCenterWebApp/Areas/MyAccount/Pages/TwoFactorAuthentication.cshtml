@@ -1,7 +1,7 @@
 ﻿@page
 @model TwoFactorAuthenticationModel
 @{
-    this.ViewBag.Title = this.localizer["Two-factor authentication (2FA)"];
+    this.ViewBag.Title = this.L["Two-factor authentication (2FA)"];
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -15,51 +15,51 @@
             if (Model.RecoveryCodesLeft == 0)
             {
                 <div class="alert alert-danger">
-                    <strong>@localizer["You have no recovery codes left."]</strong>
-                    <p>@localizer["You must generate a new set of recovery codes before you can log in with a recovery code."] <a asp-page="GenerateRecoveryCodes">@localizer["Generate a new set of recovery codes"]</a></p>
+                    <strong>@L["You have no recovery codes left."]</strong>
+                    <p>@L["You must generate a new set of recovery codes before you can log in with a recovery code."] <a asp-page="GenerateRecoveryCodes">@L["Generate a new set of recovery codes"]</a></p>
                 </div>
             }
             else if (Model.RecoveryCodesLeft == 1)
             {
                 <div class="alert alert-danger">
-                    <strong>@localizer["You have 1 recovery code left."]</strong>
-                    <p>@localizer["You can "]<a asp-page="./GenerateRecoveryCodes">@localizer["Generate a new set of recovery codes"]</a>.</p>
+                    <strong>@L["You have 1 recovery code left."]</strong>
+                    <p>@L["You can "]<a asp-page="./GenerateRecoveryCodes">@L["Generate a new set of recovery codes"]</a>.</p>
                 </div>
             }
             else if (Model.RecoveryCodesLeft <= 3)
             {
                 <div class="alert alert-warning">
-                    <strong>@localizer["You have {0} codes left.", Model.RecoveryCodesLeft]</strong>
-                    <p>@localizer["You should "]<a asp-page="./GenerateRecoveryCodes">@localizer["Generate a new set of recovery codes"]</a>。</p>
+                    <strong>@L["You have {0} codes left.", Model.RecoveryCodesLeft]</strong>
+                    <p>@L["You should "]<a asp-page="./GenerateRecoveryCodes">@L["Generate a new set of recovery codes"]</a>。</p>
                 </div>
             }
 
             if (Model.IsMachineRemembered)
             {
                 <form method="post" style="display: inline-block">
-                    <button type="submit" class="btn btn-primary">@localizer["Forget this browser"]</button>
+                    <button type="submit" class="btn btn-primary">@L["Forget this browser"]</button>
                 </form>
             }
-            <a asp-page="./Disable2fa" class="btn btn-primary">@localizer["Disable 2FA"]</a>
-            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">@localizer["Reset recovery codes"]</a>
+            <a asp-page="./Disable2fa" class="btn btn-primary">@L["Disable 2FA"]</a>
+            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">@L["Reset recovery codes"]</a>
         }
 
-        <h4>@localizer["Authenticator app"]</h4>
+        <h4>@L["Authenticator app"]</h4>
         @if (!Model.HasAuthenticator)
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">@localizer["Add authenticator app"]</a>
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">@L["Add authenticator app"]</a>
         }
         else
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">@localizer["Set up authenticator app"]</a>
-            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">@localizer["Reset authenticator app"]</a>
+            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">@L["Set up authenticator app"]</a>
+            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">@L["Reset authenticator app"]</a>
         }
     }
     else
     {
         <div class="alert alert-danger">
-            <strong>@localizer["Privacy and cookie policy have not been accepted."]</strong>
-            <p>@localizer["You must accept the policy before you can enable two factor authentication."]</p>
+            <strong>@L["Privacy and cookie policy have not been accepted."]</strong>
+            <p>@L["You must accept the policy before you can enable two factor authentication."]</p>
         </div>
     }
 }

@@ -1,15 +1,15 @@
 ﻿@page
 @model DirectoryAccountsModel
 @{
-    this.ViewBag.Title = this.localizer["Directory Accounts"];
+    this.ViewBag.Title = this.L["Directory Accounts"];
 }
 <h1>@ViewBag.Title</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <td>@localizer["Logon ID"]</td>
-            <td>@localizer["Person ID"]</td>
+            <td>@L["Logon ID"]</td>
+            <td>@L["Person ID"]</td>
         </tr>
     </thead>
     <tbody>
@@ -23,5 +23,5 @@
     </tbody>
 </table>
 
-<p><a asp-page="CreateDirectoryAccount" asp-route-anchor="@this.Model.Person.Id">@localizer["Create new account"]</a></p>
-<p><a asp-page="BindDirectoryAccount" asp-route-anchor="@this.Model.Person.Id">@localizer["Bind exists account"]</a></p>
+<p><a asp-page="CreateDirectoryAccount" asp-route-anchor="@this.Model.Person.Id">@L["Create new account"]</a></p>
+<p><a asp-page="BindDirectoryAccount" asp-route-anchor="@this.Model.Person.Id">@L["Bind exists account"]</a></p>

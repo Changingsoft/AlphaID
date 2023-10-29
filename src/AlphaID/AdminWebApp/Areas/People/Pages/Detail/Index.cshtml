@@ -5,44 +5,44 @@
     this.ViewBag.Title = $"{Model.Data.Name}";
 }
 
-<h2>@localizer["Overview"]</h2>
+<h2>@L["Overview"]</h2>
 <div class="row mb-3">
     <div class="col-10">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@localizer["Person Name"]</h3>
-                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn">@localizer["Change name"]</a>
+                <h3 class="card-title">@L["Person Name"]</h3>
+                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn">@L["Change name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Surname"]</div>
+                        <div class="datagrid-title">@L["Surname"]</div>
                         <div class="datagrid-content">
                             @Model.Data.LastName @Model.Data.PhoneticSurname
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Given name"]</div>
+                        <div class="datagrid-title">@L["Given name"]</div>
                         <div class="datagrid-content">
                             @Model.Data.FirstName @Model.Data.PhoneticGivenName
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Display"]</div>
+                        <div class="datagrid-title">@L["Display"]</div>
                         <div class="datagrid-content">
                             @Model.Data.Name @Model.Data.PhoneticSearchHint
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Gender"]</div>
+                        <div class="datagrid-title">@L["Gender"]</div>
                         <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Sex)</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Date of birth (Age)"]</div>
+                        <div class="datagrid-title">@L["Date of birth (Age)"]</div>
                         <div class="datagrid-content">@(this.Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(this.Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Website"]</div>
+                        <div class="datagrid-title">@L["Website"]</div>
                         <div class="datagrid-content">@Model.Data.WebSite</div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
     </div>
     <div class="col-2 text-center">
         <img src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" class="img-fluid img-thumbnail" />
-        <a href="#" class="btn btn-sm">@localizer["Change Avatar"]</a>
+        <a href="#" class="btn btn-sm">@L["Change Avatar"]</a>
     </div>
 </div>
 <div class="card mb-3">
@@ -61,14 +61,14 @@
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["User name"]</div>
+                <div class="datagrid-title">@L["User name"]</div>
                 <div class="datagrid-content">
                     @Model.Data.UserName
-                    <a href="#" class="btn btn-sm">@localizer["Change"]</a>
+                    <a href="#" class="btn btn-sm">@L["Change"]</a>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Email"]</div>
+                <div class="datagrid-title">@L["Email"]</div>
                 <div class="datagrid-content">
                     <a href="mailto:@Model.Data.Email">@Model.Data.Email</a>
                     @if (Model.Data.EmailConfirmed)
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Phone number"]</div>
+                <div class="datagrid-title">@L["Phone number"]</div>
                 <div class="datagrid-content">
                     @Model.Data.PhoneNumber
                     @if (Model.Data.PhoneNumberConfirmed)
@@ -88,21 +88,21 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Status"]</div>
+                <div class="datagrid-title">@L["Status"]</div>
                 <div class="datagrid-content">@Model.Data.Enabled LocalLogin? 2Fa? PhoneCheck?</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Authentication statistics"]</div>
+                <div class="datagrid-title">@L["Authentication statistics"]</div>
                 <div class="datagrid-content">10 falied:2 lock:1</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Person ID"]</div>
+                <div class="datagrid-title">@L["Person ID"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["External Logins"]</div>
+                <div class="datagrid-title">@L["External Logins"]</div>
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
@@ -111,24 +111,24 @@
 
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">@localizer["Contacts"]</h3>
+        <h3 class="card-title">@L["Contacts"]</h3>
     </div>
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Phone number"]</div>
+                <div class="datagrid-title">@L["Phone number"]</div>
                 <div class="datagrid-content">@Model.Data.PhoneNumber</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Email"]</div>
+                <div class="datagrid-title">@L["Email"]</div>
                 <div class="datagrid-content">@Model.Data.Email</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["QQ"]</div>
+                <div class="datagrid-title">@L["QQ"]</div>
                 <div class="datagrid-content">N/A</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Address"]</div>
+                <div class="datagrid-title">@L["Address"]</div>
                 <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
             </div>
         </div>
@@ -137,7 +137,7 @@
 
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">@localizer["Payments"]</h3>
+        <h3 class="card-title">@L["Payments"]</h3>
     </div>
     <div class="card-body">
         <table class="table">
@@ -162,14 +162,14 @@
 
     </div>
 </div>
-<h3>@localizer["Misc"]</h3>
-<p>@localizer["Created at"] : @Model.Data.WhenCreated</p>
-<p>@localizer["Changed at"] : @Model.Data.WhenChanged</p>
+<h3>@L["Misc"]</h3>
+<p>@L["Created at"] : @Model.Data.WhenCreated</p>
+<p>@L["Changed at"] : @Model.Data.WhenChanged</p>
 
-<h3>@localizer["Danger zone"]</h3>
+<h3>@L["Danger zone"]</h3>
 <div class="card">
     <div class="card-status-top bg-danger"></div>
     <div class="card-body">
-        <a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>
+        <a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@L["Delete person"]</a></p>
     </div>
 </div>

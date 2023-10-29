@@ -3,12 +3,12 @@
 @inject IWebHostEnvironment env
 @model IndexModel
 @{
-    this.ViewBag.Title = $"{this.product.Value.Name} {localizer["Management Center"].Value}";
+    this.ViewBag.Title = $"{this.product.Value.Name} {L["Management Center"].Value}";
 }
 
 <div class="page-body">
     <div class="container-xl">
-            <h1>@localizer["Dashboard"]</h1>
+            <h1>@L["Dashboard"]</h1>
 
         <div class="row">
             <div class="col-3">

@@ -1,23 +1,23 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Members of {0}", this.Model.Organization.Name];
+    this.ViewBag.Title = this.L["Members of {0}", this.Model.Organization.Name];
 }
 @Html.DisplayFor(m => m.Result)
 <h2>
-    @localizer["Members of {0}", this.Model.Organization.Name]
+    @L["Members of {0}", this.Model.Organization.Name]
 </h2>
 <p>@Model.Members.Count() 人</p>
 <form method="post" asp-page-handler="RemoveMember">
     <table class="table">
         <thead>
             <tr>
-                <td>@localizer["Person"]</td>
-                <td>@localizer["Title"]</td>
-                <td>@localizer["Department"]</td>
-                <td>@localizer["Remark"]</td>
-                <td>@localizer["Membership"]</td>
-                <td>@localizer["Operations"]</td>
+                <td>@L["Person"]</td>
+                <td>@L["Title"]</td>
+                <td>@L["Department"]</td>
+                <td>@L["Remark"]</td>
+                <td>@L["Membership"]</td>
+                <td>@L["Operations"]</td>
             </tr>
         </thead>
         <tbody>
@@ -33,8 +33,8 @@
                     <td>@member.Remark</td>
                     <td>@Html.DisplayFor(m => member.Visibility)</td>
                     <td>
-                        <a asp-page="Edit" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@localizer["Edit"]</a>
-                        <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@localizer["Remove"]</button>
+                        <a asp-page="Edit" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@L["Edit"]</a>
+                        <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@L["Remove"]</button>
                     </td>
                 </tr>
             }
@@ -42,7 +42,7 @@
     </table>
 </form>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberEditor">
-    @localizer["Add member"]
+    @L["Add member"]
 </button>
 <div class="modal fade" id="memberEditor">
     <div class="modal-dialog">
@@ -51,8 +51,8 @@
             <div class="modal-body">
                 <form method="post" asp-page-handler="AddMember">
                     <div class="mb-3">
-                        <label for="personSearch" class="form-label">@localizer["Search members"]</label>
-                        <input name="personSearch" class="form-control" placeholder="@localizer["Name, Display name, phonetic name, etc..."]" />
+                        <label for="personSearch" class="form-label">@L["Search members"]</label>
+                        <input name="personSearch" class="form-control" placeholder="@L["Name, Display name, phonetic name, etc..."]" />
                     </div>
                     <div class="mb-3">
                         <label asp-for="@Model.PersonId" class="form-label"></label>
@@ -74,7 +74,7 @@
                         <input asp-for="@Model.Remark" class="form-control" />
                         <span asp-validation-for="@Model.Remark" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">@localizer["Add"]</button>
+                    <button type="submit" class="btn btn-primary">@L["Add"]</button>
                 </form>
             </div>
         </div>

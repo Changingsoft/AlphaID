@@ -1,7 +1,7 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Organization.Pages.Settings.IndexModel
 @{
-    this.ViewBag.Title = this.localizer["General"];
+    this.ViewBag.Title = this.L["General"];
 }
 <h2>@ViewBag.Title</h2>
 
@@ -13,32 +13,32 @@
         <span asp-validation-for="Input.Description" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn">@localizer["Apply changes"]</button>
+    <button type="submit" class="btn">@L["Apply changes"]</button>
     <partial name="_OperationResultPartial" model="Model.OperationResult" />
 </form>
 
-<h3>@localizer["Danger zone"]</h3>
+<h3>@L["Danger zone"]</h3>
 <div class="card border-danger">
     <div class="list-group list-group-flush">
         <div class="list-group-item">
             <div class="row align-items-center">
                 <div class="col">
-                    <h4>@localizer["Rename organization"]</h4>
-                    <p>@localizer["enaming your organization can have unintended side effects."]</p>
+                    <h4>@L["Rename organization"]</h4>
+                    <p>@L["enaming your organization can have unintended side effects."]</p>
                 </div>
                 <div class="col-auto ms-auto">
-                    <a href="#" class="btn btn-danger">@localizer["Rename organization"]</a>
+                    <a href="#" class="btn btn-danger">@L["Rename organization"]</a>
                 </div>
             </div>
         </div>
         <div class="list-group-item">
             <div class="row align-items-center">
                 <div class="col">
-                    <h4>@localizer["Delete this organization"]</h4>
-                    <p>@localizer["Once deleted, it will be gone forever. Please be certain."]</p>
+                    <h4>@L["Delete this organization"]</h4>
+                    <p>@L["Once deleted, it will be gone forever. Please be certain."]</p>
                 </div>
                 <div class="col-auto ms-auto">
-                    <a href="#" class="btn btn-danger">@localizer["Delete this organization"]</a>
+                    <a href="#" class="btn btn-danger">@L["Delete this organization"]</a>
                 </div>
             </div>
         </div>

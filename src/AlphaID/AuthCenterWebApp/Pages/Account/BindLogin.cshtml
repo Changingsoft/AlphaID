@@ -10,12 +10,12 @@
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-                @(this.product.Value.Name) @L["Account"]
+                @(this.Product.Value.Name) @L["Account"]
             </a>
         </div>
         <div class="card card-md">
             <div class="card-body">
-                <p>@L["You are now signing in from external, sign in {0} for binding to external login.", product.Value.Name]</p>
+                <p>@L["You are now signing in from external, sign in {0} for binding to external login.", Product.Value.Name]</p>
                 <form method="post">
                     <input type="hidden" asp-for="Input.ReturnUrl" />
 

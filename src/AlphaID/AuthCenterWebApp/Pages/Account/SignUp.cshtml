@@ -2,7 +2,7 @@
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
     this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.L["Create your {0}", this.product.Value.Name];
+    this.ViewBag.Title = this.L["Create your {0}", this.Product.Value.Name];
 }
 
 @section Heads
@@ -15,7 +15,7 @@
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-                @product.Value.Name
+                @Product.Value.Name
             </a>
         </div>
         @if (this.Model.ExternalLoginMessage != null)

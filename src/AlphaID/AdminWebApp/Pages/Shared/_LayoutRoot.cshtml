@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @if (ViewBag.Title != null)
     {
-        <title>@ViewBag.Title - @product.Value.Name @L["Management Center"]</title>
+        <title>@ViewBag.Title - @Product.Value.Name @L["Management Center"]</title>
     }
     else
     {
-        <title>@product.Value.Name @product.Value.Name @L["Management Center"]</title>
+        <title>@Product.Value.Name @Product.Value.Name @L["Management Center"]</title>
     }
     @RenderSection("Heads", false)
 </head>

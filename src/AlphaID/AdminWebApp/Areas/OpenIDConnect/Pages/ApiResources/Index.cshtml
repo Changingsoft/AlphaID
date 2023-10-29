@@ -29,11 +29,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var data in this.Model.Results)
+            @if (Model.Results.Any())
+            {
+                foreach (var data in this.Model.Results)
+                {
+                    <tr>
+                        <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>
+                        <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.Name</a></td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>
-                    <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.Name</a></td>
+                    <td colspan="2">@localizer["No results found."]</td>
                 </tr>
             }
         </tbody>

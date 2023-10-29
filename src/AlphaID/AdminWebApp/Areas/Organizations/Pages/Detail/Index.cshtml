@@ -7,7 +7,7 @@
     var members = await this.memberManager.GetMembersAsync(this.Model.Organization);
 }
 
-
+<h2>Overview</h2>
 <div class="card mb-3">
     <div class="card-header">
         <h3 class="card-title">Base info</h3>
@@ -65,10 +65,6 @@
             <div class="datagrid-item">
                 <div class="datagrid-title">@localizer["Members"]</div>
                 <div class="datagrid-content">@members.Count()</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Administrators"]</div>
-                <div class="datagrid-content"></div>
             </div>
         </div>
     </div>

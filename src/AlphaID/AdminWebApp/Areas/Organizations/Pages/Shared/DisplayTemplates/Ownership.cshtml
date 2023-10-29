@@ -1,0 +1,8 @@
+﻿@model bool?
+@if(Model.HasValue)
+{
+    if(Model.Value)
+    {
+        <span class="badge">@localizer["Owner"]</span>
+    }
+}

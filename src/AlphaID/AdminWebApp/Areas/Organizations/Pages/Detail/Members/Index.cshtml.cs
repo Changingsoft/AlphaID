@@ -2,23 +2,20 @@ using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail;
+namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members;
 
-public class MembersModel : PageModel
+public class IndexModel : PageModel
 {
     private readonly OrganizationManager organizationManager;
     private readonly NaturalPersonManager personManager;
     private readonly OrganizationMemberManager memberManager;
 
-    public MembersModel(OrganizationManager manager, NaturalPersonManager personManager, OrganizationMemberManager memberManager)
+    public IndexModel(OrganizationManager manager, NaturalPersonManager personManager, OrganizationMemberManager memberManager)
     {
         this.organizationManager = manager;
         this.personManager = personManager;
         this.memberManager = memberManager;
     }
-
-    [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
 
     public GenericOrganization Organization { get; set; } = default!;
 
@@ -43,9 +40,9 @@ public class MembersModel : PageModel
 
     public IdOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
+        var org = await this.organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -54,9 +51,9 @@ public class MembersModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAddMemberAsync()
+    public async Task<IActionResult> OnPostAddMemberAsync(string anchor)
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
+        var org = await this.organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -65,12 +62,18 @@ public class MembersModel : PageModel
         var person = await this.personManager.FindByIdAsync(this.PersonId);
         if (person == null)
         {
-            this.ModelState.AddModelError("PhoneNumber", "找不到人员");
+            this.ModelState.AddModelError(nameof(this.PersonId), "找不到人员");
             return this.Page();
         }
 
+        var member = new OrganizationMember(this.Organization, person)
+        {
+            Title = this.Title,
+            Department = this.Department,
+            Remark = this.Remark,
+        };
 
-        var result = await this.memberManager.JoinOrganizationAsync(person, this.Organization, this.Title, this.Department, this.Remark);
+        var result = await this.memberManager.CreateAsync(member);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -84,7 +87,7 @@ public class MembersModel : PageModel
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
+        var org = await this.organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -95,7 +98,7 @@ public class MembersModel : PageModel
             return this.NotFound();
 
         this.Result = await this.memberManager.LeaveOrganizationAsync(person, this.Organization);
-        if(this.Result.Succeeded)
+        if (this.Result.Succeeded)
         {
             this.Members = await this.memberManager.GetMembersAsync(org);
         }

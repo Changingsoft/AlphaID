@@ -32,7 +32,6 @@ public class NewModel : PageModel
             Description = this.Input.Description,
             AllowedAccessTokenSigningAlgorithms = this.Input.AllowedAccessTokenSigningAlgorithms,
             RequireResourceIndicator = this.Input.RequireResourceIndicator,
-            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument,
             Enabled = true,
             Created = now,
             Updated = now,
@@ -62,14 +61,8 @@ public class NewModel : PageModel
         [Display(Name = "Description")]
         public string? Description { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [Display(Name = "Allowed access token signing algorithms")]
         public string? AllowedAccessTokenSigningAlgorithms { get; set; }
-
-        [Display(Name = "Show in discovery document")]
-        public bool ShowInDiscoveryDocument { get; set; } = true;
 
         [Display(Name = "Require resource indicator", Description = "Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.")]
         public bool RequireResourceIndicator { get; set; }

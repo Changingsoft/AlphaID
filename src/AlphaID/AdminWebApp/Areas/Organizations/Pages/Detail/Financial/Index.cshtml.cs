@@ -2,13 +2,13 @@ using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail;
+namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial;
 
-public class FinancialModel : PageModel
+public class IndexModel : PageModel
 {
     private readonly OrganizationManager organizationManager;
 
-    public FinancialModel(OrganizationManager organizationManager)
+    public IndexModel(OrganizationManager organizationManager)
     {
         this.organizationManager = organizationManager;
     }

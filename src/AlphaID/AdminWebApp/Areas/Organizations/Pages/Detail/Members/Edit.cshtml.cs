@@ -2,15 +2,15 @@ using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail
+namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
 {
-    public class EditMemberModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly OrganizationMemberManager memberManager;
         private readonly NaturalPersonManager naturalPersonManager;
         private readonly OrganizationManager organizationManager;
 
-        public EditMemberModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager, OrganizationManager organizationManager)
+        public EditModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager, OrganizationManager organizationManager)
         {
             this.memberManager = memberManager;
             this.naturalPersonManager = naturalPersonManager;
@@ -56,7 +56,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             var result = await this.memberManager.UpdateAsync(member);
             if (result.Succeeded)
             {
-                return this.RedirectToPage("Members", new { anchor });
+                return this.RedirectToPage("Index", new { anchor });
             }
 
             foreach (var error in result.Errors)

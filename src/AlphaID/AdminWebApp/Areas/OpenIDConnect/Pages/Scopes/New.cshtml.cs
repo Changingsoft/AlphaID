@@ -35,7 +35,7 @@ public class NewModel : PageModel
             Description = this.Input.Description,
             Required = this.Input.Required,
             Emphasize = this.Input.Emphasize,
-            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument, //todo 该属性已停用。
+            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument,
             Created = now,
             Updated = now,
         };

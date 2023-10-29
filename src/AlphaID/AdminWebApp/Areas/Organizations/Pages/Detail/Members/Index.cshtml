@@ -1,5 +1,5 @@
 ﻿@page
-@model MembersModel
+@model IndexModel
 @{
     this.ViewBag.Title = this.localizer["Members of {0}", this.Model.Organization.Name];
 }
@@ -16,7 +16,6 @@
                 <td>@localizer["Title"]</td>
                 <td>@localizer["Department"]</td>
                 <td>@localizer["Remark"]</td>
-                <td>@localizer["Owner"]</td>
                 <td>@localizer["Membership"]</td>
                 <td>@localizer["Operations"]</td>
             </tr>
@@ -25,14 +24,16 @@
             @foreach (var member in this.Model.Members)
             {
                 <tr>
-                    <td>@member.Person.Name</td>
+                    <td>
+                        @member.Person.Name
+                        @Html.DisplayFor(m => member.IsOwner, "Ownership")
+                    </td>
                     <td>@member.Title</td>
                     <td>@member.Department</td>
                     <td>@member.Remark</td>
-                    <td><input type="checkbox" class="form-check-input" asp-for="@member.IsOwner" disabled /></td>
-                    <td>@member.Visibility</td>
+                    <td>@Html.DisplayFor(m => member.Visibility)</td>
                     <td>
-                        <a asp-page="EditMember" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@localizer["Edit"]</a>
+                        <a asp-page="Edit" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@localizer["Edit"]</a>
                         <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@localizer["Remove"]</button>
                     </td>
                 </tr>

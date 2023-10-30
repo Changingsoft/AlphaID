@@ -1,9 +1,12 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.Model.Person.Name + " Membership";
+    this.ViewBag.Title = L[" Memberships"];
 }
-
+@section Heads{
+    <link rel="stylesheet" href="~/lib//jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
+}
+@Html.DisplayFor(m => m.Result)
 <h2>@L["Memberships"]</h2>
 <form method="post" asp-page-handler="LeaveOrganization">
     <table class="table">
@@ -23,7 +26,7 @@
                 <tr>
                     <td>
                         @member.Organization.Name
-                        @if(member.IsOwner)
+                        @if (member.IsOwner)
                         {
                             <span class="badge">@L["Owner"]</span>
                         }
@@ -54,26 +57,34 @@
                         <input name="organizationSearch" type="text" class="form-control" />
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.OrganizationId" class="form-label"></label>
-                        <input asp-for="@Model.OrganizationId" class="form-control" readonly />
-                        <span asp-validation-for="@Model.OrganizationId"></span>
+                        <label asp-for="Input.OrganizationId" class="form-label d-none"></label>
+                        <input asp-for="Input.OrganizationId" class="form-control d-none" readonly />
+                        <span asp-validation-for="Input.OrganizationId"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.Department" class="form-label"></label>
-                        <input asp-for="@Model.Department" class="form-control" />
-                        <span asp-validation-for="@Model.Department"></span>
+                        <label asp-for="Input.Title" class="form-label"></label>
+                        <input asp-for="Input.Title" class="form-control" />
+                        <span asp-validation-for="Input.Title"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.Title" class="form-label"></label>
-                        <input asp-for="@Model.Title" class="form-control" />
-                        <span asp-validation-for="@Model.Title"></span>
+                        <label asp-for="Input.Department" class="form-label"></label>
+                        <input asp-for="Input.Department" class="form-control" />
+                        <span asp-validation-for="Input.Department"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.Remark" class="form-label"></label>
-                        <input asp-for="@Model.Remark" class="form-control" />
-                        <span asp-validation-for="@Model.Remark"></span>
+                        <label asp-for="Input.Remark" class="form-label"></label>
+                        <input asp-for="Input.Remark" class="form-control" />
+                        <span asp-validation-for="Input.Remark"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Join</button>
+                    <div class="form-check">
+                        <input asp-for="Input.IsOwner" class="form-check-input" />
+                        <label asp-for="Input.IsOwner" class="form-check-label"></label>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Visibility" class="form-label"></label>
+                        <select asp-for="Input.Visibility" class="form-select" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()"></select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">@L["Join"]</button>
                 </form>
             </div>
         </div>
@@ -82,6 +93,7 @@
 
 @section scripts
     {
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
@@ -91,17 +103,28 @@
                 appendTo: "#memberEditor",
                 select: function (event, ui) {
                     $(this).val(ui.item.name);
-                    $("[name='OrganizationId']").val(ui.item.subjectId);
-                    //$("[name='Input.UserName']").val(ui.item.name);
-                    //$("[name='Input.PhoneticSearchHint']").val(ui.item.phoneticSearchHint);
-
+                    $("[name='Input.OrganizationId']").val(ui.item.subjectId);
                     return false;
                 }
             })
                 .autocomplete("instance")._renderItem = function (ul, item) {
-                    var div = $("<div>");
-                    div.append("<p>" + item.name + "</p>")
-                    div.append("<ul>").append("<li>ddd</li>");
+                    var div = $("<div>").attr("class", "row")
+                        .append(
+                            $("<div>").attr("class", "col-auto")
+                                .append(
+                                    $("<img>").attr("src", "#").attr("class", "avatar")
+                                )
+                        )
+                        .append(
+                            $("<div>").attr("class", "col text-truncate")
+                                .append(
+                                    $("<p>").append(item.name)
+                                )
+                                .append(
+                                    $("<p>").attr("class", "text-secondary")
+                                        .append(item.sex)
+                                )
+                        );
                     var li = $("<li>").append(div);
                     return li.appendTo(ul);
                 };

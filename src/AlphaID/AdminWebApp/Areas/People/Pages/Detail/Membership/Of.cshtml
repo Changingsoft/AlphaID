@@ -1,16 +1,15 @@
 ﻿@page "{orgId}"
 @model OfModel
 @{
+    this.ViewBag.Title = this.L["Membership of {0}", Model.Member.Organization.Name];
 }
 
 @Html.DisplayFor(m => m.OperationResult)
 <div class="row">
     <div class="col-auto">
-        <a asp-page="Index" asp-route-anchor="@RouteData.Values["anchor"]" class="btn btn-sm">
-            Back
-        </a>
+        
     </div>
-    <div class="col"><h2>Membership of @Model.Member.Organization.Name</h2></div>
+    <div class="col"><h2>@ViewBag.Title</h2></div>
 </div>
 
 <form method="post">
@@ -38,8 +37,10 @@
         <label asp-for="Input.Visibility" class="form-label"></label>
         <select asp-for="Input.Visibility" asp-items="@Model.MembershipVisibilties" class="form-select"></select>
     </div>
-    <button type="submit" class="btn btn-primary">@L["Apply"]</button>
+    <button type="submit" class="btn btn-primary">@L["Apply changes"]</button>
+    <a asp-page="Index" asp-route-anchor="@RouteData.Values["anchor"]" class="btn">@L["Back"]</a>
 </form>
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }

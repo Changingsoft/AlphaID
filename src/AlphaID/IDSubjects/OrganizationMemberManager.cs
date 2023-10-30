@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace IDSubjects;
 
@@ -97,32 +98,6 @@ public class OrganizationMemberManager
     }
 
     /// <summary>
-    /// Take person join in organization.
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="organization"></param>
-    /// <param name="title"></param>
-    /// <param name="department"></param>
-    /// <param name="remark"></param>
-    /// <returns></returns>
-    [Obsolete]
-    public async Task<IdOperationResult> JoinOrganizationAsync(NaturalPerson person, GenericOrganization organization, string? title = null, string? department = null, string? remark = null)
-    {
-        var member = await this.GetMemberAsync(person, organization);
-        if (member != null)
-            return IdOperationResult.Failed("自然人已是该组织的成员。");
-
-        member = new(organization, person)
-        {
-            Title = title,
-            Department = department,
-            Remark = remark,
-        };
-        await this.store.CreateAsync(member);
-        return IdOperationResult.Success;
-    }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="member"></param>
@@ -152,6 +127,16 @@ public class OrganizationMemberManager
             return await this.store.DeleteAsync(member);
         }
         return IdOperationResult.Success;
+    }
+
+    /// <summary>
+    /// 移除用户成员身份，无论用户是否是组织所有者也是如此。
+    /// </summary>
+    /// <param name="member"></param>
+    /// <returns></returns>
+    public async Task<IdOperationResult> RemoveAsync(OrganizationMember member)
+    {
+        return await this.store.DeleteAsync(member);
     }
 
     /// <summary>

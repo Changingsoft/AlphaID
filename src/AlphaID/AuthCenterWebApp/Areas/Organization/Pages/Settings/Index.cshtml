@@ -14,7 +14,7 @@
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
     <button type="submit" class="btn">@L["Apply changes"]</button>
-    <partial name="_OperationResultPartial" model="Model.OperationResult" />
+    @Html.DisplayFor(m => m.OperationResult)
 </form>
 
 <h3>@L["Danger zone"]</h3>

@@ -1,10 +1,10 @@
 ﻿@page
 @model SecurityModel
 @{
-    this.ViewBag.Title = "Security Options";
+    this.ViewBag.Title = L["Security Options"];
 }
 
-<h2>Security Options</h2>
+<h2>@L["Security Options"]</h2>
 @if (!string.IsNullOrEmpty(Model.OperationMessage))
 {
     <div class="alert alert-success">@Model.OperationMessage</div>
@@ -23,5 +23,5 @@
         <input asp-for="Input.LockoutEnabled" class="form-check-input" />
         <label asp-for="Input.LockoutEnabled" class="form-check-label"></label>
     </div>
-    <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="submit" class="btn btn-primary">@L["Apply changes"]</button>
 </form>

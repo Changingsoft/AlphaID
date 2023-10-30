@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
-public class BankAccountModel : PageModel
+public class PaymentsModel : PageModel
 {
     private readonly NaturalPersonManager personManager;
 
-    public BankAccountModel(NaturalPersonManager personManager)
+    public PaymentsModel(NaturalPersonManager personManager)
     {
         this.personManager = personManager;
     }

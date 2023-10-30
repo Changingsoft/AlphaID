@@ -1,13 +1,9 @@
 ﻿@page
-@model BankAccountModel
+@model PaymentsModel
 @{
-    this.ViewBag.Title = this.L["Bank accounts of {0}", this.Model.Person.Name];
+    this.ViewBag.Title = this.L["Payments of {0}", this.Model.Person.Name];
 }
-
-<h2><a asp-page="Index" asp-route-anchor="@Model.Anchor">@ViewBag.Title</a></h2>
-
-<partial name="_PersonSummary" model="@Model.Person" />
-
+<h2>@ViewBag.Title</h2>
 <table class="table">
     <thead>
         <tr>

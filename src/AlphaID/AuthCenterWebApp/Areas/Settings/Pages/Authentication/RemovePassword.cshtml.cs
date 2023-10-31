@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class RemovePasswordModel : PageModel
 {
@@ -15,9 +15,6 @@ public class RemovePasswordModel : PageModel
         this.userManager = userManager;
     }
 
-    [TempData]
-    public string? StatusMessage { get; set; }
-
     [Display(Name = "Password")]
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Validate_Required")]
@@ -25,6 +22,8 @@ public class RemovePasswordModel : PageModel
     public string Password { get; set; } = default!;
 
     public IList<UserLoginInfo> Logins { get; set; } = default!;
+
+    public IdentityResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -42,7 +41,12 @@ public class RemovePasswordModel : PageModel
         this.Logins = await this.userManager.GetLoginsAsync(person);
         if (!this.Logins.Any())
         {
-            this.StatusMessage = "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。";
+            this.ModelState.AddModelError("", "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。");
+            this.Result = IdentityResult.Failed(new IdentityError()
+            {
+                Code = "Cannot remove password",
+                Description = "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。",
+            });
             return this.Page();
         }
 
@@ -56,18 +60,7 @@ public class RemovePasswordModel : PageModel
             return this.Page();
         }
 
-        var result = await this.userManager.RemovePasswordAsync(person);
-        if (!result.Succeeded)
-        {
-            foreach (var error in result.Errors)
-                this.ModelState.AddModelError("", error.Description);
-            return this.Page();
-        }
-
-        person.PasswordLastSet = null;
-        await this.userManager.UpdateAsync(person);
-
-        this.StatusMessage = "您已成功移除密码。";
+        this.Result = await this.userManager.RemovePasswordAsync(person);
         this.Password = string.Empty;
         return this.Page();
     }

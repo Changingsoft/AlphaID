@@ -119,7 +119,6 @@ public class SignUpModel : PageModel
             personBuilder.SetEmail(this.Input.Email);
 
         var person = personBuilder.Person;
-        person.PasswordLastSet = DateTime.UtcNow;
         person.DateOfBirth = this.Input.DateOfBirth;
         person.Sex = this.Input.Sex;
 

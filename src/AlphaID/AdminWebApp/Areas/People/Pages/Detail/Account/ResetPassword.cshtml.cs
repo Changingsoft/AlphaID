@@ -55,18 +55,10 @@ public class ResetPasswordModel : PageModel
             return this.Page();
         }
 
-        var resetTokenTask = this.userManager.GeneratePasswordResetTokenAsync(this.Person);
         var password = this.GeneratePassword();
-        var result = await this.userManager.ResetPasswordAsync(this.Person, await resetTokenTask, password);
+        var result = await this.userManager.AdminResetPasswordAsync(this.Person, password, true, true);
         if (result.Succeeded)
         {
-            if (await this.userManager.IsLockedOutAsync(this.Person))
-                await this.userManager.SetLockoutEndDateAsync(this.Person, DateTime.UtcNow); //unlock user
-
-            //设置用户首次登录必须更改密码。
-            this.Person.PasswordLastSet = null; //todo 重置密码后要求用户首次必须修改密码。
-            await this.userManager.UpdateAsync(this.Person);
-
             await this.shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
             this.OperationResult = "密码已重置并告知用户。";
             return this.Page();
@@ -88,8 +80,7 @@ public class ResetPasswordModel : PageModel
             return this.NotFound();
         this.Person = person;
 
-        var resetTokenTask = this.userManager.GeneratePasswordResetTokenAsync(this.Person);
-        var result = await this.userManager.ResetPasswordAsync(this.Person, await resetTokenTask, this.Input.NewPassword);
+        var result = await this.userManager.AdminResetPasswordAsync(this.Person, this.Input.NewPassword, this.Input.UserMustChangePasswordOnNextLogin, this.Input.UnlockUser);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -98,13 +89,7 @@ public class ResetPasswordModel : PageModel
             }
             return this.Page();
         }
-        if (this.Input.UnlockUser)
-        {
-            if (await this.userManager.IsLockedOutAsync(this.Person))
-                await this.userManager.SetLockoutEndDateAsync(this.Person, DateTime.UtcNow);
-        }
-        this.Person.PasswordLastSet = this.Input.UserMustChangePasswordOnNextLogin ? null : DateTime.UtcNow;
-        await this.userManager.UpdateAsync(this.Person);
+
 
         this.OperationResult = "操作已成功。";
         return this.Page();

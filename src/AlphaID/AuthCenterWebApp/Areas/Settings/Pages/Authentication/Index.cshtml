@@ -1,0 +1,9 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.Authentication.IndexModel
+@{
+    this.ViewBag.Title = L["Password and authentication"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+<a asp-page="ChangePassword" class="btn">@L["Change password"]</a>

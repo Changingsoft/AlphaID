@@ -77,9 +77,6 @@ public class SetPasswordModel : PageModel
             return this.Page();
         }
 
-        user.PasswordLastSet = DateTime.UtcNow;
-        await this._userManager.UpdateAsync(user);
-
         await this._signInManager.RefreshSignInAsync(user);
         this.StatusMessage = "您的密码已设置。";
 

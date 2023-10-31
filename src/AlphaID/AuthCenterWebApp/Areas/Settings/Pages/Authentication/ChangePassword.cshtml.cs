@@ -1,12 +1,11 @@
-﻿#nullable disable
-
+﻿using AuthCenterWebApp;
 using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ChangePasswordModel : PageModel
 {
@@ -25,32 +24,31 @@ public class ChangePasswordModel : PageModel
     }
 
     [BindProperty]
-    public InputModel Input { get; set; }
-
-    [TempData]
-    public string StatusMessage { get; set; }
+    public InputModel Input { get; set; } = default!;
 
     public NaturalPerson Person { get; set; } = default!;
 
     public IList<UserLoginInfo> ExternalLogins { get; set; } = default!;
+
+    public IdentityResult? Result { get; set; }
 
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
-        public string OldPassword { get; set; }
+        public string CurrentPassword { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(100, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
-        public string NewPassword { get; set; }
+        public string NewPassword { get; set; } = default!;
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; } = default!;
     }
 
     public async Task<IActionResult> OnGetAsync()
@@ -80,20 +78,16 @@ public class ChangePasswordModel : PageModel
         }
         this.Person = user;
 
-        var changePasswordResult = await this._userManager.ChangePasswordAsync(user, this.Input.OldPassword, this.Input.NewPassword);
+        var changePasswordResult = await this._userManager.ChangePasswordAsync(user, this.Input.CurrentPassword, this.Input.NewPassword);
         if (!changePasswordResult.Succeeded)
         {
-            foreach (var error in changePasswordResult.Errors)
-            {
-                this.ModelState.AddModelError(string.Empty, error.Description);
-            }
+            this.Result = changePasswordResult;
             return this.Page();
         }
 
         await this._signInManager.RefreshSignInAsync(user);
+        this.Result = IdentityResult.Success;
         this._logger.LogInformation("用户已成功更改其密码。");
-        this.StatusMessage = "您的密码已更改。";
-
-        return this.RedirectToPage();
+        return this.Page();
     }
 }

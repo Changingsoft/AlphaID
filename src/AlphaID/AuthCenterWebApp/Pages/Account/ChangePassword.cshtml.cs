@@ -66,10 +66,6 @@ public class ChangePasswordModel : PageModel
             //Signout mustchangepassword scheme
             await this.HttpContext.SignOutAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme);
 
-            //set password last set value
-            person.PasswordLastSet = DateTime.UtcNow;
-            await this.userManager.UpdateAsync(person);
-
             //Signin user with out password.
             await this._signInManager.SignInAsync(person, rememberMe);
 

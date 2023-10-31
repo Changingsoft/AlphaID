@@ -119,7 +119,7 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     /// 获取一个值，指示用户上一次设置密码的时间。如果该值为null，或超过设定的最大更改密码期限，则用户在登录时必须强制更改密码。
     /// </summary>
-    public virtual DateTime? PasswordLastSet { get; set; }
+    public virtual DateTime? PasswordLastSet { get; protected internal set; }
 
     /// <summary>
     /// User head image data.

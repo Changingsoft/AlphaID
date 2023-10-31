@@ -4,9 +4,7 @@
     this.ViewBag.Title = this.L["Members of {0}", this.Model.Organization.Name];
 }
 @Html.DisplayFor(m => m.Result)
-<h2>
-    @L["Members of {0}", this.Model.Organization.Name]
-</h2>
+<h2>@L["Members of {0}", this.Model.Organization.Name]</h2>
 <p>@Model.Members.Count() 人</p>
 <form method="post" asp-page-handler="RemoveMember">
     <table class="table">

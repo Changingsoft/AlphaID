@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace AdminWebApp.Areas.People.Pages.Detail;
+namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
 public class ResetPasswordModel : PageModel
 {

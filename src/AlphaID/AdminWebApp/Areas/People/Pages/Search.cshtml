@@ -1,23 +1,24 @@
 ﻿@page
 @model SearchModel
 @{
-    this.ViewBag.Title = "Search People";
+    this.ViewBag.Title = L["Search People"];
 }
-
-<div class="page-body">
-    <div class="container-xl">
+@section PageHeader{
+    <h1>@L["Search Result"]</h1>
+}
+<div class="card">
+    <div class="card-body">
         <partial name="_SearchInputPart" />
-
         @if (this.Model.Results.Any())
         {
             <table class="table">
                 <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>Gender</td>
-                        <td>Account name</td>
-                        <td>Mobile phone number</td>
-                        <td>Age</td>
+                        <td>@L["Name"]</td>
+                        <td>@L["Gender"]</td>
+                        <td>@L["Account name"]</td>
+                        <td>@L["Mobile phone number"]</td>
+                        <td>@L["Age"]</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,13 +37,10 @@
                     }
                 </tbody>
             </table>
-
-
         }
         else
         {
-            <p>No results.</p>
+            <p>@L["No results."]</p>
         }
-
     </div>
 </div>

@@ -9,13 +9,9 @@
         org = await this.manager.FindByIdAsync(id);
     }
 }
-<div class="row g-2 align-items-center mb-3">
-    <div class="col">
-        <h2 class="page-title">
-            @org?.Name
-        </h2>
-    </div>
-</div>
+@section PageHeader{
+    <h1 class="page-title">@org?.Name</h1>
+}
 <div class="card">
     <div class="row g-0">
         <div class="col-12 col-md-3 border-end">

@@ -35,6 +35,8 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
                 Title = member.Title,
                 Department = member.Department,
                 Remark = member.Remark,
+                IsOwner = member.IsOwner,
+                Visibility = member.Visibility,
             };
             return this.Page();
         }
@@ -52,6 +54,8 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
             member.Title = this.Input.Title;
             member.Department = this.Input.Department;
             member.Remark = this.Input.Remark;
+            member.IsOwner = this.Input.IsOwner;
+            member.Visibility = this.Input.Visibility;
 
             var result = await this.memberManager.UpdateAsync(member);
             if (result.Succeeded)
@@ -79,6 +83,10 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
             [Display(Name = "Remark")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Remark { get; set; }
+
+            public bool IsOwner { get; set; } = false;
+
+            public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
         }
     }
 }

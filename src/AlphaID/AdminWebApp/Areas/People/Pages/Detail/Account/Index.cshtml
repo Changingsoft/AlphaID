@@ -1,9 +1,9 @@
 ﻿@page
-@model IdModel
+@model AdminWebApp.Areas.People.Pages.Detail.Account.IndexModel
 @{
+    ViewBag.Title = L["Account"];
 }
-<h2>@L["ID"]</h2>
-
+<h2>@ViewBag.Title</h2>
 @if (this.Model.OperationResultMessage != null)
 {
     <div class="alert alert-success">
@@ -30,3 +30,4 @@
     <p><a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a></p>
 }
 <p><a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Reset local password</a></p>
+

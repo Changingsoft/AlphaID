@@ -1,13 +1,11 @@
 ﻿@page
 @model IndexModel
 @inject OrganizationMemberManager memberManager
-
 @{
     this.ViewBag.Title = this.Model.Organization.Name;
     var members = await this.memberManager.GetMembersAsync(this.Model.Organization);
 }
-
-<h2>Overview</h2>
+<h2>@L["Overview"]</h2>
 <div class="card mb-3">
     <div class="card-header">
         <h3 class="card-title">Base info</h3>
@@ -96,9 +94,6 @@
     </div>
 </div>
 <p><a asp-page="Edit" asp-route-anchor="@Model.Organization.Id" class="btn btn-primary">@L["Edit"]</a></p>
-
-
-<p></p>
 <dl class="row">
     <dt class="col-4">@L["Created at"]</dt>
     <dd class="col-8">@Model.Organization.WhenCreated</dd>
@@ -106,5 +101,10 @@
     <dd class="col-8">@Model.Organization.WhenChanged</dd>
 </dl>
 
-<hr />
-<p><a asp-page="Delete" asp-route-anchor="@Model.Organization.Id" class="btn btn-danger">@L["Delete organization"]</a></p>
+<h3>@L["Danger zone"]</h3>
+<div class="card">
+    <div class="card-status-top bg-danger"></div>
+    <div class="card-body">
+        <a asp-page="Delete" asp-route-anchor="@Model.Organization.Id" class="btn btn-danger">@L["Delete organization"]</a>
+    </div>
+</div>

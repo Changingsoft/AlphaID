@@ -1,17 +1,15 @@
 ﻿@page
 @model IndexModel
-
 @{
     this.ViewBag.Title = $"{Model.Data.Name}";
 }
-
 <h2>@L["Overview"]</h2>
 <div class="row mb-3">
     <div class="col-10">
-        <div class="card">
+        <div class="card card-sm">
             <div class="card-header d-flex justify-content-between">
                 <h3 class="card-title">@L["Person Name"]</h3>
-                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn">@L["Change name"]</a>
+                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn btn-sm">@L["Change person name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
@@ -56,15 +54,40 @@
 </div>
 <div class="card mb-3">
     <div class="card-header">
+        <h3 class="card-title">@L["Contacts"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Phone number"]</div>
+                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Email"]</div>
+                <div class="datagrid-content">@Model.Data.Email</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["QQ"]</div>
+                <div class="datagrid-content">N/A</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Address"]</div>
+                <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
         <h3 class="card-title">Account</h3>
     </div>
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["User name"]</div>
+                <div class="datagrid-title">@L["Username"]</div>
                 <div class="datagrid-content">
                     @Model.Data.UserName
-                    <a href="#" class="btn btn-sm">@L["Change"]</a>
+                    <a href="#" class="btn btn-sm">@L["Change username"]</a>
                 </div>
             </div>
             <div class="datagrid-item">
@@ -108,33 +131,6 @@
         </div>
     </div>
 </div>
-
-<div class="card mb-3">
-    <div class="card-header">
-        <h3 class="card-title">@L["Contacts"]</h3>
-    </div>
-    <div class="card-body">
-        <div class="datagrid">
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Phone number"]</div>
-                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Email"]</div>
-                <div class="datagrid-content">@Model.Data.Email</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["QQ"]</div>
-                <div class="datagrid-content">N/A</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Address"]</div>
-                <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="card mb-3">
     <div class="card-header">
         <h3 class="card-title">@L["Payments"]</h3>

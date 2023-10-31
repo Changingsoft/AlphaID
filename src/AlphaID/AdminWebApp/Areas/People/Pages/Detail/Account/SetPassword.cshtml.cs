@@ -2,7 +2,7 @@ using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.People.Pages.Detail;
+namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
 public class SetPasswordModel : PageModel
 {

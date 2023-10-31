@@ -1,14 +1,15 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.People.Pages.Detail
+namespace AdminWebApp.Areas.People.Pages.Detail.Account
 {
-    public class IdModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly NaturalPersonManager userManager;
 
-        public IdModel(NaturalPersonManager userManager)
+        public IndexModel(NaturalPersonManager userManager)
         {
             this.userManager = userManager;
         }
@@ -69,5 +70,6 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string UserName { get; set; } = default!;
         }
+
     }
 }

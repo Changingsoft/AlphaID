@@ -2,7 +2,7 @@ using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.People.Pages.Detail
+namespace AdminWebApp.Areas.People.Pages.Detail.Account
 {
     public class ExternalLoginsModel : PageModel
     {

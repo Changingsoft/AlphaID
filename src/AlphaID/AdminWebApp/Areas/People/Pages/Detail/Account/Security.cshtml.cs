@@ -1,7 +1,8 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.People.Pages.Detail;
+namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
 public class SecurityModel : PageModel
 {
@@ -30,7 +31,6 @@ public class SecurityModel : PageModel
         this.Data = person;
         this.Input = new InputModel
         {
-            Enabled = this.Data.Enabled,
             TwoFactorEnabled = this.Data.TwoFactorEnabled,
             LockoutEnabled = this.Data.LockoutEnabled,
         };
@@ -44,7 +44,6 @@ public class SecurityModel : PageModel
 
         this.Data = person;
 
-        this.Data.Enabled = this.Input.Enabled;
         this.Data.TwoFactorEnabled = this.Input.TwoFactorEnabled;
         this.Data.LockoutEnabled = this.Input.LockoutEnabled;
 
@@ -55,10 +54,10 @@ public class SecurityModel : PageModel
 
     public class InputModel
     {
-        public bool Enabled { get; set; }
-
+        [Display(Name = "Two-factor enabled")]
         public bool TwoFactorEnabled { get; set; }
 
+        [Display(Name = "Lockout enabled")]
         public bool LockoutEnabled { get; set; }
 
 

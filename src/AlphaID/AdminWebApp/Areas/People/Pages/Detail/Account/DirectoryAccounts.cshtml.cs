@@ -2,7 +2,7 @@ using DirectoryLogon;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.People.Pages.Detail;
+namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
 public class DirectoryAccountsModel : PageModel
 {

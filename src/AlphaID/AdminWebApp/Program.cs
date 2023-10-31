@@ -75,7 +75,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "People"));
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "Organizations"));
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Clients/Detail", "OpenIDConnect"));
-    
+
 })
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>

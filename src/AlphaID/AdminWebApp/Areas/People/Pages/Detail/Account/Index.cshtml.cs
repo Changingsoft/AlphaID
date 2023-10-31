@@ -1,6 +1,5 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account

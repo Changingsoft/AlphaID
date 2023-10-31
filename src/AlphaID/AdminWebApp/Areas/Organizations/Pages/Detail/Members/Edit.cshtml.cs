@@ -7,13 +7,11 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
     public class EditModel : PageModel
     {
         private readonly OrganizationMemberManager memberManager;
-        private readonly NaturalPersonManager naturalPersonManager;
         private readonly OrganizationManager organizationManager;
 
-        public EditModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager, OrganizationManager organizationManager)
+        public EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager)
         {
             this.memberManager = memberManager;
-            this.naturalPersonManager = naturalPersonManager;
             this.organizationManager = organizationManager;
         }
 

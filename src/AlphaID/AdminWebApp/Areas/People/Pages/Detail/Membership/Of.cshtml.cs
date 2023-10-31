@@ -65,7 +65,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
             member.Visibility = this.Input.Visibility;
 
             this.OperationResult = await this.memberManager.UpdateAsync(member);
-            
+
             return this.Page();
         }
 
@@ -83,7 +83,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Remark { get; set; }
 
-            [Display(Name = "Is owner", Description ="The owner of organization can fully mange organization by themselvs.")]
+            [Display(Name = "Is owner", Description = "The owner of organization can fully mange organization by themselvs.")]
             public bool IsOwner { get; set; }
 
             [Display(Name = "Membership visibility")]

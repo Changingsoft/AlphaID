@@ -83,7 +83,7 @@ public class IndexModel : PageModel
 
         var members = await this.memberManager.GetMembersOfAsync(this.Person);
         var member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
-        if(member == null)
+        if (member == null)
         {
             this.ModelState.AddModelError("", "Membership not found.");
             return this.Page();

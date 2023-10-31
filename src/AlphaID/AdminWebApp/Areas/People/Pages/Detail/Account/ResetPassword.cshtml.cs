@@ -140,7 +140,7 @@ public class ResetPasswordModel : PageModel
             sb.Append(charset[Random.Shared.Next(charset.Length)]);
         }
         //Ï´ÅÆ
-        this.Shuffle(sb);
+        Shuffle(sb);
         return sb.ToString();
     }
 
@@ -149,7 +149,7 @@ public class ResetPasswordModel : PageModel
     /// </summary>
     /// <param name="sb"></param>
     /// <returns></returns>
-    private void Shuffle(StringBuilder sb)
+    private static void Shuffle(StringBuilder sb)
     {
         for (int i = 0; i < sb.Length - 1; i++)
         {

@@ -16,8 +16,9 @@ public class OidcOperationResult
 
 
     static readonly OidcOperationResult success = new() { Succeeded = true };
+
     /// <summary>
-    /// Gets an IdOperationResult instance thant point to success.
+    /// Gets an IdOperationResult instance that point to success.
     /// </summary>
     public static OidcOperationResult Success => success;
 

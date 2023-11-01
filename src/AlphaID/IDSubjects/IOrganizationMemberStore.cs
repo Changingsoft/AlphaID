@@ -11,6 +11,14 @@ public interface IOrganizationMemberStore
     IQueryable<OrganizationMember> OrganizationMembers { get; }
 
     /// <summary>
+    /// Find organization member by person id and organization id.
+    /// </summary>
+    /// <param name="personId"></param>
+    /// <param name="organizationId"></param>
+    /// <returns></returns>
+    Task<OrganizationMember?> FindAsync(string personId, string organizationId);
+
+    /// <summary>
     /// Create
     /// </summary>
     /// <param name="item"></param>

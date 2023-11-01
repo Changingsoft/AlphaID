@@ -20,23 +20,25 @@ using Serilog;
 using System.Diagnostics;
 using System.Globalization;
 
-Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
+//Log.Logger = new LoggerConfiguration()
+//                .WriteTo.Console()
+//                .CreateBootstrapLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
 
-Log.Information("Starting up");
+//Log.Information("Starting up");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) =>
+    builder.Host.UseSerilog((ctx, configuration) =>
     {
-        lc
-                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-                .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+        configuration
+                .ReadFrom.Configuration(ctx.Configuration)
                 .Enrich.FromLogContext()
-                .ReadFrom.Configuration(ctx.Configuration);
+                //.WriteTo.Console()
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+                //.WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+                ;
     });
 
     //程序资源
@@ -77,14 +79,14 @@ try
         {
             sqlOptions.UseNetTopologySuite();
         });
-        options.UseLazyLoadingProxies();
+        //options.UseLazyLoadingProxies(); //hack disable lazy loading, about cause issue identity.
     });
 
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddIdSubjectsIdentity(options =>
     {
-        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz-";
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789-";
         options.User.RequireUniqueEmail = true;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequiredLength = 8;

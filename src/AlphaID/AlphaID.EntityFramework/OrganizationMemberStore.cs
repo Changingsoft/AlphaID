@@ -1,4 +1,5 @@
 ﻿using IDSubjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlphaID.EntityFramework;
 
@@ -11,7 +12,12 @@ public class OrganizationMemberStore : IOrganizationMemberStore
         this.dbContext = dbContext;
     }
 
-    public IQueryable<OrganizationMember> OrganizationMembers => this.dbContext.OrganizationMembers;
+    public IQueryable<OrganizationMember> OrganizationMembers => this.dbContext.OrganizationMembers.Include(p => p.Organization).Include(p => p.Person);
+
+    public async Task<OrganizationMember?> FindAsync(string personId, string organizationId)
+    {
+        return await this.dbContext.OrganizationMembers.FirstOrDefaultAsync(p => p.PersonId == personId && p.OrganizationId == organizationId);
+    }
 
     public async Task<IdOperationResult> CreateAsync(OrganizationMember item)
     {

@@ -36,7 +36,7 @@ public class ChangePasswordModel : PageModel
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var result = await this.HttpContext.AuthenticateAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme);
+        var result = await this.HttpContext.AuthenticateAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (result.Principal == null)
         {
             throw new InvalidOperationException($"Unable to load must change password authentication user.");
@@ -52,7 +52,7 @@ public class ChangePasswordModel : PageModel
     public async Task<IActionResult> OnPostAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var authMustChangePasswordResult = await this.HttpContext.AuthenticateAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme);
+        var authMustChangePasswordResult = await this.HttpContext.AuthenticateAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (authMustChangePasswordResult.Principal == null)
         {
             throw new InvalidOperationException($"Unable to load must change password authentication user.");
@@ -63,7 +63,7 @@ public class ChangePasswordModel : PageModel
         if (identityResult.Succeeded)
         {
             //Signout mustchangepassword scheme
-            await this.HttpContext.SignOutAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme);
+            await this.HttpContext.SignOutAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
 
             //Signin user with out password.
             await this._signInManager.SignInAsync(person, rememberMe);

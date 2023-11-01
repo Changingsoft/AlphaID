@@ -28,9 +28,10 @@ public static class IDSubjectsServiceCollectionExtensions
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>(setupAction)
-            .AddUserManager<NaturalPersonManager>();
+            .AddUserManager<NaturalPersonManager>()
             //.AddUserValidator<PhoneNumberValidator>()
-            //.AddErrorDescriber<NaturalPersonIdentityErrorDescriber>();
+            //.AddErrorDescriber<NaturalPersonIdentityErrorDescriber>()
+            ;
         return builder;
     }
 
@@ -77,9 +78,9 @@ public static class IDSubjectsServiceCollectionExtensions
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             })
             //添加必须修改密码cookie。
-            .AddCookie(AuthCenterIdentitySchemes.MustChangePasswordScheme, o =>
+            .AddCookie(IDSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
             {
-                o.Cookie.Name = AuthCenterIdentitySchemes.MustChangePasswordScheme;
+                o.Cookie.Name = IDSubjectsIdentityDefaults.MustChangePasswordScheme;
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
         return builder;

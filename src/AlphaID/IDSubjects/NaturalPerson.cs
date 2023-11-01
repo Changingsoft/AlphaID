@@ -61,103 +61,104 @@ public class NaturalPerson : IdentityUser
     /// </summary>
     [PersonalData]
     [MaxLength(10)]
-    public virtual string? FirstName { get; protected set; }
+    public string? FirstName { get; protected set; }
 
     /// <summary>
     /// Middle name.
     /// </summary>
     [PersonalData]
     [MaxLength(50)]
-    public virtual string? MiddleName { get; set; }
+    public string? MiddleName { get; set; }
 
     /// <summary>
     /// LastName 或姓氏。
     /// </summary>
     [PersonalData]
     [MaxLength(10)]
-    public virtual string? LastName { get; protected set; }
+    public string? LastName { get; protected set; }
 
     /// <summary>
     /// 昵称。
     /// </summary>
     [PersonalData]
     [MaxLength(20)]
-    public virtual string? NickName { get; set; }
+    public string? NickName { get; set; }
 
     /// <summary>
     /// 姓氏拼音
     /// </summary>
     [MaxLength(20), Unicode(false)]
-    public virtual string? PhoneticSurname { get; set; }
+    public string? PhoneticSurname { get; set; }
 
     /// <summary>
     /// 名字拼音
     /// </summary>
     [MaxLength(40), Unicode(false)]
-    public virtual string? PhoneticGivenName { get; set; }
+    public string? PhoneticGivenName { get; set; }
 
     /// <summary>
     /// 读音检索提示。（即去掉空格的读音名字）
     /// </summary>
     [Unicode(false)]
     [MaxLength(60)]
-    public virtual string? PhoneticSearchHint { get; set; }
+    public string? PhoneticSearchHint { get; set; }
 
     /// <summary>
     /// 性别。
     /// </summary>
     [Column(TypeName = "varchar(6)")]
     [Comment("性别")]
-    public virtual Sex? Sex { get; set; }
+    public Sex? Sex { get; set; }
 
     /// <summary>
     /// 出生日期
     /// </summary>
     [Column(TypeName = "date")]
-    public virtual DateTime? DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 
     /// <summary>
     /// 获取一个值，指示用户上一次设置密码的时间。如果该值为null，或超过设定的最大更改密码期限，则用户在登录时必须强制更改密码。
     /// </summary>
-    public virtual DateTime? PasswordLastSet { get; protected internal set; }
+    public DateTime? PasswordLastSet { get; protected internal set; }
 
     /// <summary>
     /// User head image data.
     /// </summary>
-    public virtual BinaryDataInfo? Avatar { get; set; }
+    public BinaryDataInfo? Avatar { get; set; }
 
     /// <summary>
     /// 区域和语言选项
     /// </summary>
     [MaxLength(10), Unicode(false)]
-    public virtual string? Locale { get; protected internal set; }
+    public string? Locale { get; protected internal set; }
 
     /// <summary>
     /// 用户所选择的时区。存储为IANA Time zone database名称。
     /// </summary>
     [MaxLength(50), Unicode(false)]
-    public virtual string? TimeZone { get; protected internal set; }
+    public string? TimeZone { get; protected internal set; }
 
     /// <summary>
     /// 地址。
     /// </summary>
-    public virtual AddressInfo? Address { get; set; }
+    public AddressInfo? Address { get; set; }
 
     /// <summary>
     /// 个人主页。
     /// </summary>
     [MaxLength(256)]
-    public virtual string? WebSite { get; set; }
+    public string? WebSite { get; set; }
 
     /// <summary>
     /// 个人经历。
     /// </summary>
     [MaxLength(200)]
-    public virtual string? Bio { get; set; }
+    public string? Bio { get; set; }
 
     /// <summary>
     /// Gets bank accounts of the person.
     /// </summary>
+    [Obsolete("将专门移动到支付管理器中")]
     public virtual ICollection<PersonBankAccount> BankAccounts { get; protected set; } = default!;
 
 

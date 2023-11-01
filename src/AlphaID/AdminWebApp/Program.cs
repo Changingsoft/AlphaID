@@ -37,10 +37,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((ctx, lc) =>
 {
     lc
-    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    //.ReadFrom.Configuration(ctx.Configuration)
     .Enrich.FromLogContext()
-    .ReadFrom.Configuration(ctx.Configuration);
+    //.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.Console()
+    //.WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    ;
 });
 
 //ConfigServices

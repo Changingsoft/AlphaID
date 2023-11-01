@@ -143,7 +143,7 @@ public class BindLoginModel : PageModel
                 {
                     var principal = this.GenerateMustChangePasswordPrincipal(user);
                     await this._signInManager.SignOutAsync();
-                    await this.HttpContext.SignInAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme, principal);
+                    await this.HttpContext.SignInAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
                     return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
                 }
 
@@ -285,7 +285,7 @@ public class BindLoginModel : PageModel
 
     private ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
     {
-        var identity = new ClaimsIdentity(AuthCenterIdentitySchemes.MustChangePasswordScheme);
+        var identity = new ClaimsIdentity(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));
         return new ClaimsPrincipal(identity);
     }

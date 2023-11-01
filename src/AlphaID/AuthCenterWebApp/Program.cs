@@ -10,12 +10,14 @@ using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
 using IDSubjects.RealName;
+using IDSubjects.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Diagnostics;
 using System.Globalization;
 
 Log.Logger = new LoggerConfiguration()
@@ -78,54 +80,20 @@ try
         options.UseLazyLoadingProxies();
     });
 
-    //启用AspNetCore.IdentityCore
-    builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    })
-    .AddCookie(IdentityConstants.ApplicationScheme, o =>
-    {
-        o.LoginPath = new PathString("/Account/Login");
-        o.Events = new CookieAuthenticationEvents
-        {
-            OnValidatePrincipal = SecurityStampValidator.ValidatePrincipalAsync
-        };
-    })
-    .AddCookie(IdentityConstants.ExternalScheme, o =>
-    {
-        o.Cookie.Name = IdentityConstants.ExternalScheme;
-        o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-    })
-    .AddCookie(IdentityConstants.TwoFactorRememberMeScheme, o =>
-    {
-        o.Cookie.Name = IdentityConstants.TwoFactorRememberMeScheme;
-        o.Events = new CookieAuthenticationEvents
-        {
-            OnValidatePrincipal = SecurityStampValidator.ValidateAsync<ITwoFactorSecurityStampValidator>
-        };
-    })
-    .AddCookie(IdentityConstants.TwoFactorUserIdScheme, o =>
-    {
-        o.Cookie.Name = IdentityConstants.TwoFactorUserIdScheme;
-        o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-    })
-    //添加必须修改密码cookie。
-    .AddCookie(AuthCenterIdentitySchemes.MustChangePasswordScheme, o =>
-    {
-        o.Cookie.Name = AuthCenterIdentitySchemes.MustChangePasswordScheme;
-        o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-    });
 
     builder.Services.AddHttpContextAccessor();
-    builder.Services.AddIdentityCore<NaturalPerson>()
-        .AddUserManager<NaturalPersonManager>()
+    builder.Services.AddIdSubjectsIdentity(options =>
+    {
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz-";
+        options.User.RequireUniqueEmail = true;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredLength = 8;
+    })
         .AddSignInManager<PersonSignInManager>()
-        .AddUserStore<NaturalPersonStore>()
         .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
-        .AddUserValidator<NaturalPersonValidator>()
-        .AddDefaultTokenProviders();
+        .AddDefaultTokenProviders()
+        .AddDefaultStores();
+
     builder.Services.AddScoped<IQueryableUserStore<NaturalPerson>, NaturalPersonStore>();
 
     //添加邮件发送器。
@@ -201,14 +169,6 @@ try
     //身份证OCR
     builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
 
-    //组织成员
-    builder.Services.AddScoped<OrganizationMemberManager>()
-        .AddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
-
-    //Organizations
-    builder.Services.AddScoped<OrganizationManager>()
-        .AddScoped<IOrganizationStore, OrganizationStore>();
-
     //todo 由于BotDetect Captcha需要支持同步流，应改进此配置。
     builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
         .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
@@ -241,6 +201,7 @@ try
 }
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException") // https://github.com/dotnet/runtime/issues/60600
 {
+    Debug.Fail(ex.Message);
     Log.Fatal(ex, "Unhandled exception");
 }
 finally

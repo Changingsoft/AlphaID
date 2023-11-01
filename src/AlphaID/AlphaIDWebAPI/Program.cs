@@ -152,18 +152,16 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 
 
 //builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
-builder.Services.AddScoped<IOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
 
 //ASP.NET Identity NaturalPersonManager.
-builder.Services.AddIdentityCore<NaturalPerson>()
-    .AddUserManager<NaturalPersonManager>()
-    .AddUserStore<NaturalPersonStore>();
+builder.Services.AddIdSubjectsIdentityCore(options =>
+{
 
-//组织成员
-builder.Services.AddScoped<OrganizationMemberManager>()
-    .AddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
+})
+    .AddDefaultStores();
+
 
 builder.Services.AddScoped<ChineseIDCardManager>()
     .AddScoped<IChineseIDCardValidationStore, RealNameValidationStore>();

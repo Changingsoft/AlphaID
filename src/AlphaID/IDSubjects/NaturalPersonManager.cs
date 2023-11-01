@@ -60,7 +60,6 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         return Task.FromResult(person);
     }
 
-
     /// <summary>
     /// 当身份验证成功时，调用此方法以记录包括登录次数、上次登录时间、登录方式等信息。
     /// </summary>
@@ -75,17 +74,9 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     }
 
     /// <summary>
-    /// 已重写。更新自然人信息。此方法将更新WhenChanged属性。
+    /// 
     /// </summary>
-    /// <param name="person"></param>
-    /// <returns></returns>
-    public override async Task<IdentityResult> UpdateAsync(NaturalPerson person)
-    {
-        person.WhenChanged = DateTime.UtcNow;
-        return await base.UpdateAsync(person);
-    }
-
-
+    public NaturalPersonIdentityErrorDescriber NaturalPersonIdentityErrorDescriber => this.ErrorDescriber as NaturalPersonIdentityErrorDescriber ?? throw new InvalidCastException();
 
     /// <summary>
     /// 更改自然人的名称信息。
@@ -142,10 +133,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    protected override Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
+    protected override async Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
     {
         user.WhenChanged = DateTime.UtcNow;
-        return base.UpdateUserAsync(user);
+        return await base.UpdateUserAsync(user);
     }
 
     /// <summary>
@@ -221,10 +212,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     {
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         IdentityResult result = await base.ResetPasswordAsync(user, token, newPassword);
-        if(!result.Succeeded)
+        if (!result.Succeeded)
             return result;
         //todo 需要从选项确定是否要清除PasswordLastSet
-        if(true)
+        if (true)
         {
             user.PasswordLastSet = null;
             result = await this.UpdateAsync(user);
@@ -249,12 +240,12 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     protected override async Task<IdentityResult> UpdatePasswordHash(NaturalPerson user, string newPassword, bool validatePassword)
     {
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdentityResult result =await  base.UpdatePasswordHash(user, newPassword, validatePassword);
+        IdentityResult result = await base.UpdatePasswordHash(user, newPassword, validatePassword);
         if (!result.Succeeded)
             return result;
         user.PasswordLastSet = DateTime.UtcNow;
         result = await this.UpdateAsync(user);
-        if(!result.Succeeded)
+        if (!result.Succeeded)
         {
             this.Logger.LogError("用户密码已更新，但设置PasswordLastSet时出错，事务已回滚。", result);
             return result;
@@ -277,12 +268,12 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await this.UpdatePasswordHash(person, newPassword, true);
         if (!result.Succeeded)
             return result;
-        if(mustChangePassword)
+        if (mustChangePassword)
         {
             person.PasswordLastSet = null;
             result = await this.UpdateAsync(person);
             this.Logger.LogInformation("已将{user}的PasswordLastSet清除", person);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 this.Logger.LogError("用户密码已设置，但清除PasswordLastSet时出错，事务已回滚。", result);
                 return result;
@@ -290,7 +281,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         }
         if (unlockUser)
             result = await this.UnlockPersonAsync(person);
-        if(!result.Succeeded)
+        if (!result.Succeeded)
         {
             this.Logger.LogError("用户密码已设置，但设置解锁时出错，事务已回滚。", result);
             return result;
@@ -329,7 +320,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             return result;
         user.PasswordLastSet = DateTime.UtcNow;
         result = await this.UpdateAsync(user);
-        if(!result.Succeeded)
+        if (!result.Succeeded)
         {
             this.Logger.LogError("添加密码时设置PasswordLastSet属性出错。", result);
             return result;

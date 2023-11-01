@@ -1,4 +1,4 @@
-﻿namespace AuthCenterWebApp.Services;
+﻿namespace IDSubjects;
 
 public static class AuthCenterIdentitySchemes
 {

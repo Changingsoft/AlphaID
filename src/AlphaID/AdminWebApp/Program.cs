@@ -177,16 +177,12 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 });
 
 //自然人管理器
-builder.Services.AddIdentityCore<NaturalPerson>(options =>
+builder.Services.AddIdSubjectsIdentityCore(options =>
 {
 
 })
-    .AddUserManager<NaturalPersonManager>()
-    .AddUserStore<NaturalPersonStore>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddIDSubjects()
     .AddDefaultStores();
+
 builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 
 //实名身份验证器。

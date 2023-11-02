@@ -74,7 +74,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.DirectoryLogon.Enti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.WechatWebLogin.EntityFramework", "AlphaID.WechatWebLogin.EntityFramework\AlphaID.WechatWebLogin.EntityFramework.csproj", "{909F50F0-B85C-4D02-9B87-709753CDE43F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDSubjects.RealName.Tests", "IDSubjects.RealName.Tests\IDSubjects.RealName.Tests.csproj", "{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.RealName.Tests", "IDSubjects.RealName.Tests\IDSubjects.RealName.Tests.csproj", "{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -224,5 +224,6 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		RESX_TaskErrorCategory = Message
 		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
+		RESX_CodeReferences = {"Items":[{"Expression":"\\W($File.$Key)\\W","Extensions":".cs,.xaml,.cshtml","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\W($File.$Key)\\W","Extensions":".vbhtml","IsCaseSensitive":false,"SingleLineComment":null},{"Expression":"ResourceManager.GetString\\(\"($Key)\"\\)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"typeof\\((\\w+\\.)*($File)\\).+\"($Key)\"|\"($Key)\".+typeof\\((\\w+\\.)*($File)\\)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\W($Key)\\W","Extensions":".vb","IsCaseSensitive":false,"SingleLineComment":"'"},{"Expression":"\\W($File::$Key)\\W","Extensions":".cpp,.c,.hxx,.h","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"&lt;%\\$\\s+Resources:\\s*($File)\\s*,\\s*($Key)\\s*%&gt;","Extensions":".aspx,.ascx,.master","IsCaseSensitive":true,"SingleLineComment":null},{"Expression":"StringResourceKey\\.($Key)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\.($Key)","Extensions":".ts,.html","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"@L\\[\\\"($Key)\\\"\\]","Extensions":".cshtml","IsCaseSensitive":true,"SingleLineComment":null}]}
 	EndGlobalSection
 EndGlobal

@@ -97,28 +97,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Scheme" xml:space="preserve">
-    <value>方案</value>
+  <data name="Change user name" xml:space="preserve">
+    <value>更改账户名</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>创建于</value>
-  </data>
-  <data name="Renewed" xml:space="preserve">
-    <value>更新于</value>
-  </data>
-  <data name="Expires" xml:space="preserve">
-    <value>有效期至</value>
-  </data>
-  <data name="Session ID" xml:space="preserve">
-    <value>会话ID</value>
-  </data>
-  <data name="Subject ID" xml:space="preserve">
-    <value>主体ID</value>
-  </data>
-  <data name="Display name" xml:space="preserve">
-    <value>显示名称</value>
-  </data>
-  <data name="Key part" xml:space="preserve">
-    <value>密钥部件</value>
+  <data name="Change" xml:space="preserve">
+    <value>更改</value>
   </data>
 </root>

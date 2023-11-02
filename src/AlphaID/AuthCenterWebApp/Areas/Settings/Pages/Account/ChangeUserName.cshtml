@@ -11,7 +11,7 @@
         <input asp-for="UserName" class="form-control" />
         <span asp-validation-for="UserName" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn">Change</button>
+    <button type="submit" class="btn">@L["Change"]</button>
 </form>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

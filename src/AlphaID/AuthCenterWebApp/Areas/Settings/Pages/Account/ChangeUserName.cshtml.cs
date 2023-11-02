@@ -1,3 +1,4 @@
+using AuthCenterWebApp.Services;
 using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,14 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
         NaturalPersonManager manager;
         IStringLocalizer<SharedResource> localizer;
         ILogger<ChangeUserNameModel>? logger;
+        PersonSignInManager signInManager;
 
-        public ChangeUserNameModel(NaturalPersonManager manager, IStringLocalizer<SharedResource> localizer, ILogger<ChangeUserNameModel>? logger)
+        public ChangeUserNameModel(NaturalPersonManager manager, IStringLocalizer<SharedResource> localizer, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
         {
             this.manager = manager;
             this.localizer = localizer;
             this.logger = logger;
+            this.signInManager = signInManager;
         }
 
         [BindProperty]
@@ -51,14 +54,17 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
                 return this.Page();
 
             this.Result = await this.manager.SetUserNameAsync(person, this.UserName);
+            if(this.Result.Succeeded)
+            {
+                await this.signInManager.RefreshSignInAsync(person);
+            }
             //this.manager.userna
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostCheckNameAsync(string userName)
+        public IActionResult OnPostCheckName(string userName)
         {
             return new JsonResult(true); //todo 用户输入用户名时实时验证用户名是否可用
-            return new JsonResult(this.localizer["Invalid user name"].ToString());
         }
     }
 }

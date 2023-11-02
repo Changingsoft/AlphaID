@@ -6,10 +6,10 @@ namespace AdminWebApp.Areas.Organizations.Pages;
 
 public class SearchModel : PageModel
 {
-    private readonly IQueryableOrganizationStore organizationStore;
+    private readonly IOrganizationStore organizationStore;
     private readonly OrganizationSearcher searcher;
 
-    public SearchModel(IQueryableOrganizationStore organizationStore, OrganizationSearcher searcher)
+    public SearchModel(IOrganizationStore organizationStore, OrganizationSearcher searcher)
     {
         this.organizationStore = organizationStore;
         this.searcher = searcher;
@@ -25,7 +25,7 @@ public class SearchModel : PageModel
 
         if (USCC.TryParse(q!, out USCC number))
         {
-            var org = await this.organizationStore.FindByIdentityAsync("统一社会信用代码", number.ToString());
+            var org = this.organizationStore.Organizations.FirstOrDefault(p => p.USCI == number.ToString());
             return org != null ? this.RedirectToPage("Detail/Index", new { id = org.Id }) : this.Page();
         }
 

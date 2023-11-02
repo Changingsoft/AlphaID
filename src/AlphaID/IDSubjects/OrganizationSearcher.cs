@@ -32,7 +32,7 @@ public class OrganizationSearcher
 
         var result = new HashSet<GenericOrganization>();
 
-        var usedNameResult = this.organizationUsedNameStore.UsedNames.Where(p => p.Name.Contains(keywords)).Select(p => p.Organization);
+        var usedNameResult = this._organizationStore.Organizations.Where(p => p.UsedNames.Any(n => n.Name == keywords));
         result.UnionWith(usedNameResult);
 
         var mainResult = this._organizationStore.Organizations.Where(p => p.Name.Contains(keywords));

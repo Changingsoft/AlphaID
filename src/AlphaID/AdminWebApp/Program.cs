@@ -185,8 +185,6 @@ builder.Services.AddIdSubjectsIdentityCore(options =>
 })
     .AddDefaultStores();
 
-builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
-
 //实名身份验证器。
 builder.Services.AddScoped<ChineseIDCardManager>()
     .AddScoped<IChineseIDCardValidationStore, RealNameValidationStore>();

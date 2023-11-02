@@ -215,6 +215,7 @@ Global
 		{909F50F0-B85C-4D02-9B87-709753CDE43F} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_TaskErrorCategory = Message
 		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
 	EndGlobalSection
 EndGlobal

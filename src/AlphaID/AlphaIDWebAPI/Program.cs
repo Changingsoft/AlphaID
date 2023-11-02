@@ -152,7 +152,6 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 
 
 //builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
-builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
 
 //ASP.NET Identity NaturalPersonManager.

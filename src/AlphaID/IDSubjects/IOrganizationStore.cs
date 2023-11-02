@@ -3,8 +3,13 @@
 /// <summary>
 /// Provide CURD for organization.
 /// </summary>
-public interface IOrganizationStore : IQueryableOrganizationStore
+public interface IOrganizationStore
 {
+    /// <summary>
+    /// Gets queryable of organization.
+    /// </summary>
+    IQueryable<GenericOrganization> Organizations { get; }
+
     /// <summary>
     /// Find organization by Id.
     /// </summary>

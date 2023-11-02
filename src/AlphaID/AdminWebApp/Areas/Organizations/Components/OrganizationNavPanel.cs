@@ -5,9 +5,9 @@ namespace AdminWebApp.Areas.Organizations.Components;
 
 public class OrganizationNavPanel : ViewComponent
 {
-    private readonly IQueryableOrganizationStore organizationStore;
+    private readonly IOrganizationStore organizationStore;
 
-    public OrganizationNavPanel(IQueryableOrganizationStore organizationStore)
+    public OrganizationNavPanel(IOrganizationStore organizationStore)
     {
         this.organizationStore = organizationStore;
     }

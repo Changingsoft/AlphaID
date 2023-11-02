@@ -9,9 +9,9 @@ namespace AdminWebApp.Areas.Organizations.Pages;
 public class NewModel : PageModel
 {
     private readonly OrganizationManager manager;
-    private readonly IQueryableOrganizationStore organizationStore;
+    private readonly IOrganizationStore organizationStore;
 
-    public NewModel(OrganizationManager manager, IQueryableOrganizationStore organizationStore)
+    public NewModel(OrganizationManager manager, IOrganizationStore organizationStore)
     {
         this.manager = manager;
         this.organizationStore = organizationStore;
@@ -62,8 +62,8 @@ public class NewModel : PageModel
             if (!USCC.TryParse(this.USCI, out USCC uscc))
                 this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码不正确。");
 
-            var usciExists = await this.organizationStore.FindByIdentityAsync("统一社会信用代码", uscc.ToString());
-            if (usciExists != null)
+            var usciExists = this.organizationStore.Organizations.Any(p => p.USCI == uscc.ToString());
+            if (usciExists)
                 this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码已被登记。");
         }
 

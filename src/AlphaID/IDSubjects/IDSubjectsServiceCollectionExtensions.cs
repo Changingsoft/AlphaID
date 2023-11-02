@@ -25,6 +25,7 @@ public static class IDSubjectsServiceCollectionExtensions
         // 由IDSubjects使用的服务。
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
+        services.TryAddScoped<OrganizationSearcher>();
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>(setupAction)

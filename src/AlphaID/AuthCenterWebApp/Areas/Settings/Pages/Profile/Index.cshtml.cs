@@ -1,6 +1,7 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
@@ -46,6 +47,24 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                     this.ModelState.AddModelError("", error.Description);
             }
             return this.Page();
+        }
+
+        public async Task<IActionResult> OnPostUpdateProfilePictureAsync()
+        {
+            if (!this.Request.Form.Files.Any())
+                return this.BadRequest();
+
+            var file = this.Request.Form.Files[0];
+            var person = await this.personManager.GetUserAsync(this.User);
+            Debug.Assert(person != null);
+            using var stream = file.OpenReadStream();
+            byte[] data = new byte[stream.Length];
+            stream.Read(data, 0, data.Length);
+            var result = await this.personManager.SetProfilePictureAsync(person, file.ContentType, data);
+            if (result.Succeeded)
+                return new JsonResult(true);
+            else
+                return new JsonResult("Can not update profile picture.");
         }
 
         public class InputModel

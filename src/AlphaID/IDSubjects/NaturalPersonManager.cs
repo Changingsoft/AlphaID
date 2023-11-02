@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp.Formats;
 using System.Transactions;
 using TimeZoneConverter;
 
@@ -327,5 +328,26 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         }
         trans.Complete();
         return IdentityResult.Success;
+    }
+
+    public async Task<IdentityResult> SetProfilePictureAsync(NaturalPerson person, string contentType, byte[] bytes)
+    {
+        try
+        {
+            var info = Image.Identify(bytes);
+        }
+        catch (InvalidImageContentException ex)
+        {
+            this.Logger?.LogWarning(ex, "传入的数据不是有效的图片内容。");
+            throw;
+        }
+
+        person.Avatar = new BinaryDataInfo()
+        {
+            Data = bytes,
+            MimeType = contentType,
+        };
+        var result = await this.UpdateUserAsync(person);
+        return result;
     }
 }

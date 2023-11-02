@@ -18,6 +18,7 @@
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.13" />
 		<PackageReference Include="NetTopologySuite" Version="2.5.0" />
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.0.2" />
 		<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
 	</ItemGroup>
 	<ItemGroup>

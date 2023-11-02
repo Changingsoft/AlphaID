@@ -26,10 +26,8 @@ builder.Host.UseSerilog((ctx, configuration) =>
     configuration
             .ReadFrom.Configuration(ctx.Configuration)
             .Enrich.FromLogContext()
-            //.WriteTo.Console()
             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-            //.WriteTo.EventLog(".NET Runtime", manageEventSource: true)
-            ;
+            .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
 });
 
 //程序资源
@@ -177,7 +175,7 @@ if (builder.Environment.IsDevelopment())
 var app = builder.Build();
 
 //测试获取EmailSender
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var emailSenders = scope.ServiceProvider.GetService<IEnumerable<IEmailSender>>();
     Debug.Assert(emailSenders != null);

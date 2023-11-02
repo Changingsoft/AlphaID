@@ -5,7 +5,6 @@ using AlphaIDWebAPI.Middlewares;
 using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
-using IDSubjects;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,21 +17,14 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
 
-Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
-
-Log.Information("Starting up");
-
-
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog((ctx, lc) =>
+builder.Host.UseSerilog((context, configuration) =>
 {
-    lc
-    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    configuration
+    .ReadFrom.Configuration(context.Configuration)
     .Enrich.FromLogContext()
-    .ReadFrom.Configuration(ctx.Configuration);
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
 });
 
 //Configuration Services

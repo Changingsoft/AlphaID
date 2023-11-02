@@ -18,7 +18,6 @@ using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -26,23 +25,14 @@ using Serilog;
 using System.Globalization;
 using System.Security.Claims;
 
-Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
-
-Log.Information("Starting up");
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((ctx, lc) =>
+builder.Host.UseSerilog((context, configuration) =>
 {
-    lc
-    //.ReadFrom.Configuration(ctx.Configuration)
+    configuration.ReadFrom.Configuration(context.Configuration)
     .Enrich.FromLogContext()
-    //.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.Console()
-    //.WriteTo.EventLog(".NET Runtime", manageEventSource: true)
-    ;
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
 });
 
 //ConfigServices

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WechatWebLogin\WechatWebLogin.csproj" />
+    <ProjectReference Include="..\IDSubjects.WechatWebLogin\IDSubjects.WechatWebLogin.csproj" />
   </ItemGroup>
 
 </Project>

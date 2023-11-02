@@ -30,13 +30,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{7C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaIDPlatform", "AlphaIDPlatform\AlphaIDPlatform.csproj", "{C2C8783C-F9DE-4F38-8D61-424F95CEC4AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WechatWebLogin", "WechatWebLogin\WechatWebLogin.csproj", "{C7E9F11E-50FD-4FFD-A97D-FFC2CB53FC81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.WechatWebLogin", "IDSubjects.WechatWebLogin\IDSubjects.WechatWebLogin.csproj", "{C7E9F11E-50FD-4FFD-A97D-FFC2CB53FC81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DirectoryLogon", "DirectoryLogon\DirectoryLogon.csproj", "{63C32B2D-7FB1-4B31-A802-FB58C98026F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.DirectoryLogon", "IDSubjects.DirectoryLogon\IDSubjects.DirectoryLogon.csproj", "{63C32B2D-7FB1-4B31-A802-FB58C98026F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjectsTests", "IDSubjectsTests\IDSubjectsTests.csproj", "{2CD6AEE6-DB66-42B9-8621-13D7A278BBC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.Tests", "IDSubjects.Tests\IDSubjects.Tests.csproj", "{2CD6AEE6-DB66-42B9-8621-13D7A278BBC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WechatWebLoginTests", "WechatWebLoginTests\WechatWebLoginTests.csproj", "{D43953BF-8930-4F54-AAF3-99FF0383C2E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.WechatWebLogin.Tests", "IDSubjects.WechatWebLogin.Tests\IDSubjects.WechatWebLogin.Tests.csproj", "{D43953BF-8930-4F54-AAF3-99FF0383C2E0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaIDPlatformTests", "AlphaIDPlatformTests\AlphaIDPlatformTests.csproj", "{854B7B8B-B7D9-4D90-B745-29365B45CE23}"
 EndProject
@@ -48,7 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthCenterWebAppTests", "Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseTool", "DatabaseTool\DatabaseTool.csproj", "{ADD04681-DDFF-4733-B3F6-C948C1CA36F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DirectoryLogonTests", "DirectoryLogonTests\DirectoryLogonTests.csproj", "{EA2A0783-A8AD-4626-B75A-F8E6738D5AFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.DirectoryLogon.Tests", "IDSubjects.DirectoryLogon.Tests\IDSubjects.DirectoryLogon.Tests.csproj", "{EA2A0783-A8AD-4626-B75A-F8E6738D5AFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminWebAppTests", "AdminWebAppTests\AdminWebAppTests.csproj", "{4A0C797E-D5FC-4307-A1A6-CB63260BA3FC}"
 EndProject
@@ -62,7 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D2986112
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7714CF67-4098-4F37-92AD-C465912B0FB0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealName", "RealName\RealName.csproj", "{F4F56EF1-A0A7-43C0-B65A-804DD84AF237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.RealName", "IDSubjects.RealName\IDSubjects.RealName.csproj", "{F4F56EF1-A0A7-43C0-B65A-804DD84AF237}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.PlatformServices", "AlphaIDPlatformServices\AlphaID.PlatformServices.csproj", "{023D269C-A84C-4E73-BEF1-5D721B73ADC9}"
 EndProject
@@ -215,7 +215,7 @@ Global
 		{909F50F0-B85C-4D02-9B87-709753CDE43F} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_TaskErrorCategory = Message
 		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
+		RESX_TaskErrorCategory = Message
 	EndGlobalSection
 EndGlobal

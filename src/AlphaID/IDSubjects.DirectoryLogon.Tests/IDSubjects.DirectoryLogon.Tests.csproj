@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DirectoryLogon\DirectoryLogon.csproj" />
+    <ProjectReference Include="..\IDSubjects.DirectoryLogon\IDSubjects.DirectoryLogon.csproj" />
   </ItemGroup>
 
 </Project>

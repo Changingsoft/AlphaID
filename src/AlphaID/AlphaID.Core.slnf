@@ -16,14 +16,14 @@
       "AuthCenterWebApp\\AuthCenterWebApp.csproj",
       "DataTool\\DataTool.csproj",
       "DatabaseTool\\DatabaseTool.csproj",
-      "DirectoryLogonTests\\DirectoryLogonTests.csproj",
-      "DirectoryLogon\\DirectoryLogon.csproj",
-      "IDSubjectsTests\\IDSubjectsTests.csproj",
+      "IDSubjects.DirectoryLogon.Tests\\IDSubjects.DirectoryLogon.Tests.csproj",
+      "IDSubjects.DirectoryLogon\\IDSubjects.DirectoryLogon.csproj",
+      "IDSubjects.Tests\\IDSubjects.Tests.csproj",
       "IDSubjects\\IDSubjects.csproj",
       "IntegrationTestUtilities\\IntegrationTestUtilities.csproj",
-      "RealName\\RealName.csproj",
-      "WechatWebLoginTests\\WechatWebLoginTests.csproj",
-      "WechatWebLogin\\WechatWebLogin.csproj",
+      "IDSubjects.RealName\\IDSubjects.RealName.csproj",
+      "IDSubjects.WechatWebLogin.Tests\\IDSubjects.WechatWebLogin.Tests.csproj",
+      "IDSubjects.WechatWebLogin\\IDSubjects.WechatWebLogin.csproj",
       "XinAnAuth\\XinAnAuth.csproj"
     ]
   }

@@ -8,7 +8,7 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="IDSubjects.Tests"/>
+		<InternalsVisibleTo Include="IDSubjects.Tests" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -22,5 +22,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="RealName\" />
 	</ItemGroup>
 </Project>

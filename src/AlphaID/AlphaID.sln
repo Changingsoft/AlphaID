@@ -74,6 +74,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.DirectoryLogon.Enti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.WechatWebLogin.EntityFramework", "AlphaID.WechatWebLogin.EntityFramework\AlphaID.WechatWebLogin.EntityFramework.csproj", "{909F50F0-B85C-4D02-9B87-709753CDE43F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDSubjects.RealName.Tests", "IDSubjects.RealName.Tests\IDSubjects.RealName.Tests.csproj", "{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,10 @@ Global
 		{909F50F0-B85C-4D02-9B87-709753CDE43F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{909F50F0-B85C-4D02-9B87-709753CDE43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{909F50F0-B85C-4D02-9B87-709753CDE43F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,9 +219,10 @@ Global
 		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E} = {9B67AD0F-EC27-4983-81EF-B493110821FF}
 		{74C81D9A-31C7-4E02-A1E3-4F5C28F631FA} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 		{909F50F0-B85C-4D02-9B87-709753CDE43F} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
+		{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28} = {D2986112-01A1-445D-ADD2-399E9E483BD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
 		RESX_TaskErrorCategory = Message
+		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
 	EndGlobalSection
 EndGlobal

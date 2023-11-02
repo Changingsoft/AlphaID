@@ -25,4 +25,8 @@
     <ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RealName\" />
+  </ItemGroup>
+
 </Project>

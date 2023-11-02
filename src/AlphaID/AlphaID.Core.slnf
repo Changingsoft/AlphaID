@@ -18,12 +18,13 @@
       "DatabaseTool\\DatabaseTool.csproj",
       "IDSubjects.DirectoryLogon.Tests\\IDSubjects.DirectoryLogon.Tests.csproj",
       "IDSubjects.DirectoryLogon\\IDSubjects.DirectoryLogon.csproj",
-      "IDSubjects.Tests\\IDSubjects.Tests.csproj",
-      "IDSubjects\\IDSubjects.csproj",
-      "IntegrationTestUtilities\\IntegrationTestUtilities.csproj",
+      "IDSubjects.RealName.Tests\\IDSubjects.RealName.Tests.csproj",
       "IDSubjects.RealName\\IDSubjects.RealName.csproj",
+      "IDSubjects.Tests\\IDSubjects.Tests.csproj",
       "IDSubjects.WechatWebLogin.Tests\\IDSubjects.WechatWebLogin.Tests.csproj",
       "IDSubjects.WechatWebLogin\\IDSubjects.WechatWebLogin.csproj",
+      "IDSubjects\\IDSubjects.csproj",
+      "IntegrationTestUtilities\\IntegrationTestUtilities.csproj",
       "XinAnAuth\\XinAnAuth.csproj"
     ]
   }

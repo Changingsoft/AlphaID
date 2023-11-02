@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\IDSubjects.RealName\IDSubjects.RealName.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 	</ItemGroup>
 

@@ -330,6 +330,13 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         return IdentityResult.Success;
     }
 
+    /// <summary>
+    /// 设置头像。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="contentType"></param>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
     public async Task<IdentityResult> SetProfilePictureAsync(NaturalPerson person, string contentType, byte[] bytes)
     {
         try
@@ -348,6 +355,22 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             MimeType = contentType,
         };
         var result = await this.UpdateUserAsync(person);
+        return result;
+    }
+
+    /// <summary>
+    /// 清除用户的头像。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns></returns>
+    public async Task<IdentityResult> ClearProfilePictureAsync(NaturalPerson person)
+    {
+        person.Avatar = null;
+        var result = await this.UpdateUserAsync(person);
+        if (result.Succeeded)
+            this.Logger?.LogInformation("用户头像已清除。");
+        else
+            this.Logger?.LogWarning("清除用户头像时不成功。", result);
         return result;
     }
 }

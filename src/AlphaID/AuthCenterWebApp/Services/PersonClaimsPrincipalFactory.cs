@@ -24,7 +24,8 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
         id.AddClaim(new Claim(JwtClaimTypes.Name, user.Name));
         var userAnchor = user.UserName ?? user.Id;
         id.AddClaim(new Claim(JwtClaimTypes.Profile, new Uri(this.systemUrl.AuthCenterUrl, "/People/" + userAnchor).ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrl.AuthCenterUrl, $"/People/{userAnchor}/Avatar").ToString()));
+        if (user.Avatar != null)
+            id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrl.AuthCenterUrl, $"/People/{userAnchor}/Avatar").ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.Locale != null)
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));

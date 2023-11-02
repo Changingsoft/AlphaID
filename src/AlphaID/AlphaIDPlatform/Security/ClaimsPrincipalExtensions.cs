@@ -25,7 +25,18 @@ public static class ClaimsPrincipalExtensions
     /// <returns></returns>
     public static string? AvatarUrl(this ClaimsPrincipal principal)
     {
-        return principal.FindFirstValue(JwtClaimTypes.Picture);
+        var url = principal.FindFirstValue(JwtClaimTypes.Picture);
+        return url?? "/img/no-picture-avatar.png";
+    }
+
+    /// <summary>
+    /// 确定声明中是否包括User profile picture.
+    /// </summary>
+    /// <param name="principal"></param>
+    /// <returns></returns>
+    public static bool HasProfilePicture(this ClaimsPrincipal principal)
+    {
+        return principal.HasClaim(p => p.Type == JwtClaimTypes.Picture);
     }
 
     /// <summary>

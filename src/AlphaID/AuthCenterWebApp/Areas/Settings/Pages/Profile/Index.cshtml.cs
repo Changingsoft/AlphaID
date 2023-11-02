@@ -1,4 +1,6 @@
+using AuthCenterWebApp.Services;
 using IDSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -10,14 +12,18 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
     public class IndexModel : PageModel
     {
         private readonly NaturalPersonManager personManager;
+        PersonSignInManager signInManager;
 
-        public IndexModel(NaturalPersonManager personManager)
+        public IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager)
         {
             this.personManager = personManager;
+            this.signInManager = signInManager;
         }
 
         [BindProperty]
         public InputModel Input { get; set; } = default!;
+
+        public IdentityResult? Result { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -40,31 +46,47 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
             person.Bio = this.Input.Bio;
 
-            var result = await this.personManager.UpdateAsync(person);
-            if (!result.Succeeded)
+            this.Result = await this.personManager.UpdateAsync(person);
+            if (!this.Result.Succeeded)
             {
-                foreach (var error in result.Errors)
-                    this.ModelState.AddModelError("", error.Description);
+                //todo log
             }
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostUpdateProfilePictureAsync()
+        public async Task<ActionResult> OnPostUpdateProfilePictureAsync()
         {
             if (!this.Request.Form.Files.Any())
                 return this.BadRequest();
 
             var file = this.Request.Form.Files[0];
             var person = await this.personManager.GetUserAsync(this.User);
-            Debug.Assert(person != null);
+            if (person == null)
+                return this.BadRequest();
             using var stream = file.OpenReadStream();
             byte[] data = new byte[stream.Length];
             stream.Read(data, 0, data.Length);
             var result = await this.personManager.SetProfilePictureAsync(person, file.ContentType, data);
             if (result.Succeeded)
+            {
+                await this.signInManager.RefreshSignInAsync(person);
                 return new JsonResult(true);
+            }
             else
                 return new JsonResult("Can not update profile picture.");
+        }
+
+        public async Task<IActionResult> OnPostClearProfilePictureAsync(string anchor)
+        {
+            var person = await this.personManager.GetUserAsync(this.User);
+            if (person == null)
+                return this.BadRequest();
+            this.Result = await this.personManager.ClearProfilePictureAsync(person);
+            if (this.Result.Succeeded)
+            {
+                await this.signInManager.RefreshSignInAsync(person);
+            }
+            return this.Page();
         }
 
         public class InputModel

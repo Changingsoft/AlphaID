@@ -25,12 +25,6 @@
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Update="Data\Init.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties />

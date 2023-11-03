@@ -22,7 +22,7 @@ namespace IDSubjects {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace IDSubjects {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IDSubjects.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace IDSubjects {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,16 +63,25 @@ namespace IDSubjects {
         /// <summary>
         ///   查找类似 Phone number is already taken. 的本地化字符串。
         /// </summary>
-        internal static string DuplicatePhoneNumber {
+        public static string DuplicatePhoneNumber {
             get {
                 return ResourceManager.GetString("DuplicatePhoneNumber", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   查找类似 Female 的本地化字符串。
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Phone number is invalid. 的本地化字符串。
         /// </summary>
-        internal static string InvalidPhoneNumber {
+        public static string InvalidPhoneNumber {
             get {
                 return ResourceManager.GetString("InvalidPhoneNumber", resourceCulture);
             }
@@ -81,18 +90,36 @@ namespace IDSubjects {
         /// <summary>
         ///   查找类似 You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization. 的本地化字符串。
         /// </summary>
-        internal static string LastOwnerCannotLeave {
+        public static string LastOwnerCannotLeave {
             get {
                 return ResourceManager.GetString("LastOwnerCannotLeave", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   查找类似 Male 的本地化字符串。
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The membership already exists. 的本地化字符串。
         /// </summary>
-        internal static string MembershipExists {
+        public static string MembershipExists {
             get {
                 return ResourceManager.GetString("MembershipExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Other 的本地化字符串。
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
     }

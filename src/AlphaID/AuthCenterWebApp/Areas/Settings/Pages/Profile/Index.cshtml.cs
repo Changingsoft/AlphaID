@@ -1,6 +1,5 @@
 using AuthCenterWebApp.Services;
 using IDSubjects;
-using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -109,6 +108,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             public Sex? Gender { get; set; }
 
             [Display(Name = "Birth date")]
+            [DataType(DataType.Date)]
             public DateTime? DateOfBirth { get; set; }
         }
     }

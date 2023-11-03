@@ -1,4 +1,5 @@
-﻿using IDSubjects.Subjects;
+﻿using IDSubjects;
+using IDSubjects.Subjects;
 using System.Diagnostics;
 using Xunit;
 

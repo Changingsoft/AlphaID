@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects.Subjects;
+namespace IDSubjects;
 
 /// <summary>
 /// 表示生理性别。

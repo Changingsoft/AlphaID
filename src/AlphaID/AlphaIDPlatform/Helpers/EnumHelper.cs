@@ -23,9 +23,10 @@ public class EnumHelper
         {
             var member = type.GetMember(enumValue.ToString()).First();
             var displayAttribute = member.GetCustomAttribute<DisplayAttribute>();
+            //displayAttribute.getn
             listItems.Add(new SelectListItem()
             {
-                Text = displayAttribute?.Name ?? enumValue.ToString(),
+                Text = displayAttribute?.GetName() ?? enumValue.ToString(),
                 Value = enumValue.ToString(),
             });
         }

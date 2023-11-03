@@ -120,13 +120,22 @@
   <data name="DuplicatePhoneNumber" xml:space="preserve">
     <value>Phone number is already taken.</value>
   </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>Phone number is invalid.</value>
   </data>
   <data name="LastOwnerCannotLeave" xml:space="preserve">
     <value>You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization.</value>
   </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
   <data name="MembershipExists" xml:space="preserve">
     <value>The membership already exists.</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
   </data>
 </root>

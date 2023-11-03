@@ -1,13 +1,11 @@
 ﻿using IDSubjects;
 using IDSubjects.RealName;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AlphaID.EntityFramework;
 
-public class IDSubjectsDbContext : IdentityUserContext<NaturalPerson>
+public class IDSubjectsDbContext : DbContext
 {
     public IDSubjectsDbContext([NotNull] DbContextOptions<IDSubjectsDbContext> options) : base(options)
     {
@@ -18,6 +16,11 @@ public class IDSubjectsDbContext : IdentityUserContext<NaturalPerson>
     /// </summary>
     public DbSet<NaturalPerson> People { get; protected set; } = default!;
 
+    public DbSet<NaturalPersonClaim> PersonClaims { get; protected set; } = default!;
+
+    public DbSet<NaturalPersonLogin> PersonLogins { get; protected set; } = default!;
+
+    public DbSet<NaturalPersonToken> PersonTokens { get; protected set; } = default!;
 
     public DbSet<ChineseIDCardValidation> RealNameValidations { get; protected set; } = default!;
 
@@ -43,24 +46,26 @@ public class IDSubjectsDbContext : IdentityUserContext<NaturalPerson>
             e.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
         });
 
-        builder.Entity<IdentityUserLogin<string>>(e =>
+        builder.Entity<NaturalPersonLogin>(e =>
         {
             e.ToTable("UserExternalLogin");
+            e.HasKey(p => new { p.LoginProvider, p.ProviderKey });
             e.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
             e.Property(p => p.ProviderKey).HasMaxLength(256).IsUnicode(false);
             e.Property(p => p.ProviderDisplayName).HasMaxLength(50);
             e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
         });
-        builder.Entity<IdentityUserToken<string>>(e =>
+        builder.Entity<NaturalPersonToken>(e =>
         {
             e.ToTable("UserToken");
+            e.HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
             e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
             e.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
             e.Property(p => p.Name).HasMaxLength(50);
             e.Property(p => p.Value).HasMaxLength(256).IsUnicode(false);
 
         });
-        builder.Entity<IdentityUserClaim<string>>(e =>
+        builder.Entity<NaturalPersonClaim>(e =>
         {
             e.ToTable("UserClaim");
             e.Property(p => p.ClaimType).HasMaxLength(256).IsUnicode(false);

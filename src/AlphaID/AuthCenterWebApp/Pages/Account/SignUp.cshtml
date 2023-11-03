@@ -43,10 +43,7 @@
                 <div class="row">
                     <div class="col">
                         <label asp-for="Input.Sex" class="form-label required"></label>
-                        <select asp-for="Input.Sex" class="form-select">
-                            <option label="@L["Unselected"]"></option>
-                            <option label="@L["Male"]" value="Male"></option>
-                            <option label="@L["Female"]" value="Female"></option>
+                        <select asp-for="Input.Sex" class="form-select" asp-items="EnumHelper.GetSelectListItems<Sex>()">
                         </select>
                         <span asp-validation-for="Input.Sex" class="text-danger"></span>
                     </div>

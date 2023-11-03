@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DownloadPersonalDataModel : PageModel
 {
@@ -38,8 +38,7 @@ public class DownloadPersonalDataModel : PageModel
 
         // Only include personal data for download
         var personalData = new Dictionary<string, string>();
-        var personalDataProps = typeof(NaturalPerson).GetProperties().Where(
-                        prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
+        var personalDataProps = typeof(NaturalPerson).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
         foreach (var p in personalDataProps)
         {
             personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");

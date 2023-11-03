@@ -9,10 +9,12 @@
         .label {
             cursor: pointer;
         }
+
         .progress {
             display: none;
             margin-bottom: 1rem;
         }
+
         .img-container img {
             max-width: 100%;
         }
@@ -27,16 +29,35 @@
     <h2>@L["Profile"]</h2>
     <a href="@User.ProfileUrl()" class="btn btn-sm">@L["Go to your profile"]</a>
 </div>
+<a asp-page="PersonName" class="btn">@L["Edit person name"]</a>
 <hr />
 <div class="row">
     <div class="col-9">
         <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.DateOfBirth" class="form-label"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
+                <span asp-description-for="Input.DateOfBirth"></span>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.Gender" class="form-label"></label>
+                <select asp-for="Input.Gender" asp-items="EnumHelper.GetSelectListItems<Sex>()" class="form-select"></select>
+                <span asp-description-for="Input.Gender"></span>
+            </div>
             <div class="mb-3">
                 <label asp-for="Input.Bio" class="form-label"></label>
                 <input asp-for="Input.Bio" class="form-control" />
                 <span asp-description-for="Input.Bio"></span>
                 <span asp-validation-for="Input.Bio" class="text-danger"></span>
             </div>
+            <div class="mb-3">
+                <label asp-for="Input.Website" class="form-label"></label>
+                <input asp-for="Input.Website" class="form-control" />
+                <span asp-description-for="Input.Website"></span>
+                <span asp-validation-for="Input.Website" class="text-danger"></span>
+            </div>
+            
             <div asp-validation-summary="All" class="text-danger"></div>
             <button type="submit" class="btn">@L["Update profile"]</button>
         </form>

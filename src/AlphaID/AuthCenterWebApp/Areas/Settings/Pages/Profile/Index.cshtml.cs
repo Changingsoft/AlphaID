@@ -1,9 +1,9 @@
 using AuthCenterWebApp.Services;
 using IDSubjects;
+using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
@@ -32,6 +32,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             this.Input = new InputModel()
             {
                 Bio = person.Bio,
+                Website = person.WebSite,
+                Gender = person.Sex,
+                DateOfBirth = person.DateOfBirth,
             };
             return this.Page();
         }
@@ -45,6 +48,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 return this.Page();
 
             person.Bio = this.Input.Bio;
+            person.WebSite = this.Input.Website;
+            person.Sex = this.Input.Gender;
+            person.DateOfBirth = this.Input.DateOfBirth;
 
             this.Result = await this.personManager.UpdateAsync(person);
             if (!this.Result.Succeeded)
@@ -76,7 +82,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 return new JsonResult("Can not update profile picture.");
         }
 
-        public async Task<IActionResult> OnPostClearProfilePictureAsync(string anchor)
+        public async Task<IActionResult> OnPostClearProfilePictureAsync()
         {
             var person = await this.personManager.GetUserAsync(this.User);
             if (person == null)
@@ -94,6 +100,16 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             [Display(Name = "Bio", Description = "Short description about yourself.")]
             [StringLength(200)]
             public string? Bio { get; set; }
+
+            [Display(Name = "Website", Description = "Your personal website.")]
+            [DataType(DataType.Url)]
+            public string? Website { get; set; }
+
+            [Display(Name = "Gender")]
+            public Sex? Gender { get; set; }
+
+            [Display(Name = "Birth date")]
+            public DateTime? DateOfBirth { get; set; }
         }
     }
 }

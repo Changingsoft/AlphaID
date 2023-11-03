@@ -1,0 +1,28 @@
+﻿@{
+    this.Layout = "Shared/_Layout";
+}
+@section Heads{
+    @await RenderSectionAsync("Heads", false)
+}
+<h2>@L["Password and authentication"]</h2>
+<div class="card">
+    <div class="row g-0">
+        <div class="col-12 col-md-2 border-end">
+            <div class="card-body">
+                <div class="list-group list-group-transparent">
+                    <a asp-page="Index" asp-path="/Settings/Authentication" asp-match-prefix="false" class="list-group-item list-group-item-action d-flex align-items-center">@L["Overview"]</a>
+                    <a asp-page="TwoFactorAuthentication" asp-path="/Settings/Authentication/TwoFactorAuthentication" class="list-group-item list-group-item-action d-flex align-items-center">@L["Two-factor Authentication"]</a>
+                    <a asp-page="ExternalLogins" asp-path="/Settings/Authentication/ExternalLogins" class="list-group-item list-group-item-action d-flex align-items-center">@L["External Logins"]</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-10 d-flex flex-column">
+            <div class="card-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @await RenderSectionAsync("Scripts", false)
+}

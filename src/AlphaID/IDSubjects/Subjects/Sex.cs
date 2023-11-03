@@ -10,16 +10,16 @@ public enum Sex
     /// <summary>
     /// 男
     /// </summary>
-    [Display(Name = "Male")]
+    [Display(Name = "Male", ResourceType = typeof(Resources))]
     Male = 1,
     /// <summary>
     /// 女
     /// </summary>
-    [Display(Name = "Female")]
+    [Display(Name = "Female", ResourceType = typeof(Resources))]
     Female = 0,
     /// <summary>
     /// 其他
     /// </summary>
-    [Display(Name = "Other")]
+    [Display(Name = "Other", ResourceType = typeof(Resources))]
     Other = 2
 }

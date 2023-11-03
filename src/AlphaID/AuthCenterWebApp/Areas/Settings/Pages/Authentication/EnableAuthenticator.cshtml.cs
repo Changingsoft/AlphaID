@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class EnableAuthenticatorModel : PageModel
 {

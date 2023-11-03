@@ -61,7 +61,7 @@ public class NaturalPerson : IdentityUser
     /// </summary>
     [PersonalData]
     [MaxLength(10)]
-    public string? FirstName { get; protected set; }
+    public string? FirstName { get; set; }
 
     /// <summary>
     /// Middle name.
@@ -75,7 +75,7 @@ public class NaturalPerson : IdentityUser
     /// </summary>
     [PersonalData]
     [MaxLength(10)]
-    public string? LastName { get; protected set; }
+    public string? LastName { get; set; }
 
     /// <summary>
     /// 昵称。

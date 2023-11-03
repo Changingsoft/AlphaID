@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DeletePersonalDataModel : PageModel
 {

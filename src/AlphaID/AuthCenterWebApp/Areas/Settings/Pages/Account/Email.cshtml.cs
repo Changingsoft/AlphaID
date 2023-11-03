@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class EmailModel : PageModel
 {

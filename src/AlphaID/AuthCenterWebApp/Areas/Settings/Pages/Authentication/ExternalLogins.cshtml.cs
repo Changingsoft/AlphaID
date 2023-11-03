@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
-namespace AuthCenterWebApp.Areas.MyAccount.Pages;
+namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ExternalLoginsModel : PageModel
 {

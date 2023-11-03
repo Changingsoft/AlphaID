@@ -1,4 +1,6 @@
 ﻿using IDSubjects;
+using IDSubjects.DependencyInjection;
+using IDSubjects.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -16,7 +18,7 @@ public static class IDSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjectsIdentityCore(this IServiceCollection services, Action<IdentityOptions> setupAction)
+    public static IdentityBuilder AddIDSubjects(this IServiceCollection services, Action<IDSubjectsOptions>? setupAction = null)
     {
         // 由IDSubjects使用的服务。
         services.TryAddScoped<OrganizationManager>();
@@ -24,11 +26,17 @@ public static class IDSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationSearcher>();
 
         //添加基础标识
-        var builder = services.AddIdentityCore<NaturalPerson>(setupAction)
+        var builder = services.AddIdentityCore<NaturalPerson>()
             .AddUserManager<NaturalPersonManager>()
-            //.AddUserValidator<PhoneNumberValidator>()
-            //.AddErrorDescriber<NaturalPersonIdentityErrorDescriber>()
+            .AddUserValidator<PhoneNumberValidator>()
+            .AddErrorDescriber<NaturalPersonIdentityErrorDescriber>()
             ;
+
+        if(setupAction != null)
+        {
+            services.Configure<IDSubjectsOptions>(setupAction);
+        }
+
         return builder;
     }
 

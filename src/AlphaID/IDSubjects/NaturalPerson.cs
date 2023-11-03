@@ -29,7 +29,7 @@ public class NaturalPerson
     /// 
     /// </summary>
     /// <param name="userName"></param>
-    public NaturalPerson(string userName):this()
+    public NaturalPerson(string userName) : this()
     {
         this.UserName = userName;
     }
@@ -37,70 +37,79 @@ public class NaturalPerson
     /// <summary>
     /// Primary Id
     /// </summary>
+    [MaxLength(50), Unicode(false)]
     public string Id { get; protected set; } = default!;
 
     /// <summary>
     /// User Name
     /// </summary>
+    [MaxLength(256)]
     public string? UserName { get; protected internal set; }
 
     /// <summary>
     /// Normalized user name.
     /// </summary>
-    public string? NormalizedUserName { get; set; }
+    [MaxLength(256)]
+    public string? NormalizedUserName { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets the email address for this user.
     /// </summary>
     [ProtectedPersonalData]
-    public virtual string? Email { get; set; }
+    [MaxLength(256)]
+    public virtual string? Email { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets the normalized email address for this user.
     /// </summary>
-    public virtual string? NormalizedEmail { get; set; }
+    [MaxLength(256)]
+    public virtual string? NormalizedEmail { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets a flag indicating if a user has confirmed their email address.
     /// </summary>
     /// <value>True if the email address has been confirmed, otherwise false.</value>
     [PersonalData]
-    public virtual bool EmailConfirmed { get; set; }
+    public virtual bool EmailConfirmed { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets a salted and hashed representation of the password for this user.
     /// </summary>
-    public virtual string? PasswordHash { get; set; }
+    [MaxLength(100), Unicode(false)]
+    public virtual string? PasswordHash { get; protected internal set; }
 
     /// <summary>
     /// A random value that must change whenever a users credentials change (password changed, login removed)
     /// </summary>
-    public virtual string? SecurityStamp { get; set; }
+    [MaxLength(50), Unicode(false)]
+    public virtual string? SecurityStamp { get; protected internal set; }
 
     /// <summary>
     /// A random value that must change whenever a user is persisted to the store
     /// </summary>
+    [MaxLength(50), Unicode(false)]
     public virtual string? ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// Gets or sets a telephone number for the user.
     /// </summary>
     [ProtectedPersonalData]
-    public virtual string? PhoneNumber { get; set; }
+    [MaxLength(20), Unicode(false)]
+    public virtual string? PhoneNumber { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets a flag indicating if a user has confirmed their telephone address.
     /// </summary>
     /// <value>True if the telephone number has been confirmed, otherwise false.</value>
     [PersonalData]
-    public virtual bool PhoneNumberConfirmed { get; set; }
+    public virtual bool PhoneNumberConfirmed { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets a flag indicating if two factor authentication is enabled for this user.
     /// </summary>
     /// <value>True if 2fa is enabled, otherwise false.</value>
     [PersonalData]
-    public virtual bool TwoFactorEnabled { get; set; }
+    public virtual bool TwoFactorEnabled { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets the date and time, in UTC, when any user lockout ends.
@@ -108,18 +117,18 @@ public class NaturalPerson
     /// <remarks>
     /// A value in the past means the user is not locked out.
     /// </remarks>
-    public virtual DateTimeOffset? LockoutEnd { get; set; }
+    public virtual DateTimeOffset? LockoutEnd { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets a flag indicating if the user could be locked out.
     /// </summary>
     /// <value>True if the user could be locked out, otherwise false.</value>
-    public virtual bool LockoutEnabled { get; set; }
+    public virtual bool LockoutEnabled { get; protected internal set; }
 
     /// <summary>
     /// Gets or sets the number of failed login attempts for the current user.
     /// </summary>
-    public virtual int AccessFailedCount { get; set; }
+    public virtual int AccessFailedCount { get; protected internal set; }
 
     /// <summary>
     /// Name.
@@ -131,12 +140,12 @@ public class NaturalPerson
     /// <summary>
     /// When Created.
     /// </summary>
-    public DateTime WhenCreated { get; protected internal set; } = DateTime.UtcNow;
+    public DateTimeOffset WhenCreated { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// When Changed.
     /// </summary>
-    public DateTime WhenChanged { get; set; } = DateTime.UtcNow;
+    public DateTimeOffset WhenChanged { get; set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// 启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
@@ -200,13 +209,12 @@ public class NaturalPerson
     /// <summary>
     /// 出生日期
     /// </summary>
-    [Column(TypeName = "date")]
-    public DateTime? DateOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
 
     /// <summary>
     /// 获取一个值，指示用户上一次设置密码的时间。如果该值为null，或超过设定的最大更改密码期限，则用户在登录时必须强制更改密码。
     /// </summary>
-    public DateTime? PasswordLastSet { get; protected internal set; }
+    public DateTimeOffset? PasswordLastSet { get; protected internal set; }
 
     /// <summary>
     /// User head image data.

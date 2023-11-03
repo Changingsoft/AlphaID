@@ -1,4 +1,5 @@
-﻿using IDSubjects.Subjects;
+﻿using IDSubjects.DependencyInjection;
+using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -27,12 +28,12 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <param name="services"></param>
     /// <param name="logger"></param>
     public NaturalPersonManager(IUserStore<NaturalPerson> store,
-                                IOptions<IdentityOptions> optionsAccessor,
+                                IOptions<IDSubjectsOptions> optionsAccessor,
                                 IPasswordHasher<NaturalPerson> passwordHasher,
                                 IEnumerable<IUserValidator<NaturalPerson>> userValidators,
                                 IEnumerable<IPasswordValidator<NaturalPerson>> passwordValidators,
                                 ILookupNormalizer keyNormalizer,
-                                IdentityErrorDescriber errors,
+                                NaturalPersonIdentityErrorDescriber errors,
                                 IServiceProvider services,
                                 ILogger<NaturalPersonManager> logger)
         : base(store,
@@ -70,7 +71,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     public virtual Task AccessSuccededAsync(NaturalPerson person, string authenticationMethod)
     {
         //todo 记录任何登录成功次数、上次登录时间，登录方式，登录IP等。
-        this.Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person, DateTime.UtcNow, authenticationMethod);
+        this.Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person, DateTimeOffset.UtcNow, authenticationMethod);
         return Task.CompletedTask;
     }
 
@@ -112,7 +113,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
     {
-        user.PasswordLastSet = DateTime.UtcNow;
+        user.PasswordLastSet = DateTimeOffset.UtcNow;
         return await base.CreateAsync(user, password);
     }
 
@@ -123,7 +124,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> CreateAsync(NaturalPerson user)
     {
-        var utcNow = DateTime.UtcNow;
+        var utcNow = DateTimeOffset.UtcNow;
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
         return await base.CreateAsync(user);
@@ -136,7 +137,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     protected override async Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
     {
-        user.WhenChanged = DateTime.UtcNow;
+        user.WhenChanged = DateTimeOffset.UtcNow;
         return await base.UpdateUserAsync(user);
     }
 
@@ -191,7 +192,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.ChangePasswordAsync(user, currentPassword, newPassword);
         if (!result.Succeeded)
             return result;
-        user.PasswordLastSet = DateTime.UtcNow;
+        user.PasswordLastSet = DateTimeOffset.UtcNow;
         result = await this.UpdateAsync(user);
         if (!result.Succeeded)
         {
@@ -244,7 +245,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.UpdatePasswordHash(user, newPassword, validatePassword);
         if (!result.Succeeded)
             return result;
-        user.PasswordLastSet = DateTime.UtcNow;
+        user.PasswordLastSet = DateTimeOffset.UtcNow;
         result = await this.UpdateAsync(user);
         if (!result.Succeeded)
         {
@@ -319,7 +320,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.AddPasswordAsync(user, password);
         if (!result.Succeeded)
             return result;
-        user.PasswordLastSet = DateTime.UtcNow;
+        user.PasswordLastSet = DateTimeOffset.UtcNow;
         result = await this.UpdateAsync(user);
         if (!result.Succeeded)
         {
@@ -371,6 +372,18 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             this.Logger?.LogInformation("用户头像已清除。");
         else
             this.Logger?.LogWarning("清除用户头像时不成功。", result);
+        return result;
+    }
+
+    public override async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson user, string? phoneNumber)
+    {
+        var result = await base.SetPhoneNumberAsync(user, phoneNumber);
+        if(result.Succeeded)
+        {
+            //todo 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
+            user.PhoneNumberConfirmed = true;
+            return await this.UpdateAsync(user);
+        }
         return result;
     }
 }

@@ -38,6 +38,5 @@ public class OrganizationUsedName
     /// <summary>
     /// 弃用日期。
     /// </summary>
-    [Column(TypeName = "date")]
-    public DateTime DeprecateTime { get; set; }
+    public DateOnly DeprecateTime { get; set; }
 }

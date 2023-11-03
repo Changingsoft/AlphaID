@@ -1,4 +1,5 @@
 ﻿using IDSubjects;
+using IDSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -12,9 +13,9 @@ public static class IDSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdentityOptions> setupAction)
+    public static IdentityBuilder AddIDSubjectsIdentity(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
     {
-        var builder = services.AddIdSubjectsIdentityCore(setupAction);
+        var builder = services.AddIDSubjects(setupAction);
         //Add required cookies.
         services.AddAuthentication(options =>
         {

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace IDSubjects;
+namespace IDSubjects.DependencyInjection;
 
 /// <summary>
 /// IDSubjects builder for DI.

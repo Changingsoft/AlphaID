@@ -32,7 +32,7 @@ public class OrganizationManager
     /// <returns></returns>
     public async Task<IdOperationResult> CreateAsync(GenericOrganization org)
     {
-        var utcNow = DateTime.UtcNow;
+        var utcNow = DateTimeOffset.UtcNow;
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
         return await this.OrganizationStore.CreateAsync(org);
@@ -76,7 +76,7 @@ public class OrganizationManager
     /// <returns></returns>
     public async Task<IdOperationResult> UpdateAsync(GenericOrganization org)
     {
-        org.WhenChanged = DateTime.UtcNow;
+        org.WhenChanged = DateTimeOffset.UtcNow;
         return await this.OrganizationStore.UpdateAsync(org);
     }
 
@@ -90,7 +90,7 @@ public class OrganizationManager
     /// <param name="applyChangeWhenDuplicated">即便名称重复也要更改。默认为false。</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<IdOperationResult> ChangeNameAsync(GenericOrganization org, string newName, DateTime changeDate, bool recordUsedName, bool applyChangeWhenDuplicated = false)
+    public async Task<IdOperationResult> ChangeNameAsync(GenericOrganization org, string newName, DateOnly changeDate, bool recordUsedName, bool applyChangeWhenDuplicated = false)
     {
         var orgId = org.Id;
         newName = newName.Trim().Trim('\r', '\n');

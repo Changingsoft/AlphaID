@@ -51,12 +51,12 @@ public class GenericOrganization
     /// <summary>
     /// 创建记录的时间。
     /// </summary>
-    public virtual DateTime WhenCreated { get; protected internal set; } = DateTime.UtcNow;
+    public virtual DateTimeOffset WhenCreated { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// 记录修改的时间。
     /// </summary>
-    public virtual DateTime WhenChanged { get; protected internal set; } = DateTime.UtcNow;
+    public virtual DateTimeOffset WhenChanged { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// 是否有效。
@@ -84,20 +84,17 @@ public class GenericOrganization
     /// <summary>
     /// 注册时间。
     /// </summary>
-    [Column(TypeName = "date")]
-    public virtual DateTime? EstablishedAt { get; set; }
+    public virtual DateOnly? EstablishedAt { get; set; }
 
     /// <summary>
     /// 营业期起
     /// </summary>
-    [Column(TypeName = "date")]
-    public virtual DateTime? TermBegin { get; set; }
+    public virtual DateOnly? TermBegin { get; set; }
 
     /// <summary>
     /// 营业期止。
     /// </summary>
-    [Column(TypeName = "date")]
-    public virtual DateTime? TermEnd { get; set; }
+    public virtual DateOnly? TermEnd { get; set; }
 
     /// <summary>
     /// 组织的代表人。

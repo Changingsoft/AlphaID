@@ -109,7 +109,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
             [Display(Name = "Birth date")]
             [DataType(DataType.Date)]
-            public DateTime? DateOfBirth { get; set; }
+            public DateOnly? DateOfBirth { get; set; }
         }
     }
 }

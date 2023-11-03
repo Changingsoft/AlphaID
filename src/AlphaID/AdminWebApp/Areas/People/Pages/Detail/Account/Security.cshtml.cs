@@ -1,6 +1,7 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Transactions;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
@@ -44,10 +45,10 @@ public class SecurityModel : PageModel
 
         this.Data = person;
 
-        this.Data.TwoFactorEnabled = this.Input.TwoFactorEnabled;
-        this.Data.LockoutEnabled = this.Input.LockoutEnabled;
-
-        await this.manager.UpdateAsync(this.Data);
+        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        await this.manager.SetTwoFactorEnabledAsync(this.Data, this.Input.TwoFactorEnabled);
+        await this.manager.SetLockoutEnabledAsync(this.Data, this.Input.LockoutEnabled);
+        trans.Complete();
         this.OperationMessage = "ÒÑ¸üÐÂ";
         return this.Page();
     }

@@ -73,7 +73,7 @@ builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
 
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddIdSubjectsIdentity(options =>
+builder.Services.AddIDSubjectsIdentity(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789-";
     options.User.RequireUniqueEmail = true;

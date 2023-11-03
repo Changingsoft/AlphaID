@@ -10,21 +10,21 @@ public class ChineseIDCardNumberTests
     [Fact]
     public void CreateChineseIDCardNumberTest()
     {
-        var number = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 530302, new DateTime(1985, 1, 15), 031);
+        var number = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 530302, new DateOnly(1985, 1, 15), 031);
         Assert.Equal(ChineseIDCardNumberVersion.V2, number.Version);
         Assert.Equal(530302, number.RegionCode);
-        Assert.Equal(new DateTime(1985, 1, 15), number.DateOfBirth);
+        Assert.Equal(new DateOnly(1985, 1, 15), number.DateOfBirth);
         Assert.Equal(031, number.Sequence);
         Assert.Equal(Sex.Male, number.Sex);
         Assert.Equal("530302198501150314", number.NumberString);
         Assert.Equal("530302850115031", number.ToString(ChineseIDCardNumberVersion.V1));
 
         //out range test
-        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(0, 100000, DateTime.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(3, 100000, DateTime.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(ChineseIDCardNumberVersion.V1, 99999, DateTime.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(ChineseIDCardNumberVersion.V1, 1000000, DateTime.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(ChineseIDCardNumberVersion.V1, 100000, DateTime.MinValue, 1000));
+        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(0, 100000, DateOnly.MinValue, 0));
+        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(3, 100000, DateOnly.MinValue, 0));
+        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(ChineseIDCardNumberVersion.V1, 99999, DateOnly.MinValue, 0));
+        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(ChineseIDCardNumberVersion.V1, 1000000, DateOnly.MinValue, 0));
+        Assert.ThrowsAny<Exception>(() => new ChineseIDCardNumber(ChineseIDCardNumberVersion.V1, 100000, DateOnly.MinValue, 1000));
     }
 
     [Fact]
@@ -64,13 +64,13 @@ public class ChineseIDCardNumberTests
     [Fact]
     public void GenerateSampleData()
     {
-        var liubei = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateTime(0161, 7, 16), 0001);
+        var liubei = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateOnly(0161, 7, 16), 0001);
         Trace.TraceInformation("刘备的身份证号码是{0}", liubei.ToString());
-        var guanyu = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateTime(0160, 6, 24), 0001);
+        var guanyu = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateOnly(0160, 6, 24), 0001);
         Trace.TraceInformation("关羽的身份证号码是{0}", guanyu.ToString());
-        var zhangfei = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateTime(0165, 8, 28), 0001);
+        var zhangfei = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateOnly(0165, 8, 28), 0001);
         Trace.TraceInformation("张飞的身份证号码是{0}", zhangfei.ToString());
-        var zhugeliang = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateTime(0181, 9, 17), 0001);
+        var zhugeliang = new ChineseIDCardNumber(ChineseIDCardNumberVersion.V2, 990001, new DateOnly(0181, 9, 17), 0001);
         Trace.TraceInformation("诸葛亮的身份证号码是{0}", zhugeliang.ToString());
 
     }

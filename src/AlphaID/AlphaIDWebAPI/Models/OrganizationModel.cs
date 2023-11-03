@@ -14,7 +14,7 @@ public record OrganizationModel(string? Domicile,
                                 string? Contact,
                                 string? LegalPersonName,
                                 string? USCI,
-                                DateTime? Expires)
+                                DateOnly? Expires)
 {
     /// <summary>
     /// 

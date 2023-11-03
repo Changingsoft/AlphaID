@@ -5,6 +5,7 @@ using AlphaIDWebAPI.Middlewares;
 using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
+using IDSubjects.DependencyInjection;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -147,7 +148,7 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
 
 //ASP.NET Identity NaturalPersonManager.
-builder.Services.AddIdSubjectsIdentityCore(options =>
+builder.Services.AddIDSubjects(options =>
 {
 
 })

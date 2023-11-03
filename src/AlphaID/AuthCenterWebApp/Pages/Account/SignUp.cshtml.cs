@@ -73,7 +73,7 @@ public class SignUpModel : PageModel
         {
             this.Input.Sex = result;
         }
-        if (DateTime.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ?? externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out var dateOfBirth))
+        if (DateOnly.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ?? externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out var dateOfBirth))
         {
             this.Input.DateOfBirth = dateOfBirth;
         }
@@ -182,7 +182,7 @@ public class SignUpModel : PageModel
 
         [Display(Name = "Birth date")]
         [DataType(DataType.Date)]
-        public DateTime? DateOfBirth { get; set; }
+        public DateOnly? DateOfBirth { get; set; }
 
         [Display(Name = "New password")]
         [Required(ErrorMessage = "Validate_Required")]

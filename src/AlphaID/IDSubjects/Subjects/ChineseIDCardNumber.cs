@@ -8,7 +8,7 @@ namespace IDSubjects.Subjects;
 public partial struct ChineseIDCardNumber
 {
     private readonly int regionCode;
-    private readonly DateTime dateOfBirth;
+    private readonly DateOnly dateOfBirth;
     private readonly int sequence;
     private readonly char checkcode;
     private readonly int version;
@@ -20,20 +20,20 @@ public partial struct ChineseIDCardNumber
     /// <param name="RegionCode"></param>
     /// <param name="DateOfBirth"></param>
     /// <param name="Sequence"></param>
-    public ChineseIDCardNumber(int Version, int RegionCode, DateTime DateOfBirth, int Sequence)
+    public ChineseIDCardNumber(int Version, int RegionCode, DateOnly DateOfBirth, int Sequence)
     {
         if (Version != ChineseIDCardNumberVersion.V1 && Version != ChineseIDCardNumberVersion.V2)
             throw new OverflowException("Version Overflow.");
         if (RegionCode is < 100000 or > 999999)
             throw new OverflowException("Region code overflow.");
-        if (DateOfBirth > DateTime.UtcNow)
+        if (DateOfBirth > DateOnly.FromDateTime(DateTime.Now))
             throw new ArgumentException("Date of Birth in the future.");
         if (Sequence > 999)
             throw new OverflowException("Sequence out of range.");
 
         this.version = Version;
         this.regionCode = RegionCode;
-        this.dateOfBirth = DateOfBirth.Date;
+        this.dateOfBirth = DateOfBirth;
         this.sequence = Sequence;
         this.checkcode = CalculateCheckCode(string.Format(qulifiedFormat, this.regionCode, this.dateOfBirth, this.sequence));
     }
@@ -57,7 +57,7 @@ public partial struct ChineseIDCardNumber
     /// <summary>
     /// 获取或设置出生日期。
     /// </summary>
-    public readonly DateTime DateOfBirth
+    public readonly DateOnly DateOfBirth
     {
         get { return this.dateOfBirth; }
     }
@@ -183,9 +183,9 @@ public partial struct ChineseIDCardNumber
         else
             throw new FormatException("身份证格式错误。");
 
-        DateTime dateOfBirth = ver == ChineseIDCardNumberVersion.V1
-            ? new DateTime(int.Parse("19" + match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))
-            : new DateTime(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value));
+        DateOnly dateOfBirth = ver == ChineseIDCardNumberVersion.V1
+            ? new DateOnly(int.Parse("19" + match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))
+            : new DateOnly(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value));
         ChineseIDCardNumber number = new(ver, int.Parse(match.Groups[1].Value), dateOfBirth, int.Parse(match.Groups[5].Value));
         return ver == ChineseIDCardNumberVersion.V2 && number.checkcode != dataStr[17] ? throw new ArgumentException("校验错误") : number;
     }
@@ -226,15 +226,15 @@ public partial struct ChineseIDCardNumber
         if (!int.TryParse(match.Groups[4].Value, out int day))
             return false;
 
-        DateTime dateOfBirth;
+        DateOnly dateOfBirth;
         try
         {
-            dateOfBirth = new DateTime(year, month, day);
+            dateOfBirth = new DateOnly(year, month, day);
         }
         catch
         { return false; }
 
-        if (dateOfBirth > DateTime.UtcNow) return false;
+        if (dateOfBirth > DateOnly.FromDateTime(DateTime.Now)) return false;
 
         number = new ChineseIDCardNumber(ver, int.Parse(match.Groups[1].Value), dateOfBirth, int.Parse(match.Groups[5].Value));
         return ver != ChineseIDCardNumberVersion.V2 || number.checkcode == dataStr[17];

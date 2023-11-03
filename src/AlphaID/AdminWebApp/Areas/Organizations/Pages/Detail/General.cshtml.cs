@@ -89,15 +89,15 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
             [Display(Name = "Established at")]
             [DataType(DataType.Date)]
-            public DateTime? EstablishedAt { get; set; }
+            public DateOnly? EstablishedAt { get; set; }
 
             [Display(Name = "Term begin")]
             [DataType(DataType.Date)]
-            public DateTime? TermBegin { get; set; }
+            public DateOnly? TermBegin { get; set; }
 
             [Display(Name = "Term end")]
             [DataType(DataType.Date)]
-            public DateTime? TermEnd { get; set; }
+            public DateOnly? TermEnd { get; set; }
         }
     }
 }

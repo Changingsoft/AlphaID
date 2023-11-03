@@ -19,7 +19,7 @@ public class NaturalPerson
     /// <summary>
     /// 
     /// </summary>
-    public NaturalPerson()
+    protected NaturalPerson()
     {
         this.Id = Guid.NewGuid().ToString();
         this.BankAccounts = new HashSet<PersonBankAccount>();
@@ -37,12 +37,12 @@ public class NaturalPerson
     /// <summary>
     /// Primary Id
     /// </summary>
-    public string Id { get; set; } = default;
+    public string Id { get; protected set; } = default!;
 
     /// <summary>
     /// User Name
     /// </summary>
-    public string? UserName { get; set; }
+    public string? UserName { get; protected internal set; }
 
     /// <summary>
     /// Normalized user name.

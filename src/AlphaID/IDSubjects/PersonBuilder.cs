@@ -15,10 +15,7 @@ public class PersonBuilder
     /// <exception cref="ArgumentException"></exception>
     public PersonBuilder(string userName)
     {
-        this.Person = new NaturalPerson
-        {
-            UserName = userName
-        };
+        this.Person = new NaturalPerson(userName);
     }
 
     /// <summary>

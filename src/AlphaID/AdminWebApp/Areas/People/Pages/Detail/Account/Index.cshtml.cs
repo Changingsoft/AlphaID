@@ -57,8 +57,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
                 return this.Page();
             }
 
-            this.Data.UserName = this.Input.UserName;
-            await this.userManager.UpdateAsync(this.Data);
+            await this.userManager.SetUserNameAsync(this.Data, this.Input.UserName);
             this.OperationResultMessage = "操作已成功。";
             return this.Page();
         }

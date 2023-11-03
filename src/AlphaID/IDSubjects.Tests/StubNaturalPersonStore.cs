@@ -45,7 +45,6 @@ internal class StubNaturalPersonStore : IUserLoginStore<NaturalPerson>,
 
     public Task<IdentityResult> CreateAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        user.Id = Guid.NewGuid().ToString().ToLower();
         this.set.Add(user);
         return Task.FromResult(IdentityResult.Success);
     }
@@ -334,6 +333,6 @@ internal class StubNaturalPersonStore : IUserLoginStore<NaturalPerson>,
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        
     }
 }

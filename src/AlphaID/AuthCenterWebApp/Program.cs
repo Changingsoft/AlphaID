@@ -68,7 +68,7 @@ builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
     {
         sqlOptions.UseNetTopologySuite();
     });
-    //options.UseLazyLoadingProxies(); //hack disable lazy loading, about cause issue identity.
+    options.UseLazyLoadingProxies(); //hack disable lazy loading, about cause issue identity.
 });
 
 

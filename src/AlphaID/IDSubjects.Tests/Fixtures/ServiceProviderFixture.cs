@@ -10,7 +10,9 @@ public class ServiceProviderFixture : IDisposable
 
         services.AddIdentityCore<NaturalPerson>()
             .AddUserManager<NaturalPersonManager>()
-            .AddUserStore<StubNaturalPersonStore>();
+            .AddUserStore<StubNaturalPersonStore>()
+            .AddErrorDescriber<NaturalPersonIdentityErrorDescriber>();
+        services.AddScoped<NaturalPersonIdentityErrorDescriber>();
 
         this.RootServiceProvider = services.BuildServiceProvider();
         this.ServiceScopeFactory = this.RootServiceProvider.GetRequiredService<IServiceScopeFactory>();

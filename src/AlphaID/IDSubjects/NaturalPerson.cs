@@ -32,6 +32,7 @@ public class NaturalPerson
     public NaturalPerson(string userName) : this()
     {
         this.UserName = userName;
+        this.NormalizedUserName = userName.ToUpper();
     }
 
     /// <summary>
@@ -44,13 +45,13 @@ public class NaturalPerson
     /// User Name
     /// </summary>
     [MaxLength(256)]
-    public string? UserName { get; protected internal set; }
+    public string UserName { get; protected internal set; } = default!;
 
     /// <summary>
     /// Normalized user name.
     /// </summary>
     [MaxLength(256)]
-    public string? NormalizedUserName { get; protected internal set; }
+    public string NormalizedUserName { get; protected internal set; } = default!;
 
     /// <summary>
     /// Gets or sets the email address for this user.

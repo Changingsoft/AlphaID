@@ -24,12 +24,12 @@ public static class IDSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
+        services.TryAddScoped<NaturalPersonIdentityErrorDescriber>();
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>()
             .AddUserManager<NaturalPersonManager>()
             .AddUserValidator<PhoneNumberValidator>()
-            .AddErrorDescriber<NaturalPersonIdentityErrorDescriber>()
             ;
 
         if(setupAction != null)

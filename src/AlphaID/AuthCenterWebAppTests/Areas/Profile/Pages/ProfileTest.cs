@@ -9,12 +9,12 @@ public class ProfileTest : IClassFixture<AuthCenterWebAppFactory>
     }
 
     [Fact]
-    public async Task GetAvatar()
+    public async Task GetDefaultPictureWhenPersonNotSpecified()
     {
         var client = this.factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/Profile/Avatar");
+        var response = await client.GetAsync("People/guanyu/Avatar");
         response.EnsureSuccessStatusCode();
-        Assert.Equal("image/jpeg", response.Content.Headers.ContentType?.ToString());
+        Assert.Equal("image/png", response.Content.Headers.ContentType?.ToString());
     }
 }

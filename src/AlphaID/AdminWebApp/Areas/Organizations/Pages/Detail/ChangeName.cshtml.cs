@@ -38,7 +38,7 @@ public class ChangeNameModel : PageModel
         if (org == null)
             return this.NotFound();
 
-        var result = await this.manager.ChangeNameAsync(org, this.Input.NewName, this.Input.ChangeDate, this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
+        var result = await this.manager.ChangeNameAsync(org, this.Input.NewName, DateOnly.FromDateTime(this.Input.ChangeDate), this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -62,7 +62,7 @@ public class ChangeNameModel : PageModel
 
         [DataType(DataType.Date)]
         [Display(Name = "When changed")]
-        public DateOnly ChangeDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateTime ChangeDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Record used name")]
         public bool RecordUsedName { get; set; } = true;

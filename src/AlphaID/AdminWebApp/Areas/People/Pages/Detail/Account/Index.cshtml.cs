@@ -30,9 +30,10 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
 
             this.Data = person;
             this.HasPassword = await this.userManager.HasPasswordAsync(this.Data);
-            this.Input = new();
-            if (this.Data.UserName != null)
-                this.Input.UserName = this.Data.UserName;
+            this.Input = new()
+            {
+                UserName = this.Data.UserName
+            };
 
             return this.Page();
         }

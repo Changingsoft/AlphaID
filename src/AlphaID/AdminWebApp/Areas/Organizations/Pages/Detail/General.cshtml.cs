@@ -32,10 +32,10 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
                 Representative = org.Representative,
                 USCI = org.USCI,
                 Website = org.Website,
-                EstablishedAt = org.EstablishedAt,
+                EstablishedAt = org.EstablishedAt?.ToDateTime(TimeOnly.MinValue),
                 Name = org.Name,
-                TermBegin = org.TermBegin,
-                TermEnd = org.TermEnd,
+                TermBegin = org.TermBegin?.ToDateTime(TimeOnly.MinValue),
+                TermEnd = org.TermEnd?.ToDateTime(TimeOnly.MinValue),
             };
             return this.Page();
         }
@@ -58,9 +58,9 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             org.Representative = this.Input.Representative;
             org.USCI = this.Input.USCI != null ? usci.ToString() : null;
             org.Website = this.Input.Website;
-            org.EstablishedAt = this.Input.EstablishedAt;
-            org.TermBegin = this.Input.TermBegin;
-            org.TermEnd = this.Input.TermEnd;
+            org.EstablishedAt = this.Input.EstablishedAt.HasValue ? DateOnly.FromDateTime(this.Input.EstablishedAt.Value) : null;
+            org.TermBegin = this.Input.TermBegin.HasValue ? DateOnly.FromDateTime(this.Input.TermBegin.Value) : null;
+            org.TermEnd = this.Input.TermEnd.HasValue ? DateOnly.FromDateTime(this.Input.TermEnd.Value) : null;
 
             await this.manager.UpdateAsync(org);
             this.OperationResult = IdOperationResult.Success;
@@ -89,15 +89,15 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
             [Display(Name = "Established at")]
             [DataType(DataType.Date)]
-            public DateOnly? EstablishedAt { get; set; }
+            public DateTime? EstablishedAt { get; set; }
 
             [Display(Name = "Term begin")]
             [DataType(DataType.Date)]
-            public DateOnly? TermBegin { get; set; }
+            public DateTime? TermBegin { get; set; }
 
             [Display(Name = "Term end")]
             [DataType(DataType.Date)]
-            public DateOnly? TermEnd { get; set; }
+            public DateTime? TermEnd { get; set; }
         }
     }
 }

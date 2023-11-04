@@ -107,13 +107,20 @@ public class NaturalPersonManagerTest
     }
 
     [Fact]
-    public async Task UpdatePasswordLastSetTimeWhenChangePassword()
+    public async Task AddPasswordWillSetPasswordLastSetTime()
     {
         using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
         var person = await this.naturalPersonMocker.CreateDefaultMockPersonAsync(manager);
 
-        await manager.ChangePasswordAsync(person, "", "NewPassword");
-        Assert.Equal(DateTime.Now, person.PasswordLastSet);
+        using (ShimsContext.Create())
+        {
+            var utcNow = new DateTime(2023, 11, 4, 4, 50, 34, DateTimeKind.Utc);
+            System.Fakes.ShimDateTime.UtcNowGet = () => utcNow;
+
+            var result = await manager.AddPasswordAsync(person, "Password$1");
+            Assert.True(result.Succeeded);
+            Assert.Equal(utcNow, person.PasswordLastSet);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
     public class IndexModel : PageModel
     {
         private readonly NaturalPersonManager personManager;
-        PersonSignInManager signInManager;
+        private readonly PersonSignInManager signInManager;
 
         public IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager)
         {
@@ -33,7 +33,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 Bio = person.Bio,
                 Website = person.WebSite,
                 Gender = person.Sex,
-                DateOfBirth = person.DateOfBirth,
+                DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue),
             };
             return this.Page();
         }
@@ -49,7 +49,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             person.Bio = this.Input.Bio;
             person.WebSite = this.Input.Website;
             person.Sex = this.Input.Gender;
-            person.DateOfBirth = this.Input.DateOfBirth;
+            person.DateOfBirth = this.Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value) : null;
 
             this.Result = await this.personManager.UpdateAsync(person);
             if (!this.Result.Succeeded)
@@ -109,7 +109,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
             [Display(Name = "Birth date")]
             [DataType(DataType.Date)]
-            public DateOnly? DateOfBirth { get; set; }
+            public DateTime? DateOfBirth { get; set; }
         }
     }
 }

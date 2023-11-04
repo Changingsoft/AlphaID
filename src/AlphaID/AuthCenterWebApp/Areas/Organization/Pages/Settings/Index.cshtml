@@ -7,6 +7,24 @@
 
 <form method="post">
     <div class="mb-3">
+        <label asp-for="Input.Domicile" class="form-label"></label>
+        <input asp-for="Input.Domicile" class="form-control" />
+        <span asp-description-for="Input.Domicile"></span>
+        <span asp-validation-for="Input.Domicile" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Representative" class="form-label"></label>
+        <input asp-for="Input.Representative" class="form-control" />
+        <span asp-description-for="Input.Representative"></span>
+        <span asp-validation-for="Input.Representative" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Contact" class="form-label"></label>
+        <input asp-for="Input.Contact" class="form-control" />
+        <span asp-description-for="Input.Contact"></span>
+        <span asp-validation-for="Input.Contact" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
         <label asp-for="Input.Description" class="form-label"></label>
         <input asp-for="Input.Description" class="form-control" />
         <span asp-description-for="Input.Description"></span>
@@ -24,7 +42,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <h4>@L["Rename organization"]</h4>
-                    <p>@L["enaming your organization can have unintended side effects."]</p>
+                    <p>@L["Renaming your organization can have unintended side effects."]</p>
                 </div>
                 <div class="col-auto ms-auto">
                     <a href="#" class="btn btn-danger">@L["Rename organization"]</a>

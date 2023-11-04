@@ -31,6 +31,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
             this.Input = new InputModel()
             {
                 Description = org.Description,
+                Domicile = org.Domicile,
+                Contact = org.Contact,
+                Representative = org.Representative,
             };
 
             return this.Page();
@@ -49,6 +52,10 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
                 return this.Page();
 
             org.Description = this.Input.Description;
+            org.Domicile = this.Input.Domicile;
+            org.Contact = this.Input.Contact;
+            org.Representative = this.Input.Representative;
+
             await this.manager.UpdateAsync(org);
             this.OperationResult = IdOperationResult.Success;
             return this.Page();
@@ -58,6 +65,15 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         {
             [Display(Name = "Description")]
             public string? Description { get; set; }
+
+            [Display(Name = "Domicile")]
+            public string? Domicile { get; set; }
+
+            [Display(Name = "Contact")]
+            public string? Contact { get; set; }
+
+            [Display(Name = "Representative")]
+            public string? Representative { get; set; }
 
         }
     }

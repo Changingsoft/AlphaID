@@ -6,7 +6,7 @@
     <div class="container-xl">
         <div class="card">
             <div class="row g-0">
-                <div class="col-12 col-md-3 border-end">
+                <div class="col-12 col-md-2 border-end">
                     <div class="card-body">
                         <div class="list-group list-group-transparent">
                             <a asp-page="/Settings/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" class="list-group-item list-group-item-action d-flex align-items-center">@L["General"]</a>
@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-9 d-flex flex-column">
+                <div class="col-12 col-md-10 d-flex flex-column">
                     <div class="card-body">
                         @RenderBody()
                     </div>

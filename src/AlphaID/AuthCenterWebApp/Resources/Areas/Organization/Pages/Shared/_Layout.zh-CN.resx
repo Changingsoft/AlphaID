@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,133 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Agree the" xml:space="preserve">
-    <value>同意</value>
+  <data name="Overview" xml:space="preserve">
+    <value>概要</value>
   </data>
-  <data name="Birth date" xml:space="preserve">
-    <value>生日</value>
+  <data name="People" xml:space="preserve">
+    <value>成员</value>
   </data>
-  <data name="Captcha code" xml:space="preserve">
-    <value>验证码</value>
-  </data>
-  <data name="Captcha_Invalid" xml:space="preserve">
-    <value>验证码无效。</value>
-  </data>
-  <data name="Confirm password" xml:space="preserve">
-    <value>确认密码</value>
-  </data>
-  <data name="Current password" xml:space="preserve">
-    <value>当前密码</value>
-  </data>
-  <data name="Current user name" xml:space="preserve">
-    <value>当前用户名</value>
-  </data>
-  <data name="Department" xml:space="preserve">
-    <value>部门</value>
-  </data>
-  <data name="Domicile" xml:space="preserve">
-    <value>住所</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>电子邮件</value>
-  </data>
-  <data name="Female" xml:space="preserve">
-    <value>女</value>
-  </data>
-  <data name="Gender" xml:space="preserve">
-    <value>性别</value>
-  </data>
-  <data name="Given name" xml:space="preserve">
-    <value>名字</value>
-  </data>
-  <data name="Male" xml:space="preserve">
-    <value>男</value>
-  </data>
-  <data name="Mobile phone number" xml:space="preserve">
-    <value>移动电话号码</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
-  </data>
-  <data name="New email" xml:space="preserve">
-    <value>新电子邮件</value>
-  </data>
-  <data name="New mobile phone number" xml:space="preserve">
-    <value>新移动电话号码</value>
-  </data>
-  <data name="New password" xml:space="preserve">
-    <value>新密码</value>
-  </data>
-  <data name="New user name" xml:space="preserve">
-    <value>新用户名</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>密码</value>
-  </data>
-  <data name="Recovery code" xml:space="preserve">
-    <value>恢复代码</value>
-  </data>
-  <data name="Remark" xml:space="preserve">
-    <value>备注</value>
-  </data>
-  <data name="Remember me on this device" xml:space="preserve">
-    <value>在此设备上记住我</value>
-  </data>
-  <data name="Remember my decision" xml:space="preserve">
-    <value>记住我的决定</value>
-  </data>
-  <data name="Remember this device" xml:space="preserve">
-    <value>记住这台设备</value>
-  </data>
-  <data name="Representative" xml:space="preserve">
-    <value>责任人</value>
-  </data>
-  <data name="Surname" xml:space="preserve">
-    <value>姓氏</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>职务</value>
-  </data>
-  <data name="Two-factor code" xml:space="preserve">
-    <value>双因素代码</value>
-  </data>
-  <data name="Unified social credit code" xml:space="preserve">
-    <value>统一社会信用代码</value>
-  </data>
-  <data name="User name" xml:space="preserve">
-    <value>用户名</value>
-  </data>
-  <data name="Validate_EmailAddress" xml:space="preserve">
-    <value>不是有效的电子邮件格式。</value>
-  </data>
-  <data name="Validate_PasswordConfirm" xml:space="preserve">
-    <value>两次输入的密码不一致。</value>
-  </data>
-  <data name="Validate_Required" xml:space="preserve">
-    <value>{0}是必需的。</value>
-  </data>
-  <data name="Validate_StringLength" xml:space="preserve">
-    <value>{0}的长度介于{2}到{1}个字符。</value>
-  </data>
-  <data name="Verification code" xml:space="preserve">
-    <value>短信验证码</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>描述</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>联系方式</value>
-  </data>
-  <data name="Account" xml:space="preserve">
-    <value>账户</value>
-  </data>
-  <data name="Address" xml:space="preserve">
-    <value>地址</value>
-  </data>
-  <data name="Bank" xml:space="preserve">
-    <value>银行</value>
-  </data>
-  <data name="Taxpayer ID" xml:space="preserve">
-    <value>纳税人识别号</value>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
   </data>
 </root>

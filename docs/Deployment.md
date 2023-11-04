@@ -1,18 +1,31 @@
-# Deployment Guide
+# Alpha ID 部署指南
 
-## Requirements
+## 需求
 
 ### Your organization IT infrastructures
 
-* Email system
+* 电子邮件系统
 
 An email system or email service will be used for email address validation, reset password, etc. Alpha ID uses SMTP protocol for mail sending.
 
-* Mobile phone short message service
+* 短信接口
 
 Short message service will be used for phone number verification, reset password, receive notice, etc.
 
-## Multi instances & Load balance
+## 预配置
+
+配置 appsettings.json
+
+## 初始运行
+
+运行 DatabaseTool 工具以准备初始运行
+
+## 升级
+
+运行 DatabaseTool 以准备升级
+
+
+## 多实例和负载均衡
 
 Alpha ID 支持多实例部署。
 

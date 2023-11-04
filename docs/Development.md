@@ -1,6 +1,6 @@
-# Development Guide
+# Alpha ID 开发指南
 
-## Requirements
+## 环境需求
 
 开发环境：
 
@@ -8,11 +8,15 @@
 * Java Development Kit
 * Nodejs
 
+我们使用 Visual Studio 2022 作为集成开发环境。
 
+### 针对国际化和本地化的开发活动
 
-## Debuging
+为了更好提高国际化和本地化开发效率，可以额外安装 ReSharper 或 ResX Manager 扩展。
 
-本地开发调试时，Alpha ID不依赖实际的外部服务，它使用模拟的外部服务和本地持久化方案。
+## 调试
+
+本地调试时，Alpha ID 不依赖实际的外部服务，它使用模拟的外部服务和本地持久化方案。
 
 * 使用SQL Server Local DB提供持久化。
 * 不实际发送邮件，但会在日志中记录消息性日志。
@@ -28,13 +32,23 @@
 ``` powershell
 dotnet build -c
 ```
-``` bash
-rm -rd base/d
-```
-## Testing
+
+你可以在 Visual Studio 中使用“生成解决方案”的方式构建项目。
+
+## 测试
+
+### 单元测试
+
+我们使用 xUnit 来开展单元测试。开发阶段尽可能为关键代码和执行路径添加了单元测试。
+
+### 集成测试
 
 集成测试时，使用Development环境，与开发调试环境一致，使用[示例数据](SampleData.md)。
 
-## Packaging & Publish
+## 打包和发布
 
-## Contribution
+
+
+## 贡献
+
+我们热忱期待你的贡献。如果你有意为该项目作贡献，请与作者联系。

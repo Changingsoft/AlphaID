@@ -1,46 +1,50 @@
-# Alpha ID Release Notes
+# Alpha ID 发行说明
 
-## Features
+Alpha ID 尚未正式发布，目前已实现的特性如下。在正式发布时，特性可能会有所调整。
 
-### Subjects
+## 特性
 
-* Natural person and organization membership.
-* Self-servicing for person and organization.
+### 主体 Subjects
+
+* 自然人、组织以及组织成员身份
+* 针对自然人和组织的自助服务
   * Invite person join in organization
-* Membership visibility.
+* 组织成员身份的可见性
 * Provided WebAPI for Searching person and organization.
 * Support Real-Name validation.
 
-### Identity
+### 身份 Identity
 
-* Fully supports OpenID Connect protocol spec 1.0
-* Supports issue all claim types that defined from OpenID Connect spec
+* 完整支持 OAuth/OpenID Connect 有关协议
+  * 支持 OIDC 的管理
+  * 支持颁发所有 OpenID Connect 预定的声明类型
+  * 依赖方可以通过 acr-values 指示 Alpha ID 使用指定的外部 IdP
 
-### Account Management
+### 账户管理 Account Management
 
-* Manage downstream LDAP (often as Active directory) infrastructure.
+* 可以管理下游 LDAP(Microsoft Active Directory) 基础结构
+* 可以接受上游 LDAP(Microsoft Active Directory) 基础结构的管理
 
-### Authentication
+### 验证 Authentication
 
-* Local login with Password
-  * Can be disabled when password not exists
-* Supports external logins
-  * Supports specify IdP for login from Relying party.
-* Supports 2FA, via TOPT authenticator app.
-* Lockout when sign in check failed.
-* Supports force user must change password.
+* 使用密码本地登录
+  * 可以移除密码以禁用本地登录
+* 支持外部登录
+* 支持多因子身份验证
+  * 支持通过TOPT验证器实施第二因子身份验证
+* 对登录失败计数并实施锁定
+* 支持密码有效期和强制更改
 * Supports binding an exists account after external login.
 
-### Security
+### 安全性 Security
 
-* Supports CHAPCHA check when signing up.
+* 注册阶段实施 CHAPCHA 检查
 
-### Appearances
+### 外观 Appearances
 
-* Multi language support (en-US and zh-CN).
-* Frendly URL (in Auth Center Web Application).
+* 多语言支持，(en-US and zh-CN).
+* 友好 URL (in Auth Center Web Application).
 
-### System
+### 系统 System
 
-* Supports Peer instances (when enable shared server side session feature).
-  It means you can use NLB easily.
+* 对等多实例结构（启用共享服务端会话时），意味着对NLB友好。

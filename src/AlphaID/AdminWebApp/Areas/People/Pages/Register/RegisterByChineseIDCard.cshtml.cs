@@ -1,5 +1,6 @@
 using AlphaIDPlatform.Platform;
 using IDSubjects;
+using IDSubjects.ChineseName;
 using IDSubjects.RealName;
 using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;

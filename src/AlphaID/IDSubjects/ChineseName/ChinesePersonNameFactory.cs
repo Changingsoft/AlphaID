@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IDSubjects.ChineseName;
 
 /// <summary>
 /// Chinese Person Name Factory.

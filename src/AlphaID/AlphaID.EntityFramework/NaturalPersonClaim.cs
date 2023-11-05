@@ -6,7 +6,8 @@ using System.Security.Claims;
 
 namespace AlphaID.EntityFramework;
 
-[Table("UserClaim")]
+[Table("NaturalPersonClaim")]
+[Index(nameof(UserId))]
 public class NaturalPersonClaim
 {
     /// <summary>

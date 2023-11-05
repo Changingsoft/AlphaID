@@ -29,10 +29,6 @@ public class PhoneNumberValidator : IUserValidator<NaturalPerson>
                     //手机号已存在且不隶属该用户，则提示手机号重复。
                     errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.DuplicatePhoneNumber());
                 }
-                else
-                {
-                    await naturalPersonManager.SetPhoneNumberAsync(user, number.ToString());
-                }
             }
             else
             {

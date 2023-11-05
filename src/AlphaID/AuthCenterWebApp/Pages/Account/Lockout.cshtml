@@ -2,9 +2,21 @@
 @model AuthCenterWebApp.Pages.Account.LockoutModel
 @{
     this.ViewBag.Title = this.L["Locked out"];
+    this.Layout = "_AuthenticationLayout";
 }
-
-<header>
-    <h1 class="text-danger">@ViewBag.Title</h1>
-    <p class="text-danger">@L["Your account was locked out, please try again later."]</p>
-</header>
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+                <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+                @(this.Product.Value.Name) @L["Account"]
+            </a>
+        </div>
+        <div class="card card-md">
+            <div class="card-body">
+                <h2 class="text-danger">@ViewBag.Title</h2>
+                <p class="text-danger">@L["Your account was locked out, please try again later."]</p>
+            </div>
+        </div>
+    </div>
+</div>

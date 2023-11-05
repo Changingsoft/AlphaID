@@ -1,5 +1,5 @@
 ﻿using AlphaID.EntityFramework;
-using IDSubjects;
+using IDSubjects.ChineseName;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

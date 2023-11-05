@@ -63,9 +63,9 @@ public class NaturalPersonStore : NaturalPersonStoreBase
         return this.context.People.SingleOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail, cancellationToken);
     }
 
-    public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
+    public override async Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
-        return this.context.People.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken: cancellationToken);
+        return await this.context.People.FindAsync(new object?[] { userId }, cancellationToken: cancellationToken);
     }
 
     public override async Task<NaturalPerson?> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
@@ -168,7 +168,7 @@ public class NaturalPersonStore : NaturalPersonStoreBase
     public override async Task<IdentityResult> UpdateAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
         user.ConcurrencyStamp = Guid.NewGuid().ToString();
-        this.context.People.Update(user);
+        //this.context.People.Update(user);
         await this.context.SaveChangesAsync(cancellationToken);
         return IdentityResult.Success;
     }

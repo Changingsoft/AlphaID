@@ -1,4 +1,5 @@
 ﻿using IDSubjects;
+using IDSubjects.ChineseName;
 using IDSubjects.Subjects;
 using Xunit;
 

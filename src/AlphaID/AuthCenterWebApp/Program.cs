@@ -2,6 +2,7 @@
 using AlphaID.PlatformServices.Aliyun;
 using AlphaID.PlatformServices.Primitives;
 using AlphaIDPlatform;
+using AlphaIDPlatform.Identity;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatform.RazorPages;
 using AuthCenterWebApp;
@@ -9,13 +10,13 @@ using AuthCenterWebApp.Services;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
+using IDSubjects.ChineseName;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using System.Diagnostics;
 using System.Globalization;
 
 
@@ -48,6 +49,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
+
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/");
@@ -68,12 +70,9 @@ builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
     {
         sqlOptions.UseNetTopologySuite();
     });
-    options.UseLazyLoadingProxies(); //hack disable lazy loading, about cause issue identity.
 });
 
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddIDSubjectsIdentity(options =>
+var identityBuilder = builder.Services.AddIDSubjectsIdentity(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789-";
     options.User.RequireUniqueEmail = true;
@@ -85,7 +84,11 @@ builder.Services.AddIDSubjectsIdentity(options =>
     .AddDefaultTokenProviders()
     .AddDefaultStores();
 
-builder.Services.AddScoped<IQueryableUserStore<NaturalPerson>, NaturalPersonStore>();
+if (true) //todo 设置一个开关以决定是否启用实名认证模块
+{
+    identityBuilder.AddRealName()
+        .AddRealNameStore<RealNameStore>();
+}
 
 //添加邮件发送器。
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
@@ -108,29 +111,20 @@ builder.Services.AddIdentityServer(options =>
     //hack 将外部登录的方案修改为AspNetCoreIdentity的默认值？
     options.DynamicProviders.SignInScheme = IdentityConstants.ExternalScheme;
 })
-//配置IdentityServer的配置存储
 .AddConfigurationStore(options =>
 {
     options.ConfigureDbContext = b =>
     {
-        b.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"), o =>
-        {
-            o.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-        });
+        b.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
     };
 })
-//操作记录存储
 .AddOperationalStore(options =>
 {
     options.ConfigureDbContext = b =>
     {
-        b.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"), o =>
-        {
-            o.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-        });
+        b.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
     };
 })
-//使用AspNetIdentity.
 .AddAspNetIdentity<NaturalPerson>()
 .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
 .AddServerSideSessions<ServerSideSessionStore>();
@@ -173,14 +167,6 @@ if (builder.Environment.IsDevelopment())
 }
 
 var app = builder.Build();
-
-//测试获取EmailSender
-using (var scope = app.Services.CreateScope())
-{
-    var emailSenders = scope.ServiceProvider.GetService<IEnumerable<IEmailSender>>();
-    Debug.Assert(emailSenders != null);
-    Debug.Assert(emailSenders.Count() == 2); //will be contained 2 senders.
-}
 
 app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())

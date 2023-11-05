@@ -11,14 +11,12 @@ public class CreateDirectoryAccountModel : PageModel
     private readonly DirectoryServiceManager directoryServiceManager;
     private readonly LogonAccountManager logonAccountManager;
     private readonly NaturalPersonManager naturalPersonManager;
-    private readonly ChineseIDCardManager chineseIDCardManager;
 
-    public CreateDirectoryAccountModel(DirectoryServiceManager directoryServiceManager, LogonAccountManager logonAccountManager, NaturalPersonManager naturalPersonManager, ChineseIDCardManager chineseIDCardManager)
+    public CreateDirectoryAccountModel(DirectoryServiceManager directoryServiceManager, LogonAccountManager logonAccountManager, NaturalPersonManager naturalPersonManager)
     {
         this.directoryServiceManager = directoryServiceManager;
         this.logonAccountManager = logonAccountManager;
         this.naturalPersonManager = naturalPersonManager;
-        this.chineseIDCardManager = chineseIDCardManager;
     }
 
     public IEnumerable<DirectoryService> DirectoryServices => this.directoryServiceManager.Services;
@@ -31,15 +29,9 @@ public class CreateDirectoryAccountModel : PageModel
         var person = await this.naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
-        var card = await this.chineseIDCardManager.GetCurrentAsync(person);
-        if (card == null)
-        {
-            this.ModelState.AddModelError("", "必须先通过实名认证，才能创建目录账户");
-            return this.Page();
-        }
 
         //准备姓名全拼+身份证后4位
-        var accountName = $"{person.PhoneticSurname}{person.PhoneticGivenName}{card.ChineseIDCard!.CardNumber[^4..]}".ToLower();
+        var accountName = $"{person.PhoneticSurname}{person.PhoneticGivenName}".ToLower();
 
         //准备有关资料
         this.Input = new()

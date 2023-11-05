@@ -38,6 +38,11 @@ public class PersonSignInManager : SignInManager<NaturalPerson>
         var result = await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
         if (result.Succeeded)
         {
+            //如果密码验证成功，则检查是否需要强制修改密码。
+            if (user.PasswordLastSet == null || user.PasswordLastSet.Value < DateTimeOffset.UtcNow.AddDays(-90))
+            {
+                return new PersonSignInResult { MustChangePassword = true };
+            }
             await this.personManager.AccessSuccededAsync(user, "password");
         }
         return result;

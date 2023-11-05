@@ -1,4 +1,6 @@
-﻿namespace IDSubjects;
+﻿using IDSubjects.ChineseName;
+
+namespace IDSubjects;
 
 internal class DefaultChinesePersonNamePinyinInterceptor : IChinesePersonNamePinyinInterceptor
 {

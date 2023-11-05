@@ -1,4 +1,5 @@
-﻿using IDSubjects.Subjects;
+﻿using IDSubjects.ChineseName;
+using IDSubjects.Subjects;
 
 namespace IDSubjects;
 

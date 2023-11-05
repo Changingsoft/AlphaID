@@ -3,8 +3,10 @@ using IDSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace AlphaIDPlatform.Identity;
 public static class IDSubjectsServiceCollectionExtensions
 {
     /// <summary>
@@ -15,7 +17,10 @@ public static class IDSubjectsServiceCollectionExtensions
     /// <returns></returns>
     public static IdentityBuilder AddIDSubjectsIdentity(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
     {
+        services.AddHttpContextAccessor();
+
         var builder = services.AddIDSubjects(setupAction);
+
         //Add required cookies.
         services.AddAuthentication(options =>
         {

@@ -1,4 +1,4 @@
-﻿@model DateTime?
+﻿@model DateOnly?
 
 @if (!Model.HasValue)
 {
@@ -6,5 +6,5 @@
 }
 else
 {
-    <span>@Model.Value.AsAge()</span>
+    <span title="@Model.Value">@Model.Value.AsAge()</span>
 }

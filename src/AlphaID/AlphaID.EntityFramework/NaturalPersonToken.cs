@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AlphaID.EntityFramework;
 
-[Table("Token")]
+[Table("NaturalPersonToken")]
 public class NaturalPersonToken
 {
     /// <summary>

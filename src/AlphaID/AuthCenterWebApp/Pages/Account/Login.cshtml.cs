@@ -1,3 +1,4 @@
+using AuthCenterWebApp.Services;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -105,13 +106,7 @@ public class LoginModel : PageModel
                 {
                     await this._events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
 
-                    if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
-                    {
-                        var principal = this.GenerateMustChangePasswordPrincipal(user);
-                        await this._signInManager.SignOutAsync();
-                        await this.HttpContext.SignInAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
-                        return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
-                    }
+
 
                     if (context != null)
                     {
@@ -142,15 +137,16 @@ public class LoginModel : PageModel
                     }
                 }
 
+                if (result.MustChangePassword())
+                {
+                    var principal = this.GenerateMustChangePasswordPrincipal(user);
+                    await this._signInManager.SignOutAsync();
+                    await this.HttpContext.SignInAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
+                    return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
+                }
+
                 if (result.RequiresTwoFactor)
                 {
-                    if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
-                    {
-                        var principal = this.GenerateMustChangePasswordPrincipal(user);
-                        await this._signInManager.SignOutAsync();
-                        await this.HttpContext.SignInAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
-                        return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
-                    }
                     return this.RedirectToPage("./LoginWith2fa", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
                 }
 

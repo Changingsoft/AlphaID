@@ -131,12 +131,10 @@ builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
     {
         sqlOptions.UseNetTopologySuite();
     });
-    options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
-    options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {

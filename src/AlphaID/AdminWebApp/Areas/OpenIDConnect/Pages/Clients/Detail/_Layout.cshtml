@@ -1,16 +1,16 @@
-﻿@inject ConfigurationDbContext dbContext
+﻿@inject ConfigurationDbContext DbContext
 @{
     Layout = "Shared/_Layout";
     Duende.IdentityServer.EntityFramework.Entities.Client? client = default!;
     if (int.TryParse(this.ViewContext.RouteData.Values["anchor"]?.ToString(), out int clientId))
     {
-        client = this.dbContext.Clients.FirstOrDefault(p => p.Id == clientId);
+        client = DbContext.Clients.FirstOrDefault(p => p.Id == clientId);
 
     }
     this.ViewBag.Title = $"{client?.ClientName} - {this.ViewBag.Title}";
 }
 @section Heads{
-    @RenderSection("Heads", false)
+    @await RenderSectionAsync("Heads", false)
 }
 
 @section Breadcrumb{
@@ -46,5 +46,5 @@
 </div>
 @section Scripts
     {
-    @RenderSection("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 }

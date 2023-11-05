@@ -14,6 +14,12 @@ public class IDSubjectsDbContext : DbContext
         
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.UseLazyLoadingProxies();
+    }
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         base.ConfigureConventions(configurationBuilder);
@@ -46,6 +52,9 @@ public class IDSubjectsDbContext : DbContext
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = default!;
 
     public DbSet<OrganizationUsedName> OrganizationUsedNames { get; protected set; } = default!;
+
+
+    public DbSet<RealNameInfo> RealNameInfos { get; protected set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

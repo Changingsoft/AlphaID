@@ -5,6 +5,7 @@ namespace IDSubjects.RealName;
 /// <summary>
 /// 中国居民身份证管理器。
 /// </summary>
+[Obsolete]
 public class ChineseIDCardManager
 {
     private readonly IChineseIDCardValidationStore store;

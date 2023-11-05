@@ -2,7 +2,7 @@
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
 @section Heads{
-    @RenderSection("Heads", false)
+    @await RenderSectionAsync("Heads", false)
 }
 @section Navbar{
     <header class="navbar-expand-md">
@@ -60,5 +60,5 @@
 </div>
 
 @section Scripts{
-    @RenderSection("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 }

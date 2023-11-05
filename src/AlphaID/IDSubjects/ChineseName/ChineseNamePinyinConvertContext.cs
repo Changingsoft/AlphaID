@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IDSubjects.ChineseName;
 
 /// <summary>
 /// 名字拼音转换上下文。

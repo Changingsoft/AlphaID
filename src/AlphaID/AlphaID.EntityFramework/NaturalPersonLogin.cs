@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlphaID.EntityFramework;
 
-[Table("UserExternalLogin")]
+[Table("NaturalPersonLogin")]
+[Index(nameof(UserId))]
 public class NaturalPersonLogin
 {
     /// <summary>

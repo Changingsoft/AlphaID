@@ -1,4 +1,5 @@
 ﻿using IDSubjects;
+using IDSubjects.ChineseName;
 using IDSubjectsTests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.QualityTools.Testing.Fakes;

@@ -1,4 +1,5 @@
 using IDSubjects;
+using IDSubjects.ChineseName;
 using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;

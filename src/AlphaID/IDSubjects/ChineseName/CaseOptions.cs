@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IDSubjects.ChineseName;
 
 /// <summary>
 /// 拼音大小写方案。

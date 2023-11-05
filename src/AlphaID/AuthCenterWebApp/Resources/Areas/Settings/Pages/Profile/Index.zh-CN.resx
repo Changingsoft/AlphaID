@@ -98,4 +98,16 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="Are you sure you want to remove profile picture?" xml:space="preserve">
+		<value>确认要删除头像吗？</value>
+		<comment>Are you sure you want to remove profile picture?</comment>
+	</data>
+	<data name="Change profile picture" xml:space="preserve">
+		<value>更改头像</value>
+		<comment>Change profile picture</comment>
+	</data>
+	<data name="Update profile" xml:space="preserve">
+		<value>更新个人信息</value>
+		<comment>Update profile</comment>
+	</data>
 </root>

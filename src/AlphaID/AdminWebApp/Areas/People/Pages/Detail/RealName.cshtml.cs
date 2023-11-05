@@ -7,15 +7,18 @@ namespace AdminWebApp.Areas.People.Pages.Detail
     public class RealNameModel : PageModel
     {
         private readonly NaturalPersonManager userManager;
-        private readonly ChineseIDCardManager chineseIDCardManager;
+        RealNameManager realNameManager;
 
-        public RealNameModel(NaturalPersonManager userManager, ChineseIDCardManager chineseIDCardManager)
+        public RealNameModel(NaturalPersonManager userManager, RealNameManager realNameManager)
         {
             this.userManager = userManager;
-            this.chineseIDCardManager = chineseIDCardManager;
+            this.realNameManager = realNameManager;
         }
 
         public NaturalPerson Data { get; set; } = default!;
+
+        public RealNameInfo? RealName { get; set; }
+
         public ChineseIDCardValidation? Card { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
@@ -24,7 +27,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             if (person == null)
                 return this.NotFound();
 
-            this.Card = await this.chineseIDCardManager.GetCurrentAsync(person);
+            this.RealName = this.realNameManager.GetRealNameInfo(person);
 
             this.Data = person;
             return this.Page();

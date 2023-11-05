@@ -3,9 +3,9 @@
 }
 
 @section head{
-    @RenderSection("head", false)
+    @await RenderSectionAsync("head", false)
 }
 @section scripts{
-    @RenderSection("scripts", false)
+    @await RenderSectionAsync("scripts", false)
 }
 @RenderBody()

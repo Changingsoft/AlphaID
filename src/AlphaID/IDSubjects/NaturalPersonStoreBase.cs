@@ -40,9 +40,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     public virtual async Task<int> CountCodesAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
         var mergedCodes = await this.GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken).ConfigureAwait(false) ?? "";
-        if (mergedCodes.Length > 0)
-            return mergedCodes.Split(';').Length;
-        return 0;
+        return mergedCodes.Length > 0 ? mergedCodes.Split(';').Length : 0;
     }
 
     /// <summary>

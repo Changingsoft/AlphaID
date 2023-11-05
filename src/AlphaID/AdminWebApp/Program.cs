@@ -13,7 +13,7 @@ using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
-using IDSubjects;
+using IDSubjects.ChineseName;
 using IDSubjects.DependencyInjection;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication;
@@ -146,12 +146,10 @@ builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
     {
         sqlOptions.UseNetTopologySuite();
     });
-    options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
-    options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
@@ -160,21 +158,22 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
-    options.UseLazyLoadingProxies();
 }).AddScoped<OperationalStoreOptions>();
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OperationalDataConnection"));
-    options.UseLazyLoadingProxies();
 });
 
 //自然人管理器
-builder.Services.AddIDSubjects(options =>
-{
-
-})
+var identityBuilder = builder.Services.AddIDSubjects()
     .AddDefaultStores();
+
+if(true)
+{
+    identityBuilder.AddRealName()
+        .AddRealNameStore<RealNameStore>();
+}
 
 //实名身份验证器。
 builder.Services.AddScoped<ChineseIDCardManager>()

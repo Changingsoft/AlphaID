@@ -11,7 +11,8 @@
     {
         <title>@Product.Value.Name @Product.Value.Name @L["Management Center"]</title>
     }
-    @RenderSection("Heads", false)
+
+    @await RenderSectionAsync("Heads", false)
 </head>
 <body>
     @RenderBody()

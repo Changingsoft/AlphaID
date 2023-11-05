@@ -1,4 +1,5 @@
-﻿using IDSubjects.DependencyInjection;
+﻿using IDSubjects.ChineseName;
+using IDSubjects.DependencyInjection;
 using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -171,12 +172,14 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             return result;
         user.PasswordLastSet = null;
         result = await this.UpdateAsync(user);
-        if (!result.Succeeded)
+        if (result.Succeeded)
         {
-            this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，事务已回滚。", result);
             return result;
         }
+
+        this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，事务已回滚。", result);
         return result;
+
     }
 
     /// <summary>
@@ -189,14 +192,14 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     public override async Task<IdentityResult> ChangePasswordAsync(NaturalPerson user, string currentPassword, string newPassword)
     {
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdentityResult result = await base.ChangePasswordAsync(user, currentPassword, newPassword);
+        IdentityResult result = await base.ChangePasswordAsync(user, currentPassword, newPassword).ConfigureAwait(false);
         if (!result.Succeeded)
             return result;
         user.PasswordLastSet = DateTimeOffset.UtcNow;
         result = await this.UpdateAsync(user);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("用户密码已更新，但设置PasswordLastSet时出错，事务已回滚。", result);
+            this.Logger.LogError("用户密码已更新，但设置PasswordLastSet时出错，事务已回滚。");
             return result;
         }
         trans.Complete();
@@ -216,45 +219,17 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.ResetPasswordAsync(user, token, newPassword);
         if (!result.Succeeded)
             return result;
-        //todo 需要从选项确定是否要清除PasswordLastSet
-        if (true)
+        user.PasswordLastSet = DateTimeOffset.UtcNow;
+        result = await this.UpdateAsync(user);
+        if (!result.Succeeded)
         {
-            user.PasswordLastSet = null;
-            result = await this.UpdateAsync(user);
-            this.Logger.LogInformation("已将{user}的PasswordLastSet清除", user);
-            if (!result.Succeeded)
-            {
-                this.Logger.LogError("清除PasswordLastSet时出错", result);
-                return result;
-            }
+            this.Logger.LogError("清除PasswordLastSet时出错");
+            return result;
         }
         trans.Complete();
         return IdentityResult.Success;
     }
 
-    /// <summary>
-    /// 已重写，更新密码。
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="newPassword"></param>
-    /// <param name="validatePassword"></param>
-    /// <returns></returns>
-    protected override async Task<IdentityResult> UpdatePasswordHash(NaturalPerson user, string newPassword, bool validatePassword)
-    {
-        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdentityResult result = await base.UpdatePasswordHash(user, newPassword, validatePassword);
-        if (!result.Succeeded)
-            return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateAsync(user);
-        if (!result.Succeeded)
-        {
-            this.Logger.LogError("用户密码已更新，但设置PasswordLastSet时出错，事务已回滚。", result);
-            return result;
-        }
-        trans.Complete();
-        return IdentityResult.Success;
-    }
 
     /// <summary>
     /// 管理员重置用户密码。
@@ -277,7 +252,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             this.Logger.LogInformation("已将{user}的PasswordLastSet清除", person);
             if (!result.Succeeded)
             {
-                this.Logger.LogError("用户密码已设置，但清除PasswordLastSet时出错，事务已回滚。", result);
+                this.Logger.LogError("用户密码已设置，但清除PasswordLastSet时出错，事务已回滚。");
                 return result;
             }
         }
@@ -342,7 +317,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     {
         try
         {
-            var info = Image.Identify(bytes);
+            Image.Identify(bytes);
         }
         catch (InvalidImageContentException ex)
         {
@@ -375,15 +350,18 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         return result;
     }
 
+    /// <inheritdoc/>
     public override async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson user, string? phoneNumber)
     {
         var result = await base.SetPhoneNumberAsync(user, phoneNumber);
-        if(result.Succeeded)
+        if (!result.Succeeded)
         {
-            //todo 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
-            user.PhoneNumberConfirmed = true;
-            return await this.UpdateAsync(user);
+            return result;
         }
-        return result;
+
+        //todo 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
+        user.PhoneNumberConfirmed = true;
+        return await this.UpdateAsync(user);
+
     }
 }

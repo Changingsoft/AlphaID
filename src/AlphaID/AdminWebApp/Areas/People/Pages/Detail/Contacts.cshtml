@@ -1,9 +1,10 @@
 ﻿@page
 @model ContactsModel
 @{
+    ViewBag.Title = L["Contacts"];
 }
 
-<h2>@localizer["Contacts"]</h2>
+<h2>@L["Contacts"]</h2>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.PhoneNumber" class="form-label"></label>
@@ -16,6 +17,6 @@
         <span asp-validation-for="Input.Email" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">@localizer["Update"]</button>
-    <p>@this.Model.OperationMessage</p>
+    <button type="submit" class="btn btn-primary">@L["Update"]</button>
+    <p>@Model.OperationMessage</p>
 </form>

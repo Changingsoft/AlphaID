@@ -12,7 +12,7 @@ public class IndexModel : PageModel
         this.dbContext = dbContext;
     }
 
-    public IEnumerable<ApiResource> Results { get; set; } = default!;
+    public IQueryable<ApiResource> Results { get; set; } = default!;
 
     public void OnGet()
     {

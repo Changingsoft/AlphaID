@@ -1,0 +1,10 @@
+﻿@model DateOnly?
+
+@if (!Model.HasValue)
+{
+    <span>N/A</span>
+}
+else
+{
+    <span title="@Model.Value">@Model.Value.AsAge()</span>
+}

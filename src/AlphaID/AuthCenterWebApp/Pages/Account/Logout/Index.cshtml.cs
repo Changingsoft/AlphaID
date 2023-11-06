@@ -15,9 +15,9 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 [AllowAnonymous]
 public class Index : PageModel
 {
-    private readonly SignInManager<NaturalPerson> _signInManager;
-    private readonly IIdentityServerInteractionService _interaction;
-    private readonly IEventService _events;
+    private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly IIdentityServerInteractionService interaction;
+    private readonly IEventService events;
 
     [BindProperty]
     public string? LogoutId { get; set; }
@@ -27,9 +27,9 @@ public class Index : PageModel
 
     public Index(SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction, IEventService events)
     {
-        this._signInManager = signInManager;
-        this._interaction = interaction;
-        this._events = events;
+        this.signInManager = signInManager;
+        this.interaction = interaction;
+        this.events = events;
     }
 
     public async Task<IActionResult> OnGet(string? logoutId, string? returnUrl)
@@ -46,7 +46,7 @@ public class Index : PageModel
         }
         else
         {
-            var context = await this._interaction.GetLogoutContextAsync(this.LogoutId);
+            var context = await this.interaction.GetLogoutContextAsync(this.LogoutId);
             if (context?.ShowSignoutPrompt == false)
             {
                 // it's safe to automatically sign-out
@@ -66,18 +66,18 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        if (this.User.Identity!.IsAuthenticated == true)
+        if (this.User.Identity!.IsAuthenticated)
         {
             // if there's no current logout context, we need to create one
             // this captures necessary info from the current logged in user
             // this can still return null if there is no context needed
-            this.LogoutId ??= await this._interaction.CreateLogoutContextAsync();
+            this.LogoutId ??= await this.interaction.CreateLogoutContextAsync();
 
             // delete local authentication cookie
-            await this._signInManager.SignOutAsync();
+            await this.signInManager.SignOutAsync();
 
             // raise the logout event
-            await this._events.RaiseAsync(new UserLogoutSuccessEvent(this.User.GetSubjectId(), this.User.GetDisplayName()));
+            await this.events.RaiseAsync(new UserLogoutSuccessEvent(this.User.GetSubjectId(), this.User.GetDisplayName()));
 
             // see if we need to trigger federated logout
             var idp = this.User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;

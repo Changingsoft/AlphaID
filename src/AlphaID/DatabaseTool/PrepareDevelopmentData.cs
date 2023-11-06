@@ -1,4 +1,6 @@
-﻿using AlphaIDEntityFramework.EntityFramework;
+﻿using AdminWebApp.Infrastructure.DataStores;
+using AlphaID.DirectoryLogon.EntityFramework;
+using AlphaID.EntityFramework;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
@@ -12,23 +14,18 @@ public class PrepareDevelopmentData
         using var scope = app.Services.CreateScope();
 
 
-        var idDbContext = scope.ServiceProvider.GetRequiredService<IDSubjectsDbContext>();
+        var idDbContext = scope.ServiceProvider.GetRequiredService<IdSubjectsDbContext>();
         var idSvrConfigurationDbContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
         var idSvrOperationalDbContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
         var directoryLogonDbContext = scope.ServiceProvider.GetRequiredService<DirectoryLogonDbContext>();
-
-        //if any database exists, delete it first.
-        idDbContext.Database.EnsureDeleted();
-        idSvrConfigurationDbContext.Database.EnsureDeleted();
-        idSvrOperationalDbContext.Database.EnsureDeleted();
-        directoryLogonDbContext.Database.EnsureDeleted();
-
+        var adminWebAppDbContext = scope.ServiceProvider.GetRequiredService<OperationalDbContext>();
 
         //Apply Migrations
         idDbContext.Database.Migrate();
         idSvrConfigurationDbContext.Database.Migrate();
         idSvrOperationalDbContext.Database.Migrate();
         directoryLogonDbContext.Database.Migrate();
+        adminWebAppDbContext.Database.Migrate();
 
         //Apply Example Data
         var idSubjectsDbSqlFiles = Directory.GetFiles("./TestingData/IDSubjectsDbContext", "*.sql");
@@ -50,6 +47,11 @@ public class PrepareDevelopmentData
         foreach (var file in directoryLogonDataSqlFiles)
         {
             directoryLogonDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));
+        }
+        var adminWebAppTestingFiles = Directory.GetFiles("./TestingData/AdminWebAppData", "*.sql");
+        foreach(var file in adminWebAppTestingFiles)
+        {
+            adminWebAppDbContext.Database.ExecuteSqlRaw(File.ReadAllText(file, Encoding.UTF8));
         }
     }
 }

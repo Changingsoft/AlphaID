@@ -1,6 +1,7 @@
 ﻿using AlphaIDPlatform;
 using IdentityModel;
 using IDSubjects;
+using IDSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -11,7 +12,7 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
     private readonly SystemUrlInfo systemUrl;
 
     public PersonClaimsPrincipalFactory(NaturalPersonManager userManager,
-                                        IOptions<IdentityOptions> optionsAccessor,
+                                        IOptions<IdSubjectsOptions> optionsAccessor,
                                         IOptions<SystemUrlInfo> systemUrlOptions)
         : base(userManager, optionsAccessor)
     {
@@ -22,9 +23,10 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
     {
         var id = await base.GenerateClaimsAsync(user);
         id.AddClaim(new Claim(JwtClaimTypes.Name, user.Name));
-        var userAnchor = user.UserName ?? user.Id;
+        var userAnchor = user.UserName;
         id.AddClaim(new Claim(JwtClaimTypes.Profile, new Uri(this.systemUrl.AuthCenterUrl, "/People/" + userAnchor).ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrl.AuthCenterUrl, $"/People/{userAnchor}/Avatar").ToString()));
+        if (user.Avatar != null)
+            id.AddClaim(new Claim(JwtClaimTypes.Picture, new Uri(this.systemUrl.AuthCenterUrl, $"/People/{userAnchor}/Avatar").ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.Locale != null)
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));
@@ -56,8 +58,7 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
         if (user.Email != null)
             id.AddClaim(new Claim(JwtClaimTypes.Email, user.Email));
         id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
-        if (user.UserName != null)
-            id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName));
+        id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName));
         return id;
     }
 }

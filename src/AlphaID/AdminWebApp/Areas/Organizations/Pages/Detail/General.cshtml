@@ -3,16 +3,17 @@
 @{
 }
 @Html.DisplayFor(m => m.OperationResult)
+<h2>@L["General"]</h2>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
         <input asp-for="Input.Name" class="form-control disabled" readonly />
     </div>
     <div class="mb-3">
-        <label asp-for="Input.USCI" class="form-label"></label>
-        <input asp-for="Input.USCI" class="form-control" />
-        <span asp-description-for="Input.USCI"></span>
-        <span asp-validation-for="Input.USCI" class="text-danger"></span>
+        <label asp-for="Input.Usci" class="form-label"></label>
+        <input asp-for="Input.Usci" class="form-control" />
+        <span asp-description-for="Input.Usci"></span>
+        <span asp-validation-for="Input.Usci" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Domicile" class="form-label"></label>
@@ -56,7 +57,7 @@
         <span asp-description-for="Input.TermEnd"></span>
         <span asp-validation-for="Input.TermEnd" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn">@localizer["Apply changes"]</button>
+    <button type="submit" class="btn">@L["Apply changes"]</button>
 </form>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

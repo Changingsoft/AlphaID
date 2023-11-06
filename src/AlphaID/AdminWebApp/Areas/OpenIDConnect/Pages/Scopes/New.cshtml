@@ -1,0 +1,37 @@
+﻿@page
+@model NewModel
+@{
+    ViewBag.Title = L["Create scope"];
+}
+<h3>@ViewBag.Title</h3>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.Name" class="form-label"></label>
+        <input asp-for="Input.Name" class="form-control" />
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.DisplayName" class="form-label"></label>
+        <input asp-for="Input.DisplayName" class="form-control" />
+        <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Description" class="form-label"></label>
+        <input asp-for="Input.Description" class="form-control" />
+        <span asp-validation-for="Input.Description" class="text-danger"></span>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.Required" class="form-check-input" />
+        <label asp-for="Input.Required" class="form-check-label"></label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.Emphasize" class="form-check-input" />
+        <label asp-for="Input.Emphasize" class="form-check-label"></label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.ShowInDiscoveryDocument" class="form-check-input" />
+        <label asp-for="Input.ShowInDiscoveryDocument" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">@L["Create"]</button>
+</form>

@@ -1,9 +1,9 @@
 ﻿@page
 @model DeleteModel
 @{
-    this.ViewBag.Title = "Deleting" + this.Model.Person.Name + "？";
+    ViewBag.Title = L["Deleting {0}", Model.Person.Name];
 }
-<h1>Deleting@(Model.Person.Name)</h1>
+<h2>@ViewBag.Title</h2>
 
 <p>Are you sure you want to delete this person?</p>
 <p>确认要删除@(Model.Person.Name)吗？删除操作将完全抹去该自然人的资料，包括登录账号、组织、银行账号等。若要删除，请在下方填入该自然人的名字，然后点击“删除”按钮。</p>
@@ -15,5 +15,5 @@
         <span asp-validation-for="@Model.Input.DisplayName"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button class="btn btn-danger" type="submit">@localizer["Delete"]</button>
+    <button class="btn btn-danger" type="submit">@L["Delete"]</button>
 </form>

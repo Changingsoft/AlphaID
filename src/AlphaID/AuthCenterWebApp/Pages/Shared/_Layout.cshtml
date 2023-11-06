@@ -1,5 +1,5 @@
 @{
-    this.Layout = "_LayoutBase";
+    Layout = "_LayoutBase";
 }
 
 @section Heads
@@ -7,9 +7,9 @@
     @await RenderSectionAsync("Heads", false)
 }
 
-@section header
+@section Navbar
     {
-    @await RenderSectionAsync("header", false)
+    @await RenderSectionAsync("Navbar", false)
 }
 
 @RenderBody()

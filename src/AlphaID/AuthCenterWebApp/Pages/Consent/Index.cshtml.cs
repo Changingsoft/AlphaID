@@ -14,18 +14,18 @@ namespace AuthCenterWebApp.Pages.Consent;
 [SecurityHeaders]
 public class Index : PageModel
 {
-    private readonly IIdentityServerInteractionService _interaction;
-    private readonly IEventService _events;
-    private readonly ILogger<Index> _logger;
+    private readonly IIdentityServerInteractionService interaction;
+    private readonly IEventService events;
+    private readonly ILogger<Index> logger;
 
     public Index(
         IIdentityServerInteractionService interaction,
         IEventService events,
         ILogger<Index> logger)
     {
-        this._interaction = interaction;
-        this._events = events;
-        this._logger = logger;
+        this.interaction = interaction;
+        this.events = events;
+        this.logger = logger;
     }
 
     public ViewModel? View { get; set; }
@@ -52,7 +52,7 @@ public class Index : PageModel
     public async Task<IActionResult> OnPost()
     {
         // validate return url is still valid
-        var request = await this._interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
+        var request = await this.interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
         if (request == null) return this.RedirectToPage("/Home/Error/LoginModel");
 
         ConsentResponse grantedConsent = default!;
@@ -63,13 +63,13 @@ public class Index : PageModel
             grantedConsent = new ConsentResponse { Error = AuthorizationError.AccessDenied };
 
             // emit event
-            await this._events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
+            await this.events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
         }
         // user clicked 'yes' - validate the data
         else if (this.Input.Button == "yes")
         {
             // if the user consented to some scope, build the response model
-            if (this.Input.ScopesConsented != null && this.Input.ScopesConsented.Any())
+            if (this.Input.ScopesConsented.Any())
             {
                 var scopes = this.Input.ScopesConsented;
                 if (ConsentOptions.EnableOfflineAccess == false)
@@ -85,7 +85,7 @@ public class Index : PageModel
                 };
 
                 // emit event
-                await this._events.RaiseAsync(new ConsentGrantedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
+                await this.events.RaiseAsync(new ConsentGrantedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
             }
             else
             {
@@ -99,11 +99,11 @@ public class Index : PageModel
 
         if (grantedConsent != null)
         {
-            // communicate outcome of consent back to identityserver
-            await this._interaction.GrantConsentAsync(request, grantedConsent);
+            // communicate outcome of consent back to identity server
+            await this.interaction.GrantConsentAsync(request, grantedConsent);
 
             // redirect back to authorization endpoint
-            if (request.IsNativeClient() == true)
+            if (request.IsNativeClient())
             {
                 // The client is native, so this change in how to
                 // return the response is for better UX for the end user.
@@ -120,14 +120,14 @@ public class Index : PageModel
 
     private async Task<ViewModel?> BuildViewModelAsync(string returnUrl, InputModel? model = null)
     {
-        var request = await this._interaction.GetAuthorizationContextAsync(returnUrl);
+        var request = await this.interaction.GetAuthorizationContextAsync(returnUrl);
         if (request != null)
         {
             return this.CreateConsentViewModel(model, returnUrl, request);
         }
         else
         {
-            this._logger.LogError("No consent request matching request: {returnUrl}", returnUrl);
+            this.logger.LogError("No consent request matching request: {returnUrl}", returnUrl);
         }
         return null;
     }

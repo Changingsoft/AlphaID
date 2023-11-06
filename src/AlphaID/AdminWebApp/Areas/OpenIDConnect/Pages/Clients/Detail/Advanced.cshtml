@@ -1,4 +1,4 @@
-﻿@page "{id}"
+﻿@page
 @model AdvancedModel
 @{
 }
@@ -205,7 +205,7 @@
     </div>
 
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@localizer["Apply changes"]</button>
+    <button type="submit" class="btn btn-primary">@L["Apply changes"]</button>
 </form>
 
 
@@ -220,7 +220,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var prop in this.Model.Data.Properties)
+            @foreach (var prop in Model.Data.Properties)
             {
                 <tr>
                     <td>@prop.Key</td>

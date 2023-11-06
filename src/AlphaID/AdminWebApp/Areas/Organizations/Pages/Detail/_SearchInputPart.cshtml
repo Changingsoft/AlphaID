@@ -1,8 +1,0 @@
-﻿<form method="get" asp-page="/Organizations/Search">
-    <div class="input-group mb-3">
-        <input type="text" name="q" class="form-control" placeholder="@localizer["Name, USCI, etc."]" aria-label="@localizer["Keywords for searching"]" aria-describedby="button-search" value="@this.Context.Request.Query["q"]">
-        <div class="input-group-append">
-            <button class="btn" type="submit" id="button-search">@localizer["Search"]</button>
-        </div>
-    </div>
-</form>

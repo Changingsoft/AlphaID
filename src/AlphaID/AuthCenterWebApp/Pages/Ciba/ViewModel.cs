@@ -5,13 +5,13 @@ namespace AuthCenterWebApp.Pages.Ciba;
 
 public class ViewModel
 {
-    public string ClientName { get; set; } = default!;
-    public string? ClientUrl { get; set; }
-    public string? ClientLogoUrl { get; set; }
+    public string ClientName { get; init; } = default!;
+    public string? ClientUrl { get; init; }
+    public string? ClientLogoUrl { get; init; }
 
-    public string? BindingMessage { get; set; }
+    public string? BindingMessage { get; init; }
 
-    public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = default!;
+    public IEnumerable<ScopeViewModel> IdentityScopes { get; init; } = default!;
     public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = default!;
 }
 
@@ -30,5 +30,5 @@ public class ScopeViewModel
 public class ResourceViewModel
 {
     public string Name { get; set; } = default!;
-    public string DisplayName { get; set; } = default!;
+    public string DisplayName { get; init; } = default!;
 }

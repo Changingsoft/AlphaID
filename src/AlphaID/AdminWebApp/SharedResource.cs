@@ -1,7 +1,7 @@
 ﻿namespace AdminWebApp;
 
 /// <summary>
-/// 一个锚点类用来标记共享的资源。
+/// Anchor class for locate resources.
 /// </summary>
 public class SharedResource
 {

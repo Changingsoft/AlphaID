@@ -14,23 +14,23 @@ namespace AlphaIDWebAPI.Controllers.RealName;
 [Route("api/RealName/[controller]")]
 [ApiController]
 [Authorize("RealNameScopeRequired")]
-public class ChineseIDCardController : ControllerBase
+public class ChineseIdCardController : ControllerBase
 {
     private readonly NaturalPersonManager personManager;
-    private readonly ChineseIDCardManager chineseIDCardManager;
-    private readonly ILogger<ChineseIDCardController> logger;
+    private readonly ChineseIdCardManager chineseIdCardManager;
+    private readonly ILogger<ChineseIdCardController> logger;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="logger"></param>
-    /// <param name="chineseIDCardManager"></param>
-    public ChineseIDCardController(NaturalPersonManager personManager, ILogger<ChineseIDCardController> logger, ChineseIDCardManager chineseIDCardManager)
+    /// <param name="chineseIdCardManager"></param>
+    public ChineseIdCardController(NaturalPersonManager personManager, ILogger<ChineseIdCardController> logger, ChineseIdCardManager chineseIdCardManager)
     {
         this.personManager = personManager;
         this.logger = logger;
-        this.chineseIDCardManager = chineseIDCardManager;
+        this.chineseIdCardManager = chineseIdCardManager;
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class ChineseIDCardController : ControllerBase
     /// <param name="personId"></param>
     /// <returns></returns>
     [HttpGet("{personId}")]
-    public async Task<ActionResult<ChineseIDCardModel>> GetChineseIDCardInfo(string personId)
+    public async Task<ActionResult<ChineseIdCardModel>> GetChineseIdCardInfo(string personId)
     {
         this.logger.LogInformation("End user {EndUser} get a chinese ID card info.", this.User.Identity!.Name);
         this.logger.LogInformation("Incoming access token is {accessToken}", await this.HttpContext.GetTokenAsync(JwtBearerDefaults.AuthenticationScheme, "access_token"));
@@ -48,17 +48,17 @@ public class ChineseIDCardController : ControllerBase
         {
             return this.NotFound();
         }
-        var currentCard = await this.chineseIDCardManager.GetCurrentAsync(person);
+        var currentCard = await this.chineseIdCardManager.GetCurrentAsync(person);
         return currentCard == null
-            ? (ActionResult<ChineseIDCardModel>)this.NotFound()
-            : (ActionResult<ChineseIDCardModel>)new ChineseIDCardModel(currentCard.ChineseIDCard.CardNumber,
-                                      currentCard.ChineseIDCard.Name,
-                                      currentCard.ChineseIDCard.Sex.ToString(),
-                                      currentCard.ChineseIDCard.DateOfBirth,
-                                      currentCard.ChineseIDCard.Ethnicity,
-                                      currentCard.ChineseIDCard.Address,
-                                      currentCard.ChineseIDCard.Issuer,
-                                      currentCard.ChineseIDCard.IssueDate,
-                                      currentCard.ChineseIDCard.Expires);
+            ? this.NotFound()
+            : new ChineseIdCardModel(currentCard.ChineseIDCard.CardNumber,
+                currentCard.ChineseIDCard.Name,
+                currentCard.ChineseIDCard.Sex.ToString(),
+                currentCard.ChineseIDCard.DateOfBirth,
+                currentCard.ChineseIDCard.Ethnicity,
+                currentCard.ChineseIDCard.Address,
+                currentCard.ChineseIDCard.Issuer,
+                currentCard.ChineseIDCard.IssueDate,
+                currentCard.ChineseIDCard.Expires);
     }
 }

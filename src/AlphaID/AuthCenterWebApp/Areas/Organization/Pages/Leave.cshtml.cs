@@ -47,7 +47,7 @@ public class LeaveModel : PageModel
         var person = await this.naturalPersonManager.GetUserAsync(this.User);
 
         var result = await this.organizationMemberManager.LeaveOrganizationAsync(person!, this.Organization);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {

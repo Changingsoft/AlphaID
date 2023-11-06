@@ -9,20 +9,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" NoWarn="NU1605" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.12" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.13" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.5" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.6" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaID.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
 	</ItemGroup>

@@ -3,7 +3,7 @@
 /// <summary>
 /// Result of ID Card Front.
 /// </summary>
-public class ChineseIDCardFrontOCRResult
+public class ChineseIdCardFrontOcrResult
 {
     /// <summary>
     /// 姓名
@@ -33,5 +33,5 @@ public class ChineseIDCardFrontOCRResult
     /// <summary>
     /// 身份证号码。
     /// </summary>
-    public string IDCardNumber { get; set; } = default!;
+    public string IdCardNumber { get; set; } = default!;
 }

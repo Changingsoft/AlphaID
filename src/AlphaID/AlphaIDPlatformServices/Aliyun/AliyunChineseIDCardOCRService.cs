@@ -4,20 +4,20 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
-namespace AlphaIDPlatformServices.Aliyun;
+namespace AlphaID.PlatformServices.Aliyun;
 
 /// <summary>
 /// 阿里云身份证识别服务。
 /// </summary>
-public class AliyunChineseIDCardOCRService : IChineseIDCardOCRService
+public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
 {
     private readonly JsonSerializer serializer;
-    private readonly AliyunChineseIDCardOCRServiceOptions options;
+    private readonly AliyunChineseIdCardOcrServiceOptions options;
 
     /// <summary>
     /// 
     /// </summary>
-    public AliyunChineseIDCardOCRService(IOptions<AliyunChineseIDCardOCRServiceOptions> options)
+    public AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options)
     {
         this.serializer = new JsonSerializer();
         this.options = options.Value;
@@ -27,7 +27,7 @@ public class AliyunChineseIDCardOCRService : IChineseIDCardOCRService
     /// </summary>
     /// <param name="idCardBackImageData"></param>
     /// <returns></returns>
-    public async Task<ChineseIDCardBackOCRResult> RecognizeIDCardBack(Stream idCardBackImageData)
+    public async Task<ChineseIdCardBackOcrResult> RecognizeIdCardBack(Stream idCardBackImageData)
     {
         string imgBase64;
         using (var ms = new MemoryStream())
@@ -59,8 +59,8 @@ public class AliyunChineseIDCardOCRService : IChineseIDCardOCRService
         var result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应取得数据");
 
         if (!(bool)result!.success)
-            throw new ChineseIDCardOCRException("Can not recognize");
-        var returnResult = new ChineseIDCardBackOCRResult
+            throw new ChineseIdCardOcrException("Can not recognize");
+        var returnResult = new ChineseIdCardBackOcrResult
         {
             Issuer = (string)result.issue,
             IssueDate = ParseDate((string)result.start_date),
@@ -75,7 +75,7 @@ public class AliyunChineseIDCardOCRService : IChineseIDCardOCRService
     /// </summary>
     /// <param name="idCardFrontImageData"></param>
     /// <returns></returns>
-    public async Task<ChineseIDCardFrontOCRResult> RecognizeIDCardFront(Stream idCardFrontImageData)
+    public async Task<ChineseIdCardFrontOcrResult> RecognizeIdCardFront(Stream idCardFrontImageData)
     {
         string imgBase64;
         using (var ms = new MemoryStream())
@@ -106,15 +106,15 @@ public class AliyunChineseIDCardOCRService : IChineseIDCardOCRService
         var result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应中取得数据。");
 
         if (!(bool)result!.success)
-            throw new ChineseIDCardOCRException("Can not recognize");
-        var returnResult = new ChineseIDCardFrontOCRResult
+            throw new ChineseIdCardOcrException("Can not recognize");
+        var returnResult = new ChineseIdCardFrontOcrResult
         {
             Name = (string)result.name,
             SexString = (string)result.sex,
             Nationality = (string)result.nationality,
             DateOfBirth = ParseDate((string)result.birth),
             Address = (string)result.address,
-            IDCardNumber = (string)result.num,
+            IdCardNumber = (string)result.num,
         };
 
         return returnResult;

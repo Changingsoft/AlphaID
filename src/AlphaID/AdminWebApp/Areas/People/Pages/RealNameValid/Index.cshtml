@@ -1,7 +1,7 @@
 ﻿@page
 @using IDSubjects.RealName;
 @model IndexModel
-@inject ChineseIDCardManager validator
+@inject ChineseIdCardManager Validator
 @{
 }
 <h2>Pending Real Name Validation List</h2>
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var validation in this.validator.PendingValidations)
+        @foreach (var validation in Validator.PendingValidations)
         {
             <tr>
                 <td>@validation.Person.Name（@validation.Person.UserName）</td>

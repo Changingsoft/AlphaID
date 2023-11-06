@@ -1,9 +1,9 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Settings.Pages.Organizations.IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Your organizations"].Value;
+    ViewBag.Title = L["Your organizations"];
 }
-<h2>@localizer["Organizations"]</h2>
+<h2>@L["Organizations"]</h2>
 
 
 <div class="list-group list-group-hoverable">
@@ -19,12 +19,12 @@
                         <a asp-area="Organization" asp-page="/Index" asp-route-anchor="@member.Organization.Name">@member.Organization.Name</a>
                         @if (member.IsOwner)
                         {
-                            <span class="badge badge-pill" title="@localizer["You are the owner of this organization."]">@localizer["Owner"]</span>
+                            <span class="badge badge-pill" title="@L["You are the owner of this organization."]">@L["Owner"]</span>
                         }
                     </h3>
                 </div>
                 <div class="col-auto">
-                    <a asp-page="Leave" class="btn text-danger list-group-item-actions">@localizer["Leave"]</a>
+                    <a asp-page="Leave" class="btn text-danger list-group-item-actions">@L["Leave"]</a>
                 </div>
             </div>
         </div>

@@ -8,21 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
+    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.12" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
+    <ProjectReference Include="..\AdminWebApp\AdminWebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestingData\AdminWebAppData\202310300137.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestingData\ConfigurationDbContext\202303281102.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -35,6 +35,11 @@
     <None Update="TestingData\PersistedGrantDbContext\202303281103.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\IDSubjectsDb\" />
+    <Folder Include="TestingData\AdminWebAppData\" />
   </ItemGroup>
 
 </Project>

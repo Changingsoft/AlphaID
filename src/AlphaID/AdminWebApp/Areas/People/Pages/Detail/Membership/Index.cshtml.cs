@@ -25,28 +25,13 @@ public class IndexModel : PageModel
     public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = default!;
 
     [BindProperty]
-    [Required(ErrorMessage = "Validate_Required")]
-    [Display(Name = "Organization ID")]
-    public string OrganizationId { get; set; } = default!;
+    public InputModel Input { get; set; } = default!;
 
-    [BindProperty]
-    [MaxLength(50)]
-    [Display(Name = "Department")]
-    public string? Department { get; set; }
-
-    [BindProperty]
-    [MaxLength(50)]
-    [Display(Name = "Title")]
-    public string? Title { get; set; }
-
-    [BindProperty]
-    [MaxLength(50)]
-    [Display(Name = "Remark")]
-    public string? Remark { get; set; }
+    public IdOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -56,21 +41,29 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
         this.OrganizationMembers = await this.memberManager.GetMembersOfAsync(person);
 
-        var org = await this.organizationManager.FindByIdAsync(this.OrganizationId);
+        var org = await this.organizationManager.FindByIdAsync(this.Input.OrganizationId);
         if (org == null)
         {
-            this.ModelState.AddModelError(nameof(this.OrganizationId), "Organization Not Found.");
+            this.ModelState.AddModelError(nameof(this.Input.OrganizationId), "Organization Not Found.");
             return this.Page();
         }
 
-        var result = await this.memberManager.JoinOrganizationAsync(person, org, this.Department, this.Title, this.Remark);
-        if (!result.IsSuccess)
+        OrganizationMember member = new(org, this.Person)
+        {
+            Title = this.Input.Title,
+            Department = this.Input.Department,
+            Remark = this.Input.Remark,
+            IsOwner = this.Input.IsOwner,
+        };
+
+        var result = await this.memberManager.CreateAsync(member);
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
@@ -83,26 +76,45 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
 
-        var org = await this.organizationManager.FindByIdAsync(organizationId);
-        if (org == null)
+        var members = await this.memberManager.GetMembersOfAsync(this.Person);
+        var member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
+        if (member == null)
         {
-            this.ModelState.AddModelError("", "Organization Not Found.");
+            this.ModelState.AddModelError("", "Membership not found.");
             return this.Page();
         }
 
-        var result = await this.memberManager.LeaveOrganizationAsync(person, org);
-        if (!result.IsSuccess)
-        {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error);
-            }
-        }
-        return this.RedirectToPage();
+        this.Result = await this.memberManager.RemoveAsync(member);
+        return this.Page();
+    }
+
+    public class InputModel
+    {
+        [Display(Name = "Organization ID")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string OrganizationId { get; init; } = default!;
+
+        [Display(Name = "Department")]
+        [StringLength(50)]
+        public string? Department { get; init; }
+
+        [Display(Name = "Title")]
+        [StringLength(50)]
+        public string? Title { get; init; }
+
+        [Display(Name = "Remark")]
+        [StringLength(50)]
+        public string? Remark { get; init; }
+
+        [Display(Name = "Owner")]
+        public bool IsOwner { get; init; } = false;
+
+        [Display(Name = "Membership visibility")]
+        public MembershipVisibility Visibility { get; init; } = MembershipVisibility.Private;
     }
 }

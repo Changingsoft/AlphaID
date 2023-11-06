@@ -9,16 +9,16 @@ namespace AdminWebApp.Areas.Organizations.Pages;
 public class NewModel : PageModel
 {
     private readonly OrganizationManager manager;
-    private readonly IQueryableOrganizationStore organizationStore;
+    private readonly IOrganizationStore organizationStore;
 
-    public NewModel(OrganizationManager manager, IQueryableOrganizationStore organizationStore)
+    public NewModel(OrganizationManager manager, IOrganizationStore organizationStore)
     {
         this.manager = manager;
         this.organizationStore = organizationStore;
     }
 
     [Display(Name = "Unified social credit code")]
-    public string? USCI { get; set; }
+    public string? Usci { get; set; }
 
     [Display(Name = "Name")]
     [Required(ErrorMessage = "Validate_Required")]
@@ -39,16 +39,17 @@ public class NewModel : PageModel
 
     [Display(Name = "Established at")]
     [DataType(DataType.Date)]
-    public DateTime? EstablishedAt { get; set; }
+    public DateOnly? EstablishedAt { get; set; }
 
     [Display(Name = "Term begin")]
     [DataType(DataType.Date)]
-    public DateTime? TermBegin { get; set; }
+    public DateOnly? TermBegin { get; set; }
 
-    [Display(Name = "Term end", Prompt = "dd", Description = "weew")]
+    [Display(Name = "Term end")]
     [DataType(DataType.Date)]
-    public DateTime? TermEnd { get; set; }
+    public DateOnly? TermEnd { get; set; }
 
+    public IdOperationResult? OperationResult { get; set; }
     public void OnGet()
     {
 
@@ -56,14 +57,14 @@ public class NewModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!string.IsNullOrWhiteSpace(this.USCI))
+        if (!string.IsNullOrWhiteSpace(this.Usci))
         {
-            if (!USCC.TryParse(this.USCI, out USCC uscc))
-                this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码不正确。");
+            if (!Uscc.TryParse(this.Usci, out Uscc uscc))
+                this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码不正确。");
 
-            var usciExists = await this.organizationStore.FindByIdentityAsync("统一社会信用代码", uscc.ToString());
-            if (usciExists != null)
-                this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码已被登记。");
+            var usciExists = this.organizationStore.Organizations.Any(p => p.Usci == uscc.ToString());
+            if (usciExists)
+                this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码已被登记。");
         }
 
         if (!this.ModelState.IsValid)
@@ -80,21 +81,21 @@ public class NewModel : PageModel
         }
 
         var factory = new OrganizationBuilder(this.Name);
-        if (!string.IsNullOrWhiteSpace(this.USCI))
+        if (!string.IsNullOrWhiteSpace(this.Usci))
         {
-            if (USCC.TryParse(this.USCI, out USCC uscc))
+            if (Uscc.TryParse(this.Usci, out Uscc uscc))
             {
-                factory.SetUSCI(uscc);
+                factory.SetUsci(uscc);
             }
             else
             {
-                this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码不正确。");
+                this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码不正确。");
             }
         }
 
         var org = factory.Organization;
         org.Domicile = this.Domicile;
-        org.LegalPersonName = this.LegalPersonName;
+        org.Representative = this.LegalPersonName;
         org.EstablishedAt = this.EstablishedAt;
         org.TermBegin = this.TermBegin;
         org.TermEnd = this.TermEnd;
@@ -107,7 +108,11 @@ public class NewModel : PageModel
         try
         {
             var result = await this.manager.CreateAsync(org);
-            return this.RedirectToPage("Detail/Index", new { id = org.Id });
+            if (result.Succeeded)
+                return this.RedirectToPage("Detail/Index", new { anchor = org.Id });
+
+            this.OperationResult = result;
+            return this.Page();
         }
         catch (Exception ex)
         {

@@ -20,18 +20,18 @@ public class ClaimsModel : PageModel
     [BindProperty]
     public AddClaimModel Input { get; set; } = default!;
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAddClaimAsync(int id)
+    public async Task<IActionResult> OnPostAddClaimAsync(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -57,9 +57,9 @@ public class ClaimsModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostRemoveClaimAsync(int id, int claimId)
+    public async Task<IActionResult> OnPostRemoveClaimAsync(int anchor, int claimId)
     {
-        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -78,10 +78,10 @@ public class ClaimsModel : PageModel
     {
         [Display(Name = "Type")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
-        public string Type { get; set; } = default!;
+        public string Type { get; init; } = default!;
 
         [Display(Name = "Type")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
-        public string Value { get; set; } = default!;
+        public string Value { get; init; } = default!;
     }
 }

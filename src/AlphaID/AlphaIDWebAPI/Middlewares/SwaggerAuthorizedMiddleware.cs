@@ -7,7 +7,7 @@ namespace AlphaIDWebAPI.Middlewares;
 /// </summary>
 public class SwaggerAuthorizedMiddleware
 {
-    private readonly RequestDelegate _next;
+    private readonly RequestDelegate next;
 
     /// <summary>
     /// 
@@ -15,7 +15,7 @@ public class SwaggerAuthorizedMiddleware
     /// <param name="next"></param>
     public SwaggerAuthorizedMiddleware(RequestDelegate next)
     {
-        this._next = next;
+        this.next = next;
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public class SwaggerAuthorizedMiddleware
     {
         if (context.Request.Path.StartsWithSegments("/docs"))
         {
-            if (!(context.User.Identity != null && context.User.Identity.IsAuthenticated))
+            if (context.User.Identity is not { IsAuthenticated: true })
             {
                 await context.ChallengeAsync();
                 //context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -35,6 +35,6 @@ public class SwaggerAuthorizedMiddleware
             }
         }
 
-        await this._next.Invoke(context);
+        await this.next.Invoke(context);
     }
 }

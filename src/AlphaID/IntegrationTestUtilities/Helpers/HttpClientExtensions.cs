@@ -64,7 +64,7 @@ public static class HttpClientExtensions
         var target = (Uri)submit.Target;
         if (submitButton.HasAttribute("formaction"))
         {
-            var formaction = submitButton.GetAttribute("formaction");
+            var formaction = submitButton.GetAttribute("formaction")!;
             target = new Uri(formaction, UriKind.Relative);
         }
         var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)

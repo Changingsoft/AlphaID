@@ -8,16 +8,16 @@ public class SystemUrlInfo
     /// <summary>
     /// 
     /// </summary>
-    public Uri AdminWebAppUrl { get; set; } = new Uri("https://localhost:61315");
+    public Uri AdminWebAppUrl { get; set; } = new("https://localhost:61315");
 
     /// <summary>
     /// 
     /// </summary>
-    public Uri WebApiUrl { get; set; } = new Uri("https://localhost:61316");
+    public Uri WebApiUrl { get; set; } = new("https://localhost:61316");
 
     /// <summary>
     /// 
     /// </summary>
-    public Uri AuthCenterUrl { get; set; } = new Uri("https://localhost:49726");
+    public Uri AuthCenterUrl { get; set; } = new("https://localhost:49726");
 
 }

@@ -39,9 +39,9 @@ public class OrganizationBuilder
     /// </summary>
     /// <param name="uscc"></param>
     /// <returns></returns>
-    public OrganizationBuilder SetUSCI(USCC uscc)
+    public OrganizationBuilder SetUsci(Uscc uscc)
     {
-        this.Organization.USCI = uscc.ToString();
+        this.Organization.Usci = uscc.ToString();
 
         return this;
     }

@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatformServices.Primitives;
+﻿namespace AlphaID.PlatformServices.Primitives;
 
 /// <summary>
 /// 

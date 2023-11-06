@@ -1,8 +1,5 @@
 @page "{p?}"
 @model AuthCenterWebApp.Pages.Index
-@inject IWebHostEnvironment env
-@inject IConfiguration config
-@inject IOptions<SystemUrlInfo> systemUrl
 @{
 }
 <div class="page-body">
@@ -11,14 +8,14 @@
             <div class="container-fluid py-5 text-center">
                 <h1 class="display-5"><img src="~/logo.png" /></h1>
                 <p>One account, serving anywhere.</p>
-                @if (this.User.Identity!.IsAuthenticated)
+                @if (User.Identity!.IsAuthenticated)
                 {
-                    <p><a class="btn btn-primary" href="@User.ProfileUrl()">@localizer["My profile"]</a></p>
+                    <p><a class="btn btn-primary" href="@User.ProfileUrl()">@L["My profile"]</a></p>
                 }
                 else
                 {
-                    <p><a class="btn btn-primary" asp-page="Account/Login">@localizer["Sign in"]</a></p>
-                    <p><a class="btn btn-primary" asp-page="/Account/SignUp">@localizer["Create your"] @(this.product.Value.Name)</a></p>
+                    <p><a class="btn btn-primary" asp-page="Account/Login">@L["Sign in"]</a></p>
+                    <p><a class="btn btn-primary" asp-page="/Account/SignUp">@L["Create your {0}", Product.Value.Name]</a></p>
                 }
 
             </div>

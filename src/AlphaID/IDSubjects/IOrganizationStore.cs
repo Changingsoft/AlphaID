@@ -3,8 +3,13 @@
 /// <summary>
 /// Provide CURD for organization.
 /// </summary>
-public interface IOrganizationStore : IQueryableOrganizationStore
+public interface IOrganizationStore
 {
+    /// <summary>
+    /// Gets queryable of organization.
+    /// </summary>
+    IQueryable<GenericOrganization> Organizations { get; }
+
     /// <summary>
     /// Find organization by Id.
     /// </summary>
@@ -17,19 +22,19 @@ public interface IOrganizationStore : IQueryableOrganizationStore
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task CreateAsync(GenericOrganization organization);
+    Task<IdOperationResult> CreateAsync(GenericOrganization organization);
 
     /// <summary>
     /// Update organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task UpdateAsync(GenericOrganization organization);
+    Task<IdOperationResult> UpdateAsync(GenericOrganization organization);
 
     /// <summary>
     /// Delete organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task DeleteAsync(GenericOrganization organization);
+    Task<IdOperationResult> DeleteAsync(GenericOrganization organization);
 }

@@ -22,9 +22,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int anchor)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
             {
                 return this.NotFound();
@@ -45,9 +45,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             return Convert.ToBase64String(bytes);
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int anchor)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
             {
                 return this.NotFound();
@@ -72,19 +72,19 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
             this.Client.ClientSecrets.Add(secret);
             await this.configurationDbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { id });
+            return this.RedirectToPage("Secrets", new { anchor });
         }
 
         public class InputModel
         {
             [Display(Name = "Secret")]
-            public string Secret { get; set; } = default!;
+            public string Secret { get; init; } = default!;
 
             [Display(Name = "Expires")]
-            public DateTime? Expires { get; set; }
+            public DateTime? Expires { get; init; }
 
             [Display(Name = "Description")]
-            public string? Description { get; internal set; }
+            public string? Description { get; internal init; }
         }
     }
 }

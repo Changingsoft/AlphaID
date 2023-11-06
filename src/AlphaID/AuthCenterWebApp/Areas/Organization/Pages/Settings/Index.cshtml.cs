@@ -17,7 +17,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public OperationResult OperationResult { get; set; } = default!;
+        public IdOperationResult OperationResult { get; set; } = default!;
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -31,6 +31,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
             this.Input = new InputModel()
             {
                 Description = org.Description,
+                Domicile = org.Domicile,
+                Contact = org.Contact,
+                Representative = org.Representative,
             };
 
             return this.Page();
@@ -49,15 +52,28 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
                 return this.Page();
 
             org.Description = this.Input.Description;
+            org.Domicile = this.Input.Domicile;
+            org.Contact = this.Input.Contact;
+            org.Representative = this.Input.Representative;
+
             await this.manager.UpdateAsync(org);
-            this.OperationResult = OperationResult.Success;
+            this.OperationResult = IdOperationResult.Success;
             return this.Page();
         }
 
         public class InputModel
         {
             [Display(Name = "Description")]
-            public string? Description { get; set; }
+            public string? Description { get; init; }
+
+            [Display(Name = "Domicile")]
+            public string? Domicile { get; init; }
+
+            [Display(Name = "Contact")]
+            public string? Contact { get; init; }
+
+            [Display(Name = "Representative")]
+            public string? Representative { get; init; }
 
         }
     }

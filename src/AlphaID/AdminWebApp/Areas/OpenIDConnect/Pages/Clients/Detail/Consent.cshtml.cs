@@ -21,9 +21,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public string? OperationMessage { get; set; }
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int anchor)
         {
-            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -35,9 +35,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPost(int id)
+        public async Task<IActionResult> OnPost(int anchor)
         {
-            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == id);
+            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -56,10 +56,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         public class InputModel
         {
             [Display(Name = "Require consent")]
-            public bool RequireConsent { get; set; }
+            public bool RequireConsent { get; init; }
 
             [Display(Name = "Allow remember consent")]
-            public bool AllowRememberConsent { get; internal set; }
+            public bool AllowRememberConsent { get; internal init; }
         }
     }
 }

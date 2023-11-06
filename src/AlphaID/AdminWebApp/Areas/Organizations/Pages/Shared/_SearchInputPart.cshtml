@@ -1,0 +1,6 @@
+﻿<form method="get" asp-page="/Search">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="@L["Organization name..."]" aria-label="@L["Organization name..."]" aria-describedby="button-addon2" value="@Context.Request.Query["q"]" autocomplete="off">
+        <button class="btn" type="submit" id="button-addon2">@L["Search"]</button>
+    </div>
+</form>

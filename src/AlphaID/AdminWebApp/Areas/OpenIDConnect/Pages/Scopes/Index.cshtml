@@ -1,30 +1,43 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Scopes"].Value;
+    ViewBag.Title = L["Scopes"];
 }
 
-<h3>@ViewBag.Title</h3>
+@section PageHeader{
+    <div class="row">
+        <div class="col">
+            <h1>@ViewBag.Title</h1>
+        </div>
+        <div class="col-auto">
+            <a asp-page="New" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
+                </svg>
+                @L["New scope"]
+            </a>
+        </div>
+    </div>
+}
 
-<a asp-page="Create" class="btn btn-primary">@localizer["Create scope"]</a>
 <div class="card">
     <table class="table">
         <thead>
             <tr>
-                <td>@localizer["Name"]</td>
-                <td>@localizer["Enabled"]</td>
-                <td>@localizer["Display name"]</td>
-                <td>@localizer["Description"]</td>
-                <td>@localizer["Required"]</td>
-                <td>@localizer["Emphasize"]</td>
-                <td>@localizer["Show in discovery document"]</td>
+                <td>@L["Name"]</td>
+                <td>@L["Enabled"]</td>
+                <td>@L["Display name"]</td>
+                <td>@L["Description"]</td>
+                <td>@L["Required"]</td>
+                <td>@L["Emphasize"]</td>
+                <td>@L["Show in discovery document"]</td>
             </tr>
         </thead>
         <tbody>
-            @foreach (var scope in this.Model.Results)
+            @foreach (var scope in Model.Results)
             {
                 <tr>
-                    <td><a asp-page="Detail" asp-route-id="@scope.Id">@scope.Name</a></td>
+                    <td><a asp-page="Detail/Index" asp-route-id="@scope.Id">@scope.Name</a></td>
                     <td><input asp-for="@scope.Enabled" class="form-check-input" disabled /></td>
                     <td>@scope.DisplayName</td>
                     <td>@scope.Description</td>

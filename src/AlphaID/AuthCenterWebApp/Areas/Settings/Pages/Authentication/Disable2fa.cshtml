@@ -1,0 +1,23 @@
+﻿@page
+@model             Disable2FaModel
+@{
+    ViewBag.Title = L["Disable two-factor authentication (2FA)"];
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewBag.Title</h3>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>@L["This action only disables 2FA."]</strong>
+    </p>
+    <p>
+        @L["Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should"] <a asp-page="./ResetAuthenticator">@L["reset your authenticator keys."]</a>
+    </p>
+</div>
+
+<div>
+    <form method="post">
+        <button class="btn btn-danger" type="submit">@L["Disable 2FA"]</button>
+    </form>
+</div>

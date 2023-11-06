@@ -1,21 +1,19 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.Model.Organization.Name;
+    ViewBag.Title = Model.Organization.Name;
 }
 
 <div class="page-header">
     <div class="container-xl">
         <h1>@Model.Organization.Name</h1>
         <p>@Model.Organization.Description</p>
+        <p>@Model.Organization.Domicile</p>
     </div>
 </div>
 <div class="page-body">
     <div class="container-xl">
-        <h2>Activities</h2>
-        <button class="btn">
-            Start
-            <span class="badge ms-2">123</span>
-        </button>
+        <h2>@L["Activities"]</h2>
+        
     </div>
 </div>

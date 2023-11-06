@@ -1,5 +1,5 @@
-﻿using AlphaIDEntityFramework.EntityFramework;
-using IDSubjects;
+﻿using AlphaID.EntityFramework;
+using IDSubjects.ChineseName;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,12 +18,12 @@ internal class PinyinCorrectionWork : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var scope = this.factory.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<IDSubjectsDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<IdSubjectsDbContext>();
         var count = 0;
         foreach (var person in db.People.Where(p => p.Name.Contains('洋')))
         {
             count++;
-            if (person.LastName != null && person.FirstName != null)
+            if (person is { LastName: not null, FirstName: not null })
             {
                 var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(person.LastName, person.FirstName);
                 person.PhoneticSurname = pinyinSurname;

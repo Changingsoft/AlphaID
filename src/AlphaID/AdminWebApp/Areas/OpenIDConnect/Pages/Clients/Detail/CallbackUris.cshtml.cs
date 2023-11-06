@@ -16,39 +16,41 @@ public class CallbackUrisModel : PageModel
 
     public Client Data { get; set; } = default!;
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAddCallbackUrlAsync(int id, string callback_uri)
+    public async Task<IActionResult> OnPostAddCallbackUrlAsync(int anchor, string callbackUri)
     {
-        callback_uri = callback_uri.Trim();
-        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        callbackUri = callbackUri.Trim();
+        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        if (!this.Data.RedirectUris.Any(p => p.RedirectUri == callback_uri))
+        if (this.Data.RedirectUris.Any(p => p.RedirectUri == callbackUri))
         {
-            this.Data.RedirectUris.Add(new ClientRedirectUri()
-            {
-                RedirectUri = callback_uri,
-                ClientId = this.Data.Id,
-                Client = this.Data,
-            });
-            this.dbContext.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            return this.Page();
         }
+
+        this.Data.RedirectUris.Add(new ClientRedirectUri()
+        {
+            RedirectUri = callbackUri,
+            ClientId = this.Data.Id,
+            Client = this.Data,
+        });
+        this.dbContext.Update(this.Data);
+        await this.dbContext.SaveChangesAsync();
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostRemoveCallbackUrlAsync(int id, int rid)
+    public async Task<IActionResult> OnPostRemoveCallbackUrlAsync(int anchor, int rid)
     {
-        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -59,29 +61,31 @@ public class CallbackUrisModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostAddSignOutCallbackUrlAsync(int id, string callback_uri)
+    public async Task<IActionResult> OnPostAddSignOutCallbackUrlAsync(int anchor, string callbackUri)
     {
-        callback_uri = callback_uri.Trim();
-        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        callbackUri = callbackUri.Trim();
+        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        if (!this.Data.PostLogoutRedirectUris.Any(p => p.PostLogoutRedirectUri == callback_uri))
+        if (this.Data.PostLogoutRedirectUris.Any(p => p.PostLogoutRedirectUri == callbackUri))
         {
-            this.Data.PostLogoutRedirectUris.Add(new ClientPostLogoutRedirectUri()
-            {
-                PostLogoutRedirectUri = callback_uri,
-                ClientId = this.Data.Id,
-                Client = this.Data,
-            });
-            this.dbContext.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            return this.Page();
         }
+
+        this.Data.PostLogoutRedirectUris.Add(new ClientPostLogoutRedirectUri()
+        {
+            PostLogoutRedirectUri = callbackUri,
+            ClientId = this.Data.Id,
+            Client = this.Data,
+        });
+        this.dbContext.Update(this.Data);
+        await this.dbContext.SaveChangesAsync();
         return this.Page();
     }
-    public async Task<IActionResult> OnPostRemoveSignOutCallbackUrlAsync(int id, int srid)
+    public async Task<IActionResult> OnPostRemoveSignOutCallbackUrlAsync(int anchor, int srid)
     {
-        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.RedirectUris).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;

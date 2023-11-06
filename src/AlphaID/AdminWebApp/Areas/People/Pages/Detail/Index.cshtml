@@ -1,48 +1,63 @@
 ﻿@page
 @model IndexModel
-
 @{
-    this.ViewBag.Title = $"{Model.Data.Name}";
+    ViewBag.Title = $"{Model.Data.Name}";
 }
-
-<h2>@localizer["Overview"]</h2>
+@section Heads{
+    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
+    <style>
+        .label {
+            cursor: pointer;
+        }
+        .progress {
+            display: none;
+            margin-bottom: 1rem;
+        }
+        .img-container img {
+            max-width: 100%;
+        }
+    </style>
+}
+@Html.DisplayFor(m => m.Result)
+<div class="alert" style="display: none;" role="alert"></div>
+<h2>@L["Overview"]</h2>
 <div class="row mb-3">
     <div class="col-10">
-        <div class="card">
+        <div class="card card-sm">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@localizer["Person Name"]</h3>
-                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn">@localizer["Change name"]</a>
+                <h3 class="card-title">@L["Person Name"]</h3>
+                <a asp-page="EditPersonName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change person name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Surname"]</div>
+                        <div class="datagrid-title">@L["Surname"]</div>
                         <div class="datagrid-content">
                             @Model.Data.LastName @Model.Data.PhoneticSurname
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Given name"]</div>
+                        <div class="datagrid-title">@L["Given name"]</div>
                         <div class="datagrid-content">
                             @Model.Data.FirstName @Model.Data.PhoneticGivenName
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Display"]</div>
+                        <div class="datagrid-title">@L["Display"]</div>
                         <div class="datagrid-content">
                             @Model.Data.Name @Model.Data.PhoneticSearchHint
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Gender"]</div>
+                        <div class="datagrid-title">@L["Gender"]</div>
                         <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Sex)</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Date of birth (Age)"]</div>
-                        <div class="datagrid-content">@(this.Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(this.Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
+                        <div class="datagrid-title">@L["Date of birth (Age)"]</div>
+                        <div class="datagrid-content">@(Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@localizer["Website"]</div>
+                        <div class="datagrid-title">@L["Website"]</div>
                         <div class="datagrid-content">@Model.Data.WebSite</div>
                     </div>
                 </div>
@@ -50,8 +65,46 @@
         </div>
     </div>
     <div class="col-2 text-center">
-        <img src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" class="img-fluid img-thumbnail" />
-        <a href="#" class="btn btn-sm">@localizer["Change Avatar"]</a>
+        @* Profile picture *@
+        <form method="post">
+            <label class="label mb-2" data-toggle="tooltip" title="@L["Change profile picture"]">
+                <img class="rounded" id="avatar" src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" alt="avatar">
+                <input type="file" class="visually-hidden" id="input" name="image" accept="image/*">
+                <span class="btn btn-sm">@L["Change profile picture"]</span>
+            </label>
+            @if (Model.Data.Avatar != null)
+            {
+                <button type="submit" class="btn btn-sm" asp-page-handler="ClearProfilePicture" onclick="return confirm('@(L["Are you sure you want to remove the picture of this profile?"])');">@L["Remove"]</button>
+            }
+        </form>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">@L["Contacts"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Phone number"]</div>
+                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Email"]</div>
+                <div class="datagrid-content">@Model.Data.Email</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["QQ"]</div>
+                <div class="datagrid-content">N/A</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Address"]</div>
+                <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="card mb-3">
@@ -61,14 +114,14 @@
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["User name"]</div>
+                <div class="datagrid-title">@L["Username"]</div>
                 <div class="datagrid-content">
                     @Model.Data.UserName
-                    <a href="#" class="btn btn-sm">@localizer["Change"]</a>
+                    <a href="#" class="btn btn-sm">@L["Change username"]</a>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Email"]</div>
+                <div class="datagrid-title">@L["Email"]</div>
                 <div class="datagrid-content">
                     <a href="mailto:@Model.Data.Email">@Model.Data.Email</a>
                     @if (Model.Data.EmailConfirmed)
@@ -78,7 +131,7 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Phone number"]</div>
+                <div class="datagrid-title">@L["Phone number"]</div>
                 <div class="datagrid-content">
                     @Model.Data.PhoneNumber
                     @if (Model.Data.PhoneNumberConfirmed)
@@ -88,56 +141,29 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Status"]</div>
+                <div class="datagrid-title">@L["Status"]</div>
                 <div class="datagrid-content">@Model.Data.Enabled LocalLogin? 2Fa? PhoneCheck?</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Authentication statistics"]</div>
-                <div class="datagrid-content">10 falied:2 lock:1</div>
+                <div class="datagrid-title">@L["Authentication statistics"]</div>
+                <div class="datagrid-content">10 failed:2 lock:1</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Person ID"]</div>
+                <div class="datagrid-title">@L["Person ID"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["External Logins"]</div>
+                <div class="datagrid-title">@L["External Logins"]</div>
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">@localizer["Contacts"]</h3>
-    </div>
-    <div class="card-body">
-        <div class="datagrid">
-            <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Phone number"]</div>
-                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Email"]</div>
-                <div class="datagrid-content">@Model.Data.Email</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["QQ"]</div>
-                <div class="datagrid-content">N/A</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@localizer["Address"]</div>
-                <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card mb-3">
-    <div class="card-header">
-        <h3 class="card-title">@localizer["Payments"]</h3>
+        <h3 class="card-title">@L["Payments"]</h3>
     </div>
     <div class="card-body">
         <table class="table">
@@ -162,14 +188,153 @@
 
     </div>
 </div>
-<h3>@localizer["Misc"]</h3>
-<p>@localizer["Created at"] : @Model.Data.WhenCreated</p>
-<p>@localizer["Changed at"] : @Model.Data.WhenChanged</p>
+<h3>@L["Misc"]</h3>
+<p>@L["Created at"] : @Model.Data.WhenCreated</p>
+<p>@L["Changed at"] : @Model.Data.WhenChanged</p>
 
-<h3>@localizer["Danger zone"]</h3>
+<h3>@L["Danger zone"]</h3>
 <div class="card">
     <div class="card-status-top bg-danger"></div>
     <div class="card-body">
-        <a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@localizer["Delete person"]</a></p>
+        <a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">@L["Delete person"]</a>
     </div>
 </div>
+
+@* modal *@
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">@L["Crop the image"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="img-container">
+                    <img id="image" src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@L["Cancel"]</button>
+                <button type="button" class="btn btn-primary" id="crop">@L["Crop"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var avatar = document.getElementById('avatar');
+            var image = document.getElementById('image');
+            var input = document.getElementById('input');
+            var $progress = $('.progress');
+            var $progressBar = $('.progress-bar');
+            var $alert = $('.alert');
+            var $modal = $('#modal');
+            var cropper;
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            input.addEventListener('change', function (e) {
+                var files = e.target.files;
+                var done = function (url) {
+                    input.value = '';
+                    image.src = url;
+                    $alert.hide();
+                    $modal.modal('show');
+                };
+                var reader;
+                var file;
+                var url;
+
+                if (files && files.length > 0) {
+                    file = files[0];
+
+                    if (URL) {
+                        done(URL.createObjectURL(file));
+                    } else if (FileReader) {
+                        reader = new FileReader();
+                        reader.onload = function (e) {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+
+            $modal.on('shown.bs.modal', function () {
+                cropper = new Cropper(image, {
+                    aspectRatio: 1,
+                    viewMode: 3,
+                });
+            }).on('hidden.bs.modal', function () {
+                cropper.destroy();
+                cropper = null;
+            });
+
+            document.getElementById('crop').addEventListener('click', function () {
+                var initialAvatarURL;
+                var canvas;
+
+                $modal.modal('hide');
+
+                if (cropper) {
+                    canvas = cropper.getCroppedCanvas({
+                        width: 128,
+                        height: 128,
+                    });
+                    initialAvatarURL = avatar.src;
+                    avatar.src = canvas.toDataURL();
+                    $progress.show();
+                    $alert.removeClass('alert-success alert-warning');
+                    canvas.toBlob(function (blob) {
+                        var formData = new FormData();
+
+                        formData.append('avatar', blob, 'avatar.jpg');
+                        formData.append('__RequestVerificationToken', $("[name='__RequestVerificationToken']").val())
+                        $.ajax('@(Url.Page(null, pageHandler: "UpdateProfilePicture"))', {
+                            method: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+
+                            xhr: function () {
+                                var xhr = new XMLHttpRequest();
+
+                                xhr.upload.onprogress = function (e) {
+                                    var percent = '0';
+                                    var percentage = '0%';
+
+                                    if (e.lengthComputable) {
+                                        percent = Math.round((e.loaded / e.total) * 100);
+                                        percentage = percent + '%';
+                                        $progressBar.width(percentage).attr('aria-valuenow', percent).text(percentage);
+                                    }
+                                };
+
+                                return xhr;
+                            },
+
+                            success: function () {
+                                $alert.show().addClass('alert-success').text('Upload success');
+                            },
+
+                            error: function () {
+                                avatar.src = initialAvatarURL;
+                                $alert.show().addClass('alert-warning').text('Upload error');
+                            },
+
+                            complete: function () {
+                                $progress.hide();
+                            },
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+}

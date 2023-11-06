@@ -62,13 +62,13 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
         }
         public class InputModel
         {
-            public string Type { get; set; } = default!;
+            public string Type { get; init; } = default!;
 
-            public string Description { get; set; } = default!;
+            public string Description { get; init; } = default!;
 
-            public string Value { get; set; } = default!;
+            public string Value { get; init; } = default!;
 
-            public DateTime? Expires { get; set; }
+            public DateTime? Expires { get; init; }
         }
     }
 }

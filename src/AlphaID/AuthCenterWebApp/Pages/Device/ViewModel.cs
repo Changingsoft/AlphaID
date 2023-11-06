@@ -2,12 +2,12 @@ namespace AuthCenterWebApp.Pages.Device;
 
 public class ViewModel
 {
-    public string ClientName { get; set; } = default!;
-    public string? ClientUrl { get; set; }
-    public string? ClientLogoUrl { get; set; }
-    public bool AllowRememberConsent { get; set; }
+    public string ClientName { get; init; } = default!;
+    public string? ClientUrl { get; init; }
+    public string? ClientLogoUrl { get; init; }
+    public bool AllowRememberConsent { get; init; }
 
-    public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = default!;
+    public IEnumerable<ScopeViewModel> IdentityScopes { get; init; } = default!;
     public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = default!;
 }
 

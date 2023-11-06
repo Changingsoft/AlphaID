@@ -1,0 +1,31 @@
+{
+  "solution": {
+    "path": "AlphaID.sln",
+    "projects": [
+      "AdminWebAppTests\\AdminWebAppTests.csproj",
+      "AdminWebApp\\AdminWebApp.csproj",
+      "AlphaID.DirectoryLogon.EntityFramework\\AlphaID.DirectoryLogon.EntityFramework.csproj",
+      "AlphaID.EntityFramework\\AlphaID.EntityFramework.csproj",
+      "AlphaID.WechatWebLogin.EntityFramework\\AlphaID.WechatWebLogin.EntityFramework.csproj",
+      "AlphaIDPlatformServices\\AlphaID.PlatformServices.csproj",
+      "AlphaIDPlatformTests\\AlphaIDPlatformTests.csproj",
+      "AlphaIDPlatform\\AlphaIDPlatform.csproj",
+      "AlphaIDWebAPITests\\AlphaIDWebAPITests.csproj",
+      "AlphaIDWebAPI\\AlphaIDWebAPI.csproj",
+      "AuthCenterWebAppTests\\AuthCenterWebAppTests.csproj",
+      "AuthCenterWebApp\\AuthCenterWebApp.csproj",
+      "DataTool\\DataTool.csproj",
+      "DatabaseTool\\DatabaseTool.csproj",
+      "IDSubjects.DirectoryLogon.Tests\\IDSubjects.DirectoryLogon.Tests.csproj",
+      "IDSubjects.DirectoryLogon\\IDSubjects.DirectoryLogon.csproj",
+      "IDSubjects.RealName.Tests\\IDSubjects.RealName.Tests.csproj",
+      "IDSubjects.RealName\\IDSubjects.RealName.csproj",
+      "IDSubjects.Tests\\IDSubjects.Tests.csproj",
+      "IDSubjects.WechatWebLogin.Tests\\IDSubjects.WechatWebLogin.Tests.csproj",
+      "IDSubjects.WechatWebLogin\\IDSubjects.WechatWebLogin.csproj",
+      "IDSubjects\\IDSubjects.csproj",
+      "IntegrationTestUtilities\\IntegrationTestUtilities.csproj",
+      "XinAnAuth\\XinAnAuth.csproj"
+    ]
+  }
+}

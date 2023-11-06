@@ -1,7 +1,7 @@
 ﻿@page
 @model SearchModel
 @{
-    this.ViewBag.Title = this.localizer["Searching organizations"].Value;
+    ViewBag.Title = L["Searching organizations"];
 }
 
 <div class="row">
@@ -9,20 +9,20 @@
         <partial name="_SearchInputPart" />
     </div>
 </div>
-<h2>@localizer["Searching results"]</h2>
-@if (this.Model.Results != null)
+<h2>@L["Searching results"]</h2>
+@if (Model.Results != null)
 {
     <table class="table">
         <thead>
             <tr>
-                <td>@localizer["Name"]</td>
-                <td>@localizer["USCI"]</td>
-                <td>@localizer["Domicile"]</td>
-                <td>@localizer["Representative"]</td>
+                <td>@L["Name"]</td>
+                <td>@L["USCI"]</td>
+                <td>@L["Domicile"]</td>
+                <td>@L["Representative"]</td>
             </tr>
         </thead>
         <tbody>
-            @foreach (var org in this.Model.Results)
+            @foreach (var org in Model.Results)
             {
                 <tr>
                     <td>
@@ -32,9 +32,9 @@
                             <span class="text-muted small">曾用名：@usedName.Name</span>
                         }
                     </td>
-                    <td>@org.USCI</td>
+                    <td>@org.Usci</td>
                     <td>@org.Domicile</td>
-                    <td>@org.LegalPersonName</td>
+                    <td>@org.Representative</td>
                 </tr>
             }
         </tbody>

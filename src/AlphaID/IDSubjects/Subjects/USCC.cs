@@ -5,14 +5,14 @@ namespace IDSubjects.Subjects;
 /// <summary>
 /// 表示一个统一社会信用代码。
 /// </summary>
-public struct USCC
+public struct Uscc
 {
 
     /// <summary>
     /// 使用指定的代码值初始化统一社会信用代码。
     /// </summary>
     /// <param name="code"></param>
-    public USCC(string code)
+    public Uscc(string code)
     {
         if (string.IsNullOrWhiteSpace(code))
             throw new ArgumentException("数据为空。");
@@ -50,7 +50,7 @@ public struct USCC
     /// <param name="orgTypeCode"></param>
     /// <param name="regionCode"></param>
     /// <param name="organizationCode"></param>
-    public USCC(string adminCode, string orgTypeCode, string regionCode, string organizationCode)
+    public Uscc(string adminCode, string orgTypeCode, string regionCode, string organizationCode)
         : this(adminCode, orgTypeCode, regionCode, OrganizationCode.Parse(organizationCode))
     { }
 
@@ -61,7 +61,7 @@ public struct USCC
     /// <param name="orgTypeCode"></param>
     /// <param name="regionCode"></param>
     /// <param name="organizationCode"></param>
-    public USCC(string adminCode, string orgTypeCode, string regionCode, OrganizationCode organizationCode)
+    public Uscc(string adminCode, string orgTypeCode, string regionCode, OrganizationCode organizationCode)
     {
         if (string.IsNullOrWhiteSpace(adminCode))
         {
@@ -157,7 +157,7 @@ public struct USCC
     /// <returns></returns>
     public override readonly bool Equals(object? obj)
     {
-        return obj is USCC uSCC ? this == uSCC : base.Equals(obj);
+        return obj is Uscc uScc ? this == uScc : base.Equals(obj);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public struct USCC
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static bool operator ==(USCC a, USCC b)
+    public static bool operator ==(Uscc a, Uscc b)
     {
         return a.AdminCode == b.AdminCode
             && a.OrganizationTypeCode == b.OrganizationTypeCode
@@ -181,7 +181,7 @@ public struct USCC
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static bool operator !=(USCC a, USCC b)
+    public static bool operator !=(Uscc a, Uscc b)
     {
         return !(a == b);
     }
@@ -191,23 +191,23 @@ public struct USCC
         int sum = 0;
         for (int i = 0; i < 17; i++)
         {
-            var charindex = charset.IndexOf(value[i]);
+            var charindex = Charset.IndexOf(value[i]);
             if (charindex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charindex * weight[i];
+            sum += charindex * Weight[i];
         }
-        return charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在0-30范围内。
+        return Charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在0-30范围内。
     }
 
     /// <summary>
     /// Charset with order from index 0 to 30,
     /// </summary>
-    private const string charset = "0123456789ABCDEFGHJKLMNPQRTUWXY";
+    private const string Charset = "0123456789ABCDEFGHJKLMNPQRTUWXY";
 
     /// <summary>
     /// Readonly weight for corresponding position.
     /// </summary>
-    private static readonly int[] weight = new int[] { 1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28 };
+    private static readonly int[] Weight = new int[] { 1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28 };
 
     #region Public static methods
 
@@ -216,7 +216,7 @@ public struct USCC
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static USCC Parse(string s)
+    public static Uscc Parse(string s)
     {
         if (string.IsNullOrWhiteSpace(s))
             throw new ArgumentNullException(nameof(s));
@@ -228,8 +228,8 @@ public struct USCC
         string codepart = s[..17];
         char checkcode = s[17];
 
-        USCC newUSCI = new(codepart);
-        return newUSCI.CheckCode != checkcode ? throw new ArgumentException("Checksum incorrect.") : newUSCI;
+        Uscc newUsci = new(codepart);
+        return newUsci.CheckCode != checkcode ? throw new ArgumentException("Checksum incorrect.") : newUsci;
     }
 
     /// <summary>
@@ -238,9 +238,9 @@ public struct USCC
     /// <param name="s"></param>
     /// <param name="usci"></param>
     /// <returns>若匹配成功，返回true，否则返回false.</returns>
-    public static bool TryParse(string s, out USCC usci)
+    public static bool TryParse(string s, out Uscc usci)
     {
-        usci = new USCC();
+        usci = new Uscc();
         if (string.IsNullOrWhiteSpace(s))
             return false;
 
@@ -251,7 +251,7 @@ public struct USCC
         //Check if contained any invalid char.
         foreach (var c in s)
         {
-            if (charset.IndexOf(c) < 0)
+            if (Charset.IndexOf(c) < 0)
                 return false;
         }
 
@@ -265,7 +265,7 @@ public struct USCC
         if (!OrganizationCode.TryParse(organizationCode, out OrganizationCode orgCode))
             return false;
 
-        USCC innerusci = new(adminCode, orgTypeCode, regionCode, orgCode);
+        Uscc innerusci = new(adminCode, orgTypeCode, regionCode, orgCode);
         if (innerusci.CheckCode != checkcode)
             return false;
 
@@ -278,7 +278,7 @@ public struct USCC
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static bool IsUSCI(string s)
+    public static bool IsUsci(string s)
     {
         return TryParse(s, out _);
     }

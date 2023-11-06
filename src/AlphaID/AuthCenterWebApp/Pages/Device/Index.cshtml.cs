@@ -14,18 +14,18 @@ namespace AuthCenterWebApp.Pages.Device;
 [Authorize]
 public class Index : PageModel
 {
-    private readonly IDeviceFlowInteractionService _interaction;
-    private readonly IEventService _events;
-    private readonly ILogger<Index> _logger;
+    private readonly IDeviceFlowInteractionService interaction;
+    private readonly IEventService events;
+    private readonly ILogger<Index> logger;
 
     public Index(
         IDeviceFlowInteractionService interaction,
         IEventService eventService,
         ILogger<Index> logger)
     {
-        this._interaction = interaction;
-        this._events = eventService;
-        this._logger = logger;
+        this.interaction = interaction;
+        this.events = eventService;
+        this.logger = logger;
     }
 
     public ViewModel View { get; set; } = default!;
@@ -62,7 +62,7 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        var request = await this._interaction.GetAuthorizationContextAsync(this.Input.UserCode);
+        var request = await this.interaction.GetAuthorizationContextAsync(this.Input.UserCode);
         if (request == null) return this.RedirectToPage("/Home/Error/LoginModel");
 
         ConsentResponse grantedConsent = default!;
@@ -76,7 +76,7 @@ public class Index : PageModel
             };
 
             // emit event
-            await this._events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
+            await this.events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
         }
         // user clicked 'yes' - validate the data
         else if (this.Input.Button == "yes")
@@ -98,7 +98,7 @@ public class Index : PageModel
                 };
 
                 // emit event
-                await this._events.RaiseAsync(new ConsentGrantedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
+                await this.events.RaiseAsync(new ConsentGrantedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
             }
             else
             {
@@ -112,8 +112,8 @@ public class Index : PageModel
 
         if (grantedConsent != null)
         {
-            // communicate outcome of consent back to identityserver
-            await this._interaction.HandleRequestAsync(this.Input.UserCode, grantedConsent);
+            // communicate outcome of consent back to identity server
+            await this.interaction.HandleRequestAsync(this.Input.UserCode, grantedConsent);
 
             // indicate that's it ok to redirect back to authorization endpoint
             return this.RedirectToPage("/Device/Success");
@@ -127,7 +127,7 @@ public class Index : PageModel
 
     private async Task<ViewModel?> BuildViewModelAsync(string userCode, InputModel? model = null)
     {
-        var request = await this._interaction.GetAuthorizationContextAsync(userCode);
+        var request = await this.interaction.GetAuthorizationContextAsync(userCode);
         return request != null ? this.CreateConsentViewModel(model, request) : null;
     }
 

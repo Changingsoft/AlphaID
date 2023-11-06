@@ -1,11 +1,29 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Organization.Pages.Settings.IndexModel
 @{
-    this.ViewBag.Title = this.localizer["General"].Value;
+    ViewBag.Title = L["General"];
 }
 <h2>@ViewBag.Title</h2>
 
 <form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.Domicile" class="form-label"></label>
+        <input asp-for="Input.Domicile" class="form-control" />
+        <span asp-description-for="Input.Domicile"></span>
+        <span asp-validation-for="Input.Domicile" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Representative" class="form-label"></label>
+        <input asp-for="Input.Representative" class="form-control" />
+        <span asp-description-for="Input.Representative"></span>
+        <span asp-validation-for="Input.Representative" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Contact" class="form-label"></label>
+        <input asp-for="Input.Contact" class="form-control" />
+        <span asp-description-for="Input.Contact"></span>
+        <span asp-validation-for="Input.Contact" class="text-danger"></span>
+    </div>
     <div class="mb-3">
         <label asp-for="Input.Description" class="form-label"></label>
         <input asp-for="Input.Description" class="form-control" />
@@ -13,32 +31,32 @@
         <span asp-validation-for="Input.Description" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn">@localizer["Apply changes"]</button>
-    <partial name="_OperationResultPartial" model="Model.OperationResult" />
+    <button type="submit" class="btn">@L["Apply changes"]</button>
+    @Html.DisplayFor(m => m.OperationResult)
 </form>
 
-<h3>@localizer["Danger zone"]</h3>
+<h3>@L["Danger zone"]</h3>
 <div class="card border-danger">
     <div class="list-group list-group-flush">
         <div class="list-group-item">
             <div class="row align-items-center">
                 <div class="col">
-                    <h4>@localizer["Rename organization"]</h4>
-                    <p>@localizer["enaming your organization can have unintended side effects."]</p>
+                    <h4>@L["Rename organization"]</h4>
+                    <p>@L["Renaming your organization can have unintended side effects."]</p>
                 </div>
                 <div class="col-auto ms-auto">
-                    <a href="#" class="btn btn-danger">@localizer["Rename organization"]</a>
+                    <a href="#" class="btn btn-danger">@L["Rename organization"]</a>
                 </div>
             </div>
         </div>
         <div class="list-group-item">
             <div class="row align-items-center">
                 <div class="col">
-                    <h4>@localizer["Delete this organization"]</h4>
-                    <p>@localizer["Once deleted, it will be gone forever. Please be certain."]</p>
+                    <h4>@L["Delete this organization"]</h4>
+                    <p>@L["Once deleted, it will be gone forever. Please be certain."]</p>
                 </div>
                 <div class="col-auto ms-auto">
-                    <a href="#" class="btn btn-danger">@localizer["Delete this organization"]</a>
+                    <a href="#" class="btn btn-danger">@L["Delete this organization"]</a>
                 </div>
             </div>
         </div>

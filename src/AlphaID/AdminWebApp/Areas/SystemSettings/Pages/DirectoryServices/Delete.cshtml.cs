@@ -1,4 +1,4 @@
-using DirectoryLogon;
+using IDSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -47,7 +47,7 @@ public class DeleteModel : PageModel
         }
 
         var result = await this.directoryServiceManager.DeleteAsync(this.Data);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {

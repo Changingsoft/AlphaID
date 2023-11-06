@@ -1,9 +1,15 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.localizer["Account"].Value;
+    ViewBag.Title = L["Account"];
 }
 
-<h2>@localizer["Account"]</h2>
+<h2>@L["Account"]</h2>
 
-<a href="#" class="btn">@localizer["Change your name"]</a>
+<a asp-page="ChangeUserName" class="btn">@L["Change your user name"]</a>
+<a asp-page="Mobile" class="btn">@L["Change your phone number"]</a>
+<a asp-page="Email" class="btn">@L["Change your email"]</a>
+
+
+<h3>@L["Personal Data"]</h3>
+<a asp-page="PersonalData" class="btn">@L["Manage personal data"]</a>

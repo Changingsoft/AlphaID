@@ -144,4 +144,12 @@
   <data name="Sign up" xml:space="preserve">
     <value>创建账户</value>
   </data>
+  <data name="Invalid login scheme" xml:space="preserve">
+	  <value>Invalid login scheme</value>
+	  <comment>Invalid login scheme</comment>
+  </data>
+  <data name="No schemes set for this request" xml:space="preserve">
+	  <value>No schemes set for this request</value>
+	  <comment>No schemes set for this request</comment>
+  </data>
 </root>

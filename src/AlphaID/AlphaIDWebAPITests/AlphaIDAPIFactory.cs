@@ -57,11 +57,7 @@ public class AlphaIDAPIFactory : WebApplicationFactory<AlphaIDWebAPI.Program>
 
     public virtual HttpClient CreateAuthenticatedClient(WebApplicationFactoryClientOptions? options = null)
     {
-        HttpClient client;
-        if (options != null)
-            client = this.CreateClient(options);
-        else
-            client = this.CreateClient();
+        HttpClient client = options != null ? this.CreateClient(options) : this.CreateClient();
         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme);
         return client;
     }

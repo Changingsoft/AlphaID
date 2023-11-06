@@ -1,15 +1,15 @@
-﻿@inject NaturalPersonManager userManager
+﻿@inject NaturalPersonManager UserManager
 @{
-    this.Layout = "/Pages/Shared/_Layout.cshtml";
-    var person = await this.userManager.GetUserAsync(this.User);
+    Layout = "/Pages/Shared/_Layout.cshtml";
+    var person = await UserManager.GetUserAsync(User);
 }
 
 @section Heads{
     @await RenderSectionAsync("Heads", false)
 }
 
-@section header{
-    @await RenderSectionAsync("header", false)
+@section Navbar{
+    @await RenderSectionAsync("Navbar", false)
 }
 
 <div class="page-header">
@@ -20,7 +20,7 @@
             </div>
             <div class="col">
                 <h1 class="fw-bold">@person?.Name</h1>
-                <p>@localizer["Your personal account"]</p>
+                <p>@L["Your personal account"]</p>
             </div>
             <div class="col-auto ms-auto">
             </div>
@@ -31,18 +31,18 @@
     <div class="container-xl">
         <div class="card">
             <div class="row g-0">
-                <div class="col-12 col-md-3 border-end">
+                <div class="col-12 col-md-2 border-end">
                     <div class="card-body">
                         <div class="list-group list-group-transparent">
-                            <a asp-page="/Profile/Index" asp-path="/Settings/Profile" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Profile"]</a>
-                            <a asp-page="/Account/Index" asp-path="/Settings/Account" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Account"]</a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">@localizer["Password and authentication"]</a>
+                            <a asp-page="/Profile/Index" asp-path="/Settings/Profile" class="list-group-item list-group-item-action d-flex align-items-center">@L["Profile"]</a>
+                            <a asp-page="/Account/Index" asp-path="/Settings/Account" class="list-group-item list-group-item-action d-flex align-items-center">@L["Account"]</a>
+                            <a asp-page="/Authentication/Index" asp-path="/Settings/Authentication" class="list-group-item list-group-item-action d-flex align-items-center">@L["Password and authentication"]</a>
                             <a asp-page="/Organizations/Index" asp-path="/Settings/Organizations" class="list-group-item list-group-item-action d-flex align-items-center">Organizations</a>
                             <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Billing &amp; Invoices</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-9 d-flex flex-column">
+                <div class="col-12 col-md-10 d-flex flex-column">
                     <div class="card-body">
                         @RenderBody()
                     </div>

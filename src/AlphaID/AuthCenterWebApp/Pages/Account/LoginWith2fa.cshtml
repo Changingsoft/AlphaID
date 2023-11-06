@@ -1,21 +1,21 @@
 ﻿@page
-@model AuthCenterWebApp.Pages.Account.LoginWith2faModel
+@model AuthCenterWebApp.Pages.Account.LoginWith2FaModel
 @{
-    this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.localizer["Two-fact authentication"];
+    Layout = "_AuthenticationLayout";
+    ViewBag.Title = L["Two-fact authentication"];
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-                @(product.Value.Name) @localizer["Account"]
+                @(Product.Value.Name) @L["Account"]
             </a>
         </div>
         <div class="card card-md">
             <div class="card-body">
                 <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
-                <p>@localizer["Your login is protected with an authenticator app. Enter your authenticator code below."]</p>
+                <p>@L["Your login is protected with an authenticator app. Enter your authenticator code below."]</p>
                 <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
                     <input asp-for="RememberMe" type="hidden" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,12 +33,12 @@
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">@localizer["Sign in"]</button>
+                        <button type="submit" class="w-100 btn btn-lg btn-primary">@L["Sign in"]</button>
                     </div>
                 </form>
                 <p>
-                    @localizer["Don't have access to your authenticator device? You can"]
-                    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@localizer["log in with a recovery code"]</a>.
+                    @L["Don't have access to your authenticator device? You can"]
+                    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">@L["log in with a recovery code"]</a>.
                 </p>
             </div>
         </div>

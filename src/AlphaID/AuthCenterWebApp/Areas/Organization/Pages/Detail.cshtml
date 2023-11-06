@@ -1,9 +1,9 @@
 ﻿@page
 @model DetailModel
 @{
-    this.ViewBag.Title = this.Model.Data.Organization.Name;
+    ViewBag.Title = Model.Data.Organization.Name;
 }
-<h1>@this.Model.Data.Organization.Name</h1>
+<h1>@Model.Data.Organization.Name</h1>
 <partial name="_OrganizationInfoPartial" model="Model.Data.Organization" />
 
 <hr />
@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var account in this.Model.Data.Organization.BankAccounts)
+        @foreach (var account in Model.Data.Organization.BankAccounts)
         {
             <tr>
                 <td>基本户</td>
@@ -30,4 +30,4 @@
     </tbody>
 </table>
 
-<p><a asp-page="Leave" asp-route-id="@this.Model.Data.OrganizationId" class="btn btn-danger">离开组织</a></p>
+<p><a asp-page="Leave" asp-route-id="@Model.Data.OrganizationId" class="btn btn-danger">离开组织</a></p>

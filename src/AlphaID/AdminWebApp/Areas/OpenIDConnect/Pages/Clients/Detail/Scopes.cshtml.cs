@@ -22,9 +22,9 @@ public class ScopesModel : PageModel
 
     public string? OperationMessage { get; set; }
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -36,9 +36,9 @@ public class ScopesModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPost(int id)
+    public async Task<IActionResult> OnPost(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;

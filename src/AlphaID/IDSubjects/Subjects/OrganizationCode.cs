@@ -12,12 +12,12 @@ public struct OrganizationCode
     /// <summary>
     /// 使用组织机构代码（不含校验位）创建组织机构代码。
     /// </summary>
-    /// <param name="Code"></param>
-    public OrganizationCode(string Code)
+    /// <param name="code"></param>
+    public OrganizationCode(string code)
     {
-        if (string.IsNullOrWhiteSpace(Code))
+        if (string.IsNullOrWhiteSpace(code))
             throw new ArgumentException("Code is empty or null.");
-        var trimcode = Code.Trim().ToUpper();
+        var trimcode = code.Trim().ToUpper();
         if (trimcode.Length != 8)
             throw new ArgumentException("Code length error.");
         this.code = trimcode;
@@ -62,11 +62,11 @@ public struct OrganizationCode
     /// <summary>
     /// 输出组织机构代码，如果指示为机读形式，则忽略中间的连字符。
     /// </summary>
-    /// <param name="AsMachineFormat"></param>
+    /// <param name="asMachineFormat"></param>
     /// <returns></returns>
-    public readonly string ToString(bool AsMachineFormat)
+    public readonly string ToString(bool asMachineFormat)
     {
-        return AsMachineFormat ? this.code + this.CheckCode.ToString() : this.code + "-" + this.CheckCode.ToString();
+        return asMachineFormat ? this.code + this.CheckCode.ToString() : this.code + "-" + this.CheckCode.ToString();
     }
 
     /// <summary>
@@ -110,23 +110,23 @@ public struct OrganizationCode
         return !(a == b);
     }
 
-    private static char Check(string Code)
+    private static char Check(string code)
     {
         int sum = 0;
         for (int i = 0; i < 8; i++)
         {
-            var charindex = charset.IndexOf(Code[i]);
+            var charindex = Charset.IndexOf(code[i]);
             if (charindex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charindex * weight[i];
+            sum += charindex * Weight[i];
         }
-        return checkcodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
+        return CheckcodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
     }
 
-    private const string checkcodeCharset = "0123456789X";
-    private const string charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static readonly int[] weight = new int[] { 3, 7, 9, 10, 5, 8, 4, 2 };
-    private const string pattern = @"^([0-9A-Z]{8})-?([0-9X])$";
+    private const string CheckcodeCharset = "0123456789X";
+    private const string Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static readonly int[] Weight = new int[] { 3, 7, 9, 10, 5, 8, 4, 2 };
+    private const string Pattern = @"^([0-9A-Z]{8})-?([0-9X])$";
 
     /// <summary>
     /// 将给定的字符串文本匹配为组织机构代码。
@@ -139,7 +139,7 @@ public struct OrganizationCode
             throw new ArgumentException("Input is null or empty");
         var trimedStr = s.Trim().ToUpper();
 
-        var match = Regex.Match(trimedStr, pattern);
+        var match = Regex.Match(trimedStr, Pattern);
         if (!match.Success)
             throw new ArgumentException("Invalid input value format.");
 
@@ -161,7 +161,7 @@ public struct OrganizationCode
             return false;
         var trimedStr = s.Trim().ToUpper();
 
-        var match = Regex.Match(trimedStr, pattern);
+        var match = Regex.Match(trimedStr, Pattern);
         if (!match.Success)
             return false;
 

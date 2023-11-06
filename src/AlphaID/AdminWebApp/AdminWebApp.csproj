@@ -7,31 +7,21 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.12" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.13" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaIDPlatformServices.csproj" />
+		<ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaID.PlatformServices.csproj" />
+		<ProjectReference Include="..\AlphaID.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Data\Init.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 	<ProjectExtensions>
@@ -39,4 +29,5 @@
 			<UserProperties />
 		</VisualStudio>
 	</ProjectExtensions>
+
 </Project>

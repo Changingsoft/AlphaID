@@ -8,16 +8,16 @@ public class OrganizationInfo
     /// <summary>
     /// ctor.
     /// </summary>
-    /// <param name="uSCI"></param>
+    /// <param name="uSci"></param>
     /// <param name="name"></param>
     /// <param name="domicile"></param>
     /// <param name="phoneNumber"></param>
     /// <param name="email"></param>
     /// <param name="organizationCode"></param>
     /// <param name="taxNumber"></param>
-    public OrganizationInfo(string uSCI, string name, string domicile, string phoneNumber, string email, string organizationCode, string taxNumber)
+    public OrganizationInfo(string uSci, string name, string domicile, string phoneNumber, string email, string organizationCode, string taxNumber)
     {
-        this.USCI = uSCI;
+        this.Usci = uSci;
         this.Name = name;
         this.Domicile = domicile;
         this.PhoneNumber = phoneNumber;
@@ -29,7 +29,7 @@ public class OrganizationInfo
     /// <summary>
     /// 统一社会信用代码
     /// </summary>
-    public string USCI { get; protected internal set; }
+    public string Usci { get; protected internal set; }
 
     /// <summary>
     /// 名称

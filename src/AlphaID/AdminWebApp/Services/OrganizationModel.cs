@@ -9,7 +9,7 @@ public class OrganizationModel
 
     public string? Contact { get; set; }
 
-    public string? USCI { get; set; }
+    public string? Usci { get; set; }
 
     public DateTime? Expires { get; set; }
 }

@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlphaIDPlatformTests;
 public class CombineTemplatesTest
@@ -24,8 +19,9 @@ public class CombineTemplatesTest
     [Theory]
     [InlineData("", "/Home", "/Home")]
     [InlineData("Area", "", "Area")]
-    [InlineData("Area", "/", "Area")]
+    [InlineData("Area", "/", "Area/")]
     [InlineData("Area", "/Home", "Area/Home")]
+    [InlineData("Area", "/Home/", "Area/Home/")]
     public void JoinPath(string a, string b, string expected)
     {
         var result = Path.Join(a, b);

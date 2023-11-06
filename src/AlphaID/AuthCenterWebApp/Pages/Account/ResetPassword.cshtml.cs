@@ -12,11 +12,11 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ResetPasswordModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
+    private readonly NaturalPersonManager userManager;
 
     public ResetPasswordModel(NaturalPersonManager userManager)
     {
-        this._userManager = userManager;
+        this.userManager = userManager;
     }
 
     [BindProperty]
@@ -45,18 +45,16 @@ public class ResetPasswordModel : PageModel
             return this.Page();
         }
 
-        var user = await this._userManager.FindByEmailAsync(this.Input.Email);
+        var user = await this.userManager.FindByEmailAsync(this.Input.Email);
         if (user == null)
         {
             // Don't reveal that the user does not exist
             return this.RedirectToPage("./ResetPasswordConfirmation");
         }
 
-        var result = await this._userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
+        var result = await this.userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
         if (result.Succeeded)
         {
-            user.PasswordLastSet = DateTime.UtcNow;
-            await this._userManager.UpdateAsync(user);
             return this.RedirectToPage("./ResetPasswordConfirmation");
         }
 
@@ -72,22 +70,22 @@ public class ResetPasswordModel : PageModel
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress(ErrorMessage = "{0}µÄ¸ñÊ½´íÎó")]
-        public string Email { get; set; } = default!;
+        public string Email { get; init; } = default!;
 
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-        public string Password { get; set; } = default!;
+        public string Password { get; init; } = default!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [Compare("Password", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; init; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        public string Code { get; set; } = default!;
+        public string Code { get; init; } = default!;
 
     }
 }

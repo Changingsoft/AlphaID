@@ -8,9 +8,6 @@ namespace AlphaIDWebAPI;
 internal class SecurityRequirementsOperationFilter : IOperationFilter
 {
 
-    public SecurityRequirementsOperationFilter()
-    { }
-
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         var authAttributes = context.MethodInfo.DeclaringType!.GetCustomAttributes(true)

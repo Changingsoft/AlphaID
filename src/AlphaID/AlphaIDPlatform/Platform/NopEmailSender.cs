@@ -5,7 +5,7 @@
 /// </summary>
 public class NopEmailSender : IEmailSender
 {
-    private readonly ILogger<NopEmailSender> _logger;
+    private readonly ILogger<NopEmailSender> logger;
 
     /// <summary>
     /// 
@@ -13,7 +13,7 @@ public class NopEmailSender : IEmailSender
     /// <param name="logger"></param>
     public NopEmailSender(ILogger<NopEmailSender> logger)
     {
-        this._logger = logger;
+        this.logger = logger;
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public class NopEmailSender : IEmailSender
     /// <returns></returns>
     public Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
-        this._logger.LogInformation("已模拟向<{email}>发送了主题为“{subject}”的邮件，内容是：{mailContent}", email, subject, htmlMessage);
+        this.logger.LogInformation("已模拟向<{email}>发送了主题为“{subject}”的邮件，内容是：{mailContent}", email, subject, htmlMessage);
         return Task.CompletedTask;
     }
 }

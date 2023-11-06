@@ -1,3 +1,4 @@
+using AlphaIDPlatform.Helpers;
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,9 +22,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public OperationResult? OperationResult { get; set; }
+        public IdOperationResult? OperationResult { get; set; }
 
-        public IEnumerable<SelectListItem> MembershipVisibilties { get; set; } = Enum.GetNames<MembershipVisibility>().Select(v => new SelectListItem(v, v));
+        public IEnumerable<SelectListItem> MembershipVisibilities { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
 
         public async Task<IActionResult> OnGet(string anchor, string orgId)
         {
@@ -64,7 +65,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
             member.Visibility = this.Input.Visibility;
 
             this.OperationResult = await this.memberManager.UpdateAsync(member);
-            
+
             return this.Page();
         }
 
@@ -72,21 +73,21 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
         {
             [Display(Name = "Title")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Title { get; set; }
+            public string? Title { get; init; }
 
             [Display(Name = "Department")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Department { get; set; }
+            public string? Department { get; init; }
 
             [Display(Name = "Remark")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Remark { get; set; }
+            public string? Remark { get; init; }
 
-            [Display(Name = "Is owner", Description ="The owner of organization can fully mange organization by themselvs.")]
-            public bool IsOwner { get; set; }
+            [Display(Name = "Is owner", Description = "The owner of organization can fully mange organization by themselves.")]
+            public bool IsOwner { get; init; }
 
             [Display(Name = "Membership visibility")]
-            public MembershipVisibility Visibility { get; set; }
+            public MembershipVisibility Visibility { get; init; }
         }
     }
 }

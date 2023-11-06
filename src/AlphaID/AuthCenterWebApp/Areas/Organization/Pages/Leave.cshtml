@@ -1,12 +1,12 @@
 ﻿@page
 @model LeaveModel
 @{
-    this.ViewBag.Title = "离开组织";
+    ViewBag.Title = "离开组织";
 }
 
 <h1>离开组织</h1>
 
-<p>您确定要离开@(this.Model.Organization.Name)吗？您可以自由离开组织，但如果要加入组织，需要申请并得到组织管理员的批准。</p>
+<p>您确定要离开@(Model.Organization.Name)吗？您可以自由离开组织，但如果要加入组织，需要申请并得到组织管理员的批准。</p>
 <form method="post">
     <div asp-validation-summary="All"></div>
     <button type="submit" class="btn btn-danger">离开组织</button>

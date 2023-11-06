@@ -4,13 +4,13 @@ using Xunit;
 namespace AlphaIDWebAPITests.Controllers.RealName;
 
 [Collection(nameof(TestServerCollection))]
-public class ChineseIDCardControllerTest
+public class ChineseIdCardControllerTest
 {
     private readonly AlphaIDAPIFactory webAPIFactory;
 
-    public ChineseIDCardControllerTest(AlphaIDAPIFactory webAPIFactory)
+    public ChineseIdCardControllerTest(AlphaIDAPIFactory webApiFactory)
     {
-        this.webAPIFactory = webAPIFactory;
+        this.webAPIFactory = webApiFactory;
     }
 
     [Fact]

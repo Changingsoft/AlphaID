@@ -36,10 +36,22 @@ public class PersonSignInManager : SignInManager<NaturalPerson>
     public override async Task<SignInResult> CheckPasswordSignInAsync(NaturalPerson user, string password, bool lockoutOnFailure)
     {
         var result = await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            await this.personManager.AccessSuccededAsync(user, "password");
+            return result;
         }
+
+        //如果密码验证成功，则检查是否需要强制修改密码。
+        if (!this.personManager.Options.Password.EnablePassExpires)
+        {
+            return result;
+        }
+
+        if (user.PasswordLastSet == null || user.PasswordLastSet.Value < DateTimeOffset.UtcNow.AddDays(0 - this.personManager.Options.Password.PasswordExpiresDay))
+        {
+            return new PersonSignInResult { MustChangePassword = true };
+        }
+        await this.personManager.AccessSuccededAsync(user, "password");
         return result;
     }
 }

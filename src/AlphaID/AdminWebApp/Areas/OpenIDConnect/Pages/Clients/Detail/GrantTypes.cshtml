@@ -1,25 +1,27 @@
-﻿@page "{id}"
+﻿@page
 @model GrantTypesModel
 @{
 }
-<h3>Grant types</h3>
 
+<h2>Grant types</h2>
 <form method="post">
     <ul class="list-group">
-        @for (var i = 0; i < this.Model.AllowedGrantTypes.Count; i++)
+        @for (var i = 0; i < Model.AllowedGrantTypes.Count; i++)
         {
             <li class="list-group-item">
+                @* ReSharper disable AccessToModifiedClosure *@
                 <label asp-for="AllowedGrantTypes[i].Selected" class="form-check-label">
                     <input asp-for="AllowedGrantTypes[i].Selected" class="form-check-input">
-                    <span>@this.Model.AllowedGrantTypes[i].Value (@this.Model.AllowedGrantTypes[i].Text)</span>
+                    <span>@Model.AllowedGrantTypes[i].Value (@Model.AllowedGrantTypes[i].Text)</span>
                     <input asp-for="AllowedGrantTypes[i].Text" type="hidden">
                     <input asp-for="AllowedGrantTypes[i].Value" type="hidden">
                 </label>
+                @* ReSharper restore AccessToModifiedClosure *@
             </li>
         }
     </ul>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <p class="text-warning">* Some grant type combined is conflicted, system will check conflic before apllying changes.</p>
+    <p class="text-warning">* Some grant type combined is conflicted, system will check conflict before applying changes.</p>
     <button type="submit" class="btn btn-primary">Apply changes</button>
-    <p>@this.Model.OperationMessage</p>
+    <p>@Model.OperationMessage</p>
 </form>

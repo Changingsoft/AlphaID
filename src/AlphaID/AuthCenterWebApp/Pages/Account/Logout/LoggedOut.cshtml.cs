@@ -8,7 +8,7 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 [AllowAnonymous]
 public class LoggedOut : PageModel
 {
-    private readonly IIdentityServerInteractionService _interactionService;
+    private readonly IIdentityServerInteractionService interactionService;
 
     public LoggedOutViewModel View { get; set; } = default!;
 
@@ -16,14 +16,14 @@ public class LoggedOut : PageModel
 
     public LoggedOut(IIdentityServerInteractionService interactionService)
     {
-        this._interactionService = interactionService;
+        this.interactionService = interactionService;
     }
 
     public async Task OnGet(string? logoutId, string? returnUrl)
     {
         this.ReturnUrl = returnUrl ?? "/";
-        // get context information (client name, post logout redirect URI and iframe for federated signout)
-        var logout = await this._interactionService.GetLogoutContextAsync(logoutId);
+        // get context information (client name, post logout redirect URI and iframe for federated sign out)
+        var logout = await this.interactionService.GetLogoutContextAsync(logoutId);
 
         this.View = new LoggedOutViewModel
         {

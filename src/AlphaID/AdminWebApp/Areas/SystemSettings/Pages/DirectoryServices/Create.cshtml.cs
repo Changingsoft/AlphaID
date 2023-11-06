@@ -1,4 +1,4 @@
-using DirectoryLogon;
+using IDSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,15 +26,15 @@ public class CreateModel : PageModel
         {
             Name = this.Input.Name,
             ServerAddress = this.Input.ServerAddress,
-            RootDN = this.Input.RootDN,
-            DefaultUserAccountOU = this.Input.DefaultUserOU,
+            RootDN = this.Input.RootDn,
+            DefaultUserAccountOU = this.Input.DefaultUserOu,
             UpnSuffix = this.Input.UpnSuffix,
             UserName = this.Input.UserName,
             Password = this.Input.Password,
         };
 
         var result = await this.directoryServiceManager.CreateAsync(directoryService);
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
@@ -49,32 +49,32 @@ public class CreateModel : PageModel
     {
         [Display(Name = "Name")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
         [Display(Name = "Server", Prompt = "ldap.example.com")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string ServerAddress { get; set; } = default!;
+        public string ServerAddress { get; init; } = default!;
 
         [Display(Name = "User name")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string? UserName { get; set; }
+        public string? UserName { get; init; }
 
         [Display(Name = "Password")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string? Password { get; set; }
+        public string? Password { get; init; }
 
         [Display(Name = "Root DN", Prompt = "DC=example,DC=com")]
         [StringLength(150, ErrorMessage = "Validate_StringLength")]
-        public string RootDN { get; set; } = default!;
+        public string RootDn { get; init; } = default!;
 
         [Display(Name = "User OU", Prompt = "OU=Users,DC=example,DC=com")]
         [StringLength(150, ErrorMessage = "Validate_StringLength")]
-        public string DefaultUserOU { get; set; } = default!;
+        public string DefaultUserOu { get; init; } = default!;
 
         [Display(Name = "UPN suffix", Prompt = "example.com")]
         [StringLength(20, ErrorMessage = "Validate_StringLength")]
-        public string UpnSuffix { get; set; } = default!;
+        public string UpnSuffix { get; init; } = default!;
     }
 }

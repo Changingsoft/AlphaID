@@ -16,9 +16,9 @@ public class SecretsModel : PageModel
 
     public Client Data { get; set; } = default!;
 
-    public IActionResult OnGet(int id)
+    public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == id);
+        var data = this.dbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
         {
             return this.NotFound();

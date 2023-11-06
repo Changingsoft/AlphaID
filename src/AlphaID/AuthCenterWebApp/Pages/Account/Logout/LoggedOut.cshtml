@@ -1,25 +1,25 @@
 @page
 @model AuthCenterWebApp.Pages.Account.Logout.LoggedOut
 @{
-    this.Layout = "../_AuthenticationLayout";
+    Layout = "../_AuthenticationLayout";
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <h1>
-                @localizer["Signed out"]
+                @L["Signed out"]
             </h1>
-            <p>@localizer["You've successfully signed out of the login."]</p>
+            <p>@L["You've successfully signed out of the login."]</p>
             @if (Model.View.PostLogoutRedirectUri != null)
             {
                 <div>
-                    <a class="PostLogoutRedirectUri btn" href="@Model.View.PostLogoutRedirectUri">@localizer["Return back to"] @Model.View.ClientName</a>
+                    <a class="PostLogoutRedirectUri btn" href="@Model.View.PostLogoutRedirectUri">@L["Return back to"] @Model.View.ClientName</a>
                 </div>
             }
             else
             {
                 <div>
-                    <a class="btn" href="@Model.ReturnUrl">@localizer["OK"]</a>
+                    <a class="btn" href="@Model.ReturnUrl">@L["OK"]</a>
                 </div>
             }
 
@@ -31,8 +31,7 @@
     </div>
 </div>
 
-@section scripts
-    {
+@section Scripts{
     @if (Model.View.AutomaticRedirectAfterSignOut)
     {
         <script src="~/js/signout-redirect.js"></script>

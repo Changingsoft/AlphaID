@@ -1,0 +1,60 @@
+﻿@page "{id}"
+@model IndexModel
+@{
+}
+
+<h3></h3>
+<h4>@L["Summary"]</h4>
+<dl>
+    <dt>@L["Name"]</dt>
+    <dd>@Model.Data.Name</dd>
+    <dt>@L["Display name"]</dt>
+    <dd>@Model.Data.DisplayName</dd>
+    <dt>@L["Enabled"]</dt>
+    <dd>@Model.Data.Enabled</dd>
+    <dt>@L["Emphasize"]</dt>
+    <dd>@Model.Data.Emphasize</dd>
+    <dt>@L["Show in discovery document"]</dt>
+    <dd>@Model.Data.ShowInDiscoveryDocument</dd>
+    <dt>@L["Created"]</dt>
+    <dd>@Model.Data.Created</dd>
+    <dt>@L["Updated"]</dt>
+    <dd>@Model.Data.Updated</dd>
+</dl>
+
+<h4>@L["User Claims"]</h4>
+<ul>
+    @foreach (var claim in Model.Data.UserClaims)
+    {
+        <li>@claim.Type</li>
+    }
+</ul>
+
+<h4>@L["Properties"]</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <td>@L["Key"]</td>
+            <td>@L["Value"]</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prop in Model.Data.Properties)
+        {
+            <tr>
+                <td>@prop.Key</td>
+                <td>@prop.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>@L["Operations"]</h4>
+@if (Model.Data.NonEditable)
+{
+    <p>@L["System resource, can not be delete."]</p>
+}
+else
+{
+    <a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">Delete</a>
+}

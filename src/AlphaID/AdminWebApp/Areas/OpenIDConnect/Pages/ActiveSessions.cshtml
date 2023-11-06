@@ -1,35 +1,40 @@
 ﻿@page
 @model AdminWebApp.Areas.OpenIDConnect.Pages.ActiveSessionsModel
-@inject PersistedGrantDbContext dbContext;
+@inject PersistedGrantDbContext DbContext;
 @{
+    ViewBag.Title = L["Active Sessions"];
 }
-
-<table class="table">
-    <thead>
-        <tr>
-            <td>@localizer["Session ID"]</td>
-            <td>@localizer["Scheme"]</td>
-            <td>@localizer["Subject ID"]</td>
-            <td>@localizer["Created"]</td>
-            <td>@localizer["Renewed"]</td>
-            <td>@localizer["Expires"]</td>
-            <td>@localizer["Display name"]</td>
-            <td>@localizer["Key part"]</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var a in this.dbContext.ServerSideSessions)
-        {
+@section PageHeader{
+    <h1>@L["Active Sessions"]</h1>
+}
+<div class="card">
+    <table class="table card-table">
+        <thead>
             <tr>
-                <td>@a.SessionId</td>
-                <td>@a.Scheme</td>
-                <td>@a.SubjectId</td>
-                <td>@a.Created</td>
-                <td>@a.Renewed</td>
-                <td>@a.Expires</td>
-                <td>@a.DisplayName</td>
-                <td>@a.Key[0..4]</td>
+                <td>@L["Session ID"]</td>
+                <td>@L["Scheme"]</td>
+                <td>@L["Subject ID"]</td>
+                <td>@L["Created"]</td>
+                <td>@L["Renewed"]</td>
+                <td>@L["Expires"]</td>
+                <td>@L["Display name"]</td>
+                <td>@L["Key part"]</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var a in DbContext.ServerSideSessions)
+            {
+                <tr>
+                    <td>@a.SessionId</td>
+                    <td>@a.Scheme</td>
+                    <td>@a.SubjectId</td>
+                    <td>@a.Created</td>
+                    <td>@a.Renewed</td>
+                    <td>@a.Expires</td>
+                    <td>@a.DisplayName</td>
+                    <td>@a.Key[0..4]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

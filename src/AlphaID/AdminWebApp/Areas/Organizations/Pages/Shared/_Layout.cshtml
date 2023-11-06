@@ -2,14 +2,16 @@
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
 @section Heads{
-    @RenderSection("Heads", false)
+    @await RenderSectionAsync("Heads", false)
 }
+
 <div class="page-header">
     <div class="container-xl">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Organizations</a></li>
-            <li class="breadcrumb-item">Detail</li>
+            <li class="breadcrumb-item"><a asp-page="/Index">@L["Organizations"]</a></li>
+            @await RenderSectionAsync("Breadcrumb", false)
         </ul>
+        @await RenderSectionAsync("PageHeader", false)
     </div>
 </div>
 <div class="page-body">
@@ -19,5 +21,5 @@
 </div>
 
 @section Scripts{
-    @RenderSection("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 }

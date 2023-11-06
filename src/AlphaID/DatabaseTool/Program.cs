@@ -1,4 +1,6 @@
-﻿using AlphaIDEntityFramework.EntityFramework;
+﻿using AdminWebApp.Infrastructure.DataStores;
+using AlphaID.DirectoryLogon.EntityFramework;
+using AlphaID.EntityFramework;
 using DatabaseTool;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +15,7 @@ builder
         })
         .ConfigureServices((hostContext, services) =>
         {
-            services.AddDbContext<IDSubjectsDbContext>(options =>
+            services.AddDbContext<IdSubjectsDbContext>(options =>
             {
                 options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
                 {
@@ -22,12 +24,14 @@ builder
                 });
                 options.UseLazyLoadingProxies();
             });
+
             services.AddDbContext<DirectoryLogonDbContext>(options =>
             {
                 options.UseSqlServer(hostContext.Configuration.GetConnectionString("DirectoryLogonDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
                 options.UseLazyLoadingProxies();
             });
 
+            //用于IdentityServer的ConfigurationDbContext和PersistanceGrantDbContext
             services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {
@@ -36,6 +40,15 @@ builder
             .AddOperationalStore(options =>
             {
                 options.ConfigureDbContext = b => b.UseSqlServer(hostContext.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
+            });
+
+            //用于AdminWebApp的OperationalDbContext
+            services.AddDbContext<OperationalDbContext>(options =>
+            {
+                options.UseSqlServer(hostContext.Configuration.GetConnectionString("AdminWebAppDataConnection"), sql =>
+                {
+                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                });
             });
         });
 

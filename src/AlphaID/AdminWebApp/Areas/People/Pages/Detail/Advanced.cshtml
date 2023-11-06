@@ -1,7 +1,17 @@
 ﻿@page
 @model AdminWebApp.Areas.People.Pages.Detail.AdvancedModel
 @{
+    ViewBag.Title = L["Advanced"];
 }
-<h2>@localizer["Advanced"]</h2>
-
-<a href="#" class="btn">@localizer["Export personal data"]</a>
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Advanced"]</h2>
+<form method="post">
+    <div class="form-check">
+        <input asp-for="Input.Enabled" class="form-check-input" />
+        <label asp-for="Input.Enabled" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn">@L["Apply changes"]</button>
+</form>
+<hr />
+<h3>@L["Misc"]</h3>
+<a href="#" class="btn">@L["Export personal data"]</a>

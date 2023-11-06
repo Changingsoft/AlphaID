@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var secret in this.Model.Data.Secrets)
+        @foreach (var secret in Model.Data.Secrets)
         {
             <tr>
                 <td>@secret.Type</td>
@@ -48,7 +48,7 @@
 
 <h4>Scopes</h4>
 <ul>
-    @foreach (var scope in this.Model.Data.Scopes)
+    @foreach (var scope in Model.Data.Scopes)
     {
         <li>@scope.Scope</li>
     }
@@ -63,7 +63,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var claim in this.Model.Data.UserClaims)
+        @foreach (var claim in Model.Data.UserClaims)
         {
             <tr>
                 <td>@claim.Type</td>
@@ -82,7 +82,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var prop in this.Model.Data.Properties)
+        @foreach (var prop in Model.Data.Properties)
         {
             <tr>
                 <td>@prop.Key</td>
@@ -94,7 +94,7 @@
 
 
 <h4>Operations</h4>
-@if (this.Model.Data.NonEditable)
+@if (Model.Data.NonEditable)
 {
     <p>This is a system resource, can not be delete.</p>
 }

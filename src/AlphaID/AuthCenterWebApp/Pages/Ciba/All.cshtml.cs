@@ -13,10 +13,10 @@ namespace AuthCenterWebApp.Pages.Ciba;
 [Authorize]
 public class AllModel : PageModel
 {
-    private readonly IBackchannelAuthenticationInteractionService _backchannelAuthenticationInteraction;
+    private readonly IBackchannelAuthenticationInteractionService backchannelAuthenticationInteraction;
     public AllModel(IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService)
     {
-        this._backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
+        this.backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
     }
 
     public IEnumerable<BackchannelUserLoginRequest> Logins { get; set; } = default!;
@@ -28,6 +28,6 @@ public class AllModel : PageModel
 
     public async Task OnGet()
     {
-        this.Logins = await this._backchannelAuthenticationInteraction.GetPendingLoginRequestsForCurrentUserAsync();
+        this.Logins = await this.backchannelAuthenticationInteraction.GetPendingLoginRequestsForCurrentUserAsync();
     }
 }

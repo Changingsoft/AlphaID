@@ -1,0 +1,23 @@
+﻿@page
+@model SecurityModel
+@{
+    ViewBag.Title = L["Security Options"];
+}
+
+<h2>@L["Security Options"]</h2>
+@if (!string.IsNullOrEmpty(Model.OperationMessage))
+{
+    <div class="alert alert-success">@Model.OperationMessage</div>
+}
+
+<form method="post">
+    <div class="form-check">
+        <input asp-for="Input.TwoFactorEnabled" class="form-check-input" />
+        <label asp-for="Input.TwoFactorEnabled" class="form-check-label"></label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.LockoutEnabled" class="form-check-input" />
+        <label asp-for="Input.LockoutEnabled" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">@L["Apply changes"]</button>
+</form>

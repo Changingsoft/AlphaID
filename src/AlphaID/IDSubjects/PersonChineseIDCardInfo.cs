@@ -7,12 +7,12 @@ namespace IDSubjects;
 /// 中国居民身份证。
 /// </summary>
 [Owned]
-public class PersonChineseIDCardInfo
+public class PersonChineseIdCardInfo
 {
     /// <summary>
     /// 
     /// </summary>
-    protected PersonChineseIDCardInfo() { }
+    protected PersonChineseIdCardInfo() { }
 
     /// <summary>
     /// 
@@ -21,7 +21,7 @@ public class PersonChineseIDCardInfo
     /// <param name="name"></param>
     /// <param name="ethnicity"></param>
     /// <param name="address"></param>
-    public PersonChineseIDCardInfo(string cardNumber,
+    public PersonChineseIdCardInfo(string cardNumber,
                                  string name,
                                  string ethnicity,
                                  string address)

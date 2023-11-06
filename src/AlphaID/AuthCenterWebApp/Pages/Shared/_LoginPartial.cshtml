@@ -1,25 +1,24 @@
 ﻿@inject SignInManager<NaturalPerson> SignInManager
-@inject NaturalPersonManager UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
     <partial name="_NotificationPartial" />
     <div class="nav-item dropdown">
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-            <span class="avatar avatar-sm" style="background-image: url('@this.User.AvatarUrl()')"></span>
+            <span class="avatar avatar-sm" style="background-image: url('@User.AvatarUrl()')"></span>
             <div class="d-none d-xl-block ps-2">
-                <div>@this.User.Identity?.Name</div>
-                <div class="mt-1 small text-secondary">@this.User.DisplayRoles()</div>
+                <div>@User.Identity?.Name</div>
+                <div class="mt-1 small text-secondary">@User.DisplayRoles()</div>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="@User.ProfileUrl()" class="dropdown-item">@localizer["Profile"]</a>
+            <a href="@User.ProfileUrl()" class="dropdown-item">@L["Profile"]</a>
             <div class="dropdown-divider"></div>
-            <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@localizer["Grants"]</a>
-            <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@localizer["CIBA Requests"]</a>
+            <a asp-area="" asp-page="/Grants/Index" class="dropdown-item">@L["Grants"]</a>
+            <a asp-area="" asp-page="/Ciba/All" class="dropdown-item">@L["CIBA Requests"]</a>
             <div class="dropdown-divider"></div>
-            <a asp-area="Settings" asp-page="/Profile/Index" class="dropdown-item">@localizer["Settings"]</a>
-            <a asp-area="" asp-page="/Account/Logout/Index" asp-route-returnUrl="@Context.Request.Path" class="dropdown-item">@localizer["Sign out"]</a>
+            <a asp-area="Settings" asp-page="/Profile/Index" class="dropdown-item">@L["Settings"]</a>
+            <a asp-area="" asp-page="/Account/Logout/Index" asp-route-returnUrl="@Context.Request.Path" class="dropdown-item">@L["Sign out"]</a>
         </div>
     </div>
 }
@@ -29,10 +28,10 @@ else
         <div class="btn-list">
             <a asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path" class="btn">
                 <span class="avatar avatar-sm">?</span>
-                @localizer["Sign in"]
+                @L["Sign in"]
             </a>
             <a asp-page="/Account/SignUp" class="btn">
-                @localizer["Sign up"]
+                @L["Sign up"]
             </a>
         </div>
 

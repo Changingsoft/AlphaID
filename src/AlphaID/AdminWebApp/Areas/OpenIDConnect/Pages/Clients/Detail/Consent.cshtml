@@ -1,4 +1,4 @@
-﻿@page "{id}"
+﻿@page
 @model             ConsentModel
 @{
 }
@@ -15,5 +15,5 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Apply</button>
-    <p class="text-success">@this.Model.OperationMessage</p>
+    <p class="text-success">@Model.OperationMessage</p>
 </form>

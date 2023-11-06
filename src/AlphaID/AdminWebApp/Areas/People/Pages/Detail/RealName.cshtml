@@ -1,46 +1,42 @@
 ﻿@page
 @model RealNameModel
 @{
+    ViewBag.Title = L["Real name"];
 }
-<h1>Real name</h1>
+<h1>@L["Real name"]</h1>
 
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Real name Overview</h3>
-    </div>
-    <div class="card-body">
-        <div class="datagrid">
-            <div class="datagrid-item">
-                <div class="datagrid-title">Status</div>
-                <div class="datagrid-content">
-                    <span class="badge bg-green text-green-fg">Pass</span>
-                    Real named
+@if(Model.RealName != null)
+{
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Real name Overview</h3>
+        </div>
+        <div class="card-body">
+            <div class="datagrid">
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Status</div>
+                    <div class="datagrid-content">
+                        <span class="badge bg-green text-green-fg">Pass</span>
+                    </div>
                 </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Accepted at</div>
-                <div class="datagrid-content">2023-10-10 14:30</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Expires at</div>
-                <div class="datagrid-content">2043-10-10 14:30</div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Accepted at</div>
+                    <div class="datagrid-content">@Model.RealName.AcceptedAt</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Expires at</div>
+                    <div class="datagrid-content">@Model.RealName.ExpiresAt</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Passed by</div>
+                    <div class="datagrid-content">@Model.RealName.AcceptedBy</div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<h2>Chinese ID Card</h2>
-@if (this.Model.Card?.ChineseIDCard != null)
-{
-    <p>Name: @Model.Card.ChineseIDCard.Name</p>
-    <p>Card number: @Model.Card.ChineseIDCard.CardNumber</p>
-    <p>Issued at: @Model.Card.ChineseIDCard.IssueDate</p>
-    <p>Ethnicity: @Model.Card.ChineseIDCard.Ethnicity</p>
-    <p>Address: @Model.Card.ChineseIDCard.Address</p>
-    <p>Issuer: @Model.Card.ChineseIDCard.Issuer</p>
-    <p>Expires: @Model.Card.ChineseIDCard.Expires</p>
 }
 else
 {
-    <p>Real name info not found.</p>
+    <p>No real name info found.</p>
 }

@@ -3,8 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@(ViewBag.Title == null ? $"{product.Value.Name} Management Center" : $"{ViewBag.Title} - {product.Value.Name} Management Center")</title>
-    @RenderSection("Heads", false)
+    @if (ViewBag.Title != null)
+    {
+        <title>@ViewBag.Title - @Product.Value.Name @L["Management Center"]</title>
+    }
+    else
+    {
+        <title>@Product.Value.Name @Product.Value.Name @L["Management Center"]</title>
+    }
+
+    @await RenderSectionAsync("Heads", false)
 </head>
 <body>
     @RenderBody()

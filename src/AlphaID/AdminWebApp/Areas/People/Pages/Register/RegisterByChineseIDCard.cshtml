@@ -1,5 +1,5 @@
 ﻿@page
-@model             RegisterByChineseIDCardModel
+@model             RegisterByChineseIdCardModel
 @{
 }
 <h1>Register by Chinese ID Card</h1>
@@ -25,8 +25,8 @@
                 </div>
             </div>
         </div>
-        <input id="idcard_front" type="hidden" asp-for="@Model.IDCardFrontBase64" />
-        <input id="idcard_back" type="hidden" asp-for="@Model.IDCardBackBase64" />
+        <input id="idcard_front" type="hidden" asp-for="@Model.IdCardFrontBase64" />
+        <input id="idcard_back" type="hidden" asp-for="@Model.IdCardBackBase64" />
         <div class="mb-3">
             <label asp-for="Mobile"></label>
             <input asp-for="Mobile" class="form-control" />

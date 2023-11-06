@@ -4,9 +4,9 @@ namespace AdminWebApp.Areas.Organizations.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IQueryableOrganizationStore organizationStore;
+        private readonly IOrganizationStore organizationStore;
 
-        public IndexModel(IQueryableOrganizationStore organizationStore)
+        public IndexModel(IOrganizationStore organizationStore)
         {
             this.organizationStore = organizationStore;
         }

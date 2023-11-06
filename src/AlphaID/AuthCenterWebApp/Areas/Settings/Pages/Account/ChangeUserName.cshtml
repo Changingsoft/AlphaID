@@ -1,0 +1,18 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.Account.ChangeUserNameModel
+@{
+    ViewBag.Title = L["Change user name"];
+}
+@Html.DisplayFor(m => m.Result)
+<h2>@ViewBag.Title</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn">@L["Change"]</button>
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

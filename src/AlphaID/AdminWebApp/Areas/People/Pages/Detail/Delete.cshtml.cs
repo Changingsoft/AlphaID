@@ -23,7 +23,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.userManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -72,6 +72,6 @@ public class DeleteModel : PageModel
 
         [Display(Name = "Display name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; init; } = default!;
     }
 }

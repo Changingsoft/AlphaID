@@ -14,13 +14,13 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ConfirmEmailChangeModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly SignInManager<NaturalPerson> _signInManager;
+    private readonly NaturalPersonManager userManager;
+    private readonly SignInManager<NaturalPerson> signInManager;
 
     public ConfirmEmailChangeModel(NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager)
     {
-        this._userManager = userManager;
-        this._signInManager = signInManager;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
     }
 
     [TempData]
@@ -33,14 +33,14 @@ public class ConfirmEmailChangeModel : PageModel
             return this.RedirectToPage("/Index");
         }
 
-        var user = await this._userManager.FindByIdAsync(userId);
+        var user = await this.userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return this.NotFound($"Unable to load user with ID '{userId}'.");
         }
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        var result = await this._userManager.ChangeEmailAsync(user, email, code);
+        var result = await this.userManager.ChangeEmailAsync(user, email, code);
         if (!result.Succeeded)
         {
             this.StatusMessage = "更新邮件地址时出现错误。";
@@ -56,7 +56,7 @@ public class ConfirmEmailChangeModel : PageModel
         //    return this.Page();
         //}
 
-        await this._signInManager.RefreshSignInAsync(user);
+        await this.signInManager.RefreshSignInAsync(user);
         this.StatusMessage = "感谢您确认电子邮件变更。";
         return this.Page();
     }

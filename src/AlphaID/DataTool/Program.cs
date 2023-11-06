@@ -1,5 +1,5 @@
-﻿using AlphaIDEntityFramework.EntityFramework;
-using IDSubjects;
+﻿using AlphaID.EntityFramework;
+using IDSubjects.ChineseName;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +26,7 @@ internal class Program
 
 
                 //数据库
-                services.AddDbContext<IDSubjectsDbContext>(options =>
+                services.AddDbContext<IdSubjectsDbContext>(options =>
                 {
                     options.UseSqlServer(hostContext.Configuration.GetConnectionString("AlphaIDDataConnection"));
                     options.UseLazyLoadingProxies();

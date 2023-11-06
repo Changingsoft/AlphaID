@@ -1,0 +1,25 @@
+﻿@page "{id}"
+@model IndexModel
+@{
+}
+
+<h3>Identity Provider: @Model.Data.Scheme</h3>
+
+<h4>@L["Summary"]</h4>
+
+<dl>
+    <dt>@L["Scheme"]</dt>
+    <dd>@Model.Data.Scheme</dd>
+    <dt>@L["Display Name"]</dt>
+    <dd>@Model.Data.DisplayName</dd>
+    <dt>@L["Type"]</dt>
+    <dd>@Model.Data.Type</dd>
+    <dt>@L["Enabled"]</dt>
+    <dd>@Model.Data.Enabled</dd>
+    <dt>@L["Created at"]</dt>
+    <dd>@Model.Data.Created</dd>
+</dl>
+
+<h4>@L["Operations"]</h4>
+
+<a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">Delete</a>

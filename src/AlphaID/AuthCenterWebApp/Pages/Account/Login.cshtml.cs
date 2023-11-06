@@ -18,13 +18,13 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class LoginModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly SignInManager<NaturalPerson> _signInManager;
-    private readonly IIdentityServerInteractionService _interaction;
-    private readonly IEventService _events;
-    private readonly IAuthenticationSchemeProvider _schemeProvider;
-    private readonly IIdentityProviderStore _identityProviderStore;
-    private readonly ILogger<LoginModel>? _logger;
+    private readonly NaturalPersonManager userManager;
+    private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly IIdentityServerInteractionService interaction;
+    private readonly IEventService events;
+    private readonly IAuthenticationSchemeProvider schemeProvider;
+    private readonly IIdentityProviderStore identityProviderStore;
+    private readonly ILogger<LoginModel>? logger;
 
     public ViewModel View { get; set; } = default!;
 
@@ -40,13 +40,13 @@ public class LoginModel : PageModel
         SignInManager<NaturalPerson> signInManager,
         ILogger<LoginModel>? logger)
     {
-        this._userManager = userManager;
-        this._signInManager = signInManager;
-        this._interaction = interaction;
-        this._schemeProvider = schemeProvider;
-        this._identityProviderStore = identityProviderStore;
-        this._events = events;
-        this._logger = logger;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
+        this.interaction = interaction;
+        this.schemeProvider = schemeProvider;
+        this.identityProviderStore = identityProviderStore;
+        this.events = events;
+        this.logger = logger;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
@@ -64,7 +64,7 @@ public class LoginModel : PageModel
     public async Task<IActionResult> OnPost()
     {
         //检查我们是否在授权请求的上下文中
-        var context = await this._interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
+        var context = await this.interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
 
         //用户点击了“取消”按钮
         if (this.Input.Button != "login")
@@ -74,7 +74,7 @@ public class LoginModel : PageModel
                 // if the user cancels, send a result back into IdentityServer as if they 
                 // denied the consent (even if this client does not require consent).
                 // this will send back an access denied OIDC error response to the client.
-                await this._interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
+                await this.interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                 if (context.IsNativeClient())
@@ -96,23 +96,17 @@ public class LoginModel : PageModel
         if (this.ModelState.IsValid)
         {
             //登录过程。
-            var user = await this._userManager.FindByEmailAsync(this.Input.Username)
-                ?? await this._userManager.FindByMobileAsync(this.Input.Username)
-                ?? await this._userManager.FindByNameAsync(this.Input.Username);
+            var user = await this.userManager.FindByEmailAsync(this.Input.Username)
+                ?? await this.userManager.FindByMobileAsync(this.Input.Username)
+                ?? await this.userManager.FindByNameAsync(this.Input.Username);
             if (user != null)
             {
-                var result = await this._signInManager.PasswordSignInAsync(user, this.Input.Password, this.Input.RememberLogin, lockoutOnFailure: true);
+                var result = await this.signInManager.PasswordSignInAsync(user, this.Input.Password, this.Input.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    await this._events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
+                    await this.events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
-                    if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.Now.AddDays(-365.0))
-                    {
-                        var principal = this.GenerateMustChangePasswordPrincipal(user);
-                        await this._signInManager.SignOutAsync();
-                        await this.HttpContext.SignInAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme, principal);
-                        return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
-                    }
+
 
                     if (context != null)
                     {
@@ -143,15 +137,16 @@ public class LoginModel : PageModel
                     }
                 }
 
+                if (result.MustChangePassword())
+                {
+                    var principal = this.GenerateMustChangePasswordPrincipal(user);
+                    await this.signInManager.SignOutAsync();
+                    await this.HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
+                    return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
+                }
+
                 if (result.RequiresTwoFactor)
                 {
-                    if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.Now.AddDays(-365.0))
-                    {
-                        var principal = this.GenerateMustChangePasswordPrincipal(user);
-                        await this._signInManager.SignOutAsync();
-                        await this.HttpContext.SignInAsync(AuthCenterIdentitySchemes.MustChangePasswordScheme, principal);
-                        return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
-                    }
                     return this.RedirectToPage("./LoginWith2fa", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
                 }
 
@@ -163,7 +158,7 @@ public class LoginModel : PageModel
             }
 
 
-            await this._events.RaiseAsync(new UserLoginFailureEvent(this.Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
+            await this.events.RaiseAsync(new UserLoginFailureEvent(this.Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
             this.ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
 
@@ -179,13 +174,13 @@ public class LoginModel : PageModel
             ReturnUrl = returnUrl
         };
 
-        var context = await this._interaction.GetAuthorizationContextAsync(returnUrl);
+        var context = await this.interaction.GetAuthorizationContextAsync(returnUrl);
 
         //在授权上下文中指定了IdP，因此跳过本地登录而直接转到指定的IdP。
-        if (context?.IdP != null && await this._schemeProvider.GetSchemeAsync(context.IdP) != null)
+        if (context?.IdP != null && await this.schemeProvider.GetSchemeAsync(context.IdP) != null)
         {
             var local = context.IdP == Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider;
-            var scheme = await this._schemeProvider.GetSchemeAsync(context.IdP);
+            var scheme = await this.schemeProvider.GetSchemeAsync(context.IdP);
             // this is meant to short circuit the UI and only trigger the one external IdP
             this.View = new ViewModel
             {
@@ -209,7 +204,7 @@ public class LoginModel : PageModel
             return;
         }
 
-        var schemes = await this._schemeProvider.GetAllSchemesAsync();
+        var schemes = await this.schemeProvider.GetAllSchemesAsync();
 
         var providers = schemes
             .Where(x => x.DisplayName != null)
@@ -219,7 +214,7 @@ public class LoginModel : PageModel
                 AuthenticationScheme = x.Name
             }).ToList();
 
-        var dyanmicSchemes = (await this._identityProviderStore.GetAllSchemeNamesAsync())
+        var dyanmicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ViewModel.ExternalProvider
             {
@@ -234,7 +229,7 @@ public class LoginModel : PageModel
         if (client != null)
         {
             allowLocal = client.EnableLocalLogin;
-            if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+            if (client.IdentityProviderRestrictions.Any())
             {
                 providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
             }
@@ -250,7 +245,7 @@ public class LoginModel : PageModel
 
     private ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
     {
-        var identity = new ClaimsIdentity(AuthCenterIdentitySchemes.MustChangePasswordScheme);
+        var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));
         return new ClaimsPrincipal(identity);
     }
@@ -263,20 +258,20 @@ public class LoginModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = default!;
+        public string Password { get; init; } = default!;
 
         [Display(Name = "Remember me on this device")]
-        public bool RememberLogin { get; set; }
+        public bool RememberLogin { get; init; }
 
-        public string? ReturnUrl { get; set; }
+        public string? ReturnUrl { get; init; }
 
         public string Button { get; set; } = default!;
     }
 
     public class ViewModel
     {
-        public bool AllowRememberLogin { get; set; } = true;
-        public bool EnableLocalLogin { get; set; } = true;
+        public bool AllowRememberLogin { get; init; } = true;
+        public bool EnableLocalLogin { get; init; } = true;
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
@@ -288,16 +283,16 @@ public class LoginModel : PageModel
 
         public class ExternalProvider
         {
-            public string DisplayName { get; set; } = default!;
-            public string AuthenticationScheme { get; set; } = default!;
+            public string DisplayName { get; init; } = default!;
+            public string AuthenticationScheme { get; init; } = default!;
         }
     }
 
     public class LoginOptions
     {
-        public static bool AllowLocalLogin = true;
-        public static bool AllowRememberLogin = true;
+        public static readonly bool AllowLocalLogin = true;
+        public static readonly bool AllowRememberLogin = true;
         public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
-        public static string InvalidCredentialsErrorMessage = "用户名或密码无效";
+        public static readonly string InvalidCredentialsErrorMessage = "用户名或密码无效";
     }
 }

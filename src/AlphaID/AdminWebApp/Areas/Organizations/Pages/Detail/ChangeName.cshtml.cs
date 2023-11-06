@@ -38,8 +38,8 @@ public class ChangeNameModel : PageModel
         if (org == null)
             return this.NotFound();
 
-        var result = await this.manager.ChangeNameAsync(org, this.Input.NewName, this.Input.ChangeDate, this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
-        if (!result.IsSuccess)
+        var result = await this.manager.ChangeNameAsync(org, this.Input.NewName, DateOnly.FromDateTime(this.Input.ChangeDate), this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
+        if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
@@ -54,20 +54,20 @@ public class ChangeNameModel : PageModel
     public class InputModel
     {
         [Display(Name = "Current name")]
-        public string CurrentName { get; set; } = default!;
+        public string CurrentName { get; init; } = default!;
 
         [Display(Name = "New name")]
         [StringLength(100, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string NewName { get; set; } = default!;
+        public string NewName { get; init; } = default!;
 
         [DataType(DataType.Date)]
         [Display(Name = "When changed")]
-        public DateTime ChangeDate { get; set; } = DateTime.UtcNow.Date;
+        public DateTime ChangeDate { get; init; } = DateTime.Now;
 
         [Display(Name = "Record used name")]
-        public bool RecordUsedName { get; set; } = true;
+        public bool RecordUsedName { get; init; } = true;
 
         [Display(Name = "Apply changes when name duplicated")]
-        public bool ApplyChangeWhenNameDuplicated { get; set; } = false;
+        public bool ApplyChangeWhenNameDuplicated { get; init; } = false;
     }
 }

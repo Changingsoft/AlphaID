@@ -1,0 +1,26 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewBag.Title = L["Personal Data"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>@L["Your account contains personal data that you have given us. This page allows you to download or delete that data."]</p>
+        <p>
+            <strong>@L["Deleting this data will permanently remove your account, and this cannot be recovered."]</strong>
+        </p>
+        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="mb-3">
+            <button class="btn btn-primary" type="submit">@L["Download personal data"]</button>
+        </form>
+        <p>
+            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">@L["Delete personal data"]</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -2,22 +2,22 @@ using AdminWebApp;
 using AdminWebApp.Domain.Security;
 using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
-using AlphaIDEntityFramework.EntityFramework;
+using AlphaID.DirectoryLogon.EntityFramework;
+using AlphaID.EntityFramework;
+using AlphaID.PlatformServices.Aliyun;
+using AlphaID.PlatformServices.Primitives;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatform.RazorPages;
-using AlphaIDPlatformServices.Aliyun;
-using AlphaIDPlatformServices.Primitives;
-using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
-using IDSubjects;
+using IDSubjects.ChineseName;
+using IDSubjects.DirectoryLogon;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -25,21 +25,14 @@ using Serilog;
 using System.Globalization;
 using System.Security.Claims;
 
-Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger(); //hack see https://github.com/serilog/serilog-aspnetcore/issues/289#issuecomment-1060303792
-
-Log.Information("Starting up");
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((ctx, lc) =>
+builder.Host.UseSerilog((context, configuration) =>
 {
-    lc
-    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.EventLog(".NET Runtime", manageEventSource: true)
+    configuration.ReadFrom.Configuration(context.Configuration)
     .Enrich.FromLogContext()
-    .ReadFrom.Configuration(ctx.Configuration);
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+    .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
 });
 
 //ConfigServices
@@ -73,7 +66,8 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/Account");
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "People"));
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "Organizations"));
-    
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Clients/Detail", "OpenIDConnect"));
+
 })
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>
@@ -145,18 +139,16 @@ builder.Services
     });
 
 //注册IDSubjects DbContext.
-builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
+builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
         sqlOptions.UseNetTopologySuite();
     });
-    options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
-    options.UseLazyLoadingProxies();
 });
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
@@ -165,34 +157,29 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
-    options.UseLazyLoadingProxies();
 }).AddScoped<OperationalStoreOptions>();
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OperationalDataConnection"));
-    options.UseLazyLoadingProxies();
 });
 
 //自然人管理器
-builder.Services.AddIdentityCore<NaturalPerson>(options =>
-{
-
-})
-    .AddUserManager<NaturalPersonManager>()
-    .AddUserStore<NaturalPersonStore>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddIDSubjects()
+var identityBuilder = builder.Services.AddIdSubjects()
     .AddDefaultStores();
-builder.Services.AddScoped<IQueryableOrganizationStore, OrganizationStore>();
+
+if(true)
+{
+    identityBuilder.AddRealName()
+        .AddRealNameStore<RealNameStore>();
+}
 
 //实名身份验证器。
-builder.Services.AddScoped<ChineseIDCardManager>()
-    .AddScoped<IChineseIDCardValidationStore, RealNameValidationStore>();
+builder.Services.AddScoped<ChineseIdCardManager>()
+    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 //身份证OCR识别
-builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
+builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
 
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
@@ -244,6 +231,7 @@ if (builder.Environment.IsDevelopment())
 var app = builder.Build();
 
 //Pipelines.
+app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -267,21 +255,6 @@ app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
 
-var startAction = app.Configuration["StartAction"];
-if (startAction != null)
-{
-    switch (startAction.ToLower())
-    {
-        case "migration":
-            using (var db = app.Services.GetRequiredService<OperationalDbContext>())
-            {
-                db.Database.Migrate();
-            }
-            break;
-    }
-}
-
-//Run
 app.Run();
 
 namespace AdminWebApp

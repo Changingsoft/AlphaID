@@ -46,17 +46,17 @@ public class GenericOrganization
     /// 统一社会信用代码。
     /// </summary>
     [MaxLength(18), Column(TypeName = "char(18)")]
-    public string? USCI { get; set; }
+    public string? Usci { get; set; }
 
     /// <summary>
     /// 创建记录的时间。
     /// </summary>
-    public virtual DateTime WhenCreated { get; protected internal set; } = DateTime.UtcNow;
+    public virtual DateTimeOffset WhenCreated { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// 记录修改的时间。
     /// </summary>
-    public virtual DateTime WhenChanged { get; protected internal set; } = DateTime.UtcNow;
+    public virtual DateTimeOffset WhenChanged { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
     /// 是否有效。
@@ -84,26 +84,23 @@ public class GenericOrganization
     /// <summary>
     /// 注册时间。
     /// </summary>
-    [Column(TypeName = "date")]
-    public virtual DateTime? EstablishedAt { get; set; }
+    public virtual DateOnly? EstablishedAt { get; set; }
 
     /// <summary>
     /// 营业期起
     /// </summary>
-    [Column(TypeName = "date")]
-    public virtual DateTime? TermBegin { get; set; }
+    public virtual DateOnly? TermBegin { get; set; }
 
     /// <summary>
     /// 营业期止。
     /// </summary>
-    [Column(TypeName = "date")]
-    public virtual DateTime? TermEnd { get; set; }
+    public virtual DateOnly? TermEnd { get; set; }
 
     /// <summary>
-    /// 法定代表人名称。
+    /// 组织的代表人。
     /// </summary>
     [MaxLength(20)]
-    public virtual string? LegalPersonName { get; set; }
+    public virtual string? Representative { get; set; }
 
     /// <summary>
     /// 标示该组织的地理位置。

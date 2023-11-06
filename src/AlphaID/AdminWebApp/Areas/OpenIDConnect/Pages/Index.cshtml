@@ -1,21 +1,26 @@
 ﻿@page
 @model IndexModel
-@inject ConfigurationDbContext dbContext
-@inject PersistedGrantDbContext persistedGrantDbContext
+@inject ConfigurationDbContext DbContext
+@inject PersistedGrantDbContext PersistedGrantDbContext
 @{
-    this.ViewBag.Title = this.localizer["OAuth/OIDC"];
+    ViewBag.Title = L["OAuth/OIDC"];
 }
-<h1>@localizer["Overview"]</h1>
+
+@section PageHeader{
+    <h1>@L["Overview"]</h1>
+}
+
+
 <div class="row">
     <div class="col-sm-6 col-lg-3">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Clients"]</div>
+                    <div class="subheader">@L["Clients"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
-                <div class="h1 mb-3">@this.dbContext.Clients.Count()</div>
+                <div class="h1 mb-3">@DbContext.Clients.Count()</div>
             </div>
         </div>
     </div>
@@ -23,7 +28,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Scopes"]</div>
+                    <div class="subheader">@L["Scopes"]</div>
                     <div class="ms-auto lh-1">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -36,7 +41,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-baseline">
-                    <div class="h1 mb-0 me-2">@this.dbContext.ApiScopes.Count()</div>
+                    <div class="h1 mb-0 me-2">@DbContext.ApiScopes.Count()</div>
                     <div class="me-auto">
                         <span class="text-green d-inline-flex align-items-center lh-1">
                             8% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
@@ -51,7 +56,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["API Resources"]</div>
+                    <div class="subheader">@L["API Resources"]</div>
                     <div class="ms-auto lh-1">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -64,7 +69,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-baseline">
-                    <div class="h1 mb-3 me-2">@this.dbContext.ApiResources.Count()</div>
+                    <div class="h1 mb-3 me-2">@DbContext.ApiResources.Count()</div>
                     <div class="me-auto">
                         <span class="text-yellow d-inline-flex align-items-center lh-1">
                             0% <!-- Download SVG icon from http://tabler-icons.io/i/minus -->
@@ -80,7 +85,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["ID Providers"]</div>
+                    <div class="subheader">@L["ID Providers"]</div>
                     <div class="ms-auto lh-1">
                         <div class="dropdown">
                             <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -93,7 +98,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-baseline">
-                    <div class="h1 mb-3 me-2">@dbContext.IdentityProviders.Count()</div>
+                    <div class="h1 mb-3 me-2">@DbContext.IdentityProviders.Count()</div>
                     <div class="me-auto">
                         <span class="text-green d-inline-flex align-items-center lh-1">
                             4% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
@@ -108,11 +113,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Active Sessions"]</div>
+                    <div class="subheader">@L["Active Sessions"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
-                <div class="h1 mb-3"><a asp-page="/ActiveSessions">@this.persistedGrantDbContext.ServerSideSessions.Count()</a></div>
+                <div class="h1 mb-3"><a asp-page="/ActiveSessions">@PersistedGrantDbContext.ServerSideSessions.Count()</a></div>
             </div>
         </div>
     </div>
@@ -120,11 +125,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="subheader">@localizer["Keys"]</div>
+                    <div class="subheader">@L["Keys"]</div>
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
-                <div class="h1 mb-3">@this.persistedGrantDbContext.Keys.Count()</div>
+                <div class="h1 mb-3">@PersistedGrantDbContext.Keys.Count()</div>
             </div>
         </div>
     </div>

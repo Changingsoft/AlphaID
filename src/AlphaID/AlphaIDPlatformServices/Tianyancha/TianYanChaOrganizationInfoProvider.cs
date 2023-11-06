@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace AlphaIDPlatformServices.Tianyancha;
+namespace AlphaID.PlatformServices.Tianyancha;
 
 /// <summary>
 /// 天眼查工商信息服务。
@@ -28,10 +28,10 @@ public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
     {
         var client = new HttpClient
         {
-            BaseAddress = new Uri(URL),
+            BaseAddress = new Uri(Url),
         };
 
-        client.DefaultRequestHeaders.Add("Authorization", TOKEN);
+        client.DefaultRequestHeaders.Add("Authorization", Token);
 
 
         var response = await client.GetAsync("");
@@ -49,8 +49,8 @@ public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
         return new OrganizationInfo(result.creditCode, result.name, result.regLocation, string.Empty, string.Empty, result.orgNumber, result.taxNumber);
     }
 
-    private const string URL = "http://open.api.tianyancha.com/services/open/ic/baseinfo/2.0";
-    private const string TOKEN = "1e439145-9eec-48d9-b22c-99d7fda0cb92";
+    private const string Url = "http://open.api.tianyancha.com/services/open/ic/baseinfo/2.0";
+    private const string Token = "1e439145-9eec-48d9-b22c-99d7fda0cb92";
 
 
 }

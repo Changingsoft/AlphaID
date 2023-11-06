@@ -3,7 +3,9 @@
 @using Microsoft.Extensions.Options
 @using AlphaIDPlatform
 @using AlphaIDPlatform.Security
+@using AlphaIDPlatform.Helpers
 @using IDSubjects
+@using IDSubjects.Subjects
 @using BotDetect.Web.Mvc
 
 @namespace AuthCenterWebApp.Pages
@@ -11,5 +13,5 @@
 @addTagHelper *, AuthCenterWebApp
 @addTagHelper "BotDetect.Web.Mvc.CaptchaTagHelper, BotDetect.Web.Mvc"
 
-@inject IViewLocalizer localizer
-@inject IOptions<ProductInfo> product
+@inject IViewLocalizer L
+@inject IOptions<ProductInfo> Product

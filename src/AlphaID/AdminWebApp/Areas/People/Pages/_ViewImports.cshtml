@@ -1,9 +1,15 @@
 ﻿@using IDSubjects
 @using Microsoft.AspNetCore.Mvc.Localization;
 @using AlphaIDPlatform
+@using AlphaIDPlatform.Helpers
+@using Microsoft.AspNetCore.Identity
+@using IDSubjects.Subjects
+@using Microsoft.Extensions.Localization;
 
 @namespace AdminWebApp.Areas.People.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, AlphaIDPlatform
 
-@inject IViewLocalizer localizer
+@inject IViewLocalizer L
+@* ReSharper disable once InconsistentNaming *@
+@inject IHtmlLocalizer<SharedResource> SL

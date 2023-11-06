@@ -1,4 +1,5 @@
-﻿using IDSubjects.Subjects;
+﻿using IDSubjects.ChineseName;
+using IDSubjects.Subjects;
 
 namespace IDSubjects;
 
@@ -7,22 +8,18 @@ namespace IDSubjects;
 /// </summary>
 public class PersonBuilder
 {
-
     /// <summary>
     /// 
     /// </summary>
-    /// <param userName="name"></param>
+    /// <param name="userName"></param>
     /// <exception cref="ArgumentException"></exception>
     public PersonBuilder(string userName)
     {
-        this.Person = new NaturalPerson
-        {
-            UserName = userName
-        };
+        this.Person = new NaturalPerson(userName);
     }
 
     /// <summary>
-    /// Set mobile phone numebr.
+    /// Set mobile phone number.
     /// </summary>
     /// <param userName="mobilePhoneNumber"></param>
     /// <returns></returns>

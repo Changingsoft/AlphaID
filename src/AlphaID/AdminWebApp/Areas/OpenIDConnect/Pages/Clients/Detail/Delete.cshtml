@@ -1,0 +1,13 @@
+﻿@page
+@model DeleteModel
+@{
+}
+<h3>Delete</h3>
+<p>该客户端将被永久删除。请键入客户端名称（@(Model.Data.ClientName)）以确认。</p>
+<form method="post">
+    <div class="mb-3">
+        <input asp-for="ClientName" class="form-control" />
+        <span asp-validation-for="ClientName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>

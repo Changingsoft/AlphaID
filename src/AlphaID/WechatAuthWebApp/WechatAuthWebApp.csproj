@@ -11,15 +11,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaIDEntityFramework\AlphaIDEntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaIDPlatformServices.csproj" />
+		<ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaID.PlatformServices.csproj" />
+		<ProjectReference Include="..\DirectoryLogon\DirectoryLogon.csproj" />
+		<ProjectReference Include="..\AlphaID.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj" />
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
+		<ProjectReference Include="..\AlphaID.WechatWebLogin.EntityFramework\AlphaID.WechatWebLogin.EntityFramework.csproj" />
 		<ProjectReference Include="..\WechatWebLogin\WechatWebLogin.csproj" />
 	</ItemGroup>
 

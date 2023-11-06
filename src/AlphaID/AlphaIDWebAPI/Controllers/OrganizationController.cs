@@ -36,7 +36,7 @@ public partial class OrganizationController : ControllerBase
     public async Task<ActionResult<OrganizationModel>> GetAsync(string id)
     {
         var org = await this.organizationStore.FindByIdAsync(id);
-        return org == null ? (ActionResult<OrganizationModel>)this.NotFound() : (ActionResult<OrganizationModel>)new OrganizationModel(org);
+        return org == null ? this.NotFound() : new OrganizationModel(org);
     }
 
     /// <summary>

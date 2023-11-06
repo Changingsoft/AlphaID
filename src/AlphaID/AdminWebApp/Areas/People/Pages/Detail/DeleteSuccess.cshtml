@@ -1,8 +1,8 @@
 ﻿@page
 @model DeleteSuccessModel
 @{
-    this.ViewBag.Title = this.localizer["Delete Success"].Value;
+    ViewBag.Title = L["Delete Success"];
 }
 
-<h1>@ViewBag.Title</h1>
-<p><a asp-page="/Subjects/Index" class="btn btn-primary">@localizer["OK"]</a></p>
+<h2>@ViewBag.Title</h2>
+<p><a asp-page="/Subjects/Index" class="btn btn-primary">@L["OK"]</a></p>

@@ -47,10 +47,10 @@
 
                 @if (Model.UserIsOwner)
                 {
-                    <a asp-area="Settings" asp-page="/Profile/Index" class="btn">@localizer["Edit profile"]</a>
+                    <a asp-area="Settings" asp-page="/Profile/Index" class="btn">@L["Edit profile"]</a>
                 }
                 <hr />
-                <h2>@localizer["Organizations"]</h2>
+                <h2>@L["Organizations"]</h2>
                 <ul>
                     @foreach (var member in Model.Members)
                     {

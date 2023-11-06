@@ -12,7 +12,7 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IDSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    partial class IDSubjectsDbContextModelSnapshot : ModelSnapshot
+    partial class IdSubjectsDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -25,6 +25,90 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AlphaID.EntityFramework.NaturalPersonClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NaturalPersonClaim");
+                });
+
+            modelBuilder.Entity("AlphaID.EntityFramework.NaturalPersonLogin", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NaturalPersonLogin");
+                });
+
+            modelBuilder.Entity("AlphaID.EntityFramework.NaturalPersonToken", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("NaturalPersonToken");
+                });
 
             modelBuilder.Entity("IDSubjects.GenericOrganization", b =>
                 {
@@ -69,7 +153,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Property<DateTime?>("TermEnd")
                         .HasColumnType("date");
 
-                    b.Property<string>("USCI")
+                    b.Property<string>("Usci")
                         .HasMaxLength(18)
                         .HasColumnType("char(18)");
 
@@ -77,17 +161,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime>("WhenChanged")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("WhenChanged")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("WhenCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
 
-                    b.HasIndex("USCI")
+                    b.HasIndex("Usci")
                         .IsUnique()
                         .HasFilter("[USCI] IS NOT NULL");
 
@@ -113,7 +197,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
@@ -168,6 +251,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -176,8 +260,8 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime?>("PasswordLastSet")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("PasswordLastSet")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(20)
@@ -220,6 +304,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -227,35 +312,41 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime>("WhenChanged")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("WhenChanged")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("WhenCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("Name");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+                        .IsUnique()
+                        .HasFilter("[NormalizedEmail] IS NOT NULL");
 
                     b.HasIndex("NormalizedUserName")
+                        .IsUnique();
+
+                    b.HasIndex("PhoneNumber")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.HasIndex("PhoneticSearchHint");
 
                     b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasFilter("[UserName] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("WhenChanged");
 
                     b.HasIndex("WhenCreated");
 
-                    b.ToTable("NaturalPerson", (string)null);
+                    b.ToTable("NaturalPerson");
                 });
 
             modelBuilder.Entity("IDSubjects.OrganizationBankAccount", b =>
@@ -378,7 +469,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.ToTable("PersonBankAccount");
                 });
 
-            modelBuilder.Entity("IDSubjects.RealName.ChineseIDCardValidation", b =>
+            modelBuilder.Entity("IDSubjects.RealName.ChineseIdCardValidation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -402,87 +493,57 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.ToTable("RealNameValidation");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("IDSubjects.RealName.RealNameInfo", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasMaxLength(256)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("PersonId")
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTimeOffset>("AcceptedAt")
+                        .HasColumnType("datetimeoffset");
 
-                    b.HasIndex("UserId");
+                    b.Property<string>("AcceptedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("UserClaim", (string)null);
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("PersonId");
+
+                    b.ToTable("RealNameInfo");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("AlphaID.EntityFramework.NaturalPersonClaim", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                    b.HasOne("IDSubjects.NaturalPerson", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(256)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserExternalLogin", (string)null);
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("AlphaID.EntityFramework.NaturalPersonLogin", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                    b.HasOne("IDSubjects.NaturalPerson", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                    b.Navigation("User");
+                });
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+            modelBuilder.Entity("AlphaID.EntityFramework.NaturalPersonToken", b =>
+                {
+                    b.HasOne("IDSubjects.NaturalPerson", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Value")
-                        .HasMaxLength(256)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("UserToken", (string)null);
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("IDSubjects.NaturalPerson", b =>
@@ -626,7 +687,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("IDSubjects.RealName.ChineseIDCardValidation", b =>
+            modelBuilder.Entity("IDSubjects.RealName.ChineseIdCardValidation", b =>
                 {
                     b.HasOne("IDSubjects.NaturalPerson", "Person")
                         .WithMany()
@@ -634,9 +695,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("IDSubjects.ChinesePersonName", "ChinesePersonName", b1 =>
+                    b.OwnsOne("IDSubjects.ChineseName.ChinesePersonName", "ChinesePersonName", b1 =>
                         {
-                            b1.Property<int>("ChineseIDCardValidationId")
+                            b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("GivenName")
@@ -659,17 +720,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)");
 
-                            b1.HasKey("ChineseIDCardValidationId");
+                            b1.HasKey("ChineseIdCardValidationId");
 
                             b1.ToTable("RealNameValidation");
 
                             b1.WithOwner()
-                                .HasForeignKey("ChineseIDCardValidationId");
+                                .HasForeignKey("ChineseIdCardValidationId");
                         });
 
                     b.OwnsOne("IDSubjects.RealName.ChineseIDCardImage", "ChineseIDCardImage", b1 =>
                         {
-                            b1.Property<int>("ChineseIDCardValidationId")
+                            b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
 
                             b1.Property<byte[]>("IssuerFace")
@@ -692,17 +753,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(50)");
 
-                            b1.HasKey("ChineseIDCardValidationId");
+                            b1.HasKey("ChineseIdCardValidationId");
 
                             b1.ToTable("RealNameValidation");
 
                             b1.WithOwner()
-                                .HasForeignKey("ChineseIDCardValidationId");
+                                .HasForeignKey("ChineseIdCardValidationId");
                         });
 
                     b.OwnsOne("IDSubjects.RealName.ChineseIDCardInfo", "ChineseIDCard", b1 =>
                         {
-                            b1.Property<int>("ChineseIDCardValidationId")
+                            b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("Address")
@@ -744,17 +805,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .IsRequired()
                                 .HasColumnType("varchar(7)");
 
-                            b1.HasKey("ChineseIDCardValidationId");
+                            b1.HasKey("ChineseIdCardValidationId");
 
                             b1.ToTable("RealNameValidation");
 
                             b1.WithOwner()
-                                .HasForeignKey("ChineseIDCardValidationId");
+                                .HasForeignKey("ChineseIdCardValidationId");
                         });
 
                     b.OwnsOne("IDSubjects.RealName.ValidationResult", "Result", b1 =>
                         {
-                            b1.Property<int>("ChineseIDCardValidationId")
+                            b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
 
                             b1.Property<bool>("Accepted")
@@ -768,12 +829,12 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
-                            b1.HasKey("ChineseIDCardValidationId");
+                            b1.HasKey("ChineseIdCardValidationId");
 
                             b1.ToTable("RealNameValidation");
 
                             b1.WithOwner()
-                                .HasForeignKey("ChineseIDCardValidationId");
+                                .HasForeignKey("ChineseIdCardValidationId");
                         });
 
                     b.Navigation("ChineseIDCard");
@@ -787,31 +848,15 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Navigation("Result");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("IDSubjects.RealName.RealNameInfo", b =>
                 {
-                    b.HasOne("IDSubjects.NaturalPerson", null)
+                    b.HasOne("IDSubjects.NaturalPerson", "Person")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("IDSubjects.NaturalPerson", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("IDSubjects.NaturalPerson", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("IDSubjects.GenericOrganization", b =>

@@ -11,5 +11,5 @@ SET IDENTITY_INSERT [dbo].[OrganizationUsedName] ON
 INSERT [dbo].[OrganizationUsedName] ([Id], [OrganizationId], [Name], [DeprecateTime]) VALUES (1, N'5288b813-e1f4-4fd3-a342-6f21a4c3fef7', N'改名前的有限公司', CAST(N'2022-06-01' AS Date))
 SET IDENTITY_INSERT [dbo].[OrganizationUsedName] OFF
 INSERT [dbo].[PersonBankAccount] ([AccountNumber], [AccountName], [BankName], [PersonId]) VALUES (N'62284813594021514', N'刘备', N'西蜀银行', N'bf16436b-d15f-44b7-bd61-831eacee5063')
-INSERT [dbo].[UserExternalLogin] ([LoginProvider], [ProviderKey], [ProviderDisplayName], [UserId]) VALUES (N'federal.changingsoft.com', N'm9TZEJxoHgsFUmXA5UrFYMVHGmk91QOLFGPGMEcFA3I=', N'员工登录', N'd2480421-8a15-4292-8e8f-06985a1f645b')
-INSERT [dbo].[UserExternalLogin] ([LoginProvider], [ProviderKey], [ProviderDisplayName], [UserId]) VALUES (N'federal.changingsoft.com', N'nWZDRjhYSFDnRF1M8/nSIuCL8ZFAN4YYG0MaCYDP+Sw=', N'AD FS', N'bf16436b-d15f-44b7-bd61-831eacee5063')
+INSERT [dbo].[NaturalPersonLogin] ([LoginProvider], [ProviderKey], [ProviderDisplayName], [UserId]) VALUES (N'federal.changingsoft.com', N'm9TZEJxoHgsFUmXA5UrFYMVHGmk91QOLFGPGMEcFA3I=', N'员工登录', N'd2480421-8a15-4292-8e8f-06985a1f645b')
+INSERT [dbo].[NaturalPersonLogin] ([LoginProvider], [ProviderKey], [ProviderDisplayName], [UserId]) VALUES (N'federal.changingsoft.com', N'nWZDRjhYSFDnRF1M8/nSIuCL8ZFAN4YYG0MaCYDP+Sw=', N'AD FS', N'bf16436b-d15f-44b7-bd61-831eacee5063')

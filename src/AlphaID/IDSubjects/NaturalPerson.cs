@@ -12,6 +12,7 @@ namespace IDSubjects;
 [Table("NaturalPerson")]
 [Index(nameof(Name))]
 [Index(nameof(UserName), IsUnique = true)]
+[Index(nameof(NormalizedUserName), IsUnique = true)]
 [Index(nameof(PhoneticSearchHint))]
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
@@ -39,20 +40,21 @@ public class NaturalPerson
     /// <summary>
     /// Primary Id
     /// </summary>
+    [Key]
     [MaxLength(50), Unicode(false)]
-    public string Id { get; protected set; } = default!;
+    public string Id { get; protected set; }
 
     /// <summary>
     /// User Name
     /// </summary>
     [MaxLength(256)]
-    public virtual string UserName { get; protected internal set; } = default!;
+    public string UserName { get; protected internal set; } = default!;
 
     /// <summary>
     /// Normalized user name.
     /// </summary>
     [MaxLength(256)]
-    public virtual string NormalizedUserName { get; protected internal set; } = default!;
+    public string NormalizedUserName { get; protected internal set; } = default!;
 
     /// <summary>
     /// Gets or sets the email address for this user.

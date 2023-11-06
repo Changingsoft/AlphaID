@@ -61,43 +61,27 @@ public class IdSubjectsDbContext : DbContext
         base.OnModelCreating(builder);
         builder.Entity<NaturalPerson>(e =>
         {
-            e.ToTable("NaturalPerson");
-            e.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);
-            e.Property(p => p.PasswordHash).HasMaxLength(100).IsUnicode(false);
-            e.Property(p => p.SecurityStamp).HasMaxLength(50).IsUnicode(false);
-            e.Property(p => p.ConcurrencyStamp).HasMaxLength(50).IsUnicode(false);
-            e.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
+            e.HasIndex(p => p.Email).IsUnique().HasFilter("[Email] IS NOT NULL");
+            e.HasIndex(p => p.NormalizedEmail).IsUnique().HasFilter("[NormalizedEmail] IS NOT NULL");
+            e.HasIndex(p => p.PhoneNumber).IsUnique().HasFilter("[PhoneNumber] IS NOT NULL");
         });
 
         builder.Entity<NaturalPersonLogin>(e =>
         {
-            e.ToTable("UserExternalLogin");
             e.HasKey(p => new { p.LoginProvider, p.ProviderKey });
-            e.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
-            e.Property(p => p.ProviderKey).HasMaxLength(256).IsUnicode(false);
-            e.Property(p => p.ProviderDisplayName).HasMaxLength(50);
-            e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
         });
         builder.Entity<NaturalPersonToken>(e =>
         {
-            e.ToTable("UserToken");
             e.HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
-            e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
-            e.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
-            e.Property(p => p.Name).HasMaxLength(50);
-            e.Property(p => p.Value).HasMaxLength(256).IsUnicode(false);
 
         });
         builder.Entity<NaturalPersonClaim>(e =>
         {
-            e.ToTable("UserClaim");
-            e.Property(p => p.ClaimType).HasMaxLength(256).IsUnicode(false);
-            e.Property(p => p.ClaimValue).HasMaxLength(50);
         });
 
         builder.Entity<GenericOrganization>(e =>
         {
-            e.HasIndex(p => p.Usci).IsUnique(true).HasFilter(@"[USCI] IS NOT NULL");
+            e.HasIndex(p => p.Usci).IsUnique().HasFilter(@"[USCI] IS NOT NULL");
         });
 
 

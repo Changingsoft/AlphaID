@@ -18,7 +18,7 @@ public class NaturalPersonLogin
     /// <summary>
     /// Gets or sets the unique provider identifier for this login.
     /// </summary>
-    [MaxLength(256), Unicode(false)]
+    [MaxLength(128), Unicode(false)]
     public virtual string ProviderKey { get; set; } = default!;
 
     /// <summary>

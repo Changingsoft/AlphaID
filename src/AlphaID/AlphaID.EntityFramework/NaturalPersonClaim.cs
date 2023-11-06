@@ -25,14 +25,14 @@ public class NaturalPersonClaim
     /// <summary>
     /// Gets or sets the claim type for this claim.
     /// </summary>
-    [MaxLength(256), Unicode(false)]
-    public virtual string? ClaimType { get; set; }
+    [MaxLength(200), Unicode(false)]
+    public virtual string ClaimType { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets the claim value for this claim.
     /// </summary>
-    [MaxLength(50)]
-    public virtual string? ClaimValue { get; set; }
+    [MaxLength(200)]
+    public virtual string ClaimValue { get; set; } = default!;
 
     [ForeignKey(nameof(UserId))]
     public virtual NaturalPerson User { get; set; } = default!;

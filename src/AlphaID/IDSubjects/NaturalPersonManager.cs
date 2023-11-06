@@ -46,7 +46,13 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
                services,
                logger)
     {
+        this.Options = optionsAccessor.Value;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public new IdSubjectsOptions Options { get; set; }
 
     /// <summary>
     /// Find person via mobile.

@@ -231,6 +231,7 @@ if (builder.Environment.IsDevelopment())
 var app = builder.Build();
 
 //Pipelines.
+app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

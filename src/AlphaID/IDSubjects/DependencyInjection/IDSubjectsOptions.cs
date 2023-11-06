@@ -6,4 +6,5 @@ namespace IDSubjects.DependencyInjection;
 /// </summary>
 public class IdSubjectsOptions : IdentityOptions
 {
+    public new IDSubjectsPasswordOptions Password { get; set; } = new();
 }

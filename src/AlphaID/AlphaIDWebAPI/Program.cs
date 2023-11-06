@@ -41,9 +41,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddCors(options =>
 {
     //Ìí¼ÓÄ¬ÈÏ²ßÂÔ¡£
-    options.AddDefaultPolicy(builder =>
+    options.AddDefaultPolicy(policyBuilder =>
     {
-        builder.SetIsOriginAllowed(origin => true)
+        policyBuilder.SetIsOriginAllowed(origin => true)
         .AllowAnyMethod()
         .AllowCredentials()
         .AllowAnyHeader()
@@ -158,6 +158,7 @@ builder.Services.AddScoped<ChineseIdCardManager>()
 var app = builder.Build();
 
 //Configure Pipeline
+app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

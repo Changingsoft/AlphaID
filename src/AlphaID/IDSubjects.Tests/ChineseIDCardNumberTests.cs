@@ -30,8 +30,8 @@ public class ChineseIDCardNumberTests
     [Fact]
     public void ParseChineseIDCardNumberTest()
     {
-        var incorrectnumber = "530302198501150315";
-        Assert.ThrowsAny<Exception>(() => ChineseIDCardNumber.Parse(incorrectnumber));
+        var s = "530302198501150315";
+        Assert.ThrowsAny<Exception>(() => ChineseIDCardNumber.Parse(s));
         Assert.ThrowsAny<Exception>(() => ChineseIDCardNumber.Parse("0123"));
 
     }

@@ -9,8 +9,8 @@ public class RoleConstants
     {
         var roles = new HashSet<Role>
         {
-            new Role() { Name = "Administrators", DisplayName = "系统管理员" },
-            new Role() { Name = "ApplicationAdmin", DisplayName = "应用程序管理员" },
+            new() { Name = "Administrators", DisplayName = "系统管理员" },
+            new() { Name = "ApplicationAdmin", DisplayName = "应用程序管理员" },
         };
         Roles = roles;
     }

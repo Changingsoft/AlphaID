@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IDSubjects.RealName;
+﻿namespace IDSubjects.RealName;
 /// <summary>
 /// 表示一个实名验证请求
 /// </summary>

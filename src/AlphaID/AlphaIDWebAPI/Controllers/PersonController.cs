@@ -96,7 +96,7 @@ public class PersonController : ControllerBase
             ChineseIDCardValidation? card = null;
             if (this.chineseIDCardManager != null)
                 card = await this.chineseIDCardManager.GetCurrentAsync(result);
-            return new PersonSearchResult(new PersonModel[] { new PersonModel(result, card != null) });
+            return new PersonSearchResult(new PersonModel[] { new(result, card != null) });
         }
 
         var pinyinSearchSet = this.personManager.Users.Where(p => p.PhoneticSearchHint!.StartsWith(keywords)).OrderBy(p => p.PhoneticSearchHint!.Length).ThenBy(p => p.PhoneticSearchHint);

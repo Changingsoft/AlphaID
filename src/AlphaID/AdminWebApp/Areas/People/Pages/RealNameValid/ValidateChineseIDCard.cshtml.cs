@@ -90,13 +90,13 @@ public class ValidateChineseIDCardModel : PageModel
         public bool Accepted { get; set; }
 
         [Display(Name = "Surname")]
-        public string? Surname { get; set; } = default!;
+        public string? Surname { get; set; }
 
         [Display(Name = "Given name")]
         public string GivenName { get; set; } = default!;
 
         [Display(Name = "Phonetic surname")]
-        public string? PinyinSurname { get; set; } = default!;
+        public string? PinyinSurname { get; set; }
 
         [Display(Name = "Phonetic given name")]
         public string PinyinGivenName { get; set; } = default!;

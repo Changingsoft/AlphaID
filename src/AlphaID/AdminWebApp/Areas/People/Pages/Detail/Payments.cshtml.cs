@@ -35,7 +35,7 @@ public class PaymentsModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var result = await this.personManager.FindByIdAsync(this.Anchor.ToString());
+        var result = await this.personManager.FindByIdAsync(this.Anchor);
         if (result == null)
             return this.NotFound();
         this.Person = result;
@@ -44,7 +44,7 @@ public class PaymentsModel : PageModel
 
     public async Task<IActionResult> OnPostAddBankAccountAsync()
     {
-        var person = await this.personManager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -63,7 +63,7 @@ public class PaymentsModel : PageModel
 
     public async Task<IActionResult> OnPostRemoveBankAccountAsync()
     {
-        var person = await this.personManager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

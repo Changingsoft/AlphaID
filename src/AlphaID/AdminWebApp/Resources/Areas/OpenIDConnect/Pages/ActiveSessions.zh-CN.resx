@@ -121,4 +121,8 @@
   <data name="Key part" xml:space="preserve">
     <value>密钥部件</value>
   </data>
+  <data name="Active Sessions" xml:space="preserve">
+	  <value>活动会话</value>
+	  <comment>Active Sessions</comment>
+  </data>
 </root>

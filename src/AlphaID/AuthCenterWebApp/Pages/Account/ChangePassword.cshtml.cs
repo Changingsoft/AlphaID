@@ -39,10 +39,10 @@ public class ChangePasswordModel : PageModel
         var result = await this.HttpContext.AuthenticateAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (result.Principal == null)
         {
-            throw new InvalidOperationException($"Unable to load must change password authentication user.");
+            throw new InvalidOperationException("Unable to load must change password authentication user.");
         }
-        string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
-        _ = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
+        string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
+        _ = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
         this.RememberMe = rememberMe;
         this.ReturnUrl = returnUrl;
 

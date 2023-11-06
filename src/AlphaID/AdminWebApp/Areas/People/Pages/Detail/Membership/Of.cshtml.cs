@@ -24,7 +24,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
 
         public IdOperationResult? OperationResult { get; set; }
 
-        public IEnumerable<SelectListItem> MembershipVisibilties { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
+        public IEnumerable<SelectListItem> MembershipVisibilities { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
 
         public async Task<IActionResult> OnGet(string anchor, string orgId)
         {
@@ -83,7 +83,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Remark { get; set; }
 
-            [Display(Name = "Is owner", Description = "The owner of organization can fully mange organization by themselvs.")]
+            [Display(Name = "Is owner", Description = "The owner of organization can fully mange organization by themselves.")]
             public bool IsOwner { get; set; }
 
             [Display(Name = "Membership visibility")]

@@ -35,20 +35,26 @@ public class Index : PageModel
         public ViewModel(AuthenticateResult result)
         {
             this.AuthenticateResult = result;
-            if (result.Properties != null)
+            if (result.Properties == null)
             {
-                if (result.Properties.Items.ContainsKey("client_list"))
-                {
-                    var encoded = result.Properties.Items["client_list"];
-                    if (encoded != null)
-                    {
-                        var bytes = Base64Url.Decode(encoded);
-                        var value = Encoding.UTF8.GetString(bytes);
-
-                        this.Clients = JsonSerializer.Deserialize<string[]>(value)!;
-                    }
-                }
+                return;
             }
+
+            if (!result.Properties.Items.ContainsKey("client_list"))
+            {
+                return;
+            }
+
+            var encoded = result.Properties.Items["client_list"];
+            if (encoded == null)
+            {
+                return;
+            }
+
+            var bytes = Base64Url.Decode(encoded);
+            var value = Encoding.UTF8.GetString(bytes);
+
+            this.Clients = JsonSerializer.Deserialize<string[]>(value)!;
         }
 
         public AuthenticateResult AuthenticateResult { get; }

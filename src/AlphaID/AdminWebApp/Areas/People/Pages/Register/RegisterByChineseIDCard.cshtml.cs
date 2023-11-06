@@ -142,14 +142,13 @@ public class RegisterByChineseIDCardModel : PageModel
     private static Task<(string issuerFaceMimeType, byte[] issuerFaceBytes)> EnsureBase64Image(string iDCardBackBase64)
     {
         var bytes = Convert.FromBase64String(iDCardBackBase64);
-        string mime;
         using MemoryStream stream = new(bytes);
         using Image image = Image.FromStream(stream);
-        mime = image.RawFormat.Equals(ImageFormat.Jpeg)
+        string mime = image.RawFormat.Equals(ImageFormat.Jpeg)
             ? "image/jpeg"
             : image.RawFormat.Equals(ImageFormat.Png)
-            ? "image/png"
-            : image.RawFormat.Equals(ImageFormat.Bmp) ? "image/bmp" : throw new ArgumentException("不支持的图像格式");
+                ? "image/png"
+                : image.RawFormat.Equals(ImageFormat.Bmp) ? "image/bmp" : throw new ArgumentException("不支持的图像格式");
         return Task.FromResult((mime, bytes));
     }
 

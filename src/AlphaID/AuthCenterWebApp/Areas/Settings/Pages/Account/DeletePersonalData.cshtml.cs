@@ -71,7 +71,7 @@ public class DeletePersonalDataModel : PageModel
         var userId = await this._userManager.GetUserIdAsync(user);
         if (!result.Succeeded)
         {
-            throw new InvalidOperationException($"Unexpected error occurred deleting user.");
+            throw new InvalidOperationException("Unexpected error occurred deleting user.");
         }
 
         await this._signInManager.SignOutAsync();

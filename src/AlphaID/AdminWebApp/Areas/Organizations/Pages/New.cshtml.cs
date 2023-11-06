@@ -45,7 +45,7 @@ public class NewModel : PageModel
     [DataType(DataType.Date)]
     public DateOnly? TermBegin { get; set; }
 
-    [Display(Name = "Term end", Prompt = "dd", Description = "weew")]
+    [Display(Name = "Term end")]
     [DataType(DataType.Date)]
     public DateOnly? TermEnd { get; set; }
 

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true" />
-    @RenderSection("Heads", false)
+    @await RenderSectionAsync("Heads", false)
 }
 
 <div class="page">

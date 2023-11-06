@@ -5,13 +5,10 @@ namespace IDSubjects.Subjects;
 /// <summary>
 /// 表示一个中华人民共和国居民身份证号。
 /// </summary>
-public partial struct ChineseIDCardNumber
+public readonly partial struct ChineseIDCardNumber
 {
-    private readonly int regionCode;
     private readonly DateOnly dateOfBirth;
-    private readonly int sequence;
     private readonly char checkcode;
-    private readonly int version;
 
     /// <summary>
     /// 使用指定的版本、区划代码、生日和序列号创建一个身份证号码。
@@ -31,28 +28,22 @@ public partial struct ChineseIDCardNumber
         if (Sequence > 999)
             throw new OverflowException("Sequence out of range.");
 
-        this.version = Version;
-        this.regionCode = RegionCode;
+        this.Version = Version;
+        this.RegionCode = RegionCode;
         this.dateOfBirth = DateOfBirth;
-        this.sequence = Sequence;
-        this.checkcode = CalculateCheckCode(string.Format(qulifiedFormat, this.regionCode, this.dateOfBirth, this.sequence));
+        this.Sequence = Sequence;
+        this.checkcode = CalculateCheckCode(string.Format(qulifiedFormat, this.RegionCode, this.dateOfBirth, this.Sequence));
     }
 
     /// <summary>
     /// 获取或设置该身份证号码的版本。
     /// </summary>
-    public readonly int Version
-    {
-        get { return this.version; }
-    }
+    public int Version { get; }
 
     /// <summary>
     /// 获取或设置行政区划编码。
     /// </summary>
-    public readonly int RegionCode
-    {
-        get { return this.regionCode; }
-    }
+    public int RegionCode { get; }
 
     /// <summary>
     /// 获取或设置出生日期。
@@ -65,10 +56,7 @@ public partial struct ChineseIDCardNumber
     /// <summary>
     /// 获取或设置序列号。
     /// </summary>
-    public readonly int Sequence
-    {
-        get { return this.sequence; }
-    }
+    public int Sequence { get; }
 
     /// <summary>
     /// 获取一个值，指示性别。
@@ -77,7 +65,7 @@ public partial struct ChineseIDCardNumber
     {
         get
         {
-            return this.sequence % 2 == 1 ? Sex.Male : Sex.Female;
+            return this.Sequence % 2 == 1 ? Sex.Male : Sex.Female;
         }
     }
 
@@ -99,7 +87,7 @@ public partial struct ChineseIDCardNumber
     public override readonly string ToString()
     {
 
-        return this.ToString(this.version);
+        return this.ToString(this.Version);
     }
 
     /// <summary>
@@ -119,9 +107,9 @@ public partial struct ChineseIDCardNumber
     public readonly string ToString(int Version)
     {
         return Version == ChineseIDCardNumberVersion.V1
-            ? this.regionCode.ToString("000000") + this.dateOfBirth.ToString("yyMMdd") + this.sequence.ToString("000")
+            ? this.RegionCode.ToString("000000") + this.dateOfBirth.ToString("yyMMdd") + this.Sequence.ToString("000")
             : Version == ChineseIDCardNumberVersion.V2
-            ? this.regionCode.ToString("000000") + this.dateOfBirth.ToString("yyyyMMdd") + this.sequence.ToString("000") + this.checkcode.ToString()
+            ? this.RegionCode.ToString("000000") + this.dateOfBirth.ToString("yyyyMMdd") + this.Sequence.ToString("000") + this.checkcode.ToString()
             : throw new NotSupportedException("Version Not supported.");
     }
 
@@ -133,7 +121,7 @@ public partial struct ChineseIDCardNumber
     /// <returns></returns>
     public static bool operator ==(ChineseIDCardNumber a, ChineseIDCardNumber b)
     {
-        return a.version == b.version && a.regionCode == b.regionCode && a.dateOfBirth == b.dateOfBirth && a.sequence == b.sequence;
+        return a.Version == b.Version && a.RegionCode == b.RegionCode && a.dateOfBirth == b.dateOfBirth && a.Sequence == b.Sequence;
     }
 
     /// <summary>

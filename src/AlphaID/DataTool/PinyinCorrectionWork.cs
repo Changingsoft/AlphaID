@@ -23,7 +23,7 @@ internal class PinyinCorrectionWork : BackgroundService
         foreach (var person in db.People.Where(p => p.Name.Contains('洋')))
         {
             count++;
-            if (person.LastName != null && person.FirstName != null)
+            if (person is { LastName: not null, FirstName: not null })
             {
                 var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(person.LastName, person.FirstName);
                 person.PhoneticSurname = pinyinSurname;

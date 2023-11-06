@@ -4,7 +4,6 @@ using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SixLabors.ImageSharp.Formats;
 using System.Transactions;
 using TimeZoneConverter;
 

@@ -31,7 +31,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -41,7 +41,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -76,7 +76,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.personMamager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

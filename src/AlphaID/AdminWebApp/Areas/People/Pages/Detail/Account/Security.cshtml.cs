@@ -26,7 +26,7 @@ public class SecurityModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.manager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.manager.FindByIdAsync(this.Anchor);
         if (person == null) { return this.NotFound(); }
 
         this.Data = person;
@@ -40,7 +40,7 @@ public class SecurityModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await this.manager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.manager.FindByIdAsync(this.Anchor);
         if (person == null) { return this.NotFound(); }
 
         this.Data = person;

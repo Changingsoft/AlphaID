@@ -1,14 +1,9 @@
 ﻿using IDSubjects.RealName;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlphaID.EntityFramework;
 public class RealNameStore : IRealNameStore
 {
-    IDSubjectsDbContext db;
+    private readonly IDSubjectsDbContext db;
 
     public RealNameStore(IDSubjectsDbContext db)
     {

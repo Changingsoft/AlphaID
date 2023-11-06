@@ -1,15 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IDSubjects.RealName;
+/// <summary>
+/// 
+/// </summary>
 public class RealNameBuilder
 {
-    IServiceCollection services;
+    private readonly IServiceCollection services;
 
     public RealNameBuilder(IServiceCollection services)
     {

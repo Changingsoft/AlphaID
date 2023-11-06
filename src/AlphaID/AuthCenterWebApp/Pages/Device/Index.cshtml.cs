@@ -112,7 +112,7 @@ public class Index : PageModel
 
         if (grantedConsent != null)
         {
-            // communicate outcome of consent back to identityserver
+            // communicate outcome of consent back to identity server
             await this._interaction.HandleRequestAsync(this.Input.UserCode, grantedConsent);
 
             // indicate that's it ok to redirect back to authorization endpoint

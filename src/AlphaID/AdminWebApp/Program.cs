@@ -14,7 +14,6 @@ using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
 using IDSubjects.ChineseName;
-using IDSubjects.DependencyInjection;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

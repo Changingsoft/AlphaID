@@ -209,25 +209,25 @@ public class NewModel : PageModel
         [Display(Name = "Allow offline Access")]
         public bool AllowOfflineAccess { get; set; }
 
-        [Display(Name = "Identity Token lifetime (secends)")]
+        [Display(Name = "Identity Token lifetime (seconds)")]
         public int IdentityTokenLifetime { get; set; } = 300;
 
         [Display(Name = "Allowed identity token signing algorithms")]
         public string? AllowedIdentityTokenSigningAlgorithms { get; set; }
 
-        [Display(Name = "Access Token lifetime (secends)")]
+        [Display(Name = "Access Token lifetime (seconds)")]
         public int AccessTokenLifetime { get; set; } = 3600;
 
-        [Display(Name = "Authorization code lifetime (secends)")]
+        [Display(Name = "Authorization code lifetime (seconds)")]
         public int AuthorizationCodeLifetime { get; set; } = 300;
 
         [Display(Name = "Consent lifetime")]
         public int? ConsentLifetime { get; set; } = null;
 
-        [Display(Name = "Absolute refresh token lifetime (secends)")]
+        [Display(Name = "Absolute refresh token lifetime (seconds)")]
         public int AbsoluteRefreshTokenLifetime { get; set; } = 2592000;
 
-        [Display(Name = "Sliding refresh token lifetime (secends)")]
+        [Display(Name = "Sliding refresh token lifetime (seconds)")]
         public int SlidingRefreshTokenLifetime { get; set; } = 1296000;
 
         [Display(Name = "Refresh token usage (0:Reuse, 1:One time)")]

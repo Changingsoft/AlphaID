@@ -8,11 +8,10 @@ namespace IDSubjects;
 /// </summary>
 public class PersonBuilder
 {
-
     /// <summary>
     /// 
     /// </summary>
-    /// <param userName="name"></param>
+    /// <param name="userName"></param>
     /// <exception cref="ArgumentException"></exception>
     public PersonBuilder(string userName)
     {

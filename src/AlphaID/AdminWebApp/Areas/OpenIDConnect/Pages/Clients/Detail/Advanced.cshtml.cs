@@ -165,7 +165,7 @@ public class AdvancedModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Always Include User Claims In Anchor Token", Description = "When requesting both an anchor token and access token, should the user claims always be added to the anchor token instead of requiring the client to use the userinfo endpoint. Default is false.")]
+        [Display(Name = "Always Include User Claims In Anchor Token", Description = "When requesting both an anchor token and access token, should the user claims always be added to the anchor token instead of requiring the client to use the user info endpoint. Default is false.")]
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
 
         [Display(Name = "Require Request Object", Description = "Specifies whether this client needs to wrap the authorize request parameters in a JWT (defaults to false)")]
@@ -174,7 +174,7 @@ public class AdvancedModel : PageModel
         [Display(Name = "Allow Access Tokens Via Browser", Description = "Specifies whether this client is allowed to receive access tokens via the browser. This is useful to harden flows that allow multiple response types (e.g. by disallowing a hybrid flow client that is supposed to use code id_token to add the token response type and thus leaking the token to the browser).")]
         public bool AllowAccessTokensViaBrowser { get; set; }
 
-        [Display(Name = "Require DPoP", Description = "Specifies whether a DPoP (Demonstrating Proof-of-Possession) token is requied to be used by this client. Defaults to false.")]
+        [Display(Name = "Require DPoP", Description = "Specifies whether a DPoP (Demonstrating Proof-of-Possession) token is required to be used by this client. Defaults to false.")]
         public bool RequireDPoP { get; set; }
 
         [Display(Name = "DPoP Validation Mode", Description = "Enum setting to control validation for the DPoP proof token expiration. This supports both the client generated ¡®iat¡¯ value and/or the server generated ¡®nonce¡¯ value. Defaults to DPoPTokenExpirationValidationMode.Iat, which only validates the ¡®iat¡¯ value.")]
@@ -211,7 +211,7 @@ public class AdvancedModel : PageModel
         public int AuthorizationCodeLifetime { get; set; } = 300;
 
         [Display(Name = "Consent Lifetime", Description = "Lifetime of a user consent in seconds. Defaults to null (no expiration).")]
-        public int? ConsentLifetime { get; set; } = null;
+        public int? ConsentLifetime { get; set; }
 
         [Display(Name = "Absolute Refresh Token Lifetime", Description = "Maximum lifetime of a refresh token in seconds. Defaults to 2592000 seconds / 30 days")]
         public int AbsoluteRefreshTokenLifetime { get; set; } = 2592000;

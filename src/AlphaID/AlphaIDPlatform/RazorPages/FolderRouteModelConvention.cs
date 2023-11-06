@@ -12,7 +12,7 @@ public abstract class FolderRouteModelConvention : IPageRouteModelConvention
     /// </summary>
     /// <param name="folderPath"></param>
     /// <param name="areaName"></param>
-    public FolderRouteModelConvention(string folderPath, string? areaName = null)
+    protected FolderRouteModelConvention(string folderPath, string? areaName = null)
     {
         this.AreaName = areaName;
         this.FolderPath = folderPath.TrimEnd('/');

@@ -23,7 +23,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.Anchor.ToString());
+        var person = await this.userManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

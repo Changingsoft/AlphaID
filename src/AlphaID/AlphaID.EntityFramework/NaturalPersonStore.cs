@@ -104,7 +104,7 @@ public class NaturalPersonStore : NaturalPersonStoreBase
                     join user in this.context.People on userClaim.UserId equals user.Id
                     where userClaim.ClaimValue == claim.Value && userClaim.ClaimType == claim.Type
                     select user;
-        return await query.ToListAsync();
+        return await query.ToListAsync(cancellationToken: cancellationToken);
     }
 
     public override async Task RemoveClaimsAsync(NaturalPerson user, IEnumerable<Claim> claims, CancellationToken cancellationToken)

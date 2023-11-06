@@ -70,7 +70,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 return this.BadRequest();
             using var stream = file.OpenReadStream();
             byte[] data = new byte[stream.Length];
-            stream.Read(data, 0, data.Length);
+            await stream.ReadAsync(data, 0, data.Length);
             var result = await this.personManager.SetProfilePictureAsync(person, file.ContentType, data);
             if (result.Succeeded)
             {

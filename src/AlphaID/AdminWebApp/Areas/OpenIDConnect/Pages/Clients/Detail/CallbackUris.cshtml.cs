@@ -32,17 +32,19 @@ public class CallbackUrisModel : PageModel
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        if (!this.Data.RedirectUris.Any(p => p.RedirectUri == callback_uri))
+        if (this.Data.RedirectUris.Any(p => p.RedirectUri == callback_uri))
         {
-            this.Data.RedirectUris.Add(new ClientRedirectUri()
-            {
-                RedirectUri = callback_uri,
-                ClientId = this.Data.Id,
-                Client = this.Data,
-            });
-            this.dbContext.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            return this.Page();
         }
+
+        this.Data.RedirectUris.Add(new ClientRedirectUri()
+        {
+            RedirectUri = callback_uri,
+            ClientId = this.Data.Id,
+            Client = this.Data,
+        });
+        this.dbContext.Update(this.Data);
+        await this.dbContext.SaveChangesAsync();
         return this.Page();
     }
 
@@ -66,17 +68,19 @@ public class CallbackUrisModel : PageModel
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        if (!this.Data.PostLogoutRedirectUris.Any(p => p.PostLogoutRedirectUri == callback_uri))
+        if (this.Data.PostLogoutRedirectUris.Any(p => p.PostLogoutRedirectUri == callback_uri))
         {
-            this.Data.PostLogoutRedirectUris.Add(new ClientPostLogoutRedirectUri()
-            {
-                PostLogoutRedirectUri = callback_uri,
-                ClientId = this.Data.Id,
-                Client = this.Data,
-            });
-            this.dbContext.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            return this.Page();
         }
+
+        this.Data.PostLogoutRedirectUris.Add(new ClientPostLogoutRedirectUri()
+        {
+            PostLogoutRedirectUri = callback_uri,
+            ClientId = this.Data.Id,
+            Client = this.Data,
+        });
+        this.dbContext.Update(this.Data);
+        await this.dbContext.SaveChangesAsync();
         return this.Page();
     }
     public async Task<IActionResult> OnPostRemoveSignOutCallbackUrlAsync(int anchor, int srid)

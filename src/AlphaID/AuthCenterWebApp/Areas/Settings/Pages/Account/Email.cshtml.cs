@@ -14,8 +14,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class EmailModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly IEmailSender _emailSender;
+    private readonly NaturalPersonManager userManager;
+    private readonly IEmailSender emailSender;
     private readonly ProductInfo production;
 
     public EmailModel(
@@ -23,8 +23,8 @@ public class EmailModel : PageModel
         IEmailSender emailSender,
         IOptions<ProductInfo> production)
     {
-        this._userManager = userManager;
-        this._emailSender = emailSender;
+        this.userManager = userManager;
+        this.emailSender = emailSender;
         this.production = production.Value;
     }
 
@@ -39,7 +39,6 @@ public class EmailModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; }
 
-    /// </summary>
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
@@ -50,7 +49,7 @@ public class EmailModel : PageModel
 
     private async Task LoadAsync(NaturalPerson user)
     {
-        var email = await this._userManager.GetEmailAsync(user);
+        var email = await this.userManager.GetEmailAsync(user);
         this.Email = email;
 
         this.Input = new InputModel
@@ -58,15 +57,15 @@ public class EmailModel : PageModel
             NewEmail = email,
         };
 
-        this.IsEmailConfirmed = await this._userManager.IsEmailConfirmedAsync(user);
+        this.IsEmailConfirmed = await this.userManager.IsEmailConfirmedAsync(user);
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
         await this.LoadAsync(user);
@@ -75,10 +74,10 @@ public class EmailModel : PageModel
 
     public async Task<IActionResult> OnPostChangeEmailAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
         if (!this.ModelState.IsValid)
@@ -87,18 +86,18 @@ public class EmailModel : PageModel
             return this.Page();
         }
 
-        var email = await this._userManager.GetEmailAsync(user);
+        var email = await this.userManager.GetEmailAsync(user);
         if (this.Input.NewEmail != email)
         {
-            var userId = await this._userManager.GetUserIdAsync(user);
-            var code = await this._userManager.GenerateChangeEmailTokenAsync(user, this.Input.NewEmail);
+            var userId = await this.userManager.GetUserIdAsync(user);
+            var code = await this.userManager.GenerateChangeEmailTokenAsync(user, this.Input.NewEmail);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = this.Url.Page(
                 "/Account/ConfirmEmailChange",
                 pageHandler: null,
                 values: new { area = "", userId, email = this.Input.NewEmail, code },
                 protocol: this.Request.Scheme);
-            await this._emailSender.SendEmailAsync(
+            await this.emailSender.SendEmailAsync(
                 this.Input.NewEmail,
                 "确认您的邮件地址",
                 $"<p>您已请求更改电子邮件地址，请单击<a href='{callbackUrl}'>这里</a>以确认您的邮件地址。</p>" +
@@ -114,10 +113,10 @@ public class EmailModel : PageModel
 
     public async Task<IActionResult> OnPostSendVerificationEmailAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
         if (!this.ModelState.IsValid)
@@ -126,16 +125,16 @@ public class EmailModel : PageModel
             return this.Page();
         }
 
-        var userId = await this._userManager.GetUserIdAsync(user);
-        var email = await this._userManager.GetEmailAsync(user);
-        var code = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
+        var userId = await this.userManager.GetUserIdAsync(user);
+        var email = await this.userManager.GetEmailAsync(user);
+        var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         var callbackUrl = this.Url.Page(
             "/Account/ConfirmEmail",
             pageHandler: null,
             values: new { area = "Identity", userId, code },
             protocol: this.Request.Scheme);
-        await this._emailSender.SendEmailAsync(
+        await this.emailSender.SendEmailAsync(
             email,
             "确认您的邮件地址",
             $"<p>您已请求更改电子邮件地址，请单击<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>这里</a>以确认您的邮件地址。</p>" +

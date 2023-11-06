@@ -82,7 +82,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
             public string? Remark { get; set; }
 
-            public bool IsOwner { get; set; } = false;
+            public bool IsOwner { get; set; }
 
             public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
         }

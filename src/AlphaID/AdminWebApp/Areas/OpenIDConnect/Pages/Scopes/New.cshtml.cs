@@ -59,22 +59,22 @@ public class NewModel : PageModel
     public class InputModel
     {
         [Display(Name = "Name")]
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
         [Display(Name = "Display name")]
-        public string? DisplayName { get; set; }
+        public string? DisplayName { get; init; }
 
         [Display(Name = "Description")]
-        public string? Description { get; set; }
+        public string? Description { get; init; }
 
         [Display(Name = "Required", Description = "Required.")]
-        public bool Required { get; set; }
+        public bool Required { get; init; }
 
         [Display(Name = "Emphasize", Description = "Emphasize.")]
-        public bool Emphasize { get; set; }
+        public bool Emphasize { get; init; }
 
         [Display(Name = "Show in discovery document")]
-        public bool ShowInDiscoveryDocument { get; set; }
+        public bool ShowInDiscoveryDocument { get; init; }
 
     }
 }

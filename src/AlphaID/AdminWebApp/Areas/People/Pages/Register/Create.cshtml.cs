@@ -90,7 +90,6 @@ public class CreateModel : PageModel
     /// <summary>
     /// ªÒ»°∆¥“Ù°£
     /// </summary>
-    /// <param name="charactors"></param>
     /// <returns></returns>
     public IActionResult OnGetPinyin(string surname, string givenName)
     {
@@ -105,33 +104,33 @@ public class CreateModel : PageModel
     {
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; set; } = default!;
+        public string Surname { get; init; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Given name")]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; init; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Display name")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; init; } = default!;
 
-        public string PhoneticSurname { get; set; } = default!;
+        public string PhoneticSurname { get; init; } = default!;
 
-        public string PhoneticGivenName { get; set; } = default!;
+        public string PhoneticGivenName { get; init; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Phonetic display name")]
-        public string PhoneticDisplayName { get; set; } = default!;
+        public string PhoneticDisplayName { get; init; } = default!;
 
         [Display(Name = "Gender")]
-        public Sex Sex { get; set; }
+        public Sex Sex { get; init; }
 
         [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; init; }
 
 
-        public string? Email { get; set; }
+        public string? Email { get; init; }
     }
 }

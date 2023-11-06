@@ -18,7 +18,7 @@ public class NewModel : PageModel
     }
 
     [Display(Name = "Unified social credit code")]
-    public string? USCI { get; set; }
+    public string? Usci { get; set; }
 
     [Display(Name = "Name")]
     [Required(ErrorMessage = "Validate_Required")]
@@ -57,14 +57,14 @@ public class NewModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!string.IsNullOrWhiteSpace(this.USCI))
+        if (!string.IsNullOrWhiteSpace(this.Usci))
         {
-            if (!USCC.TryParse(this.USCI, out USCC uscc))
-                this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码不正确。");
+            if (!Uscc.TryParse(this.Usci, out Uscc uscc))
+                this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码不正确。");
 
-            var usciExists = this.organizationStore.Organizations.Any(p => p.USCI == uscc.ToString());
+            var usciExists = this.organizationStore.Organizations.Any(p => p.Usci == uscc.ToString());
             if (usciExists)
-                this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码已被登记。");
+                this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码已被登记。");
         }
 
         if (!this.ModelState.IsValid)
@@ -81,15 +81,15 @@ public class NewModel : PageModel
         }
 
         var factory = new OrganizationBuilder(this.Name);
-        if (!string.IsNullOrWhiteSpace(this.USCI))
+        if (!string.IsNullOrWhiteSpace(this.Usci))
         {
-            if (USCC.TryParse(this.USCI, out USCC uscc))
+            if (Uscc.TryParse(this.Usci, out Uscc uscc))
             {
-                factory.SetUSCI(uscc);
+                factory.SetUsci(uscc);
             }
             else
             {
-                this.ModelState.AddModelError(nameof(this.USCI), "统一社会信用代码不正确。");
+                this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码不正确。");
             }
         }
 

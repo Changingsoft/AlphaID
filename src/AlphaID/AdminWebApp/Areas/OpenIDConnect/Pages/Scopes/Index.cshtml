@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.L["Scopes"];
+    ViewBag.Title = L["Scopes"];
 }
 
 @section PageHeader{
@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var scope in this.Model.Results)
+            @foreach (var scope in Model.Results)
             {
                 <tr>
                     <td><a asp-page="Detail/Index" asp-route-id="@scope.Id">@scope.Name</a></td>

@@ -1,7 +1,7 @@
 ﻿@page
 @model CreateDirectoryAccountModel
 @{
-    this.ViewBag.Title = L["Create Directory Service Account"];
+    ViewBag.Title = L["Create Directory Service Account"];
 }
 
 <h2>@L["Create Directory Service Account"]</h2>
@@ -10,21 +10,21 @@
     <div class="mb-3">
         <label asp-for="Input.ServiceId" class="form-label"></label>
         <select asp-for="Input.ServiceId" class="form-control">
-            @foreach (var service in this.Model.DirectoryServices)
+            @foreach (var service in Model.DirectoryServices)
             {
                 <option value="@service.Id" label="@service.Name"></option>
             }
         </select>
     </div>
     <div class="mb-3">
-        <label asp-for="Input.SAMAccountName" class="form-label"></label>
-        <input asp-for="Input.SAMAccountName" class="form-control" />
-        <span asp-validation-for="Input.SAMAccountName" class="text-danger"></span>
+        <label asp-for="Input.SamAccountName" class="form-label"></label>
+        <input asp-for="Input.SamAccountName" class="form-control" />
+        <span asp-validation-for="Input.SamAccountName" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Input.UPNPart" class="form-label"></label>
-        <input asp-for="Input.UPNPart" class="form-control" />
-        <span asp-validation-for="Input.UPNPart" class="text-danger"></span>
+        <label asp-for="Input.UpnPart" class="form-label"></label>
+        <input asp-for="Input.UpnPart" class="form-control" />
+        <span asp-validation-for="Input.UpnPart" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.EntryName" class="form-label"></label>

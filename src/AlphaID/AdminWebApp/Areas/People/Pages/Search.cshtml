@@ -1,7 +1,7 @@
 ﻿@page
 @model SearchModel
 @{
-    this.ViewBag.Title = L["Search People"];
+    ViewBag.Title = L["Search People"];
 }
 @section PageHeader{
     <h1>@L["Search Result"]</h1>
@@ -9,7 +9,7 @@
 <div class="card">
     <div class="card-body">
         <partial name="_SearchInputPart" />
-        @if (this.Model.Results.Any())
+        @if (Model.Results.Any())
         {
             <table class="table">
                 <thead>
@@ -26,7 +26,7 @@
                     {
                         <tr>
                             <td>
-                                <img src="@(this.Url.Page("Detail/Index", "Photo", new{ Anchor = person.Id }))" class="img-fluid img-thumbnail" width="36" />
+                                <img src="@Url.Page("Detail/Index", "Photo", new{ Anchor = person.Id })" class="img-fluid img-thumbnail" width="36" />
                                 <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person.Name</a>
                             </td>
                             <td>@Html.DisplayFor(m => person.Sex)</td>

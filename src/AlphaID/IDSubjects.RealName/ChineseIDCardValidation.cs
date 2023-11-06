@@ -9,18 +9,18 @@ namespace IDSubjects.RealName;
 /// 实名验证信息。
 /// </summary>
 [Table("RealNameValidation")]
-public class ChineseIDCardValidation
+public class ChineseIdCardValidation
 {
     /// <summary>
     /// 
     /// </summary>
-    protected ChineseIDCardValidation() { }
+    protected ChineseIdCardValidation() { }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="chineseIDCardImage"></param>
-    public ChineseIDCardValidation(ChineseIDCardImage chineseIDCardImage)
+    public ChineseIdCardValidation(ChineseIDCardImage chineseIDCardImage)
     {
         this.ChineseIDCardImage = chineseIDCardImage;
     }
@@ -75,7 +75,7 @@ public class ChineseIDCardValidation
     /// </summary>
     /// <param name="card"></param>
     /// <returns></returns>
-    public bool TryApplyChineseIDCardInfo(ChineseIDCardInfo card)
+    public bool TryApplyChineseIdCardInfo(ChineseIDCardInfo card)
     {
         if (this.Result != null) return false;
         this.ChineseIDCard = card;

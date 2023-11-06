@@ -7,7 +7,7 @@ namespace IDSubjects.DependencyInjection;
 /// <summary>
 /// IDSubjects builder for DI.
 /// </summary>
-public class IDSubjectsBuilder
+public class IdSubjectsBuilder
 {
     /// <summary>
     /// Gets the service collection.
@@ -18,7 +18,7 @@ public class IDSubjectsBuilder
     /// Create new builder using incoming service collection.
     /// </summary>
     /// <param name="services"></param>
-    public IDSubjectsBuilder(IServiceCollection services)
+    public IdSubjectsBuilder(IServiceCollection services)
     {
         this.Services = services;
     }
@@ -28,7 +28,7 @@ public class IDSubjectsBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IDSubjectsBuilder AddPersonStore<T>() where T : IUserStore<NaturalPerson>
+    public IdSubjectsBuilder AddPersonStore<T>() where T : IUserStore<NaturalPerson>
     {
         this.Services.TryAddScoped(typeof(IUserStore<NaturalPerson>), typeof(T));
         return this;
@@ -39,7 +39,7 @@ public class IDSubjectsBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IDSubjectsBuilder AddOrganizationStore<T>() where T : IOrganizationStore
+    public IdSubjectsBuilder AddOrganizationStore<T>() where T : IOrganizationStore
     {
         this.Services.TryAddScoped(typeof(IOrganizationStore), typeof(T));
         return this;
@@ -50,7 +50,7 @@ public class IDSubjectsBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IDSubjectsBuilder AddOrganizationMemberStore<T>() where T : IOrganizationMemberStore
+    public IdSubjectsBuilder AddOrganizationMemberStore<T>() where T : IOrganizationMemberStore
     {
         this.Services.TryAddScoped(typeof(IOrganizationMemberStore), typeof(T));
         return this;

@@ -7,7 +7,7 @@
 <h2>Callback URI</h2>
 <form method="post">
     <ul class="list-group">
-        @foreach (var uri in this.Model.Data.RedirectUris)
+        @foreach (var uri in Model.Data.RedirectUris)
         {
             <li class="list-group-item">
                 @uri.RedirectUri
@@ -27,7 +27,7 @@
 <h2>Post logout redirect URIs</h2>
 <form method="post">
     <ul class="list-group list-group-flush">
-        @foreach (var uri in this.Model.Data.PostLogoutRedirectUris)
+        @foreach (var uri in Model.Data.PostLogoutRedirectUris)
         {
             <li class="list-group-item">
                 @uri.PostLogoutRedirectUri

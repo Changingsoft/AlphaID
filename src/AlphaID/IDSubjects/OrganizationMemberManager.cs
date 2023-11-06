@@ -12,7 +12,7 @@ public class OrganizationMemberManager
     private readonly ILogger<OrganizationMemberManager>? logger;
 
     /// <summary>
-    /// Init GenericOrganization Member Mamager via GenericOrganization Member store.
+    /// Init GenericOrganization Member Manager via GenericOrganization Member store.
     /// </summary>
     /// <param name="store"></param>
     /// <param name="logger"></param>

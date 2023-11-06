@@ -53,19 +53,19 @@ public class NewModel : PageModel
     public class InputModel
     {
         [Display(Name = "Resource ID", Description = "Unique identifier for resource in OIDC workflow.")]
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
         [Display(Name = "Display name")]
-        public string? DisplayName { get; set; }
+        public string? DisplayName { get; init; }
 
         [Display(Name = "Description")]
-        public string? Description { get; set; }
+        public string? Description { get; init; }
 
         [Display(Name = "Allowed access token signing algorithms")]
-        public string? AllowedAccessTokenSigningAlgorithms { get; set; }
+        public string? AllowedAccessTokenSigningAlgorithms { get; init; }
 
         [Display(Name = "Require resource indicator", Description = "Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.")]
-        public bool RequireResourceIndicator { get; set; }
+        public bool RequireResourceIndicator { get; init; }
 
     }
 }

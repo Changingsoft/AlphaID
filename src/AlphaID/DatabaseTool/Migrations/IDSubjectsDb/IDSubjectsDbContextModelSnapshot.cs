@@ -11,7 +11,7 @@ using NetTopologySuite.Geometries;
 
 namespace DatabaseTool.Migrations.IDSubjectsDb
 {
-    [DbContext(typeof(IDSubjectsDbContext))]
+    [DbContext(typeof(IdSubjectsDbContext))]
     partial class IDSubjectsDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

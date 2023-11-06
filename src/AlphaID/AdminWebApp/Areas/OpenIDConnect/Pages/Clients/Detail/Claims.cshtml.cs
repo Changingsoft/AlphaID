@@ -78,10 +78,10 @@ public class ClaimsModel : PageModel
     {
         [Display(Name = "Type")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
-        public string Type { get; set; } = default!;
+        public string Type { get; init; } = default!;
 
         [Display(Name = "Type")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
-        public string Value { get; set; } = default!;
+        public string Value { get; init; } = default!;
     }
 }

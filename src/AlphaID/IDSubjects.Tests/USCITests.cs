@@ -1,55 +1,55 @@
 ﻿using IDSubjects.Subjects;
 using Xunit;
 
-namespace IDSubjectsTests;
+namespace IDSubjects.Tests;
 
-public class USCITests
+public class UsciTests
 {
     [Fact]
-    public void CreateUSCITest()
+    public void CreateUsciTest()
     {
-        USCC usci = new("91530300217222042");
+        Uscc usci = new("91530300217222042");
         Assert.Equal("91530300217222042J", usci.ToString());
-        Assert.ThrowsAny<Exception>(() => new USCC("12345"));
+        Assert.ThrowsAny<Exception>(() => new Uscc("12345"));
     }
 
     [Fact]
-    public void CreateUSCIWithPartTest()
+    public void CreateUsciWithPartTest()
     {
-        var uscc = new USCC("9", "1", "530300", "217222042");
+        var uscc = new Uscc("9", "1", "530300", "217222042");
         Assert.Equal("91530300217222042J", uscc.ToString());
     }
 
     [Fact]
-    public void ParseUSCITest()
+    public void ParseUsciTest()
     {
 
-        Assert.ThrowsAny<Exception>(() => USCC.Parse(""));
-        Assert.ThrowsAny<Exception>(() => USCC.Parse("91530300"));
-        Assert.ThrowsAny<Exception>(() => USCC.Parse("91530300217222042a"));
+        Assert.ThrowsAny<Exception>(() => Uscc.Parse(""));
+        Assert.ThrowsAny<Exception>(() => Uscc.Parse("91530300"));
+        Assert.ThrowsAny<Exception>(() => Uscc.Parse("91530300217222042a"));
 
-        var usci = USCC.Parse("91530300217222042j"); //支持对小写的转换。
+        var usci = Uscc.Parse("91530300217222042j"); //支持对小写的转换。
         Assert.Equal("91530300217222042", usci.Code);
         Assert.Equal('J', usci.CheckCode);
     }
 
     [Fact]
-    public void TryParseUSCITest()
+    public void TryParseUsciTest()
     {
-        Assert.False(USCC.TryParse("", out _));
-        Assert.False(USCC.TryParse("123456", out _));
-        Assert.False(USCC.TryParse("9153000061160006XM", out _));
-        Assert.True(USCC.TryParse("91530300217222042j", out USCC usci));
+        Assert.False(Uscc.TryParse("", out _));
+        Assert.False(Uscc.TryParse("123456", out _));
+        Assert.False(Uscc.TryParse("9153000061160006XM", out _));
+        Assert.True(Uscc.TryParse("91530300217222042j", out Uscc usci));
         Assert.Equal("91530300217222042", usci.Code);
         Assert.Equal('J', usci.CheckCode);
     }
 
     [Fact]
-    public void USCIEqualityTest()
+    public void UsciEqualityTest()
     {
-        var a = USCC.Parse("91530300217222042j");
-        var b = USCC.Parse("91530300217222042J");
-        var c = USCC.Parse("91530300592049026D");
+        var a = Uscc.Parse("91530300217222042j");
+        var b = Uscc.Parse("91530300217222042J");
+        var c = Uscc.Parse("91530300592049026D");
 
         Assert.Equal(a, b);
         Assert.NotEqual(a, c);

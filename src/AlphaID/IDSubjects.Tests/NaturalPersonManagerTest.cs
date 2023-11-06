@@ -1,13 +1,10 @@
-﻿using IDSubjects;
-using IDSubjects.ChineseName;
-using IDSubjectsTests.Fixtures;
+﻿using IDSubjects.ChineseName;
+using IDSubjects.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.QualityTools.Testing.Fakes;
-using System;
-using System.Security.Cryptography.X509Certificates;
 using Xunit;
 
-namespace IDSubjectsTests;
+namespace IDSubjects.Tests;
 
 [Collection(nameof(ServiceProviderCollection))]
 public class NaturalPersonManagerTest

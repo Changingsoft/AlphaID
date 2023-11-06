@@ -1,7 +1,7 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Settings.Pages.Organizations.NewModel
 @{
-    this.ViewBag.Title = this.L["New organization"];
+    ViewBag.Title = L["New organization"];
 }
 <h2>@ViewBag.Title</h2>
 
@@ -13,10 +13,10 @@
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="USCI" class="form-label"></label>
-        <input asp-for="USCI" class="form-control" />
-        <span asp-description-for="USCI"></span>
-        <span asp-validation-for="USCI" class="text-danger"></span>
+        <label asp-for="Usci" class="form-label"></label>
+        <input asp-for="Usci" class="form-control" />
+        <span asp-description-for="Usci"></span>
+        <span asp-validation-for="Usci" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Domicile" class="form-label"></label>

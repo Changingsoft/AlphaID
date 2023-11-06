@@ -1,9 +1,9 @@
 ﻿namespace IDSubjects;
 
 /// <summary>
-/// IDSubjects Identiy defaults.
+/// IDSubjects Identity defaults.
 /// </summary>
-public static class IDSubjectsIdentityDefaults
+public static class IdSubjectsIdentityDefaults
 {
     /// <summary>
     /// scheme name for Must change password.

@@ -1,10 +1,10 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.L["Members of {0}", this.Model.Organization.Name];
+    ViewBag.Title = L["Members of {0}", Model.Organization.Name];
 }
 @Html.DisplayFor(m => m.Result)
-<h2>@L["Members of {0}", this.Model.Organization.Name]</h2>
+<h2>@L["Members of {0}", Model.Organization.Name]</h2>
 <p>@Model.Members.Count() 人</p>
 <form method="post" asp-page-handler="RemoveMember">
     <table class="table">
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var member in this.Model.Members)
+            @foreach (var member in Model.Members)
             {
                 <tr>
                     <td>
@@ -31,7 +31,7 @@
                     <td>@member.Remark</td>
                     <td>@Html.DisplayFor(m => member.Visibility)</td>
                     <td>
-                        <a asp-page="Edit" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@L["Edit"]</a>
+                        <a asp-page="Edit" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@L["Edit"]</a>
                         <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@L["Remove"]</button>
                     </td>
                 </tr>
@@ -85,7 +85,7 @@
     <script>
         $(function () {
             $("[name='personSearch']").autocomplete({
-                source: "@(this.Url.Action("SearchPerson", "IdService"))",
+                source: "@Url.Action("SearchPerson", "IdService")",
                 minLength: 2,
                 appendTo: "#memberEditor",
                 select: function (event, ui) {

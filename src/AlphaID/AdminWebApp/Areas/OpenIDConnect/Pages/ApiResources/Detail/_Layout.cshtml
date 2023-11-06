@@ -12,11 +12,11 @@
 <div class="row">
     <div class="col-2">
         <nav class="nav flex-column">
-            <a class="nav-link" asp-page="Index" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@L["Overview"]</a>
-            <a class="nav-link" asp-page="Secrets" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@L["Secrets"]</a>
-            <a class="nav-link" asp-page="Scopes" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@L["Scopes"]</a>
-            <a class="nav-link" asp-page="Claims" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@L["User Claims"]</a>
-            <a class="nav-link" asp-page="Advanced" asp-route-id="@this.ViewContext.RouteData.Values["id"]">@L["Advanced"]</a>
+            <a class="nav-link" asp-page="Index" asp-route-id="@ViewContext.RouteData.Values["id"]">@L["Overview"]</a>
+            <a class="nav-link" asp-page="Secrets" asp-route-id="@ViewContext.RouteData.Values["id"]">@L["Secrets"]</a>
+            <a class="nav-link" asp-page="Scopes" asp-route-id="@ViewContext.RouteData.Values["id"]">@L["Scopes"]</a>
+            <a class="nav-link" asp-page="Claims" asp-route-id="@ViewContext.RouteData.Values["id"]">@L["User Claims"]</a>
+            <a class="nav-link" asp-page="Advanced" asp-route-id="@ViewContext.RouteData.Values["id"]">@L["Advanced"]</a>
         </nav>
     </div>
     <div class="col-10">

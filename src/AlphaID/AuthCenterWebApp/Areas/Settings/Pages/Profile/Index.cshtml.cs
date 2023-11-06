@@ -68,7 +68,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             var person = await this.personManager.GetUserAsync(this.User);
             if (person == null)
                 return this.BadRequest();
-            using var stream = file.OpenReadStream();
+            await using var stream = file.OpenReadStream();
             byte[] data = new byte[stream.Length];
             await stream.ReadAsync(data, 0, data.Length);
             var result = await this.personManager.SetProfilePictureAsync(person, file.ContentType, data);
@@ -98,18 +98,18 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         {
             [Display(Name = "Bio", Description = "Short description about yourself.")]
             [StringLength(200)]
-            public string? Bio { get; set; }
+            public string? Bio { get; init; }
 
             [Display(Name = "Website", Description = "Your personal website.")]
             [DataType(DataType.Url)]
-            public string? Website { get; set; }
+            public string? Website { get; init; }
 
             [Display(Name = "Gender")]
-            public Sex? Gender { get; set; }
+            public Sex? Gender { get; init; }
 
             [Display(Name = "Birth date")]
             [DataType(DataType.Date)]
-            public DateTime? DateOfBirth { get; set; }
+            public DateTime? DateOfBirth { get; init; }
         }
     }
 }

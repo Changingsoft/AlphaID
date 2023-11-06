@@ -56,10 +56,10 @@ public class SecurityModel : PageModel
     public class InputModel
     {
         [Display(Name = "Two-factor enabled")]
-        public bool TwoFactorEnabled { get; set; }
+        public bool TwoFactorEnabled { get; init; }
 
         [Display(Name = "Lockout enabled")]
-        public bool LockoutEnabled { get; set; }
+        public bool LockoutEnabled { get; init; }
 
 
     }

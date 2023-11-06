@@ -1,5 +1,5 @@
-using DirectoryLogon;
 using IDSubjects;
+using IDSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -35,8 +35,8 @@ public class CreateDirectoryAccountModel : PageModel
         //准备有关资料
         this.Input = new()
         {
-            SAMAccountName = accountName,
-            UPNPart = accountName,
+            SamAccountName = accountName,
+            UpnPart = accountName,
             EntryName = accountName,
             Surname = person.LastName!,
             GivenName = person.FirstName!,
@@ -66,8 +66,8 @@ public class CreateDirectoryAccountModel : PageModel
         CreateAccountRequest request = new()
         {
             AccountName = this.Input.EntryName,
-            SAMAccountName = this.Input.SAMAccountName,
-            UpnLeftPart = this.Input.UPNPart,
+            SamAccountName = this.Input.SamAccountName,
+            UpnLeftPart = this.Input.UpnPart,
             DisplayName = this.Input.DisplayName,
             Surname = this.Input.Surname,
             GivenName = this.Input.GivenName,
@@ -91,44 +91,44 @@ public class CreateDirectoryAccountModel : PageModel
     public class InputModel
     {
         [Display(Name = "Directory Service")]
-        public int ServiceId { get; set; }
+        public int ServiceId { get; init; }
 
         [Display(Name = "SAM Account Name")]
-        public string SAMAccountName { get; set; } = default!;
+        public string SamAccountName { get; init; } = default!;
 
         [Display(Name = "UPN Prefix Part")]
-        public string UPNPart { get; set; } = default!;
+        public string UpnPart { get; init; } = default!;
 
         [Display(Name = "Directory Entry Name")]
-        public string EntryName { get; set; } = default!;
+        public string EntryName { get; init; } = default!;
 
-        public string Surname { get; set; } = default!;
+        public string Surname { get; init; } = default!;
 
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; init; } = default!;
 
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; init; } = default!;
 
-        public string? PinyinSurname { get; set; }
+        public string? PinyinSurname { get; init; }
 
-        public string? PinyinGivenName { get; set; }
+        public string? PinyinGivenName { get; init; }
 
-        public string? PinyinDisplayName { get; set; }
+        public string? PinyinDisplayName { get; init; }
 
         [Display(Name = "PhoneNumber Phone Number")]
-        public string Mobile { get; set; } = default!;
+        public string Mobile { get; init; } = default!;
 
         [Display(Name = "Email Address")]
-        public string? Email { get; set; }
+        public string? Email { get; init; }
 
         [Display(Name = "Password")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; init; } = default!;
 
         [Display(Name = "Confirm Password")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; init; } = default!;
     }
 }

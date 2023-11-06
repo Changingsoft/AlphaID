@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.DirectoryServices;
 
-namespace DirectoryLogon;
+namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// Logon Account

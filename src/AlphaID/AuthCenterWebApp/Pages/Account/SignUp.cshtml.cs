@@ -166,17 +166,17 @@ public class SignUpModel : PageModel
         [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string VerificationCode { get; set; } = default!;
+        public string VerificationCode { get; init; } = default!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; set; } = default!;
+        public string Surname { get; init; } = default!;
 
         [Display(Name = "Given name", Prompt = "Given name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; init; } = default!;
 
         [Display(Name = "Gender")]
         public Sex? Sex { get; set; }
@@ -189,25 +189,25 @@ public class SignUpModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; init; } = default!;
 
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; init; } = default!;
 
         [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]
         [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
-        public string? Email { get; set; }
+        public string? Email { get; init; }
 
         [Display(Name = "Captcha code")]
         [Required(ErrorMessage = "Validate_Required")]
         [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
-        public string CaptchaCode { get; set; } = default!;
+        public string CaptchaCode { get; init; } = default!;
 
         [Display(Name = "Agree the")]
-        public bool Agree { get; set; }
+        public bool Agree { get; init; }
     }
 }

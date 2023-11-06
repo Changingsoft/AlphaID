@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.DirectoryServices;
 
-namespace DirectoryLogon;
+namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// Directory Service. e.g. Microsoft Active Directory.
@@ -97,7 +97,7 @@ public class DirectoryService
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    internal DirectoryEntry GetUserOUEntry()
+    internal DirectoryEntry GetUserOuEntry()
     {
         var host = new Uri($"LDAP://{this.ServerAddress}");
         var fqdn = new Uri(host, this.DefaultUserAccountOU);

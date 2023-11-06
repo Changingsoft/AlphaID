@@ -23,9 +23,9 @@ public class SearchModel : PageModel
         if (string.IsNullOrWhiteSpace(q))
             return this.Page();
 
-        if (USCC.TryParse(q!, out USCC number))
+        if (Uscc.TryParse(q!, out Uscc number))
         {
-            var org = this.organizationStore.Organizations.FirstOrDefault(p => p.USCI == number.ToString());
+            var org = this.organizationStore.Organizations.FirstOrDefault(p => p.Usci == number.ToString());
             return org != null ? this.RedirectToPage("Detail/Index", new { id = org.Id }) : this.Page();
         }
 

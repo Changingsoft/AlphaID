@@ -17,19 +17,19 @@ public class PersonController : ControllerBase
 {
     private readonly NaturalPersonManager personManager;
     private readonly OrganizationMemberManager organizationMemberManager;
-    private readonly ChineseIDCardManager? chineseIDCardManager;
+    private readonly ChineseIdCardManager? chineseIdCardManager;
 
     /// <summary>
     /// Init Person Controller.
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="organizationMemberManager"></param>
-    /// <param name="chineseIDCardManager"></param>
-    public PersonController(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager, ChineseIDCardManager? chineseIDCardManager)
+    /// <param name="chineseIdCardManager"></param>
+    public PersonController(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager, ChineseIdCardManager? chineseIdCardManager)
     {
         this.personManager = personManager;
         this.organizationMemberManager = organizationMemberManager;
-        this.chineseIDCardManager = chineseIDCardManager;
+        this.chineseIdCardManager = chineseIdCardManager;
     }
 
     /// <summary>
@@ -93,9 +93,9 @@ public class PersonController : ControllerBase
             if (result == null)
                 return new PersonSearchResult(Enumerable.Empty<PersonModel>());
 
-            ChineseIDCardValidation? card = null;
-            if (this.chineseIDCardManager != null)
-                card = await this.chineseIDCardManager.GetCurrentAsync(result);
+            ChineseIdCardValidation? card = null;
+            if (this.chineseIdCardManager != null)
+                card = await this.chineseIdCardManager.GetCurrentAsync(result);
             return new PersonSearchResult(new PersonModel[] { new(result, card != null) });
         }
 
@@ -112,10 +112,10 @@ public class PersonController : ControllerBase
         var final = new List<PersonModel>();
         foreach (var person in searchResults)
         {
-            ChineseIDCardValidation? chineseIDCard = null;
-            if (this.chineseIDCardManager != null)
-                chineseIDCard = await this.chineseIDCardManager.GetCurrentAsync(person);
-            final.Add(new PersonModel(person, chineseIDCard != null, members: await this.organizationMemberManager.GetMembersOfAsync(person)));
+            ChineseIdCardValidation? chineseIdCard = null;
+            if (this.chineseIdCardManager != null)
+                chineseIdCard = await this.chineseIdCardManager.GetCurrentAsync(person);
+            final.Add(new PersonModel(person, chineseIdCard != null, members: await this.organizationMemberManager.GetMembersOfAsync(person)));
         }
 
         return new PersonSearchResult(final, pinyinSearchSetCount > 30 || nameSearchSetCount > 30);

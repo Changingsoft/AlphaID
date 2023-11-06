@@ -1,7 +1,6 @@
-﻿using IDSubjects;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
-namespace DirectoryLogon;
+namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// Directory service manager.

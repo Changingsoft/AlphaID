@@ -26,7 +26,7 @@ internal class Program
 
 
                 //数据库
-                services.AddDbContext<IDSubjectsDbContext>(options =>
+                services.AddDbContext<IdSubjectsDbContext>(options =>
                 {
                     options.UseSqlServer(hostContext.Configuration.GetConnectionString("AlphaIDDataConnection"));
                     options.UseLazyLoadingProxies();

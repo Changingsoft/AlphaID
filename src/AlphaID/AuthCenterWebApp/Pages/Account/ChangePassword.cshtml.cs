@@ -15,14 +15,14 @@ namespace AuthCenterWebApp.Pages.Account;
 public class ChangePasswordModel : PageModel
 {
     private readonly NaturalPersonManager userManager;
-    private readonly SignInManager<NaturalPerson> _signInManager;
-    private readonly IIdentityServerInteractionService _interaction;
+    private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly IIdentityServerInteractionService interaction;
 
     public ChangePasswordModel(NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction)
     {
         this.userManager = userManager;
-        this._signInManager = signInManager;
-        this._interaction = interaction;
+        this.signInManager = signInManager;
+        this.interaction = interaction;
     }
 
     public bool RememberMe { get; set; }
@@ -36,7 +36,7 @@ public class ChangePasswordModel : PageModel
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var result = await this.HttpContext.AuthenticateAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
+        var result = await this.HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (result.Principal == null)
         {
             throw new InvalidOperationException("Unable to load must change password authentication user.");
@@ -52,23 +52,23 @@ public class ChangePasswordModel : PageModel
     public async Task<IActionResult> OnPostAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var authMustChangePasswordResult = await this.HttpContext.AuthenticateAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
+        var authMustChangePasswordResult = await this.HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (authMustChangePasswordResult.Principal == null)
         {
-            throw new InvalidOperationException($"Unable to load must change password authentication user.");
+            throw new InvalidOperationException("Unable to load must change password authentication user.");
         }
-        string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
-        var person = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException($"Unable to load must change password authentication user.");
+        string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
+        var person = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
         var identityResult = await this.userManager.ChangePasswordAsync(person, this.Input.OldPassword, this.Input.NewPassword);
         if (identityResult.Succeeded)
         {
-            //Signout mustchangepassword scheme
-            await this.HttpContext.SignOutAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
+            //Sign out MustChangePasswordScheme
+            await this.HttpContext.SignOutAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
 
             //Signin user with out password.
-            await this._signInManager.SignInAsync(person, rememberMe);
+            await this.signInManager.SignInAsync(person, rememberMe);
 
-            var context = await this._interaction.GetAuthorizationContextAsync(returnUrl);
+            var context = await this.interaction.GetAuthorizationContextAsync(returnUrl);
 
             if (context != null)
             {
@@ -99,7 +99,7 @@ public class ChangePasswordModel : PageModel
             }
         }
 
-        this.ModelState.AddModelError("", $"更改密码操作无效！");
+        this.ModelState.AddModelError("", "更改密码操作无效！");
         foreach (var error in identityResult.Errors)
         {
             this.ModelState.AddModelError("", error.Description);
@@ -112,17 +112,17 @@ public class ChangePasswordModel : PageModel
         [Display(Name = "Current password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
-        public string OldPassword { get; set; } = default!;
+        public string OldPassword { get; init; } = default!;
 
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; init; } = default!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; init; } = default!;
     }
 }

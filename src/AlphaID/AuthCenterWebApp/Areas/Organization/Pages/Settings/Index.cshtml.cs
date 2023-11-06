@@ -64,16 +64,16 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         public class InputModel
         {
             [Display(Name = "Description")]
-            public string? Description { get; set; }
+            public string? Description { get; init; }
 
             [Display(Name = "Domicile")]
-            public string? Domicile { get; set; }
+            public string? Domicile { get; init; }
 
             [Display(Name = "Contact")]
-            public string? Contact { get; set; }
+            public string? Contact { get; init; }
 
             [Display(Name = "Representative")]
-            public string? Representative { get; set; }
+            public string? Representative { get; init; }
 
         }
     }

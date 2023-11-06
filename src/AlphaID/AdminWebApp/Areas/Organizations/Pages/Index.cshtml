@@ -1,7 +1,7 @@
 ﻿@page
 @model AdminWebApp.Areas.Organizations.Pages.IndexModel
 @{
-    this.ViewBag.Title = this.L["Organizations"];
+    ViewBag.Title = L["Organizations"];
 }
 @section PageHeader{
     <div class="row align-items-center">
@@ -22,7 +22,7 @@
                     <div class="ms-auto lh-1">
                     </div>
                 </div>
-                <div class="h1 mb-3">@this.Model.OrgCount</div>
+                <div class="h1 mb-3">@Model.OrgCount</div>
             </div>
         </div>
     </div>
@@ -39,13 +39,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var org in this.Model.Last10Orgs)
+        @foreach (var org in Model.Last10Orgs)
         {
             <tr>
                 <td><a asp-page="Detail/Index" asp-route-anchor="@org.Id">@org.Name</a></td>
                 <td>@org.Domicile</td>
                 <td>@org.Representative</td>
-                <td>@org.USCI</td>
+                <td>@org.Usci</td>
             </tr>
         }
     </tbody>

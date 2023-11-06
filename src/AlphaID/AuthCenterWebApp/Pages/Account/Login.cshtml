@@ -1,15 +1,15 @@
 @page
 @model AuthCenterWebApp.Pages.Account.LoginModel
 @{
-    this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.L["Sign in"];
+    Layout = "_AuthenticationLayout";
+    ViewBag.Title = L["Sign in"];
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-                @(this.Product.Value.Name) @L["Account"]
+                @Product.Value.Name @L["Account"]
             </a>
         </div>
         <div class="card card-md">
@@ -29,14 +29,14 @@
                             <label class="form-label" asp-for="Input.Password">
                                 @L["Password"]
                                 <span class="form-label-description">
-                                    <a href="./forgot-password.html">@L["I forgot password"]</a>
+                                    <a asp-page="ForgetPassword">@L["I forgot password"]</a>
                                 </span>
                             </label>
                             <input asp-for="Input.Password" class="form-control">
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
                         <div class="mb-2">
-                            @if (this.Model.View.AllowRememberLogin)
+                            @if (Model.View.AllowRememberLogin)
                             {
                                 <label asp-for="Input.RememberLogin" class="form-check">
                                     <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">

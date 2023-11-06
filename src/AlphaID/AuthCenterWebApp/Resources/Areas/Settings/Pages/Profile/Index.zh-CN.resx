@@ -110,4 +110,12 @@
 		<value>更新个人信息</value>
 		<comment>Update profile</comment>
 	</data>
+	<data name="Profile" xml:space="preserve">
+		<value>Profile</value>
+		<comment>Profile</comment>
+	</data>
+	<data name="Edit person name" xml:space="preserve">
+		<value>Edit person name</value>
+		<comment>Edit person name</comment>
+	</data>
 </root>

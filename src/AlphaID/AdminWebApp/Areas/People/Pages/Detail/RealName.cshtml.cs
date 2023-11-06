@@ -19,7 +19,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public RealNameInfo? RealName { get; set; }
 
-        public ChineseIDCardValidation? Card { get; set; }
+        public ChineseIdCardValidation? Card { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
         {

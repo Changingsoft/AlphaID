@@ -47,40 +47,9 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<AuthCenterWebApp.Pr
         return server;
     }
 
-
-    protected override IHost CreateHost(IHostBuilder builder)
-    {
-        var host = base.CreateHost(builder);
-        //hack bypass database init process.
-        return host;
-#if DEBUG
-        var workDir = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\..\DatabaseTool\bin\Debug\net7.0\";
-        var process = new Process();
-        process.StartInfo.FileName = workDir + @"DatabaseTool.exe";
-        process.StartInfo.WorkingDirectory = workDir;
-        process.Start();
-        process.WaitForExit();
-#endif
-#if RELEASE
-        var workDir = AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\..\DatabaseTool\bin\Release\net7.0\";
-        var process = new Process();
-        process.StartInfo.FileName = workDir + @"DatabaseTool.exe";
-        process.StartInfo.WorkingDirectory = workDir;
-        process.Start();
-        process.WaitForExit();
-#endif
-
-
-        return host;
-    }
-
     public virtual HttpClient CreateAuthenticatedClient(WebApplicationFactoryClientOptions? options = null)
     {
-        HttpClient client;
-        if (options != null)
-            client = this.CreateClient(options);
-        else
-            client = this.CreateClient();
+        HttpClient client = options != null ? this.CreateClient(options) : this.CreateClient();
         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
         return client;
     }

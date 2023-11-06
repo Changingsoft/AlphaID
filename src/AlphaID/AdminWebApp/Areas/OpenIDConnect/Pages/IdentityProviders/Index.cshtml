@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = this.L["Identity Providers"];
+    ViewBag.Title = L["Identity Providers"];
 }
 @section PageHeader{
     <div class="row">
@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var idp in this.Model.Results)
+            @foreach (var idp in Model.Results)
             {
                 <tr>
                     <td><a asp-page="Detail/Index" asp-route-id="@idp.Id">@idp.Scheme</a></td>

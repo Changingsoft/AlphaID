@@ -11,13 +11,13 @@ namespace AuthCenterWebApp.Pages.ExternalLogin;
 [SecurityHeaders]
 public class Challenge : PageModel
 {
-    private readonly IIdentityServerInteractionService _interactionService;
-    private readonly OpenIdConnectOptions _openIdConnectOptions;
+    private readonly IIdentityServerInteractionService interactionService;
+    private readonly OpenIdConnectOptions openIdConnectOptions;
 
     public Challenge(IIdentityServerInteractionService interactionService, IOptionsFactory<OpenIdConnectOptions> openIdConnectOptions)
     {
-        this._interactionService = interactionService;
-        this._openIdConnectOptions = openIdConnectOptions.Create("netauth-8088.changingsoft.com");
+        this.interactionService = interactionService;
+        this.openIdConnectOptions = openIdConnectOptions.Create("netauth-8088.changingsoft.com");
     }
 
     public IActionResult OnGet(string scheme, string schemeDisplayName, string returnUrl)
@@ -25,7 +25,7 @@ public class Challenge : PageModel
         if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
 
         // validate returnUrl - either it is a valid OIDC URL or back to a local page
-        if (this.Url.IsLocalUrl(returnUrl) == false && this._interactionService.IsValidReturnUrl(returnUrl) == false)
+        if (this.Url.IsLocalUrl(returnUrl) == false && this.interactionService.IsValidReturnUrl(returnUrl) == false)
         {
             throw new Exception("invalid return URL");
         }
@@ -33,7 +33,7 @@ public class Challenge : PageModel
         // start challenge and roundtrip the return URL and scheme 
         var props = new AuthenticationProperties
         {
-            RedirectUri = this.Url.Page("/externallogin/callback"),
+            RedirectUri = this.Url.Page("/ExternalLogin/Callback"),
 
             Items =
             {

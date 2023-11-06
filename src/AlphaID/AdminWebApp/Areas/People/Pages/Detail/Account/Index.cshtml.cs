@@ -67,7 +67,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
         {
             [Display(Name = "User name")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string UserName { get; set; } = default!;
+            public string UserName { get; init; } = default!;
         }
 
     }

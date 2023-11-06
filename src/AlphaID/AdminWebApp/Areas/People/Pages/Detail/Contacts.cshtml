@@ -1,7 +1,7 @@
 ﻿@page
 @model ContactsModel
 @{
-    this.ViewBag.Title = L["Contacts"];
+    ViewBag.Title = L["Contacts"];
 }
 
 <h2>@L["Contacts"]</h2>
@@ -18,5 +18,5 @@
     </div>
     <div asp-validation-summary="All"></div>
     <button type="submit" class="btn btn-primary">@L["Update"]</button>
-    <p>@this.Model.OperationMessage</p>
+    <p>@Model.OperationMessage</p>
 </form>

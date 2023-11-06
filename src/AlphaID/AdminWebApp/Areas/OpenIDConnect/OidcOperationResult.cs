@@ -12,15 +12,13 @@ public class OidcOperationResult
     /// <summary>
     /// 指示操作是否成功。
     /// </summary>
-    public bool Succeeded { get; protected set; }
+    public bool Succeeded { get; protected init; }
 
-
-    static readonly OidcOperationResult success = new() { Succeeded = true };
 
     /// <summary>
     /// Gets an IdOperationResult instance that point to success.
     /// </summary>
-    public static OidcOperationResult Success => success;
+    public static OidcOperationResult Success { get; } = new() { Succeeded = true };
 
     /// <summary>
     /// 

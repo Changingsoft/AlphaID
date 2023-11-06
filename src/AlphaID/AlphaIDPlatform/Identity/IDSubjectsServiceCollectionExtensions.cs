@@ -1,13 +1,11 @@
 ﻿using IDSubjects;
-using IDSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AlphaIDPlatform.Identity;
-public static class IDSubjectsServiceCollectionExtensions
+public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>
     /// 向基础设施添加自然人标识管理功能，并设置通过自然人标识来处理用户身份验证。
@@ -15,11 +13,11 @@ public static class IDSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIDSubjectsIdentity(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
+    public static IdentityBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
     {
         services.AddHttpContextAccessor();
 
-        var builder = services.AddIDSubjects(setupAction);
+        var builder = services.AddIdSubjects(setupAction);
 
         //Add required cookies.
         services.AddAuthentication(options =>
@@ -55,9 +53,9 @@ public static class IDSubjectsServiceCollectionExtensions
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             })
             //添加必须修改密码cookie。
-            .AddCookie(IDSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
+            .AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
             {
-                o.Cookie.Name = IDSubjectsIdentityDefaults.MustChangePasswordScheme;
+                o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
         return builder;

@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = L["API Resources"];
+    ViewBag.Title = L["API Resources"];
 }
 
 @section PageHeader{
@@ -31,7 +31,7 @@
         <tbody>
             @if (Model.Results.Any())
             {
-                foreach (var data in this.Model.Results)
+                foreach (var data in Model.Results)
                 {
                     <tr>
                         <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>

@@ -10,28 +10,28 @@ using System.Drawing.Imaging;
 
 namespace AdminWebApp.Areas.People.Pages.Register;
 
-public class RegisterByChineseIDCardModel : PageModel
+public class RegisterByChineseIdCardModel : PageModel
 {
-    private readonly IChineseIDCardOCRService ocrService;
+    private readonly IChineseIdCardOcrService ocrService;
     private readonly NaturalPersonManager personManager;
     private readonly ChinesePersonNameFactory chinesePersonNameFactory;
-    private readonly ChineseIDCardManager chineseIDCardManager;
-    private readonly ILogger<RegisterByChineseIDCardModel> logger;
+    private readonly ChineseIdCardManager chineseIdCardManager;
+    private readonly ILogger<RegisterByChineseIdCardModel> logger;
 
-    public RegisterByChineseIDCardModel(IChineseIDCardOCRService ocrService, NaturalPersonManager personManager, ChinesePersonNameFactory chinesePersonNameFactory, ChineseIDCardManager realNameValidator, ILogger<RegisterByChineseIDCardModel> logger)
+    public RegisterByChineseIdCardModel(IChineseIdCardOcrService ocrService, NaturalPersonManager personManager, ChinesePersonNameFactory chinesePersonNameFactory, ChineseIdCardManager realNameValidator, ILogger<RegisterByChineseIdCardModel> logger)
     {
         this.ocrService = ocrService;
         this.personManager = personManager;
         this.chinesePersonNameFactory = chinesePersonNameFactory;
-        this.chineseIDCardManager = realNameValidator;
+        this.chineseIdCardManager = realNameValidator;
         this.logger = logger;
     }
 
     [BindProperty]
-    public string IDCardFrontBase64 { get; set; } = default!;
+    public string IdCardFrontBase64 { get; set; } = default!;
 
     [BindProperty]
-    public string IDCardBackBase64 { get; set; } = default!;
+    public string IdCardBackBase64 { get; set; } = default!;
 
     [Display(Name = "PhoneNumber phone number")]
     [BindProperty]
@@ -56,19 +56,19 @@ public class RegisterByChineseIDCardModel : PageModel
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        var (personalFaceMimeType, personalFaceBytes) = await EnsureBase64Image(this.IDCardFrontBase64);
-        var (issuerFaceMimeType, issuerFaceBytes) = await EnsureBase64Image(this.IDCardBackBase64);
+        var (personalFaceMimeType, personalFaceBytes) = await EnsureBase64Image(this.IdCardFrontBase64);
+        var (issuerFaceMimeType, issuerFaceBytes) = await EnsureBase64Image(this.IdCardBackBase64);
 
-        ChineseIDCardFrontOCRResult personalFaceResult;
-        ChineseIDCardBackOCRResult issuerFaceResult;
+        ChineseIdCardFrontOcrResult personalFaceResult;
+        ChineseIdCardBackOcrResult issuerFaceResult;
         try
         {
             using var personalFaceStream = new MemoryStream(personalFaceBytes);
-            personalFaceResult = await this.ocrService.RecognizeIDCardFront(personalFaceStream);
+            personalFaceResult = await this.ocrService.RecognizeIdCardFront(personalFaceStream);
             using var issuerFaceStream = new MemoryStream(issuerFaceBytes);
-            issuerFaceResult = await this.ocrService.RecognizeIDCardBack(issuerFaceStream);
+            issuerFaceResult = await this.ocrService.RecognizeIdCardBack(issuerFaceStream);
         }
-        catch (ChineseIDCardOCRException ex)
+        catch (ChineseIdCardOcrException ex)
         {
             this.logger.LogWarning(ex, "用户提供的图像无法识别为有效的身份证件。");
             this.ModelState.AddModelError("", "无法识别为有效的身份证图片");
@@ -77,7 +77,7 @@ public class RegisterByChineseIDCardModel : PageModel
 
 
         //check if exists in database
-        var cardExists = this.chineseIDCardManager.Validations.Any(p => p.ChineseIDCard!.CardNumber == personalFaceResult.IDCardNumber);
+        var cardExists = this.chineseIdCardManager.Validations.Any(p => p.ChineseIDCard!.CardNumber == personalFaceResult.IdCardNumber);
         if (cardExists)
         {
             this.ModelState.AddModelError("", "该身份证已经注册过。");
@@ -106,7 +106,7 @@ public class RegisterByChineseIDCardModel : PageModel
                                      personalFaceResult.Nationality,
                                      personalFaceResult.DateOfBirth,
                                      personalFaceResult.Address,
-                                     personalFaceResult.IDCardNumber,
+                                     personalFaceResult.IdCardNumber,
                                      issuerFaceResult.Issuer,
                                      issuerFaceResult.IssueDate,
                                      issuerFaceResult.ExpiresDate);
@@ -129,11 +129,11 @@ public class RegisterByChineseIDCardModel : PageModel
         }
 
         //add chinese card
-        ChineseIDCardValidation card = new(new ChineseIDCardImage(personalFaceBytes, personalFaceMimeType, issuerFaceBytes, issuerFaceMimeType));
-        card.TryApplyChineseIDCardInfo(cardInfo);
+        ChineseIdCardValidation card = new(new ChineseIDCardImage(personalFaceBytes, personalFaceMimeType, issuerFaceBytes, issuerFaceMimeType));
+        card.TryApplyChineseIdCardInfo(cardInfo);
         card.TryApplyChinesePersonName(chinesePersonName);
-        await this.chineseIDCardManager.CommitAsync(builder.Person, card);
-        await this.chineseIDCardManager.ValidateAsync(card, "System", true);
+        await this.chineseIdCardManager.CommitAsync(builder.Person, card);
+        await this.chineseIdCardManager.ValidateAsync(card, "System", true);
 
         return this.RedirectToPage("../Detail/Index", new { id = builder.Person.Id });
     }

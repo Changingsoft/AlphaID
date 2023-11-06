@@ -1,11 +1,12 @@
 @{
-    this.Layout = "_LayoutRoot";
+    Layout = "_LayoutRoot";
 }
 
 @section Heads{
     <link rel="stylesheet" href="~/lib/tabler/dist/css/tabler.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* ReSharper disable once Html.PathError *@
     <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true" />
     @await RenderSectionAsync("Heads", false)
 }
@@ -41,15 +42,16 @@
                     <div class="col-lg-auto ms-lg-auto">
                         <ul class="list-inline list-inline-dots mb-0">
                             <li class="list-inline-item">
+                                @* ReSharper disable once Html.PathError *@
                                 <a href="~/.well-known/openid-configuration" class="link-secondary" target="_blank">@L["Discovery Document"]</a>
                             </li>
                             <li class="list-inline-item">
                                 <a asp-area="Developer" asp-page="/Index" class="link-secondary" target="_blank">@L["Developer Center"]</a>
                             </li>
-                            @if (this.User.IsInRole("Administrators"))
+                            @if (User.IsInRole("Administrators"))
                             {
                                 <li class="list-inline-item">
-                                    <a asp-area="Admin" asp-page="/Index" class="link-secondary">@L["System Management"]</a>
+                                    <a href="#" class="link-secondary">@L["System Management"]</a>
                                 </li>
                             }
                         </ul>

@@ -77,7 +77,7 @@ public struct MobilePhoneNumber
             return false;
         s = s.Trim();
 
-        var match = regex.Match(s);
+        var match = Regex.Match(s);
         if (!match.Success)
             return false;
 
@@ -99,7 +99,7 @@ public struct MobilePhoneNumber
             : !TryParse(s, out MobilePhoneNumber number) ? throw new FormatException("不正确的移动电话号码。") : number;
     }
 
-    private static readonly Regex regex = new(@"^(\+86)?(\d{11})$");
+    private static readonly Regex Regex = new(@"^(\+86)?(\d{11})$");
     private const string DefaultCountryCode = "86";
 
 

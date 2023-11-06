@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var scope in this.Model.Data.Scopes)
+            @foreach (var scope in Model.Data.Scopes)
             {
                 <tr>
                     <td>@scope.Scope</td>
@@ -33,7 +33,7 @@
         <form method="post" asp-page-handler="Add">
             <label asp-for="SelectedScope" class="form-label"></label>
             <select asp-for="SelectedScope" class="form-control">
-                @foreach(var scope in this.Model.RemainingScopes)
+                @foreach(var scope in Model.RemainingScopes)
                 {
                     <option value="@scope">@scope</option>
                 }

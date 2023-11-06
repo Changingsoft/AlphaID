@@ -51,7 +51,7 @@ public class IndexModel : PageModel
         var person = await this.userManager.FindByIdAsync(anchor);
         Debug.Assert(person != null);
 
-        using var stream = file.OpenReadStream();
+        await using var stream = file.OpenReadStream();
         byte[] data = new byte[stream.Length];
         await stream.ReadAsync(data, 0, data.Length);
         var result = await this.userManager.SetProfilePictureAsync(person, file.ContentType, data);

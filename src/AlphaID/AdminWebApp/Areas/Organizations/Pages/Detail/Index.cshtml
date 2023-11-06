@@ -1,9 +1,9 @@
 ﻿@page
 @model IndexModel
-@inject OrganizationMemberManager memberManager
+@inject OrganizationMemberManager MemberManager
 @{
-    this.ViewBag.Title = this.Model.Organization.Name;
-    var members = await this.memberManager.GetMembersAsync(this.Model.Organization);
+    ViewBag.Title = Model.Organization.Name;
+    var members = await MemberManager.GetMembersAsync(Model.Organization);
 }
 <h2>@L["Overview"]</h2>
 <div class="card mb-3">
@@ -22,7 +22,7 @@
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["Used name"]</div>
                 <div class="datagrid-content">
-                    @foreach (var usedName in this.Model.Organization.UsedNames.OrderByDescending(p => p.DeprecateTime).Take(2))
+                    @foreach (var usedName in Model.Organization.UsedNames.OrderByDescending(p => p.DeprecateTime).Take(2))
                     {
                         <p class="text-muted small">@Html.DisplayFor(m => usedName)</p>
                     }
@@ -30,7 +30,7 @@
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["USCI"]</div>
-                <div class="datagrid-content">@Model.Organization.USCI</div>
+                <div class="datagrid-content">@Model.Organization.Usci</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["Domicile"]</div>

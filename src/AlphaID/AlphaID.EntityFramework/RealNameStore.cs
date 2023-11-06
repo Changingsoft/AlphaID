@@ -3,9 +3,9 @@
 namespace AlphaID.EntityFramework;
 public class RealNameStore : IRealNameStore
 {
-    private readonly IDSubjectsDbContext db;
+    private readonly IdSubjectsDbContext db;
 
-    public RealNameStore(IDSubjectsDbContext db)
+    public RealNameStore(IdSubjectsDbContext db)
     {
         this.db = db;
     }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.DirectoryServices;
 
-namespace WechatWebLogin;
+namespace IDSubjects.WechatWebLogin;
 
 /// <summary>
 /// 

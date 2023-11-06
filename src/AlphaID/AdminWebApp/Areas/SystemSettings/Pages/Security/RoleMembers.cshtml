@@ -1,7 +1,7 @@
 @page "{role?}"
 @model RoleMembersModel
 @{
-    this.ViewBag.Title = "Role Members";
+    ViewBag.Title = "Role Members";
 }
 
 <h3>Role Members</h3>
@@ -17,13 +17,13 @@
     </div>
     <div class="col-9">
         <h2>Members</h2>
-        @if (this.Model.RoleMembers != null)
+        @if (Model.RoleMembers != null)
         {
-            if (this.Model.RoleMembers.Any())
+            if (Model.RoleMembers.Any())
             {
                 <form method="post" asp-page-handler="RemoveMember" asp-route-role="@Model.Role">
                     <ul>
-                        @foreach (var member in this.Model.RoleMembers)
+                        @foreach (var member in Model.RoleMembers)
                         {
                             <li>@member.UserName <button type="submit" asp-page-handler="RemoveMember" asp-route-personId="@member.UserId" class="btn btn-outline-danger btn-sm" onclick="return confirm('确实要移除吗？');">移除</button></li>
                         }
@@ -72,7 +72,7 @@
     <script>
         $(function () {
             $("[name='personSearch']").autocomplete({
-                source: "@(this.Url.Action("SearchPerson", "IdService"))",
+                source: "@Url.Action("SearchPerson", "IdService")",
                 minLength: 2,
                 appendTo: "#memberEditor",
                 select: function (event, ui) {

@@ -6,16 +6,16 @@ namespace AdminWebApp.Components;
 
 public class PersonChineseIdCardPanel : ViewComponent
 {
-    private readonly ChineseIDCardManager chineseIDCardManager;
+    private readonly ChineseIdCardManager chineseIdCardManager;
 
-    public PersonChineseIdCardPanel(ChineseIDCardManager chineseIDCardManager)
+    public PersonChineseIdCardPanel(ChineseIdCardManager chineseIdCardManager)
     {
-        this.chineseIDCardManager = chineseIDCardManager;
+        this.chineseIdCardManager = chineseIdCardManager;
     }
 
     public async Task<IViewComponentResult> InvokeAsync(NaturalPerson person)
     {
-        var validation = await this.chineseIDCardManager.GetCurrentAsync(person);
+        var validation = await this.chineseIdCardManager.GetCurrentAsync(person);
         return this.View(validation);
     }
 }

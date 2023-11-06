@@ -104,7 +104,7 @@ public class LoginModel : PageModel
                 var result = await this.signInManager.PasswordSignInAsync(user, this.Input.Password, this.Input.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    await this.events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
+                    await this.events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
 
 
@@ -141,7 +141,7 @@ public class LoginModel : PageModel
                 {
                     var principal = this.GenerateMustChangePasswordPrincipal(user);
                     await this.signInManager.SignOutAsync();
-                    await this.HttpContext.SignInAsync(IDSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
+                    await this.HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
                     return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
                 }
 
@@ -229,7 +229,7 @@ public class LoginModel : PageModel
         if (client != null)
         {
             allowLocal = client.EnableLocalLogin;
-            if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+            if (client.IdentityProviderRestrictions.Any())
             {
                 providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
             }
@@ -245,7 +245,7 @@ public class LoginModel : PageModel
 
     private ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
     {
-        var identity = new ClaimsIdentity(IDSubjectsIdentityDefaults.MustChangePasswordScheme);
+        var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));
         return new ClaimsPrincipal(identity);
     }
@@ -258,20 +258,20 @@ public class LoginModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = default!;
+        public string Password { get; init; } = default!;
 
         [Display(Name = "Remember me on this device")]
-        public bool RememberLogin { get; set; }
+        public bool RememberLogin { get; init; }
 
-        public string? ReturnUrl { get; set; }
+        public string? ReturnUrl { get; init; }
 
         public string Button { get; set; } = default!;
     }
 
     public class ViewModel
     {
-        public bool AllowRememberLogin { get; set; } = true;
-        public bool EnableLocalLogin { get; set; } = true;
+        public bool AllowRememberLogin { get; init; } = true;
+        public bool EnableLocalLogin { get; init; } = true;
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
@@ -283,16 +283,16 @@ public class LoginModel : PageModel
 
         public class ExternalProvider
         {
-            public string DisplayName { get; set; } = default!;
-            public string AuthenticationScheme { get; set; } = default!;
+            public string DisplayName { get; init; } = default!;
+            public string AuthenticationScheme { get; init; } = default!;
         }
     }
 
     public class LoginOptions
     {
-        public static bool AllowLocalLogin = true;
-        public static bool AllowRememberLogin = true;
+        public static readonly bool AllowLocalLogin = true;
+        public static readonly bool AllowRememberLogin = true;
         public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
-        public static string InvalidCredentialsErrorMessage = "用户名或密码无效";
+        public static readonly string InvalidCredentialsErrorMessage = "用户名或密码无效";
     }
 }

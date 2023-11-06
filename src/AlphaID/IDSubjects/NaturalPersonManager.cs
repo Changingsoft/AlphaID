@@ -28,7 +28,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <param name="services"></param>
     /// <param name="logger"></param>
     public NaturalPersonManager(IUserStore<NaturalPerson> store,
-                                IOptions<IDSubjectsOptions> optionsAccessor,
+                                IOptions<IdSubjectsOptions> optionsAccessor,
                                 IPasswordHasher<NaturalPerson> passwordHasher,
                                 IEnumerable<IUserValidator<NaturalPerson>> userValidators,
                                 IEnumerable<IPasswordValidator<NaturalPerson>> passwordValidators,

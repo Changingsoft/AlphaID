@@ -1,7 +1,7 @@
 @page
 @model AuthCenterWebApp.Pages.Account.Logout.LoggedOut
 @{
-    this.Layout = "../_AuthenticationLayout";
+    Layout = "../_AuthenticationLayout";
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -31,8 +31,7 @@
     </div>
 </div>
 
-@section scripts
-    {
+@section Scripts{
     @if (Model.View.AutomaticRedirectAfterSignOut)
     {
         <script src="~/js/signout-redirect.js"></script>

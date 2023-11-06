@@ -1,5 +1,5 @@
-using DirectoryLogon;
 using IDSubjects;
+using IDSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;

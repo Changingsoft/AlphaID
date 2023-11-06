@@ -1,7 +1,7 @@
 ﻿@page
 @model BindDirectoryAccountModel
 @{
-    this.ViewBag.Title = L["Bind exiets account"];
+    ViewBag.Title = L["Bind exists account"];
 }
 <h2>@L["Bind exists account"]</h2>
 
@@ -9,7 +9,7 @@
     <div class="input-group">
         <div class="input-group-prepend">
             <select name="serviceId" class="form-control">
-                @foreach (var svc in this.Model.DirectoryServices)
+                @foreach (var svc in Model.DirectoryServices)
                 {
                     <option value="@svc.Id">@svc.Name</option>
                 }
@@ -34,15 +34,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in this.Model.SearchItems)
+            @foreach (var item in Model.SearchItems)
             {
                 <tr>
                     <td>@item.DisplayName</td>
                     <td>@item.Name</td>
-                    <td>@item.SAMAccountName</td>
+                    <td>@item.SamAccountName</td>
                     <td>@item.UserPrincipalName</td>
                     <td>@item.Mobile</td>
-                    <td><button type="submit" asp-page-handler="Bind" asp-route-entryGuid="@item.ObjectGUID" class="btn btn-sm btn-primary">@L["Bind"]</button></td>
+                    <td><button type="submit" asp-page-handler="Bind" asp-route-entryGuid="@item.ObjectGuid" class="btn btn-sm btn-primary">@L["Bind"]</button></td>
                 </tr>
             }
         </tbody>

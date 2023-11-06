@@ -3,12 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@this.ViewBag.Title</title>
+    <title>@ViewBag.Title</title>
     <base href="~/" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
-    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.theme.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
     @await RenderSectionAsync("head", false)
 </head>
 <body>
@@ -16,8 +13,8 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
-                    <img src="~/logo.png" title="@this.Product.Value.Name" class="icon-banner">
-                    @this.Product.Value.Name API
+                    <img src="~/logo.png" title="@Product.Value.Name" class="icon-banner">
+                    @Product.Value.Name API
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +31,7 @@
 
     <footer class="border-top text-muted">
         <div class="container">
-            &copy; 2021 - @this.Product.Value.Organization
+            &copy; 2021 - @Product.Value.Organization
         </div>
     </footer>
 
@@ -42,10 +39,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

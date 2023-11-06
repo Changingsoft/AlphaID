@@ -18,11 +18,10 @@ public class IdOperationResult
     public bool Succeeded { get; protected set; }
 
 
-    static readonly IdOperationResult success = new() { Succeeded = true };
     /// <summary>
     /// Gets an IdOperationResult instance thant point to success.
     /// </summary>
-    public static IdOperationResult Success => success;
+    public static readonly IdOperationResult Success = new() { Succeeded = true };
 
     /// <summary>
     /// 
@@ -32,8 +31,7 @@ public class IdOperationResult
     public static IdOperationResult Failed(params string[] errors)
     {
         var result = new IdOperationResult() { Succeeded = false };
-        if(errors != null)
-            result.errors.AddRange(errors);
+        result.errors.AddRange(errors);
         return result;
     }
 }

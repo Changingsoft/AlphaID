@@ -28,7 +28,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 
         [BindProperty]
         [Display(Name = "Unified social credit code\r\n")]
-        public string? USCI { get; set; }
+        public string? Usci { get; set; }
 
         [BindProperty]
         public InputModel Input { get; set; } = default!;
@@ -44,16 +44,16 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (this.organizationManager.Organizations.Any(p => p.Name == this.Name))
                 this.ModelState.AddModelError(nameof(this.Name), "Organization already exists.");
-            USCC usci = new();
-            if (this.USCI != null)
+            Uscc usci = new();
+            if (this.Usci != null)
             {
-                if (USCC.TryParse(this.USCI, out usci))
+                if (Uscc.TryParse(this.Usci, out usci))
                 {
-                    if (this.organizationManager.Organizations.Any(p => p.USCI == usci.ToString()))
-                        this.ModelState.AddModelError(nameof(this.USCI), "USCI already exists");
+                    if (this.organizationManager.Organizations.Any(p => p.Usci == usci.ToString()))
+                        this.ModelState.AddModelError(nameof(this.Usci), "USCI already exists");
                 }
                 else
-                    this.ModelState.AddModelError(nameof(this.USCI), "Invalid USCI");
+                    this.ModelState.AddModelError(nameof(this.Usci), "Invalid USCI");
             }
 
             if (!this.ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 
             var organization = new GenericOrganization(this.Name)
             {
-                USCI = this.USCI != null ? usci.ToString() : null,
+                Usci = this.Usci != null ? usci.ToString() : null,
                 Domicile = this.Input.Domicile,
                 Representative = this.Input.Representative,
             };
@@ -105,23 +105,23 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
         {
             [Display(Name = "Domicile")]
             [StringLength(100)]
-            public string? Domicile { get; set; }
+            public string? Domicile { get; init; }
 
             [Display(Name = "Representative")]
             [StringLength(20)]
-            public string? Representative { get; set; }
+            public string? Representative { get; init; }
 
             [Display(Name = "Title")]
             [StringLength(50)]
-            public string? Title { get; set; }
+            public string? Title { get; init; }
 
             [Display(Name = "Department")]
             [StringLength(50)]
-            public string? Department { get; set; }
+            public string? Department { get; init; }
 
             [Display(Name = "Remark")]
             [StringLength(50)]
-            public string? Remark { get; set; }
+            public string? Remark { get; init; }
         }
     }
 }

@@ -50,18 +50,18 @@ public class EditPersonNameModel : PageModel
     {
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string? Surname { get; set; }
+        public string? Surname { get; init; }
 
         [Display(Name = "Given name")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; init; } = default!;
 
         [Display(Name = "Phonetic surname")]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string? PinyinSurname { get; set; }
+        public string? PinyinSurname { get; init; }
 
         [Display(Name = "Phonetic given name")]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string PinyinGivenName { get; set; } = default!;
+        public string PinyinGivenName { get; init; } = default!;
     }
 }

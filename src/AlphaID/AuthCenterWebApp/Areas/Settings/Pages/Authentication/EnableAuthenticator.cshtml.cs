@@ -13,9 +13,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class EnableAuthenticatorModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly ILogger<EnableAuthenticatorModel> _logger;
-    private readonly UrlEncoder _urlEncoder;
+    private readonly NaturalPersonManager userManager;
+    private readonly ILogger<EnableAuthenticatorModel> logger;
+    private readonly UrlEncoder urlEncoder;
     private readonly ProductInfo production;
 
     private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -26,9 +26,9 @@ public class EnableAuthenticatorModel : PageModel
         UrlEncoder urlEncoder,
         IOptions<ProductInfo> production)
     {
-        this._userManager = userManager;
-        this._logger = logger;
-        this._urlEncoder = urlEncoder;
+        this.userManager = userManager;
+        this.logger = logger;
+        this.urlEncoder = urlEncoder;
         this.production = production.Value;
     }
 
@@ -51,15 +51,15 @@ public class EnableAuthenticatorModel : PageModel
         [StringLength(7, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Text)]
         [Display(Name = "Verification Code")]
-        public string Code { get; set; }
+        public string Code { get; init; }
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
         await this.LoadSharedKeyAndQrCodeUriAsync(user);
@@ -69,10 +69,10 @@ public class EnableAuthenticatorModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
         if (!this.ModelState.IsValid)
@@ -84,25 +84,25 @@ public class EnableAuthenticatorModel : PageModel
         // Strip spaces and hyphens
         var verificationCode = this.Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-        var is2faTokenValid = await this._userManager.VerifyTwoFactorTokenAsync(
-            user, this._userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+        var is2FaTokenValid = await this.userManager.VerifyTwoFactorTokenAsync(
+            user, this.userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-        if (!is2faTokenValid)
+        if (!is2FaTokenValid)
         {
             this.ModelState.AddModelError("Input.Code", "Verification code is invalid.");
             await this.LoadSharedKeyAndQrCodeUriAsync(user);
             return this.Page();
         }
 
-        await this._userManager.SetTwoFactorEnabledAsync(user, true);
-        var userId = await this._userManager.GetUserIdAsync(user);
-        this._logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+        await this.userManager.SetTwoFactorEnabledAsync(user, true);
+        var userId = await this.userManager.GetUserIdAsync(user);
+        this.logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
 
         this.StatusMessage = "Your authenticator app has been verified.";
 
-        if (await this._userManager.CountRecoveryCodesAsync(user) == 0)
+        if (await this.userManager.CountRecoveryCodesAsync(user) == 0)
         {
-            var recoveryCodes = await this._userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+            var recoveryCodes = await this.userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
             this.RecoveryCodes = recoveryCodes.ToArray();
             return this.RedirectToPage("./ShowRecoveryCodes");
         }
@@ -115,16 +115,16 @@ public class EnableAuthenticatorModel : PageModel
     private async Task LoadSharedKeyAndQrCodeUriAsync(NaturalPerson user)
     {
         // Load the authenticator key & QR code URI to display on the form
-        var unformattedKey = await this._userManager.GetAuthenticatorKeyAsync(user);
+        var unformattedKey = await this.userManager.GetAuthenticatorKeyAsync(user);
         if (string.IsNullOrEmpty(unformattedKey))
         {
-            await this._userManager.ResetAuthenticatorKeyAsync(user);
-            unformattedKey = await this._userManager.GetAuthenticatorKeyAsync(user);
+            await this.userManager.ResetAuthenticatorKeyAsync(user);
+            unformattedKey = await this.userManager.GetAuthenticatorKeyAsync(user);
         }
 
         this.SharedKey = this.FormatKey(unformattedKey);
 
-        var email = await this._userManager.GetEmailAsync(user);
+        var email = await this.userManager.GetEmailAsync(user);
         this.AuthenticatorUri = this.GenerateQrCodeUri(email, unformattedKey);
     }
 
@@ -150,8 +150,8 @@ public class EnableAuthenticatorModel : PageModel
         return string.Format(
             CultureInfo.InvariantCulture,
             AuthenticatorUriFormat,
-            this._urlEncoder.Encode($"{this.production.Name} Auth Center"), //Title
-            this._urlEncoder.Encode(email),
+            this.urlEncoder.Encode($"{this.production.Name} Auth Center"), //Title
+            this.urlEncoder.Encode(email),
             unformattedKey);
     }
 }

@@ -40,7 +40,7 @@ public class ChinesePersonNameFactory
             throw new ArgumentException("名字太短");
 
         string surname = default!;
-        foreach (var prefix in compoundSurnamePrefixs)
+        foreach (var prefix in CompoundSurnamePrefixs)
         {
             if (fullName.StartsWith(prefix))
             {
@@ -64,7 +64,7 @@ public class ChinesePersonNameFactory
 
     }
 
-    private static readonly List<string> compoundSurnamePrefixs = new()
+    private static readonly List<string> CompoundSurnamePrefixs = new()
     {
         "欧阳",
         "太史",

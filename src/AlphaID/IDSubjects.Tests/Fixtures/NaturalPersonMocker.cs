@@ -1,6 +1,4 @@
-﻿using IDSubjects;
-
-namespace IDSubjectsTests.Fixtures;
+﻿namespace IDSubjects.Tests.Fixtures;
 public class NaturalPersonMocker
 {
     /// <summary>

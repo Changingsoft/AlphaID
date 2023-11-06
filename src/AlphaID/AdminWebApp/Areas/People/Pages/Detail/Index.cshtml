@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = $"{Model.Data.Name}";
+    ViewBag.Title = $"{Model.Data.Name}";
 }
 @section Heads{
     <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
@@ -26,7 +26,7 @@
         <div class="card card-sm">
             <div class="card-header d-flex justify-content-between">
                 <h3 class="card-title">@L["Person Name"]</h3>
-                <a asp-page="EditPersonName" asp-route-anchor="@this.Model.Data.Id" class="btn btn-sm">@L["Change person name"]</a>
+                <a asp-page="EditPersonName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change person name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Date of birth (Age)"]</div>
-                        <div class="datagrid-content">@(this.Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(this.Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
+                        <div class="datagrid-content">@(Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Website"]</div>
@@ -146,7 +146,7 @@
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["Authentication statistics"]</div>
-                <div class="datagrid-content">10 falied:2 lock:1</div>
+                <div class="datagrid-content">10 failed:2 lock:1</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["Person ID"]</div>

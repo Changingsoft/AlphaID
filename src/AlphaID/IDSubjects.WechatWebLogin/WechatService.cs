@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WechatWebLogin;
+namespace IDSubjects.WechatWebLogin;
 
 /// <summary>
 /// 微信公众号。

@@ -80,10 +80,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         public class InputModel
         {
             [Display(Name = "Expires")]
-            public DateTime? Expires { get; set; }
+            public DateTime? Expires { get; init; }
 
             [Display(Name = "Description")]
-            public string? Description { get; set; }
+            public string? Description { get; init; }
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿@page
 @model BindLoginModel
 @{
-    this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.L["Binding external account"];
+    Layout = "_AuthenticationLayout";
+    ViewBag.Title = L["Binding external account"];
 }
 
 <div class="page page-center">
@@ -10,7 +10,7 @@
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-                @(this.Product.Value.Name) @L["Account"]
+                @Product.Value.Name @L["Account"]
             </a>
         </div>
         <div class="card card-md">

@@ -30,7 +30,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
                 Contact = org.Contact,
                 Domicile = org.Domicile,
                 Representative = org.Representative,
-                USCI = org.USCI,
+                Usci = org.Usci,
                 Website = org.Website,
                 EstablishedAt = org.EstablishedAt?.ToDateTime(TimeOnly.MinValue),
                 Name = org.Name,
@@ -46,8 +46,8 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             if (org == null)
                 return this.NotFound();
 
-            USCC usci = default!;
-            if (this.Input.USCI != null && !USCC.TryParse(this.Input.USCI, out usci))
+            Uscc usci = default!;
+            if (this.Input.Usci != null && !Uscc.TryParse(this.Input.Usci, out usci))
                 this.ModelState.AddModelError("Input.USCI", "Invalid USCI");
 
             if (!this.ModelState.IsValid)
@@ -56,7 +56,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             org.Contact = this.Input.Contact;
             org.Domicile = this.Input.Domicile;
             org.Representative = this.Input.Representative;
-            org.USCI = this.Input.USCI != null ? usci.ToString() : null;
+            org.Usci = this.Input.Usci != null ? usci.ToString() : null;
             org.Website = this.Input.Website;
             org.EstablishedAt = this.Input.EstablishedAt.HasValue ? DateOnly.FromDateTime(this.Input.EstablishedAt.Value) : null;
             org.TermBegin = this.Input.TermBegin.HasValue ? DateOnly.FromDateTime(this.Input.TermBegin.Value) : null;
@@ -70,34 +70,34 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         public class InputModel
         {
             [Display(Name = "Name")]
-            public string Name { get; set; } = default!;
+            public string Name { get; init; } = default!;
 
             [Display(Name = "Domicile")]
-            public string? Domicile { get; set; }
+            public string? Domicile { get; init; }
 
             [Display(Name = "USCI")]
-            public string? USCI { get; set; }
+            public string? Usci { get; init; }
 
             [Display(Name = "Contact")]
-            public string? Contact { get; set; }
+            public string? Contact { get; init; }
 
             [Display(Name = "Representative")]
-            public string? Representative { get; set; }
+            public string? Representative { get; init; }
 
             [Display(Name = "Website")]
-            public string? Website { get; set; }
+            public string? Website { get; init; }
 
             [Display(Name = "Established at")]
             [DataType(DataType.Date)]
-            public DateTime? EstablishedAt { get; set; }
+            public DateTime? EstablishedAt { get; init; }
 
             [Display(Name = "Term begin")]
             [DataType(DataType.Date)]
-            public DateTime? TermBegin { get; set; }
+            public DateTime? TermBegin { get; init; }
 
             [Display(Name = "Term end")]
             [DataType(DataType.Date)]
-            public DateTime? TermEnd { get; set; }
+            public DateTime? TermEnd { get; init; }
         }
     }
 }

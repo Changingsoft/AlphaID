@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WechatWebLogin;
+﻿using IDSubjects.WechatWebLogin;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlphaID.WechatWebLogin.EntityFramework;
 public class WechatWebLoginDbContext : DbContext

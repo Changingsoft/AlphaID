@@ -7,7 +7,7 @@
 
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
-        @foreach(var idpr in this.Model.Data.IdentityProviderRestrictions)
+        @foreach(var idpr in Model.Data.IdentityProviderRestrictions)
         {
             <li class="list-group-item">
                 @idpr.Provider
@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <label asp-for="SelectedProvider" class="form-label"></label>
                 <select asp-for="SelectedProvider">
-                    @foreach(var item in this.Model.IdProviders)
+                    @foreach(var item in Model.IdProviders)
                     {
                         <option value="@item.Value">@item.Text</option>
                     }

@@ -101,23 +101,23 @@ public class ResetPasswordModel : PageModel
         var charset = new StringBuilder();
         if (this.identityOptions.Password.RequireLowercase)
         {
-            sb.Append(LOWER_CHARSET[Random.Shared.Next(LOWER_CHARSET.Length)]);
-            charset.Append(LOWER_CHARSET);
+            sb.Append(LowerCharset[Random.Shared.Next(LowerCharset.Length)]);
+            charset.Append(LowerCharset);
         }
         if (this.identityOptions.Password.RequireUppercase)
         {
-            sb.Append(UPPER_CHARSET[Random.Shared.Next(UPPER_CHARSET.Length)]);
-            charset.Append(UPPER_CHARSET);
+            sb.Append(UpperCharset[Random.Shared.Next(UpperCharset.Length)]);
+            charset.Append(UpperCharset);
         }
         if (this.identityOptions.Password.RequireDigit)
         {
-            sb.Append(NUM_CHARSET[Random.Shared.Next(NUM_CHARSET.Length)]);
-            charset.Append(NUM_CHARSET);
+            sb.Append(NumCharset[Random.Shared.Next(NumCharset.Length)]);
+            charset.Append(NumCharset);
         }
         if (this.identityOptions.Password.RequireNonAlphanumeric)
         {
-            sb.Append(SYMBOL_CHARSET[Random.Shared.Next(SYMBOL_CHARSET.Length)]);
-            charset.Append(SYMBOL_CHARSET);
+            sb.Append(SymbolCharset[Random.Shared.Next(SymbolCharset.Length)]);
+            charset.Append(SymbolCharset);
         }
         //²¹È«³¤¶È
         while (sb.Length < this.identityOptions.Password.RequiredLength)
@@ -144,28 +144,28 @@ public class ResetPasswordModel : PageModel
         }
     }
 
-    private const string UPPER_CHARSET = @"ABCDEFGHJKLMNPQRSTUVWXYZ";
-    private const string LOWER_CHARSET = @"abcdefghijkmnopqrstuvwxyz";
-    private const string NUM_CHARSET = @"123456789";
-    private const string SYMBOL_CHARSET = @"!@#$%^&*()_-+={}|[]\:;<>?,./";
+    private const string UpperCharset = @"ABCDEFGHJKLMNPQRSTUVWXYZ";
+    private const string LowerCharset = @"abcdefghijkmnopqrstuvwxyz";
+    private const string NumCharset = @"123456789";
+    private const string SymbolCharset = @"!@#$%^&*()_-+={}|[]\:;<>?,./";
 
     public class InputModel
     {
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; init; } = default!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; init; } = default!;
 
         [Display(Name = "User must change password on next login")]
-        public bool UserMustChangePasswordOnNextLogin { get; set; } = true;
+        public bool UserMustChangePasswordOnNextLogin { get; init; } = true;
 
         [Display(Name = "Unlock user (if locked)")]
-        public bool UnlockUser { get; set; } = true;
+        public bool UnlockUser { get; init; } = true;
     }
 }

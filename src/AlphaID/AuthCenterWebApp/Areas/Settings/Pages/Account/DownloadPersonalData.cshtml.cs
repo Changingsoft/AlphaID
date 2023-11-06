@@ -10,15 +10,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DownloadPersonalDataModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly ILogger<DownloadPersonalDataModel> _logger;
+    private readonly NaturalPersonManager userManager;
+    private readonly ILogger<DownloadPersonalDataModel> logger;
 
     public DownloadPersonalDataModel(
         NaturalPersonManager userManager,
         ILogger<DownloadPersonalDataModel> logger)
     {
-        this._userManager = userManager;
-        this._logger = logger;
+        this.userManager = userManager;
+        this.logger = logger;
     }
 
     public IActionResult OnGet()
@@ -28,13 +28,13 @@ public class DownloadPersonalDataModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
-        this._logger.LogInformation("User with ID '{UserId}' asked for their personal data.", this._userManager.GetUserId(this.User));
+        this.logger.LogInformation("User with ID '{UserId}' asked for their personal data.", this.userManager.GetUserId(this.User));
 
         // Only include personal data for download
         var personalData = new Dictionary<string, string>();
@@ -44,13 +44,13 @@ public class DownloadPersonalDataModel : PageModel
             personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
         }
 
-        var logins = await this._userManager.GetLoginsAsync(user);
+        var logins = await this.userManager.GetLoginsAsync(user);
         foreach (var l in logins)
         {
             personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
         }
 
-        personalData.Add($"Authenticator Key", await this._userManager.GetAuthenticatorKeyAsync(user));
+        personalData.Add("Authenticator Key", await this.userManager.GetAuthenticatorKeyAsync(user));
 
         this.Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
         return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");

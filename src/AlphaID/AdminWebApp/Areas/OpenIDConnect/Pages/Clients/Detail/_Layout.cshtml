@@ -2,12 +2,12 @@
 @{
     Layout = "Shared/_Layout";
     Duende.IdentityServer.EntityFramework.Entities.Client? client = default!;
-    if (int.TryParse(this.ViewContext.RouteData.Values["anchor"]?.ToString(), out int clientId))
+    if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out int clientId))
     {
         client = DbContext.Clients.FirstOrDefault(p => p.Id == clientId);
 
     }
-    this.ViewBag.Title = $"{client?.ClientName} - {this.ViewBag.Title}";
+    ViewBag.Title = $"{client?.ClientName} - {ViewBag.Title}";
 }
 @section Heads{
     @await RenderSectionAsync("Heads", false)
@@ -24,16 +24,16 @@
         <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)" asp-match-prefix="false" asp-page="Index" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Consent" asp-page="Consent" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Consent"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Secrets" asp-page="Secrets" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Secrets"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/GrantTypes" asp-page="GrantTypes" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Grant types"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Scopes" asp-page="Scopes" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Scopes"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/CallbackUris" asp-page="CallbackUris" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Callbacks"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Claims" asp-page="Claims" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Claims"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Cors" asp-page="Cors" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["CORS"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/IdPRestriction" asp-page="IdPRestriction" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["IdP Restriction"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Advanced" asp-page="Advanced" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]">@L["Advanced"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)" asp-match-prefix="false" asp-page="Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Consent" asp-page="Consent" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Consent"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Secrets" asp-page="Secrets" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Secrets"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/GrantTypes" asp-page="GrantTypes" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Grant types"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Scopes" asp-page="Scopes" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Scopes"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/CallbackUris" asp-page="CallbackUris" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Callbacks"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Claims" asp-page="Claims" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Claims"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Cors" asp-page="Cors" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["CORS"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/IdPRestriction" asp-page="IdPRestriction" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["IdP Restriction"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Advanced" asp-page="Advanced" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Advanced"]</a>
                 </div>
             </div>
         </div>

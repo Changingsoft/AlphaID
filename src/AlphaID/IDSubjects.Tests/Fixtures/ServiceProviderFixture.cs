@@ -1,7 +1,6 @@
-﻿using IDSubjects;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace IDSubjectsTests.Fixtures;
+namespace IDSubjects.Tests.Fixtures;
 public class ServiceProviderFixture : IDisposable
 {
     public ServiceProviderFixture()

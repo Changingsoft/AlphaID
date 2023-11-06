@@ -5,9 +5,9 @@ namespace AlphaID.EntityFramework;
 
 public class OrganizationMemberStore : IOrganizationMemberStore
 {
-    private readonly IDSubjectsDbContext dbContext;
+    private readonly IdSubjectsDbContext dbContext;
 
-    public OrganizationMemberStore(IDSubjectsDbContext dbContext)
+    public OrganizationMemberStore(IdSubjectsDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

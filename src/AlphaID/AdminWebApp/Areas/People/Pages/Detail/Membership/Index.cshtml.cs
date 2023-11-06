@@ -97,24 +97,24 @@ public class IndexModel : PageModel
     {
         [Display(Name = "Organization ID")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string OrganizationId { get; set; } = default!;
+        public string OrganizationId { get; init; } = default!;
 
         [Display(Name = "Department")]
         [StringLength(50)]
-        public string? Department { get; set; }
+        public string? Department { get; init; }
 
         [Display(Name = "Title")]
         [StringLength(50)]
-        public string? Title { get; set; }
+        public string? Title { get; init; }
 
         [Display(Name = "Remark")]
         [StringLength(50)]
-        public string? Remark { get; set; }
+        public string? Remark { get; init; }
 
         [Display(Name = "Owner")]
-        public bool IsOwner { get; set; } = false;
+        public bool IsOwner { get; init; } = false;
 
         [Display(Name = "Membership visibility")]
-        public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
+        public MembershipVisibility Visibility { get; init; } = MembershipVisibility.Private;
     }
 }

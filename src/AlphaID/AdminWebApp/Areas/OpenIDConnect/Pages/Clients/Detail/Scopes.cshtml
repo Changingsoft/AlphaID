@@ -6,21 +6,23 @@
 
 <form method="post">
     <ul class="list-group">
-        @for (var i = 0; i < this.Model.ScopeItems.Count; i++)
+        @for (var i = 0; i < Model.ScopeItems.Count; i++)
         {
             <li class="list-group-item">
+                @* ReSharper disable AccessToModifiedClosure *@
                 <label asp-for="ScopeItems[i].Selected" class="form-check-label">
-                    <input asp-for="ScopeItems[i].Selected" class="form-check-input" disabled="@this.Model.ScopeItems[i].Disabled">
-                    <span>@this.Model.ScopeItems[i].Value (@this.Model.ScopeItems[i].Text)</span>
+                    <input asp-for="ScopeItems[i].Selected" class="form-check-input" disabled="@Model.ScopeItems[i].Disabled">
+                    <span>@Model.ScopeItems[i].Value (@Model.ScopeItems[i].Text)</span>
                     <input asp-for="ScopeItems[i].Text" type="hidden">
                     <input asp-for="ScopeItems[i].Value" type="hidden">
                     <input asp-for="ScopeItems[i].Disabled" type="hidden">
                 </label>
+                @* ReSharper restore AccessToModifiedClosure *@
             </li>
         }
     </ul>
     <button type="submit" class="btn btn-primary">Apply changes</button>
-    <p>@this.Model.OperationMessage</p>
+    <p>@Model.OperationMessage</p>
 </form>
 
 <p>@L["About all available scopes, see <a href=\"#\">here</a>."]</p>

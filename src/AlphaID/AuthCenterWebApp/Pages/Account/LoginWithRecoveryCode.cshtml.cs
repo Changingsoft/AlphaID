@@ -13,9 +13,9 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class LoginWithRecoveryCodeModel : PageModel
 {
-    private readonly SignInManager<NaturalPerson> _signInManager;
-    private readonly NaturalPersonManager _userManager;
-    private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
+    private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly NaturalPersonManager userManager;
+    private readonly ILogger<LoginWithRecoveryCodeModel> logger;
     private readonly IIdentityServerInteractionService interactionService;
     private readonly IEventService eventService;
 
@@ -26,9 +26,9 @@ public class LoginWithRecoveryCodeModel : PageModel
         IIdentityServerInteractionService interactionService,
         IEventService eventService)
     {
-        this._signInManager = signInManager;
-        this._userManager = userManager;
-        this._logger = logger;
+        this.signInManager = signInManager;
+        this.userManager = userManager;
+        this.logger = logger;
         this.interactionService = interactionService;
         this.eventService = eventService;
     }
@@ -44,13 +44,13 @@ public class LoginWithRecoveryCodeModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Text)]
         [Display(Name = "Recovery code")]
-        public string RecoveryCode { get; set; }
+        public string RecoveryCode { get; init; }
     }
 
     public async Task<IActionResult> OnGetAsync(string returnUrl = null)
     {
         // Ensure the user has gone through the username & password screen first
-        _ = await this._signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+        _ = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
         this.ReturnUrl = returnUrl;
 
         return this.Page();
@@ -63,19 +63,19 @@ public class LoginWithRecoveryCodeModel : PageModel
             return this.Page();
         }
 
-        var user = await this._signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+        var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
         var recoveryCode = this.Input.RecoveryCode.Replace(" ", string.Empty);
 
-        var result = await this._signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-        _ = await this._userManager.GetUserIdAsync(user);
+        var result = await this.signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+        _ = await this.userManager.GetUserIdAsync(user);
 
         var context = await this.interactionService.GetAuthorizationContextAsync(returnUrl);
 
         if (result.Succeeded)
         {
-            this._logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
+            this.logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
 
-            await this.eventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
+            await this.eventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
             if (context != null)
             {
@@ -107,12 +107,12 @@ public class LoginWithRecoveryCodeModel : PageModel
         }
         if (result.IsLockedOut)
         {
-            this._logger.LogWarning("User account locked out.");
+            this.logger.LogWarning("User account locked out.");
             return this.RedirectToPage("./Lockout");
         }
         else
         {
-            this._logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
+            this.logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
             this.ModelState.AddModelError(string.Empty, "恢复代码无效。");
             return this.Page();
         }

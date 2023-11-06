@@ -1,10 +1,10 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = L[" Memberships"];
+    ViewBag.Title = L[" Memberships"];
 }
 @section Heads{
-    <link rel="stylesheet" href="~/lib//jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
 }
 @Html.DisplayFor(m => m.Result)
 <h2>@L["Memberships"]</h2>
@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var member in this.Model.OrganizationMembers)
+            @foreach (var member in Model.OrganizationMembers)
             {
                 <tr>
                     <td>
@@ -36,7 +36,7 @@
                     <td>@member.Remark</td>
                     <td>@member.Visibility</td>
                     <td>
-                        <a asp-page="Of" asp-route-anchor="@this.ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">Edit</a>
+                        <a asp-page="Of" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">Edit</a>
                         <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@L["Are you sure you want leave person from organization?"]');">@L["Leave"]</button>
                     </td>
                 </tr>
@@ -98,7 +98,7 @@
     <script>
         $(function () {
             $("[name='organizationSearch']").autocomplete({
-                source: "@(this.Url.Action("SearchOrganization", "IdService"))",
+                source: "@Url.Action("SearchOrganization", "IdService")",
                 minLength: 2,
                 appendTo: "#memberEditor",
                 select: function (event, ui) {

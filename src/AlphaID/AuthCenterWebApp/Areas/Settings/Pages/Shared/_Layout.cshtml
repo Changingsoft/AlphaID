@@ -1,7 +1,7 @@
-﻿@inject NaturalPersonManager userManager
+﻿@inject NaturalPersonManager UserManager
 @{
-    this.Layout = "/Pages/Shared/_Layout.cshtml";
-    var person = await this.userManager.GetUserAsync(this.User);
+    Layout = "/Pages/Shared/_Layout.cshtml";
+    var person = await UserManager.GetUserAsync(User);
 }
 
 @section Heads{

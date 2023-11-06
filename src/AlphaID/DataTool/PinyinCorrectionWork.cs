@@ -18,7 +18,7 @@ internal class PinyinCorrectionWork : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var scope = this.factory.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<IDSubjectsDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<IdSubjectsDbContext>();
         var count = 0;
         foreach (var person in db.People.Where(p => p.Name.Contains('洋')))
         {

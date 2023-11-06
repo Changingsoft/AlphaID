@@ -12,13 +12,13 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ResetPasswordMobileModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly IVerificationCodeService _verificationCodeService;
+    private readonly NaturalPersonManager userManager;
+    private readonly IVerificationCodeService verificationCodeService;
 
     public ResetPasswordMobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService)
     {
-        this._userManager = userManager;
-        this._verificationCodeService = verificationCodeService;
+        this.userManager = userManager;
+        this.verificationCodeService = verificationCodeService;
     }
 
     [BindProperty]
@@ -70,18 +70,18 @@ public class ResetPasswordMobileModel : PageModel
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = this._userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
+        var person = this.userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
         if (person == null || !person.PhoneNumberConfirmed)
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
         }
 
-        if (!await this._verificationCodeService.VerifyAsync(this.PhoneNumber, this.VerificationCode))
+        if (!await this.verificationCodeService.VerifyAsync(this.PhoneNumber, this.VerificationCode))
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
         }
 
-        var result = await this._userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
+        var result = await this.userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
         if (result.Succeeded)
         {
             return this.RedirectToPage("ResetPasswordConfirmation");

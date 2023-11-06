@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace IDSubjectsTests.Fixtures;
+namespace IDSubjects.Tests.Fixtures;
 
 [CollectionDefinition(nameof(ServiceProviderCollection))]
 public class ServiceProviderCollection : ICollectionFixture<ServiceProviderFixture>

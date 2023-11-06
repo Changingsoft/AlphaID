@@ -1,4 +1,4 @@
-﻿namespace DirectoryLogon;
+﻿namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// 

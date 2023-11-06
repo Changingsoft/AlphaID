@@ -12,7 +12,7 @@
 /// <param name="Issuer"></param>
 /// <param name="IssueDate"></param>
 /// <param name="Expires"></param>
-public record ChineseIDCardModel(string CardNumber,
+public record ChineseIdCardModel(string CardNumber,
                                  string Name,
                                  string Sex,
                                  DateTime DateOfBirth,

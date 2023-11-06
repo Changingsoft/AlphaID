@@ -5,20 +5,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.RealNameValid;
 
-public class ValidateChineseIDCardModel : PageModel
+public class ValidateChineseIdCardModel : PageModel
 {
-    private readonly ChineseIDCardManager realNameValidator;
+    private readonly ChineseIdCardManager realNameValidator;
     private readonly ChinesePersonNameFactory chinesePersonNameFactory;
-    private readonly ILogger<ValidateChineseIDCardModel> logger;
+    private readonly ILogger<ValidateChineseIdCardModel> logger;
 
-    public ValidateChineseIDCardModel(ChineseIDCardManager realNameValidator, ChinesePersonNameFactory chinesePersonNameFactory, ILogger<ValidateChineseIDCardModel> logger)
+    public ValidateChineseIdCardModel(ChineseIdCardManager realNameValidator, ChinesePersonNameFactory chinesePersonNameFactory, ILogger<ValidateChineseIdCardModel> logger)
     {
         this.realNameValidator = realNameValidator;
         this.chinesePersonNameFactory = chinesePersonNameFactory;
         this.logger = logger;
     }
 
-    public ChineseIDCardValidation Data { get; set; } = default!;
+    public ChineseIdCardValidation Data { get; set; } = default!;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -78,7 +78,7 @@ public class ValidateChineseIDCardModel : PageModel
         }
         catch (Exception ex)
         {
-            this.logger.LogWarning("An exception {exceptionType} was occured. message is : {message}", ex.GetType().Name, ex.Message);
+            this.logger.LogWarning("An exception {exceptionType} was occurred. message is : {message}", ex.GetType().Name, ex.Message);
             this.ModelState.AddModelError("", ex, this.MetadataProvider.GetMetadataForType(this.Input.GetType()));
             return this.Page();
         }
@@ -87,18 +87,18 @@ public class ValidateChineseIDCardModel : PageModel
     public class InputModel
     {
         [Display(Name = "Accepted")]
-        public bool Accepted { get; set; }
+        public bool Accepted { get; init; }
 
         [Display(Name = "Surname")]
-        public string? Surname { get; set; }
+        public string? Surname { get; init; }
 
         [Display(Name = "Given name")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; init; } = default!;
 
         [Display(Name = "Phonetic surname")]
-        public string? PinyinSurname { get; set; }
+        public string? PinyinSurname { get; init; }
 
         [Display(Name = "Phonetic given name")]
-        public string PinyinGivenName { get; set; } = default!;
+        public string PinyinGivenName { get; init; } = default!;
     }
 }

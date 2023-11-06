@@ -1,9 +1,8 @@
-﻿using IDSubjects;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.DirectoryServices;
 
-namespace DirectoryLogon;
+namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// Logon Account Manager.
@@ -50,15 +49,15 @@ public class LogonAccountManager
         //todo 查找重名。//主要是sAMAccountName和userProncipalName不能重复
         try
         {
-            using var userOU = directoryService.GetUserOUEntry();
-            using var userEntry = userOU.Children.Add($"CN={request.AccountName}", "user");
+            using var userOu = directoryService.GetUserOuEntry();
+            using var userEntry = userOu.Children.Add($"CN={request.AccountName}", "user");
             userEntry.Properties["displayName"].Value = request.DisplayName;
             userEntry.Properties["sn"].Value = request.Surname;
             userEntry.Properties["givenName"].Value = request.GivenName;
             userEntry.Properties["mobile"].Value = request.E164Mobile;
             if (request.Email != null)
                 userEntry.Properties["mail"].Value = request.Email;
-            userEntry.Properties["sAMAccountName"].Value = request.SAMAccountName;
+            userEntry.Properties["sAMAccountName"].Value = request.SamAccountName;
             userEntry.Properties["userPrincipalName"].Value = $"{request.UpnLeftPart}@{directoryService.UpnSuffix}";
             if (request.PinyinSurname != null)
                 userEntry.Properties["msDS-PhoneticLastName"].Value = request.PinyinSurname;

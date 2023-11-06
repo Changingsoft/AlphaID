@@ -7,10 +7,10 @@ namespace AlphaID.EntityFramework;
 
 public class NaturalPersonStore : NaturalPersonStoreBase
 {
-    private readonly IDSubjectsDbContext context;
+    private readonly IdSubjectsDbContext context;
     private readonly IdentityErrorDescriber? describer;
 
-    public NaturalPersonStore(IDSubjectsDbContext context, IdentityErrorDescriber? describer = null)
+    public NaturalPersonStore(IdSubjectsDbContext context, IdentityErrorDescriber? describer = null)
     {
         this.context = context;
         this.describer = describer;
@@ -70,7 +70,7 @@ public class NaturalPersonStore : NaturalPersonStoreBase
 
     public override async Task<NaturalPerson?> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
-        var login = await this.context.PersonLogins.FirstOrDefaultAsync(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey, cancellationToken);
+        var login = await this.context.PersonLogins.Include(naturalPersonLogin => naturalPersonLogin.User).FirstOrDefaultAsync(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey, cancellationToken);
         return login?.User;
     }
 

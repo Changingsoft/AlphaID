@@ -1,4 +1,4 @@
-namespace DirectoryLogonTests;
+namespace IDSubjects.DirectoryLogon.Tests;
 
 public class DirectoryServiceManagerTest
 {

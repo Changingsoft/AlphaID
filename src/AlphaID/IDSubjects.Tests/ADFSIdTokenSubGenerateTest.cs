@@ -2,15 +2,15 @@
 using System.Text;
 using Xunit;
 
-namespace IDSubjectsTests;
-public class ADFSIdTokenSubGenerateTest
+namespace IDSubjects.Tests;
+public class AdfsIdTokenSubGenerateTest
 {
     /// <summary>
     /// 用于测试校准Microsoft AD FS生成id token的sub字段。
-    /// <see cref="https://github.com/MicrosoftDocs/azure-docs/issues/16150"/>
+    /// <see href="https://github.com/MicrosoftDocs/azure-docs/issues/16150"/>
     /// </summary>
     //[Fact]
-    public void ADFSGenerateIdTokenSub()
+    public void AdfsGenerateIdTokenSub()
     {
         var clientId = @"<client-id>";
         var anchorValue = @"<anchor-value>";

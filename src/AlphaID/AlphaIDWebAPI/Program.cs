@@ -2,10 +2,9 @@ using AlphaID.DirectoryLogon.EntityFramework;
 using AlphaID.EntityFramework;
 using AlphaIDWebAPI;
 using AlphaIDWebAPI.Middlewares;
-using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
-using IDSubjects.DependencyInjection;
+using IDSubjects.DirectoryLogon;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -125,7 +124,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 //³Ö¾Ã»¯
-builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
+builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
@@ -146,15 +145,15 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
 
 //ASP.NET Identity NaturalPersonManager.
-builder.Services.AddIDSubjects(options =>
+builder.Services.AddIdSubjects(options =>
 {
 
 })
     .AddDefaultStores();
 
 
-builder.Services.AddScoped<ChineseIDCardManager>()
-    .AddScoped<IChineseIDCardValidationStore, RealNameValidationStore>();
+builder.Services.AddScoped<ChineseIdCardManager>()
+    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 var app = builder.Build();
 

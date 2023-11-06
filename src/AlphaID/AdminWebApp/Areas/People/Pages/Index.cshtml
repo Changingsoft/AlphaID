@@ -2,8 +2,8 @@
 @model IndexModel
 @inject NaturalPersonManager PersonManager
 @{
-    this.ViewBag.Title = this.L["People"];
-    var users = this.PersonManager.Users;
+    ViewBag.Title = L["People"];
+    var users = PersonManager.Users;
 }
 @section PageHeader{
     <div class="row align-items-center">

@@ -8,12 +8,12 @@ namespace AlphaIDWebAPI.Models;
 /// <param name="Domicile">住所</param>
 /// <param name="Contact">联系方式</param>
 /// <param name="LegalPersonName">组织的负责人或代表人名称</param>
-/// <param name="USCI">统一社会信用代码</param>
+/// <param name="Usci">统一社会信用代码</param>
 /// <param name="Expires">有效期</param>
 public record OrganizationModel(string? Domicile,
                                 string? Contact,
                                 string? LegalPersonName,
-                                string? USCI,
+                                string? Usci,
                                 DateOnly? Expires)
 {
     /// <summary>
@@ -24,7 +24,7 @@ public record OrganizationModel(string? Domicile,
         : this(organization.Domicile,
                organization.Contact,
                organization.Representative,
-               organization.USCI,
+               organization.Usci,
                organization.TermEnd)
     {
         this.SubjectId = organization.Id;

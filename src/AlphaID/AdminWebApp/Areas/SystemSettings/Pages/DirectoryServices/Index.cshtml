@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    this.ViewBag.Title = "Directory Services Management";
+    ViewBag.Title = "Directory Services Management";
 }
 <h1>Directory service</h1>
 
@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var service in this.Model.DirectoryServices)
+        @foreach (var service in Model.DirectoryServices)
         {
             <tr>
                 <td><a asp-page="Detail" asp-route-id="@service.Id">@service.Name</a></td>

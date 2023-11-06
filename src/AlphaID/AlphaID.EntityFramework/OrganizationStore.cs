@@ -4,9 +4,9 @@ namespace AlphaID.EntityFramework;
 
 public class OrganizationStore : IOrganizationStore
 {
-    private readonly IDSubjectsDbContext dbContext;
+    private readonly IdSubjectsDbContext dbContext;
 
-    public OrganizationStore(IDSubjectsDbContext dbContext)
+    public OrganizationStore(IdSubjectsDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
@@ -39,7 +39,7 @@ public class OrganizationStore : IOrganizationStore
 
         identityType = identityType.Trim();
         identityValue = identityValue.Trim();
-        var organization = this.dbContext.Organizations.FirstOrDefault(p => p.USCI == identityValue);
+        var organization = this.dbContext.Organizations.FirstOrDefault(p => p.Usci == identityValue);
 
         return Task.FromResult(organization);
     }

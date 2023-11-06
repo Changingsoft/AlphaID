@@ -72,6 +72,6 @@ public class DeleteModel : PageModel
 
         [Display(Name = "Display name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; init; } = default!;
     }
 }

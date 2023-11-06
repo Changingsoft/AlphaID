@@ -12,7 +12,7 @@ using NetTopologySuite.Geometries;
 
 namespace DatabaseTool.Migrations.IDSubjectsDb
 {
-    [DbContext(typeof(IDSubjectsDbContext))]
+    [DbContext(typeof(IdSubjectsDbContext))]
     [Migration("20231029181406_Init")]
     partial class Init
     {

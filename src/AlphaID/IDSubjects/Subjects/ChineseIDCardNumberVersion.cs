@@ -3,7 +3,7 @@
 /// <summary>
 /// 身份证号码的版本。
 /// </summary>
-public static class ChineseIDCardNumberVersion
+public static class ChineseIdCardNumberVersion
 {
     /// <summary>
     /// 表示第一代身份证号码。

@@ -52,21 +52,19 @@ public class ChinesePersonNamePinyinConverter
     /// <returns></returns>
     public PhoneticChineseChar Convert(char chineseChar)
     {
-        if (ChineseChar.IsValidChar(chineseChar))
+        if (!ChineseChar.IsValidChar(chineseChar))
         {
-            var cc = new ChineseChar(chineseChar);
-            var pinyinList = new List<string>();
-            for (int i = 0; i < cc.PinyinCount; i++)
-            {
-                if (!this.WithTone)
-                    pinyinList.Add(cc.Pinyins[i].ToUpper()[0..^1]);
-                else
-                    pinyinList.Add(cc.Pinyins[i].ToUpper());
-            }
-            return new PhoneticChineseChar(chineseChar, pinyinList.ToArray());
-        }
-        else
             return new PhoneticChineseChar(chineseChar, new[] { $"{char.ToUpper(chineseChar)}" });
+        }
+
+        var cc = new ChineseChar(chineseChar);
+        var pinyinList = new List<string>();
+        for (int i = 0; i < cc.PinyinCount; i++)
+        {
+            pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[0..^1] : cc.Pinyins[i].ToUpper());
+        }
+        return new PhoneticChineseChar(chineseChar, pinyinList.ToArray());
+
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
     private readonly SystemUrlInfo systemUrl;
 
     public PersonClaimsPrincipalFactory(NaturalPersonManager userManager,
-                                        IOptions<IDSubjectsOptions> optionsAccessor,
+                                        IOptions<IdSubjectsOptions> optionsAccessor,
                                         IOptions<SystemUrlInfo> systemUrlOptions)
         : base(userManager, optionsAccessor)
     {

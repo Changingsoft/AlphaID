@@ -1,7 +1,7 @@
 ﻿@page
 @model CreateModel
 @{
-    this.ViewBag.Title = L["Create person"];
+    ViewBag.Title = L["Create person"];
 }
 
 <h2>Create person</h2>
@@ -91,7 +91,7 @@
 
         function updateForms() {
             $("#Input_DisplayName").val($("#Input_Surname").val() + $("#Input_GivenName").val());
-            $.get("@(this.Url.PageLink(pageHandler: "Pinyin"))", { surname: $("#Input_Surname").val(), givenName: $("#Input_GivenName").val() }, function (data, status, xhr) {
+            $.get("@Url.PageLink(pageHandler: "Pinyin")", { surname: $("#Input_Surname").val(), givenName: $("#Input_GivenName").val() }, function (data, status, xhr) {
                 $("#Input_PhoneticDisplayName").val(data);
             });
         }

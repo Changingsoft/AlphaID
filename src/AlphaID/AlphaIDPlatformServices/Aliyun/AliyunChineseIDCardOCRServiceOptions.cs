@@ -3,7 +3,7 @@
 /// <summary>
 /// 阿里云身份证OCR识别服务选项。
 /// </summary>
-public class AliyunChineseIDCardOCRServiceOptions
+public class AliyunChineseIdCardOcrServiceOptions
 {
     /// <summary>
     /// 服务基地址。

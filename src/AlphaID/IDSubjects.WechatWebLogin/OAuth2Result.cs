@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WechatWebLogin;
+namespace IDSubjects.WechatWebLogin;
 
 /// <summary>
 /// OAuth2结果。
@@ -20,7 +20,7 @@ public class OAuth2Result
     public string TokenType { get; set; } = default!;
 
     /// <summary>
-    /// Expires in secends.
+    /// Expires in seconds.
     /// </summary>
     [JsonProperty("expires_in")]
     public int ExpiresIn { get; set; }

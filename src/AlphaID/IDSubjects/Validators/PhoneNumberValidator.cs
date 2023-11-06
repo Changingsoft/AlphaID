@@ -19,21 +19,23 @@ public class PhoneNumberValidator : IUserValidator<NaturalPerson>
         var naturalPersonManager = manager as NaturalPersonManager ?? throw new InvalidOperationException("无法转换UserManger到NaturalPersonManager。");
         var errors = new List<IdentityError>();
         var phoneNumber = await naturalPersonManager.GetPhoneNumberAsync(user);
-        if (phoneNumber != null)
+        if (phoneNumber == null)
         {
-            if (MobilePhoneNumber.TryParse(phoneNumber, out var number))
+            return errors.Count > 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;
+        }
+
+        if (MobilePhoneNumber.TryParse(phoneNumber, out var number))
+        {
+            var owner = await naturalPersonManager.FindByMobileAsync(number.ToString());
+            if (owner != null && !string.Equals(user.Id, owner.Id))
             {
-                var owner = await naturalPersonManager.FindByMobileAsync(number.ToString());
-                if (owner != null && !string.Equals(user.Id, owner.Id))
-                {
-                    //手机号已存在且不隶属该用户，则提示手机号重复。
-                    errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.DuplicatePhoneNumber());
-                }
+                //手机号已存在且不隶属该用户，则提示手机号重复。
+                errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.DuplicatePhoneNumber());
             }
-            else
-            {
-                errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.InvalidPhoneNumberFormat());
-            }
+        }
+        else
+        {
+            errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.InvalidPhoneNumberFormat());
         }
 
         return errors.Count > 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;

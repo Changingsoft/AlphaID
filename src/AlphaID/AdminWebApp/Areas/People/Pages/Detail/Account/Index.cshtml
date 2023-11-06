@@ -4,10 +4,10 @@
     ViewBag.Title = L["Account"];
 }
 <h2>@ViewBag.Title</h2>
-@if (this.Model.OperationResultMessage != null)
+@if (Model.OperationResultMessage != null)
 {
     <div class="alert alert-success">
-        @this.Model.OperationResultMessage
+        @Model.OperationResultMessage
     </div>
 }
 
@@ -21,11 +21,11 @@
     <button type="submit" class="btn btn-primary">@L["Update"]</button>
 </form>
 
-<p>Local login: @(this.Model.HasPassword)</p>
+<p>Local login: @Model.HasPassword</p>
 <p>Two Factor Authentication (TOPT): @(Model.Data.TwoFactorEnabled)</p>
 <p>Login failed counter：@Model.Data.AccessFailedCount</p>
 <p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
-@if (!this.Model.HasPassword)
+@if (!Model.HasPassword)
 {
     <p><a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a></p>
 }

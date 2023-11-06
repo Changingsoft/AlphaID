@@ -1,12 +1,12 @@
-﻿@inject OrganizationManager manager
+﻿@inject OrganizationManager Manager
 @{
     Layout = "Shared/_Layout";
 
-    var id = this.ViewContext.RouteData.Values["anchor"]?.ToString();
+    var id = ViewContext.RouteData.Values["anchor"]?.ToString();
     GenericOrganization? org = null;
     if (id != null)
     {
-        org = await this.manager.FindByIdAsync(id);
+        org = await Manager.FindByIdAsync(id);
     }
 }
 @section PageHeader{

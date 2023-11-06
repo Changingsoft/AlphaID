@@ -6,15 +6,15 @@ namespace IDSubjects.RealName;
 /// 中国居民身份证管理器。
 /// </summary>
 [Obsolete]
-public class ChineseIDCardManager
+public class ChineseIdCardManager
 {
-    private readonly IChineseIDCardValidationStore store;
+    private readonly IChineseIdCardValidationStore store;
 
     /// <summary>
     /// 初始化实名验证器。
     /// </summary>
     /// <param name="store"></param>
-    public ChineseIDCardManager(IChineseIDCardValidationStore store)
+    public ChineseIdCardManager(IChineseIdCardValidationStore store)
     {
         this.store = store;
     }
@@ -22,7 +22,7 @@ public class ChineseIDCardManager
     /// <summary>
     /// 获取等待审批的实名认证请求。
     /// </summary>
-    public IEnumerable<ChineseIDCardValidation> PendingValidations
+    public IEnumerable<ChineseIdCardValidation> PendingValidations
     {
         get
         {
@@ -33,14 +33,14 @@ public class ChineseIDCardManager
     /// <summary>
     /// 获取Validations.
     /// </summary>
-    public IQueryable<ChineseIDCardValidation> Validations => this.store.RealNameValidations;
+    public IQueryable<ChineseIdCardValidation> Validations => this.store.RealNameValidations;
 
     /// <summary>
     /// 获取当前待定的实名认证。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public Task<ChineseIDCardValidation?> GetPendingRequestAsync(NaturalPerson person)
+    public Task<ChineseIdCardValidation?> GetPendingRequestAsync(NaturalPerson person)
     {
         return this.store.GetPendingRequestAsync(person);
     }
@@ -50,7 +50,7 @@ public class ChineseIDCardManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public Task<ChineseIDCardValidation?> GetCurrentAsync(NaturalPerson person)
+    public Task<ChineseIdCardValidation?> GetCurrentAsync(NaturalPerson person)
     {
         return this.store.GetCurrentAsync(person);
     }
@@ -60,7 +60,7 @@ public class ChineseIDCardManager
     /// </summary>
     /// <param name="validation"></param>
     /// <returns></returns>
-    public Task UpdateAsync(ChineseIDCardValidation validation)
+    public Task UpdateAsync(ChineseIdCardValidation validation)
     {
         return this.store.UpdateAsync(validation);
     }
@@ -73,7 +73,7 @@ public class ChineseIDCardManager
     /// <param name="accepted"></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task ValidateAsync(ChineseIDCardValidation validation, string validator, bool accepted)
+    public async Task ValidateAsync(ChineseIdCardValidation validation, string validator, bool accepted)
     {
         if (validation.Result != null)
         {
@@ -104,7 +104,7 @@ public class ChineseIDCardManager
     /// <param name="validation"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task CommitAsync(NaturalPerson person, ChineseIDCardValidation validation)
+    public async Task CommitAsync(NaturalPerson person, ChineseIdCardValidation validation)
     {
         validation.Person = person;
         validation.PersonId = person.Id;
@@ -118,7 +118,7 @@ public class ChineseIDCardManager
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public ValueTask<ChineseIDCardValidation?> FindByIdAsync(int id)
+    public ValueTask<ChineseIdCardValidation?> FindByIdAsync(int id)
     {
         return this.store.FindByIdAsync(id);
     }

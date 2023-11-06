@@ -1,4 +1,4 @@
-﻿namespace DirectoryLogon;
+﻿namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// Request for create account
@@ -13,7 +13,7 @@ public class CreateAccountRequest
     /// <summary>
     /// 
     /// </summary>
-    public string SAMAccountName { get; set; } = default!;
+    public string SamAccountName { get; set; } = default!;
 
     /// <summary>
     /// 

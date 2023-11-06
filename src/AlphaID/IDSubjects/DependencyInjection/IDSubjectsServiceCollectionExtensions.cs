@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// Extensions for IDSubjects service injection.
 /// </summary>
-public static class IDSubjectsServiceCollectionExtensions
+public static class IdSubjectsServiceCollectionExtensions
 {
 
     /// <summary>
@@ -18,7 +18,7 @@ public static class IDSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIDSubjects(this IServiceCollection services, Action<IDSubjectsOptions>? setupAction = null)
+    public static IdentityBuilder AddIdSubjects(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
     {
         // 由IDSubjects使用的服务。
         services.TryAddScoped<OrganizationManager>();
@@ -34,7 +34,7 @@ public static class IDSubjectsServiceCollectionExtensions
 
         if(setupAction != null)
         {
-            services.Configure<IDSubjectsOptions>(setupAction);
+            services.Configure<IdSubjectsOptions>(setupAction);
         }
 
         return builder;

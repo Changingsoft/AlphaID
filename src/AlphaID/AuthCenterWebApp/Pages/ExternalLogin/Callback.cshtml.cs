@@ -1,4 +1,3 @@
-using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using IdentityModel;
@@ -18,12 +17,12 @@ namespace AuthCenterWebApp.Pages.ExternalLogin;
 [SecurityHeaders]
 public class Callback : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly SignInManager<NaturalPerson> _signInManager;
-    private readonly IIdentityServerInteractionService _interaction;
-    private readonly ILogger<Callback> _logger;
-    private readonly IEventService _events;
-    private readonly ChinesePersonNamePinyinConverter _chinesePersonNamePinyinConverter;
+    private readonly NaturalPersonManager userManager;
+    private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly IIdentityServerInteractionService interaction;
+    private readonly ILogger<Callback> logger;
+    private readonly IEventService events;
+    private readonly ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter;
     private readonly ChinesePersonNameFactory chinesePersonNameFactory;
 
     public Callback(
@@ -35,12 +34,12 @@ public class Callback : PageModel
         ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
         ChinesePersonNameFactory chinesePersonNameFactory)
     {
-        this._userManager = userManager;
-        this._signInManager = signInManager;
-        this._interaction = interaction;
-        this._logger = logger;
-        this._events = events;
-        this._chinesePersonNamePinyinConverter = chinesePersonNamePinyinConverter;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
+        this.interaction = interaction;
+        this.logger = logger;
+        this.events = events;
+        this.chinesePersonNamePinyinConverter = chinesePersonNamePinyinConverter;
         this.chinesePersonNameFactory = chinesePersonNameFactory;
     }
 
@@ -55,10 +54,10 @@ public class Callback : PageModel
 
         var externalUser = result.Principal;
 
-        if (this._logger.IsEnabled(LogLevel.Debug))
+        if (this.logger.IsEnabled(LogLevel.Debug))
         {
             var externalClaims = externalUser.Claims.Select(c => $"{c.Type}: {c.Value}");
-            this._logger.LogDebug("External claims: {@claims}", externalClaims);
+            this.logger.LogDebug("External claims: {@claims}", externalClaims);
         }
 
         // lookup our user and external provider info
@@ -75,7 +74,7 @@ public class Callback : PageModel
         var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 
         // find external user
-        var user = await this._userManager.FindByLoginAsync(provider, providerUserId);
+        var user = await this.userManager.FindByLoginAsync(provider, providerUserId);
         //这可能是您可以启动用户注册的自定义工作流的位置
         if (user == null)
         {
@@ -92,7 +91,7 @@ public class Callback : PageModel
         this.CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
 
         // issue authentication cookie for user
-        await this._signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
+        await this.signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
         // delete temporary cookie used during external authentication
         await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -100,8 +99,8 @@ public class Callback : PageModel
         // retrieve return URL
 
         // check if external login is in the context of an OIDC request
-        var context = await this._interaction.GetAuthorizationContextAsync(returnUrl);
-        await this._events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id.ToString(), user.UserName, true, context?.Client.ClientId));
+        var context = await this.interaction.GetAuthorizationContextAsync(returnUrl);
+        await this.events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true, context?.Client.ClientId));
 
         if (context != null)
         {
@@ -133,7 +132,7 @@ public class Callback : PageModel
 
         var displayName = claims.FirstOrDefault(p => p.Type == "displayName")?.Value ?? claims.FirstOrDefault(p => p.Type == "http://schemas.changingsoft.com/ws/2013/05/identity/claims/displayname")?.Value ?? lastName + firstName;
 
-        var (phoneticSurname, phoneticGivenName) = this._chinesePersonNamePinyinConverter.Convert(lastName, firstName);
+        var (phoneticSurname, phoneticGivenName) = this.chinesePersonNamePinyinConverter.Convert(lastName, firstName);
         var chinesePersonName = new ChinesePersonName(lastName, firstName, phoneticSurname, phoneticGivenName);
         var phoneticDisplayName = $"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim();
 
@@ -161,18 +160,18 @@ public class Callback : PageModel
         // create a list of claims that we want to transfer into our store
         //
 
-        var identityResult = await this._userManager.CreateAsync(user);
+        var identityResult = await this.userManager.CreateAsync(user);
         if (!identityResult.Succeeded)
             throw new Exception(identityResult.Errors.First().Description);
 
         if (filtered.Any())
         {
-            identityResult = await this._userManager.AddClaimsAsync(user, filtered);
+            identityResult = await this.userManager.AddClaimsAsync(user, filtered);
             if (!identityResult.Succeeded)
                 throw new Exception(identityResult.Errors.First().Description);
         }
 
-        identityResult = await this._userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, providerDisplayName));
+        identityResult = await this.userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, providerDisplayName));
         return !identityResult.Succeeded ? throw new Exception(identityResult.Errors.First().Description) : user;
     }
 

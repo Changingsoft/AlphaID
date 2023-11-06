@@ -1,8 +1,8 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
-    this.Layout = "_AuthenticationLayout";
-    this.ViewBag.Title = this.L["Create your {0}", this.Product.Value.Name];
+    Layout = "_AuthenticationLayout";
+    ViewBag.Title = L["Create your {0}", Product.Value.Name];
 }
 
 @section Heads
@@ -18,10 +18,10 @@
                 @Product.Value.Name
             </a>
         </div>
-        @if (this.Model.ExternalLoginMessage != null)
+        @if (Model.ExternalLoginMessage != null)
         {
             <div class="alert alert-primary">
-                <p>@this.Model.ExternalLoginMessage</p>
+                <p>@Model.ExternalLoginMessage</p>
             </div>
         }
         <form method="post" class="card card-md">

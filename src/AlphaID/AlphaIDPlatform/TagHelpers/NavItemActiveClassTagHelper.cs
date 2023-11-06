@@ -41,21 +41,19 @@ public class NavItemActiveClassTagHelper : TagHelper
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         var currentPath = this.ViewContext.HttpContext.Request.Path.Value;
-        bool result;
-        if (this.MatchPrefix)
-            result = currentPath!.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase);
-        else
-            result = string.Equals(this.Path, currentPath, StringComparison.OrdinalIgnoreCase);
+        bool result = this.MatchPrefix ? currentPath!.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase) : string.Equals(this.Path, currentPath, StringComparison.OrdinalIgnoreCase);
 
-        if (result)
+        if (!result)
         {
-            var existingClasses = output.Attributes["class"].Value.ToString();
-            if (output.Attributes["class"] != null)
-            {
-                output.Attributes.Remove(output.Attributes["class"]);
-            }
-
-            output.Attributes.Add("class", $"{existingClasses} active");
+            return;
         }
+
+        var existingClasses = output.Attributes["class"].Value.ToString();
+        if (output.Attributes["class"] != null)
+        {
+            output.Attributes.Remove(output.Attributes["class"]);
+        }
+
+        output.Attributes.Add("class", $"{existingClasses} active");
     }
 }

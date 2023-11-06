@@ -15,7 +15,7 @@ builder
         })
         .ConfigureServices((hostContext, services) =>
         {
-            services.AddDbContext<IDSubjectsDbContext>(options =>
+            services.AddDbContext<IdSubjectsDbContext>(options =>
             {
                 options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
                 {

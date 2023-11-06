@@ -10,15 +10,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class SetPasswordModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly SignInManager<NaturalPerson> _signInManager;
+    private readonly NaturalPersonManager userManager;
+    private readonly SignInManager<NaturalPerson> signInManager;
 
     public SetPasswordModel(
         NaturalPersonManager userManager,
         SignInManager<NaturalPerson> signInManager)
     {
-        this._userManager = userManager;
-        this._signInManager = signInManager;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
     }
 
     [BindProperty]
@@ -33,23 +33,23 @@ public class SetPasswordModel : PageModel
         [StringLength(100, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
-        public string NewPassword { get; set; }
+        public string NewPassword { get; init; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; init; }
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
-        var hasPassword = await this._userManager.HasPasswordAsync(user);
+        var hasPassword = await this.userManager.HasPasswordAsync(user);
 
         return hasPassword ? this.RedirectToPage("./ChangePassword") : this.Page();
     }
@@ -61,13 +61,13 @@ public class SetPasswordModel : PageModel
             return this.Page();
         }
 
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
-        var addPasswordResult = await this._userManager.AddPasswordAsync(user, this.Input.NewPassword);
+        var addPasswordResult = await this.userManager.AddPasswordAsync(user, this.Input.NewPassword);
         if (!addPasswordResult.Succeeded)
         {
             foreach (var error in addPasswordResult.Errors)
@@ -77,7 +77,7 @@ public class SetPasswordModel : PageModel
             return this.Page();
         }
 
-        await this._signInManager.RefreshSignInAsync(user);
+        await this.signInManager.RefreshSignInAsync(user);
         this.StatusMessage = "您的密码已设置。";
 
         return this.RedirectToPage();

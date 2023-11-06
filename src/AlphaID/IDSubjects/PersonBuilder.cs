@@ -19,7 +19,7 @@ public class PersonBuilder
     }
 
     /// <summary>
-    /// Set mobile phone numebr.
+    /// Set mobile phone number.
     /// </summary>
     /// <param userName="mobilePhoneNumber"></param>
     /// <returns></returns>

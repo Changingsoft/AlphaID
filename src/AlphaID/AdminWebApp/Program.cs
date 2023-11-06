@@ -9,11 +9,11 @@ using AlphaID.PlatformServices.Primitives;
 using AlphaIDPlatform;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatform.RazorPages;
-using DirectoryLogon;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
 using IDSubjects.ChineseName;
+using IDSubjects.DirectoryLogon;
 using IDSubjects.RealName;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -139,7 +139,7 @@ builder.Services
     });
 
 //注册IDSubjects DbContext.
-builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
+builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
@@ -165,7 +165,7 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 });
 
 //自然人管理器
-var identityBuilder = builder.Services.AddIDSubjects()
+var identityBuilder = builder.Services.AddIdSubjects()
     .AddDefaultStores();
 
 if(true)
@@ -175,11 +175,11 @@ if(true)
 }
 
 //实名身份验证器。
-builder.Services.AddScoped<ChineseIDCardManager>()
-    .AddScoped<IChineseIDCardValidationStore, RealNameValidationStore>();
+builder.Services.AddScoped<ChineseIdCardManager>()
+    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 //身份证OCR识别
-builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
+builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
 
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();

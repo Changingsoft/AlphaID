@@ -2,7 +2,7 @@
 @model AdminWebApp.Areas.OpenIDConnect.Pages.ActiveSessionsModel
 @inject PersistedGrantDbContext DbContext;
 @{
-    this.ViewBag.Title = this.L["Active Sessions"];
+    ViewBag.Title = L["Active Sessions"];
 }
 @section PageHeader{
     <h1>@L["Active Sessions"]</h1>
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var a in this.DbContext.ServerSideSessions)
+            @foreach (var a in DbContext.ServerSideSessions)
             {
                 <tr>
                     <td>@a.SessionId</td>

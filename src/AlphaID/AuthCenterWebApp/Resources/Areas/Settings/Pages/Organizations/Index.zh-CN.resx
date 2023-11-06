@@ -98,4 +98,12 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="Organizations" xml:space="preserve">
+		<value>Organizations</value>
+		<comment>Organizations</comment>
+	</data>
+	<data name="You are the owner of this organization." xml:space="preserve">
+		<value>You are the owner of this organization.</value>
+		<comment>You are the owner of this organization.</comment>
+	</data>
 </root>

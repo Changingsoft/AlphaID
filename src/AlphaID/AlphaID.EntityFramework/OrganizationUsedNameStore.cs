@@ -3,9 +3,9 @@
 namespace AlphaID.EntityFramework;
 public class OrganizationUsedNameStore : IQueryableOrganizationUsedNameStore
 {
-    private readonly IDSubjectsDbContext dbContext;
+    private readonly IdSubjectsDbContext dbContext;
 
-    public OrganizationUsedNameStore(IDSubjectsDbContext dbContext)
+    public OrganizationUsedNameStore(IdSubjectsDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

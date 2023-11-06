@@ -25,7 +25,7 @@ public class SmtpMailSender : IEmailSender
     }
 
     /// <summary>
-    /// Send email to specificed recipient with subject and html message body.
+    /// Send email to specified recipient with subject and html message body.
     /// </summary>
     /// <param name="email">Recipient.</param>
     /// <param name="subject">Title of this mail.</param>

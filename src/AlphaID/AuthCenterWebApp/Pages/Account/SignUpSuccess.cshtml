@@ -1,8 +1,8 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.SignUpSuccessModel
 @{
-    this.ViewBag.Title = this.L["Register confirmation"];
+    ViewBag.Title = L["Register confirmation"];
 }
 <h1>@ViewBag.Title</h1>
 
-<p><a href="@this.User.ProfileUrl()" class="btn btn-primary">@L["Continue"]</a></p>
+<p><a href="@User.ProfileUrl()" class="btn btn-primary">@L["Continue"]</a></p>

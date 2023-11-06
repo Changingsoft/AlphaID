@@ -1,4 +1,4 @@
-﻿namespace DirectoryLogon;
+﻿namespace IDSubjects.DirectoryLogon;
 
 /// <summary>
 /// 提供登录账户的可查询能力。

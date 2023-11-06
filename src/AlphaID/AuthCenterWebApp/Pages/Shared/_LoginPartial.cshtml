@@ -1,15 +1,14 @@
 ﻿@inject SignInManager<NaturalPerson> SignInManager
-@inject NaturalPersonManager UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
     <partial name="_NotificationPartial" />
     <div class="nav-item dropdown">
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-            <span class="avatar avatar-sm" style="background-image: url('@this.User.AvatarUrl()')"></span>
+            <span class="avatar avatar-sm" style="background-image: url('@User.AvatarUrl()')"></span>
             <div class="d-none d-xl-block ps-2">
-                <div>@this.User.Identity?.Name</div>
-                <div class="mt-1 small text-secondary">@this.User.DisplayRoles()</div>
+                <div>@User.Identity?.Name</div>
+                <div class="mt-1 small text-secondary">@User.DisplayRoles()</div>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

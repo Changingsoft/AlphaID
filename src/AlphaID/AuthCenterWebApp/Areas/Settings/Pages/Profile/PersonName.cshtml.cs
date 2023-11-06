@@ -60,27 +60,27 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         {
             [Display(Name = "Surname")]
             [StringLength(10)]
-            public string? Surname { get; set; }
+            public string? Surname { get; init; }
 
             [Display(Name = "MiddleName")]
             [StringLength(10)]
-            public string? MiddleName { get; set; }
+            public string? MiddleName { get; init; }
 
             [Display(Name = "GivenName")]
             [StringLength(10)]
-            public string? GivenName { get; set; }
+            public string? GivenName { get; init; }
 
             [Display(Name = "PhoneticSurname")]
             [StringLength(10)]
-            public string? PhoneticSurname { get; set; }
+            public string? PhoneticSurname { get; init; }
 
             [Display(Name = "PhoneticGivenName")]
             [StringLength(10)]
-            public string? PhoneticGivenName { get; set; }
+            public string? PhoneticGivenName { get; init; }
 
             [Display(Name = "NickName")]
             [StringLength(10)]
-            public string? NickName { get; set; }
+            public string? NickName { get; init; }
         }
     }
 }

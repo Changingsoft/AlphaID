@@ -54,20 +54,20 @@ public class ChangeNameModel : PageModel
     public class InputModel
     {
         [Display(Name = "Current name")]
-        public string CurrentName { get; set; } = default!;
+        public string CurrentName { get; init; } = default!;
 
         [Display(Name = "New name")]
         [StringLength(100, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string NewName { get; set; } = default!;
+        public string NewName { get; init; } = default!;
 
         [DataType(DataType.Date)]
         [Display(Name = "When changed")]
-        public DateTime ChangeDate { get; set; } = DateTime.Now;
+        public DateTime ChangeDate { get; init; } = DateTime.Now;
 
         [Display(Name = "Record used name")]
-        public bool RecordUsedName { get; set; } = true;
+        public bool RecordUsedName { get; init; } = true;
 
         [Display(Name = "Apply changes when name duplicated")]
-        public bool ApplyChangeWhenNameDuplicated { get; set; } = false;
+        public bool ApplyChangeWhenNameDuplicated { get; init; } = false;
     }
 }

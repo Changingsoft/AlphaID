@@ -5,7 +5,7 @@
 /// </summary>
 public class NopVerificationCodeService : IVerificationCodeService
 {
-    private readonly ILogger<NopVerificationCodeService> _logger;
+    private readonly ILogger<NopVerificationCodeService> logger;
 
     /// <summary>
     /// Ctor.
@@ -13,7 +13,7 @@ public class NopVerificationCodeService : IVerificationCodeService
     /// <param name="logger"></param>
     public NopVerificationCodeService(ILogger<NopVerificationCodeService> logger)
     {
-        this._logger = logger;
+        this.logger = logger;
     }
 
     /// <summary>
@@ -23,7 +23,7 @@ public class NopVerificationCodeService : IVerificationCodeService
     /// <returns></returns>
     public Task SendAsync(string mobile)
     {
-        this._logger.LogInformation("已模拟向{mobile}发送短信验证码。若使用该模拟服务验证验证码，请输入任意数字即可。", mobile);
+        this.logger.LogInformation("已模拟向{mobile}发送短信验证码。若使用该模拟服务验证验证码，请输入任意数字即可。", mobile);
         return Task.CompletedTask;
     }
 
@@ -35,7 +35,7 @@ public class NopVerificationCodeService : IVerificationCodeService
     /// <returns></returns>
     public Task<bool> VerifyAsync(string mobile, string code)
     {
-        this._logger.LogInformation("已验证{mobile}的验证码{code}。该模拟服务总是向调用方返回true。", mobile, code);
+        this.logger.LogInformation("已验证{mobile}的验证码{code}。该模拟服务总是向调用方返回true。", mobile, code);
         return Task.FromResult(true);
     }
 }

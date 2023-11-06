@@ -7,9 +7,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace AlphaID.EntityFramework;
 
-public class IDSubjectsDbContext : DbContext
+public class IdSubjectsDbContext : DbContext
 {
-    public IDSubjectsDbContext([NotNull] DbContextOptions<IDSubjectsDbContext> options) : base(options)
+    public IdSubjectsDbContext([NotNull] DbContextOptions<IdSubjectsDbContext> options) : base(options)
     {
         
     }
@@ -42,7 +42,7 @@ public class IDSubjectsDbContext : DbContext
 
     public DbSet<NaturalPersonToken> PersonTokens { get; protected set; } = default!;
 
-    public DbSet<ChineseIDCardValidation> RealNameValidations { get; protected set; } = default!;
+    public DbSet<ChineseIdCardValidation> RealNameValidations { get; protected set; } = default!;
 
     /// <summary>
     /// Organizations.
@@ -97,7 +97,7 @@ public class IDSubjectsDbContext : DbContext
 
         builder.Entity<GenericOrganization>(e =>
         {
-            e.HasIndex(p => p.USCI).IsUnique(true).HasFilter(@"[USCI] IS NOT NULL");
+            e.HasIndex(p => p.Usci).IsUnique(true).HasFilter(@"[USCI] IS NOT NULL");
         });
 
 
@@ -136,9 +136,9 @@ public class IDSubjectsDbContext : DbContext
     }
 
     /// <summary>
-    /// Converts <see cref="DateOnly?" /> to <see cref="DateTime?"/> and vice versa.
+    /// Converts <see cref="DateOnly" /> to <see cref="DateTime"/> and vice versa.
     /// </summary>
-    public class NullableDateOnlyConverter : ValueConverter<DateOnly?, DateTime?>
+    private class NullableDateOnlyConverter : ValueConverter<DateOnly?, DateTime?>
     {
         /// <summary>
         /// Creates a new instance of this converter.

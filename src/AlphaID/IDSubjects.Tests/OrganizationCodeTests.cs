@@ -1,7 +1,7 @@
 ﻿using IDSubjects.Subjects;
 using Xunit;
 
-namespace IDSubjectsTests;
+namespace IDSubjects.Tests;
 
 public class OrganizationCodeTests
 {

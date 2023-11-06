@@ -13,18 +13,18 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class LoginWith2faModel : PageModel
+public class LoginWith2FaModel : PageModel
 {
     private readonly SignInManager<NaturalPerson> signInManager;
     private readonly NaturalPersonManager userManager;
-    private readonly ILogger<LoginWith2faModel> logger;
+    private readonly ILogger<LoginWith2FaModel> logger;
     private readonly IIdentityServerInteractionService interactionService;
     private readonly IEventService eventService;
 
-    public LoginWith2faModel(
+    public LoginWith2FaModel(
         SignInManager<NaturalPerson> signInManager,
         NaturalPersonManager userManager,
-        ILogger<LoginWith2faModel> logger,
+        ILogger<LoginWith2FaModel> logger,
         IIdentityServerInteractionService interactionService,
         IEventService eventService)
     {
@@ -48,16 +48,16 @@ public class LoginWith2faModel : PageModel
         [StringLength(7, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Text)]
         [Display(Name = "Two-factor code")]
-        public string TwoFactorCode { get; set; }
+        public string TwoFactorCode { get; init; }
 
         [Display(Name = "Remember this device")]
-        public bool RememberMachine { get; set; }
+        public bool RememberMachine { get; init; }
     }
 
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
     {
         // Ensure the user has gone through the username & password screen first
-        _ = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+        _ = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
         this.ReturnUrl = returnUrl;
         this.RememberMe = rememberMe;
 
@@ -74,7 +74,7 @@ public class LoginWith2faModel : PageModel
         returnUrl ??= this.Url.Content("~/");
         var context = await this.interactionService.GetAuthorizationContextAsync(returnUrl);
 
-        var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+        var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
         var authenticatorCode = this.Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
         var result = await this.signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, this.Input.RememberMachine);
@@ -83,7 +83,7 @@ public class LoginWith2faModel : PageModel
         if (result.Succeeded)
         {
             this.logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
-            await this.eventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName, clientId: context?.Client.ClientId));
+            await this.eventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
             if (context != null)
             {

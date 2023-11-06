@@ -1,7 +1,7 @@
 ﻿@page
 @model NewModel
 @{
-    this.ViewBag.Title = this.L["New organization"];
+    ViewBag.Title = L["New organization"];
 }
 
 @Html.DisplayFor(m => m.OperationResult)
@@ -15,9 +15,9 @@
 
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.USCI" class="form-label"></label>
-                <input asp-for="@Model.USCI" class="form-control" />
-                <span asp-validation-for="@Model.USCI"></span>
+                <label asp-for="@Model.Usci" class="form-label"></label>
+                <input asp-for="@Model.Usci" class="form-control" />
+                <span asp-validation-for="@Model.Usci"></span>
             </div>
             <div class="form-check">
                 <input asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-input" />
@@ -65,7 +65,7 @@
     <script>
         $(function () {
             $("#personSearch").autocomplete({
-                source: "@(this.Url.Action("SearchPerson", "IdService"))",
+                source: "@Url.Action("SearchPerson", "IdService")",
                 minLength: 2,
                 select: function (event, ui) {
                     $(this).val(ui.item.name);

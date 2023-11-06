@@ -1,4 +1,4 @@
-﻿using DirectoryLogon;
+﻿using IDSubjects.DirectoryLogon;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 

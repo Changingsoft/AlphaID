@@ -1,15 +1,15 @@
 ﻿@page
 @model AuthCenterWebApp.Pages.Account.LockoutModel
 @{
-    this.ViewBag.Title = this.L["Locked out"];
-    this.Layout = "_AuthenticationLayout";
+    ViewBag.Title = L["Locked out"];
+    Layout = "_AuthenticationLayout";
 }
 <div class="page page-center">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
                 <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-                @(this.Product.Value.Name) @L["Account"]
+                @Product.Value.Name @L["Account"]
             </a>
         </div>
         <div class="card card-md">

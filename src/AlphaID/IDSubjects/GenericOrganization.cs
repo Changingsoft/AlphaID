@@ -46,7 +46,7 @@ public class GenericOrganization
     /// 统一社会信用代码。
     /// </summary>
     [MaxLength(18), Column(TypeName = "char(18)")]
-    public string? USCI { get; set; }
+    public string? Usci { get; set; }
 
     /// <summary>
     /// 创建记录的时间。

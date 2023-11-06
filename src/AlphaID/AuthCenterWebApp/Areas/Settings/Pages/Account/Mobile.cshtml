@@ -1,14 +1,14 @@
 ﻿@page
 @model MobileModel
 @{
-    this.ViewBag.Title = this.L["Manage your phone number"];
+    ViewBag.Title = L["Manage your phone number"];
 }
 <h2>@ViewBag.Title</h2>
 
-@if(!string.IsNullOrEmpty(this.Model.OperationMessage))
+@if(!string.IsNullOrEmpty(Model.OperationMessage))
 {
     <div class="alert alert-info">
-        @this.Model.OperationMessage
+        @Model.OperationMessage
     </div>
 }
 
@@ -26,7 +26,7 @@
         <span asp-validation-for="NewMobile" class="text-danger"></span>
     </div>
     <button class="btn btn-secondary" type="submit" asp-page-handler="SendVerificationCode" formnovalidate>@L["Send code"]</button>
-    @if(this.Model.VerificationCodeSent)
+    @if(Model.VerificationCodeSent)
     {
         <span>@L["Code has been sent"]</span>
     }

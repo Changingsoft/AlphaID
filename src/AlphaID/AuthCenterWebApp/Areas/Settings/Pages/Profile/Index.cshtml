@@ -1,7 +1,7 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.Settings.Pages.Profile.IndexModel
 @{
-    this.ViewBag.Title = this.L["Profile"];
+    ViewBag.Title = L["Profile"];
 }
 @section Heads{
     <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
@@ -69,7 +69,7 @@
                 <input type="file" class="visually-hidden" id="input" name="image" accept="image/*">
                 <span class="btn btn-sm">@L["Change profile picture"]</span>
             </label>
-            @if (this.User.HasProfilePicture())
+            @if (User.HasProfilePicture())
             {
                 <button type="submit" class="btn btn-sm" asp-page-handler="ClearProfilePicture" onclick="return confirm('@(L["Are you sure you want to remove profile picture?"])');">@L["Remove"]</button>
             }

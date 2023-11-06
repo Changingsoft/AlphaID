@@ -1,9 +1,8 @@
-﻿using IDSubjects;
-using IDSubjects.ChineseName;
+﻿using IDSubjects.ChineseName;
 using IDSubjects.Subjects;
 using Xunit;
 
-namespace IDSubjectsTests;
+namespace IDSubjects.Tests;
 
 public class PersonBuilderTests
 {

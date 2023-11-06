@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace WechatWebLogin;
+namespace IDSubjects.WechatWebLogin;
 
 /// <summary>
 /// 微信异常。

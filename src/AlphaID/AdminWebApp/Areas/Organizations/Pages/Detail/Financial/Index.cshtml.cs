@@ -37,22 +37,22 @@ public class IndexModel : PageModel
     public class InputModel
     {
         [Display(Name = "Name")]
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
         [Display(Name = "Taxpayer ID")]
-        public string TaxpayerId { get; set; } = default!;
+        public string TaxpayerId { get; init; } = default!;
 
         [Display(Name = "Address")]
-        public string Address { get; set; } = default!;
+        public string Address { get; init; } = default!;
 
         [Display(Name = "Contact")]
-        public string Contact { get; set; } = default!;
+        public string Contact { get; init; } = default!;
 
         [Display(Name = "Bank")]
-        public string Bank { get; set; } = default!;
+        public string Bank { get; init; } = default!;
 
         [Display(Name = "Account")]
-        public string Account { get; set; } = default!;
+        public string Account { get; init; } = default!;
     }
 
 }

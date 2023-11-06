@@ -4,7 +4,7 @@ namespace AlphaIDWebAPI;
 
 internal static class CorsPolicyExtensions
 {
-    private const string _WildcardSubdomain = "*.";
+    private const string WildcardSubdomain = "*.";
 
     public static bool IsOriginAllowedSubdomainAndLocalhost(this CorsPolicy policy, string origin)
     {
@@ -12,13 +12,13 @@ internal static class CorsPolicyExtensions
             || Uri.TryCreate(origin, UriKind.Absolute, out var originUri)
             && (originUri.IsLoopback
             || policy.Origins
-                .Where(o => o.Contains($"://{_WildcardSubdomain}"))
+                .Where(o => o.Contains($"://{WildcardSubdomain}"))
                 .Select(CreateDomainUri)
                 .Any(domain => UriHelpers.IsSubdomainOf(originUri, domain)));
     }
 
     private static Uri CreateDomainUri(string origin)
     {
-        return new Uri(origin.Replace(_WildcardSubdomain, string.Empty), UriKind.Absolute);
+        return new Uri(origin.Replace(WildcardSubdomain, string.Empty), UriKind.Absolute);
     }
 }

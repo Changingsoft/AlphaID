@@ -3,7 +3,7 @@
 /// <summary>
 /// Result of IDCardBack.
 /// </summary>
-public class ChineseIDCardBackOCRResult
+public class ChineseIdCardBackOcrResult
 {
     /// <summary>
     /// 签发机关。

@@ -12,18 +12,18 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ExternalLoginsModel : PageModel
 {
-    private readonly NaturalPersonManager _userManager;
-    private readonly SignInManager<NaturalPerson> _signInManager;
-    private readonly IUserStore<NaturalPerson> _userStore;
+    private readonly NaturalPersonManager userManager;
+    private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly IUserStore<NaturalPerson> userStore;
 
     public ExternalLoginsModel(
         NaturalPersonManager userManager,
         SignInManager<NaturalPerson> signInManager,
         IUserStore<NaturalPerson> userStore)
     {
-        this._userManager = userManager;
-        this._signInManager = signInManager;
-        this._userStore = userStore;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
+        this.userStore = userStore;
     }
 
     public IList<UserLoginInfo> CurrentLogins { get; set; }
@@ -37,19 +37,19 @@ public class ExternalLoginsModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
-        this.CurrentLogins = await this._userManager.GetLoginsAsync(user);
-        this.OtherLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync())
+        this.CurrentLogins = await this.userManager.GetLoginsAsync(user);
+        this.OtherLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync())
             .Where(auth => this.CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
             .ToList();
 
         string passwordHash = null;
-        if (this._userStore is IUserPasswordStore<NaturalPerson> userPasswordStore)
+        if (this.userStore is IUserPasswordStore<NaturalPerson> userPasswordStore)
         {
             passwordHash = await userPasswordStore.GetPasswordHashAsync(user, this.HttpContext.RequestAborted);
         }
@@ -60,20 +60,20 @@ public class ExternalLoginsModel : PageModel
 
     public async Task<IActionResult> OnPostRemoveLoginAsync(string loginProvider, string providerKey)
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
 
-        var result = await this._userManager.RemoveLoginAsync(user, loginProvider, providerKey);
+        var result = await this.userManager.RemoveLoginAsync(user, loginProvider, providerKey);
         if (!result.Succeeded)
         {
             this.StatusMessage = "The external login was not removed.";
             return this.RedirectToPage();
         }
 
-        await this._signInManager.RefreshSignInAsync(user);
+        await this.signInManager.RefreshSignInAsync(user);
         this.StatusMessage = "已删除外部登录。";
         return this.RedirectToPage();
     }
@@ -85,20 +85,20 @@ public class ExternalLoginsModel : PageModel
 
         // Request a redirect to the external login provider to link a login for the current user
         var redirectUrl = this.Url.Page("./ExternalLogins", pageHandler: "LinkLoginCallback");
-        var properties = this._signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, this._userManager.GetUserId(this.User));
+        var properties = this.signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, this.userManager.GetUserId(this.User));
         return new ChallengeResult(provider, properties);
     }
 
     public async Task<IActionResult> OnGetLinkLoginCallbackAsync()
     {
-        var user = await this._userManager.GetUserAsync(this.User);
+        var user = await this.userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
-        var userId = await this._userManager.GetUserIdAsync(user);
-        var info = await this._signInManager.GetExternalLoginInfoAsync(userId) ?? throw new InvalidOperationException($"加载外部登录信息时发生意外错误。");
-        var result = await this._userManager.AddLoginAsync(user, info);
+        var userId = await this.userManager.GetUserIdAsync(user);
+        var info = await this.signInManager.GetExternalLoginInfoAsync(userId) ?? throw new InvalidOperationException("加载外部登录信息时发生意外错误。");
+        var result = await this.userManager.AddLoginAsync(user, info);
         if (!result.Succeeded)
         {
             this.StatusMessage = "未添加外部登录名。外部登录只能与一个帐户关联。";
@@ -147,7 +147,7 @@ public class ExternalLoginsModel : PageModel
             return null;
         }
 
-        var providerDisplayName = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).FirstOrDefault(p => p.Name == provider)?.DisplayName
+        var providerDisplayName = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).FirstOrDefault(p => p.Name == provider)?.DisplayName
                                   ?? provider;
         return new ExternalLoginInfo(auth.Principal, provider, providerKey, providerDisplayName)
         {

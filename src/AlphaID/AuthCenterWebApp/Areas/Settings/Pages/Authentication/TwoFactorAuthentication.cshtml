@@ -1,7 +1,7 @@
 ﻿@page
 @model TwoFactorAuthenticationModel
 @{
-    this.ViewBag.Title = this.L["Two-factor authentication (2FA)"];
+    ViewBag.Title = L["Two-factor authentication (2FA)"];
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -10,7 +10,7 @@
     var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
     @if (consentFeature?.CanTrack ?? true)
     {
-        @if (Model.Is2faEnabled)
+        @if (Model.Is2FaEnabled)
         {
             if (Model.RecoveryCodesLeft == 0)
             {

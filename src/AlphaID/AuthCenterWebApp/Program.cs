@@ -64,7 +64,7 @@ builder.Services.AddRazorPages(options =>
     options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
 });
 
-builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
+builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
@@ -72,7 +72,7 @@ builder.Services.AddDbContext<IDSubjectsDbContext>(options =>
     });
 });
 
-var identityBuilder = builder.Services.AddIDSubjectsIdentity(options =>
+var identityBuilder = builder.Services.AddIdSubjectsIdentity(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789-";
     options.User.RequireUniqueEmail = true;
@@ -148,11 +148,11 @@ builder.Services.AddSession(options =>
 });
 
 //实名认证
-builder.Services.AddScoped<ChineseIDCardManager>()
-    .AddScoped<IChineseIDCardValidationStore, RealNameValidationStore>();
+builder.Services.AddScoped<ChineseIdCardManager>()
+    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 //身份证OCR
-builder.Services.AddScoped<IChineseIDCardOCRService, AliyunChineseIDCardOCRService>();
+builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
 
 //todo 由于BotDetect Captcha需要支持同步流，应改进此配置。
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)

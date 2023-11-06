@@ -44,7 +44,7 @@ public class EmailModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress]
         [Display(Name = "New email")]
-        public string NewEmail { get; set; }
+        public string NewEmail { get; init; }
     }
 
     private async Task LoadAsync(NaturalPerson user)

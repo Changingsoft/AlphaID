@@ -12,35 +12,35 @@ namespace AuthCenterWebApp.Pages.Grants;
 [Authorize]
 public class Index : PageModel
 {
-    private readonly IIdentityServerInteractionService _interaction;
-    private readonly IClientStore _clients;
-    private readonly IResourceStore _resources;
-    private readonly IEventService _events;
+    private readonly IIdentityServerInteractionService interaction;
+    private readonly IClientStore clients;
+    private readonly IResourceStore resources;
+    private readonly IEventService events;
 
     public Index(IIdentityServerInteractionService interaction,
         IClientStore clients,
         IResourceStore resources,
         IEventService events)
     {
-        this._interaction = interaction;
-        this._clients = clients;
-        this._resources = resources;
-        this._events = events;
+        this.interaction = interaction;
+        this.clients = clients;
+        this.resources = resources;
+        this.events = events;
     }
 
     public ViewModel View { get; set; } = default!;
 
     public async Task OnGet()
     {
-        var grants = await this._interaction.GetAllUserGrantsAsync();
+        var grants = await this.interaction.GetAllUserGrantsAsync();
 
         var list = new List<GrantViewModel>();
         foreach (var grant in grants)
         {
-            var client = await this._clients.FindClientByIdAsync(grant.ClientId);
+            var client = await this.clients.FindClientByIdAsync(grant.ClientId);
             if (client != null)
             {
-                var resources = await this._resources.FindResourcesByScopeAsync(grant.Scopes);
+                var resources = await this.resources.FindResourcesByScopeAsync(grant.Scopes);
 
                 var item = new GrantViewModel()
                 {
@@ -71,8 +71,8 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        await this._interaction.RevokeUserConsentAsync(this.ClientId);
-        await this._events.RaiseAsync(new GrantsRevokedEvent(this.User.GetSubjectId(), this.ClientId));
+        await this.interaction.RevokeUserConsentAsync(this.ClientId);
+        await this.events.RaiseAsync(new GrantsRevokedEvent(this.User.GetSubjectId(), this.ClientId));
 
         return this.RedirectToPage("/Grants/Index");
     }

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace DirectoryLogon;
+namespace IDSubjects.DirectoryLogon;
 
 internal static class GuidExtensions
 {

@@ -1,4 +1,4 @@
-﻿using DirectoryLogon;
+﻿using IDSubjects.DirectoryLogon;
 
 namespace AlphaID.DirectoryLogon.EntityFramework;
 

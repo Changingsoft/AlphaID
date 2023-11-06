@@ -3,7 +3,6 @@ using AlphaID.DirectoryLogon.EntityFramework;
 using AlphaID.EntityFramework;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 using System.Text;
 
 namespace DatabaseTool;
@@ -15,7 +14,7 @@ public class PrepareDevelopmentData
         using var scope = app.Services.CreateScope();
 
 
-        var idDbContext = scope.ServiceProvider.GetRequiredService<IDSubjectsDbContext>();
+        var idDbContext = scope.ServiceProvider.GetRequiredService<IdSubjectsDbContext>();
         var idSvrConfigurationDbContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
         var idSvrOperationalDbContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
         var directoryLogonDbContext = scope.ServiceProvider.GetRequiredService<DirectoryLogonDbContext>();

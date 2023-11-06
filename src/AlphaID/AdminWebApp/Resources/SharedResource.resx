@@ -184,7 +184,7 @@
     <value>User DN</value>
   </data>
   <data name="User must change password on next login" xml:space="preserve">
-    <value>User musth change password on next login</value>
+    <value>User must change password on next login</value>
   </data>
   <data name="User name" xml:space="preserve">
     <value>User name</value>

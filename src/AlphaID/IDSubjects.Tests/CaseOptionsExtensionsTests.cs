@@ -1,7 +1,7 @@
 ﻿using IDSubjects.ChineseName;
 using Xunit;
 
-namespace IDSubjectsTests;
+namespace IDSubjects.Tests;
 
 public class CaseOptionsExtensionsTests
 {

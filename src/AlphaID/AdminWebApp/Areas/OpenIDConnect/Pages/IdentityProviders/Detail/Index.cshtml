@@ -3,23 +3,23 @@
 @{
 }
 
-<h3>Identity Provider: @this.Model.Data.Scheme</h3>
+<h3>Identity Provider: @Model.Data.Scheme</h3>
 
 <h4>@L["Summary"]</h4>
 
 <dl>
     <dt>@L["Scheme"]</dt>
-    <dd>@this.Model.Data.Scheme</dd>
+    <dd>@Model.Data.Scheme</dd>
     <dt>@L["Display Name"]</dt>
-    <dd>@this.Model.Data.DisplayName</dd>
+    <dd>@Model.Data.DisplayName</dd>
     <dt>@L["Type"]</dt>
-    <dd>@this.Model.Data.Type</dd>
+    <dd>@Model.Data.Type</dd>
     <dt>@L["Enabled"]</dt>
-    <dd>@this.Model.Data.Enabled</dd>
+    <dd>@Model.Data.Enabled</dd>
     <dt>@L["Created at"]</dt>
-    <dd>@this.Model.Data.Created</dd>
+    <dd>@Model.Data.Created</dd>
 </dl>
 
 <h4>@L["Operations"]</h4>
 
-<a asp-page="Delete" asp-route-id="@this.Model.Data.Id" class="btn btn-danger">Delete</a>
+<a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">Delete</a>

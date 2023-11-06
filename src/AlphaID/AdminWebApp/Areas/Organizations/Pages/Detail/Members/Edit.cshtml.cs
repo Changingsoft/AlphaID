@@ -72,19 +72,19 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
         {
             [Display(Name = "Title")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Title { get; set; }
+            public string? Title { get; init; }
 
             [Display(Name = "Department")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Department { get; set; }
+            public string? Department { get; init; }
 
             [Display(Name = "Remark")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Remark { get; set; }
+            public string? Remark { get; init; }
 
-            public bool IsOwner { get; set; }
+            public bool IsOwner { get; init; }
 
-            public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
+            public MembershipVisibility Visibility { get; init; } = MembershipVisibility.Private;
         }
     }
 }

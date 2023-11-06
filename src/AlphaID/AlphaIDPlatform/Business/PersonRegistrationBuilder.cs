@@ -33,24 +33,24 @@ public class PersonRegistrationBuilder
     /// <summary>
     /// Apply chinese ID card to registration.
     /// </summary>
-    /// <param name="chineseIDCard"></param>
+    /// <param name="chineseIdCard"></param>
     /// <returns></returns>
-    public PersonRegistrationBuilder ApplyChineseIDCard(ChineseIDCardInfo chineseIDCard)
+    public PersonRegistrationBuilder ApplyChineseIdCard(ChineseIDCardInfo chineseIdCard)
     {
-        if (chineseIDCard is null)
+        if (chineseIdCard is null)
         {
-            throw new ArgumentNullException(nameof(chineseIDCard));
+            throw new ArgumentNullException(nameof(chineseIdCard));
         }
 
-        this.registration.ChineseIDCard = chineseIDCard;
+        this.registration.ChineseIdCard = chineseIdCard;
 
-        var cpersonName = this.processor.Create(chineseIDCard.Name);
+        var cpersonName = this.processor.Create(chineseIdCard.Name);
 
-        this.registration.DisplayName = chineseIDCard.Name;
+        this.registration.DisplayName = chineseIdCard.Name;
         this.registration.Surname = cpersonName.Surname;
         this.registration.GivenName = cpersonName.GivenName;
         this.registration.PhoneticDisplayName = $"{cpersonName.PhoneticSurname} {cpersonName.PhoneticGivenName}".Trim();
-        this.registration.Sex = chineseIDCard.Sex;
+        this.registration.Sex = chineseIdCard.Sex;
 
         return this;
     }
@@ -96,10 +96,10 @@ public class PersonRegistrationBuilder
     {
         if (this.LoginAccountEnabled)
         {
-            if (this.registration.ChineseIDCard == null)
+            if (this.registration.ChineseIdCard == null)
                 throw new InvalidOperationException("未登记身份证时，不能创建登录账号。");
 
-            var cardNumber = this.registration.ChineseIDCard.CardNumber;
+            var cardNumber = this.registration.ChineseIdCard.CardNumber;
             var idCardLast4 = cardNumber[^4..].ToLower();
             var mobileLast4 = this.registration.Mobile?.ToString()[^4..];
             var accountPinyin = this.registration.PhoneticDisplayName?.ToLower();

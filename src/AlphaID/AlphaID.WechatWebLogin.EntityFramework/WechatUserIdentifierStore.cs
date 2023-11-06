@@ -1,4 +1,4 @@
-﻿using WechatWebLogin;
+﻿using IDSubjects.WechatWebLogin;
 
 namespace AlphaID.WechatWebLogin.EntityFramework;
 

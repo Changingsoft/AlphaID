@@ -84,12 +84,12 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             [Display(Name = "Phone number")]
             [StringLength(15, ErrorMessage = "Validate_StringLength")]
             [DataType(DataType.PhoneNumber)]
-            public string? PhoneNumber { get; set; }
+            public string? PhoneNumber { get; init; }
 
             [Display(Name = "Email")]
             [StringLength(100, ErrorMessage = "Validate_StringLength")]
             [EmailAddress]
-            public string? Email { get; set; }
+            public string? Email { get; init; }
         }
     }
 }

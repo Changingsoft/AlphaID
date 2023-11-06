@@ -8,9 +8,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class DetailModel : PageModel
 {
-    private readonly IDSubjectsDbContext dbContext;
+    private readonly IdSubjectsDbContext dbContext;
 
-    public DetailModel(IDSubjectsDbContext dbContext)
+    public DetailModel(IdSubjectsDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

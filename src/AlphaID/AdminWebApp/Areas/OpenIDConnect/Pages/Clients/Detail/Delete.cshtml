@@ -3,7 +3,7 @@
 @{
 }
 <h3>Delete</h3>
-<p>该客户端将被永久删除。请键入客户端名称（@this.Model.Data.ClientName）以确认。</p>
+<p>该客户端将被永久删除。请键入客户端名称（@(Model.Data.ClientName)）以确认。</p>
 <form method="post">
     <div class="mb-3">
         <input asp-for="ClientName" class="form-control" />

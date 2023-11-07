@@ -2,7 +2,6 @@
 using AlphaID.PlatformServices.Aliyun;
 using AlphaID.PlatformServices.Primitives;
 using AlphaIDPlatform;
-using AlphaIDPlatform.Identity;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatform.RazorPages;
 using AuthCenterWebApp;

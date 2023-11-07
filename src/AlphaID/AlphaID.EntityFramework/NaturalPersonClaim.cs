@@ -43,7 +43,7 @@ public class NaturalPersonClaim
     /// <returns></returns>
     public virtual Claim ToClaim()
     {
-        return new Claim(ClaimType!, ClaimValue!);
+        return new Claim(ClaimType, ClaimValue);
     }
 
     /// <summary>

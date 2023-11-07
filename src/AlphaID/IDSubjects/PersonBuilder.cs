@@ -33,7 +33,7 @@ public class PersonBuilder
     /// <summary>
     /// Use chinese person userName info.
     /// </summary>
-    /// <param userName="name"></param>
+    /// <param name="name"></param>
     /// <returns></returns>
     public PersonBuilder UseChinesePersonName(ChinesePersonName name)
     {

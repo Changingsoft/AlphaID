@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-#nullable enable
+
 namespace AuthCenterWebApp.Pages.Account;
 
 //[SecurityHeaders]

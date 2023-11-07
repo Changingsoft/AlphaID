@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace AlphaIDPlatform.Security;
@@ -66,5 +67,24 @@ public static class ClaimsPrincipalExtensions
         if (roleClaims.Length == 0)
             return string.Empty;
         return roleClaims.Select(p => p.Value).Aggregate((x, y) => $"{x},{y}");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="principal"></param>
+    /// <returns></returns>
+    public static string? DisplayName(this ClaimsPrincipal principal)
+    {
+        var surname = principal.FindFirstValue(JwtClaimTypes.FamilyName);
+        var givenName = principal.FindFirstValue(JwtClaimTypes.GivenName);
+
+        CultureInfo culture = CultureInfo.CurrentCulture;
+        return culture.TwoLetterISOLanguageName switch
+        {
+            "zh" => $"{surname}{givenName}",
+            "en" => $"{givenName} {surname}",
+            _ => $"{givenName} {surname}"
+        };
     }
 }

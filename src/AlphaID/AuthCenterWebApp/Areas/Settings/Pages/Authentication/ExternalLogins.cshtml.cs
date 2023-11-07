@@ -121,7 +121,7 @@ public class ExternalLoginsModel : PageModel
     [Obsolete()]
     private async Task<ExternalLoginInfo> GetExternalLoginInfoAsync(string expectedXsrf = null)
     {
-        var auth = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme); //修正以使用IdeneityServer的方案。
+        var auth = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme); //修正以使用Identity Server的方案。
         var items = auth?.Properties?.Items;
         if (auth?.Principal == null || items == null || !items.ContainsKey(LoginProviderKey))
         {

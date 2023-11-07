@@ -149,7 +149,7 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
 
         await this.AuthenticateAsync(this.client);
 
-        var shortMessage = new FreeTextMessage(new string[] { mobile }, content);
+        var shortMessage = new FreeTextMessage(new[] { mobile }, content);
         var jsonContent = JsonContent.Create(shortMessage);
 
         var result = await this.client.PostAsync("/api/FreeTextMessage", jsonContent);

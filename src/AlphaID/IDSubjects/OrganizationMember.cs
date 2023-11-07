@@ -80,4 +80,13 @@ public class OrganizationMember
     /// Membership visibility.
     /// </summary>
     public virtual MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"{this.Organization.Name}|{this.Person.UserName}|{(this.IsOwner ? "Owner" : "")}|{this.Visibility}";
+    }
 }

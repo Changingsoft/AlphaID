@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\IDSubjectsDb\" />
+    <Folder Include="Migrations\IdSubjectsDb\" />
     <Folder Include="TestingData\AdminWebAppData\" />
   </ItemGroup>
 

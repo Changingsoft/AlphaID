@@ -36,11 +36,13 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
             this.Members = await this.organizationMemberManager.GetVisibleMembersOfAsync(person, visitor);
 
-            if (this.User.Identity!.IsAuthenticated)
+            if (!this.User.Identity!.IsAuthenticated)
             {
-                if (this.User.SubjectId() == this.Person.Id)
-                    this.UserIsOwner = true;
+                return this.Page();
             }
+
+            if (this.User.SubjectId() == this.Person.Id)
+                this.UserIsOwner = true;
 
             return this.Page();
         }

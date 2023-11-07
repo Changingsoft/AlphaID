@@ -56,5 +56,3 @@ var host = builder.Build();
 
 
 PrepareDevelopmentData.EnsureDevelopmentData(host);
-
-return;

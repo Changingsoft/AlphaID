@@ -78,7 +78,7 @@ public class CreateModel : PageModel
             return new JsonResult(true);
 
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
-            return new JsonResult($"移动电话号码无效");
+            return new JsonResult("移动电话号码无效");
 
         if (this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
         {

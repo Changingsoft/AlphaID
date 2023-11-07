@@ -48,7 +48,7 @@ public readonly partial struct ChineseIdCardNumber
     /// <summary>
     /// 获取或设置出生日期。
     /// </summary>
-    public readonly DateOnly DateOfBirth
+    public DateOnly DateOfBirth
     {
         get { return this.dateOfBirth; }
     }
@@ -61,7 +61,7 @@ public readonly partial struct ChineseIdCardNumber
     /// <summary>
     /// 获取一个值，指示性别。
     /// </summary>
-    public readonly Sex Sex
+    public Sex Sex
     {
         get
         {
@@ -72,7 +72,7 @@ public readonly partial struct ChineseIdCardNumber
     /// <summary>
     /// 获取一个值，表示身份证号码。
     /// </summary>
-    public readonly string NumberString
+    public string NumberString
     {
         get
         {
@@ -84,7 +84,7 @@ public readonly partial struct ChineseIdCardNumber
     /// 已重写，输入身份证号码。
     /// </summary>
     /// <returns></returns>
-    public override readonly string ToString()
+    public override string ToString()
     {
 
         return this.ToString(this.Version);
@@ -94,7 +94,7 @@ public readonly partial struct ChineseIdCardNumber
     /// 已重写。获取用于哈希表的对象哈希。
     /// </summary>
     /// <returns></returns>
-    public override readonly int GetHashCode()
+    public override int GetHashCode()
     {
         return this.ToString().GetHashCode();
     }
@@ -104,7 +104,7 @@ public readonly partial struct ChineseIdCardNumber
     /// </summary>
     /// <param name="version"></param>
     /// <returns></returns>
-    public readonly string ToString(int version)
+    public string ToString(int version)
     {
         return version == ChineseIdCardNumberVersion.V1
             ? this.RegionCode.ToString("000000") + this.dateOfBirth.ToString("yyMMdd") + this.Sequence.ToString("000")
@@ -140,7 +140,7 @@ public readonly partial struct ChineseIdCardNumber
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override readonly bool Equals(object? obj)
+    public override bool Equals(object? obj)
     {
         return obj != null && obj is ChineseIdCardNumber number && this == number;
     }

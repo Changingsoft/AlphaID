@@ -4,8 +4,14 @@
 /// </summary>
 public class RealNameValidationRequest
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public int Id { get; protected set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public DateTimeOffset WhenCommited { get; protected set; }
 
 

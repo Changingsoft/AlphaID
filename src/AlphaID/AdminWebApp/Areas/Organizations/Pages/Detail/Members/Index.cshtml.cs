@@ -93,11 +93,11 @@ public class IndexModel : PageModel
         this.Organization = org;
         this.Members = await this.memberManager.GetMembersAsync(org);
 
-        var person = await this.personManager.FindByIdAsync(personId);
-        if (person == null)
-            return this.NotFound();
+        var member = this.Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+            return this.Page();
 
-        this.Result = await this.memberManager.LeaveOrganizationAsync(person, this.Organization);
+        this.Result = await this.memberManager.LeaveOrganizationAsync(member);
         if (this.Result.Succeeded)
         {
             this.Members = await this.memberManager.GetMembersAsync(org);

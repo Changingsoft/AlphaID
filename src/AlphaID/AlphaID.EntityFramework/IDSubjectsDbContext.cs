@@ -1,4 +1,5 @@
 ﻿using IDSubjects;
+using IDSubjects.Invitations;
 using IDSubjects.Payments;
 using IDSubjects.RealName;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,8 @@ public class IdSubjectsDbContext : DbContext
 
 
     public DbSet<RealNameInfo> RealNameInfos { get; protected set; } = default!;
+
+    public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

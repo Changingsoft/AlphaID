@@ -201,7 +201,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual Task<string?> GetNormalizedUserNameAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        return Task.FromResult(user.NormalizedUserName);
+        return Task.FromResult<string?>(user.NormalizedUserName);
     }
 
     /// <summary>
@@ -288,7 +288,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual Task<string?> GetUserNameAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        return Task.FromResult(user.UserName);
+        return Task.FromResult<string?>(user.UserName);
     }
 
     /// <summary>
@@ -492,7 +492,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual Task SetNormalizedUserNameAsync(NaturalPerson user, string? normalizedName, CancellationToken cancellationToken)
     {
-        user.NormalizedUserName = normalizedName;
+        user.NormalizedUserName = normalizedName ?? throw new ArgumentNullException(nameof(normalizedName));
         return Task.CompletedTask;
     }
 
@@ -581,7 +581,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual Task SetUserNameAsync(NaturalPerson user, string? userName, CancellationToken cancellationToken)
     {
-        user.UserName = userName;
+        user.UserName = userName ?? throw new ArgumentNullException(nameof(userName));
         return Task.CompletedTask;
     }
 

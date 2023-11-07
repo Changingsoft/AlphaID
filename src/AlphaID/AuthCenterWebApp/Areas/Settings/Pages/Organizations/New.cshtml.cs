@@ -96,7 +96,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 
         public async Task<IActionResult> OnPostCheckName(string name)
         {
-            if ((await this.organizationManager.SearchByNameAsync(name)).Any())
+            if (this.organizationManager.SearchByName(name).Any())
                 return new JsonResult("Organization name exists.");
             return new JsonResult(true);
         }

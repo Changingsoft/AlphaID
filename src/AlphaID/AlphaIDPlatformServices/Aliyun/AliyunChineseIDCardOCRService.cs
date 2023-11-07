@@ -18,7 +18,6 @@ public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
     /// </summary>
     public AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options)
     {
-        new JsonSerializer();
         this.options = options.Value;
     }
     /// <summary>
@@ -31,7 +30,7 @@ public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
         string imgBase64;
         using (var ms = new MemoryStream())
         {
-            idCardBackImageData.CopyTo(ms);
+            await idCardBackImageData.CopyToAsync(ms);
             imgBase64 = Convert.ToBase64String(ms.ToArray());
         }
         var requestData = new

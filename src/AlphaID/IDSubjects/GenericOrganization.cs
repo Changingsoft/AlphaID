@@ -40,7 +40,7 @@ public class GenericOrganization
     /// Name.
     /// </summary>
     [MaxLength(100)]
-    public virtual string Name { get; protected internal set; } = default!;
+    public string Name { get; protected internal set; } = default!;
 
     /// <summary>
     /// 统一社会信用代码。

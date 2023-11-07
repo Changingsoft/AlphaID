@@ -1,5 +1,6 @@
 ﻿using IDSubjects;
 using IDSubjects.DependencyInjection;
+using IDSubjects.Invitations;
 using IDSubjects.Payments;
 using IDSubjects.Validators;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,7 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationSearcher>();
         services.TryAddScoped<NaturalPersonIdentityErrorDescriber>();
         services.TryAddScoped<PersonBankAccountManager>();
+        services.TryAddScoped<JoinOrganizationInvitationManager>();
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>()

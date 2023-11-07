@@ -233,6 +233,8 @@ public class WechatLoginSessionManager
         return await this.store.FindAsync(sessionId);
     }
 
+    // ReSharper disable IdentifierTypo
+    // ReSharper disable InconsistentNaming
     private const int UF_ACCOUNTDISABLE = 0x0002;
     private const int UF_PASSWD_NOTREQD = 0x0020;
     private const int UF_PASSWD_CANT_CHANGE = 0x0040;
@@ -240,4 +242,6 @@ public class WechatLoginSessionManager
     private const int UF_DONT_EXPIRE_PASSWD = 0x10000;
     private const int UF_SMARTCARD_REQUIRED = 0x40000;
     private const int UF_PASSWORD_EXPIRED = 0x800000;
+    // ReSharper restore InconsistentNaming
+    // ReSharper restore IdentifierTypo
 }

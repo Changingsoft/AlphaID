@@ -60,6 +60,10 @@
             </div>
             <div class="col-8">
                 <h2>Activities</h2>
+                @if (Model.UserIsOwner)
+                {
+                    <vc:received-invitations person="Model.Person"></vc:received-invitations>
+                }
             </div>
         </div>
     </div>

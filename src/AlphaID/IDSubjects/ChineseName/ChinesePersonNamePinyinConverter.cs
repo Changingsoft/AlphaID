@@ -61,7 +61,7 @@ public class ChinesePersonNamePinyinConverter
         var pinyinList = new List<string>();
         for (int i = 0; i < cc.PinyinCount; i++)
         {
-            pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[0..^1] : cc.Pinyins[i].ToUpper());
+            pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[..^1] : cc.Pinyins[i].ToUpper());
         }
         return new PhoneticChineseChar(chineseChar, pinyinList.ToArray());
 

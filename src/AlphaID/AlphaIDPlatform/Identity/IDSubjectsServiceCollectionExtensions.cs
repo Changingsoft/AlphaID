@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace AlphaIDPlatform.Identity;
+// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.DependencyInjection;
+
+/// <summary>
+/// 
+/// </summary>
 public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>

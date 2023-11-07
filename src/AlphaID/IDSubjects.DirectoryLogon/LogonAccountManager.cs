@@ -75,7 +75,7 @@ public class LogonAccountManager
             //userEntry.Invoke("SetOption", new object[] { ADS_OPTION_PASSWORD_PORTNUMBER, 389 });
             //userEntry.Invoke("SetOption", new object[] { ADS_OPTION_PASSWORD_METHOD, ADS_PASSWORD_ENCODE_CLEAR });
 
-            userEntry.Invoke("SetPassword", new object[] { request.InitPassword });
+            userEntry.Invoke("SetPassword", request.InitPassword);
             userEntry.CommitChanges();
 
             //set User Account Control Flag

@@ -70,7 +70,7 @@ public class NewModel : PageModel
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        var nameExists = await this.manager.SearchByNameAsync(this.Name);
+        var nameExists = this.manager.SearchByName(this.Name);
         if (nameExists.Any())
         {
             if (!this.RegisterWithSameNameAnyway)

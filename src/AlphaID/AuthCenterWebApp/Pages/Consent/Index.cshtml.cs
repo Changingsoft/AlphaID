@@ -143,7 +143,7 @@ public class Index : PageModel
             ClientLogoUrl = request.Client.LogoUri,
             AllowRememberConsent = request.Client.AllowRememberConsent,
             IdentityScopes = request.ValidatedResources.Resources.IdentityResources
-            .Select(x => this.CreateScopeViewModel(x, model?.ScopesConsented == null || model.ScopesConsented?.Contains(x.Name) == true))
+            .Select(x => this.CreateScopeViewModel(x, model?.ScopesConsented == null || model.ScopesConsented.Contains(x.Name) == true))
             .ToArray()
         };
 

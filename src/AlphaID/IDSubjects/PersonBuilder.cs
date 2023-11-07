@@ -42,39 +42,6 @@ public class PersonBuilder
     }
 
     /// <summary>
-    /// Add bank account to person.
-    /// </summary>
-    /// <param userName="accountNumber"></param>
-    /// <param userName="bankName"></param>
-    /// <param userName="accountName"></param>
-    /// <returns></returns>
-    public PersonBuilder AddBankAccount(string accountNumber, string bankName, string accountName)
-    {
-        if (string.IsNullOrWhiteSpace(accountName))
-        {
-            throw new ArgumentException($"“{nameof(accountName)}”不能为 null 或空白。", nameof(accountName));
-        }
-
-        if (string.IsNullOrWhiteSpace(accountNumber))
-        {
-            throw new ArgumentException($"“{nameof(accountNumber)}”不能为 null 或空白。", nameof(accountNumber));
-        }
-
-        if (string.IsNullOrWhiteSpace(bankName))
-        {
-            throw new ArgumentException($"“{nameof(bankName)}”不能为 null 或空白。", nameof(bankName));
-        }
-
-        this.Person.BankAccounts.Add(new PersonBankAccount()
-        {
-            AccountName = accountName.Trim(),
-            AccountNumber = accountNumber.Trim(),
-            BankName = bankName.Trim(),
-        });
-        return this;
-    }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="email"></param>

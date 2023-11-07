@@ -34,7 +34,7 @@ public class ChinesePersonName
     /// 姓氏。
     /// </summary>
     [MaxLength(10)]
-    public string? Surname { get; protected set; } = default!;
+    public string? Surname { get; protected set; }
 
     /// <summary>
     /// 名字（不含姓氏部分）。
@@ -52,7 +52,7 @@ public class ChinesePersonName
     /// 
     /// </summary>
     [MaxLength(20), Unicode(false)]
-    public string? PhoneticSurname { get; protected set; } = default!;
+    public string? PhoneticSurname { get; protected set; }
 
     /// <summary>
     /// 

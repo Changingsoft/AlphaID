@@ -5,8 +5,8 @@
 /// </summary>
 public class PhoneticChineseChar
 {
-    private string? customPinyin = null;
-    private int selectedIndex = 0;
+    private string? customPinyin;
+    private int selectedIndex;
 
     /// <summary>
     /// 使用字符和拼音初始化读音汉字字符。

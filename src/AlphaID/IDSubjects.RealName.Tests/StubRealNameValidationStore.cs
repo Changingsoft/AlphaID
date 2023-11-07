@@ -1,7 +1,4 @@
-﻿using IDSubjects;
-using IDSubjects.RealName;
-
-namespace IDSubjectsTests.RealName;
+﻿namespace IDSubjects.RealName.Tests;
 internal class StubRealNameValidationStore : IChineseIdCardValidationStore
 {
     private readonly HashSet<ChineseIdCardValidation> set = new();

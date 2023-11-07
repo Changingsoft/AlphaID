@@ -161,33 +161,6 @@
         </div>
     </div>
 </div>
-<div class="card mb-3">
-    <div class="card-header">
-        <h3 class="card-title">@L["Payments"]</h3>
-    </div>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <td>Account ID</td>
-                    <td>Account name</td>
-                    <td>Bank</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var bankAccount in Model.Data.BankAccounts)
-                {
-                    <tr>
-                        <td>@bankAccount.AccountNumber</td>
-                        <td>@bankAccount.AccountName</td>
-                        <td>@bankAccount.BankName</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-    </div>
-</div>
 <h3>@L["Misc"]</h3>
 <p>@L["Created at"] : @Model.Data.WhenCreated</p>
 <p>@L["Changed at"] : @Model.Data.WhenChanged</p>

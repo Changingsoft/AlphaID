@@ -12,12 +12,11 @@ namespace AuthCenterWebApp.Pages.ExternalLogin;
 public class Challenge : PageModel
 {
     private readonly IIdentityServerInteractionService interactionService;
-    private readonly OpenIdConnectOptions openIdConnectOptions;
 
     public Challenge(IIdentityServerInteractionService interactionService, IOptionsFactory<OpenIdConnectOptions> openIdConnectOptions)
     {
         this.interactionService = interactionService;
-        this.openIdConnectOptions = openIdConnectOptions.Create("netauth-8088.changingsoft.com");
+        openIdConnectOptions.Create("netauth-8088.changingsoft.com");
     }
 
     public IActionResult OnGet(string scheme, string schemeDisplayName, string returnUrl)

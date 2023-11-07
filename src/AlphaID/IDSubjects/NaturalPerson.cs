@@ -24,7 +24,6 @@ public class NaturalPerson
     protected NaturalPerson()
     {
         this.Id = Guid.NewGuid().ToString();
-        this.BankAccounts = new HashSet<PersonBankAccount>();
     }
 
     /// <summary>
@@ -253,13 +252,6 @@ public class NaturalPerson
     /// </summary>
     [MaxLength(200)]
     public virtual string? Bio { get; set; }
-
-    /// <summary>
-    /// Gets bank accounts of the person.
-    /// </summary>
-    [Obsolete("将专门移动到支付管理器中")]
-    public virtual ICollection<PersonBankAccount> BankAccounts { get; protected set; } = default!;
-
 
     /// <summary>
     /// Overrided.

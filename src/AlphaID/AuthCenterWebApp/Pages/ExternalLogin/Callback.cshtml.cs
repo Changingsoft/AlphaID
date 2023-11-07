@@ -23,7 +23,6 @@ public class Callback : PageModel
     private readonly ILogger<Callback> logger;
     private readonly IEventService events;
     private readonly ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter;
-    private readonly ChinesePersonNameFactory chinesePersonNameFactory;
 
     public Callback(
         IIdentityServerInteractionService interaction,
@@ -40,7 +39,6 @@ public class Callback : PageModel
         this.logger = logger;
         this.events = events;
         this.chinesePersonNamePinyinConverter = chinesePersonNamePinyinConverter;
-        this.chinesePersonNameFactory = chinesePersonNameFactory;
     }
 
     public async Task<IActionResult> OnGet()
@@ -81,7 +79,7 @@ public class Callback : PageModel
             return this.RedirectToPage("/Account/BindLogin", new { returnUrl });
         }
 
-        user ??= await this.AutoProvisionUserAsync(provider, providerDisplayName, providerUserId, externalUser.Claims);
+        //user ??= await this.AutoProvisionUserAsync(provider, providerDisplayName, providerUserId, externalUser.Claims);
 
         // this allows us to collect any additional claims or properties
         // for the specific protocols used and store them in the local auth cookie.

@@ -45,7 +45,7 @@ public class SignUpModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
-    public string? ExternalLoginMessage { get; set; } = default!;
+    public string? ExternalLoginMessage { get; set; }
 
     public async Task<IActionResult> OnGet(string? external)
     {

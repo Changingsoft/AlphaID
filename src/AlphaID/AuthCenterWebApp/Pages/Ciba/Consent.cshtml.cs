@@ -137,7 +137,7 @@ public class Consent : PageModel
             ClientLogoUrl = request.Client.LogoUri,
             BindingMessage = request.BindingMessage,
             IdentityScopes = request.ValidatedResources.Resources.IdentityResources
-            .Select(x => this.CreateScopeViewModel(x, model?.ScopesConsented == null || model.ScopesConsented?.Contains(x.Name) == true))
+            .Select(x => this.CreateScopeViewModel(x, model?.ScopesConsented == null || model.ScopesConsented.Contains(x.Name) == true))
             .ToArray()
         };
 

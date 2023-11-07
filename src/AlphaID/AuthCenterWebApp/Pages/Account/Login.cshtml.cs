@@ -24,7 +24,6 @@ public class LoginModel : PageModel
     private readonly IEventService events;
     private readonly IAuthenticationSchemeProvider schemeProvider;
     private readonly IIdentityProviderStore identityProviderStore;
-    private readonly ILogger<LoginModel>? logger;
 
     public ViewModel View { get; set; } = default!;
 
@@ -46,7 +45,6 @@ public class LoginModel : PageModel
         this.schemeProvider = schemeProvider;
         this.identityProviderStore = identityProviderStore;
         this.events = events;
-        this.logger = logger;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
@@ -276,7 +274,7 @@ public class LoginModel : PageModel
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
-        public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders?.Count() == 1;
+        public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders.Count() == 1;
         public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
         public string? EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;

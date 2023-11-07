@@ -9,7 +9,6 @@ namespace IDSubjects;
 public class OrganizationMemberManager
 {
     private readonly IOrganizationMemberStore store;
-    private readonly ILogger<OrganizationMemberManager>? logger;
 
     /// <summary>
     /// Init GenericOrganization Member Manager via GenericOrganization Member store.
@@ -19,7 +18,6 @@ public class OrganizationMemberManager
     public OrganizationMemberManager(IOrganizationMemberStore store, ILogger<OrganizationMemberManager>? logger = null)
     {
         this.store = store;
-        this.logger = logger;
     }
 
     /// <summary>

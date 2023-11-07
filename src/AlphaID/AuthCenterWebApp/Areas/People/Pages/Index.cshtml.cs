@@ -19,7 +19,7 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public NaturalPerson Person { get; set; } = default!;
 
-        public bool UserIsOwner { get; set; } = false;
+        public bool UserIsOwner { get; set; }
 
         public IEnumerable<OrganizationMember> Members { get; set; } = Enumerable.Empty<OrganizationMember>();
 

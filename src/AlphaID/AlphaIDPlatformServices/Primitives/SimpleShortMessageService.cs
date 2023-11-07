@@ -108,10 +108,8 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     {
         if (!AccessTokenExpires.HasValue || AccessTokenExpires.Value < DateTime.UtcNow.AddMinutes(3))
         {
-            using var authClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://federal.changingsoft.com")
-            };
+            using var authClient = new HttpClient();
+            authClient.BaseAddress = new Uri("https://federal.changingsoft.com");
 
             var form = new Dictionary<string, string>
             {

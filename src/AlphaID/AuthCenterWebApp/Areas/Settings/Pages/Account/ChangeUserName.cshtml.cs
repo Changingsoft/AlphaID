@@ -11,14 +11,12 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
     public class ChangeUserNameModel : PageModel
     {
         NaturalPersonManager manager;
-        IStringLocalizer<SharedResource> localizer;
         ILogger<ChangeUserNameModel>? logger;
         PersonSignInManager signInManager;
 
         public ChangeUserNameModel(NaturalPersonManager manager, IStringLocalizer<SharedResource> localizer, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
         {
             this.manager = manager;
-            this.localizer = localizer;
             this.logger = logger;
             this.signInManager = signInManager;
         }

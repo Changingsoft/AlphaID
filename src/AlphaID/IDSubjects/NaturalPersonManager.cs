@@ -177,12 +177,12 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             return result;
         user.PasswordLastSet = null;
         result = await this.UpdateAsync(user);
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
+            this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，错误{error}，事务已回滚。", result);
             return result;
         }
-
-        this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，事务已回滚。", result);
+        trans.Complete();
         return result;
 
     }
@@ -265,7 +265,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             result = await this.UnlockPersonAsync(person);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("用户密码已设置，但设置解锁时出错，事务已回滚。", result);
+            this.Logger.LogError("用户密码已设置，但设置解锁时出错，消息是{error}，事务已回滚。", result);
             return result;
         }
         trans.Complete();
@@ -304,7 +304,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         result = await this.UpdateAsync(user);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("添加密码时设置PasswordLastSet属性出错。", result);
+            this.Logger.LogError("添加密码时设置PasswordLastSet属性出错。消息是{result}，事务已回滚。", result);
             return result;
         }
         trans.Complete();
@@ -326,7 +326,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         }
         catch (InvalidImageContentException ex)
         {
-            this.Logger?.LogWarning(ex, "传入的数据不是有效的图片内容。");
+            this.Logger.LogWarning(ex, "传入的数据不是有效的图片内容。");
             throw;
         }
 
@@ -349,9 +349,9 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         person.Avatar = null;
         var result = await this.UpdateUserAsync(person);
         if (result.Succeeded)
-            this.Logger?.LogInformation("用户头像已清除。");
+            this.Logger.LogInformation("用户头像已清除。");
         else
-            this.Logger?.LogWarning("清除用户头像时不成功。", result);
+            this.Logger.LogWarning("清除用户头像时不成功。{result}", result);
         return result;
     }
 

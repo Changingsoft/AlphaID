@@ -1,4 +1,5 @@
 using IDSubjects;
+using IDSubjects.Payments;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,10 +8,12 @@ namespace AdminWebApp.Areas.People.Pages.Detail;
 public class PaymentsModel : PageModel
 {
     private readonly NaturalPersonManager personManager;
+    PersonBankAccountManager bankAccountManager;
 
-    public PaymentsModel(NaturalPersonManager personManager)
+    public PaymentsModel(NaturalPersonManager personManager, PersonBankAccountManager bankAccountManager)
     {
         this.personManager = personManager;
+        this.bankAccountManager = bankAccountManager;
     }
 
     public NaturalPerson Person { get; set; } = default!;
@@ -33,12 +36,17 @@ public class PaymentsModel : PageModel
     [MaxLength(150)]
     public string BankName { get; set; } = default!;
 
+    public IEnumerable<PersonBankAccount> BankAccounts { get; set; } = default!;
+
+    public IdOperationResult? Result { get; set; }
+
     public async Task<IActionResult> OnGetAsync()
     {
         var result = await this.personManager.FindByIdAsync(this.Anchor);
         if (result == null)
             return this.NotFound();
         this.Person = result;
+        this.BankAccounts = this.bankAccountManager.GetBankAccounts(this.Person);
         return this.Page();
     }
 
@@ -48,31 +56,31 @@ public class PaymentsModel : PageModel
         if (person == null)
             return this.NotFound();
         this.Person = person;
+        this.BankAccounts = this.bankAccountManager.GetBankAccounts(person);
 
-        if (this.Person.BankAccounts.Any(p => p.AccountNumber == this.AccountNumber))
-        {
+        if (this.BankAccounts.Any(p => p.AccountNumber == this.AccountNumber))
             this.ModelState.AddModelError(nameof(this.AccountNumber), "¥À’À∫≈“—¥Ê‘⁄°£");
+        if (!this.ModelState.IsValid)
             return this.Page();
-        }
 
-        this.Person.BankAccounts.Add(new PersonBankAccount(this.AccountNumber.Trim(), this.AccountName.Trim(), this.BankName.Trim()));
-
-        await this.personManager.UpdateAsync(this.Person);
+        this.Result = await this.bankAccountManager.AddBankAccountAsync(person, new BankAccountInfo(this.AccountNumber, this.AccountName, this.BankName));
+        if(this.Result.Succeeded)
+            this.BankAccounts = this.bankAccountManager.GetBankAccounts(person);
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPostRemoveBankAccountAsync()
+    public async Task<IActionResult> OnPostRemoveBankAccountAsync(string accountNumber)
     {
         var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
+        this.BankAccounts = this.bankAccountManager.GetBankAccounts(person);
 
-        var account = this.Person.BankAccounts.FirstOrDefault(p => p.AccountNumber == this.AccountNumber);
-        if (account != null)
+        this.Result = await this.bankAccountManager.RemoveBankAccountAsync(person, accountNumber);
+        if (this.Result.Succeeded)
         {
-            this.Person.BankAccounts.Remove(account);
-            await this.personManager.UpdateAsync(this.Person);
+            this.BankAccounts = this.bankAccountManager.GetBankAccounts(person);
         }
         return this.Page();
     }

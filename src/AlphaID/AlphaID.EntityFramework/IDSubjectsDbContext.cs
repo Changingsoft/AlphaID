@@ -1,17 +1,17 @@
 ﻿using IDSubjects;
+using IDSubjects.Payments;
 using IDSubjects.RealName;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AlphaID.EntityFramework;
 
 public class IdSubjectsDbContext : DbContext
 {
-    public IdSubjectsDbContext([NotNull] DbContextOptions<IdSubjectsDbContext> options) : base(options)
+    public IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : base(options)
     {
-        
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,6 +42,8 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<NaturalPersonToken> PersonTokens { get; protected set; } = default!;
 
+    public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = default!;
+
     public DbSet<ChineseIdCardValidation> RealNameValidations { get; protected set; } = default!;
 
     /// <summary>
@@ -65,30 +67,11 @@ public class IdSubjectsDbContext : DbContext
             e.HasIndex(p => p.NormalizedEmail).IsUnique().HasFilter("[NormalizedEmail] IS NOT NULL");
             e.HasIndex(p => p.PhoneNumber).IsUnique().HasFilter("[PhoneNumber] IS NOT NULL");
         });
-
-        builder.Entity<NaturalPersonLogin>(e =>
-        {
-            e.HasKey(p => new { p.LoginProvider, p.ProviderKey });
-        });
-        builder.Entity<NaturalPersonToken>(e =>
-        {
-            e.HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
-
-        });
-        builder.Entity<NaturalPersonClaim>(e =>
-        {
-        });
-
         builder.Entity<GenericOrganization>(e =>
         {
             e.HasIndex(p => p.Usci).IsUnique().HasFilter(@"[USCI] IS NOT NULL");
         });
-
-
-
     }
-
-
 
     /// <summary>
     /// Converts <see cref="DateOnly" /> to <see cref="DateTime"/> and vice versa.
@@ -138,7 +121,7 @@ public class IdSubjectsDbContext : DbContext
     }
 
     /// <summary>
-    /// Compares <see cref="DateOnly?" />.
+    /// Compares <see cref="DateOnly" />.
     /// </summary>
     public class NullableDateOnlyComparer : ValueComparer<DateOnly?>
     {

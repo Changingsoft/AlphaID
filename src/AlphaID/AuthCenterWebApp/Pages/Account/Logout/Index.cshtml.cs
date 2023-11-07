@@ -47,7 +47,7 @@ public class Index : PageModel
         else
         {
             var context = await this.interaction.GetLogoutContextAsync(this.LogoutId);
-            if (context?.ShowSignoutPrompt == false)
+            if (context.ShowSignoutPrompt == false)
             {
                 // it's safe to automatically sign-out
                 showLogoutPrompt = false;

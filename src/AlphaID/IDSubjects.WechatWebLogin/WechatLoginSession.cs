@@ -62,7 +62,7 @@ public class WechatLoginSession
     /// <summary>
     /// 
     /// </summary>
-    public DateTime WhenExpires { get; protected set; } = default!;
+    public DateTime WhenExpires { get; protected set; }
 
     /// <summary>
     /// 

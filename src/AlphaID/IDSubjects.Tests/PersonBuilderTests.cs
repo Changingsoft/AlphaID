@@ -29,16 +29,4 @@ public class PersonBuilderTests
         Assert.Equal("SAN", person.PhoneticGivenName);
     }
 
-    [Fact()]
-    public void AddBankAccountTest()
-    {
-        var builder = new PersonBuilder("PersonName");
-        builder.AddBankAccount("AccountNumber1", "BankName1", "AccountName1");
-        builder.AddBankAccount("AccountNumber2", "BankName2", "AccountName2");
-
-        var person = builder.Person;
-        Assert.Equal(2, person.BankAccounts.Count);
-
-    }
-
 }

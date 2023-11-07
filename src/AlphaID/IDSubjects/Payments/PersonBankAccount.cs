@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects;
+namespace IDSubjects.Payments;
 
 /// <summary>
 /// 银行账户。
@@ -51,11 +51,11 @@ public class PersonBankAccount
     /// 主体Id.
     /// </summary>
     [MaxLength(50), Unicode(false)]
-    public string PersonId { get; protected set; } = default!;
+    public string PersonId { get; protected internal set; } = default!;
 
     /// <summary>
     /// 
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public virtual NaturalPerson Person { get; protected set; } = default!;
+    public virtual NaturalPerson Person { get; protected internal set; } = default!;
 }

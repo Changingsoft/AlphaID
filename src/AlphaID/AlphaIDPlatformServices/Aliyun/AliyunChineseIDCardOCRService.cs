@@ -11,7 +11,6 @@ namespace AlphaID.PlatformServices.Aliyun;
 /// </summary>
 public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
 {
-    private readonly JsonSerializer serializer;
     private readonly AliyunChineseIdCardOcrServiceOptions options;
 
     /// <summary>
@@ -19,7 +18,7 @@ public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
     /// </summary>
     public AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options)
     {
-        this.serializer = new JsonSerializer();
+        new JsonSerializer();
         this.options = options.Value;
     }
     /// <summary>

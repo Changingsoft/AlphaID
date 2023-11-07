@@ -50,13 +50,13 @@ public class PersonChineseIdCardInfo
     /// 民族。
     /// </summary>
     [MaxLength(50)]
-    public string? Ethnicity { get; protected set; } = default!;
+    public string? Ethnicity { get; protected set; }
 
 
     /// <summary>
     /// 住址。
     /// </summary>
     [MaxLength(100)]
-    public string? Address { get; protected set; } = default!;
+    public string? Address { get; protected set; }
 
 }

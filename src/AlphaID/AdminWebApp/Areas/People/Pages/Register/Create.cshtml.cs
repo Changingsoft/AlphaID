@@ -34,7 +34,7 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
         {
             this.ModelState.AddModelError("", "移动电话号码无效。");
         }
@@ -58,7 +58,7 @@ public class CreateModel : PageModel
         var result = await this.manager.CreateAsync(person);
 
         if (result.Succeeded)
-            return this.RedirectToPage("../Detail/Index", new { id = person.Id });
+            return this.RedirectToPage("../Detail/Index", new { anchor = person.Id });
 
         foreach (var error in result.Errors)
         {
@@ -80,7 +80,7 @@ public class CreateModel : PageModel
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
             return new JsonResult("移动电话号码无效");
 
-        if (this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
+        if (!this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
         {
             return new JsonResult(true);
         }

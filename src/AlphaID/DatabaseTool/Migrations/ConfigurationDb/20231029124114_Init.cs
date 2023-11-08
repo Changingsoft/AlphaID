@@ -645,7 +645,8 @@ namespace DatabaseTool.Migrations.ConfigurationDb
                 unique: true);
 
             //Apply Init Data
-            
+            migrationBuilder.Sql(File.ReadAllText("Migrations/ConfigurationDb/20231029124114_Init.sql"));
+
         }
 
         /// <inheritdoc />

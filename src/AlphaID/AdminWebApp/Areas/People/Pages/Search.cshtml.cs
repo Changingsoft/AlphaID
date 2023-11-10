@@ -26,8 +26,8 @@ public class SearchModel : PageModel
             return person != null ? this.RedirectToPage("Detail/Index", new { id = person.Id }) : this.Page();
         }
 
-        var pinyinResult = new List<NaturalPerson>(this.personManager.Users.Where(p => p.PhoneticSearchHint!.StartsWith(q)).OrderBy(p => p.PhoneticSearchHint!.Length).ThenBy(p => p.PhoneticSearchHint));
-        var nameResult = new List<NaturalPerson>(this.personManager.Users.Where(p => p.Name.StartsWith(q)).OrderBy(p => p.Name.Length).ThenBy(p => p.Name));
+        var pinyinResult = new List<NaturalPerson>(this.personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(q)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint));
+        var nameResult = new List<NaturalPerson>(this.personManager.Users.Where(p => p.PersonName.FullName.StartsWith(q)).OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName));
 
         this.Results = pinyinResult.UnionBy(nameResult, p => p.Id);
         return this.Page();

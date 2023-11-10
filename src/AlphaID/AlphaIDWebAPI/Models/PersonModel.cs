@@ -31,11 +31,11 @@ public record PersonModel(string SubjectId,
     public PersonModel(NaturalPerson person, bool realNameValid = false,
                        IEnumerable<OrganizationMember>? members = null)
         : this(person.Id,
-               person.Name,
-               person.Sex.ToString(),
+               person.PersonName.FullName,
+               person.Gender.ToString(),
                person.PhoneNumber?.MobileSuffix(),
                realNameValid,
-               person.PhoneticSearchHint,
+               person.PersonName.SearchHint,
                members?.Select(p => $"{p.Title} {p.Department} {p.Organization.Name}".Trim()))
     { }
 }

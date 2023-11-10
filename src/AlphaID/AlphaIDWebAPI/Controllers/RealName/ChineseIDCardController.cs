@@ -53,7 +53,7 @@ public class ChineseIdCardController : ControllerBase
             ? this.NotFound()
             : new ChineseIdCardModel(currentCard.ChineseIDCard.CardNumber,
                 currentCard.ChineseIDCard.Name,
-                currentCard.ChineseIDCard.Sex.ToString(),
+                currentCard.ChineseIDCard.Gender.ToString(),
                 currentCard.ChineseIDCard.DateOfBirth,
                 currentCard.ChineseIDCard.Ethnicity,
                 currentCard.ChineseIDCard.Address,

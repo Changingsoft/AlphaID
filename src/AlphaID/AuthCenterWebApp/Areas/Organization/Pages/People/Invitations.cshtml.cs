@@ -54,8 +54,8 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public IActionResult OnGetFindPerson(string term)
         {
-            var searchResults = this.naturalPersonManager.Users.Where(p => p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.Name.StartsWith(term))
-                .Select(p => new FindPersonModel() { UserName = p.UserName, Name = p.Name });
+            var searchResults = this.naturalPersonManager.Users.Where(p => p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.PersonName.FullName.StartsWith(term))
+                .Select(p => new FindPersonModel() { UserName = p.UserName, Name = p.PersonName.FullName });
             return new JsonResult(searchResults);
         }
 

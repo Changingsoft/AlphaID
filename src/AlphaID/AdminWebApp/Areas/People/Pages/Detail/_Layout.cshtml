@@ -13,7 +13,7 @@
     @await RenderSectionAsync("Heads", false)
 }
 @section PageHeader{
-    <h1>@person?.Name</h1>
+    <h1>@person?.PersonName.FullName</h1>
 }
 <div class="card">
     <div class="row g-0">

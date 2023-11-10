@@ -19,13 +19,13 @@ public class AddressInfo
     /// 地区/省
     /// </summary>
     [MaxLength(50)]
-    public string? State { get; set; }
+    public string? Region { get; set; }
 
     /// <summary>
     /// 城市
     /// </summary>
     [MaxLength(50)]
-    public string City { get; set; } = default!;
+    public string Locality { get; set; } = default!;
 
     /// <summary>
     /// 街道1
@@ -44,12 +44,6 @@ public class AddressInfo
     /// </summary>
     [MaxLength(50)]
     public string? Street3 { get; set; }
-
-    /// <summary>
-    /// 公司
-    /// </summary>
-    [MaxLength(50)]
-    public string? Company { get; set; }
 
     /// <summary>
     /// 收件人
@@ -75,6 +69,6 @@ public class AddressInfo
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{this.Receiver} {this.Company},{this.Street3},{this.Street2},{this.Street1},{this.City},{this.Country},{this.PostalCode}";
+        return $"{this.Receiver} ,{this.Street3},{this.Street2},{this.Street1},{this.Locality},{this.Country},{this.PostalCode}";
     }
 }

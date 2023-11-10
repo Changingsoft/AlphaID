@@ -14,7 +14,7 @@ public class ChineseIdCardNumberTests
         Assert.Equal(530302, number.RegionCode);
         Assert.Equal(new DateOnly(1985, 1, 15), number.DateOfBirth);
         Assert.Equal(031, number.Sequence);
-        Assert.Equal(Sex.Male, number.Sex);
+        Assert.Equal(Gender.Male, number.Gender);
         Assert.Equal("530302198501150314", number.NumberString);
         Assert.Equal("530302850115031", number.ToString(ChineseIdCardNumberVersion.V1));
 

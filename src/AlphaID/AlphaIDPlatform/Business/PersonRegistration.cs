@@ -15,7 +15,7 @@ public class PersonRegistration
     /// <param name="displayName"></param>
     /// <param name="mobile"></param>
     /// <param name="sex"></param>
-    public PersonRegistration(string displayName, MobilePhoneNumber mobile, Sex? sex = null)
+    public PersonRegistration(string displayName, MobilePhoneNumber mobile, Gender? sex = null)
     {
         this.DisplayName = displayName;
         this.Mobile = mobile;
@@ -66,7 +66,7 @@ public class PersonRegistration
     /// <summary>
     /// 性别。
     /// </summary>
-    public Sex? Sex { get; internal set; }
+    public Gender? Sex { get; internal set; }
 
     /// <summary>
     /// 要加入的组织。

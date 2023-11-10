@@ -99,11 +99,11 @@ public class PersonController : ControllerBase
             return new PersonSearchResult(new PersonModel[] { new(result, card != null) });
         }
 
-        var pinyinSearchSet = this.personManager.Users.Where(p => p.PhoneticSearchHint!.StartsWith(keywords)).OrderBy(p => p.PhoneticSearchHint!.Length).ThenBy(p => p.PhoneticSearchHint);
+        var pinyinSearchSet = this.personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(keywords)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint);
         var pinyinSearchSetCount = pinyinSearchSet.Count();
         var pinyinSearchResult = new List<NaturalPerson>(pinyinSearchSet.Take(30));
 
-        var nameSearchSet = this.personManager.Users.Where(p => p.Name.StartsWith(keywords)).OrderBy(p => p.Name.Length).ThenBy(p => p.Name);
+        var nameSearchSet = this.personManager.Users.Where(p => p.PersonName.FullName.StartsWith(keywords)).OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName);
         var nameSearchSetCount = nameSearchSet.Count();
         var nameSearchResult = new List<NaturalPerson>(nameSearchSet.Take(30));
 

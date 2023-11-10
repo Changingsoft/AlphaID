@@ -12,6 +12,9 @@ public class InputModel
 
     [Display(Name = "Remember my decision")]
     public bool RememberConsent { get; init; } = true;
+
     public string ReturnUrl { get; init; } = default!;
-    public string Description { get; init; } = default!;
+
+    [Display(Name = "Description")]
+    public string? Description { get; init; }
 }

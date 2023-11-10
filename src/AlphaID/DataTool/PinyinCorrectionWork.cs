@@ -20,15 +20,15 @@ internal class PinyinCorrectionWork : BackgroundService
         using var scope = this.factory.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<IdSubjectsDbContext>();
         var count = 0;
-        foreach (var person in db.People.Where(p => p.Name.Contains('洋')))
+        foreach (var person in db.People.Where(p => p.PersonName.FullName.Contains('洋')))
         {
             count++;
-            if (person is { LastName: not null, FirstName: not null })
+            if (person is { PersonName.Surname: not null, PersonName.GivenName: not null })
             {
-                var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(person.LastName, person.FirstName);
+                var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(person.PersonName.Surname, person.PersonName.GivenName);
                 person.PhoneticSurname = pinyinSurname;
                 person.PhoneticGivenName = pinyinGivenName;
-                person.PhoneticSearchHint = $"{pinyinSurname}{pinyinGivenName}";
+                person.PersonName.SearchHint = $"{pinyinSurname}{pinyinGivenName}";
             }
             Console.WriteLine($"{count:0000000}");
         }

@@ -25,8 +25,8 @@ public class EditPersonNameModel : PageModel
         }
         this.Input = new()
         {
-            Surname = person.LastName,
-            GivenName = person.FirstName ?? default!,
+            Surname = person.PersonName.Surname,
+            GivenName = person.PersonName.GivenName ?? default!,
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName ?? default!,
         };
@@ -42,7 +42,8 @@ public class EditPersonNameModel : PageModel
             return this.Page();
 
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, this.Input.PinyinSurname, this.Input.PinyinGivenName);
-        await this.naturalPersonManager.ForceChangeNameAsync(person, chinesePersonName);
+        var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName);
+        await this.naturalPersonManager.AdminChangePersonNameAsync(person, personName);
         return this.RedirectToPage("Index");
     }
 

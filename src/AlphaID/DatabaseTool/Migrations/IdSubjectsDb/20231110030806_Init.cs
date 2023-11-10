@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
 
 #nullable disable
@@ -18,48 +19,49 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     Id = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
-                    SecurityStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    PersonName_Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PersonName_MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PersonName_GivenName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PersonName_FullName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    PersonName_SearchHint = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    CanEditPersonName = table.Column<bool>(type: "bit", nullable: false),
+                    Gender = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
                     WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     WhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    PasswordLastSet = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     NickName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     PhoneticSurname = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     PhoneticGivenName = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: true),
-                    PhoneticSearchHint = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: true),
-                    Sex = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
-                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    PasswordLastSet = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Avatar_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
-                    Avatar_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ProfilePicture_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    ProfilePicture_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ProfilePicture_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Locale = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
                     TimeZone = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     Address_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Region = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Locality = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Street1 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Street2 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Street3 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address_Company = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Receiver = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Contact = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     Address_PostalCode = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
-                    WebSite = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
+                    WebSite = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,16 +74,20 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 {
                     Id = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Usci = table.Column<string>(type: "char(18)", maxLength: 18, nullable: true),
-                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    WhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Enabled = table.Column<bool>(type: "bit", nullable: false),
                     Domicile = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Contact = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Email = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    Representative = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ProfilePicture_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    ProfilePicture_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ProfilePicture_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    WhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Usci = table.Column<string>(type: "char(18)", maxLength: 18, nullable: true),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
                     EstablishedAt = table.Column<DateTime>(type: "date", nullable: true),
                     TermBegin = table.Column<DateTime>(type: "date", nullable: true),
                     TermEnd = table.Column<DateTime>(type: "date", nullable: true),
-                    Representative = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Location = table.Column<Geometry>(type: "geography", nullable: true),
                     Website = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
@@ -179,7 +185,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     PersonId = table.Column<string>(type: "varchar(50)", nullable: false),
                     AcceptedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     ExpiresAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    AcceptedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AcceptedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,7 +206,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     ChineseIDCard_Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ChineseIDCard_Sex = table.Column<string>(type: "varchar(7)", nullable: true),
+                    ChineseIDCard_Gender = table.Column<string>(type: "varchar(7)", nullable: true),
                     ChineseIDCard_Ethnicity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ChineseIDCard_DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
                     ChineseIDCard_Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -351,11 +357,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_Name",
-                table: "NaturalPerson",
-                column: "Name");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_NormalizedEmail",
                 table: "NaturalPerson",
                 column: "NormalizedEmail",
@@ -369,16 +370,21 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_NaturalPerson_PersonName_FullName",
+                table: "NaturalPerson",
+                column: "PersonName_FullName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NaturalPerson_PersonName_SearchHint",
+                table: "NaturalPerson",
+                column: "PersonName_SearchHint");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_PhoneNumber",
                 table: "NaturalPerson",
                 column: "PhoneNumber",
                 unique: true,
                 filter: "[PhoneNumber] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_PhoneticSearchHint",
-                table: "NaturalPerson",
-                column: "PhoneticSearchHint");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_UserName",

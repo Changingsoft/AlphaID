@@ -97,28 +97,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Overview" xml:space="preserve">
-    <value>概览</value>
-  </data>
-  <data name="OAuth/OIDC" xml:space="preserve">
-    <value>OAuth/OIDC</value>
-  </data>
-  <data name="Clients" xml:space="preserve">
-    <value>客户端</value>
-  </data>
-  <data name="Scopes" xml:space="preserve">
-    <value>范围</value>
+  <data name="Active Sessions" xml:space="preserve">
+    <value>活跃会话</value>
   </data>
   <data name="API Resources" xml:space="preserve">
     <value>API资源</value>
   </data>
+  <data name="Clients" xml:space="preserve">
+    <value>客户端</value>
+  </data>
   <data name="ID Providers" xml:space="preserve">
     <value>标识提供者</value>
   </data>
-  <data name="Active Sessions" xml:space="preserve">
-    <value>活跃会话</value>
-  </data>
   <data name="Keys" xml:space="preserve">
     <value>密钥</value>
+  </data>
+  <data name="OAuth/OIDC" xml:space="preserve">
+    <value>OAuth/OIDC</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>概览</value>
+  </data>
+  <data name="Scopes" xml:space="preserve">
+    <value>范围</value>
   </data>
 </root>

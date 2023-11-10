@@ -34,5 +34,6 @@ public class RealNameInfo
     /// <summary>
     /// 
     /// </summary>
+    [MaxLength(50)]
     public string AcceptedBy { get; set; } = default!;
 }

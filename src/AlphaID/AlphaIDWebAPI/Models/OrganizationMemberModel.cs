@@ -26,7 +26,7 @@ public record OrganizationMemberModel(string PersonId,
     /// <param name="member"></param>
     public OrganizationMemberModel(OrganizationMember member)
         : this(member.PersonId,
-               member.Person.Name,
+               member.Person.PersonName.FullName,
                member.OrganizationId,
                member.Organization.Name,
                member.Title,

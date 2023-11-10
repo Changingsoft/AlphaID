@@ -61,6 +61,15 @@ namespace IDSubjects {
         }
         
         /// <summary>
+        ///   查找类似 Cannot change person name. 的本地化字符串。
+        /// </summary>
+        public static string CannotChangePersonName {
+            get {
+                return ResourceManager.GetString("CannotChangePersonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Phone number is already taken. 的本地化字符串。
         /// </summary>
         public static string DuplicatePhoneNumber {

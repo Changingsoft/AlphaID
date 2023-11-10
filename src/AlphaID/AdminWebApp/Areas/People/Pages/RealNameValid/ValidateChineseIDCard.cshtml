@@ -11,7 +11,7 @@
             <img src="data:@(Model.Data.ChineseIDCardImage.PersonalFaceMimeType);base64,@(Convert.ToBase64String(Model.Data.ChineseIDCardImage.PersonalFace))" class="img-flued img-thumbnail" />
         }
         <p>姓名：@Model.Data.ChineseIDCard?.Name</p>
-        <p>性别：@Model.Data.ChineseIDCard?.Sex</p>
+        <p>性别：@Model.Data.ChineseIDCard?.Gender</p>
         <p>出生日期：@Model.Data.ChineseIDCard?.DateOfBirth</p>
         <p>民族：@Model.Data.ChineseIDCard?.Ethnicity</p>
         <p>住址：@Model.Data.ChineseIDCard?.Address</p>

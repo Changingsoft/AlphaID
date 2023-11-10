@@ -131,6 +131,11 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
@@ -243,6 +248,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("CanEditPersonName")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -261,13 +269,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("Gender")
+                        .HasColumnType("varchar(6)")
+                        .HasComment("性别");
 
                     b.Property<string>("Locale")
                         .HasMaxLength(10)
@@ -279,15 +283,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("NickName")
                         .HasMaxLength(20)
@@ -323,11 +318,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(40)");
 
-                    b.Property<string>("PhoneticSearchHint")
-                        .HasMaxLength(60)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(60)");
-
                     b.Property<string>("PhoneticSurname")
                         .HasMaxLength(20)
                         .IsUnicode(false)
@@ -337,10 +327,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Sex")
-                        .HasColumnType("varchar(6)")
-                        .HasComment("性别");
 
                     b.Property<string>("TimeZone")
                         .HasMaxLength(50)
@@ -371,8 +357,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.HasIndex("Name");
-
                     b.HasIndex("NormalizedEmail")
                         .IsUnique()
                         .HasFilter("[NormalizedEmail] IS NOT NULL");
@@ -383,8 +367,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.HasIndex("PhoneNumber")
                         .IsUnique()
                         .HasFilter("[PhoneNumber] IS NOT NULL");
-
-                    b.HasIndex("PhoneticSearchHint");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -550,7 +532,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.Property<string>("AcceptedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTimeOffset>("ExpiresAt")
                         .HasColumnType("datetimeoffset");
@@ -593,6 +576,37 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("IDSubjects.GenericOrganization", b =>
+                {
+                    b.OwnsOne("IDSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
+                        {
+                            b1.Property<string>("GenericOrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("MimeType")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(100)");
+
+                            b1.Property<DateTimeOffset>("UpdateTime")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.HasKey("GenericOrganizationId");
+
+                            b1.ToTable("Organization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GenericOrganizationId");
+                        });
+
+                    b.Navigation("ProfilePicture");
+                });
+
             modelBuilder.Entity("IDSubjects.Invitations.JoinOrganizationInvitation", b =>
                 {
                     b.HasOne("IDSubjects.NaturalPerson", "Invitee")
@@ -619,21 +633,17 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                             b1.Property<string>("NaturalPersonId")
                                 .HasColumnType("varchar(50)");
 
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("Company")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
                             b1.Property<string>("Contact")
                                 .HasMaxLength(20)
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(20)");
 
                             b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Locality")
                                 .IsRequired()
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
@@ -648,7 +658,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
-                            b1.Property<string>("State")
+                            b1.Property<string>("Region")
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
@@ -673,7 +683,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("NaturalPersonId");
                         });
 
-                    b.OwnsOne("IDSubjects.BinaryDataInfo", "Avatar", b1 =>
+                    b.OwnsOne("IDSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
                         {
                             b1.Property<string>("NaturalPersonId")
                                 .HasColumnType("varchar(50)");
@@ -688,7 +698,48 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(100)");
 
+                            b1.Property<DateTimeOffset>("UpdateTime")
+                                .HasColumnType("datetimeoffset");
+
                             b1.HasKey("NaturalPersonId");
+
+                            b1.ToTable("NaturalPerson");
+
+                            b1.WithOwner()
+                                .HasForeignKey("NaturalPersonId");
+                        });
+
+                    b.OwnsOne("IDSubjects.PersonNameInfo", "PersonName", b1 =>
+                        {
+                            b1.Property<string>("NaturalPersonId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("FullName")
+                                .IsRequired()
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)");
+
+                            b1.Property<string>("GivenName")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("MiddleName")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("SearchHint")
+                                .HasMaxLength(60)
+                                .HasColumnType("nvarchar(60)");
+
+                            b1.Property<string>("Surname")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.HasKey("NaturalPersonId");
+
+                            b1.HasIndex("FullName");
+
+                            b1.HasIndex("SearchHint");
 
                             b1.ToTable("NaturalPerson");
 
@@ -698,7 +749,10 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.Navigation("Address");
 
-                    b.Navigation("Avatar");
+                    b.Navigation("PersonName")
+                        .IsRequired();
+
+                    b.Navigation("ProfilePicture");
                 });
 
             modelBuilder.Entity("IDSubjects.OrganizationBankAccount", b =>
@@ -854,6 +908,10 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                             b1.Property<DateTime?>("Expires")
                                 .HasColumnType("date");
 
+                            b1.Property<string>("Gender")
+                                .IsRequired()
+                                .HasColumnType("varchar(7)");
+
                             b1.Property<DateTime>("IssueDate")
                                 .HasColumnType("date");
 
@@ -866,10 +924,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .IsRequired()
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("Sex")
-                                .IsRequired()
-                                .HasColumnType("varchar(7)");
 
                             b1.HasKey("ChineseIdCardValidationId");
 

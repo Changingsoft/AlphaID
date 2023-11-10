@@ -23,11 +23,11 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public IEnumerable<OrganizationMember> Members { get; set; } = Enumerable.Empty<OrganizationMember>();
 
-        public async Task<IActionResult> OnGetAsync(string userAnchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
             //Support both userAnchor and user ID.
-            var person = await this.personManager.FindByNameAsync(userAnchor)
-                ?? await this.personManager.FindByIdAsync(userAnchor);
+            var person = await this.personManager.FindByNameAsync(anchor)
+                ?? await this.personManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
             this.Person = person;

@@ -132,6 +132,9 @@
   <data name="Contact" xml:space="preserve">
     <value>联系信息</value>
   </data>
+  <data name="Date of birth" xml:space="preserve">
+    <value>生日</value>
+  </data>
   <data name="Department" xml:space="preserve">
     <value>部门</value>
   </data>
@@ -151,7 +154,7 @@
     <value>电子邮件</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>启用的</value>
+    <value>启用</value>
   </data>
   <data name="Expires" xml:space="preserve">
     <value>过期时间</value>
@@ -174,9 +177,6 @@
   <data name="Male" xml:space="preserve">
     <value>男</value>
   </data>
-  <data name="Mobile phone number" xml:space="preserve">
-    <value>移动电话号码</value>
-  </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>
   </data>
@@ -186,14 +186,23 @@
   <data name="New password" xml:space="preserve">
     <value>新密码</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>下一步</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>移动电话号码</value>
+  </data>
+  <data name="Phonetic display name" xml:space="preserve">
+    <value>读音全名</value>
   </data>
   <data name="Phonetic given name" xml:space="preserve">
     <value>名字读音</value>
   </data>
   <data name="Phonetic surname" xml:space="preserve">
-    <value>姓氏读音</value>
+    <value>读音姓氏</value>
   </data>
   <data name="Remark" xml:space="preserve">
     <value>备注</value>
@@ -231,6 +240,9 @@
   <data name="Unified social credit code" xml:space="preserve">
     <value>统一社会信用代码</value>
   </data>
+  <data name="Unselected" xml:space="preserve">
+    <value>未选择</value>
+  </data>
   <data name="UPN suffix" xml:space="preserve">
     <value>UPN后缀</value>
   </data>
@@ -241,7 +253,7 @@
     <value>用户下次登录必须修改密码</value>
   </data>
   <data name="User name" xml:space="preserve">
-    <value>用户名称</value>
+    <value>用户名</value>
   </data>
   <data name="Validate_EmailAddress" xml:space="preserve">
     <value>不是有效的电子邮件格式。</value>

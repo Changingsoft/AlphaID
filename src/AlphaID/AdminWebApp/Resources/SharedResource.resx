@@ -117,84 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Validate_EmailAddress" xml:space="preserve">
-    <value>It isn't look like an email address.</value>
-  </data>
-  <data name="Validate_PasswordConfirm" xml:space="preserve">
-    <value>Confirm password is not same as new password.</value>
-  </data>
-  <data name="Validate_Required" xml:space="preserve">
-    <value>The {0} field is required.</value>
-  </data>
-  <data name="Validate_StringLength" xml:space="preserve">
-    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
-  </data>
-  <data name="New password" xml:space="preserve">
-    <value>New password</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="Phonetic given name" xml:space="preserve">
-    <value>Phonetic given name</value>
-  </data>
-  <data name="Phonetic surname" xml:space="preserve">
-    <value>Phonetic surname</value>
-  </data>
-  <data name="Remark" xml:space="preserve">
-    <value>Remark</value>
-  </data>
-  <data name="Require resource indicator" xml:space="preserve">
-    <value>Require resource indicator</value>
-  </data>
-  <data name="Resource name" xml:space="preserve">
-    <value>Resource name</value>
-  </data>
-  <data name="Root DN" xml:space="preserve">
-    <value>Root DN</value>
-  </data>
-  <data name="Secret" xml:space="preserve">
-    <value>Secret</value>
-  </data>
-  <data name="Server" xml:space="preserve">
-    <value>Server</value>
-  </data>
-  <data name="Show in discovery document" xml:space="preserve">
-    <value>Show in discovery document</value>
-  </data>
-  <data name="Specifies logout URI at client for HTTP based front-channel logout." xml:space="preserve">
-    <value>Specifies logout URI at client for HTTP based front-channel logout.</value>
-  </data>
-  <data name="Surname" xml:space="preserve">
-    <value>Surname</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="Unified social credit code" xml:space="preserve">
-    <value>Unified social credit code</value>
-  </data>
-  <data name="UPN suffix" xml:space="preserve">
-    <value>UPN suffix</value>
-  </data>
-  <data name="User DN" xml:space="preserve">
-    <value>User DN</value>
-  </data>
-  <data name="User must change password on next login" xml:space="preserve">
-    <value>User must change password on next login</value>
-  </data>
-  <data name="User name" xml:space="preserve">
-    <value>User name</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="Verification code" xml:space="preserve">
-    <value>Verification code</value>
-  </data>
   <data name="Allowed access token signing algorithms" xml:space="preserve">
     <value>Allowed access token signing algorithms</value>
   </data>
@@ -209,6 +131,9 @@
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
+  </data>
+  <data name="Date of birth" xml:space="preserve">
+    <value>Date of birth</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Department</value>
@@ -252,13 +177,101 @@
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
-  <data name="Mobile phone number" xml:space="preserve">
-    <value>Mobile phone number</value>
-  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="New claim type" xml:space="preserve">
     <value>New claim type</value>
+  </data>
+  <data name="New password" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="Phonetic display name" xml:space="preserve">
+    <value>Phonetic display name</value>
+  </data>
+  <data name="Phonetic given name" xml:space="preserve">
+    <value>Phonetic given name</value>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+    <value>Phonetic surname</value>
+  </data>
+  <data name="Remark" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="Require resource indicator" xml:space="preserve">
+    <value>Require resource indicator</value>
+  </data>
+  <data name="Resource name" xml:space="preserve">
+    <value>Resource name</value>
+  </data>
+  <data name="Root DN" xml:space="preserve">
+    <value>Root DN</value>
+  </data>
+  <data name="Secret" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="Show in discovery document" xml:space="preserve">
+    <value>Show in discovery document</value>
+  </data>
+  <data name="Specifies logout URI at client for HTTP based front-channel logout." xml:space="preserve">
+    <value>Specifies logout URI at client for HTTP based front-channel logout.</value>
+  </data>
+  <data name="Surname" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Unified social credit code" xml:space="preserve">
+    <value>Unified social credit code</value>
+  </data>
+  <data name="Unselected" xml:space="preserve">
+	  <value>Unselected</value>
+	  <comment>Unselected</comment>
+  </data>
+  <data name="UPN suffix" xml:space="preserve">
+    <value>UPN suffix</value>
+  </data>
+  <data name="User DN" xml:space="preserve">
+    <value>User DN</value>
+  </data>
+  <data name="User must change password on next login" xml:space="preserve">
+    <value>User must change password on next login</value>
+  </data>
+  <data name="User name" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="Validate_EmailAddress" xml:space="preserve">
+    <value>It isn't look like an email address.</value>
+  </data>
+  <data name="Validate_PasswordConfirm" xml:space="preserve">
+    <value>Confirm password is not same as new password.</value>
+  </data>
+  <data name="Validate_Required" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="Validate_StringLength" xml:space="preserve">
+    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Verification code" xml:space="preserve">
+    <value>Verification code</value>
   </data>
 </root>

@@ -45,6 +45,11 @@ public class SignUpModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
+    [BindProperty]
+    [Display(Name = "User name")]
+    [StringLength(20, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+    public string? UserName { get; set; }
+
     public string? ExternalLoginMessage { get; set; }
 
     public async Task<IActionResult> OnGet(string? external)
@@ -57,7 +62,7 @@ public class SignUpModel : PageModel
 
         var externalPrincipal = externalAuthResult.Principal;
 
-
+        this.UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
         this.Input = new InputModel
         {
             Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Upn),
@@ -70,7 +75,7 @@ public class SignUpModel : PageModel
         {
             this.Input.Mobile = phoneNumber.PhoneNumber;
         }
-        if (Enum.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ?? externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Sex result))
+        if (Enum.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ?? externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result))
         {
             this.Input.Sex = result;
         }
@@ -113,15 +118,16 @@ public class SignUpModel : PageModel
         var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, pinyinSurname, pinyinGivenName);
         var userName = this.Input.Email ?? phoneNumber.PhoneNumber;
-        var personBuilder = new PersonBuilder(userName);
+        var personBuilder = new PersonBuilder(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
         if (this.Input.Email != null)
             personBuilder.SetEmail(this.Input.Email);
 
-        var person = personBuilder.Person;
+        var person = personBuilder.Build();
+
         person.DateOfBirth = this.Input.DateOfBirth;
-        person.Sex = this.Input.Sex;
+        person.Gender = this.Input.Sex;
 
         var result = await this.naturalPersonManager.CreateAsync(person, this.Input.NewPassword);
         if (result.Succeeded)
@@ -158,7 +164,7 @@ public class SignUpModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "PhoneNumber phone number", Prompt = "1xxxxxxxxxx")]
+        [Display(Name = "Phone number", Prompt = "1xxxxxxxxxx")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = default!;
@@ -179,7 +185,7 @@ public class SignUpModel : PageModel
         public string GivenName { get; init; } = default!;
 
         [Display(Name = "Gender")]
-        public Sex? Sex { get; set; }
+        public Gender? Sex { get; set; }
 
         [Display(Name = "Birth date")]
         [DataType(DataType.Date)]

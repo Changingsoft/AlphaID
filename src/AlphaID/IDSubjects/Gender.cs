@@ -3,9 +3,9 @@
 namespace IDSubjects;
 
 /// <summary>
-/// 表示生理性别。
+/// 表示社会性别。
 /// </summary>
-public enum Sex
+public enum Gender
 {
     /// <summary>
     /// 男

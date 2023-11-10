@@ -38,7 +38,7 @@ public class DeleteModel : PageModel
         this.Person = person;
 
 
-        if (this.Input.DisplayName != this.Person.Name)
+        if (this.Input.DisplayName != this.Person.PersonName.FullName)
         {
             this.ModelState.AddModelError(nameof(this.Input.DisplayName), "Ãû³Æ²»Ò»ÖÂ");
         }

@@ -23,9 +23,9 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public IdOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string userAnchor, int invitationId)
+        public async Task<IActionResult> OnGetAsync(string anchor, int invitationId)
         {
-            var person = await this.personManager.FindByNameAsync(userAnchor);
+            var person = await this.personManager.FindByNameAsync(anchor);
             if (person == null)
             {
                 return this.NotFound();
@@ -43,9 +43,9 @@ namespace AuthCenterWebApp.Areas.People.Pages
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string userAnchor, int invitationId, string button, MembershipVisibility visibility)
+        public async Task<IActionResult> OnPostAsync(string anchor, int invitationId, string button, MembershipVisibility visibility)
         {
-            var person = await this.personManager.FindByNameAsync(userAnchor);
+            var person = await this.personManager.FindByNameAsync(anchor);
             if (person == null)
             {
                 return this.NotFound();

@@ -37,8 +37,8 @@ public class IndexModel : PageModel
         if (person == null)
             return this.NotFound();
 
-        if (person.Avatar != null)
-            return this.File(person.Avatar.Data, person.Avatar.MimeType);
+        if (person.ProfilePicture != null)
+            return this.File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
         return this.File("~/img/no-picture-avatar.png", "image/png");
     }
 
@@ -70,7 +70,7 @@ public class IndexModel : PageModel
         this.Data = person;
         this.ExternalLogins = await this.userManager.GetLoginsAsync(person);
 
-        person.Avatar = null;
+        person.ProfilePicture = null;
         this.Result = await this.userManager.ClearProfilePictureAsync(person);
         return this.Page();
     }

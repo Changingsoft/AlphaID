@@ -97,8 +97,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="People" xml:space="preserve">
-    <value>People</value>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="Find members" xml:space="preserve">
     <value>Find members</value>
@@ -106,7 +106,7 @@
   <data name="Invite member" xml:space="preserve">
     <value>Invite member</value>
   </data>
-  <data name="Export" xml:space="preserve">
-    <value>Export</value>
+  <data name="People" xml:space="preserve">
+    <value>People</value>
   </data>
 </root>

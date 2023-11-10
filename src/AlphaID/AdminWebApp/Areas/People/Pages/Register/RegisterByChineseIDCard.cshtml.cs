@@ -102,7 +102,7 @@ public class RegisterByChineseIdCardModel : PageModel
         //ensure chinese person name
         var chinesePersonName = this.chinesePersonNameFactory.Create(personalFaceResult.Name);
         ChineseIDCardInfo cardInfo = new(personalFaceResult.Name,
-                                     personalFaceResult.SexString == "男" ? Sex.Male : Sex.Female,
+                                     personalFaceResult.SexString == "男" ? Gender.Male : Gender.Female,
                                      personalFaceResult.Nationality,
                                      personalFaceResult.DateOfBirth,
                                      personalFaceResult.Address,
@@ -112,13 +112,13 @@ public class RegisterByChineseIdCardModel : PageModel
                                      issuerFaceResult.ExpiresDate);
 
 
-        PersonBuilder builder = new(userName);
+        PersonBuilder builder = new(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         builder.UseChinesePersonName(chinesePersonName);
         builder.SetMobile(phoneNumber, true);
         if (!string.IsNullOrEmpty(this.Email))
             builder.SetEmail(this.Email);
 
-        var result = await this.personManager.CreateAsync(builder.Person);
+        var result = await this.personManager.CreateAsync(builder.Build());
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -132,10 +132,10 @@ public class RegisterByChineseIdCardModel : PageModel
         ChineseIdCardValidation card = new(new ChineseIDCardImage(personalFaceBytes, personalFaceMimeType, issuerFaceBytes, issuerFaceMimeType));
         card.TryApplyChineseIdCardInfo(cardInfo);
         card.TryApplyChinesePersonName(chinesePersonName);
-        await this.chineseIdCardManager.CommitAsync(builder.Person, card);
+        await this.chineseIdCardManager.CommitAsync(builder.Build(), card);
         await this.chineseIdCardManager.ValidateAsync(card, "System", true);
 
-        return this.RedirectToPage("../Detail/Index", new { id = builder.Person.Id });
+        return this.RedirectToPage("../Detail/Index", new { id = builder.Build().Id });
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]

@@ -100,13 +100,13 @@
   <data name="Management Center" xml:space="preserve">
     <value>管理中心</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>隐私策略</value>
+  </data>
   <data name="System Management" xml:space="preserve">
     <value>系统管理</value>
   </data>
   <data name="Terms of service" xml:space="preserve">
     <value>服务条款</value>
-  </data>
-  <data name="Privacy" xml:space="preserve">
-    <value>隐私策略</value>
   </data>
 </root>

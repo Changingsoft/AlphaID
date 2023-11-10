@@ -10,18 +10,15 @@
             <h1>Debug Panel</h1>
         </div>
         <div class="card-body">
-            <h2>Useful links</h2>
-            <ul>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">Liubei's profile page</a></li>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu@sanguo.net")}"))">Guanyu's profile page</a></li>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("汉王事业集团")}"))">汉王事业集团 profile page</a></li>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏实业集团")}"))">北魏实业集团 profile page</a></li>
+            <h2>Useful Links</h2>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">Liubei's profile page</a></li>
             </ul>
             <h2>Route Data</h2>
-            <ul>
+            <ul class="list-inline">
                 @foreach(var routeValue in ViewContext.RouteData.Values)
                 {
-                    <li>@routeValue.Key : @routeValue.Value</li>
+                    <li class="list-inline-item">["@(routeValue.Key)"] = "@(routeValue.Value)"</li>
                 }
             </ul>
             <h2>Access user</h2>

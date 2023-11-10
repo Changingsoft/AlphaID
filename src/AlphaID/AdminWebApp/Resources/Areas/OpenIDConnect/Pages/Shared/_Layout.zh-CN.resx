@@ -97,28 +97,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Active Sessions" xml:space="preserve">
+    <value>活跃会话</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="API Resources" xml:space="preserve">
+    <value>API 资源</value>
+  </data>
+  <data name="Clients" xml:space="preserve">
+    <value>客户端</value>
+  </data>
+  <data name="Identity Providers" xml:space="preserve">
+    <value>标识提供者</value>
+  </data>
+  <data name="Identity Resources" xml:space="preserve">
+    <value>标识</value>
+  </data>
   <data name="Overview" xml:space="preserve">
     <value>概述</value>
   </data>
   <data name="Scopes" xml:space="preserve">
     <value>范围</value>
-  </data>
-  <data name="API Resources" xml:space="preserve">
-    <value>API 资源</value>
-  </data>
-  <data name="Identity Resources" xml:space="preserve">
-    <value>标识</value>
-  </data>
-  <data name="Identity Providers" xml:space="preserve">
-    <value>标识提供者</value>
-  </data>
-  <data name="Advanced" xml:space="preserve">
-    <value>高级</value>
-  </data>
-  <data name="Active Sessions" xml:space="preserve">
-    <value>活跃会话</value>
-  </data>
-  <data name="Clients" xml:space="preserve">
-    <value>客户端</value>
   </data>
 </root>

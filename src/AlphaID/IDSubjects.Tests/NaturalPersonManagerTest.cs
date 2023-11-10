@@ -1,5 +1,4 @@
-﻿using IDSubjects.ChineseName;
-using IDSubjects.Tests.Fixtures;
+﻿using IDSubjects.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
@@ -19,21 +18,32 @@ public class NaturalPersonManagerTest
 
 
     [Fact]
-    public async Task ChangeName()
+    public async Task ChangeNameWhenCanEditNameFlagNotSet()
     {
         using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
         var person = await this.naturalPersonMocker.CreateDefaultMockPersonAsync(manager);
 
-        var chineseName = new ChinesePersonName("张", "三", "ZHANG", "SAN");
+        var personName = new PersonNameInfo("张三", "张", "三");
 
-        var result = await manager.ChangeNameAsync(person, chineseName);
+        var result = await manager.ChangePersonNameAsync(person, personName);
+        Assert.False(result.Succeeded);
+        Assert.NotEqual(personName, person.PersonName);
+        //Assert.Equal(personName, person.PersonName);
+    }
+
+    [Fact]
+    public async Task ChangeNameWhenCanEditNameFlagSet()
+    {
+        using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var person = await this.naturalPersonMocker.CreateDefaultMockPersonAsync(manager);
+
+        var personName = new PersonNameInfo("张三", "张", "三");
+        person.CanEditPersonName = true;
+        var result = await manager.ChangePersonNameAsync(person, personName);
         Assert.True(result.Succeeded);
-        Assert.Equal("张", person.LastName);
-        Assert.Equal("三", person.FirstName);
-        Assert.Equal("ZHANG", person.PhoneticSurname);
-        Assert.Equal("SAN", person.PhoneticGivenName);
-        Assert.Equal("ZHANGSAN", person.PhoneticSearchHint);
+        Assert.Equal(personName, person.PersonName);
     }
 
     [Fact]
@@ -53,7 +63,7 @@ public class NaturalPersonManagerTest
         using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
 
-        var person = new NaturalPerson("new-test-person");
+        var person = new NaturalPerson("new-test-person", new PersonNameInfo("FullName", "Surname", "GivenName"));
         var result = await manager.CreateAsync(person, "password");
         Assert.True(person.PasswordLastSet.HasValue);
     }
@@ -63,7 +73,7 @@ public class NaturalPersonManagerTest
         using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
 
-        var person = new NaturalPerson("new-test-person");
+        var person = new NaturalPerson("new-test-person", new PersonNameInfo("FullName", "Surname", "GivenName"));
         var result = await manager.CreateAsync(person);
         Assert.False(person.PasswordLastSet.HasValue);
     }
@@ -78,7 +88,7 @@ public class NaturalPersonManagerTest
             using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
             var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
 
-            var person = new NaturalPerson("new-test-person");
+            var person = new NaturalPerson("new-test-person", new PersonNameInfo("FullName", "Surname", "GivenName"));
             var result = await manager.CreateAsync(person);
             Assert.Equal(utcNow, person.WhenCreated);
             Assert.Equal(utcNow, person.WhenChanged);

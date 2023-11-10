@@ -35,11 +35,11 @@
                                 <div class="col-auto"><input type="checkbox" class="form-check-input" value="@member.PersonId"></div>
                                 <div class="col-auto">
                                     <a href="#">
-                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", userAnchor = member.PersonId })"></span>
+                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
                                     </a>
                                 </div>
                                 <div class="col text-truncate">
-                                    <a asp-page="/Index" asp-area="People" asp-route-userAnchor="@member.Person.UserName" class="text-reset d-block">@member.Person.Name</a>
+                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@member.Person.PersonName.FullName</a>
                                     <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
                                 </div>
                                 <div class="col-auto">

@@ -28,9 +28,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             }
             this.Input = new InputMode()
             {
-                Surname = person.LastName,
-                MiddleName = person.MiddleName,
-                GivenName = person.FirstName,
+                Surname = person.PersonName.Surname,
+                MiddleName = person.PersonName.MiddleName,
+                GivenName = person.PersonName.GivenName,
                 PhoneticSurname = person.PhoneticSurname,
                 PhoneticGivenName = person.PhoneticGivenName,
                 NickName = person.NickName,
@@ -45,9 +45,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             {
                 return this.NotFound();
             }
-            person.LastName = this.Input.Surname;
-            person.MiddleName = this.Input.MiddleName;
-            person.FirstName = this.Input.GivenName;
+
+            await this.personManager.ChangePersonNameAsync(person, new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName));
             person.PhoneticSurname = this.Input.PhoneticSurname;
             person.PhoneticGivenName = this.Input.PhoneticGivenName;
             person.NickName = this.Input.NickName;

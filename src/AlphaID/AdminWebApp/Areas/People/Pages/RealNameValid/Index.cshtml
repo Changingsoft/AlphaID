@@ -19,7 +19,7 @@
         @foreach (var validation in Validator.PendingValidations)
         {
             <tr>
-                <td>@validation.Person.Name（@validation.Person.UserName）</td>
+                <td>@validation.Person.PersonName.FullName（@validation.Person.UserName）</td>
                 <td>@validation.ChineseIDCard!.Name</td>
                 <td>@validation.ChineseIDCard!.CardNumber</td>
                 <td>@validation.CommitTime</td>

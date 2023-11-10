@@ -83,7 +83,7 @@ public class Callback : PageModel
 
         // this allows us to collect any additional claims or properties
         // for the specific protocols used and store them in the local auth cookie.
-        // this is typically used to store data needed for signout from those protocols.
+        // this is typically used to store data needed for sign out from those protocols.
         var additionalLocalClaims = new List<Claim>();
         var localSignInProps = new AuthenticationProperties();
         this.CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
@@ -113,66 +113,6 @@ public class Callback : PageModel
         return this.Redirect(returnUrl);
     }
 
-    private async Task<NaturalPerson> AutoProvisionUserAsync(string provider, string providerDisplayName, string providerUserId, IEnumerable<Claim> claims)
-    {
-
-        // email
-        var email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
-                    claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-
-        var upn = claims.FirstOrDefault(p => p.Type == ClaimTypes.Upn)?.Value ?? email; //如果没有upn，则使用email代替。
-
-        var mobile = claims.FirstOrDefault(p => p.Type == "mobile")?.Value ?? claims.FirstOrDefault(p => p.Type == "http://schemas.changingsoft.com/ws/2013/05/identity/claims/mobile")?.Value;
-
-        var firstName = claims.FirstOrDefault(p => p.Type == JwtClaimTypes.GivenName)?.Value ?? claims.FirstOrDefault(p => p.Type == ClaimTypes.GivenName)?.Value;
-
-        var lastName = claims.FirstOrDefault(p => p.Type == JwtClaimTypes.FamilyName)?.Value ?? claims.FirstOrDefault(p => p.Type == ClaimTypes.Surname)?.Value;
-
-        var displayName = claims.FirstOrDefault(p => p.Type == "displayName")?.Value ?? claims.FirstOrDefault(p => p.Type == "http://schemas.changingsoft.com/ws/2013/05/identity/claims/displayname")?.Value ?? lastName + firstName;
-
-        var (phoneticSurname, phoneticGivenName) = this.chinesePersonNamePinyinConverter.Convert(lastName, firstName);
-        var chinesePersonName = new ChinesePersonName(lastName, firstName, phoneticSurname, phoneticGivenName);
-        var phoneticDisplayName = $"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim();
-
-        var phoneticSearchHint = phoneticDisplayName.Replace(" ", string.Empty);
-
-        //Valid是否具备足够自动注册的条件，否则跳转手动注册。
-        //
-        var builder = new PersonBuilder(upn);
-
-
-
-        if (email != null)
-        {
-            builder.SetEmail(email);
-        }
-        if (mobile != null)
-        {
-            builder.SetMobile(MobilePhoneNumber.Parse(mobile));
-        }
-        var user = builder.Person;
-        user.SetName(chinesePersonName); //hack 需要改进。
-
-
-        var filtered = new List<Claim>();
-        // create a list of claims that we want to transfer into our store
-        //
-
-        var identityResult = await this.userManager.CreateAsync(user);
-        if (!identityResult.Succeeded)
-            throw new Exception(identityResult.Errors.First().Description);
-
-        if (filtered.Any())
-        {
-            identityResult = await this.userManager.AddClaimsAsync(user, filtered);
-            if (!identityResult.Succeeded)
-                throw new Exception(identityResult.Errors.First().Description);
-        }
-
-        identityResult = await this.userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, providerDisplayName));
-        return !identityResult.Succeeded ? throw new Exception(identityResult.Errors.First().Description) : user;
-    }
-
     // if the external login is OIDC-based, there are certain things we need to preserve to make logout work
     // this will be different for WS-Fed, SAML2p or other protocols
     private void CaptureExternalLoginContext(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
@@ -188,7 +128,7 @@ public class Callback : PageModel
             localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
         }
 
-        // if the external provider issued an id_token, we'll keep it for signout
+        // if the external provider issued an id_token, we'll keep it for sign out
         var idToken = externalResult.Properties.GetTokenValue("id_token");
         if (idToken != null)
         {

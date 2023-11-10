@@ -24,7 +24,7 @@ public class PersonRegistrationBuilder
     /// <param name="displayName"></param>
     /// <param name="mobile"></param>
     /// <param name="sex"></param>
-    public PersonRegistrationBuilder(string displayName, MobilePhoneNumber mobile, Sex? sex = null)
+    public PersonRegistrationBuilder(string displayName, MobilePhoneNumber mobile, Gender? sex = null)
     {
         this.processor = new ChinesePersonNameFactory();
         this.registration = new PersonRegistration(displayName, mobile, sex);
@@ -50,7 +50,7 @@ public class PersonRegistrationBuilder
         this.registration.Surname = cpersonName.Surname;
         this.registration.GivenName = cpersonName.GivenName;
         this.registration.PhoneticDisplayName = $"{cpersonName.PhoneticSurname} {cpersonName.PhoneticGivenName}".Trim();
-        this.registration.Sex = chineseIdCard.Sex;
+        this.registration.Sex = chineseIdCard.Gender;
 
         return this;
     }

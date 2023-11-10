@@ -43,10 +43,33 @@ public class GenericOrganization
     public string Name { get; protected internal set; } = default!;
 
     /// <summary>
-    /// 统一社会信用代码。
+    /// 住所。
     /// </summary>
-    [MaxLength(18), Column(TypeName = "char(18)")]
-    public string? Usci { get; set; }
+    [MaxLength(100)]
+    public virtual string? Domicile { get; set; }
+
+    /// <summary>
+    /// 联系方式。
+    /// </summary>
+    [MaxLength(50)]
+    public virtual string? Contact { get; set; }
+
+    /// <summary>
+    /// 公开电子邮件。
+    /// </summary>
+    [MaxLength(100),Unicode(false)]
+    public string? Email { get; set; }
+
+    /// <summary>
+    /// 组织的代表人。
+    /// </summary>
+    [MaxLength(20)]
+    public virtual string? Representative { get; set; }
+
+    /// <summary>
+    /// 组织的头像。
+    /// </summary>
+    public virtual BinaryDataInfo? ProfilePicture { get; set; }
 
     /// <summary>
     /// 创建记录的时间。
@@ -59,27 +82,16 @@ public class GenericOrganization
     public virtual DateTimeOffset WhenChanged { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
+    /// 统一社会信用代码。
+    /// </summary>
+    [MaxLength(18), Column(TypeName = "char(18)")]
+    [Obsolete("将专门使用标识符表来存储")]
+    public string? Usci { get; set; }
+
+    /// <summary>
     /// 是否有效。
     /// </summary>
     public virtual bool Enabled { get; protected internal set; } = true;
-
-    /// <summary>
-    /// 银行账号。
-    /// </summary>
-    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; protected set; } = new HashSet<OrganizationBankAccount>();
-
-    /// <summary>
-    /// 住所。
-    /// </summary>
-    [MaxLength(100)]
-    public virtual string? Domicile { get; set; }
-
-    /// <summary>
-    /// 联系方式。
-    /// </summary>
-    [MaxLength(50)]
-    public virtual string? Contact { get; set; }
-
 
     /// <summary>
     /// 注册时间。
@@ -97,12 +109,6 @@ public class GenericOrganization
     public virtual DateOnly? TermEnd { get; set; }
 
     /// <summary>
-    /// 组织的代表人。
-    /// </summary>
-    [MaxLength(20)]
-    public virtual string? Representative { get; set; }
-
-    /// <summary>
     /// 标示该组织的地理位置。
     /// </summary>
     [Column(TypeName = "geography")]
@@ -115,13 +121,19 @@ public class GenericOrganization
     public virtual string? Website { get; set; }
 
     /// <summary>
+    /// Description of organization.
+    /// </summary>
+    [MaxLength(200)]
+    public virtual string? Description { get; set; }
+
+    /// <summary>
     /// 曾用名。
     /// </summary>
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = new HashSet<OrganizationUsedName>();
 
     /// <summary>
-    /// Description of organization.
+    /// 银行账号。
     /// </summary>
-    [MaxLength(200)]
-    public virtual string? Description { get; set; }
+    [Obsolete("Will be manage and access via Organization financial account manager.")]
+    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; protected set; } = new HashSet<OrganizationBankAccount>();
 }

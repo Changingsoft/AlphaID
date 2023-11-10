@@ -3,77 +3,88 @@
 @{
     ViewBag.Title = L["Create person"];
 }
-
-<h2>Create person</h2>
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Create person"]</h2>
 <div class="card">
     <div class="card-body">
         <form method="post">
             <div class="mb-3">
-                <label asp-for="Input.Surname" class="form-label"></label>
-                <input asp-for="Input.Surname" class="form-control" />
-                <span asp-description-for="Input.Surname"></span>
-                <span asp-validation-for="Input.Surname" class="alert-danger"></span>
+                <label asp-for="UserName" class="form-label required"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-description-for="UserName"></span>
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Input.GivenName" class="form-label"></label>
-                <input asp-for="Input.GivenName" class="form-control" />
-                <span asp-description-for="Input.GivenName"></span>
-                <span class="alert-danger" asp-validation-for="Input.GivenName"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.PhoneticSurname" class="form-label"></label>
-                <input asp-for="Input.PhoneticSurname" class="form-control" />
-                <span asp-description-for="Input.PhoneticSurname"></span>
-                <span class="alert-danger" asp-validation-for="Input.PhoneticSurname"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.PhoneticGivenName" class="form-label"></label>
-                <input asp-for="Input.PhoneticGivenName" class="form-control" />
-                <span asp-description-for="Input.PhoneticGivenName"></span>
-                <span class="alert-danger" asp-validation-for="Input.PhoneticGivenName"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.DisplayName" class="form-label"></label>
-                <input asp-for="Input.DisplayName" class="form-control" />
-                <span asp-description-for="Input.DisplayName"></span>
-                <span class="alert-danger" asp-validation-for="Input.DisplayName"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.PhoneticDisplayName" class="form-label"></label>
-                <input asp-for="Input.PhoneticDisplayName" class="form-control" />
-                <span asp-description-for="Input.PhoneticDisplayName"></span>
-                <span class="alert-danger" asp-validation-for="Input.PhoneticDisplayName"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.Sex" class="form-label"></label>
-                <select asp-for="Input.Sex" class="form-control">
-                    <option>Unselected</option>
-                    <option value="Male" label="Male"></option>
-                    <option value="Female" label="Female"></option>
-                </select>
-                <span asp-description-for="Input.Sex"></span>
-                <span class="alert-danger" asp-validation-for="Input.Sex"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.DateOfBirth" class="form-label"></label>
-                <input asp-for="Input.DateOfBirth" class="form-control" />
-                <span asp-description-for="Input.DateOfBirth"></span>
-                <span class="alert-danger" asp-validation-for="Input.DateOfBirth"></span>
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-description-for="Email"></span>
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Mobile" class="form-label"></label>
-                <input asp-for="Mobile" class="form-control" />
+                <input asp-for="Mobile" class="form-control"/>
                 <span asp-description-for="Mobile"></span>
-                <span class="alert-danger" asp-validation-for="Mobile"></span>
+                <span asp-validation-for="Mobile" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Input.Email" class="form-label"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-description-for="Input.Email"></span>
-                <span class="alert-danger" asp-validation-for="Input.Email"></span>
+            <div class="row">
+                <div class="col-md">
+                    <label asp-for="Input.Surname" class="form-label"></label>
+                    <input asp-for="Input.Surname" class="form-control"/>
+                    <span asp-description-for="Input.Surname"></span>
+                    <span asp-validation-for="Input.Surname" class="text-danger"></span>
+                </div>
+                <div class="col-md">
+                    <label asp-for="Input.GivenName" class="form-label"></label>
+                    <input asp-for="Input.GivenName" class="form-control"/>
+                    <span asp-description-for="Input.GivenName"></span>
+                    <span asp-validation-for="Input.GivenName" class="text-danger"></span>
+                </div>
+                <div class="col-md">
+                    <label asp-for="Input.DisplayName" class="form-label required"></label>
+                    <input asp-for="Input.DisplayName" class="form-control"/>
+                    <span asp-description-for="Input.DisplayName"></span>
+                    <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-md">
+                    <label asp-for="Input.PhoneticSurname" class="form-label"></label>
+                    <input asp-for="Input.PhoneticSurname" class="form-control"/>
+                    <span asp-description-for="Input.PhoneticSurname"></span>
+                    <span asp-validation-for="Input.PhoneticSurname" class="text-danger"></span>
+                </div>
+                <div class="col-md">
+                    <label asp-for="Input.PhoneticGivenName" class="form-label"></label>
+                    <input asp-for="Input.PhoneticGivenName" class="form-control"/>
+                    <span asp-description-for="Input.PhoneticGivenName"></span>
+                    <span asp-validation-for="Input.PhoneticGivenName" class="text-danger"></span>
+                </div>
+                <div class="col-md">
+                    <label asp-for="Input.PhoneticDisplayName" class="form-label"></label>
+                    <input asp-for="Input.PhoneticDisplayName" class="form-control"/>
+                    <span asp-description-for="Input.PhoneticDisplayName"></span>
+                    <span asp-validation-for="Input.PhoneticDisplayName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label asp-for="Input.Gender" class="form-label"></label>
+                    <select asp-for="Input.Gender" asp-items="@EnumHelper.GetSelectListItems<Gender>()" class="form-select">
+                        <option>@SL["Unselected"]</option>
+                    </select>
+                    <span asp-description-for="Input.Gender"></span>
+                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                </div>
+                <div class="col-md">
+                    <label asp-for="Input.DateOfBirth" class="form-label"></label>
+                    <input asp-for="Input.DateOfBirth" class="form-control"/>
+                    <span asp-description-for="Input.DateOfBirth"></span>
+                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            
             <div asp-validation-summary="All"></div>
-            <button type="submit" class="btn btn-primary">Next</button>
+            <button type="submit" class="btn btn-primary">@SL["Next"]</button>
         </form>
     </div>
 </div>

@@ -61,11 +61,11 @@ public readonly partial struct ChineseIdCardNumber
     /// <summary>
     /// 获取一个值，指示性别。
     /// </summary>
-    public Sex Sex
+    public Gender Gender
     {
         get
         {
-            return this.Sequence % 2 == 1 ? Sex.Male : Sex.Female;
+            return this.Sequence % 2 == 1 ? Gender.Male : Gender.Female;
         }
     }
 

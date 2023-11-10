@@ -32,7 +32,7 @@ internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
                 new("family_name", "刘"),
                 new("nickname", "备备"),
                 new("address", "中国,河北省,涿州,,北京路,,,,刘备,"),
-                new("phonetic_search_hint", "LIUBEI"),
+                new("search_hint", "LIUBEI"),
                 new("birthdate", "0161-07-16"),
                 new("phone_number", "+8613812340001"),
                 new("phone_number_verified", "True"),

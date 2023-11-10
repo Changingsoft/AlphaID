@@ -54,7 +54,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/");
     options.Conventions.AuthorizeAreaFolder("Profile", "/");
     options.Conventions.AuthorizeAreaFolder("Settings", "/");
-    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People", "{userAnchor}"));
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People"));
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));
 })
 .AddViewLocalization()
@@ -73,7 +73,7 @@ builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 
 var identityBuilder = builder.Services.AddIdSubjectsIdentity(options =>
 {
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789-";
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789.-_@";
     options.User.RequireUniqueEmail = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;

@@ -2,11 +2,11 @@
 @{
     Layout = "Shared/_Layout";
 
-    var id = ViewContext.RouteData.Values["anchor"]?.ToString();
+    var anchor = ViewContext.RouteData.Values["anchor"]?.ToString();
     NaturalPerson? person = null;
-    if (id != null)
+    if (anchor != null)
     {
-        person = await Manager.FindByIdAsync(id);
+        person = await Manager.FindByIdAsync(anchor);
     }
 }
 @section Heads{
@@ -20,16 +20,14 @@
         <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
-                    @* ReSharper disable Mvc.ActionNotResolved *@
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Contacts" asp-page="/Detail/Contacts" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Contacts"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Membership" asp-page="/Detail/Membership/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Memberships"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Payments" asp-page="/Detail/Payments" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Payments"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/RealName" asp-page="/Detail/RealName" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Real Name"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Account" asp-page="/Detail/Account/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Account"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/ActivityLog" asp-page="/Detail/ActivityLog" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Activity log"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Advanced" asp-page="/Detail/Advanced" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Advanced"]</a>
-                    @* ReSharper restore Mvc.ActionNotResolved *@
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Contacts" asp-page="/Detail/Contacts" asp-route-anchor="@anchor">@L["Contacts"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Membership" asp-page="/Detail/Membership/Index" asp-route-anchor="@anchor">@L["Memberships"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Payments" asp-page="/Detail/Payments" asp-route-anchor="@anchor">@L["Payments"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/RealName" asp-page="/Detail/RealName" asp-route-anchor="@anchor">@L["Real Name"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account" asp-page="/Detail/Account/Index" asp-route-anchor="@anchor">@L["Account"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/ActivityLog" asp-page="/Detail/ActivityLog" asp-route-anchor="@anchor">@L["Activity log"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Advanced" asp-page="/Detail/Advanced" asp-route-anchor="@anchor">@L["Advanced"]</a>
                 </div>
             </div>
         </div>

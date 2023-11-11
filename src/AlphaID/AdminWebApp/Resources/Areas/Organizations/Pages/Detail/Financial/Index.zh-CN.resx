@@ -150,4 +150,16 @@
   <data name="Usage" xml:space="preserve">
     <value>用途</value>
   </data>
+  <data name="Operations" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Set default" xml:space="preserve">
+    <value>设为默认</value>
+  </data>
+  <data name="Are you sure you want to remove this bank account info from this organization?" xml:space="preserve">
+    <value>您确认要移除组织的银行账户信息吗？</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
 </root>

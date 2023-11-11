@@ -27,10 +27,6 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
         public string Name { get; set; } = default!;
 
         [BindProperty]
-        [Display(Name = "Unified social credit code\r\n")]
-        public string? Usci { get; set; }
-
-        [BindProperty]
         public InputModel Input { get; set; } = default!;
 
         public IActionResult OnGet()
@@ -44,24 +40,12 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (this.organizationManager.Organizations.Any(p => p.Name == this.Name))
                 this.ModelState.AddModelError(nameof(this.Name), "Organization already exists.");
-            UnifiedSocialCreditCode usci = new();
-            if (this.Usci != null)
-            {
-                if (UnifiedSocialCreditCode.TryParse(this.Usci, out usci))
-                {
-                    if (this.organizationManager.Organizations.Any(p => p.Usci == usci.ToString()))
-                        this.ModelState.AddModelError(nameof(this.Usci), "USCI already exists");
-                }
-                else
-                    this.ModelState.AddModelError(nameof(this.Usci), "Invalid USCI");
-            }
 
             if (!this.ModelState.IsValid)
                 return this.Page();
 
             var organization = new GenericOrganization(this.Name)
             {
-                Usci = this.Usci != null ? usci.ToString() : null,
                 Domicile = this.Input.Domicile,
                 Representative = this.Input.Representative,
             };

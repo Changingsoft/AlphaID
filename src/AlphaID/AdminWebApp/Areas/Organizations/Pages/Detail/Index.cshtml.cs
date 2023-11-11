@@ -17,9 +17,6 @@ public class IndexModel : PageModel
 
     public GenericOrganization Organization { get; set; } = default!;
 
-
-
-
     public async Task<IActionResult> OnGetAsync()
     {
         var org = await this.organizationManager.FindByIdAsync(this.Anchor);

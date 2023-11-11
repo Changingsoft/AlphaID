@@ -16,7 +16,7 @@
                 </span>
                 <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
             </div>
-            @if (Model.Members.Any(m => m.IsOwner && m.PersonId == this.User.SubjectId()))
+            @if (Model.Members.Any(m => m.IsOwner && m.PersonId == User.SubjectId()))
             {
                 <a class="btn ms-auto">@L["Export"]</a>
                 <a class="btn ms-3" asp-page="Invitations" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>

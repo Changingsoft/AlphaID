@@ -180,4 +180,13 @@
   <data name="Website" xml:space="preserve">
     <value>网站</value>
   </data>
+  <data name="Not specified." xml:space="preserve">
+    <value>未指定。</value>
+  </data>
+  <data name="Fapiao Info" xml:space="preserve">
+    <value>发票信息</value>
+  </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+    <value>纳税人识别号</value>
+  </data>
 </root>

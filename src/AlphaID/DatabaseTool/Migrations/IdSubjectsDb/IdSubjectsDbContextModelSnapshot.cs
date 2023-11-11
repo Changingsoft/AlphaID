@@ -160,10 +160,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Property<DateTime?>("TermEnd")
                         .HasColumnType("date");
 
-                    b.Property<string>("Usci")
-                        .HasMaxLength(18)
-                        .HasColumnType("char(18)");
-
                     b.Property<string>("Website")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -177,10 +173,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
-
-                    b.HasIndex("Usci")
-                        .IsUnique()
-                        .HasFilter("[USCI] IS NOT NULL");
 
                     b.HasIndex("WhenChanged");
 
@@ -353,20 +345,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("NormalizedEmail")
-                        .IsUnique()
-                        .HasFilter("[NormalizedEmail] IS NOT NULL");
-
                     b.HasIndex("NormalizedUserName")
                         .IsUnique();
-
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -391,12 +371,20 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("AccountName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("BankName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("Default")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Usage")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("AccountNumber", "OrganizationId");
 
@@ -578,6 +566,49 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("IDSubjects.GenericOrganization", b =>
                 {
+                    b.OwnsOne("IDSubjects.FapiaoInfo", "Fapiao", b1 =>
+                        {
+                            b1.Property<string>("GenericOrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("Account")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Bank")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Contact")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("TaxPayerId")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.HasKey("GenericOrganizationId");
+
+                            b1.ToTable("Organization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GenericOrganizationId");
+                        });
+
                     b.OwnsOne("IDSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
                         {
                             b1.Property<string>("GenericOrganizationId")
@@ -603,6 +634,34 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                             b1.WithOwner()
                                 .HasForeignKey("GenericOrganizationId");
                         });
+
+                    b.OwnsMany("IDSubjects.OrganizationIdentifier", "Identifiers", b1 =>
+                        {
+                            b1.Property<string>("OrganizationId")
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("Type")
+                                .HasColumnType("varchar(30)");
+
+                            b1.Property<string>("Value")
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.HasKey("OrganizationId", "Type", "Value");
+
+                            b1.ToTable("OrganizationIdentifier");
+
+                            b1.WithOwner("Organization")
+                                .HasForeignKey("OrganizationId");
+
+                            b1.Navigation("Organization");
+                        });
+
+                    b.Navigation("Fapiao");
+
+                    b.Navigation("Identifiers");
 
                     b.Navigation("ProfilePicture");
                 });
@@ -758,7 +817,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
             modelBuilder.Entity("IDSubjects.OrganizationBankAccount", b =>
                 {
                     b.HasOne("IDSubjects.GenericOrganization", "Organization")
-                        .WithMany("BankAccounts")
+                        .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -981,8 +1040,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("IDSubjects.GenericOrganization", b =>
                 {
-                    b.Navigation("BankAccounts");
-
                     b.Navigation("UsedNames");
                 });
 #pragma warning restore 612, 618

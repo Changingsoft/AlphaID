@@ -129,4 +129,11 @@
   <data name="Overview" xml:space="preserve">
     <value>概览</value>
   </data>
+  <data name="Fapiao" xml:space="preserve">
+	  <value>发票</value>
+	  <comment>Fapiao</comment>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>地图</value>
+  </data>
 </root>

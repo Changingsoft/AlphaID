@@ -276,4 +276,16 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+	  <value>纳税人识别号</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>银行</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>地址</value>
+  </data>
 </root>

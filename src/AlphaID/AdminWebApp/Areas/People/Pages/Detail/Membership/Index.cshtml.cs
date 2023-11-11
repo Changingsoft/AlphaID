@@ -6,13 +6,13 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership;
 
 public class IndexModel : PageModel
 {
-    private readonly NaturalPersonManager personMamager;
+    private readonly NaturalPersonManager personManager;
     private readonly OrganizationManager organizationManager;
     private readonly OrganizationMemberManager memberManager;
 
     public IndexModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager)
     {
-        this.personMamager = personManager;
+        this.personManager = personManager;
         this.organizationManager = organizationManager;
         this.memberManager = memberManager;
     }
@@ -31,7 +31,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor);
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -41,7 +41,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor);
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -76,7 +76,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor);
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;

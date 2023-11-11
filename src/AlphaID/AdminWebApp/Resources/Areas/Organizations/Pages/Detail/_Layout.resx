@@ -113,4 +113,12 @@
 		<value>Overview</value>
 		<comment>Overview</comment>
 	</data>
+  <data name="Fapiao" xml:space="preserve">
+	  <value>Fapiao</value>
+	  <comment>Fapiao</comment>
+  </data>
+  <data name="Map" xml:space="preserve">
+	  <value>Map</value>
+	  <comment>Map</comment>
+  </data>
 </root>

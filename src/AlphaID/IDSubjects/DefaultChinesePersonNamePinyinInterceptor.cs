@@ -1,4 +1,5 @@
 ﻿using IDSubjects.ChineseName;
+// ReSharper disable StringLiteralTypo
 
 namespace IDSubjects;
 

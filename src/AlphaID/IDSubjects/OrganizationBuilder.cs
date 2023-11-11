@@ -41,7 +41,11 @@ public class OrganizationBuilder
     /// <returns></returns>
     public OrganizationBuilder SetUsci(UnifiedSocialCreditCode unifiedSocialCreditCode)
     {
-        this.Organization.Usci = unifiedSocialCreditCode.ToString();
+        this.Organization.Identifiers.Add(new OrganizationIdentifier()
+        {
+            Type = OrganizationIdentifierType.UnifiedSocialCreditCode,
+            Value = unifiedSocialCreditCode.ToString(),
+        });
 
         return this;
     }

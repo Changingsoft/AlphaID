@@ -56,6 +56,8 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<OrganizationUsedName> OrganizationUsedNames { get; protected set; } = default!;
 
+    public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = default!;
+
 
     public DbSet<RealNameInfo> RealNameInfos { get; protected set; } = default!;
 
@@ -64,16 +66,6 @@ public class IdSubjectsDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<NaturalPerson>(e =>
-        {
-            e.HasIndex(p => p.Email).IsUnique().HasFilter("[Email] IS NOT NULL");
-            e.HasIndex(p => p.NormalizedEmail).IsUnique().HasFilter("[NormalizedEmail] IS NOT NULL");
-            e.HasIndex(p => p.PhoneNumber).IsUnique().HasFilter("[PhoneNumber] IS NOT NULL");
-        });
-        builder.Entity<GenericOrganization>(e =>
-        {
-            e.HasIndex(p => p.Usci).IsUnique().HasFilter(@"[USCI] IS NOT NULL");
-        });
     }
 
     /// <summary>

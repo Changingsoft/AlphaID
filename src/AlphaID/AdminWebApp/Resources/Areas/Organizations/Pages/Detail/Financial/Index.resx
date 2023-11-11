@@ -141,4 +141,20 @@
 		<value>Usage</value>
 		<comment>Usage</comment>
 	</data>
+  <data name="Operations" xml:space="preserve">
+	  <value>Operations</value>
+	  <comment>Operations</comment>
+  </data>
+  <data name="Set default" xml:space="preserve">
+	  <value>Set default</value>
+	  <comment>Set default</comment>
+  </data>
+  <data name="Are you sure you want to remove this bank account info from this organization?" xml:space="preserve">
+	  <value>Are you sure you want to remove this bank account info from this organization?</value>
+	  <comment>Are you sure you want to remove this bank account info from this organization?</comment>
+  </data>
+  <data name="Remove" xml:space="preserve">
+	  <value>Remove</value>
+	  <comment>Remove</comment>
+  </data>
 </root>

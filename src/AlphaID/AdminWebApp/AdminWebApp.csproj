@@ -24,6 +24,12 @@
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\Organizations\Pages\Detail\Fapiao.zh-cn.resx">
+	    <DependentUpon>Fapiao.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties />

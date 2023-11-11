@@ -22,7 +22,7 @@
 </form>
 
 <p>Local login: @Model.HasPassword</p>
-<p>Two Factor Authentication (TOPT): @(Model.Data.TwoFactorEnabled)</p>
+<p>Two Factor Authentication (TOTP): @(Model.Data.TwoFactorEnabled)</p>
 <p>Login failed counter：@Model.Data.AccessFailedCount</p>
 <p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
 @if (!Model.HasPassword)

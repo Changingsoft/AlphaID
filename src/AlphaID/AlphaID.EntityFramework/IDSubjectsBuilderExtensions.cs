@@ -15,6 +15,7 @@ public static class IdSubjectsBuilderExtensions
         builder.Services.TryAddScoped<IQueryableOrganizationUsedNameStore, OrganizationUsedNameStore>();
         builder.Services.TryAddScoped<IPersonBankAccountStore, PersonBankAccountStore>();
         builder.Services.TryAddScoped<IJoinOrganizationInvitationStore, JoinOrganizationInvitationStore>();
+        builder.Services.TryAddScoped<IOrganizationBankAccountStore, OrganizationBankAccountStore>();
 
         return builder;
     }

@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Serilog;
 using System.Globalization;
 using System.Security.Claims;
+// ReSharper disable StringLiteralTypo
 
 var builder = WebApplication.CreateBuilder(args);
 

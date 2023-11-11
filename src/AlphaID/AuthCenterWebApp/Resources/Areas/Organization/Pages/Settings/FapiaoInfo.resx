@@ -105,9 +105,9 @@
 		<value>Fapiao info</value>
 		<comment>Fapiao info</comment>
 	</data>
-  <data name="Fapiao info will be public and be used by other sallers." xml:space="preserve">
-		<value>Fapiao info will be public and be used by other sallers.</value>
-		<comment>Fapiao info will be public and be used by other sallers.</comment>
+  <data name="Fapiao info will be public and be used by other sellers." xml:space="preserve">
+		<value>Fapiao info will be public and be used by other sellers.</value>
+		<comment>Fapiao info will be public and be used by other sellers.</comment>
 	</data>
   <data name="Save" xml:space="preserve">
 		<value>Save</value>

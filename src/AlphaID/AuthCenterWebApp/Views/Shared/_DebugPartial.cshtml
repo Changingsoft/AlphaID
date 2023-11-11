@@ -10,10 +10,12 @@
         <div class="card-body">
             <h2>Useful Links</h2>
             <ul class="list-inline">
+                @* ReSharper disable StringLiteralTypo *@
                 <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei")}"))">刘备</a></li>
                 <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu")}"))">关羽</a></li>
                 <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhangfei")}"))">张飞</a></li>
                 <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhugeliang")}"))">诸葛亮</a></li>
+                @* ReSharper restore StringLiteralTypo *@
             </ul>
 
             <ul class="list-inline">

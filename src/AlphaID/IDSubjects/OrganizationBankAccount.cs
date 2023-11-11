@@ -19,14 +19,17 @@ public class OrganizationBankAccount
     /// <summary>
     /// 通过银行信息初始化银行账号。
     /// </summary>
+    /// <param name="organization"></param>
     /// <param name="accountNumber"></param>
     /// <param name="accountName"></param>
     /// <param name="bankName"></param>
-    public OrganizationBankAccount(string accountNumber, string? accountName, string? bankName)
+    internal OrganizationBankAccount(GenericOrganization organization, string accountNumber, string accountName, string? bankName)
     {
         this.AccountNumber = accountNumber;
         this.AccountName = accountName;
         this.BankName = bankName;
+        this.Organization = organization;
+        this.OrganizationId = organization.Id;
     }
 
     /// <summary>
@@ -39,13 +42,18 @@ public class OrganizationBankAccount
     /// 户名
     /// </summary>
     [MaxLength(100)]
-    public string? AccountName { get; set; }
+    public string AccountName { get; set; }
 
     /// <summary>
     /// 开户行
     /// </summary>
     [MaxLength(100)]
     public string? BankName { get; set; }
+
+    [MaxLength(20)]
+    public string? Usage { get; set; }
+
+    public bool Default { get; protected internal set; } = false;
 
     /// <summary>
     /// 主体Id.

@@ -82,13 +82,6 @@ public class GenericOrganization
     public virtual DateTimeOffset WhenChanged { get; protected internal set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
-    /// 统一社会信用代码。
-    /// </summary>
-    [MaxLength(18), Column(TypeName = "char(18)")]
-    [Obsolete("将专门使用标识符表来存储")]
-    public string? Usci { get; set; }
-
-    /// <summary>
     /// 是否有效。
     /// </summary>
     public virtual bool Enabled { get; protected internal set; } = true;
@@ -127,13 +120,17 @@ public class GenericOrganization
     public virtual string? Description { get; set; }
 
     /// <summary>
+    /// 发票信息。
+    /// </summary>
+    public virtual FapiaoInfo? Fapiao { get; set; }
+
+    /// <summary>
     /// 曾用名。
     /// </summary>
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = new HashSet<OrganizationUsedName>();
 
     /// <summary>
-    /// 银行账号。
+    /// 组织的标识符。
     /// </summary>
-    [Obsolete("Will be manage and access via Organization financial account manager.")]
-    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; protected set; } = new HashSet<OrganizationBankAccount>();
+    public virtual ICollection<OrganizationIdentifier> Identifiers { get; protected set; } = new HashSet<OrganizationIdentifier>();
 }

@@ -11,8 +11,7 @@ public class OrganizationSearcher
     /// 初始化组织搜索器。
     /// </summary>
     /// <param name="organizationStore"></param>
-    /// <param name="organizationUsedNameStore"></param>
-    public OrganizationSearcher(IOrganizationStore organizationStore, IQueryableOrganizationUsedNameStore organizationUsedNameStore)
+    public OrganizationSearcher(IOrganizationStore organizationStore)
     {
         this.organizationStore = organizationStore;
     }
@@ -30,10 +29,8 @@ public class OrganizationSearcher
 
         var result = new HashSet<GenericOrganization>();
 
-        var usedNameResult = this.organizationStore.Organizations.Where(p => p.UsedNames.Any(n => n.Name.Contains(keywords)));
-        result.UnionWith(usedNameResult);
-
-        var mainResult = this.organizationStore.Organizations.Where(p => p.Name.Contains(keywords));
+        var mainResult = this.organizationStore.Organizations.Where(p => p.Name.Contains(keywords) || p.Identifiers.Any(i => i.Value == keywords) || p.UsedNames.Any(n => n.Name.Contains(keywords)));
+        
         result.UnionWith(mainResult);
         return result;
     }

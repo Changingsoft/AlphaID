@@ -12,9 +12,9 @@ internal class AdminCenterDbMigrator : DatabaseMigrator
         this.db = db;
     }
 
-    public override Task DropDatabaseAsync()
+    public override async Task DropDatabaseAsync()
     {
-        return Task.CompletedTask;
+        await this.db.Database.EnsureDeletedAsync();
     }
 
     public override async Task MigrateAsync()

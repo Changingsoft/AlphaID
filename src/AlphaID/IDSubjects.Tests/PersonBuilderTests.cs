@@ -1,5 +1,6 @@
 ﻿using IDSubjects.ChineseName;
 using Xunit;
+// ReSharper disable StringLiteralTypo
 
 namespace IDSubjects.Tests;
 

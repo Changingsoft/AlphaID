@@ -181,4 +181,16 @@
 		<value>Website</value>
 		<comment>Website</comment>
 	</data>
+  <data name="Not specified." xml:space="preserve">
+	  <value>Not specified.</value>
+	  <comment>Not specified.</comment>
+  </data>
+  <data name="Fapiao Info" xml:space="preserve">
+	  <value>Fapiao Info</value>
+	  <comment>Fapiao Info</comment>
+  </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+	  <value>Taxpayer ID</value>
+	  <comment>Taxpayer ID</comment>
+  </data>
 </root>

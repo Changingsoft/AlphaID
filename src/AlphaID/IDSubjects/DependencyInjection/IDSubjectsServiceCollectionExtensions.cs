@@ -30,6 +30,7 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<NaturalPersonIdentityErrorDescriber>();
         services.TryAddScoped<PersonBankAccountManager>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
+        services.TryAddScoped<OrganizationBankAccountManager>();
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>()

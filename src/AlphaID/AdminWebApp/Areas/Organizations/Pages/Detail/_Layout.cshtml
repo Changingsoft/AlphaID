@@ -2,11 +2,11 @@
 @{
     Layout = "Shared/_Layout";
 
-    var id = ViewContext.RouteData.Values["anchor"]?.ToString();
+    var anchor = ViewContext.RouteData.Values["anchor"]?.ToString();
     GenericOrganization? org = null;
-    if (id != null)
+    if (anchor != null)
     {
-        org = await Manager.FindByIdAsync(id);
+        org = await Manager.FindByIdAsync(anchor);
     }
 }
 @section PageHeader{
@@ -14,21 +14,23 @@
 }
 <div class="card">
     <div class="row g-0">
-        <div class="col-12 col-md-3 border-end">
+        <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
                     @* ReSharper disable Mvc.ActionNotResolved *@
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(ViewContext.RouteData.Values["anchor"])" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(ViewContext.RouteData.Values["anchor"])/General" asp-page="/Detail/General" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["General"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(ViewContext.RouteData.Values["anchor"])/Financial" asp-page="/Detail/Financial/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Financial"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(ViewContext.RouteData.Values["anchor"])/Members" asp-page="/Detail/Members/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Members"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/General" asp-page="/Detail/General" asp-route-anchor="@anchor">@L["General"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/Map" asp-page="/Detail/Map" asp-route-anchor="@anchor">@L["Map"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/Financial" asp-page="/Detail/Financial/Index" asp-route-anchor="@anchor">@L["Financial"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/Fapiao" asp-page="/Detail/Fapiao" asp-route-anchor="@anchor">@L["Fapiao"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/Members" asp-page="/Detail/Members/Index" asp-route-anchor="@anchor">@L["Members"]</a>
                     @* <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">@L["Attachments"]</a> *@
                     @* <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">@L["Advanced"]</a> *@
                     @* ReSharper restore Mvc.ActionNotResolved *@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-9 d-flex flex-column">
+        <div class="col-12 col-md-10 d-flex flex-column">
             <div class="card-body">
                 @RenderBody()
             </div>
@@ -37,7 +39,7 @@
 </div>
 
 
-@section scripts
+@section Scripts
     {
-    @await RenderSectionAsync("scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 }

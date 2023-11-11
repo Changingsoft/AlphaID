@@ -9,7 +9,7 @@
         var subjectId = User.SubjectId();
         if (anchor != null && subjectId != null)
         {
-            var orgs = await OrganizationManager.FindByAnchorAsync(anchor);
+            var orgs = (await OrganizationManager.FindByAnchorAsync(anchor)).ToList();
             if (orgs.Count() == 1)
             {
                 var org = orgs.First();

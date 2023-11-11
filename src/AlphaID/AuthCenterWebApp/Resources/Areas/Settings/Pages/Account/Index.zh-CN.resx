@@ -120,7 +120,19 @@
   <data name="Account" xml:space="preserve">
     <value>账户</value>
   </data>
+  <data name="Change your email" xml:space="preserve">
+    <value>更改电子邮件地址</value>
+  </data>
+  <data name="Change your phone number" xml:space="preserve">
+    <value>更改移动电话号码</value>
+  </data>
   <data name="Change your user name" xml:space="preserve">
     <value>更改账户名</value>
+  </data>
+  <data name="Manage personal data" xml:space="preserve">
+    <value>管理个人数据</value>
+  </data>
+  <data name="Personal Data" xml:space="preserve">
+    <value>个人数据</value>
   </data>
 </root>

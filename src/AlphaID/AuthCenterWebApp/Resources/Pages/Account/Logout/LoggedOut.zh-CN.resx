@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="OK" xml:space="preserve">
+    <value>好</value>
+  </data>
+  <data name="Return back to" xml:space="preserve">
+    <value>返回</value>
+  </data>
   <data name="Signed out" xml:space="preserve">
     <value>注销登录</value>
   </data>
   <data name="You've successfully signed out of the login." xml:space="preserve">
     <value>您已成功注销登录。</value>
-  </data>
-  <data name="Return back to" xml:space="preserve">
-    <value>返回</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>好</value>
   </data>
 </root>

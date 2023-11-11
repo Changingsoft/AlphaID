@@ -23,7 +23,7 @@ public class SearchModel : PageModel
         if (string.IsNullOrWhiteSpace(q))
             return this.Page();
 
-        if (Uscc.TryParse(q!, out Uscc number))
+        if (UnifiedSocialCreditCode.TryParse(q!, out UnifiedSocialCreditCode number))
         {
             var org = this.organizationStore.Organizations.FirstOrDefault(p => p.Usci == number.ToString());
             return org != null ? this.RedirectToPage("Detail/Index", new { id = org.Id }) : this.Page();

@@ -14,7 +14,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
         ILogger<ChangeUserNameModel>? logger;
         PersonSignInManager signInManager;
 
-        public ChangeUserNameModel(NaturalPersonManager manager, IStringLocalizer<SharedResource> localizer, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
+        public ChangeUserNameModel(NaturalPersonManager manager, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
         {
             this.manager = manager;
             this.logger = logger;
@@ -56,7 +56,6 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
             {
                 await this.signInManager.RefreshSignInAsync(person);
             }
-            //this.manager.userna
             return this.Page();
         }
 

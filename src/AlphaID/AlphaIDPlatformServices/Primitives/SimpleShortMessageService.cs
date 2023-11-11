@@ -92,16 +92,8 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
 
     private async Task AuthenticateAsync(HttpClient client)
     {
-        try
-        {
-            await this.EnsureAccessTokenAsync();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-
+        await this.EnsureAccessTokenAsync();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
     }
 
     private async Task EnsureAccessTokenAsync()

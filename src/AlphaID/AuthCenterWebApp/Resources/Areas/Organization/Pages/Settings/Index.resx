@@ -100,6 +100,10 @@
   <data name="Apply changes" xml:space="preserve">
     <value>Apply changes</value>
   </data>
+  <data name="Danger zone" xml:space="preserve">
+	  <value>Danger zone</value>
+	  <comment>Danger zone</comment>
+  </data>
   <data name="Delete this organization" xml:space="preserve">
     <value>Delete this organization</value>
   </data>

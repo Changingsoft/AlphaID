@@ -186,7 +186,7 @@ await app.RunAsync();
 namespace AuthCenterWebApp
 {
     /// <summary>
-    /// Definations for Testing.
+    /// Definitions for Testing.
     /// </summary>
-    public partial class Program { }
+    public class Program { }
 }

@@ -21,7 +21,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public async Task<IActionResult> OnGet(string anchor)
         {
-            var orgs = await this.manager.FindByAnchorAsync(anchor);
+            var orgs = (await this.manager.FindByAnchorAsync(anchor)).ToList();
             if (!orgs.Any())
                 return this.NotFound();
             if (orgs.Count() > 1)
@@ -41,7 +41,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var orgs = await this.manager.FindByAnchorAsync(anchor);
+            var orgs = (await this.manager.FindByAnchorAsync(anchor)).ToList();
             if (!orgs.Any())
                 return this.NotFound();
             if (orgs.Count() > 1)

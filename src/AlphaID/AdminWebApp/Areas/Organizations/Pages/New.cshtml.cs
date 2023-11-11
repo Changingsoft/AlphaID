@@ -59,7 +59,7 @@ public class NewModel : PageModel
     {
         if (!string.IsNullOrWhiteSpace(this.Usci))
         {
-            if (!Uscc.TryParse(this.Usci, out Uscc uscc))
+            if (!UnifiedSocialCreditCode.TryParse(this.Usci, out UnifiedSocialCreditCode uscc))
                 this.ModelState.AddModelError(nameof(this.Usci), "统一社会信用代码不正确。");
 
             var usciExists = this.organizationStore.Organizations.Any(p => p.Usci == uscc.ToString());
@@ -83,7 +83,7 @@ public class NewModel : PageModel
         var factory = new OrganizationBuilder(this.Name);
         if (!string.IsNullOrWhiteSpace(this.Usci))
         {
-            if (Uscc.TryParse(this.Usci, out Uscc uscc))
+            if (UnifiedSocialCreditCode.TryParse(this.Usci, out UnifiedSocialCreditCode uscc))
             {
                 factory.SetUsci(uscc);
             }

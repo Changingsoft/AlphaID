@@ -13,15 +13,15 @@ public class DirectoryServiceStore : IDirectoryServiceStore
 
     public IQueryable<DirectoryService> Services => this.dbContext.DirectoryServices;
 
-    public async Task CreateAsync(DirectoryService serivce)
+    public async Task CreateAsync(DirectoryService service)
     {
-        this.dbContext.DirectoryServices.Add(serivce);
+        this.dbContext.DirectoryServices.Add(service);
         _ = await this.dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(DirectoryService serivce)
+    public async Task DeleteAsync(DirectoryService service)
     {
-        this.dbContext.DirectoryServices.Remove(serivce);
+        this.dbContext.DirectoryServices.Remove(service);
         _ = await this.dbContext.SaveChangesAsync();
     }
 
@@ -30,9 +30,9 @@ public class DirectoryServiceStore : IDirectoryServiceStore
         return await this.dbContext.DirectoryServices.FindAsync(id);
     }
 
-    public async Task UpdateAsync(DirectoryService serivce)
+    public async Task UpdateAsync(DirectoryService service)
     {
-        this.dbContext.Entry(serivce).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        this.dbContext.Entry(service).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         _ = await this.dbContext.SaveChangesAsync();
     }
 }

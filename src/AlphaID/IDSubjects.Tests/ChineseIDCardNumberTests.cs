@@ -38,8 +38,8 @@ public class ChineseIdCardNumberTests
     [Fact]
     public void TryParseChineseIdCardNumberTest()
     {
-        var correctnumber = "530302198501150314";
-        Assert.True(ChineseIdCardNumber.TryParse(correctnumber, out _));
+        var correctNumber = "530302198501150314";
+        Assert.True(ChineseIdCardNumber.TryParse(correctNumber, out _));
         Assert.False(ChineseIdCardNumber.TryParse("530302198501150315", out _));
         Assert.False(ChineseIdCardNumber.TryParse("012345198412100123", out _));
         Assert.False(ChineseIdCardNumber.TryParse("0123", out _));

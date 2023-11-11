@@ -27,7 +27,7 @@ public static class ClaimsPrincipalExtensions
     public static string? AvatarUrl(this ClaimsPrincipal principal)
     {
         var url = principal.FindFirstValue(JwtClaimTypes.Picture);
-        return url?? "/img/no-picture-avatar.png";
+        return url;
     }
 
     /// <summary>

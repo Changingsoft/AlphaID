@@ -101,7 +101,7 @@ public class Consent : PageModel
 
         if (result != null)
         {
-            // communicate outcome of consent back to identityserver
+            // communicate outcome of consent back to identity server
             await this.interaction.CompleteLoginRequestAsync(result);
 
             return this.RedirectToPage("/Ciba/All");
@@ -142,7 +142,7 @@ public class Consent : PageModel
         };
 
         var resourceIndicators = request.RequestedResourceIndicators ?? Enumerable.Empty<string>();
-        var apiResources = request.ValidatedResources.Resources.ApiResources.Where(x => resourceIndicators.Contains(x.Name));
+        var apiResources = request.ValidatedResources.Resources.ApiResources.Where(x => resourceIndicators.Contains(x.Name)).ToList();
 
         var apiScopes = new List<ScopeViewModel>();
         foreach (var parsedScope in request.ValidatedResources.ParsedScopes)

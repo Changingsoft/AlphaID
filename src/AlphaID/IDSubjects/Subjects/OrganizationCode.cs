@@ -115,15 +115,15 @@ public struct OrganizationCode
         int sum = 0;
         for (int i = 0; i < 8; i++)
         {
-            var charindex = Charset.IndexOf(code[i]);
-            if (charindex < 0)
+            var charIndex = Charset.IndexOf(code[i]);
+            if (charIndex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charindex * Weight[i];
+            sum += charIndex * Weight[i];
         }
-        return CheckcodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
+        return CheckCodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
     }
 
-    private const string CheckcodeCharset = "0123456789X";
+    private const string CheckCodeCharset = "0123456789X";
     private const string Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static readonly int[] Weight = new int[] { 3, 7, 9, 10, 5, 8, 4, 2 };
     private const string Pattern = @"^([0-9A-Z]{8})-?([0-9X])$";

@@ -185,13 +185,13 @@ public class LoginModel : PageModel
                 EnableLocalLogin = local,
             };
 
-            this.Input.Username = context?.LoginHint ?? "";
+            this.Input.Username = context.LoginHint ?? "";
 
             if (!local)
             {
                 this.View.ExternalProviders = new ViewModel.ExternalProvider[]
                 {
-                    new ViewModel.ExternalProvider()
+                    new()
                     {
                         AuthenticationScheme = context!.IdP,
                         DisplayName = scheme!.DisplayName!,

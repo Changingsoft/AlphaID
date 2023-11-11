@@ -4,8 +4,6 @@ using AlphaID.EntityFramework;
 using DatabaseTool;
 using DatabaseTool.Migrators;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Runtime.CompilerServices;
 
 
 var builder = Host.CreateDefaultBuilder(args);
@@ -34,7 +32,7 @@ builder
                 options.UseLazyLoadingProxies();
             });
 
-            //用于IdentityServer的ConfigurationDbContext和PersistanceGrantDbContext
+            //用于IdentityServer的ConfigurationDbContext和PersistenceGrantDbContext
             services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {

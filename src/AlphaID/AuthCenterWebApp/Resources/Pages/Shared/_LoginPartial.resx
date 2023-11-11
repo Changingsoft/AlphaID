@@ -109,14 +109,26 @@
   <data name="Grants" xml:space="preserve">
     <value>Grants</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+	  <value>Profile</value>
+	  <comment>Profile</comment>
+  </data>
   <data name="Profile &amp;amp; Account" xml:space="preserve">
     <value>Profile &amp;amp; Account</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Sign in" xml:space="preserve">
+	  <value>Sign in</value>
+	  <comment>Sign in</comment>
+  </data>
   <data name="Sign out" xml:space="preserve">
     <value>Sign out</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+	  <value>Sign up</value>
+	  <comment>Sign up</comment>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>

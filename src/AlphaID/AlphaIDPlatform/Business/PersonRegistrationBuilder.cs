@@ -84,7 +84,7 @@ public class PersonRegistrationBuilder
     /// <returns></returns>
     public PersonRegistrationBuilder JoinOrganization(GenericOrganization organization, string department, string title)
     {
-        this.registration.OrganizationMembers.Add(new OrganizationMemberDescriptor(organization.Id.ToString().ToUpper(), department, title));
+        this.registration.OrganizationMembers.Add(new OrganizationMemberDescriptor(organization.Id.ToUpper(), department, title));
         return this;
     }
 
@@ -106,7 +106,7 @@ public class PersonRegistrationBuilder
             this.registration.LoginAccount = new LoginAccountDescriptor
             {
                 PrimaryAccountName = accountPinyin + idCardLast4, //姓名全拼+身份证后4位
-                SecandaryAccountName = accountPinyin + mobileLast4 //姓名全拼+移动电话号码后4位。
+                SecondaryAccountName = accountPinyin + mobileLast4 //姓名全拼+移动电话号码后4位。
             };
         }
 

@@ -1,6 +1,5 @@
 ﻿using IDSubjects.DirectoryLogon;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AlphaID.DirectoryLogon.EntityFramework;
 

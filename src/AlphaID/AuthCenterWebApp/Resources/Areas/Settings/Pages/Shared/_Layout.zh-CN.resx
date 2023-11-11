@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Your personal account" xml:space="preserve">
-    <value>您的个人账户</value>
-  </data>
-  <data name="Profile" xml:space="preserve">
-    <value>个人配置</value>
-  </data>
   <data name="Account" xml:space="preserve">
     <value>账户</value>
   </data>
   <data name="Password and authentication" xml:space="preserve">
     <value>密码和验证</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>个人配置</value>
+  </data>
+  <data name="Your personal account" xml:space="preserve">
+    <value>您的个人账户</value>
   </data>
 </root>

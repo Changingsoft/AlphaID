@@ -103,6 +103,10 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="Sign out" xml:space="preserve">
+	  <value>Sign out</value>
+	  <comment>Sign out</comment>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>

@@ -37,11 +37,11 @@ public class OrganizationBuilder
     /// <summary>
     /// 设置统一社会信用代码。
     /// </summary>
-    /// <param name="uscc"></param>
+    /// <param name="unifiedSocialCreditCode"></param>
     /// <returns></returns>
-    public OrganizationBuilder SetUsci(Uscc uscc)
+    public OrganizationBuilder SetUsci(UnifiedSocialCreditCode unifiedSocialCreditCode)
     {
-        this.Organization.Usci = uscc.ToString();
+        this.Organization.Usci = unifiedSocialCreditCode.ToString();
 
         return this;
     }

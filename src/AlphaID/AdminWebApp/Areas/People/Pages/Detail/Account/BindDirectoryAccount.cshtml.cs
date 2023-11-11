@@ -58,15 +58,7 @@ public class BindDirectoryAccountModel : PageModel
         if (directoryService == null)
             return this.Page();
 
-        try
-        {
-            await this.logonAccountManager.BindExistsAccount(directoryService, person, entryGuid);
-            return this.RedirectToPage("DirectoryAccounts", new { anchor });
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        await this.logonAccountManager.BindExistsAccount(directoryService, person, entryGuid);
+        return this.RedirectToPage("DirectoryAccounts", new { anchor });
     }
 }

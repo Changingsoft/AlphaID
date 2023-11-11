@@ -4,12 +4,12 @@ internal class StubDirectoryServiceStore : IDirectoryServiceStore
 {
     public IQueryable<DirectoryService> Services => throw new NotImplementedException();
 
-    public Task CreateAsync(DirectoryService serivce)
+    public Task CreateAsync(DirectoryService service)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(DirectoryService serivce)
+    public Task DeleteAsync(DirectoryService service)
     {
         throw new NotImplementedException();
     }
@@ -19,7 +19,7 @@ internal class StubDirectoryServiceStore : IDirectoryServiceStore
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(DirectoryService serivce)
+    public Task UpdateAsync(DirectoryService service)
     {
         throw new NotImplementedException();
     }

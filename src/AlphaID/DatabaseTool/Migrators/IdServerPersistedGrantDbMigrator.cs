@@ -29,8 +29,8 @@ internal class IdServerPersistedGrantDbMigrator : DatabaseMigrator
 
     public override async Task AddTestingDataAsync()
     {
-        var idserverOperationalSqlFiles = Directory.GetFiles("./TestingData/PersistedGrantDbContext", "*.sql");
-        foreach (var file in idserverOperationalSqlFiles)
+        var sqlFiles = Directory.GetFiles("./TestingData/PersistedGrantDbContext", "*.sql");
+        foreach (var file in sqlFiles)
         {
             await this.db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
         }

@@ -120,6 +120,9 @@
   <data name="Create your" xml:space="preserve">
     <value>创建您的</value>
   </data>
+  <data name="Create your {0}" xml:space="preserve">
+    <value>创建您的{0}</value>
+  </data>
   <data name="My profile" xml:space="preserve">
     <value>个人中心</value>
   </data>

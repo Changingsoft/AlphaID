@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Sign in" xml:space="preserve">
-    <value>登录</value>
-  </data>
-  <data name="Two-fact authentication" xml:space="preserve">
-    <value>双因子身份验证</value>
-  </data>
   <data name="Account" xml:space="preserve">
     <value>账户</value>
-  </data>
-  <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve">
-    <value>您的登录受验证器App保护。请在下放输入验证码。</value>
   </data>
   <data name="Don't have access to your authenticator device? You can" xml:space="preserve">
     <value>无法访问您的验证器设备？您可以</value>
   </data>
   <data name="log in with a recovery code" xml:space="preserve">
     <value>通过恢复代码登录</value>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Two-fact authentication" xml:space="preserve">
+    <value>双因子身份验证</value>
+  </data>
+  <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve">
+    <value>您的登录受验证器App保护。请在下放输入验证码。</value>
   </data>
 </root>

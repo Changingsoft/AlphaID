@@ -4,6 +4,6 @@ namespace AlphaIDWebAPITests;
 
 [CollectionDefinition(nameof(TestServerCollection))]
 public class TestServerCollection
-    : ICollectionFixture<AlphaIDAPIFactory>
+    : ICollectionFixture<AlphaIdApiFactory>
 {
 }

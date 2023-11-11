@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DatabaseTool;
+﻿namespace DatabaseTool;
 /// <summary>
 /// 表示一个数据库迁移器。
 /// </summary>

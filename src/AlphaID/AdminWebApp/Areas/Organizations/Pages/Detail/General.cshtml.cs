@@ -46,8 +46,8 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             if (org == null)
                 return this.NotFound();
 
-            Uscc usci = default!;
-            if (this.Input.Usci != null && !Uscc.TryParse(this.Input.Usci, out usci))
+            UnifiedSocialCreditCode usci = default!;
+            if (this.Input.Usci != null && !UnifiedSocialCreditCode.TryParse(this.Input.Usci, out usci))
                 this.ModelState.AddModelError("Input.USCI", "Invalid USCI");
 
             if (!this.ModelState.IsValid)

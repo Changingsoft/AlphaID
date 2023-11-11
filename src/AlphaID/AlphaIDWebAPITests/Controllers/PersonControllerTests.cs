@@ -9,9 +9,9 @@ namespace AlphaIDWebAPITests.Controllers;
 [Collection(nameof(TestServerCollection))]
 public class PersonControllerTests
 {
-    private readonly AlphaIDAPIFactory factory;
+    private readonly AlphaIdApiFactory factory;
 
-    public PersonControllerTests(AlphaIDAPIFactory factory)
+    public PersonControllerTests(AlphaIdApiFactory factory)
     {
         this.factory = factory;
     }
@@ -58,7 +58,7 @@ public class PersonControllerTests
         _ = await response.Content.ReadAsStringAsync();
         response.EnsureSuccessStatusCode();
         var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());
-        Assert.Single(data!.Persons!);
+        Assert.Single(data!.Persons);
     }
 
     [Fact]
@@ -69,6 +69,6 @@ public class PersonControllerTests
         var response = await client.GetAsync("/api/Person/Search/13812340001");
         response.EnsureSuccessStatusCode();
         var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());
-        Assert.Single(data!.Persons!);
+        Assert.Single(data!.Persons);
     }
 }

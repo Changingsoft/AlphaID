@@ -6,9 +6,9 @@ namespace AlphaIDWebAPITests.Controllers.RealName;
 [Collection(nameof(TestServerCollection))]
 public class ChineseIdCardControllerTest
 {
-    private readonly AlphaIDAPIFactory webAPIFactory;
+    private readonly AlphaIdApiFactory webAPIFactory;
 
-    public ChineseIdCardControllerTest(AlphaIDAPIFactory webApiFactory)
+    public ChineseIdCardControllerTest(AlphaIdApiFactory webApiFactory)
     {
         this.webAPIFactory = webApiFactory;
     }

@@ -20,6 +20,7 @@
         <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
+                    @* ReSharper disable Mvc.ActionNotResolved *@
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Contacts" asp-page="/Detail/Contacts" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Contacts"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Membership" asp-page="/Detail/Membership/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Memberships"]</a>
@@ -28,6 +29,7 @@
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Account" asp-page="/Detail/Account/Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Account"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/ActivityLog" asp-page="/Detail/ActivityLog" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Activity log"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(this.ViewContext.RouteData.Values["anchor"])/Advanced" asp-page="/Detail/Advanced" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Advanced"]</a>
+                    @* ReSharper restore Mvc.ActionNotResolved *@
                 </div>
             </div>
         </div>

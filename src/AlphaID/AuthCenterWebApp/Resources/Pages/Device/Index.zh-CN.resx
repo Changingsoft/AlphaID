@@ -117,40 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User Code" xml:space="preserve">
-    <value>用户代码</value>
-  </data>
-  <data name="Please enter the code displayed on your device." xml:space="preserve">
-    <value>请输入在您设备上看到的代码。</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>提交</value>
-  </data>
-  <data name="is requesting your permission" xml:space="preserve">
-    <value>正在请求您授予权限</value>
-  </data>
-  <data name="Please confirm that the authorization request matches the code:" xml:space="preserve">
-    <value>请确认你的授权匹配如下代码：</value>
-  </data>
-  <data name="Uncheck the permissions you do not wish to grant." xml:space="preserve">
-    <value>取消勾选您不希望授予的权限。</value>
-  </data>
-  <data name="Personal Information" xml:space="preserve">
-    <value>个人信息</value>
-  </data>
   <data name="Application Access" xml:space="preserve">
     <value>应用程序访问</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>描述</value>
   </data>
-  <data name="Remember My Decision" xml:space="preserve">
-    <value>记住我的决定</value>
-  </data>
-  <data name="Yes, Allow" xml:space="preserve">
-    <value>是的，同意</value>
+  <data name="is requesting your permission" xml:space="preserve">
+    <value>正在请求您授予权限</value>
   </data>
   <data name="No, Do Not Allow" xml:space="preserve">
     <value>否，不允许</value>
+  </data>
+  <data name="Personal Information" xml:space="preserve">
+    <value>个人信息</value>
+  </data>
+  <data name="Please confirm that the authorization request matches the code:" xml:space="preserve">
+    <value>请确认你的授权匹配如下代码：</value>
+  </data>
+  <data name="Please enter the code displayed on your device." xml:space="preserve">
+    <value>请输入在您设备上看到的代码。</value>
+  </data>
+  <data name="Remember My Decision" xml:space="preserve">
+    <value>记住我的决定</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Uncheck the permissions you do not wish to grant." xml:space="preserve">
+    <value>取消勾选您不希望授予的权限。</value>
+  </data>
+  <data name="User Code" xml:space="preserve">
+    <value>用户代码</value>
+  </data>
+  <data name="Yes, Allow" xml:space="preserve">
+    <value>是的，同意</value>
   </data>
 </root>

@@ -126,7 +126,7 @@ public class BindLoginModel : PageModel
 
                 // this allows us to collect any additional claims or properties
                 // for the specific protocols used and store them in the local auth cookie.
-                // this is typically used to store data needed for signout from those protocols.
+                // this is typically used to store data needed for sign out from those protocols.
                 var additionalLocalClaims = new List<Claim>();
                 var localSignInProps = new AuthenticationProperties();
                 this.CaptureExternalLoginContext(externalLoginResult, additionalLocalClaims, localSignInProps);
@@ -211,7 +211,7 @@ public class BindLoginModel : PageModel
             {
                 this.View.ExternalProviders = new ViewModel.ExternalProvider[]
                 {
-                    new ViewModel.ExternalProvider()
+                    new()
                     {
                         AuthenticationScheme = context.IdP,
                         DisplayName = scheme!.DisplayName,
@@ -274,7 +274,7 @@ public class BindLoginModel : PageModel
             localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
         }
 
-        // if the external provider issued an id_token, we'll keep it for signout
+        // if the external provider issued an id_token, we'll keep it for sign out
         var idToken = externalResult.Properties.GetTokenValue("id_token");
         if (idToken != null)
         {

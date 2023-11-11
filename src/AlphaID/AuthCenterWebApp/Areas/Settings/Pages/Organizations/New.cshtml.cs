@@ -44,10 +44,10 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (this.organizationManager.Organizations.Any(p => p.Name == this.Name))
                 this.ModelState.AddModelError(nameof(this.Name), "Organization already exists.");
-            Uscc usci = new();
+            UnifiedSocialCreditCode usci = new();
             if (this.Usci != null)
             {
-                if (Uscc.TryParse(this.Usci, out usci))
+                if (UnifiedSocialCreditCode.TryParse(this.Usci, out usci))
                 {
                     if (this.organizationManager.Organizations.Any(p => p.Usci == usci.ToString()))
                         this.ModelState.AddModelError(nameof(this.Usci), "USCI already exists");

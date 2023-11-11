@@ -8,9 +8,9 @@ namespace AlphaIDWebAPITests.Controllers;
 [Collection(nameof(TestServerCollection))]
 public class OrganizationControllerTest
 {
-    private readonly AlphaIDAPIFactory factory;
+    private readonly AlphaIdApiFactory factory;
 
-    public OrganizationControllerTest(AlphaIDAPIFactory factory)
+    public OrganizationControllerTest(AlphaIdApiFactory factory)
     {
         this.factory = factory;
     }

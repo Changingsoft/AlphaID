@@ -118,6 +118,10 @@
   <data name="No schemes set for this request" xml:space="preserve">
     <value>No schemes set for this request</value>
   </data>
+  <data name="or" xml:space="preserve">
+	  <value>or</value>
+	  <comment>or</comment>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>

@@ -117,23 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Client Application Permissions" xml:space="preserve">
-    <value>客户端应用程序权限</value>
+  <data name="API Grants" xml:space="preserve">
+    <value>API授权</value>
   </data>
   <data name="Below is the list of applications you have given permission to and the resources they have access to." xml:space="preserve">
     <value>下面列出了您已授予权限的应用程序。</value>
   </data>
-  <data name="You have not given access to any applications" xml:space="preserve">
-    <value>您尚未对应用程序授予访问</value>
-  </data>
-  <data name="Revoke Access" xml:space="preserve">
-    <value>解除授权</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>描述</value>
+  <data name="Client Application Permissions" xml:space="preserve">
+    <value>客户端应用程序权限</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>创建于</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
   </data>
   <data name="Expires" xml:space="preserve">
     <value>有效期至</value>
@@ -141,7 +138,10 @@
   <data name="Identity Grants" xml:space="preserve">
     <value>标识授权</value>
   </data>
-  <data name="API Grants" xml:space="preserve">
-    <value>API授权</value>
+  <data name="Revoke Access" xml:space="preserve">
+    <value>解除授权</value>
+  </data>
+  <data name="You have not given access to any applications" xml:space="preserve">
+    <value>您尚未对应用程序授予访问</value>
   </data>
 </root>

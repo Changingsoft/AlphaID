@@ -1,5 +1,4 @@
-﻿using IDSubjects.ChineseName;
-using IDSubjects.Subjects;
+﻿using IDSubjects.Subjects;
 
 namespace IDSubjects;
 
@@ -88,6 +87,11 @@ public class PersonBuilder
         return this;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public NaturalPerson Build()
     {
         //Ensure person

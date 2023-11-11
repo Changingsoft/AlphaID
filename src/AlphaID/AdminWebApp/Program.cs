@@ -259,5 +259,5 @@ app.Run();
 
 namespace AdminWebApp
 {
-    public partial class Program { }
+    public class Program { }
 }

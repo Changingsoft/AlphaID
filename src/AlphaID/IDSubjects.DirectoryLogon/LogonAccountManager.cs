@@ -46,7 +46,7 @@ public class LogonAccountManager
     {
         var directoryService = await this.directoryServiceStore.FindByIdAsync(request.ServiceId) ?? throw new InvalidOperationException("找不到指定的DirectoryService。");
 
-        //todo 查找重名。//主要是sAMAccountName和userProncipalName不能重复
+        //todo 查找重名。//主要是sAMAccountName和userPrincipalName不能重复
         try
         {
             using var userOu = directoryService.GetUserOuEntry();

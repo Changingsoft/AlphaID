@@ -131,5 +131,14 @@ namespace IDSubjects {
                 return ResourceManager.GetString("Other", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 {0} can not be null or white space. 的本地化字符串。
+        /// </summary>
+        public static string StringIsNullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("StringIsNullOrWhiteSpace", resourceCulture);
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using IDSubjects.ChineseName;
-using IDSubjects.DependencyInjection;
+﻿using IDSubjects.DependencyInjection;
 using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

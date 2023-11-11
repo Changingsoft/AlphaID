@@ -140,6 +140,9 @@
 	  <value>No schemes set for this request</value>
 	  <comment>No schemes set for this request</comment>
   </data>
+  <data name="or" xml:space="preserve">
+    <value>或</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>

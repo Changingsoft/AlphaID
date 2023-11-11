@@ -56,7 +56,7 @@ public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
         responseMsg.EnsureSuccessStatusCode();
         var result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应取得数据");
 
-        if (!(bool)result!.success)
+        if (!(bool)result.success)
             throw new ChineseIdCardOcrException("Can not recognize");
         var returnResult = new ChineseIdCardBackOcrResult
         {
@@ -78,7 +78,7 @@ public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
         string imgBase64;
         using (var ms = new MemoryStream())
         {
-            idCardFrontImageData.CopyTo(ms);
+            await idCardFrontImageData.CopyToAsync(ms);
             imgBase64 = Convert.ToBase64String(ms.ToArray());
         }
         var requestData = new
@@ -103,7 +103,7 @@ public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
         responseMsg.EnsureSuccessStatusCode();
         var result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应中取得数据。");
 
-        if (!(bool)result!.success)
+        if (!(bool)result.success)
             throw new ChineseIdCardOcrException("Can not recognize");
         var returnResult = new ChineseIdCardFrontOcrResult
         {

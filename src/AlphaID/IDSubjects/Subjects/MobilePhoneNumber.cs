@@ -16,12 +16,12 @@ public struct MobilePhoneNumber
     {
         if (string.IsNullOrWhiteSpace(countryCode))
         {
-            throw new ArgumentException($"“{nameof(countryCode)}”不能为 Null 或空白", nameof(countryCode));
+            throw new ArgumentException(string.Format(Resources.StringIsNullOrWhiteSpace, nameof(countryCode)), nameof(countryCode));
         }
 
         if (string.IsNullOrWhiteSpace(phoneNumber))
         {
-            throw new ArgumentException($"“{nameof(phoneNumber)}”不能为 Null 或空白", nameof(phoneNumber));
+            throw new ArgumentException(string.Format(Resources.StringIsNullOrWhiteSpace, nameof(phoneNumber)), nameof(phoneNumber));
         }
 
         countryCode = countryCode.Trim();
@@ -39,8 +39,8 @@ public struct MobilePhoneNumber
     /// <summary>
     /// 使用号码初始化移动电话号码。默认国家代码为86
     /// </summary>
-    /// <param name="phoneBumber">电话号码。</param>
-    public MobilePhoneNumber(string phoneBumber) : this(DefaultCountryCode, phoneBumber) { }
+    /// <param name="phoneNumber">电话号码。</param>
+    public MobilePhoneNumber(string phoneNumber) : this(DefaultCountryCode, phoneNumber) { }
 
     /// <summary>
     /// 获取或设置国家代码。
@@ -95,7 +95,7 @@ public struct MobilePhoneNumber
     public static MobilePhoneNumber Parse(string s)
     {
         return string.IsNullOrWhiteSpace(s)
-            ? throw new ArgumentException($"“{nameof(s)}”不能为 Null 或空白", nameof(s))
+            ? throw new ArgumentException(string.Format(Resources.StringIsNullOrWhiteSpace, nameof(s)), nameof(s))
             : !TryParse(s, out MobilePhoneNumber number) ? throw new FormatException("不正确的移动电话号码。") : number;
     }
 

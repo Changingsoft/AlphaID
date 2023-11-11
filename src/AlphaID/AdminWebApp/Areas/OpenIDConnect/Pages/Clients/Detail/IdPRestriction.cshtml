@@ -7,11 +7,11 @@
 
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
-        @foreach(var idpr in Model.Data.IdentityProviderRestrictions)
+        @foreach(var restriction in Model.Data.IdentityProviderRestrictions)
         {
             <li class="list-group-item">
-                @idpr.Provider
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm();" name="itemId" value="@idpr.Id">Remove</button>
+                @restriction.Provider
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm();" name="itemId" value="@restriction.Id">Remove</button>
             </li>
         }
     </ul>

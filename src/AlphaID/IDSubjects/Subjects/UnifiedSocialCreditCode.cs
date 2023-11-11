@@ -5,14 +5,14 @@ namespace IDSubjects.Subjects;
 /// <summary>
 /// 表示一个统一社会信用代码。
 /// </summary>
-public struct Uscc
+public struct UnifiedSocialCreditCode
 {
 
     /// <summary>
     /// 使用指定的代码值初始化统一社会信用代码。
     /// </summary>
     /// <param name="code"></param>
-    public Uscc(string code)
+    public UnifiedSocialCreditCode(string code)
     {
         if (string.IsNullOrWhiteSpace(code))
             throw new ArgumentException("数据为空。");
@@ -50,7 +50,7 @@ public struct Uscc
     /// <param name="orgTypeCode"></param>
     /// <param name="regionCode"></param>
     /// <param name="organizationCode"></param>
-    public Uscc(string adminCode, string orgTypeCode, string regionCode, string organizationCode)
+    public UnifiedSocialCreditCode(string adminCode, string orgTypeCode, string regionCode, string organizationCode)
         : this(adminCode, orgTypeCode, regionCode, OrganizationCode.Parse(organizationCode))
     { }
 
@@ -61,7 +61,7 @@ public struct Uscc
     /// <param name="orgTypeCode"></param>
     /// <param name="regionCode"></param>
     /// <param name="organizationCode"></param>
-    public Uscc(string adminCode, string orgTypeCode, string regionCode, OrganizationCode organizationCode)
+    public UnifiedSocialCreditCode(string adminCode, string orgTypeCode, string regionCode, OrganizationCode organizationCode)
     {
         if (string.IsNullOrWhiteSpace(adminCode))
         {
@@ -157,7 +157,7 @@ public struct Uscc
     /// <returns></returns>
     public override readonly bool Equals(object? obj)
     {
-        return obj is Uscc uScc ? this == uScc : base.Equals(obj);
+        return obj is UnifiedSocialCreditCode uScc ? this == uScc : base.Equals(obj);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public struct Uscc
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static bool operator ==(Uscc a, Uscc b)
+    public static bool operator ==(UnifiedSocialCreditCode a, UnifiedSocialCreditCode b)
     {
         return a.AdminCode == b.AdminCode
             && a.OrganizationTypeCode == b.OrganizationTypeCode
@@ -181,7 +181,7 @@ public struct Uscc
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static bool operator !=(Uscc a, Uscc b)
+    public static bool operator !=(UnifiedSocialCreditCode a, UnifiedSocialCreditCode b)
     {
         return !(a == b);
     }
@@ -216,7 +216,7 @@ public struct Uscc
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static Uscc Parse(string s)
+    public static UnifiedSocialCreditCode Parse(string s)
     {
         if (string.IsNullOrWhiteSpace(s))
             throw new ArgumentNullException(nameof(s));
@@ -228,7 +228,7 @@ public struct Uscc
         string codepart = s[..17];
         char checkcode = s[17];
 
-        Uscc newUsci = new(codepart);
+        UnifiedSocialCreditCode newUsci = new(codepart);
         return newUsci.CheckCode != checkcode ? throw new ArgumentException("Checksum incorrect.") : newUsci;
     }
 
@@ -238,9 +238,9 @@ public struct Uscc
     /// <param name="s"></param>
     /// <param name="usci"></param>
     /// <returns>若匹配成功，返回true，否则返回false.</returns>
-    public static bool TryParse(string s, out Uscc usci)
+    public static bool TryParse(string s, out UnifiedSocialCreditCode usci)
     {
-        usci = new Uscc();
+        usci = new UnifiedSocialCreditCode();
         if (string.IsNullOrWhiteSpace(s))
             return false;
 
@@ -265,7 +265,7 @@ public struct Uscc
         if (!OrganizationCode.TryParse(organizationCode, out OrganizationCode orgCode))
             return false;
 
-        Uscc innerusci = new(adminCode, orgTypeCode, regionCode, orgCode);
+        UnifiedSocialCreditCode innerusci = new(adminCode, orgTypeCode, regionCode, orgCode);
         if (innerusci.CheckCode != checkcode)
             return false;
 

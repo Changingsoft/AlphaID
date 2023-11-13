@@ -58,6 +58,8 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = default!;
 
+    public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = default!;
+
 
     public DbSet<RealNameInfo> RealNameInfos { get; protected set; } = default!;
 

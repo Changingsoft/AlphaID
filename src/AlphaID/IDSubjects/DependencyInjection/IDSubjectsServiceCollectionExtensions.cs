@@ -31,6 +31,8 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<PersonBankAccountManager>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
         services.TryAddScoped<OrganizationBankAccountManager>();
+        services.TryAddScoped<OrganizationIdentifierManager>();
+        services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>()
@@ -38,7 +40,7 @@ public static class IdSubjectsServiceCollectionExtensions
             .AddUserValidator<PhoneNumberValidator>()
             ;
 
-        if(setupAction != null)
+        if (setupAction != null)
         {
             services.Configure(setupAction);
         }

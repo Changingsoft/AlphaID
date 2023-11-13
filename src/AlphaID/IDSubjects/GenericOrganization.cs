@@ -128,9 +128,4 @@ public class GenericOrganization
     /// 曾用名。
     /// </summary>
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = new HashSet<OrganizationUsedName>();
-
-    /// <summary>
-    /// 组织的标识符。
-    /// </summary>
-    public virtual ICollection<OrganizationIdentifier> Identifiers { get; protected set; } = new HashSet<OrganizationIdentifier>();
 }

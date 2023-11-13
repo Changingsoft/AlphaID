@@ -1,3 +1,4 @@
+using AlphaIDPlatform.Identity;
 using AuthCenterWebApp.Services;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;

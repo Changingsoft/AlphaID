@@ -1,4 +1,5 @@
-﻿using IDSubjects;
+﻿using AlphaIDPlatform.Identity;
+using IDSubjects;
 using IDSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;

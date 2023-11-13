@@ -249,4 +249,7 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
+  <data name="Legal Entity Identifier" xml:space="preserve">
+	  <value>全球法人实体标识（LEI）</value>
+  </data>
 </root>

@@ -35,7 +35,7 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources.zh-cn.resx">
+	  <EmbeddedResource Update="Resources.zh-CN.resx">
 	    <DependentUpon>Resources.resx</DependentUpon>
 	  </EmbeddedResource>
 	</ItemGroup>

@@ -144,14 +144,11 @@
   <data name="StringIsNullOrWhiteSpace" xml:space="preserve">
 	  <value>“{0}”不能为 Null 或空白。</value>
   </data>
-  <data name="Duns Number" xml:space="preserve">
+  <data name="DunsNumber" xml:space="preserve">
     <value>邓白氏码</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
+  <data name="LegalEntityIdentifier" xml:space="preserve">
     <value>全球法人实体标识符（LEI）</value>
-  </data>
-  <data name="Unified Social Credit Code" xml:space="preserve">
-    <value>统一社会信用代码</value>
   </data>
   <data name="Specified directory entry not found" xml:space="preserve">
 	  <value>找不到指定的目录对象。</value>
@@ -164,5 +161,9 @@
   </data>
   <data name="Invlid organization type." xml:space="preserve">
 	  <value>无效的组织类型。</value>
+  </data>
+  <data name="UnifiedSocialCreditCode" xml:space="preserve">
+	  <value>统一社会信用代码
+</value>
   </data>
 </root>

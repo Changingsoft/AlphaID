@@ -249,4 +249,7 @@
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
   </data>
+  <data name="Legal Entity Identifier" xml:space="preserve">
+	  <value>Legal Entity Identifier</value>
+  </data>
 </root>

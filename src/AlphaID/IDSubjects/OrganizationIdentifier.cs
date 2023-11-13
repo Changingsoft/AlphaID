@@ -7,9 +7,8 @@ namespace IDSubjects;
 /// <summary>
 /// 
 /// </summary>
-[Owned]
 [Table("OrganizationIdentifier")]
-[PrimaryKey(nameof(OrganizationId), nameof(Type), nameof(Value))]
+[PrimaryKey(nameof(Value), nameof(Type))]
 public class OrganizationIdentifier
 {
     /// <summary>

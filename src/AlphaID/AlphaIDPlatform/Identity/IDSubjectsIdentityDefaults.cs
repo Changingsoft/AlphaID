@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace AlphaIDPlatform.Identity;
 
 /// <summary>
 /// IDSubjects Identity defaults.

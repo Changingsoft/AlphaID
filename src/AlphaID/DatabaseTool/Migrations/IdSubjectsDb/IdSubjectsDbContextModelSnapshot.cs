@@ -393,6 +393,28 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("OrganizationBankAccount");
                 });
 
+            modelBuilder.Entity("IDSubjects.OrganizationIdentifier", b =>
+                {
+                    b.Property<string>("Value")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("OrganizationId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Value", "Type");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("OrganizationIdentifier");
+                });
+
             modelBuilder.Entity("IDSubjects.OrganizationMember", b =>
                 {
                     b.Property<string>("PersonId")
@@ -635,33 +657,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("GenericOrganizationId");
                         });
 
-                    b.OwnsMany("IDSubjects.OrganizationIdentifier", "Identifiers", b1 =>
-                        {
-                            b1.Property<string>("OrganizationId")
-                                .HasMaxLength(50)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("Type")
-                                .HasColumnType("varchar(30)");
-
-                            b1.Property<string>("Value")
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.HasKey("OrganizationId", "Type", "Value");
-
-                            b1.ToTable("OrganizationIdentifier");
-
-                            b1.WithOwner("Organization")
-                                .HasForeignKey("OrganizationId");
-
-                            b1.Navigation("Organization");
-                        });
-
                     b.Navigation("Fapiao");
-
-                    b.Navigation("Identifiers");
 
                     b.Navigation("ProfilePicture");
                 });
@@ -815,6 +811,17 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 });
 
             modelBuilder.Entity("IDSubjects.OrganizationBankAccount", b =>
+                {
+                    b.HasOne("IDSubjects.GenericOrganization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("IDSubjects.OrganizationIdentifier", b =>
                 {
                     b.HasOne("IDSubjects.GenericOrganization", "Organization")
                         .WithMany()

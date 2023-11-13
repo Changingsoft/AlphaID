@@ -1,0 +1,23 @@
+﻿@page
+@using AlphaIDPlatform.Helpers
+@model AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers.AddModel
+@{
+    ViewBag.Title = L["Add Identifier"];
+}
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Add Identifier"]</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Type" class="form-label"></label>
+        <select asp-for="Type" class="form-select" asp-items="@EnumHelper.GetSelectListItems<OrganizationIdentifierType>()">
+            <option></option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Value" class="form-label"></label>
+        <input asp-for="Value" class="form-control"/>
+        <span asp-description-for="Value"></span>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn">@L["Add"]</button>
+</form>

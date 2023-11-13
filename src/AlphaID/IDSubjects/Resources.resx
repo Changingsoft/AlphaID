@@ -120,7 +120,7 @@
   <data name="CannotChangePersonName" xml:space="preserve">
     <value>Cannot change person name.</value>
   </data>
-  <data name="Duns Number" xml:space="preserve">
+  <data name="DunsNumber" xml:space="preserve">
     <value>Duns Number</value>
   </data>
   <data name="DuplicatePhoneNumber" xml:space="preserve">
@@ -135,7 +135,7 @@
   <data name="LastOwnerCannotLeave" xml:space="preserve">
     <value>You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization.</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
+  <data name="LegalEntityIdentifier" xml:space="preserve">
     <value>Legal Entity Identifier</value>
   </data>
   <data name="Male" xml:space="preserve">
@@ -150,19 +150,19 @@
   <data name="StringIsNullOrWhiteSpace" xml:space="preserve">
     <value>{0} can not be null or white space.</value>
   </data>
-  <data name="Unified Social Credit Code" xml:space="preserve">
+  <data name="UnifiedSocialCreditCode" xml:space="preserve">
     <value>Unified Social Credit Code</value>
   </data>
   <data name="Specified directory entry not found" xml:space="preserve">
-	  <value>Specified directory entry not found.</value>
+    <value>Specified directory entry not found.</value>
   </data>
   <data name="Invalid administrative code" xml:space="preserve">
-	  <value>Invalid administrative code</value>
+    <value>Invalid administrative code</value>
   </data>
   <data name="Invlid organization type." xml:space="preserve">
-	  <value>Invlid organization type.</value>
+    <value>Invlid organization type.</value>
   </data>
   <data name="Invalid region code." xml:space="preserve">
-	  <value>Invalid region code.</value>
+    <value>Invalid region code.</value>
   </data>
 </root>

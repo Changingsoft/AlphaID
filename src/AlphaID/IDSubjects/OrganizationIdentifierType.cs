@@ -10,16 +10,16 @@ public enum OrganizationIdentifierType
     /// <summary>
     /// 统一社会信用代码。
     /// </summary>
-    [Display(Name = "Unified Social Credit Code", ResourceType = typeof(Resources))]
+    [Display(Name = "UnifiedSocialCreditCode", ResourceType = typeof(Resources))]
     UnifiedSocialCreditCode,
     /// <summary>
     /// 全球法人实体标识符（LEI）
     /// </summary>
-    [Display(Name = "Legal Entity Identifier", ResourceType = typeof(Resources))]
+    [Display(Name = "LegalEntityIdentifier", ResourceType = typeof(Resources))]
     LegalEntityIdentifier,
     /// <summary>
     /// 邓白氏编码
     /// </summary>
-    [Display(Name = "Duns Number", ResourceType = typeof(Resources))]
+    [Display(Name = "DunsNumber", ResourceType = typeof(Resources))]
     DunsNumber,
 }

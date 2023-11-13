@@ -1,7 +1,6 @@
-﻿using IDSubjects.ChineseName;
-// ReSharper disable StringLiteralTypo
+﻿// ReSharper disable StringLiteralTypo
 
-namespace IDSubjects;
+namespace IDSubjects.ChineseName;
 
 internal class DefaultChinesePersonNamePinyinInterceptor : IChinesePersonNamePinyinInterceptor
 {

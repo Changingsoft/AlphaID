@@ -29,11 +29,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources.zh-cn.resx">
-	    <Generator></Generator>
+	  <EmbeddedResource Update="Resources.zh-CN.resx">
+		  <DependentUpon>Resources.resx</DependentUpon>
 	  </EmbeddedResource>
 	</ItemGroup>
 </Project>

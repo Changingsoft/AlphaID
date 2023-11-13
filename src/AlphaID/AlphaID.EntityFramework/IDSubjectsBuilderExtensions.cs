@@ -12,10 +12,10 @@ public static class IdSubjectsBuilderExtensions
         builder.Services.TryAddScoped<IOrganizationStore, OrganizationStore>();
         builder.Services.TryAddScoped<IOrganizationMemberStore, OrganizationMemberStore>();
         builder.AddUserStore<NaturalPersonStore>();
-        builder.Services.TryAddScoped<IQueryableOrganizationUsedNameStore, OrganizationUsedNameStore>();
         builder.Services.TryAddScoped<IPersonBankAccountStore, PersonBankAccountStore>();
         builder.Services.TryAddScoped<IJoinOrganizationInvitationStore, JoinOrganizationInvitationStore>();
         builder.Services.TryAddScoped<IOrganizationBankAccountStore, OrganizationBankAccountStore>();
+        builder.Services.TryAddScoped<IOrganizationIdentifierStore, OrganizationIdentifierStore>();
 
         return builder;
     }

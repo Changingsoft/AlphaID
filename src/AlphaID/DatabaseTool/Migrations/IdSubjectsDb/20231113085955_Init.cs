@@ -300,13 +300,13 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 name: "OrganizationIdentifier",
                 columns: table => new
                 {
-                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Type = table.Column<string>(type: "varchar(30)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrganizationIdentifier", x => new { x.OrganizationId, x.Type, x.Value });
+                    table.PrimaryKey("PK_OrganizationIdentifier", x => new { x.Value, x.Type });
                     table.ForeignKey(
                         name: "FK_OrganizationIdentifier_Organization_OrganizationId",
                         column: x => x.OrganizationId,
@@ -435,6 +435,11 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationBankAccount_OrganizationId",
                 table: "OrganizationBankAccount",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrganizationIdentifier_OrganizationId",
+                table: "OrganizationIdentifier",
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(

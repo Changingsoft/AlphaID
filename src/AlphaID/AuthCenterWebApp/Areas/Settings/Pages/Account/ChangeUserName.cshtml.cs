@@ -3,7 +3,6 @@ using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account

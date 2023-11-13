@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlphaID.WechatWebLogin.EntityFramework;
 
-public class WechatSPAConfidentialClientStore : IWechatAppClientStore
+public class WechatSpaConfidentialClientStore : IWechatAppClientStore
 {
     private readonly WechatWebLoginDbContext dbContext;
 
-    public WechatSPAConfidentialClientStore(WechatWebLoginDbContext dbContext)
+    public WechatSpaConfidentialClientStore(WechatWebLoginDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

@@ -1,0 +1,48 @@
+﻿@page
+@model IndexModel
+@{
+    ViewBag.Title = L["Financial"];
+}
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Financial"]</h2>
+<div class="row align-items-center">
+    <div class="col">
+        <h2>@L["Bank accounts"]</h2>
+    </div>
+    <div class="col-auto">
+        <a asp-page="NewBankAccount" asp-route-anchor="@RouteData.Values["anchor"]" class="btn">@L["Add account"]</a>
+    </div>
+</div>
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>@L["Name"]</td>
+                <td>@L["Account ID"]</td>
+                <td>@L["Bank"]</td>
+                <td>@L["Usage"]</td>
+                <td>@L["Default"]</td>
+                <td>@L["Operations"]</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bankAccount in Model.BankAccounts)
+            {
+                <tr>
+                    <td>@bankAccount.AccountName</td>
+                    <td>@bankAccount.AccountNumber</td>
+                    <td>@bankAccount.BankName</td>
+                    <td>@bankAccount.Usage</td>
+                    <td>@bankAccount.Default</td>
+                    <td>
+                        @if (!bankAccount.Default)
+                        {
+                            <button type="submit" asp-page-handler="SetDefault" name="accountNumber" value="@bankAccount.AccountNumber" class="btn btn-sm">@L["Set default"]</button>
+                        }
+                        <button type="submit" asp-page-handler="Remove" name="accountNumber" value="@bankAccount.AccountNumber" class="btn btn-sm btn-danger" onclick="return confirm('@(L["Are you sure you want to remove this bank account info from this organization?"])');">@L["Remove"]</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

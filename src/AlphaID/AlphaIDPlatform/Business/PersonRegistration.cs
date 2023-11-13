@@ -26,7 +26,7 @@ public class PersonRegistration
     /// <summary>
     /// 身份证。
     /// </summary>
-    public ChineseIDCardInfo? ChineseIdCard { get; internal set; }
+    public ChineseIdCardInfo? ChineseIdCard { get; internal set; }
 
     /// <summary>
     /// 姓氏。

@@ -26,8 +26,8 @@ public class CreateModel : PageModel
         {
             Name = this.Input.Name,
             ServerAddress = this.Input.ServerAddress,
-            RootDN = this.Input.RootDn,
-            DefaultUserAccountOU = this.Input.DefaultUserOu,
+            RootDn = this.Input.RootDn,
+            DefaultUserAccountOu = this.Input.DefaultUserOu,
             UpnSuffix = this.Input.UpnSuffix,
             UserName = this.Input.UserName,
             Password = this.Input.Password,

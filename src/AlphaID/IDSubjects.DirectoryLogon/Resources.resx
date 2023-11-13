@@ -117,43 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotChangePersonName" xml:space="preserve">
-    <value>无法更改个人名称。</value>
-  </data>
-  <data name="DuplicatePhoneNumber" xml:space="preserve">
-    <value>移动电话号码已被注册。</value>
-  </data>
-  <data name="Female" xml:space="preserve">
-    <value>女</value>
-  </data>
-  <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>无效的移动电话号码。</value>
-  </data>
-  <data name="LastOwnerCannotLeave" xml:space="preserve">
-    <value>您是该组织最后一个所有者，若要离开组织，请将您的所有权转移给组织内的其他成员。</value>
-  </data>
-  <data name="Male" xml:space="preserve">
-    <value>男</value>
-  </data>
-  <data name="MembershipExists" xml:space="preserve">
-    <value>组织成员身份已存在。</value>
-  </data>
-  <data name="Other" xml:space="preserve">
-    <value>其他</value>
-  </data>
-  <data name="StringIsNullOrWhiteSpace" xml:space="preserve">
-	  <value>“{0}”不能为 Null 或空白。</value>
-  </data>
-  <data name="Duns Number" xml:space="preserve">
-    <value>邓白氏码</value>
-  </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
-    <value>全球法人实体标识符（LEI）</value>
-  </data>
-  <data name="Unified Social Credit Code" xml:space="preserve">
-    <value>统一社会信用代码</value>
-  </data>
   <data name="Specified directory entry not found" xml:space="preserve">
-	  <value>找不到指定的目录对象。</value>
+    <value>Specified directory entry not found.</value>
   </data>
 </root>

@@ -73,7 +73,7 @@ builder.Services.AddRazorPages(options =>
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>
     {
-        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+        options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(SharedResource));
     })
     .AddSessionStateTempDataProvider();
 

@@ -5,12 +5,7 @@ namespace IDSubjects.Tests;
 
 internal class StubNaturalPersonStore : NaturalPersonStoreBase
 {
-    private readonly HashSet<NaturalPerson> set;
-
-    public StubNaturalPersonStore()
-    {
-        this.set = new HashSet<NaturalPerson>();
-    }
+    private readonly HashSet<NaturalPerson> set = new();
 
     public override IQueryable<NaturalPerson> Users => this.set.AsQueryable();
 

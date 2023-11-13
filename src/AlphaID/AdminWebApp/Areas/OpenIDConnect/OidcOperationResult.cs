@@ -28,8 +28,7 @@ public class OidcOperationResult
     public static OidcOperationResult Failed(params string[] errors)
     {
         var result = new OidcOperationResult() { Succeeded = false };
-        if (errors != null)
-            result.errors.AddRange(errors);
+        result.errors.AddRange(errors);
         return result;
     }
 

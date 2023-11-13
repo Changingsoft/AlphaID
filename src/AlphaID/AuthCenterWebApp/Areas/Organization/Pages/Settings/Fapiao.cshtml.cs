@@ -1,8 +1,9 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail
+namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 {
     public class FapiaoModel : PageModel
     {
@@ -18,9 +19,10 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public IdOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public IActionResult OnGet(string anchor)
         {
-            var organization = await this.organizationManager.FindByIdAsync(anchor);
+            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+                return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
 
@@ -42,7 +44,8 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public async Task<IActionResult> OnPostSaveAsync(string anchor)
         {
-            var organization = await this.organizationManager.FindByIdAsync(anchor);
+            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+                return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
 
@@ -76,12 +79,14 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public async Task<IActionResult> OnPostClearAsync(string anchor)
         {
-            var organization = await this.organizationManager.FindByIdAsync(anchor);
+            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+                return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
 
             organization.Fapiao = null;
             this.Result = await this.organizationManager.UpdateAsync(organization);
+            this.Input = default!;
             return this.Page();
         }
 

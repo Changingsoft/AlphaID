@@ -35,7 +35,7 @@ public class PersonRegistrationBuilder
     /// </summary>
     /// <param name="chineseIdCard"></param>
     /// <returns></returns>
-    public PersonRegistrationBuilder ApplyChineseIdCard(ChineseIDCardInfo chineseIdCard)
+    public PersonRegistrationBuilder ApplyChineseIdCard(ChineseIdCardInfo chineseIdCard)
     {
         if (chineseIdCard is null)
         {
@@ -44,12 +44,12 @@ public class PersonRegistrationBuilder
 
         this.registration.ChineseIdCard = chineseIdCard;
 
-        var cpersonName = this.processor.Create(chineseIdCard.Name);
+        var chinesePersonName = this.processor.Create(chineseIdCard.Name);
 
         this.registration.DisplayName = chineseIdCard.Name;
-        this.registration.Surname = cpersonName.Surname;
-        this.registration.GivenName = cpersonName.GivenName;
-        this.registration.PhoneticDisplayName = $"{cpersonName.PhoneticSurname} {cpersonName.PhoneticGivenName}".Trim();
+        this.registration.Surname = chinesePersonName.Surname;
+        this.registration.GivenName = chinesePersonName.GivenName;
+        this.registration.PhoneticDisplayName = $"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim();
         this.registration.Sex = chineseIdCard.Gender;
 
         return this;

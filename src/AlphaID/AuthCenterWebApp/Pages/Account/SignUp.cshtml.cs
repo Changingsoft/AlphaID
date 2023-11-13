@@ -164,7 +164,7 @@ public class SignUpModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "Phone number", Prompt = "1xxxxxxxxxx")]
+        [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = default!;

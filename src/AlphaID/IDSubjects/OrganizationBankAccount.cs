@@ -50,9 +50,15 @@ public class OrganizationBankAccount
     [MaxLength(100)]
     public string? BankName { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [MaxLength(20)]
     public string? Usage { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public bool Default { get; protected internal set; } = false;
 
     /// <summary>

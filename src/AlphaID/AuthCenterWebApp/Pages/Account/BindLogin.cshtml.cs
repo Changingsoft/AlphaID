@@ -232,14 +232,14 @@ public class BindLoginModel : PageModel
                 AuthenticationScheme = x.Name
             }).ToList();
 
-        var dyanmicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
+        var dynamicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ViewModel.ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
                 DisplayName = x.DisplayName
             });
-        providers.AddRange(dyanmicSchemes);
+        providers.AddRange(dynamicSchemes);
 
 
         var allowLocal = true;
@@ -319,7 +319,7 @@ public class BindLoginModel : PageModel
         public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders.Count() == 1;
         public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string? EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
+        public string? ExternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {

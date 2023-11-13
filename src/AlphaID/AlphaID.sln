@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{9B67AD0F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminWebApp", "AdminWebApp\AdminWebApp.csproj", "{7D73B9F1-EB23-4B17-A66B-674BF5F2E52E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTool", "DataTool\DataTool.csproj", "{F8644A3B-0654-4152-8FE0-6B960D0D9EF2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{D92B699A-567D-4D77-B830-F9FE537BCC59}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{7CC468B3-52ED-4E35-BDB5-38642BE5B3C4}"
@@ -66,8 +64,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDSubjects.RealName", "IDSu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.PlatformServices", "AlphaIDPlatformServices\AlphaID.PlatformServices.csproj", "{023D269C-A84C-4E73-BEF1-5D721B73ADC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XinAnAuth", "XinAnAuth\XinAnAuth.csproj", "{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTestUtilities", "IntegrationTestUtilities\IntegrationTestUtilities.csproj", "{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaID.DirectoryLogon.EntityFramework", "AlphaID.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj", "{74C81D9A-31C7-4E02-A1E3-4F5C28F631FA}"
@@ -98,10 +94,6 @@ Global
 		{7D73B9F1-EB23-4B17-A66B-674BF5F2E52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D73B9F1-EB23-4B17-A66B-674BF5F2E52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D73B9F1-EB23-4B17-A66B-674BF5F2E52E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8644A3B-0654-4152-8FE0-6B960D0D9EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8644A3B-0654-4152-8FE0-6B960D0D9EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8644A3B-0654-4152-8FE0-6B960D0D9EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8644A3B-0654-4152-8FE0-6B960D0D9EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C2C8783C-F9DE-4F38-8D61-424F95CEC4AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2C8783C-F9DE-4F38-8D61-424F95CEC4AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2C8783C-F9DE-4F38-8D61-424F95CEC4AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -166,10 +158,6 @@ Global
 		{023D269C-A84C-4E73-BEF1-5D721B73ADC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{023D269C-A84C-4E73-BEF1-5D721B73ADC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{023D269C-A84C-4E73-BEF1-5D721B73ADC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -195,7 +183,6 @@ Global
 		{5FF004D6-3ABD-4745-8052-C7FC7FA372EA} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 		{B52A8244-EDF9-4B0E-B07D-BEF893636DAB} = {D8C6EC4E-A781-49E5-B296-8C5576EBEB02}
 		{7D73B9F1-EB23-4B17-A66B-674BF5F2E52E} = {D8C6EC4E-A781-49E5-B296-8C5576EBEB02}
-		{F8644A3B-0654-4152-8FE0-6B960D0D9EF2} = {9B67AD0F-EC27-4983-81EF-B493110821FF}
 		{C2C8783C-F9DE-4F38-8D61-424F95CEC4AE} = {7CC468B3-52ED-4E35-BDB5-38642BE5B3C4}
 		{C7E9F11E-50FD-4FFD-A97D-FFC2CB53FC81} = {D92B699A-567D-4D77-B830-F9FE537BCC59}
 		{63C32B2D-7FB1-4B31-A802-FB58C98026F8} = {D92B699A-567D-4D77-B830-F9FE537BCC59}
@@ -215,15 +202,14 @@ Global
 		{7714CF67-4098-4F37-92AD-C465912B0FB0} = {7CC468B3-52ED-4E35-BDB5-38642BE5B3C4}
 		{F4F56EF1-A0A7-43C0-B65A-804DD84AF237} = {D92B699A-567D-4D77-B830-F9FE537BCC59}
 		{023D269C-A84C-4E73-BEF1-5D721B73ADC9} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
-		{26C66A92-2A73-4A22-AED4-4BE92CA42AAF} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 		{FFF75454-F55E-4E7B-A5C9-D1CE59FE1E4E} = {9B67AD0F-EC27-4983-81EF-B493110821FF}
 		{74C81D9A-31C7-4E02-A1E3-4F5C28F631FA} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 		{909F50F0-B85C-4D02-9B87-709753CDE43F} = {8D38EFB9-849B-430A-8D9F-4D22524D658B}
 		{2424DC94-F6F9-4FDF-9EC2-2C9B5E6ECC28} = {D2986112-01A1-445D-ADD2-399E9E483BD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_CodeReferences = {"Items":[{"Expression":"\\W($File.$Key)\\W","Extensions":".cs,.xaml,.cshtml","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\W($File.$Key)\\W","Extensions":".vbhtml","IsCaseSensitive":false,"SingleLineComment":null},{"Expression":"ResourceManager.GetString\\(\"($Key)\"\\)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"typeof\\((\\w+\\.)*($File)\\).+\"($Key)\"|\"($Key)\".+typeof\\((\\w+\\.)*($File)\\)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\W($Key)\\W","Extensions":".vb","IsCaseSensitive":false,"SingleLineComment":"'"},{"Expression":"\\W($File::$Key)\\W","Extensions":".cpp,.c,.hxx,.h","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"&lt;%\\$\\s+Resources:\\s*($File)\\s*,\\s*($Key)\\s*%&gt;","Extensions":".aspx,.ascx,.master","IsCaseSensitive":true,"SingleLineComment":null},{"Expression":"StringResourceKey\\.($Key)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\.($Key)","Extensions":".ts,.html","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"@L\\[\\\"($Key)\\\"\\]","Extensions":".cshtml","IsCaseSensitive":true,"SingleLineComment":null}]}
-		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
 		RESX_TaskErrorCategory = Message
+		SolutionGuid = {FAC996D9-8451-4B0E-99CC-F15843E0538A}
+		RESX_CodeReferences = {"Items":[{"Expression":"\\W($File.$Key)\\W","Extensions":".cs,.xaml,.cshtml","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\W($File.$Key)\\W","Extensions":".vbhtml","IsCaseSensitive":false,"SingleLineComment":null},{"Expression":"ResourceManager.GetString\\(\"($Key)\"\\)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"typeof\\((\\w+\\.)*($File)\\).+\"($Key)\"|\"($Key)\".+typeof\\((\\w+\\.)*($File)\\)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\W($Key)\\W","Extensions":".vb","IsCaseSensitive":false,"SingleLineComment":"'"},{"Expression":"\\W($File::$Key)\\W","Extensions":".cpp,.c,.hxx,.h","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"&lt;%\\$\\s+Resources:\\s*($File)\\s*,\\s*($Key)\\s*%&gt;","Extensions":".aspx,.ascx,.master","IsCaseSensitive":true,"SingleLineComment":null},{"Expression":"StringResourceKey\\.($Key)","Extensions":".cs","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"\\.($Key)","Extensions":".ts,.html","IsCaseSensitive":true,"SingleLineComment":"\/\/"},{"Expression":"@L\\[\\\"($Key)\\\"\\]","Extensions":".cshtml","IsCaseSensitive":true,"SingleLineComment":null}]}
 	EndGlobalSection
 EndGlobal

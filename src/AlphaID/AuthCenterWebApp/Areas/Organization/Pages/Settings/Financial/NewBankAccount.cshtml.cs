@@ -1,7 +1,8 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
+namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial
 {
     public class NewBankAccountModel : PageModel
     {
@@ -19,10 +20,11 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
 
         public IdOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public IActionResult OnGet(string anchor)
         {
-            var org = await this.organizationManager.FindByIdAsync(anchor);
-            if (org == null)
+            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+                return this.RedirectToPage("/Who", new { anchor });
+            if (organization == null)
                 return this.NotFound();
 
             return this.Page();
@@ -30,14 +32,15 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var org = await this.organizationManager.FindByIdAsync(anchor);
-            if (org == null)
+            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+                return this.RedirectToPage("/Who", new { anchor });
+            if (organization == null)
                 return this.NotFound();
 
             if (!this.ModelState.IsValid)
                 return this.Page();
 
-            this.Result = await this.bankAccountManager.AddAsync(org, this.Input.AccountNumber, this.Input.AccountName,
+            this.Result = await this.bankAccountManager.AddAsync(organization, this.Input.AccountNumber, this.Input.AccountName,
                 this.Input.BankName, this.Input.Usage, this.Input.SetDefault);
 
             if (!this.Result.Succeeded)

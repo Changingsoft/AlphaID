@@ -4,9 +4,11 @@
 
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AuthCenterWebApp.Pages;
 
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
 public class SecurityHeadersAttribute : ActionFilterAttribute
 {
     public override void OnResultExecuting(ResultExecutingContext context)

@@ -28,7 +28,7 @@ public class ValidateChineseIdCardModel : PageModel
         var data = await this.realNameValidator.FindByIdAsync(id);
         if (data == null)
             return this.NotFound();
-        if (data.ChineseIDCard == null)
+        if (data.ChineseIdCard == null)
             return this.NotFound();
 
         this.Data = data;
@@ -44,7 +44,7 @@ public class ValidateChineseIdCardModel : PageModel
         }
         else
         {
-            var chineseName = this.chinesePersonNameFactory.Create(this.Data.ChineseIDCard.Name);
+            var chineseName = this.chinesePersonNameFactory.Create(this.Data.ChineseIdCard.Name);
             this.Input = new()
             {
                 Surname = chineseName.Surname,
@@ -61,7 +61,7 @@ public class ValidateChineseIdCardModel : PageModel
         var data = await this.realNameValidator.FindByIdAsync(id);
         if (data == null)
             return this.NotFound();
-        if (data.ChineseIDCard == null)
+        if (data.ChineseIdCard == null)
             return this.NotFound();
 
         this.Data = data;

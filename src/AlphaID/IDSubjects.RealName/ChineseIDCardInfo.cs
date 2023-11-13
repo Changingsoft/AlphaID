@@ -8,12 +8,12 @@ namespace IDSubjects.RealName;
 /// 身份证信息
 /// </summary>
 [Owned]
-public class ChineseIDCardInfo
+public class ChineseIdCardInfo
 {
     /// <summary>
     /// 
     /// </summary>
-    protected ChineseIDCardInfo() { }
+    protected ChineseIdCardInfo() { }
 
     /// <summary>
     /// 
@@ -27,7 +27,7 @@ public class ChineseIDCardInfo
     /// <param name="issuer"></param>
     /// <param name="issueDate"></param>
     /// <param name="expires"></param>
-    public ChineseIDCardInfo(string name,
+    public ChineseIdCardInfo(string name,
                          Gender gender,
                          string ethnicity,
                          DateTime dateOfBirth,

@@ -1,5 +1,6 @@
 ﻿using AlphaIDWebAPITests.Models;
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -18,6 +19,7 @@ public class PersonControllerTests
 
 
     [Fact(Skip = "暂时跳过")]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public async Task GetNonExistsPerson()
     {
         var client = this.factory.CreateAuthenticatedClient();

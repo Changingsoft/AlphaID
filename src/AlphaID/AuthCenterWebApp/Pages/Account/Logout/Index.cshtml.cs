@@ -91,7 +91,7 @@ public class Index : PageModel
                     // build a return URL so the upstream provider will redirect back
                     // to us after the user has logged out. this allows us to then
                     // complete our single sign-out processing.
-                    string? url = this.Url.Page("/Account/Logout/Loggedout", new { logoutId = this.LogoutId });
+                    string? url = this.Url.Page("/Account/Logout/LoggedOut", new { logoutId = this.LogoutId });
 
                     // this triggers a redirect to the external provider for sign-out
                     return this.SignOut(new AuthenticationProperties { RedirectUri = url }, idp);

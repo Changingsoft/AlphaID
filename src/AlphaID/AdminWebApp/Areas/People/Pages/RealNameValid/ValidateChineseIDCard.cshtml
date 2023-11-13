@@ -6,25 +6,25 @@
 
 <div class="row">
     <div class="col-6">
-        @if (Model.Data.ChineseIDCardImage != null)
+        @if (Model.Data.ChineseIdCardImage != null)
         {
-            <img src="data:@(Model.Data.ChineseIDCardImage.PersonalFaceMimeType);base64,@(Convert.ToBase64String(Model.Data.ChineseIDCardImage.PersonalFace))" class="img-flued img-thumbnail" />
+            <img src="data:@(Model.Data.ChineseIdCardImage.PersonalFaceMimeType);base64,@(Convert.ToBase64String(Model.Data.ChineseIdCardImage.PersonalFace))" class="img-flued img-thumbnail" />
         }
-        <p>姓名：@Model.Data.ChineseIDCard?.Name</p>
-        <p>性别：@Model.Data.ChineseIDCard?.Gender</p>
-        <p>出生日期：@Model.Data.ChineseIDCard?.DateOfBirth</p>
-        <p>民族：@Model.Data.ChineseIDCard?.Ethnicity</p>
-        <p>住址：@Model.Data.ChineseIDCard?.Address</p>
-        <p>身份证号码：@Model.Data.ChineseIDCard?.CardNumber</p>
+        <p>姓名：@Model.Data.ChineseIdCard?.Name</p>
+        <p>性别：@Model.Data.ChineseIdCard?.Gender</p>
+        <p>出生日期：@Model.Data.ChineseIdCard?.DateOfBirth</p>
+        <p>民族：@Model.Data.ChineseIdCard?.Ethnicity</p>
+        <p>住址：@Model.Data.ChineseIdCard?.Address</p>
+        <p>身份证号码：@Model.Data.ChineseIdCard?.CardNumber</p>
     </div>
     <div class="col-6">
-        @if (Model.Data.ChineseIDCardImage != null)
+        @if (Model.Data.ChineseIdCardImage != null)
         {
-            <img src="data:@(Model.Data.ChineseIDCardImage.IssuerFaceMimeType);base64,@(Convert.ToBase64String(Model.Data.ChineseIDCardImage.IssuerFace))" class="img-flued img-thumbnail" />
+            <img src="data:@(Model.Data.ChineseIdCardImage.IssuerFaceMimeType);base64,@(Convert.ToBase64String(Model.Data.ChineseIdCardImage.IssuerFace))" class="img-flued img-thumbnail" />
         }
-        <p>签发机关：@Model.Data.ChineseIDCard?.Issuer</p>
-        <p>签发日期：@Model.Data.ChineseIDCard?.IssueDate</p>
-        <p>有效期至：@Model.Data.ChineseIDCard?.Expires</p>
+        <p>签发机关：@Model.Data.ChineseIdCard?.Issuer</p>
+        <p>签发日期：@Model.Data.ChineseIdCard?.IssueDate</p>
+        <p>有效期至：@Model.Data.ChineseIdCard?.Expires</p>
     </div>
 </div>
 

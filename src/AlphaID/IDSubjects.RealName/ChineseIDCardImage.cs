@@ -7,12 +7,12 @@ namespace IDSubjects.RealName;
 /// 身份证扫描件
 /// </summary>
 [Owned]
-public class ChineseIDCardImage
+public class ChineseIdCardImage
 {
     /// <summary>
     /// 
     /// </summary>
-    protected ChineseIDCardImage() { }
+    protected ChineseIdCardImage() { }
 
     /// <summary>
     /// 
@@ -21,7 +21,7 @@ public class ChineseIDCardImage
     /// <param name="personalFaceMimeType"></param>
     /// <param name="issuerFace"></param>
     /// <param name="issuerFaceMimeType"></param>
-    public ChineseIDCardImage(byte[] personalFace, string personalFaceMimeType, byte[] issuerFace, string issuerFaceMimeType)
+    public ChineseIdCardImage(byte[] personalFace, string personalFaceMimeType, byte[] issuerFace, string issuerFaceMimeType)
     {
         this.PersonalFace = personalFace;
         this.IssuerFace = issuerFace;

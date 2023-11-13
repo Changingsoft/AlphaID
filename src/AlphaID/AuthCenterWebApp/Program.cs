@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Globalization;
+// ReSharper disable All
 
 
 var builder = WebApplication.CreateBuilder(args);

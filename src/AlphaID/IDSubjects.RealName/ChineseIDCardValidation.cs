@@ -19,10 +19,10 @@ public class ChineseIdCardValidation
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="chineseIDCardImage"></param>
-    public ChineseIdCardValidation(ChineseIDCardImage chineseIDCardImage)
+    /// <param name="chineseIdCardImage"></param>
+    public ChineseIdCardValidation(ChineseIdCardImage chineseIdCardImage)
     {
-        this.ChineseIDCardImage = chineseIDCardImage;
+        this.ChineseIdCardImage = chineseIdCardImage;
     }
 
 
@@ -48,12 +48,12 @@ public class ChineseIdCardValidation
     /// <summary>
     /// 身份证信息
     /// </summary>
-    public virtual ChineseIDCardInfo? ChineseIDCard { get; set; }
+    public virtual ChineseIdCardInfo? ChineseIdCard { get; set; }
 
     /// <summary>
     /// 身份证扫描件
     /// </summary>
-    public virtual ChineseIDCardImage? ChineseIDCardImage { get; protected set; }
+    public virtual ChineseIdCardImage? ChineseIdCardImage { get; protected set; }
 
     /// <summary>
     /// 姓名。
@@ -75,10 +75,10 @@ public class ChineseIdCardValidation
     /// </summary>
     /// <param name="card"></param>
     /// <returns></returns>
-    public bool TryApplyChineseIdCardInfo(ChineseIDCardInfo card)
+    public bool TryApplyChineseIdCardInfo(ChineseIdCardInfo card)
     {
         if (this.Result != null) return false;
-        this.ChineseIDCard = card;
+        this.ChineseIdCard = card;
         return true;
     }
 

@@ -1,5 +1,4 @@
 using IDSubjects;
-using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,12 +8,10 @@ namespace AdminWebApp.Areas.Organizations.Pages;
 public class NewModel : PageModel
 {
     private readonly OrganizationManager manager;
-    private readonly IOrganizationStore organizationStore;
 
-    public NewModel(OrganizationManager manager, IOrganizationStore organizationStore)
+    public NewModel(OrganizationManager manager)
     {
         this.manager = manager;
-        this.organizationStore = organizationStore;
     }
 
     [Display(Name = "Name")]

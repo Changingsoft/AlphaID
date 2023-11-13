@@ -100,6 +100,7 @@ public class IdSubjectsDbContext : DbContext
     /// <summary>
     /// Converts <see cref="DateOnly" /> to <see cref="DateTime"/> and vice versa.
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Local
     private class NullableDateOnlyConverter : ValueConverter<DateOnly?, DateTime?>
     {
         /// <summary>

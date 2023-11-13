@@ -14,7 +14,6 @@
       "AlphaIDWebAPI\\AlphaIDWebAPI.csproj",
       "AuthCenterWebAppTests\\AuthCenterWebAppTests.csproj",
       "AuthCenterWebApp\\AuthCenterWebApp.csproj",
-      "DataTool\\DataTool.csproj",
       "DatabaseTool\\DatabaseTool.csproj",
       "IDSubjects.DirectoryLogon.Tests\\IDSubjects.DirectoryLogon.Tests.csproj",
       "IDSubjects.DirectoryLogon\\IDSubjects.DirectoryLogon.csproj",
@@ -24,8 +23,7 @@
       "IDSubjects.WechatWebLogin.Tests\\IDSubjects.WechatWebLogin.Tests.csproj",
       "IDSubjects.WechatWebLogin\\IDSubjects.WechatWebLogin.csproj",
       "IDSubjects\\IDSubjects.csproj",
-      "IntegrationTestUtilities\\IntegrationTestUtilities.csproj",
-      "XinAnAuth\\XinAnAuth.csproj"
+      "IntegrationTestUtilities\\IntegrationTestUtilities.csproj"
     ]
   }
 }

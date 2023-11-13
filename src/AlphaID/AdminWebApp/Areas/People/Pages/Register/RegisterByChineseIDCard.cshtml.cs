@@ -77,7 +77,7 @@ public class RegisterByChineseIdCardModel : PageModel
 
 
         //check if exists in database
-        var cardExists = this.chineseIdCardManager.Validations.Any(p => p.ChineseIDCard!.CardNumber == personalFaceResult.IdCardNumber);
+        var cardExists = this.chineseIdCardManager.Validations.Any(p => p.ChineseIdCard!.CardNumber == personalFaceResult.IdCardNumber);
         if (cardExists)
         {
             this.ModelState.AddModelError("", "该身份证已经注册过。");
@@ -101,7 +101,7 @@ public class RegisterByChineseIdCardModel : PageModel
 
         //ensure chinese person name
         var chinesePersonName = this.chinesePersonNameFactory.Create(personalFaceResult.Name);
-        ChineseIDCardInfo cardInfo = new(personalFaceResult.Name,
+        ChineseIdCardInfo cardInfo = new(personalFaceResult.Name,
                                      personalFaceResult.SexString == "男" ? Gender.Male : Gender.Female,
                                      personalFaceResult.Nationality,
                                      personalFaceResult.DateOfBirth,
@@ -129,7 +129,7 @@ public class RegisterByChineseIdCardModel : PageModel
         }
 
         //add chinese card
-        ChineseIdCardValidation card = new(new ChineseIDCardImage(personalFaceBytes, personalFaceMimeType, issuerFaceBytes, issuerFaceMimeType));
+        ChineseIdCardValidation card = new(new ChineseIdCardImage(personalFaceBytes, personalFaceMimeType, issuerFaceBytes, issuerFaceMimeType));
         card.TryApplyChineseIdCardInfo(cardInfo);
         card.TryApplyChinesePersonName(chinesePersonName);
         await this.chineseIdCardManager.CommitAsync(builder.Build(), card);

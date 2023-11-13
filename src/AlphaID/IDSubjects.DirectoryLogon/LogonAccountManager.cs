@@ -97,7 +97,7 @@ public class LogonAccountManager
             //Create external login
             if (directoryService.ExternalLoginProvider != null)
             {
-                var providerKey = this.options.GenerateExternalLoginId(directoryService.SAMDomainPart, userEntry);
+                var providerKey = this.options.GenerateExternalLoginId(directoryService.SamDomainPart, userEntry);
                 var identityResult = await this.naturalPersonManager.AddLoginAsync(person, new Microsoft.AspNetCore.Identity.UserLoginInfo(directoryService.ExternalLoginProvider, providerKey, directoryService.ExternalLoginProviderName));
                 if (!identityResult.Succeeded)
                 {
@@ -155,27 +155,27 @@ public class LogonAccountManager
     /// </summary>
     /// <param name="directoryService"></param>
     /// <param name="person"></param>
-    /// <param name="entryObjectGUID"></param>
+    /// <param name="entryObjectGuid"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public async Task<LogonAccount> BindExistsAccount(DirectoryService directoryService, NaturalPerson person, Guid entryObjectGUID)
+    public async Task<LogonAccount> BindExistsAccount(DirectoryService directoryService, NaturalPerson person, Guid entryObjectGuid)
     {
         using var searchRoot = directoryService.GetRootEntry();
         using DirectorySearcher searcher = new(searchRoot);
-        searcher.Filter = $"(objectGUID={entryObjectGUID.ToHexString()})";
+        searcher.Filter = $"(objectGUID={entryObjectGuid.ToHexString()})";
         var result = searcher.FindOne();
         if (result == null)
         {
-            this.logger?.LogInformation("找不到指定的目录对象。objectGUID是{objectGUID}", entryObjectGUID);
-            throw new ArgumentException("Specified directory entry not found.", nameof(entryObjectGUID));
+            this.logger?.LogInformation("找不到指定的目录对象。objectGUID是{objectGUID}", entryObjectGuid);
+            throw new ArgumentException(Resources.Specified_directory_entry_not_found, nameof(entryObjectGuid));
         }
         using var userEntry = result.GetDirectoryEntry();
 
         LogonAccount logonAccount = new()
         {
             ServiceId = directoryService.Id,
-            LogonId = Convert.ToBase64String(entryObjectGUID.ToByteArray()),
+            LogonId = Convert.ToBase64String(entryObjectGuid.ToByteArray()),
             PersonId = person.Id,
         };
         await this.logonAccountStore.CreateAsync(logonAccount);
@@ -183,7 +183,7 @@ public class LogonAccountManager
         //Create external login
         if (directoryService.ExternalLoginProvider != null)
         {
-            var providerKey = this.options.GenerateExternalLoginId(directoryService.SAMDomainPart, userEntry);
+            var providerKey = this.options.GenerateExternalLoginId(directoryService.SamDomainPart, userEntry);
             var identityResult = await this.naturalPersonManager.AddLoginAsync(person, new Microsoft.AspNetCore.Identity.UserLoginInfo(directoryService.ExternalLoginProvider, providerKey, directoryService.ExternalLoginProviderName));
             if (!identityResult.Succeeded)
             {

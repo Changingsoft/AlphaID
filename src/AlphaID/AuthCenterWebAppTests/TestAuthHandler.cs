@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 
@@ -13,6 +14,7 @@ internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
     {
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (this.Request.Headers.Authorization.Contains("TestScheme"))

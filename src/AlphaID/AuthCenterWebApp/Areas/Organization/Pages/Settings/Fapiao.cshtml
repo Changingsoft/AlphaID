@@ -1,10 +1,9 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Organization.Pages.Settings.FapiaoInfoModel
+@model FapiaoModel
 @{
-    ViewBag.Title = L["Fapiao info"];
 }
-<h2>@ViewBag.Title</h2>
-<p>@L["Fapiao info will be public and be used by other sellers."]</p>
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Fapiao info"]</h2>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
@@ -47,6 +46,10 @@
         </div>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@L["Save"]</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="Save">@L["Save"]</button>
     <button type="submit" class="btn btn-danger" asp-page-handler="Clear">@L["Clear"]</button>
 </form>
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

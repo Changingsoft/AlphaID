@@ -79,7 +79,7 @@ public class ChineseIdCardManager
         {
             throw new InvalidOperationException("已审核的实名认证不能再进行审核");
         }
-        if (validation.ChineseIDCard == null)
+        if (validation.ChineseIdCard == null)
         {
             throw new InvalidOperationException("未填写身份证信息时，不能启动验证");
         }

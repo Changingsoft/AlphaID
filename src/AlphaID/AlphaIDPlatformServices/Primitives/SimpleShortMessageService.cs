@@ -37,11 +37,6 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     /// <exception cref="InvalidOperationException"></exception>
     public async Task SendAsync(string mobile)
     {
-        if (string.IsNullOrWhiteSpace(mobile))
-        {
-            throw new ArgumentException($"“{nameof(mobile)}”不能为 Null 或空白", nameof(mobile));
-        }
-
         var form = new Dictionary<string, string>
         {
             {"recipient", mobile.Trim() }
@@ -66,16 +61,6 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     /// <exception cref="InvalidOperationException"></exception>
     public async Task<bool> VerifyAsync(string mobile, string code)
     {
-        if (string.IsNullOrWhiteSpace(mobile))
-        {
-            throw new ArgumentException($"“{nameof(mobile)}”不能为 Null 或空白", nameof(mobile));
-        }
-
-        if (string.IsNullOrWhiteSpace(code))
-        {
-            throw new ArgumentException($"“{nameof(code)}”不能为 Null 或空白", nameof(code));
-        }
-
         var form = new Dictionary<string, string>
         {
             {"recipient", mobile.Trim() },
@@ -133,12 +118,6 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     /// <exception cref="InvalidOperationException"></exception>
     public async Task SendAsync(string mobile, string content)
     {
-        if (string.IsNullOrWhiteSpace(mobile))
-        {
-            throw new ArgumentException($"“{nameof(mobile)}”不能为 Null 或空白", nameof(mobile));
-        }
-
-
         await this.AuthenticateAsync(this.client);
 
         var shortMessage = new FreeTextMessage(new[] { mobile }, content);

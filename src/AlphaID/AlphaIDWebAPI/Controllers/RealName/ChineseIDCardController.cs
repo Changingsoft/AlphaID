@@ -51,14 +51,14 @@ public class ChineseIdCardController : ControllerBase
         var currentCard = await this.chineseIdCardManager.GetCurrentAsync(person);
         return currentCard == null
             ? this.NotFound()
-            : new ChineseIdCardModel(currentCard.ChineseIDCard.CardNumber,
-                currentCard.ChineseIDCard.Name,
-                currentCard.ChineseIDCard.Gender.ToString(),
-                currentCard.ChineseIDCard.DateOfBirth,
-                currentCard.ChineseIDCard.Ethnicity,
-                currentCard.ChineseIDCard.Address,
-                currentCard.ChineseIDCard.Issuer,
-                currentCard.ChineseIDCard.IssueDate,
-                currentCard.ChineseIDCard.Expires);
+            : new ChineseIdCardModel(currentCard.ChineseIdCard.CardNumber,
+                currentCard.ChineseIdCard.Name,
+                currentCard.ChineseIdCard.Gender.ToString(),
+                currentCard.ChineseIdCard.DateOfBirth,
+                currentCard.ChineseIdCard.Ethnicity,
+                currentCard.ChineseIdCard.Address,
+                currentCard.ChineseIdCard.Issuer,
+                currentCard.ChineseIdCard.IssueDate,
+                currentCard.ChineseIdCard.Expires);
     }
 }

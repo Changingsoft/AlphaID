@@ -21,7 +21,6 @@ public class Callback : PageModel
     private readonly IIdentityServerInteractionService interaction;
     private readonly ILogger<Callback> logger;
     private readonly IEventService events;
-    private readonly ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter;
 
     public Callback(
         IIdentityServerInteractionService interaction,
@@ -29,15 +28,13 @@ public class Callback : PageModel
         ILogger<Callback> logger,
         NaturalPersonManager userManager,
         SignInManager<NaturalPerson> signInManager,
-        ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
-        ChinesePersonNameFactory chinesePersonNameFactory)
+        ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.interaction = interaction;
         this.logger = logger;
         this.events = events;
-        this.chinesePersonNamePinyinConverter = chinesePersonNamePinyinConverter;
     }
 
     public async Task<IActionResult> OnGet()

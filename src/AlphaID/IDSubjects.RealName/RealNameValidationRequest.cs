@@ -12,7 +12,7 @@ public class RealNameValidationRequest
     /// <summary>
     /// 
     /// </summary>
-    public DateTimeOffset WhenCommited { get; protected set; }
+    public DateTimeOffset WhenCommitted { get; protected set; }
 
 
 }

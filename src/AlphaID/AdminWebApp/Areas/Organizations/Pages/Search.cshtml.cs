@@ -1,17 +1,14 @@
 using IDSubjects;
-using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.Organizations.Pages;
 
 public class SearchModel : PageModel
 {
-    private readonly IOrganizationStore organizationStore;
     private readonly OrganizationSearcher searcher;
 
-    public SearchModel(IOrganizationStore organizationStore, OrganizationSearcher searcher)
+    public SearchModel(OrganizationSearcher searcher)
     {
-        this.organizationStore = organizationStore;
         this.searcher = searcher;
     }
 

@@ -19,21 +19,19 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public IdOperationResult OperationResult { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public IActionResult OnGet(string anchor)
         {
-            var orgs = (await this.manager.FindByAnchorAsync(anchor)).ToList();
-            if (!orgs.Any())
-                return this.NotFound();
-            if (orgs.Count() > 1)
+            if (!this.manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
-            var org = orgs.First();
+            if (organization == null)
+                return this.NotFound();
 
             this.Input = new InputModel()
             {
-                Description = org.Description,
-                Domicile = org.Domicile,
-                Contact = org.Contact,
-                Representative = org.Representative,
+                Description = organization.Description,
+                Domicile = organization.Domicile,
+                Contact = organization.Contact,
+                Representative = organization.Representative,
             };
 
             return this.Page();
@@ -41,22 +39,20 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var orgs = (await this.manager.FindByAnchorAsync(anchor)).ToList();
-            if (!orgs.Any())
-                return this.NotFound();
-            if (orgs.Count() > 1)
+            if (!this.manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
-            var org = orgs.First();
+            if (organization == null)
+                return this.NotFound();
 
             if (!this.ModelState.IsValid)
                 return this.Page();
 
-            org.Description = this.Input.Description;
-            org.Domicile = this.Input.Domicile;
-            org.Contact = this.Input.Contact;
-            org.Representative = this.Input.Representative;
+            organization.Description = this.Input.Description;
+            organization.Domicile = this.Input.Domicile;
+            organization.Contact = this.Input.Contact;
+            organization.Representative = this.Input.Representative;
 
-            await this.manager.UpdateAsync(org);
+            await this.manager.UpdateAsync(organization);
             this.OperationResult = IdOperationResult.Success;
             return this.Page();
         }

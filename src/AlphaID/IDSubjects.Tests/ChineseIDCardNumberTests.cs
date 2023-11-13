@@ -1,5 +1,6 @@
 ﻿using IDSubjects.Subjects;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace IDSubjects.Tests;
@@ -61,6 +62,7 @@ public class ChineseIdCardNumberTests
     }
 
     [Fact]
+    [SuppressMessage("ReSharper", "IdentifierTypo")]
     public void GenerateSampleData()
     {
         var liubei = new ChineseIdCardNumber(ChineseIdCardNumberVersion.V2, 990001, new DateOnly(0161, 7, 16), 0001);

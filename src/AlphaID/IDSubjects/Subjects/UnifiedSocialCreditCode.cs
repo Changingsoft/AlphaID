@@ -5,7 +5,7 @@ namespace IDSubjects.Subjects;
 /// <summary>
 /// 表示一个统一社会信用代码。
 /// </summary>
-public struct UnifiedSocialCreditCode
+public readonly struct UnifiedSocialCreditCode
 {
 
     /// <summary>
@@ -63,31 +63,16 @@ public struct UnifiedSocialCreditCode
     /// <param name="organizationCode"></param>
     public UnifiedSocialCreditCode(string adminCode, string orgTypeCode, string regionCode, OrganizationCode organizationCode)
     {
-        if (string.IsNullOrWhiteSpace(adminCode))
-        {
-            throw new ArgumentException("登记管理部门代码无效。", nameof(adminCode));
-        }
-
-        if (string.IsNullOrWhiteSpace(orgTypeCode))
-        {
-            throw new ArgumentException("机构类别代码无效。", nameof(orgTypeCode));
-        }
-
-        if (string.IsNullOrWhiteSpace(regionCode))
-        {
-            throw new ArgumentException("登记管理机关行政区划代码无效。", nameof(regionCode));
-        }
-
         adminCode = adminCode.Trim().ToUpper();
         orgTypeCode = orgTypeCode.Trim().ToUpper();
         regionCode = regionCode.Trim().ToUpper();
 
         if (!Regex.IsMatch(adminCode, @"^[0-9,A-H,J-N,P-R,T-U,W-Y]{1}$"))
-            throw new ArgumentException("登记管理部门代码无效。", nameof(adminCode));
+            throw new ArgumentException(Resources.Invalid_administrative_code, nameof(adminCode));
         if (!Regex.IsMatch(orgTypeCode, @"^[0-9,A-H,J-N,P-R,T-U,W-Y]{1}$"))
-            throw new ArgumentException("机构类别代码无效。", nameof(orgTypeCode));
+            throw new ArgumentException(Resources.Invlid_organization_type_, nameof(orgTypeCode));
         if (!Regex.IsMatch(regionCode, @"^\d{6}$"))
-            throw new ArgumentException("登记管理机关行政区划代码无效。", nameof(regionCode));
+            throw new ArgumentException(Resources.Invalid_region_code_, nameof(regionCode));
 
         this.AdminCode = adminCode;
         this.OrganizationTypeCode = orgTypeCode;
@@ -99,7 +84,7 @@ public struct UnifiedSocialCreditCode
     /// <summary>
     /// 获取该统一社会信用代码的编码部分（不包括校验码）。
     /// </summary>
-    public readonly string Code
+    public string Code
     {
         get
         {
@@ -136,7 +121,7 @@ public struct UnifiedSocialCreditCode
     /// 已重写，输出统一社会信用代码的字符串形式。
     /// </summary>
     /// <returns></returns>
-    public override readonly string ToString()
+    public override string ToString()
     {
         return this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true) + this.CheckCode.ToString();
     }
@@ -145,7 +130,7 @@ public struct UnifiedSocialCreditCode
     /// 已重写，输出统一社会信用代码的哈希。
     /// </summary>
     /// <returns></returns>
-    public override readonly int GetHashCode()
+    public override int GetHashCode()
     {
         return this.ToString().GetHashCode();
     }
@@ -155,7 +140,7 @@ public struct UnifiedSocialCreditCode
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override readonly bool Equals(object? obj)
+    public override bool Equals(object? obj)
     {
         return obj is UnifiedSocialCreditCode uScc ? this == uScc : base.Equals(obj);
     }
@@ -191,10 +176,10 @@ public struct UnifiedSocialCreditCode
         int sum = 0;
         for (int i = 0; i < 17; i++)
         {
-            var charindex = Charset.IndexOf(value[i]);
-            if (charindex < 0)
+            var charIndex = Charset.IndexOf(value[i]);
+            if (charIndex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charindex * Weight[i];
+            sum += charIndex * Weight[i];
         }
         return Charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在0-30范围内。
     }
@@ -225,11 +210,11 @@ public struct UnifiedSocialCreditCode
         if (s.Length != 18)
             throw new ArgumentException("Length incorrect.");
 
-        string codepart = s[..17];
-        char checkcode = s[17];
+        string codePart = s[..17];
+        char checkCode = s[17];
 
-        UnifiedSocialCreditCode newUsci = new(codepart);
-        return newUsci.CheckCode != checkcode ? throw new ArgumentException("Checksum incorrect.") : newUsci;
+        UnifiedSocialCreditCode newUsci = new(codePart);
+        return newUsci.CheckCode != checkCode ? throw new ArgumentException("Checksum incorrect.") : newUsci;
     }
 
     /// <summary>
@@ -255,21 +240,21 @@ public struct UnifiedSocialCreditCode
                 return false;
         }
 
-        string codepart = s[..17];
-        var adminCode = codepart[..1];
-        var orgTypeCode = codepart.Substring(1, 1);
-        var regionCode = codepart.Substring(2, 6);
-        var organizationCode = codepart.Substring(8, 9);
-        char checkcode = s[17];
+        string codePart = s[..17];
+        var adminCode = codePart[..1];
+        var orgTypeCode = codePart.Substring(1, 1);
+        var regionCode = codePart.Substring(2, 6);
+        var organizationCode = codePart.Substring(8, 9);
+        char checkCode = s[17];
 
         if (!OrganizationCode.TryParse(organizationCode, out OrganizationCode orgCode))
             return false;
 
-        UnifiedSocialCreditCode innerusci = new(adminCode, orgTypeCode, regionCode, orgCode);
-        if (innerusci.CheckCode != checkcode)
+        UnifiedSocialCreditCode innerUscc = new(adminCode, orgTypeCode, regionCode, orgCode);
+        if (innerUscc.CheckCode != checkCode)
             return false;
 
-        usci = innerusci;
+        usci = innerUscc;
         return true;
     }
 

@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Html.Dom;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IntegrationTestUtilities.Helpers;
 
@@ -48,6 +49,7 @@ public static class HttpClientExtensions
     /// <param name="submitButton"></param>
     /// <param name="formValues"></param>
     /// <returns></returns>
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static Task<HttpResponseMessage> SendAsync(
         this HttpClient client,
         IHtmlFormElement form,
@@ -64,8 +66,8 @@ public static class HttpClientExtensions
         var target = (Uri)submit.Target;
         if (submitButton.HasAttribute("formaction"))
         {
-            var formaction = submitButton.GetAttribute("formaction")!;
-            target = new Uri(formaction, UriKind.Relative);
+            var formAction = submitButton.GetAttribute("formaction")!;
+            target = new Uri(formAction, UriKind.Relative);
         }
         var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
         {

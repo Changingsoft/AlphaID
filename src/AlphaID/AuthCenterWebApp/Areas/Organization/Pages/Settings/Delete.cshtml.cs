@@ -15,7 +15,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public IdOperationResult? Result { get; set; }
 
-        public IActionResult OnGetAsTask(string anchor)
+        public IActionResult OnGet(string anchor)
         {
             if (!this.manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
@@ -27,7 +27,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPost(string anchor)
+        public async Task<IActionResult> OnPostAsync(string anchor)
         {
             if (!this.manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });

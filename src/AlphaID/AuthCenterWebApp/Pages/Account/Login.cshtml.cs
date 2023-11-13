@@ -53,7 +53,7 @@ public class LoginModel : PageModel
         if (this.View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider
-            return this.RedirectToPage("/ExternalLogin/Challenge", new { scheme = this.View.ExternalLoginScheme, schemeDisplayName = this.View.EnternalLoginDisplayName, returnUrl });
+            return this.RedirectToPage("/ExternalLogin/Challenge", new { scheme = this.View.ExternalLoginScheme, schemeDisplayName = this.View.ExternalLoginDisplayName, returnUrl });
         }
 
         return this.Page();
@@ -212,14 +212,14 @@ public class LoginModel : PageModel
                 AuthenticationScheme = x.Name
             }).ToList();
 
-        var dyanmicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
+        var dynamicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ViewModel.ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
                 DisplayName = x.DisplayName ?? "",
             });
-        providers.AddRange(dyanmicSchemes);
+        providers.AddRange(dynamicSchemes);
 
 
         var allowLocal = true;
@@ -277,7 +277,7 @@ public class LoginModel : PageModel
         public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders.Count() == 1;
         public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string? EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
+        public string? ExternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {

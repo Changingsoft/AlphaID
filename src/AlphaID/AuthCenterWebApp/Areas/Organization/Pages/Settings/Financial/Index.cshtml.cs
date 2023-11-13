@@ -1,7 +1,8 @@
 using IDSubjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial;
+namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
 public class IndexModel : PageModel
 {
@@ -19,23 +20,25 @@ public class IndexModel : PageModel
 
     public IdOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var data = await this.organizationManager.FindByIdAsync(anchor);
-        if (data == null)
+        if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            return this.RedirectToPage("/Who", new { anchor });
+        if (organization == null)
             return this.NotFound();
-        this.Data = data;
-        this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+        this.Data = organization;
+        this.BankAccounts = this.bankAccountManager.GetBankAccounts(this.Data);
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
-        var data = await this.organizationManager.FindByIdAsync(anchor);
-        if (data == null)
+        if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            return this.RedirectToPage("/Who", new { anchor });
+        if (organization == null)
             return this.NotFound();
-        this.Data = data;
-        this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+        this.Data = organization;
+        this.BankAccounts = this.bankAccountManager.GetBankAccounts(this.Data);
 
         var bankAccount = this.BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null)
@@ -45,7 +48,7 @@ public class IndexModel : PageModel
 
         this.Result = await this.bankAccountManager.RemoveAsync(bankAccount);
         if(this.Result.Succeeded)
-            this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+            this.BankAccounts = this.bankAccountManager.GetBankAccounts(this.Data);
         return this.Page();
     }
 

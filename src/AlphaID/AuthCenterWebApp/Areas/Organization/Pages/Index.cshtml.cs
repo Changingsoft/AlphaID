@@ -18,8 +18,8 @@ public class IndexModel : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if(!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-            return this.RedirectToPage("Who");
+        if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            return this.RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return this.NotFound();
 

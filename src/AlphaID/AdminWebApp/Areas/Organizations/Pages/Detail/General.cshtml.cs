@@ -1,5 +1,4 @@
 using IDSubjects;
-using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

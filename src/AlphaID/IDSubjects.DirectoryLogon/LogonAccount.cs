@@ -51,7 +51,7 @@ public class LogonAccount
     {
         Guid directoryObjectGuid = new(Convert.FromBase64String(this.LogonId));
 
-        using var root = new DirectoryEntry($"LDAP://{this.DirectoryService.ServerAddress}/{this.DirectoryService.RootDN}");
+        using var root = new DirectoryEntry($"LDAP://{this.DirectoryService.ServerAddress}/{this.DirectoryService.RootDn}");
         using var searcher = new DirectorySearcher(root);
         searcher.Filter = $"(objectGUID={directoryObjectGuid.ToHexString()})";
         var result = searcher.FindOne();

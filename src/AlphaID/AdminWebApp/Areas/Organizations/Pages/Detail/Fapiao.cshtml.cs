@@ -88,22 +88,22 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         public class InputModel
         {
             [Display(Name = "Name")]
-            public string Name { get; init; } = default!;
+            public string Name { get; set; } = default!;
 
             [Display(Name = "Taxpayer ID")]
-            public string TaxpayerId { get; init; } = default!;
+            public string TaxpayerId { get; set; } = default!;
 
             [Display(Name = "Address")]
-            public string Address { get; init; } = default!;
+            public string Address { get; set; } = default!;
 
             [Display(Name = "Contact")]
-            public string Contact { get; init; } = default!;
+            public string Contact { get; set; } = default!;
 
             [Display(Name = "Bank")]
-            public string Bank { get; init; } = default!;
+            public string Bank { get; set; } = default!;
 
             [Display(Name = "Account")]
-            public string Account { get; init; } = default!;
+            public string Account { get; set; } = default!;
         }
 
     }

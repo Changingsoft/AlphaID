@@ -49,32 +49,32 @@ public class CreateModel : PageModel
     {
         [Display(Name = "Name")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string Name { get; init; } = default!;
+        public string Name { get; set; } = default!;
 
         [Display(Name = "Server", Prompt = "ldap.example.com")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string ServerAddress { get; init; } = default!;
+        public string ServerAddress { get; set; } = default!;
 
         [Display(Name = "User name")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string? UserName { get; init; }
+        public string? UserName { get; set; }
 
         [Display(Name = "Password")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string? Password { get; init; }
+        public string? Password { get; set; }
 
         [Display(Name = "Root DN", Prompt = "DC=example,DC=com")]
         [StringLength(150, ErrorMessage = "Validate_StringLength")]
-        public string RootDn { get; init; } = default!;
+        public string RootDn { get; set; } = default!;
 
         [Display(Name = "User OU", Prompt = "OU=Users,DC=example,DC=com")]
         [StringLength(150, ErrorMessage = "Validate_StringLength")]
-        public string DefaultUserOu { get; init; } = default!;
+        public string DefaultUserOu { get; set; } = default!;
 
         [Display(Name = "UPN suffix", Prompt = "example.com")]
         [StringLength(20, ErrorMessage = "Validate_StringLength")]
-        public string UpnSuffix { get; init; } = default!;
+        public string UpnSuffix { get; set; } = default!;
     }
 }

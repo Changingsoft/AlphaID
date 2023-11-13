@@ -32,7 +32,7 @@ public class DeletePersonalDataModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        public string Password { get; init; }
+        public string Password { get; set; }
     }
 
     public bool RequirePassword { get; set; }

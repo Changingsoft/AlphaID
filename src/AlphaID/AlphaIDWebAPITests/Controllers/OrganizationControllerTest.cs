@@ -20,10 +20,10 @@ public class OrganizationControllerTest
     {
         var client = this.factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/api/Organization/1c86b543-0c92-4cd8-bcd5-b4e462847e59");
+        var response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5");
         response.EnsureSuccessStatusCode();
         var data = await response.Content.ReadFromJsonAsync<OrganizationModel>();
-        Assert.Equal("子虚乌有公司", data!.Name);
+        Assert.Equal("蜀汉集团", data!.Name);
     }
 
     [Fact]
@@ -31,11 +31,11 @@ public class OrganizationControllerTest
     {
         var client = this.factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/api/Organization/5288b813-e1f4-4fd3-a342-6f21a4c3fef7/Members");
+        var response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5/Members");
         response.EnsureSuccessStatusCode();
 
         var data = await response.Content.ReadFromJsonAsync<OrganizationMemberModel[]>();
-        Assert.Single(data!);
+        Assert.NotEmpty(data!);
     }
 
     [Fact]

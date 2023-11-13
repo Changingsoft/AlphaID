@@ -148,43 +148,43 @@ public class NewModel : PageModel
     public class InputModel
     {
         [Display(Name = "Client name", Description = "Friendly name for display.")]
-        public string ClientName { get; init; } = default!;
+        public string ClientName { get; set; } = default!;
 
         [Display(Name = "Require client secret", Description = "Specifies the client is a credential client.")]
-        public bool RequireClientSecret { get; init; } = true;
+        public bool RequireClientSecret { get; set; } = true;
 
         [Display(Name = "Client secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
-        public string? ClientSecret { get; init; }
+        public string? ClientSecret { get; set; }
 
         [Display(Name = "Redirect URI", Prompt = "https://example.com/signin-oidc")]
-        public string? RedirectUri { get; init; }
+        public string? RedirectUri { get; set; }
 
         [Display(Name = "Default grant type")]
-        public string DefaultGrantType { get; init; } = "authorization_code";
+        public string DefaultGrantType { get; set; } = "authorization_code";
 
         [Display(Name = "Description", Description = "Description for this client.")]
-        public string? Description { get; init; }
+        public string? Description { get; set; }
 
         [Display(Name = "Client URI", Prompt = "https://example.com")]
-        public string? ClientUri { get; init; }
+        public string? ClientUri { get; set; }
 
         [Display(Name = "Logo URI", Prompt = "https://example.com/logo.jpg")]
-        public string? LogoUri { get; init; }
+        public string? LogoUri { get; set; }
 
         [Display(Name = "Require consent")]
-        public bool RequireConsent { get; init; } = false;
+        public bool RequireConsent { get; set; } = false;
 
         [Display(Name = "Allow remember consent")]
-        public bool AllowRememberConsent { get; init; } = true;
+        public bool AllowRememberConsent { get; set; } = true;
 
         [Display(Name = "Always include user claims in Anchor Token")]
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
 
         [Display(Name = "Require PKCE")]
-        public bool RequirePkce { get; init; } = true;
+        public bool RequirePkce { get; set; } = true;
 
         [Display(Name = "Allow plain text PKCE")]
-        public bool AllowPlainTextPkce { get; init; }
+        public bool AllowPlainTextPkce { get; set; }
 
         [Display(Name = "Require request object")]
         public bool RequireRequestObject { get; set; }
@@ -207,16 +207,16 @@ public class NewModel : PageModel
         public bool BackChannelLogoutSessionRequired { get; set; }
 
         [Display(Name = "Allow offline Access")]
-        public bool AllowOfflineAccess { get; init; }
+        public bool AllowOfflineAccess { get; set; }
 
         [Display(Name = "Identity Token lifetime (seconds)")]
-        public int IdentityTokenLifetime { get; init; } = 300;
+        public int IdentityTokenLifetime { get; set; } = 300;
 
         [Display(Name = "Allowed identity token signing algorithms")]
         public string? AllowedIdentityTokenSigningAlgorithms { get; set; }
 
         [Display(Name = "Access Token lifetime (seconds)")]
-        public int AccessTokenLifetime { get; init; } = 3600;
+        public int AccessTokenLifetime { get; set; } = 3600;
 
         [Display(Name = "Authorization code lifetime (seconds)")]
         public int AuthorizationCodeLifetime { get; set; } = 300;

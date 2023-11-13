@@ -55,7 +55,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
         public class InputModel
         {
             [Display(Name = "Enabled")]
-            public bool Enabled { get; init; }
+            public bool Enabled { get; set; }
         }
     }
 }

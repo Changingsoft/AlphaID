@@ -130,14 +130,14 @@
     <value>忘记密码</value>
   </data>
   <data name="Invalid login scheme" xml:space="preserve">
-	  <value>Invalid login scheme</value>
+	  <value>无效的登录方案</value>
 	  <comment>Invalid login scheme</comment>
   </data>
   <data name="Login to your account" xml:space="preserve">
     <value>登录到您的账户</value>
   </data>
   <data name="No schemes set for this request" xml:space="preserve">
-	  <value>No schemes set for this request</value>
+	  <value>没有针对此请求的方案集</value>
 	  <comment>No schemes set for this request</comment>
   </data>
   <data name="or" xml:space="preserve">

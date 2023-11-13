@@ -12,7 +12,7 @@ public class OidcOperationResult
     /// <summary>
     /// 指示操作是否成功。
     /// </summary>
-    public bool Succeeded { get; protected init; }
+    public bool Succeeded { get; protected set; }
 
 
     /// <summary>

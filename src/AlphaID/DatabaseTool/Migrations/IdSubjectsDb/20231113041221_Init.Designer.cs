@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20231111162236_Init")]
+    [Migration("20231113041221_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -569,6 +569,49 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("IDSubjects.GenericOrganization", b =>
                 {
+                    b.OwnsOne("IDSubjects.FapiaoInfo", "Fapiao", b1 =>
+                        {
+                            b1.Property<string>("GenericOrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("Account")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Bank")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Contact")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("TaxPayerId")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.HasKey("GenericOrganizationId");
+
+                            b1.ToTable("Organization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GenericOrganizationId");
+                        });
+
                     b.OwnsOne("IDSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
                         {
                             b1.Property<string>("GenericOrganizationId")
@@ -618,6 +661,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                             b1.Navigation("Organization");
                         });
+
+                    b.Navigation("Fapiao");
 
                     b.Navigation("Identifiers");
 
@@ -865,7 +910,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("ChineseIdCardValidationId");
                         });
 
-                    b.OwnsOne("IDSubjects.RealName.ChineseIDCardImage", "ChineseIDCardImage", b1 =>
+                    b.OwnsOne("IDSubjects.RealName.ChineseIdCardImage", "ChineseIdCardImage", b1 =>
                         {
                             b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
@@ -898,7 +943,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("ChineseIdCardValidationId");
                         });
 
-                    b.OwnsOne("IDSubjects.RealName.ChineseIDCardInfo", "ChineseIDCard", b1 =>
+                    b.OwnsOne("IDSubjects.RealName.ChineseIdCardInfo", "ChineseIdCard", b1 =>
                         {
                             b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
@@ -974,9 +1019,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("ChineseIdCardValidationId");
                         });
 
-                    b.Navigation("ChineseIDCard");
+                    b.Navigation("ChineseIdCard");
 
-                    b.Navigation("ChineseIDCardImage");
+                    b.Navigation("ChineseIdCardImage");
 
                     b.Navigation("ChinesePersonName");
 

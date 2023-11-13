@@ -78,13 +78,13 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         public class InputModel
         {
             [Display(Name = "Secret")]
-            public string Secret { get; init; } = default!;
+            public string Secret { get; set; } = default!;
 
             [Display(Name = "Expires")]
-            public DateTime? Expires { get; init; }
+            public DateTime? Expires { get; set; }
 
             [Display(Name = "Description")]
-            public string? Description { get; internal init; }
+            public string? Description { get; internal set; }
         }
     }
 }

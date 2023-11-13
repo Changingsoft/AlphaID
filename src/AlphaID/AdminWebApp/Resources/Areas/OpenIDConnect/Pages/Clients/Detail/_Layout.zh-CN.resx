@@ -133,7 +133,7 @@
     <value>同意</value>
   </data>
   <data name="CORS" xml:space="preserve">
-    <value>CORS</value>
+	  <value>跨域资源共享（CORS）</value>
   </data>
   <data name="Grant types" xml:space="preserve">
     <value>授权类型</value>

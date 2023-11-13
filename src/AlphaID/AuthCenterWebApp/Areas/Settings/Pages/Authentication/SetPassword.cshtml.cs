@@ -33,12 +33,12 @@ public class SetPasswordModel : PageModel
         [StringLength(100, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
-        public string NewPassword { get; init; }
+        public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; init; }
+        public string ConfirmPassword { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync()

@@ -1,4 +1,5 @@
 using IDSubjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -60,16 +61,16 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         public class InputModel
         {
             [Display(Name = "Description")]
-            public string? Description { get; init; }
+            public string? Description { get; set; }
 
             [Display(Name = "Domicile")]
-            public string? Domicile { get; init; }
+            public string? Domicile { get; set; }
 
             [Display(Name = "Contact")]
-            public string? Contact { get; init; }
+            public string? Contact { get; set; }
 
             [Display(Name = "Representative")]
-            public string? Representative { get; init; }
+            public string? Representative { get; set; }
 
         }
     }

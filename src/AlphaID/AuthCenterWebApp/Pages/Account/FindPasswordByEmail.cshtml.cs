@@ -74,6 +74,6 @@ public class FindPasswordByEmailModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress]
         [Display(Name = "Email")]
-        public string Email { get; init; } = default!;
+        public string Email { get; set; } = default!;
     }
 }

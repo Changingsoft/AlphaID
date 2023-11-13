@@ -73,21 +73,21 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
         {
             [Display(Name = "Title")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Title { get; init; }
+            public string? Title { get; set; }
 
             [Display(Name = "Department")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Department { get; init; }
+            public string? Department { get; set; }
 
             [Display(Name = "Remark")]
             [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Remark { get; init; }
+            public string? Remark { get; set; }
 
             [Display(Name = "Is owner", Description = "The owner of organization can fully mange organization by themselves.")]
-            public bool IsOwner { get; init; }
+            public bool IsOwner { get; set; }
 
             [Display(Name = "Membership visibility")]
-            public MembershipVisibility Visibility { get; init; }
+            public MembershipVisibility Visibility { get; set; }
         }
     }
 }

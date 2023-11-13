@@ -88,23 +88,23 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
         {
             [Display(Name = "Domicile")]
             [StringLength(100)]
-            public string? Domicile { get; init; }
+            public string? Domicile { get; set; }
 
             [Display(Name = "Representative")]
             [StringLength(20)]
-            public string? Representative { get; init; }
+            public string? Representative { get; set; }
 
             [Display(Name = "Title")]
             [StringLength(50)]
-            public string? Title { get; init; }
+            public string? Title { get; set; }
 
             [Display(Name = "Department")]
             [StringLength(50)]
-            public string? Department { get; init; }
+            public string? Department { get; set; }
 
             [Display(Name = "Remark")]
             [StringLength(50)]
-            public string? Remark { get; init; }
+            public string? Remark { get; set; }
         }
     }
 }

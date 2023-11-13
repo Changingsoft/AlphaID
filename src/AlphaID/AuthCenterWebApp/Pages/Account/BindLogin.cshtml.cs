@@ -298,12 +298,12 @@ public class BindLoginModel : PageModel
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
-        public string Password { get; init; } = default!;
+        public string Password { get; set; } = default!;
 
         [Display(Name = "Remember my login")]
         public bool RememberLogin { get; set; }
 
-        public string ReturnUrl { get; init; } = default!;
+        public string ReturnUrl { get; set; } = default!;
 
         public string Button { get; set; } = default!;
     }
@@ -311,7 +311,7 @@ public class BindLoginModel : PageModel
     public class ViewModel
     {
         public bool AllowRememberLogin { get; set; } = true;
-        public bool EnableLocalLogin { get; init; } = true;
+        public bool EnableLocalLogin { get; set; } = true;
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
@@ -323,8 +323,8 @@ public class BindLoginModel : PageModel
 
         public class ExternalProvider
         {
-            public string? DisplayName { get; init; }
-            public string AuthenticationScheme { get; init; } = default!;
+            public string? DisplayName { get; set; }
+            public string AuthenticationScheme { get; set; } = default!;
         }
     }
 

@@ -907,7 +907,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("ChineseIdCardValidationId");
                         });
 
-                    b.OwnsOne("IDSubjects.RealName.ChineseIDCardImage", "ChineseIDCardImage", b1 =>
+                    b.OwnsOne("IDSubjects.RealName.ChineseIdCardImage", "ChineseIdCardImage", b1 =>
                         {
                             b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
@@ -940,7 +940,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("ChineseIdCardValidationId");
                         });
 
-                    b.OwnsOne("IDSubjects.RealName.ChineseIDCardInfo", "ChineseIDCard", b1 =>
+                    b.OwnsOne("IDSubjects.RealName.ChineseIdCardInfo", "ChineseIdCard", b1 =>
                         {
                             b1.Property<int>("ChineseIdCardValidationId")
                                 .HasColumnType("int");
@@ -1016,9 +1016,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("ChineseIdCardValidationId");
                         });
 
-                    b.Navigation("ChineseIDCard");
+                    b.Navigation("ChineseIdCard");
 
-                    b.Navigation("ChineseIDCardImage");
+                    b.Navigation("ChineseIdCardImage");
 
                     b.Navigation("ChinesePersonName");
 

@@ -86,28 +86,28 @@ public class IndexModel : PageModel
     {
         [Display(Name = "Client name")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string ClientName { get; init; } = default!;
+        public string ClientName { get; set; } = default!;
 
         [Display(Name = "Client Anchor")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string ClientId { get; init; } = default!;
+        public string ClientId { get; set; } = default!;
 
         [Display(Name = "Description")]
         [StringLength(1000, ErrorMessage = "Validate_StringLength")]
-        public string? Description { get; init; }
+        public string? Description { get; set; }
 
         [Display(Name = "Enabled")]
-        public bool Enabled { get; init; }
+        public bool Enabled { get; set; }
 
         [Display(Name = "Logo URI")]
         [DataType(DataType.Url)]
-        public string? LogoUri { get; init; }
+        public string? LogoUri { get; set; }
 
         [Display(Name = "Client URI")]
         [DataType(DataType.Url)]
-        public string? ClientUri { get; init; }
+        public string? ClientUri { get; set; }
 
         [Display(Name = "Require client secret")]
-        public bool RequireClientSecret { get; init; }
+        public bool RequireClientSecret { get; set; }
     }
 }

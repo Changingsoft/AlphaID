@@ -139,32 +139,32 @@ public class CreateModel : PageModel
     {
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; init; } = default!;
+        public string Surname { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Given name")]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Display name")]
-        public string DisplayName { get; init; } = default!;
+        public string DisplayName { get; set; } = default!;
 
         [Display(Name = "Phonetic surname")]
-        public string PhoneticSurname { get; init; } = default!;
+        public string PhoneticSurname { get; set; } = default!;
 
         [Display(Name = "Phonetic given name")]
-        public string PhoneticGivenName { get; init; } = default!;
+        public string PhoneticGivenName { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Phonetic display name")]
-        public string PhoneticDisplayName { get; init; } = default!;
+        public string PhoneticDisplayName { get; set; } = default!;
 
         [Display(Name = "Gender")]
-        public Gender? Gender { get; init; }
+        public Gender? Gender { get; set; }
 
         [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
-        public DateTime? DateOfBirth { get; init; }
+        public DateTime? DateOfBirth { get; set; }
     }
 }

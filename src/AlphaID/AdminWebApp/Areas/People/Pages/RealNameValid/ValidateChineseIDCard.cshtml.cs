@@ -87,18 +87,18 @@ public class ValidateChineseIdCardModel : PageModel
     public class InputModel
     {
         [Display(Name = "Accepted")]
-        public bool Accepted { get; init; }
+        public bool Accepted { get; set; }
 
         [Display(Name = "Surname")]
-        public string? Surname { get; init; }
+        public string? Surname { get; set; }
 
         [Display(Name = "Given name")]
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
         [Display(Name = "Phonetic surname")]
-        public string? PinyinSurname { get; init; }
+        public string? PinyinSurname { get; set; }
 
         [Display(Name = "Phonetic given name")]
-        public string PinyinGivenName { get; init; } = default!;
+        public string PinyinGivenName { get; set; } = default!;
     }
 }

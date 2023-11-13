@@ -11,10 +11,10 @@ public class InputModel
     public IEnumerable<string> ScopesConsented { get; set; } = default!;
 
     [Display(Name = "Remember my decision")]
-    public bool RememberConsent { get; init; } = true;
+    public bool RememberConsent { get; set; } = true;
 
-    public string ReturnUrl { get; init; } = default!;
+    public string ReturnUrl { get; set; } = default!;
 
     [Display(Name = "Description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 }

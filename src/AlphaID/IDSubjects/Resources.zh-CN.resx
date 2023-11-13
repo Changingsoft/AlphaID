@@ -156,4 +156,13 @@
   <data name="Specified directory entry not found" xml:space="preserve">
 	  <value>找不到指定的目录对象。</value>
   </data>
+  <data name="Invalid administrative code" xml:space="preserve">
+	  <value>无效的管理者代码</value>
+  </data>
+  <data name="Invalid region code." xml:space="preserve">
+	  <value>无效的行政区划代码。</value>
+  </data>
+  <data name="Invlid organization type." xml:space="preserve">
+	  <value>无效的组织类型。</value>
+  </data>
 </root>

@@ -98,18 +98,18 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         {
             [Display(Name = "Bio", Description = "Short description about yourself.")]
             [StringLength(200)]
-            public string? Bio { get; init; }
+            public string? Bio { get; set; }
 
             [Display(Name = "Website", Description = "Your personal website.")]
             [DataType(DataType.Url)]
-            public string? Website { get; init; }
+            public string? Website { get; set; }
 
             [Display(Name = "Gender")]
-            public Gender? Gender { get; init; }
+            public Gender? Gender { get; set; }
 
             [Display(Name = "Birth date")]
             [DataType(DataType.Date)]
-            public DateTime? DateOfBirth { get; init; }
+            public DateTime? DateOfBirth { get; set; }
         }
     }
 }

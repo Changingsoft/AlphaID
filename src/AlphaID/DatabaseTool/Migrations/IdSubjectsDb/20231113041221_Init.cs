@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
 
 #nullable disable
@@ -88,7 +89,13 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     TermEnd = table.Column<DateTime>(type: "date", nullable: true),
                     Location = table.Column<Geometry>(type: "geography", nullable: true),
                     Website = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Fapiao_Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Fapiao_TaxPayerId = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Fapiao_Address = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Fapiao_Contact = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Fapiao_Bank = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Fapiao_Account = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -203,19 +210,19 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    ChineseIDCard_Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ChineseIDCard_Gender = table.Column<string>(type: "varchar(7)", nullable: true),
-                    ChineseIDCard_Ethnicity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ChineseIDCard_DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    ChineseIDCard_Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ChineseIDCard_CardNumber = table.Column<string>(type: "varchar(18)", unicode: false, maxLength: 18, nullable: true),
-                    ChineseIDCard_Issuer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ChineseIDCard_IssueDate = table.Column<DateTime>(type: "date", nullable: true),
-                    ChineseIDCard_Expires = table.Column<DateTime>(type: "date", nullable: true),
-                    ChineseIDCardImage_PersonalFace = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    ChineseIDCardImage_PersonalFaceMimeType = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    ChineseIDCardImage_IssuerFace = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    ChineseIDCardImage_IssuerFaceMimeType = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    ChineseIdCard_Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ChineseIdCard_Gender = table.Column<string>(type: "varchar(7)", nullable: true),
+                    ChineseIdCard_Ethnicity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ChineseIdCard_DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    ChineseIdCard_Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ChineseIdCard_CardNumber = table.Column<string>(type: "varchar(18)", unicode: false, maxLength: 18, nullable: true),
+                    ChineseIdCard_Issuer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ChineseIdCard_IssueDate = table.Column<DateTime>(type: "date", nullable: true),
+                    ChineseIdCard_Expires = table.Column<DateTime>(type: "date", nullable: true),
+                    ChineseIdCardImage_PersonalFace = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ChineseIdCardImage_PersonalFaceMimeType = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    ChineseIdCardImage_IssuerFace = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ChineseIdCardImage_IssuerFaceMimeType = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     ChinesePersonName_Surname = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     ChinesePersonName_GivenName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     ChinesePersonName_PhoneticSurname = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),

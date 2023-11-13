@@ -63,31 +63,31 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         public class InputModel
         {
             [Display(Name = "Name")]
-            public string Name { get; init; } = default!;
+            public string Name { get; set; } = default!;
 
             [Display(Name = "Domicile")]
-            public string? Domicile { get; init; }
+            public string? Domicile { get; set; }
 
             [Display(Name = "Contact")]
-            public string? Contact { get; init; }
+            public string? Contact { get; set; }
 
             [Display(Name = "Representative")]
-            public string? Representative { get; init; }
+            public string? Representative { get; set; }
 
             [Display(Name = "Website")]
-            public string? Website { get; init; }
+            public string? Website { get; set; }
 
             [Display(Name = "Established at")]
             [DataType(DataType.Date)]
-            public DateTime? EstablishedAt { get; init; }
+            public DateTime? EstablishedAt { get; set; }
 
             [Display(Name = "Term begin")]
             [DataType(DataType.Date)]
-            public DateTime? TermBegin { get; init; }
+            public DateTime? TermBegin { get; set; }
 
             [Display(Name = "Term end")]
             [DataType(DataType.Date)]
-            public DateTime? TermEnd { get; init; }
+            public DateTime? TermEnd { get; set; }
         }
     }
 }

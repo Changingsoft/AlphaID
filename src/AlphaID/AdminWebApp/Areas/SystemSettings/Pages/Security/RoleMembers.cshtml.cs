@@ -57,11 +57,11 @@ public class RoleMembersModel : PageModel
     public class InputModel
     {
         [Required(ErrorMessage = "{0}是必需的。")]
-        public string PersonId { get; init; } = default!;
+        public string PersonId { get; set; } = default!;
 
         [Required(ErrorMessage = "{0}是必需的。")]
-        public string UserName { get; init; } = default!;
+        public string UserName { get; set; } = default!;
 
-        public string PhoneticSearchHint { get; init; } = default!;
+        public string PhoneticSearchHint { get; set; } = default!;
     }
 }

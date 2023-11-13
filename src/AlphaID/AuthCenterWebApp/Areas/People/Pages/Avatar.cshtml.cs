@@ -13,13 +13,13 @@ namespace AuthCenterWebApp.Areas.People.Pages
             this.personManager = personManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(string userAnchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var person = await this.personManager.FindByNameAsync(userAnchor) ?? await this.personManager.FindByIdAsync(userAnchor);
+            var person = await this.personManager.FindByNameAsync(anchor) ?? await this.personManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
-            if (person.Avatar != null)
-                return this.File(person.Avatar.Data, person.Avatar.MimeType);
+            if (person.ProfilePicture != null)
+                return this.File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
             return this.File("~/img/no-picture-avatar.png", "image/png");
         }
     }

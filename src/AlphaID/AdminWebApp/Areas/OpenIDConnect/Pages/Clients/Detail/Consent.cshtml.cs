@@ -56,10 +56,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         public class InputModel
         {
             [Display(Name = "Require consent")]
-            public bool RequireConsent { get; init; }
+            public bool RequireConsent { get; set; }
 
             [Display(Name = "Allow remember consent")]
-            public bool AllowRememberConsent { get; internal init; }
+            public bool AllowRememberConsent { get; set; }
         }
     }
 }

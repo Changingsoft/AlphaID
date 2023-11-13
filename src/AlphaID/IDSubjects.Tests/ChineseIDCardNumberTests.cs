@@ -1,5 +1,6 @@
 ﻿using IDSubjects.Subjects;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace IDSubjects.Tests;
@@ -14,7 +15,7 @@ public class ChineseIdCardNumberTests
         Assert.Equal(530302, number.RegionCode);
         Assert.Equal(new DateOnly(1985, 1, 15), number.DateOfBirth);
         Assert.Equal(031, number.Sequence);
-        Assert.Equal(Sex.Male, number.Sex);
+        Assert.Equal(Gender.Male, number.Gender);
         Assert.Equal("530302198501150314", number.NumberString);
         Assert.Equal("530302850115031", number.ToString(ChineseIdCardNumberVersion.V1));
 
@@ -38,8 +39,8 @@ public class ChineseIdCardNumberTests
     [Fact]
     public void TryParseChineseIdCardNumberTest()
     {
-        var correctnumber = "530302198501150314";
-        Assert.True(ChineseIdCardNumber.TryParse(correctnumber, out _));
+        var correctNumber = "530302198501150314";
+        Assert.True(ChineseIdCardNumber.TryParse(correctNumber, out _));
         Assert.False(ChineseIdCardNumber.TryParse("530302198501150315", out _));
         Assert.False(ChineseIdCardNumber.TryParse("012345198412100123", out _));
         Assert.False(ChineseIdCardNumber.TryParse("0123", out _));
@@ -61,6 +62,7 @@ public class ChineseIdCardNumberTests
     }
 
     [Fact]
+    [SuppressMessage("ReSharper", "IdentifierTypo")]
     public void GenerateSampleData()
     {
         var liubei = new ChineseIdCardNumber(ChineseIdCardNumberVersion.V2, 990001, new DateOnly(0161, 7, 16), 0001);

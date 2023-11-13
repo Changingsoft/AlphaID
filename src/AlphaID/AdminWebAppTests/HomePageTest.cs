@@ -23,7 +23,7 @@ public class HomePageTest : IClassFixture<AdminWebAppFactory>
     }
 
     [Fact]
-    public async Task AuthenticatedUserOK()
+    public async Task AuthenticatedUserOk()
     {
         var client = this.factory.CreateAuthenticatedClient();
 

@@ -7,7 +7,7 @@ public class MobilePhoneNumberTests
 {
     [Theory]
     [InlineData("86", "15912345678")]
-    public void InitalizeTest(string countryCode, string phoneNumber)
+    public void InitializeTest(string countryCode, string phoneNumber)
     {
         var number1 = new MobilePhoneNumber(countryCode, phoneNumber);
         Assert.Equal(countryCode, number1.CountryCode);

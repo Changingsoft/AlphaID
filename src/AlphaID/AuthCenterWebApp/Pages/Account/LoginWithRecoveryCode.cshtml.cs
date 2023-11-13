@@ -44,7 +44,7 @@ public class LoginWithRecoveryCodeModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Text)]
         [Display(Name = "Recovery code")]
-        public string RecoveryCode { get; init; }
+        public string RecoveryCode { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync(string returnUrl = null)

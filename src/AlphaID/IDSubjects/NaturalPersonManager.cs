@@ -1,5 +1,4 @@
-﻿using IDSubjects.ChineseName;
-using IDSubjects.DependencyInjection;
+﻿using IDSubjects.DependencyInjection;
 using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -87,28 +86,15 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     public NaturalPersonIdentityErrorDescriber NaturalPersonIdentityErrorDescriber => this.ErrorDescriber as NaturalPersonIdentityErrorDescriber ?? throw new InvalidCastException();
 
     /// <summary>
-    /// 更改自然人的名称信息。
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="chinesePersonName"></param>
-    /// <returns></returns>
-    public virtual async Task<IdentityResult> ChangeNameAsync(NaturalPerson person, ChinesePersonName chinesePersonName)
-    {
-        person.SetName(chinesePersonName);
-        await this.UpdateAsync(person);
-        return IdentityResult.Success;
-    }
-
-    /// <summary>
     /// 强制更改用户的姓名信息。
     /// </summary>
     /// <param name="person"></param>
-    /// <param name="chinesePersonName"></param>
+    /// <param name="personName"></param>
     /// <returns></returns>
-    public async Task ForceChangeNameAsync(NaturalPerson person, ChinesePersonName chinesePersonName)
+    public async Task<IdentityResult> AdminChangePersonNameAsync(NaturalPerson person, PersonNameInfo personName)
     {
-        person.SetName(chinesePersonName);
-        await this.UpdateAsync(person);
+        person.PersonName = personName;
+        return await this.UpdateUserAsync(person);
     }
 
     /// <summary>
@@ -119,7 +105,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
     {
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
+        var utcNow = DateTimeOffset.UtcNow;
+        user.WhenCreated = utcNow;
+        user.WhenChanged = utcNow;
+        user.PasswordLastSet = utcNow;
         return await base.CreateAsync(user, password);
     }
 
@@ -176,13 +165,13 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         if (!result.Succeeded)
             return result;
         user.PasswordLastSet = null;
-        result = await this.UpdateAsync(user);
-        if (result.Succeeded)
+        result = await this.UpdateUserAsync(user);
+        if (!result.Succeeded)
         {
+            this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，错误{error}，事务已回滚。", result);
             return result;
         }
-
-        this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，事务已回滚。", result);
+        trans.Complete();
         return result;
 
     }
@@ -201,7 +190,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         if (!result.Succeeded)
             return result;
         user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateAsync(user);
+        result = await this.UpdateUserAsync(user);
         if (!result.Succeeded)
         {
             this.Logger.LogError("用户密码已更新，但设置PasswordLastSet时出错，事务已回滚。");
@@ -225,7 +214,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         if (!result.Succeeded)
             return result;
         user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateAsync(user);
+        result = await this.UpdateUserAsync(user);
         if (!result.Succeeded)
         {
             this.Logger.LogError("清除PasswordLastSet时出错");
@@ -265,7 +254,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
             result = await this.UnlockPersonAsync(person);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("用户密码已设置，但设置解锁时出错，事务已回滚。", result);
+            this.Logger.LogError("用户密码已设置，但设置解锁时出错，消息是{error}，事务已回滚。", result);
             return result;
         }
         trans.Complete();
@@ -301,10 +290,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         if (!result.Succeeded)
             return result;
         user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateAsync(user);
+        result = await this.UpdateUserAsync(user);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("添加密码时设置PasswordLastSet属性出错。", result);
+            this.Logger.LogError("添加密码时设置PasswordLastSet属性出错。消息是{result}，事务已回滚。", result);
             return result;
         }
         trans.Complete();
@@ -326,15 +315,11 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         }
         catch (InvalidImageContentException ex)
         {
-            this.Logger?.LogWarning(ex, "传入的数据不是有效的图片内容。");
+            this.Logger.LogWarning(ex, "传入的数据不是有效的图片内容。");
             throw;
         }
 
-        person.Avatar = new BinaryDataInfo()
-        {
-            Data = bytes,
-            MimeType = contentType,
-        };
+        person.ProfilePicture = new BinaryDataInfo(contentType, bytes);
         var result = await this.UpdateUserAsync(person);
         return result;
     }
@@ -346,12 +331,12 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public async Task<IdentityResult> ClearProfilePictureAsync(NaturalPerson person)
     {
-        person.Avatar = null;
+        person.ProfilePicture = null;
         var result = await this.UpdateUserAsync(person);
         if (result.Succeeded)
-            this.Logger?.LogInformation("用户头像已清除。");
+            this.Logger.LogInformation("用户头像已清除。");
         else
-            this.Logger?.LogWarning("清除用户头像时不成功。", result);
+            this.Logger.LogWarning("清除用户头像时不成功。{result}", result);
         return result;
     }
 
@@ -366,7 +351,23 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
 
         //todo 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
         user.PhoneNumberConfirmed = true;
-        return await this.UpdateAsync(user);
+        return await this.UpdateUserAsync(user);
 
+    }
+
+    /// <summary>
+    /// 更改个人名称。
+    /// 
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="personNameInfo"></param>
+    /// <returns></returns>
+    public virtual async Task<IdentityResult> ChangePersonNameAsync(NaturalPerson person, PersonNameInfo personNameInfo)
+    {
+        if (!person.CanEditPersonName)
+            return IdentityResult.Failed(this.NaturalPersonIdentityErrorDescriber.CannotChangePersonName());
+
+        person.PersonName = personNameInfo;
+        return await this.UpdateUserAsync(person);
     }
 }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotChangePersonName" xml:space="preserve">
+    <value>无法更改个人名称。</value>
+  </data>
   <data name="DuplicatePhoneNumber" xml:space="preserve">
     <value>移动电话号码已被注册。</value>
   </data>
@@ -137,5 +140,30 @@
   </data>
   <data name="Other" xml:space="preserve">
     <value>其他</value>
+  </data>
+  <data name="StringIsNullOrWhiteSpace" xml:space="preserve">
+	  <value>“{0}”不能为 Null 或空白。</value>
+  </data>
+  <data name="DunsNumber" xml:space="preserve">
+    <value>邓白氏码</value>
+  </data>
+  <data name="LegalEntityIdentifier" xml:space="preserve">
+    <value>全球法人实体标识符（LEI）</value>
+  </data>
+  <data name="Specified directory entry not found" xml:space="preserve">
+	  <value>找不到指定的目录对象。</value>
+  </data>
+  <data name="Invalid administrative code" xml:space="preserve">
+	  <value>无效的管理者代码</value>
+  </data>
+  <data name="Invalid region code." xml:space="preserve">
+	  <value>无效的行政区划代码。</value>
+  </data>
+  <data name="Invlid organization type." xml:space="preserve">
+	  <value>无效的组织类型。</value>
+  </data>
+  <data name="UnifiedSocialCreditCode" xml:space="preserve">
+	  <value>统一社会信用代码
+</value>
   </data>
 </root>

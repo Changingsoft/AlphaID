@@ -12,7 +12,7 @@ public class OidcOperationResult
     /// <summary>
     /// 指示操作是否成功。
     /// </summary>
-    public bool Succeeded { get; protected init; }
+    public bool Succeeded { get; protected set; }
 
 
     /// <summary>
@@ -28,8 +28,7 @@ public class OidcOperationResult
     public static OidcOperationResult Failed(params string[] errors)
     {
         var result = new OidcOperationResult() { Succeeded = false };
-        if (errors != null)
-            result.errors.AddRange(errors);
+        result.errors.AddRange(errors);
         return result;
     }
 

@@ -6,13 +6,13 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership;
 
 public class IndexModel : PageModel
 {
-    private readonly NaturalPersonManager personMamager;
+    private readonly NaturalPersonManager personManager;
     private readonly OrganizationManager organizationManager;
     private readonly OrganizationMemberManager memberManager;
 
     public IndexModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager)
     {
-        this.personMamager = personManager;
+        this.personManager = personManager;
         this.organizationManager = organizationManager;
         this.memberManager = memberManager;
     }
@@ -31,7 +31,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor);
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -41,7 +41,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor);
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -76,7 +76,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await this.personMamager.FindByIdAsync(this.Anchor);
+        var person = await this.personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -97,24 +97,24 @@ public class IndexModel : PageModel
     {
         [Display(Name = "Organization ID")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string OrganizationId { get; init; } = default!;
+        public string OrganizationId { get; set; } = default!;
 
         [Display(Name = "Department")]
         [StringLength(50)]
-        public string? Department { get; init; }
+        public string? Department { get; set; }
 
         [Display(Name = "Title")]
         [StringLength(50)]
-        public string? Title { get; init; }
+        public string? Title { get; set; }
 
         [Display(Name = "Remark")]
         [StringLength(50)]
-        public string? Remark { get; init; }
+        public string? Remark { get; set; }
 
         [Display(Name = "Owner")]
-        public bool IsOwner { get; init; } = false;
+        public bool IsOwner { get; set; } = false;
 
         [Display(Name = "Membership visibility")]
-        public MembershipVisibility Visibility { get; init; } = MembershipVisibility.Private;
+        public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
     }
 }

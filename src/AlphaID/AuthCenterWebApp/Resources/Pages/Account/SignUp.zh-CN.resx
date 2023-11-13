@@ -120,11 +120,18 @@
   <data name="Agree the" xml:space="preserve">
     <value>了解并同意</value>
   </data>
+  <data name="Already have account?" xml:space="preserve">
+    <value>已有账户？</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>继续</value>
   </data>
   <data name="Create new account" xml:space="preserve">
     <value>创建新账户</value>
+  </data>
+  <data name="Create your {0}" xml:space="preserve">
+	  <value>创建您的{0}</value>
+	  <comment>Create your {0}</comment>
   </data>
   <data name="Female" xml:space="preserve">
     <value>女</value>
@@ -132,11 +139,13 @@
   <data name="Male" xml:space="preserve">
     <value>男</value>
   </data>
+  <data name="Send code" xml:space="preserve">
+    <value>发送代码</value>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>登录</value>
+  </data>
   <data name="Terms of service" xml:space="preserve">
     <value>服务条款</value>
-  </data>
-  <data name="Create your {0}" xml:space="preserve">
-	  <value>Create your {0}</value>
-	  <comment>Create your {0}</comment>
   </data>
 </root>

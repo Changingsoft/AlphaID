@@ -37,11 +37,6 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     /// <exception cref="InvalidOperationException"></exception>
     public async Task SendAsync(string mobile)
     {
-        if (string.IsNullOrWhiteSpace(mobile))
-        {
-            throw new ArgumentException($"“{nameof(mobile)}”不能为 Null 或空白", nameof(mobile));
-        }
-
         var form = new Dictionary<string, string>
         {
             {"recipient", mobile.Trim() }
@@ -66,16 +61,6 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     /// <exception cref="InvalidOperationException"></exception>
     public async Task<bool> VerifyAsync(string mobile, string code)
     {
-        if (string.IsNullOrWhiteSpace(mobile))
-        {
-            throw new ArgumentException($"“{nameof(mobile)}”不能为 Null 或空白", nameof(mobile));
-        }
-
-        if (string.IsNullOrWhiteSpace(code))
-        {
-            throw new ArgumentException($"“{nameof(code)}”不能为 Null 或空白", nameof(code));
-        }
-
         var form = new Dictionary<string, string>
         {
             {"recipient", mobile.Trim() },
@@ -92,26 +77,16 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
 
     private async Task AuthenticateAsync(HttpClient client)
     {
-        try
-        {
-            await this.EnsureAccessTokenAsync();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-
+        await this.EnsureAccessTokenAsync();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
     }
 
     private async Task EnsureAccessTokenAsync()
     {
         if (!AccessTokenExpires.HasValue || AccessTokenExpires.Value < DateTime.UtcNow.AddMinutes(3))
         {
-            using var authClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://federal.changingsoft.com")
-            };
+            using var authClient = new HttpClient();
+            authClient.BaseAddress = new Uri("https://federal.changingsoft.com");
 
             var form = new Dictionary<string, string>
             {
@@ -143,15 +118,9 @@ public class SimpleShortMessageService : IVerificationCodeService, IShortMessage
     /// <exception cref="InvalidOperationException"></exception>
     public async Task SendAsync(string mobile, string content)
     {
-        if (string.IsNullOrWhiteSpace(mobile))
-        {
-            throw new ArgumentException($"“{nameof(mobile)}”不能为 Null 或空白", nameof(mobile));
-        }
-
-
         await this.AuthenticateAsync(this.client);
 
-        var shortMessage = new FreeTextMessage(new string[] { mobile }, content);
+        var shortMessage = new FreeTextMessage(new[] { mobile }, content);
         var jsonContent = JsonContent.Create(shortMessage);
 
         var result = await this.client.PostAsync("/api/FreeTextMessage", jsonContent);

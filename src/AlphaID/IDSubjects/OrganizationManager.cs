@@ -43,10 +43,10 @@ public class OrganizationManager
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Task<IEnumerable<GenericOrganization>> SearchByNameAsync(string name)
+    public IEnumerable<GenericOrganization> SearchByName(string name)
     {
         var results = this.OrganizationStore.Organizations.Where(o => o.Name == name);
-        return Task.FromResult(results.AsEnumerable());
+        return results;
     }
 
     /// <summary>

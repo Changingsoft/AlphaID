@@ -22,9 +22,6 @@ Alpha ID 尚未正式发布，目前已实现的特性如下。在正式发布�
 
 ### 账户管理 Account Management
 
-* 可以管理下游 LDAP(Microsoft Active Directory) 基础结构
-* 可以接受上游 LDAP(Microsoft Active Directory) 基础结构的管理
-
 ### 验证 Authentication
 
 * 使用密码本地登录
@@ -48,3 +45,13 @@ Alpha ID 尚未正式发布，目前已实现的特性如下。在正式发布�
 ### 系统 System
 
 * 对等多实例结构（启用共享服务端会话时），意味着对NLB友好。
+
+-------
+
+## 将来考虑实现的功能特性
+
+（不分先后顺序）
+
+* 提供对下游LDAP目录的管理能力，如 Microsoft Active Directory 或类似 LDAP 产品。
+* 拟计划提供简单 RADIUS 协议
+* 拟实现每客户端 Pairwise sub 声明值，以提高个人隐私跟踪难度

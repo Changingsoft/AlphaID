@@ -5,6 +5,8 @@
 }
 <div class="page-body">
     <div class="container-xl">
+        @Html.DisplayFor(m => m.Result)
+
         <h1>@L["People"]</h1>
         <div class="d-flex mb-3">
             <div class="input-icon">
@@ -14,31 +16,46 @@
                 </span>
                 <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
             </div>
-            <a class="btn ms-auto">@L["Export"]</a>
-            <a class="btn ms-3">@L["Invite member"]</a>
+            @if (Model.Members.Any(m => m.IsOwner && m.PersonId == User.SubjectId()))
+            {
+                <a class="btn ms-auto">@L["Export"]</a>
+                <a class="btn ms-3" asp-page="Invitations" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
+            }
         </div>
         <div class="card">
             <div class="card-header">
-                <input type="checkbox" class="form-check-input" />
+                <input type="checkbox" class="form-check-input"/>
             </div>
-            <div class="list-group list-group-flush">
-                @foreach (var member in Model.Members)
-                {
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto"><input type="checkbox" class="form-check-input" value="@member.PersonId"></div>
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new{area="People", userAnchor = member.PersonId})"></span>
-                                </a>
-                            </div>
-                            <div class="col text-truncate">
-                                <a asp-page="/Index" asp-area="People" asp-route-userAnchor="@member.Person.UserName" class="text-reset d-block">@member.Person.Name</a>
-                                <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
+            <div class="list-group list-group-flush list-group-hoverable">
+                <form method="post" asp-page-handler="Leave">
+                    @foreach (var member in Model.Members)
+                    {
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-auto"><input type="checkbox" class="form-check-input" value="@member.PersonId"></div>
+                                <div class="col-auto">
+                                    <a href="#">
+                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
+                                    </a>
+                                </div>
+                                <div class="col text-truncate">
+                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@member.Person.PersonName.FullName</a>
+                                    <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
+                                </div>
+                                <div class="col-auto">
+                                    @if (member.IsOwner)
+                                    {
+                                        <span class="badge" title="@(L["You are the owner of this organization"])">@L["Owner"]</span>
+                                    }
+                                    <span class="badge">@member.Visibility</span>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" name="personId" value="@member.PersonId" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Are you sure you want leave this person from organization?"])');">@L["Leave"]</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </form>
             </div>
         </div>
     </div>

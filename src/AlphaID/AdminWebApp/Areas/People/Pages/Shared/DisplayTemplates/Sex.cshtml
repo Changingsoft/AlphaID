@@ -1,16 +1,16 @@
-﻿@model Sex?
+﻿@model Gender?
 
 @if (Model.HasValue)
 {
     switch (Model)
     {
-        case Sex.Female:
+        case Gender.Female:
             <span>@SL["Female"]</span>
             break;
-        case Sex.Male:
+        case Gender.Male:
             <span>@SL["Male"]</span>
             break;
-        case Sex.Other:
+        case Gender.Other:
             <span>@SL["Other"]</span>
             break;
     }

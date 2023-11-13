@@ -11,7 +11,7 @@ namespace AlphaIDWebAPI.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public partial class OrganizationController : ControllerBase
+public class OrganizationController : ControllerBase
 {
     private readonly IOrganizationStore organizationStore;
     private readonly OrganizationMemberManager memberManager;

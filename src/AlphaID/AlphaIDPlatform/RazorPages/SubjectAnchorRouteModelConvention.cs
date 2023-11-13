@@ -68,7 +68,7 @@ public class SubjectAnchorRouteModelConvention : FolderRouteModelConvention
         // Products/{anchor}/Manage/Index/{param}
         //         /\       /\
 
-        // passed if route templat is override pattern
+        // passed if route template is override pattern
 
         var pathPrefix = Path.Join(this.AreaName ?? "", this.FolderPath).Trim('/');
 
@@ -79,7 +79,7 @@ public class SubjectAnchorRouteModelConvention : FolderRouteModelConvention
             if (metadata == null || AttributeRouteModel.IsOverridePattern(metadata.RouteTemplate)) //没有元数据，或路由模板是覆盖模式时，跳过处理
                 continue;
             Debug.Assert(!selector.AttributeRouteModel!.Template!.StartsWith("~"));
-            var absTemplate = selector!.AttributeRouteModel!.Template!;
+            var absTemplate = selector.AttributeRouteModel!.Template!;
             Debug.Assert(absTemplate.StartsWith(pathPrefix, StringComparison.OrdinalIgnoreCase));
             var left = absTemplate[..pathPrefix.Length];
             var right = absTemplate[pathPrefix.Length..].Trim('/');

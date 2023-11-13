@@ -1,0 +1,7 @@
+﻿@model IEnumerable<IDSubjects.Invitations.JoinOrganizationInvitation>
+<ul>
+    @foreach (var invitation in Model)
+    {
+        <li>@invitation.Inviter invite you join @invitation.OrganizationId</li>
+    }
+</ul>

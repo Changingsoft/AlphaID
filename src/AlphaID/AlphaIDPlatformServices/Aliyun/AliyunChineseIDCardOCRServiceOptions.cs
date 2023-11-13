@@ -11,7 +11,7 @@ public class AliyunChineseIdCardOcrServiceOptions
     public string ServiceBaseUrl { get; set; } = "https://cardnumber.market.alicloudapi.com/rest/160601/ocr/ocr_idcard.json";
 
     /// <summary>
-    /// APPCODE。
+    /// APP CODE。
     /// </summary>
     public string AppCode { get; set; } = "ab77a94f915949bba85304cacac82f47";
 }

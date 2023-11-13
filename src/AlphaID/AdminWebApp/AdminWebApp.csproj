@@ -24,6 +24,18 @@
 		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\Organizations\Pages\Detail\Fapiao.zh-cn.resx">
+	    <DependentUpon>Fapiao.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Shared\_LayoutRoot.zh-cn.resx">
+	    <DependentUpon>_LayoutRoot.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Shared\_LayoutRoot.zh_CN.zh-cn.resx">
+	    <DependentUpon>_LayoutRoot.zh_CN.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties />

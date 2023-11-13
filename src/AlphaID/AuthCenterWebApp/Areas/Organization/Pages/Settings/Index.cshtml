@@ -45,7 +45,7 @@
                     <p>@L["Renaming your organization can have unintended side effects."]</p>
                 </div>
                 <div class="col-auto ms-auto">
-                    <a href="#" class="btn btn-danger">@L["Rename organization"]</a>
+                    <a asp-page="Rename" asp-route-anchor="@RouteData.Values["anchor"]" class="btn btn-danger">@L["Rename organization"]</a>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <p>@L["Once deleted, it will be gone forever. Please be certain."]</p>
                 </div>
                 <div class="col-auto ms-auto">
-                    <a href="#" class="btn btn-danger">@L["Delete this organization"]</a>
+                    <a asp-page="Delete" asp-route-anchor="@RouteData.Values["anchor"]" class="btn btn-danger">@L["Delete this organization"]</a>
                 </div>
             </div>
         </div>

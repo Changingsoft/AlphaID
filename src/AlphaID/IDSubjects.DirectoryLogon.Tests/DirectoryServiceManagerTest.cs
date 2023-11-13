@@ -11,7 +11,7 @@ public class DirectoryServiceManagerTest
         var directoryService = new DirectoryService()
         {
             ServerAddress = "localhost",
-            RootDN = "DC=qjyc,DC=cn",
+            RootDn = "DC=qjyc,DC=cn",
         };
         var result = await manager.CreateAsync(directoryService);
         Assert.True(result.Succeeded);

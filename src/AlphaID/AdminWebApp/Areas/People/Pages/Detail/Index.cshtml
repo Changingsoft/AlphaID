@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewBag.Title = $"{Model.Data.Name}";
+    ViewBag.Title = $"{Model.Data.PersonName.FullName}";
 }
 @section Heads{
     <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
@@ -33,24 +33,24 @@
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Surname"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.LastName @Model.Data.PhoneticSurname
+                            @Model.Data.PersonName.Surname @Model.Data.PhoneticSurname
                         </div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Given name"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.FirstName @Model.Data.PhoneticGivenName
+                            @Model.Data.PersonName.GivenName @Model.Data.PhoneticGivenName
                         </div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Display"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.Name @Model.Data.PhoneticSearchHint
+                            @Model.Data.PersonName.FullName
                         </div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Gender"]</div>
-                        <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Sex)</div>
+                        <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Gender)</div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Date of birth (Age)"]</div>
@@ -72,7 +72,7 @@
                 <input type="file" class="visually-hidden" id="input" name="image" accept="image/*">
                 <span class="btn btn-sm">@L["Change profile picture"]</span>
             </label>
-            @if (Model.Data.Avatar != null)
+            @if (Model.Data.ProfilePicture != null)
             {
                 <button type="submit" class="btn btn-sm" asp-page-handler="ClearProfilePicture" onclick="return confirm('@(L["Are you sure you want to remove the picture of this profile?"])');">@L["Remove"]</button>
             }
@@ -159,33 +159,6 @@
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
-    </div>
-</div>
-<div class="card mb-3">
-    <div class="card-header">
-        <h3 class="card-title">@L["Payments"]</h3>
-    </div>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <td>Account ID</td>
-                    <td>Account name</td>
-                    <td>Bank</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var bankAccount in Model.Data.BankAccounts)
-                {
-                    <tr>
-                        <td>@bankAccount.AccountNumber</td>
-                        <td>@bankAccount.AccountName</td>
-                        <td>@bankAccount.BankName</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
     </div>
 </div>
 <h3>@L["Misc"]</h3>

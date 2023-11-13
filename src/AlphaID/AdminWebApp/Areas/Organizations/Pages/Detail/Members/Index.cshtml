@@ -23,7 +23,7 @@
             {
                 <tr>
                     <td>
-                        @member.Person.Name
+                        @member.Person.PersonName.FullName
                         @Html.DisplayFor(m => member.IsOwner, "Ownership")
                     </td>
                     <td>@member.Title</td>
@@ -50,7 +50,7 @@
                 <form method="post" asp-page-handler="AddMember">
                     <div class="mb-3">
                         <label for="personSearch" class="form-label">@L["Search members"]</label>
-                        <input name="personSearch" class="form-control" placeholder="@L["Name, Display name, phonetic name, etc..."]" />
+                        <input id="personSearch" name="personSearch" class="form-control" placeholder="@L["Name, Display name, phonetic name, etc..."]" />
                     </div>
                     <div class="mb-3">
                         <label asp-for="@Model.PersonId" class="form-label"></label>

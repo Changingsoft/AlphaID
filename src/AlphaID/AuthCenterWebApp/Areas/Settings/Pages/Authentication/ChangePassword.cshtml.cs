@@ -36,18 +36,18 @@ public class ChangePasswordModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
-        public string CurrentPassword { get; init; } = default!;
+        public string CurrentPassword { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(100, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
-        public string NewPassword { get; init; } = default!;
+        public string NewPassword { get; set; } = default!;
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; init; } = default!;
+        public string ConfirmPassword { get; set; } = default!;
     }
 
     public async Task<IActionResult> OnGetAsync()

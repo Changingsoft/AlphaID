@@ -25,9 +25,9 @@ public class LogonAccountManagerOptions
     public string PpidPrivacyEntropy { get; set; } = @"LKAi9pXlxmc7hnviBywEoHnZslIK9yjrufFQBoYd9BtLoO02o4yDwR7l/agyqvMDAADu8SAlwvnnrw9BVLaqY99h39VcsZjAaDyrEJBCP2ZHRA0S5kK8FTmKjs+qwNos3UPP44fvjzCrZ6q5GWfcN4gT4/yJmjgRrUmW5vpSZYVfIaPuutLOC1RPSveF8DJZL1pYHo4Ud6lkNLPP4FjqnzvlOPzsPM0WAE85r+Wsr3KA2xx3s6qhzD2+OP/aF1xXvOERn2qRd1NOpeIWU9sElJ0wKz9Lw0+9GKbYk3qhaotFo0s3EDa9CdYwVZ+DeSebisVUDbsqscjI0ccHxocz+A==";
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    internal string GenerateExternalLoginId(string sAMDomainPart, DirectoryEntry userEntry)
+    internal string GenerateExternalLoginId(string sAmDomainPart, DirectoryEntry userEntry)
     {
-        var anchorValue = $"{sAMDomainPart}\\{userEntry.Properties[this.AnchorPropertyName].Value}";
+        var anchorValue = $"{sAmDomainPart}\\{userEntry.Properties[this.AnchorPropertyName].Value}";
         byte[] originBytes = Array.Empty<byte>();
         originBytes = originBytes
             .Concat(Encoding.Unicode.GetBytes(this.ClientId))

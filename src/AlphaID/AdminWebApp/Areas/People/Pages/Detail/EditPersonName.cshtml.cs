@@ -25,8 +25,8 @@ public class EditPersonNameModel : PageModel
         }
         this.Input = new()
         {
-            Surname = person.LastName,
-            GivenName = person.FirstName ?? default!,
+            Surname = person.PersonName.Surname,
+            GivenName = person.PersonName.GivenName ?? default!,
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName ?? default!,
         };
@@ -42,7 +42,8 @@ public class EditPersonNameModel : PageModel
             return this.Page();
 
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, this.Input.PinyinSurname, this.Input.PinyinGivenName);
-        await this.naturalPersonManager.ForceChangeNameAsync(person, chinesePersonName);
+        var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName);
+        await this.naturalPersonManager.AdminChangePersonNameAsync(person, personName);
         return this.RedirectToPage("Index");
     }
 
@@ -50,18 +51,18 @@ public class EditPersonNameModel : PageModel
     {
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string? Surname { get; init; }
+        public string? Surname { get; set; }
 
         [Display(Name = "Given name")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
         [Display(Name = "Phonetic surname")]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string? PinyinSurname { get; init; }
+        public string? PinyinSurname { get; set; }
 
         [Display(Name = "Phonetic given name")]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string PinyinGivenName { get; init; } = default!;
+        public string PinyinGivenName { get; set; } = default!;
     }
 }

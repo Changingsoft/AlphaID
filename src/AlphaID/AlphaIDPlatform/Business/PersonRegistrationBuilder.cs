@@ -24,7 +24,7 @@ public class PersonRegistrationBuilder
     /// <param name="displayName"></param>
     /// <param name="mobile"></param>
     /// <param name="sex"></param>
-    public PersonRegistrationBuilder(string displayName, MobilePhoneNumber mobile, Sex? sex = null)
+    public PersonRegistrationBuilder(string displayName, MobilePhoneNumber mobile, Gender? sex = null)
     {
         this.processor = new ChinesePersonNameFactory();
         this.registration = new PersonRegistration(displayName, mobile, sex);
@@ -35,7 +35,7 @@ public class PersonRegistrationBuilder
     /// </summary>
     /// <param name="chineseIdCard"></param>
     /// <returns></returns>
-    public PersonRegistrationBuilder ApplyChineseIdCard(ChineseIDCardInfo chineseIdCard)
+    public PersonRegistrationBuilder ApplyChineseIdCard(ChineseIdCardInfo chineseIdCard)
     {
         if (chineseIdCard is null)
         {
@@ -44,13 +44,13 @@ public class PersonRegistrationBuilder
 
         this.registration.ChineseIdCard = chineseIdCard;
 
-        var cpersonName = this.processor.Create(chineseIdCard.Name);
+        var chinesePersonName = this.processor.Create(chineseIdCard.Name);
 
         this.registration.DisplayName = chineseIdCard.Name;
-        this.registration.Surname = cpersonName.Surname;
-        this.registration.GivenName = cpersonName.GivenName;
-        this.registration.PhoneticDisplayName = $"{cpersonName.PhoneticSurname} {cpersonName.PhoneticGivenName}".Trim();
-        this.registration.Sex = chineseIdCard.Sex;
+        this.registration.Surname = chinesePersonName.Surname;
+        this.registration.GivenName = chinesePersonName.GivenName;
+        this.registration.PhoneticDisplayName = $"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim();
+        this.registration.Sex = chineseIdCard.Gender;
 
         return this;
     }
@@ -84,7 +84,7 @@ public class PersonRegistrationBuilder
     /// <returns></returns>
     public PersonRegistrationBuilder JoinOrganization(GenericOrganization organization, string department, string title)
     {
-        this.registration.OrganizationMembers.Add(new OrganizationMemberDescriptor(organization.Id.ToString().ToUpper(), department, title));
+        this.registration.OrganizationMembers.Add(new OrganizationMemberDescriptor(organization.Id.ToUpper(), department, title));
         return this;
     }
 
@@ -106,7 +106,7 @@ public class PersonRegistrationBuilder
             this.registration.LoginAccount = new LoginAccountDescriptor
             {
                 PrimaryAccountName = accountPinyin + idCardLast4, //姓名全拼+身份证后4位
-                SecandaryAccountName = accountPinyin + mobileLast4 //姓名全拼+移动电话号码后4位。
+                SecondaryAccountName = accountPinyin + mobileLast4 //姓名全拼+移动电话号码后4位。
             };
         }
 

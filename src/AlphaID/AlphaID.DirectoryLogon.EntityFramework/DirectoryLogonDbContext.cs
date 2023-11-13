@@ -1,12 +1,11 @@
 ﻿using IDSubjects.DirectoryLogon;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AlphaID.DirectoryLogon.EntityFramework;
 
 public class DirectoryLogonDbContext : DbContext
 {
-    public DirectoryLogonDbContext([NotNull] DbContextOptions<DirectoryLogonDbContext> options) : base(options)
+    public DirectoryLogonDbContext(DbContextOptions<DirectoryLogonDbContext> options) : base(options)
     {
     }
 

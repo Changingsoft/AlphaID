@@ -32,7 +32,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             {
                 Bio = person.Bio,
                 Website = person.WebSite,
-                Gender = person.Sex,
+                Gender = person.Gender,
                 DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue),
             };
             return this.Page();
@@ -48,7 +48,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
             person.Bio = this.Input.Bio;
             person.WebSite = this.Input.Website;
-            person.Sex = this.Input.Gender;
+            person.Gender = this.Input.Gender;
             person.DateOfBirth = this.Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value) : null;
 
             this.Result = await this.personManager.UpdateAsync(person);
@@ -98,18 +98,18 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         {
             [Display(Name = "Bio", Description = "Short description about yourself.")]
             [StringLength(200)]
-            public string? Bio { get; init; }
+            public string? Bio { get; set; }
 
             [Display(Name = "Website", Description = "Your personal website.")]
             [DataType(DataType.Url)]
-            public string? Website { get; init; }
+            public string? Website { get; set; }
 
             [Display(Name = "Gender")]
-            public Sex? Gender { get; init; }
+            public Gender? Gender { get; set; }
 
             [Display(Name = "Birth date")]
             [DataType(DataType.Date)]
-            public DateTime? DateOfBirth { get; init; }
+            public DateTime? DateOfBirth { get; set; }
         }
     }
 }

@@ -22,4 +22,22 @@
 		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources.zh-CN.resx">
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>

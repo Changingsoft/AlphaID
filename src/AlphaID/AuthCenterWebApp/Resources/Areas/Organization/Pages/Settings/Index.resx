@@ -97,22 +97,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Apply changes" xml:space="preserve">
+    <value>Apply changes</value>
+  </data>
+  <data name="Danger zone" xml:space="preserve">
+	  <value>Danger zone</value>
+	  <comment>Danger zone</comment>
+  </data>
+  <data name="Delete this organization" xml:space="preserve">
+    <value>Delete this organization</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Apply changes" xml:space="preserve">
-    <value>Apply changes</value>
+  <data name="Once deleted, it will be gone forever. Please be certain." xml:space="preserve">
+    <value>Once deleted, it will be gone forever. Please be certain.</value>
   </data>
   <data name="Rename organization" xml:space="preserve">
     <value>Rename organization</value>
   </data>
   <data name="Renaming your organization can have unintended side effects." xml:space="preserve">
     <value>Renaming your organization can have unintended side effects.</value>
-  </data>
-  <data name="Delete this organization" xml:space="preserve">
-    <value>Delete this organization</value>
-  </data>
-  <data name="Once deleted, it will be gone forever. Please be certain." xml:space="preserve">
-    <value>Once deleted, it will be gone forever. Please be certain.</value>
   </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using AlphaIDWebAPITests.Models;
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -9,15 +10,16 @@ namespace AlphaIDWebAPITests.Controllers;
 [Collection(nameof(TestServerCollection))]
 public class PersonControllerTests
 {
-    private readonly AlphaIDAPIFactory factory;
+    private readonly AlphaIdApiFactory factory;
 
-    public PersonControllerTests(AlphaIDAPIFactory factory)
+    public PersonControllerTests(AlphaIdApiFactory factory)
     {
         this.factory = factory;
     }
 
 
     [Fact(Skip = "暂时跳过")]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public async Task GetNonExistsPerson()
     {
         var client = this.factory.CreateAuthenticatedClient();
@@ -58,7 +60,7 @@ public class PersonControllerTests
         _ = await response.Content.ReadAsStringAsync();
         response.EnsureSuccessStatusCode();
         var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());
-        Assert.Single(data!.Persons!);
+        Assert.Single(data!.Persons);
     }
 
     [Fact]
@@ -69,6 +71,6 @@ public class PersonControllerTests
         var response = await client.GetAsync("/api/Person/Search/13812340001");
         response.EnsureSuccessStatusCode();
         var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());
-        Assert.Single(data!.Persons!);
+        Assert.Single(data!.Persons);
     }
 }

@@ -117,23 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Agree the" xml:space="preserve">
+    <value>Agree the</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>Bank</value>
+  </data>
+  <data name="Birth date" xml:space="preserve">
+    <value>Birth date</value>
+  </data>
+  <data name="Captcha code" xml:space="preserve">
+    <value>Captcha code</value>
+  </data>
   <data name="Captcha_Invalid" xml:space="preserve">
     <value>Captcha code is invalid.</value>
   </data>
-  <data name="Validate_EmailAddress" xml:space="preserve">
-    <value>It isn't look like an email address.</value>
-  </data>
-  <data name="Validate_PasswordConfirm" xml:space="preserve">
-    <value>Confirm password is not same as new password.</value>
-  </data>
-  <data name="Validate_Required" xml:space="preserve">
-    <value>The {0} field is required.</value>
-  </data>
-  <data name="Validate_StringLength" xml:space="preserve">
-    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
-  </data>
   <data name="Confirm password" xml:space="preserve">
     <value>Confirm password</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
   </data>
   <data name="Current password" xml:space="preserve">
     <value>Current password</value>
@@ -144,11 +153,17 @@
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="Domicile" xml:space="preserve">
     <value>Domicile</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="Email (Optional)" xml:space="preserve">
+    <value>Email (Optional)</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>Female</value>
@@ -204,6 +219,9 @@
   <data name="Surname" xml:space="preserve">
     <value>Surname</value>
   </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+    <value>Taxpayer ID</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -216,34 +234,22 @@
   <data name="User name" xml:space="preserve">
     <value>User name</value>
   </data>
+  <data name="Validate_EmailAddress" xml:space="preserve">
+    <value>It isn't look like an email address.</value>
+  </data>
+  <data name="Validate_PasswordConfirm" xml:space="preserve">
+    <value>Confirm password is not same as new password.</value>
+  </data>
+  <data name="Validate_Required" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="Validate_StringLength" xml:space="preserve">
+    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
+  </data>
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
   </data>
-  <data name="Agree the" xml:space="preserve">
-    <value>Agree the</value>
-  </data>
-  <data name="Birth date" xml:space="preserve">
-    <value>Birth date</value>
-  </data>
-  <data name="Captcha code" xml:space="preserve">
-    <value>Captcha code</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact</value>
-  </data>
-  <data name="Taxpayer ID" xml:space="preserve">
-    <value>Taxpayer ID</value>
-  </data>
-  <data name="Address" xml:space="preserve">
-    <value>Address</value>
-  </data>
-  <data name="Bank" xml:space="preserve">
-    <value>Bank</value>
-  </data>
-  <data name="Account" xml:space="preserve">
-    <value>Account</value>
+  <data name="Legal Entity Identifier" xml:space="preserve">
+	  <value>Legal Entity Identifier</value>
   </data>
 </root>

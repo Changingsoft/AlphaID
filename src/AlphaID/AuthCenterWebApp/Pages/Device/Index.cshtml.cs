@@ -16,7 +16,6 @@ public class Index : PageModel
 {
     private readonly IDeviceFlowInteractionService interaction;
     private readonly IEventService events;
-    private readonly ILogger<Index> logger;
 
     public Index(
         IDeviceFlowInteractionService interaction,
@@ -25,7 +24,6 @@ public class Index : PageModel
     {
         this.interaction = interaction;
         this.events = eventService;
-        this.logger = logger;
     }
 
     public ViewModel View { get; set; } = default!;

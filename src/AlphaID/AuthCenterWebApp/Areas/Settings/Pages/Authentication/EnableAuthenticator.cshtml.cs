@@ -51,7 +51,7 @@ public class EnableAuthenticatorModel : PageModel
         [StringLength(7, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Text)]
         [Display(Name = "Verification Code")]
-        public string Code { get; init; }
+        public string Code { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync()

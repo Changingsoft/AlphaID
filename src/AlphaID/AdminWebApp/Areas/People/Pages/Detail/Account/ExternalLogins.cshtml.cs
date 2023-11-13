@@ -25,12 +25,12 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveAsync(string anchor, string provider, string pkey)
+        public async Task<IActionResult> OnPostRemoveAsync(string anchor, string provider, string providerKey)
         {
             var person = await this.personManager.FindByIdAsync(anchor);
             if (person == null) { return this.NotFound(); }
 
-            var result = await this.personManager.RemoveLoginAsync(person, provider, pkey);
+            var result = await this.personManager.RemoveLoginAsync(person, provider, providerKey);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)

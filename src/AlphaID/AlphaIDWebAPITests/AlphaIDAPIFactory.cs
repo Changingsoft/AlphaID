@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace AlphaIDWebAPITests;
 
-public class AlphaIDAPIFactory : WebApplicationFactory<AlphaIDWebAPI.Program>
+public class AlphaIdApiFactory : WebApplicationFactory<AlphaIDWebAPI.Program>
 {
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

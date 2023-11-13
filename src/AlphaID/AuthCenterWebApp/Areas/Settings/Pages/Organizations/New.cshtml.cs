@@ -1,5 +1,4 @@
 using IDSubjects;
-using IDSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -27,10 +26,6 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
         public string Name { get; set; } = default!;
 
         [BindProperty]
-        [Display(Name = "Unified social credit code\r\n")]
-        public string? Usci { get; set; }
-
-        [BindProperty]
         public InputModel Input { get; set; } = default!;
 
         public IActionResult OnGet()
@@ -44,24 +39,12 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (this.organizationManager.Organizations.Any(p => p.Name == this.Name))
                 this.ModelState.AddModelError(nameof(this.Name), "Organization already exists.");
-            Uscc usci = new();
-            if (this.Usci != null)
-            {
-                if (Uscc.TryParse(this.Usci, out usci))
-                {
-                    if (this.organizationManager.Organizations.Any(p => p.Usci == usci.ToString()))
-                        this.ModelState.AddModelError(nameof(this.Usci), "USCI already exists");
-                }
-                else
-                    this.ModelState.AddModelError(nameof(this.Usci), "Invalid USCI");
-            }
 
             if (!this.ModelState.IsValid)
                 return this.Page();
 
             var organization = new GenericOrganization(this.Name)
             {
-                Usci = this.Usci != null ? usci.ToString() : null,
                 Domicile = this.Input.Domicile,
                 Representative = this.Input.Representative,
             };
@@ -96,7 +79,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 
         public async Task<IActionResult> OnPostCheckName(string name)
         {
-            if ((await this.organizationManager.SearchByNameAsync(name)).Any())
+            if (this.organizationManager.SearchByName(name).Any())
                 return new JsonResult("Organization name exists.");
             return new JsonResult(true);
         }
@@ -105,23 +88,23 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
         {
             [Display(Name = "Domicile")]
             [StringLength(100)]
-            public string? Domicile { get; init; }
+            public string? Domicile { get; set; }
 
             [Display(Name = "Representative")]
             [StringLength(20)]
-            public string? Representative { get; init; }
+            public string? Representative { get; set; }
 
             [Display(Name = "Title")]
             [StringLength(50)]
-            public string? Title { get; init; }
+            public string? Title { get; set; }
 
             [Display(Name = "Department")]
             [StringLength(50)]
-            public string? Department { get; init; }
+            public string? Department { get; set; }
 
             [Display(Name = "Remark")]
             [StringLength(50)]
-            public string? Remark { get; init; }
+            public string? Remark { get; set; }
         }
     }
 }

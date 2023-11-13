@@ -70,22 +70,22 @@ public class ResetPasswordModel : PageModel
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress(ErrorMessage = "{0}µÄ¸ñÊ½´íÎó")]
-        public string Email { get; init; } = default!;
+        public string Email { get; set; } = default!;
 
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-        public string Password { get; init; } = default!;
+        public string Password { get; set; } = default!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [Compare("Password", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; init; } = default!;
+        public string ConfirmPassword { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        public string Code { get; init; } = default!;
+        public string Code { get; set; } = default!;
 
     }
 }

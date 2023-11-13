@@ -8,18 +8,18 @@ namespace IDSubjects.RealName;
 /// 身份证信息
 /// </summary>
 [Owned]
-public class ChineseIDCardInfo
+public class ChineseIdCardInfo
 {
     /// <summary>
     /// 
     /// </summary>
-    protected ChineseIDCardInfo() { }
+    protected ChineseIdCardInfo() { }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="sex"></param>
+    /// <param name="gender"></param>
     /// <param name="ethnicity"></param>
     /// <param name="dateOfBirth"></param>
     /// <param name="address"></param>
@@ -27,8 +27,8 @@ public class ChineseIDCardInfo
     /// <param name="issuer"></param>
     /// <param name="issueDate"></param>
     /// <param name="expires"></param>
-    public ChineseIDCardInfo(string name,
-                         Sex sex,
+    public ChineseIdCardInfo(string name,
+                         Gender gender,
                          string ethnicity,
                          DateTime dateOfBirth,
                          string address,
@@ -41,7 +41,7 @@ public class ChineseIDCardInfo
         this.Ethnicity = ethnicity;
         this.Address = address;
         this.CardNumber = cardNumber;
-        this.Sex = sex;
+        this.Gender = gender;
         this.DateOfBirth = dateOfBirth;
         this.Issuer = issuer;
         this.IssueDate = issueDate;
@@ -58,7 +58,7 @@ public class ChineseIDCardInfo
     /// 性别
     /// </summary>
     [Column(TypeName = "varchar(7)")]
-    public Sex Sex { get; protected set; }
+    public Gender Gender { get; protected set; }
 
     /// <summary>
     /// 民族

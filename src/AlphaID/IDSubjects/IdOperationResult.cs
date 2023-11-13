@@ -19,12 +19,12 @@ public class IdOperationResult
 
 
     /// <summary>
-    /// Gets an IdOperationResult instance thant point to success.
+    /// 获取一个表示成功状态的IdOperationResult。
     /// </summary>
     public static readonly IdOperationResult Success = new() { Succeeded = true };
 
     /// <summary>
-    /// 
+    /// 使用若干错误消息创建一个失败状态的IdOperationResult。
     /// </summary>
     /// <param name="errors"></param>
     /// <returns></returns>

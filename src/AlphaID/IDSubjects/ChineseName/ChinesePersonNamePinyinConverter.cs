@@ -11,12 +11,12 @@ public class ChinesePersonNamePinyinConverter
     /// <summary>
     /// 初始化转换器。
     /// </summary>
-    /// <param name="nameCharactorSpacing">设置一个值，指示名称汉字间是否有空格。</param>
+    /// <param name="nameCharacterSpacing">设置一个值，指示名称汉字间是否有空格。</param>
     /// <param name="withTone">设置一个值，指示获取的汉字读音是否包含音调。</param>
     /// <param name="interceptors">设置转换拦截器集合。</param>
-    public ChinesePersonNamePinyinConverter(bool nameCharactorSpacing, bool withTone, ICollection<IChinesePersonNamePinyinInterceptor> interceptors)
+    public ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool withTone, ICollection<IChinesePersonNamePinyinInterceptor> interceptors)
     {
-        this.NameCharactorSpacing = nameCharactorSpacing;
+        this.NameCharacterSpacing = nameCharacterSpacing;
         this.WithTone = withTone;
         this.Interceptors = interceptors;
     }
@@ -33,7 +33,7 @@ public class ChinesePersonNamePinyinConverter
     /// <summary>
     /// 获取或设置一个值，用来表示汉字读音之间是否需要空格。
     /// </summary>
-    public bool NameCharactorSpacing { get; set; }
+    public bool NameCharacterSpacing { get; set; }
 
     /// <summary>
     /// 获取或设置一个值，指示拼音是否包括音调。
@@ -61,7 +61,7 @@ public class ChinesePersonNamePinyinConverter
         var pinyinList = new List<string>();
         for (int i = 0; i < cc.PinyinCount; i++)
         {
-            pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[0..^1] : cc.Pinyins[i].ToUpper());
+            pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[..^1] : cc.Pinyins[i].ToUpper());
         }
         return new PhoneticChineseChar(chineseChar, pinyinList.ToArray());
 
@@ -98,7 +98,7 @@ public class ChinesePersonNamePinyinConverter
         var surnameBuilder = new StringBuilder();
         foreach (var surnameChar in context.SurnameChars)
         {
-            if (this.NameCharactorSpacing)
+            if (this.NameCharacterSpacing)
                 surnameBuilder.Append($" {surnameChar.Selected}");
             else
                 surnameBuilder.Append(surnameChar.Selected);
@@ -107,7 +107,7 @@ public class ChinesePersonNamePinyinConverter
         var givenNameBuilder = new StringBuilder();
         foreach (var givenNameChar in context.GivenNameChars)
         {
-            if (this.NameCharactorSpacing)
+            if (this.NameCharacterSpacing)
                 givenNameBuilder.Append($" {givenNameChar.Selected}");
             else
                 givenNameBuilder.Append(givenNameChar.Selected);

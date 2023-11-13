@@ -29,18 +29,13 @@ public class ChinesePersonNameFactory
     /// <returns></returns>
     public ChinesePersonName Create(string fullName)
     {
-
-        if (string.IsNullOrWhiteSpace(fullName))
-        {
-            throw new ArgumentException($"“{nameof(fullName)}”不能为 null 或空白。", nameof(fullName));
-        }
         fullName = fullName.Trim(' ', '\r', '\n').Replace(" ", string.Empty);
 
         if (fullName.Length <= 1)
             throw new ArgumentException("名字太短");
 
         string surname = default!;
-        foreach (var prefix in CompoundSurnamePrefixs)
+        foreach (var prefix in CompoundSurnamePrefixes)
         {
             if (fullName.StartsWith(prefix))
             {
@@ -64,7 +59,7 @@ public class ChinesePersonNameFactory
 
     }
 
-    private static readonly List<string> CompoundSurnamePrefixs = new()
+    private static readonly List<string> CompoundSurnamePrefixes = new()
     {
         "欧阳",
         "太史",

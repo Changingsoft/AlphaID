@@ -97,8 +97,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="People" xml:space="preserve">
-    <value>People</value>
+  <data name="Are you sure you want leave this person from organization?" xml:space="preserve">
+	  <value>Are you sure you want leave this person from organization?</value>
+	  <comment>Are you sure you want leave this person from organization?</comment>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="Find members" xml:space="preserve">
     <value>Find members</value>
@@ -106,7 +110,19 @@
   <data name="Invite member" xml:space="preserve">
     <value>Invite member</value>
   </data>
-  <data name="Export" xml:space="preserve">
-    <value>Export</value>
+  <data name="Leave" xml:space="preserve">
+	  <value>Leave</value>
+	  <comment>Leave</comment>
+  </data>
+  <data name="Owner" xml:space="preserve">
+	  <value>Owner</value>
+	  <comment>Owner</comment>
+  </data>
+  <data name="People" xml:space="preserve">
+    <value>People</value>
+  </data>
+  <data name="You are the owner of this organization" xml:space="preserve">
+	  <value>You are the owner of this organization</value>
+	  <comment>You are the owner of this organization</comment>
   </data>
 </root>

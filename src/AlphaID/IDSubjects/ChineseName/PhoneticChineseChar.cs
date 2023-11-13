@@ -5,8 +5,8 @@
 /// </summary>
 public class PhoneticChineseChar
 {
-    private string? customPinyin = null;
-    private int selectedIndex = 0;
+    private string? customPinyin;
+    private int selectedIndex;
 
     /// <summary>
     /// 使用字符和拼音初始化读音汉字字符。
@@ -47,7 +47,7 @@ public class PhoneticChineseChar
     public void Select(int index)
     {
         if (index >= this.Pinyins.Length)
-            throw new ArgumentOutOfRangeException(nameof(index), "选择索引超出了界限");
+            throw new ArgumentOutOfRangeException(nameof(index));
         this.selectedIndex = index;
     }
 
@@ -59,7 +59,7 @@ public class PhoneticChineseChar
     {
         if (string.IsNullOrWhiteSpace(custom))
         {
-            throw new ArgumentException($"“{nameof(custom)}”不能为 null 或空白。", nameof(custom));
+            throw new ArgumentException(Resources.StringIsNullOrWhiteSpace, nameof(custom));
         }
 
         for (int i = 0; i < this.Pinyins.Length; i++)

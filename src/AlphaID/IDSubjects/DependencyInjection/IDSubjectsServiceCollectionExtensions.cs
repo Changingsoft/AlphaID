@@ -1,9 +1,12 @@
 ﻿using IDSubjects;
 using IDSubjects.DependencyInjection;
+using IDSubjects.Invitations;
+using IDSubjects.Payments;
 using IDSubjects.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -25,6 +28,11 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
         services.TryAddScoped<NaturalPersonIdentityErrorDescriber>();
+        services.TryAddScoped<PersonBankAccountManager>();
+        services.TryAddScoped<JoinOrganizationInvitationManager>();
+        services.TryAddScoped<OrganizationBankAccountManager>();
+        services.TryAddScoped<OrganizationIdentifierManager>();
+        services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
 
         //添加基础标识
         var builder = services.AddIdentityCore<NaturalPerson>()
@@ -32,9 +40,9 @@ public static class IdSubjectsServiceCollectionExtensions
             .AddUserValidator<PhoneNumberValidator>()
             ;
 
-        if(setupAction != null)
+        if (setupAction != null)
         {
-            services.Configure<IdSubjectsOptions>(setupAction);
+            services.Configure(setupAction);
         }
 
         return builder;

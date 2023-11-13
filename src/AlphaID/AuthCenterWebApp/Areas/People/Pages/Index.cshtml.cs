@@ -19,15 +19,15 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public NaturalPerson Person { get; set; } = default!;
 
-        public bool UserIsOwner { get; set; } = false;
+        public bool UserIsOwner { get; set; }
 
         public IEnumerable<OrganizationMember> Members { get; set; } = Enumerable.Empty<OrganizationMember>();
 
-        public async Task<IActionResult> OnGetAsync(string userAnchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
             //Support both userAnchor and user ID.
-            var person = await this.personManager.FindByNameAsync(userAnchor)
-                ?? await this.personManager.FindByIdAsync(userAnchor);
+            var person = await this.personManager.FindByNameAsync(anchor)
+                ?? await this.personManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
             this.Person = person;
@@ -36,11 +36,13 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
             this.Members = await this.organizationMemberManager.GetVisibleMembersOfAsync(person, visitor);
 
-            if (this.User.Identity!.IsAuthenticated)
+            if (!this.User.Identity!.IsAuthenticated)
             {
-                if (this.User.SubjectId() == this.Person.Id)
-                    this.UserIsOwner = true;
+                return this.Page();
             }
+
+            if (this.User.SubjectId() == this.Person.Id)
+                this.UserIsOwner = true;
 
             return this.Page();
         }

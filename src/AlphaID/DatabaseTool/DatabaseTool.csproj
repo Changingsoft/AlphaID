@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Migrations\ConfigurationDb\20231029124114_Init.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestingData\AdminWebAppData\202310300137.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -38,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\IDSubjectsDb\" />
+    <Folder Include="Migrations\IdSubjectsDb\" />
     <Folder Include="TestingData\AdminWebAppData\" />
   </ItemGroup>
 

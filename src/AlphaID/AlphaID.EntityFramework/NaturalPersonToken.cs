@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AlphaID.EntityFramework;
 
 [Table("NaturalPersonToken")]
+[PrimaryKey(nameof(UserId), nameof(LoginProvider), nameof(Name))]
 public class NaturalPersonToken
 {
     /// <summary>

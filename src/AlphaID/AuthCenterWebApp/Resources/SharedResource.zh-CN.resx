@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>地址</value>
+  </data>
   <data name="Agree the" xml:space="preserve">
     <value>同意</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>银行</value>
   </data>
   <data name="Birth date" xml:space="preserve">
     <value>生日</value>
@@ -132,6 +141,9 @@
   <data name="Confirm password" xml:space="preserve">
     <value>确认密码</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>联系方式</value>
+  </data>
   <data name="Current password" xml:space="preserve">
     <value>当前密码</value>
   </data>
@@ -141,11 +153,17 @@
   <data name="Department" xml:space="preserve">
     <value>部门</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
   <data name="Domicile" xml:space="preserve">
     <value>住所</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
+  </data>
+  <data name="Email (Optional)" xml:space="preserve">
+    <value>电子邮件（可选）</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>女</value>
@@ -201,6 +219,9 @@
   <data name="Surname" xml:space="preserve">
     <value>姓氏</value>
   </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+    <value>纳税人识别号</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>职务</value>
   </data>
@@ -228,22 +249,7 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>描述</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>联系方式</value>
-  </data>
-  <data name="Account" xml:space="preserve">
-    <value>账户</value>
-  </data>
-  <data name="Address" xml:space="preserve">
-    <value>地址</value>
-  </data>
-  <data name="Bank" xml:space="preserve">
-    <value>银行</value>
-  </data>
-  <data name="Taxpayer ID" xml:space="preserve">
-    <value>纳税人识别号</value>
+  <data name="Legal Entity Identifier" xml:space="preserve">
+	  <value>全球法人实体标识（LEI）</value>
   </data>
 </root>

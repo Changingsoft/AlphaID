@@ -3,7 +3,6 @@ using IDSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account
@@ -11,14 +10,12 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
     public class ChangeUserNameModel : PageModel
     {
         NaturalPersonManager manager;
-        IStringLocalizer<SharedResource> localizer;
         ILogger<ChangeUserNameModel>? logger;
         PersonSignInManager signInManager;
 
-        public ChangeUserNameModel(NaturalPersonManager manager, IStringLocalizer<SharedResource> localizer, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
+        public ChangeUserNameModel(NaturalPersonManager manager, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
         {
             this.manager = manager;
-            this.localizer = localizer;
             this.logger = logger;
             this.signInManager = signInManager;
         }
@@ -58,7 +55,6 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
             {
                 await this.signInManager.RefreshSignInAsync(person);
             }
-            //this.manager.userna
             return this.Page();
         }
 

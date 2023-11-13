@@ -15,9 +15,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages
 
         public IEnumerable<GenericOrganization> Organizations { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public IActionResult OnGet(string anchor)
         {
-            this.Organizations = await this.organizationManager.SearchByNameAsync(anchor);
+            this.Organizations = this.organizationManager.SearchByName(anchor).ToList();
             if (!this.Organizations.Any())
                 return this.NotFound();
 

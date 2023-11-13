@@ -13,5 +13,5 @@ public class LoginAccountDescriptor
     /// <summary>
     /// 备选账户名称。
     /// </summary>
-    public string SecandaryAccountName { get; set; } = default!;
+    public string SecondaryAccountName { get; set; } = default!;
 }

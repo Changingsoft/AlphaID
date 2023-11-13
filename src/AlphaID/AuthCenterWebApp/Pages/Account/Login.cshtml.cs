@@ -1,3 +1,4 @@
+using AlphaIDPlatform.Identity;
 using AuthCenterWebApp.Services;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
@@ -24,7 +25,6 @@ public class LoginModel : PageModel
     private readonly IEventService events;
     private readonly IAuthenticationSchemeProvider schemeProvider;
     private readonly IIdentityProviderStore identityProviderStore;
-    private readonly ILogger<LoginModel>? logger;
 
     public ViewModel View { get; set; } = default!;
 
@@ -46,7 +46,6 @@ public class LoginModel : PageModel
         this.schemeProvider = schemeProvider;
         this.identityProviderStore = identityProviderStore;
         this.events = events;
-        this.logger = logger;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
@@ -55,7 +54,7 @@ public class LoginModel : PageModel
         if (this.View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider
-            return this.RedirectToPage("/ExternalLogin/Challenge", new { scheme = this.View.ExternalLoginScheme, schemeDisplayName = this.View.EnternalLoginDisplayName, returnUrl });
+            return this.RedirectToPage("/ExternalLogin/Challenge", new { scheme = this.View.ExternalLoginScheme, schemeDisplayName = this.View.ExternalLoginDisplayName, returnUrl });
         }
 
         return this.Page();
@@ -187,13 +186,13 @@ public class LoginModel : PageModel
                 EnableLocalLogin = local,
             };
 
-            this.Input.Username = context?.LoginHint ?? "";
+            this.Input.Username = context.LoginHint ?? "";
 
             if (!local)
             {
                 this.View.ExternalProviders = new ViewModel.ExternalProvider[]
                 {
-                    new ViewModel.ExternalProvider()
+                    new()
                     {
                         AuthenticationScheme = context!.IdP,
                         DisplayName = scheme!.DisplayName!,
@@ -214,14 +213,14 @@ public class LoginModel : PageModel
                 AuthenticationScheme = x.Name
             }).ToList();
 
-        var dyanmicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
+        var dynamicSchemes = (await this.identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ViewModel.ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
                 DisplayName = x.DisplayName ?? "",
             });
-        providers.AddRange(dyanmicSchemes);
+        providers.AddRange(dynamicSchemes);
 
 
         var allowLocal = true;
@@ -258,33 +257,33 @@ public class LoginModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        public string Password { get; init; } = default!;
+        public string Password { get; set; } = default!;
 
         [Display(Name = "Remember me on this device")]
-        public bool RememberLogin { get; init; }
+        public bool RememberLogin { get; set; }
 
-        public string? ReturnUrl { get; init; }
+        public string? ReturnUrl { get; set; }
 
         public string Button { get; set; } = default!;
     }
 
     public class ViewModel
     {
-        public bool AllowRememberLogin { get; init; } = true;
-        public bool EnableLocalLogin { get; init; } = true;
+        public bool AllowRememberLogin { get; set; } = true;
+        public bool EnableLocalLogin { get; set; } = true;
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
         public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
-        public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders?.Count() == 1;
+        public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders.Count() == 1;
         public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string? EnternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
+        public string? ExternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {
-            public string DisplayName { get; init; } = default!;
-            public string AuthenticationScheme { get; init; } = default!;
+            public string DisplayName { get; set; } = default!;
+            public string AuthenticationScheme { get; set; } = default!;
         }
     }
 

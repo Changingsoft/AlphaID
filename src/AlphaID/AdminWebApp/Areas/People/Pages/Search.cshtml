@@ -27,9 +27,9 @@
                         <tr>
                             <td>
                                 <img src="@Url.Page("Detail/Index", "Photo", new{ Anchor = person.Id })" class="img-fluid img-thumbnail" width="36" />
-                                <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person.Name</a>
+                                <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person.PersonName.FullName</a>
                             </td>
-                            <td>@Html.DisplayFor(m => person.Sex)</td>
+                            <td>@Html.DisplayFor(m => person.Gender)</td>
                             <td>@person.UserName</td>
                             <td>@person.PhoneNumber</td>
                             <td>@Html.DisplayFor(m => person.DateOfBirth, "Age")</td>

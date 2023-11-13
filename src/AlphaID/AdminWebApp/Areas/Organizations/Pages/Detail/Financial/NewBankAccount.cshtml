@@ -1,0 +1,40 @@
+﻿@page
+@model AdminWebApp.Areas.Organizations.Pages.Detail.Financial.NewBankAccountModel
+@{
+    ViewBag.Title = L["Create new bank account"];
+}
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Create new bank account"]</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.AccountNumber" class="form-label"></label>
+        <input asp-for="Input.AccountNumber" class="form-control"/>
+        <span asp-description-for="Input.AccountNumber"></span>
+        <span asp-validation-for="Input.AccountNumber" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.AccountName" class="form-label"></label>
+        <input asp-for="Input.AccountName" class="form-control" />
+        <span asp-description-for="Input.AccountName"></span>
+        <span asp-validation-for="Input.AccountName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.BankName" class="form-label"></label>
+        <input asp-for="Input.BankName" class="form-control" />
+        <span asp-description-for="Input.BankName"></span>
+        <span asp-validation-for="Input.BankName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Usage" class="form-label"></label>
+        <input asp-for="Input.Usage" class="form-control" />
+        <span asp-description-for="Input.Usage"></span>
+        <span asp-validation-for="Input.Usage" class="text-danger"></span>
+    </div>
+    <div class="form-check">
+        <input asp-for="Input.SetDefault" class="form-check-input"/>
+        <label asp-for="Input.SetDefault" class="form-check-label"></label>
+        <span asp-description-for="Input.SetDefault"></span>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn">@L["Create"]</button>
+</form>

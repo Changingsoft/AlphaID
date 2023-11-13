@@ -1,15 +1,15 @@
 ﻿@page
 @model AuthCenterWebApp.Areas.People.Pages.IndexModel
 @{
-    ViewBag.Title = $"{Model.Person.Name} ({Model.Person.UserName})";
+    ViewBag.Title = $"{Model.Person.PersonName.FullName} ({Model.Person.UserName})";
 }
 
 <div class="page-body">
     <div class="container-xl">
         <div class="row">
             <div class="col-4">
-                <img class="img-fluid mx-auto d-block rounded" src="@(Url.Page("/Avatar", new { userAnchor = Model.Person.UserName, area = "People"}))" title="Avatar" />
-                <h2>@Model.Person.Name (@(Model.Person.UserName))</h2>
+                <img class="img-fluid mx-auto d-block rounded" src="@(Url.Page("/Avatar", new { anchor = Model.Person.UserName, area = "People"}))" title="Avatar" />
+                <h2>@Model.Person.PersonName.FullName (@(Model.Person.UserName))</h2>
                 <p>@Model.Person.Bio</p>
                 @* <ul class="text-secondary">
                     <li>
@@ -60,6 +60,10 @@
             </div>
             <div class="col-8">
                 <h2>Activities</h2>
+                @if (Model.UserIsOwner)
+                {
+                    <vc:received-invitations person="Model.Person"></vc:received-invitations>
+                }
             </div>
         </div>
     </div>

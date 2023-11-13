@@ -1,6 +1,5 @@
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,12 +11,10 @@ namespace AuthCenterWebApp.Pages.ExternalLogin;
 public class Challenge : PageModel
 {
     private readonly IIdentityServerInteractionService interactionService;
-    private readonly OpenIdConnectOptions openIdConnectOptions;
 
-    public Challenge(IIdentityServerInteractionService interactionService, IOptionsFactory<OpenIdConnectOptions> openIdConnectOptions)
+    public Challenge(IIdentityServerInteractionService interactionService)
     {
         this.interactionService = interactionService;
-        this.openIdConnectOptions = openIdConnectOptions.Create("netauth-8088.changingsoft.com");
     }
 
     public IActionResult OnGet(string scheme, string schemeDisplayName, string returnUrl)

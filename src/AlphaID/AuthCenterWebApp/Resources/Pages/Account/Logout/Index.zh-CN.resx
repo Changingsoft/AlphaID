@@ -121,11 +121,14 @@
     <value>确认要从“{0}”注销登录吗？</value>
   </data>
   <data name="No" xml:space="preserve">
-	  <value>No</value>
+	  <value>否</value>
 	  <comment>No</comment>
   </data>
+  <data name="Sign out" xml:space="preserve">
+    <value>注销</value>
+  </data>
   <data name="Yes" xml:space="preserve">
-	  <value>Yes</value>
+	  <value>是</value>
 	  <comment>Yes</comment>
   </data>
 </root>

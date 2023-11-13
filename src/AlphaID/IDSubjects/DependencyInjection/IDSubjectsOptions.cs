@@ -6,5 +6,8 @@ namespace IDSubjects.DependencyInjection;
 /// </summary>
 public class IdSubjectsOptions : IdentityOptions
 {
-    public new IDSubjectsPasswordOptions Password { get; set; } = new();
+    /// <summary>
+    /// 已替换，提供Password有关选项。
+    /// </summary>
+    public new IdSubjectsPasswordOptions Password { get; set; } = new();
 }

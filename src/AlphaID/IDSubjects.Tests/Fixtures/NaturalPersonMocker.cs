@@ -10,10 +10,7 @@ public class NaturalPersonMocker
     /// <returns></returns>
     public async Task<NaturalPerson> CreateMockPersonAsync(NaturalPersonManager manager, string userName, string displayName)
     {
-        var person = new NaturalPerson(userName)
-        {
-            Name = displayName
-        };
+        var person = new NaturalPerson(userName, new PersonNameInfo(displayName));
         _ = await manager.CreateAsync(person);
         return person;
     }

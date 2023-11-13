@@ -1,3 +1,4 @@
+using AlphaIDPlatform.Identity;
 using Duende.IdentityServer.Services;
 using IDSubjects;
 using Microsoft.AspNetCore.Authentication;
@@ -112,17 +113,17 @@ public class ChangePasswordModel : PageModel
         [Display(Name = "Current password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
-        public string OldPassword { get; init; } = default!;
+        public string OldPassword { get; set; } = default!;
 
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
-        public string NewPassword { get; init; } = default!;
+        public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string ConfirmPassword { get; init; } = default!;
+        public string ConfirmPassword { get; set; } = default!;
     }
 }

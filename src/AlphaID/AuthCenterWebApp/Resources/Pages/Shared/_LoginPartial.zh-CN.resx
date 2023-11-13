@@ -129,14 +129,23 @@
   <data name="Grants" xml:space="preserve">
     <value>授权</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+    <value>个人</value>
+  </data>
   <data name="Profile &amp;amp; Account" xml:space="preserve">
     <value>个人配置 &amp; 账户</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>登录</value>
+  </data>
   <data name="Sign out" xml:space="preserve">
     <value>注销</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>注册</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>状态</value>

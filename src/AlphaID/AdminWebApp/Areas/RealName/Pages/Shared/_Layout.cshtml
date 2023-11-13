@@ -1,11 +1,11 @@
 ﻿@{
-    Layout = "/Pages/Shared/_Lauout.cshtml";
+    Layout = "Shared/_Layout";
 }
 
-@section head{
-    @await RenderSectionAsync("head", false)
+@section Heads{
+    @await RenderSectionAsync("Heads", false)
 }
-@section scripts{
-    @await RenderSectionAsync("scripts", false)
+@section Scripts{
+    @await RenderSectionAsync("Scripts", false)
 }
 @RenderBody()

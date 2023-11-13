@@ -28,7 +28,7 @@ public class ValidateChineseIdCardModel : PageModel
         var data = await this.realNameValidator.FindByIdAsync(id);
         if (data == null)
             return this.NotFound();
-        if (data.ChineseIDCard == null)
+        if (data.ChineseIdCard == null)
             return this.NotFound();
 
         this.Data = data;
@@ -44,7 +44,7 @@ public class ValidateChineseIdCardModel : PageModel
         }
         else
         {
-            var chineseName = this.chinesePersonNameFactory.Create(this.Data.ChineseIDCard.Name);
+            var chineseName = this.chinesePersonNameFactory.Create(this.Data.ChineseIdCard.Name);
             this.Input = new()
             {
                 Surname = chineseName.Surname,
@@ -61,7 +61,7 @@ public class ValidateChineseIdCardModel : PageModel
         var data = await this.realNameValidator.FindByIdAsync(id);
         if (data == null)
             return this.NotFound();
-        if (data.ChineseIDCard == null)
+        if (data.ChineseIdCard == null)
             return this.NotFound();
 
         this.Data = data;
@@ -87,18 +87,18 @@ public class ValidateChineseIdCardModel : PageModel
     public class InputModel
     {
         [Display(Name = "Accepted")]
-        public bool Accepted { get; init; }
+        public bool Accepted { get; set; }
 
         [Display(Name = "Surname")]
-        public string? Surname { get; init; }
+        public string? Surname { get; set; }
 
         [Display(Name = "Given name")]
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
         [Display(Name = "Phonetic surname")]
-        public string? PinyinSurname { get; init; }
+        public string? PinyinSurname { get; set; }
 
         [Display(Name = "Phonetic given name")]
-        public string PinyinGivenName { get; init; } = default!;
+        public string PinyinGivenName { get; set; } = default!;
     }
 }

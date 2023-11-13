@@ -5,12 +5,12 @@ namespace AuthCenterWebApp.Pages.Consent;
 
 public class ViewModel
 {
-    public string ClientName { get; init; } = default!;
-    public string? ClientUrl { get; init; }
-    public string? ClientLogoUrl { get; init; }
-    public bool AllowRememberConsent { get; init; }
+    public string ClientName { get; set; } = default!;
+    public string? ClientUrl { get; set; }
+    public string? ClientLogoUrl { get; set; }
+    public bool AllowRememberConsent { get; set; }
 
-    public IEnumerable<ScopeViewModel> IdentityScopes { get; init; } = default!;
+    public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = default!;
     public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = default!;
 }
 
@@ -23,11 +23,11 @@ public class ScopeViewModel
     public bool Emphasize { get; set; }
     public bool Required { get; set; }
     public bool Checked { get; set; }
-    public IEnumerable<ResourceViewModel> Resources { get; set; } = default!;
+    public IEnumerable<ResourceViewModel> Resources { get; set; } = Enumerable.Empty<ResourceViewModel>();
 }
 
 public class ResourceViewModel
 {
     public string Name { get; set; } = default!;
-    public string DisplayName { get; init; } = default!;
+    public string DisplayName { get; set; } = default!;
 }

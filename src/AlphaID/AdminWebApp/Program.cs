@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Serilog;
 using System.Globalization;
 using System.Security.Claims;
+// ReSharper disable StringLiteralTypo
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,7 +73,7 @@ builder.Services.AddRazorPages(options =>
     .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>
     {
-        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+        options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(SharedResource));
     })
     .AddSessionStateTempDataProvider();
 
@@ -259,5 +260,5 @@ app.Run();
 
 namespace AdminWebApp
 {
-    public partial class Program { }
+    public class Program { }
 }

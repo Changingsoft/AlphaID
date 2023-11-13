@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewBag.Title = L[" Memberships"];
+    ViewBag.Title = L["Memberships"];
 }
 @section Heads{
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
@@ -54,7 +54,7 @@
                 <form method="post" asp-page-handler="JoinOrganization">
                     <div class="mb-3">
                         <label for="organizationSearch" class="form-label">Search organization</label>
-                        <input name="organizationSearch" type="text" class="form-control" />
+                        <input id="organizationSearch" name="organizationSearch" type="text" class="form-control" />
                     </div>
                     <div class="mb-3">
                         <label asp-for="Input.OrganizationId" class="form-label d-none"></label>
@@ -91,7 +91,7 @@
     </div>
 </div>
 
-@section scripts
+@section Scripts
     {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>

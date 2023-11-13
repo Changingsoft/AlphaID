@@ -17,11 +17,11 @@ public struct OrganizationCode
     {
         if (string.IsNullOrWhiteSpace(code))
             throw new ArgumentException("Code is empty or null.");
-        var trimcode = code.Trim().ToUpper();
-        if (trimcode.Length != 8)
+        var trimmedCode = code.Trim().ToUpper();
+        if (trimmedCode.Length != 8)
             throw new ArgumentException("Code length error.");
-        this.code = trimcode;
-        this.CheckCode = Check(trimcode);
+        this.code = trimmedCode;
+        this.CheckCode = Check(trimmedCode);
     }
 
     /// <summary>
@@ -37,11 +37,11 @@ public struct OrganizationCode
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Code is empty or null.");
-            var trimcode = value.Trim().ToUpper();
-            if (trimcode.Length != 8)
+            var trimmedCode = value.Trim().ToUpper();
+            if (trimmedCode.Length != 8)
                 throw new ArgumentException("Code length error.");
-            this.code = trimcode;
-            this.CheckCode = Check(trimcode);
+            this.code = trimmedCode;
+            this.CheckCode = Check(trimmedCode);
         }
     }
 
@@ -115,15 +115,15 @@ public struct OrganizationCode
         int sum = 0;
         for (int i = 0; i < 8; i++)
         {
-            var charindex = Charset.IndexOf(code[i]);
-            if (charindex < 0)
+            var charIndex = Charset.IndexOf(code[i]);
+            if (charIndex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charindex * Weight[i];
+            sum += charIndex * Weight[i];
         }
-        return CheckcodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
+        return CheckCodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
     }
 
-    private const string CheckcodeCharset = "0123456789X";
+    private const string CheckCodeCharset = "0123456789X";
     private const string Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static readonly int[] Weight = new int[] { 3, 7, 9, 10, 5, 8, 4, 2 };
     private const string Pattern = @"^([0-9A-Z]{8})-?([0-9X])$";
@@ -137,15 +137,15 @@ public struct OrganizationCode
     {
         if (string.IsNullOrWhiteSpace(s))
             throw new ArgumentException("Input is null or empty");
-        var trimedStr = s.Trim().ToUpper();
+        var trimmedStr = s.Trim().ToUpper();
 
-        var match = Regex.Match(trimedStr, Pattern);
+        var match = Regex.Match(trimmedStr, Pattern);
         if (!match.Success)
             throw new ArgumentException("Invalid input value format.");
 
-        OrganizationCode newcode = new(match.Groups[1].Value);
+        OrganizationCode newCode = new(match.Groups[1].Value);
         char inputCheckCode = char.Parse(match.Groups[2].Value);
-        return inputCheckCode != newcode.CheckCode ? throw new ArgumentException("Invalid Checksum.") : newcode;
+        return inputCheckCode != newCode.CheckCode ? throw new ArgumentException("Invalid Checksum.") : newCode;
     }
 
     /// <summary>
@@ -159,20 +159,20 @@ public struct OrganizationCode
         result = new OrganizationCode();
         if (string.IsNullOrWhiteSpace(s))
             return false;
-        var trimedStr = s.Trim().ToUpper();
+        var trimmedStr = s.Trim().ToUpper();
 
-        var match = Regex.Match(trimedStr, Pattern);
+        var match = Regex.Match(trimmedStr, Pattern);
         if (!match.Success)
             return false;
 
-        OrganizationCode newcode = new(match.Groups[1].Value);
+        OrganizationCode newCode = new(match.Groups[1].Value);
 
         if (!char.TryParse(match.Groups[2].Value, out char inputCheckCode))
             return false;
-        if (inputCheckCode != newcode.CheckCode)
+        if (inputCheckCode != newCode.CheckCode)
             return false;
 
-        result = newcode;
+        result = newCode;
         return true;
     }
 

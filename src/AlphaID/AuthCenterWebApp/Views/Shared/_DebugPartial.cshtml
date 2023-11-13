@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Authentication
-@inject IHostEnvironment Env
+﻿@inject IHostEnvironment Env
 @inject IOptions<SystemUrlInfo> SystemUrl
 @if(Env.IsDevelopment())
 {
@@ -9,14 +8,28 @@
             <h1>Debug Panel</h1>
         </div>
         <div class="card-body">
-            <h2>Useful links</h2>
-            <ul>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">Liubei's profile page</a></li>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu@sanguo.net")}"))">Guanyu's profile page</a></li>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("汉王事业集团")}"))">汉王事业集团 profile page</a></li>
-                <li><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏实业集团")}"))">北魏实业集团 profile page</a></li>
+            <h2>Useful Links</h2>
+            <ul class="list-inline">
+                @* ReSharper disable StringLiteralTypo *@
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei")}"))">刘备</a></li>
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu")}"))">关羽</a></li>
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhangfei")}"))">张飞</a></li>
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhugeliang")}"))">诸葛亮</a></li>
+                @* ReSharper restore StringLiteralTypo *@
             </ul>
 
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("蜀汉集团")}"))">蜀汉集团</a></li>
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏集团")}"))">北魏集团</a></li>
+                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("东吴集团")}"))">东吴集团</a></li>
+            </ul>
+            <h2>Route Data</h2>
+            <ul class="list-inline">
+                @foreach (var routeValue in ViewContext.RouteData.Values)
+                {
+                    <li class="list-inline-item">["@(routeValue.Key)"] = "@(routeValue.Value)"</li>
+                }
+            </ul>
             <h2>Access user</h2>
             <table class="table table-sm">
                 <thead>
@@ -33,30 +46,6 @@
                             <td>@claim.Value</td>
                         </tr>
                     }
-                </tbody>
-            </table>
-
-            <h2>Tokens</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>access_token</td>
-                        <td style="word-break:break-all;"><code>@(await Context.GetTokenAsync("access_token"))</code></td>
-                    </tr>
-                    <tr>
-                        <td>id_token</td>
-                        <td style="word-break:break-all;"><code>@(await Context.GetTokenAsync("id_token"))</code></td>
-                    </tr>
-                    <tr>
-                        <td>refresh_token</td>
-                        <td style="word-break:break-all;"><code>@(await Context.GetTokenAsync("refresh_token"))</code></td>
-                    </tr>
                 </tbody>
             </table>
         </div>

@@ -48,10 +48,10 @@ public class LoginWith2FaModel : PageModel
         [StringLength(7, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Text)]
         [Display(Name = "Two-factor code")]
-        public string TwoFactorCode { get; init; }
+        public string TwoFactorCode { get; set; }
 
         [Display(Name = "Remember this device")]
-        public bool RememberMachine { get; init; }
+        public bool RememberMachine { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)

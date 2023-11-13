@@ -16,23 +16,14 @@ public class IndexModel : PageModel
 
     public GenericOrganization Organization { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var orgs = await this.organizationManager.SearchByNameAsync(anchor);
-        if (orgs.Count() > 1)
-        {
-            return this.RedirectToPage("Who");
-        }
-        if (orgs.Any())
-        {
-            this.Organization = orgs.First();
-            return this.Page();
-        }
-        var org = await this.organizationManager.FindByIdAsync(anchor);
-        if (org == null)
+        if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            return this.RedirectToPage("/Who", new { anchor });
+        if (organization == null)
             return this.NotFound();
 
-        this.Organization = org;
+        this.Organization = organization;
         return this.Page();
     }
 }

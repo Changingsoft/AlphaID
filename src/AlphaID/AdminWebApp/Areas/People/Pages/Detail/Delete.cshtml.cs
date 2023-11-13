@@ -38,7 +38,7 @@ public class DeleteModel : PageModel
         this.Person = person;
 
 
-        if (this.Input.DisplayName != this.Person.Name)
+        if (this.Input.DisplayName != this.Person.PersonName.FullName)
         {
             this.ModelState.AddModelError(nameof(this.Input.DisplayName), "Ãû³Æ²»Ò»ÖÂ");
         }
@@ -72,6 +72,6 @@ public class DeleteModel : PageModel
 
         [Display(Name = "Display name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string DisplayName { get; init; } = default!;
+        public string DisplayName { get; set; } = default!;
     }
 }

@@ -28,9 +28,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             }
             this.Input = new InputMode()
             {
-                Surname = person.LastName,
-                MiddleName = person.MiddleName,
-                GivenName = person.FirstName,
+                Surname = person.PersonName.Surname,
+                MiddleName = person.PersonName.MiddleName,
+                GivenName = person.PersonName.GivenName,
                 PhoneticSurname = person.PhoneticSurname,
                 PhoneticGivenName = person.PhoneticGivenName,
                 NickName = person.NickName,
@@ -45,9 +45,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             {
                 return this.NotFound();
             }
-            person.LastName = this.Input.Surname;
-            person.MiddleName = this.Input.MiddleName;
-            person.FirstName = this.Input.GivenName;
+
+            await this.personManager.ChangePersonNameAsync(person, new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName));
             person.PhoneticSurname = this.Input.PhoneticSurname;
             person.PhoneticGivenName = this.Input.PhoneticGivenName;
             person.NickName = this.Input.NickName;
@@ -60,27 +59,27 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         {
             [Display(Name = "Surname")]
             [StringLength(10)]
-            public string? Surname { get; init; }
+            public string? Surname { get; set; }
 
             [Display(Name = "MiddleName")]
             [StringLength(10)]
-            public string? MiddleName { get; init; }
+            public string? MiddleName { get; set; }
 
             [Display(Name = "GivenName")]
             [StringLength(10)]
-            public string? GivenName { get; init; }
+            public string? GivenName { get; set; }
 
             [Display(Name = "PhoneticSurname")]
             [StringLength(10)]
-            public string? PhoneticSurname { get; init; }
+            public string? PhoneticSurname { get; set; }
 
             [Display(Name = "PhoneticGivenName")]
             [StringLength(10)]
-            public string? PhoneticGivenName { get; init; }
+            public string? PhoneticGivenName { get; set; }
 
             [Display(Name = "NickName")]
             [StringLength(10)]
-            public string? NickName { get; init; }
+            public string? NickName { get; set; }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace IDSubjects.Subjects;
 public readonly partial struct ChineseIdCardNumber
 {
     private readonly DateOnly dateOfBirth;
-    private readonly char checkcode;
+    private readonly char checkCode;
 
     /// <summary>
     /// 使用指定的版本、区划代码、生日和序列号创建一个身份证号码。
@@ -32,7 +32,7 @@ public readonly partial struct ChineseIdCardNumber
         this.RegionCode = regionCode;
         this.dateOfBirth = dateOfBirth;
         this.Sequence = sequence;
-        this.checkcode = CalculateCheckCode(string.Format(QulifiedFormat, this.RegionCode, this.dateOfBirth, this.Sequence));
+        this.checkCode = CalculateCheckCode(string.Format(QualifiedFormat, this.RegionCode, this.dateOfBirth, this.Sequence));
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public readonly partial struct ChineseIdCardNumber
     /// <summary>
     /// 获取或设置出生日期。
     /// </summary>
-    public readonly DateOnly DateOfBirth
+    public DateOnly DateOfBirth
     {
         get { return this.dateOfBirth; }
     }
@@ -61,18 +61,18 @@ public readonly partial struct ChineseIdCardNumber
     /// <summary>
     /// 获取一个值，指示性别。
     /// </summary>
-    public readonly Sex Sex
+    public Gender Gender
     {
         get
         {
-            return this.Sequence % 2 == 1 ? Sex.Male : Sex.Female;
+            return this.Sequence % 2 == 1 ? Gender.Male : Gender.Female;
         }
     }
 
     /// <summary>
     /// 获取一个值，表示身份证号码。
     /// </summary>
-    public readonly string NumberString
+    public string NumberString
     {
         get
         {
@@ -84,7 +84,7 @@ public readonly partial struct ChineseIdCardNumber
     /// 已重写，输入身份证号码。
     /// </summary>
     /// <returns></returns>
-    public override readonly string ToString()
+    public override string ToString()
     {
 
         return this.ToString(this.Version);
@@ -94,7 +94,7 @@ public readonly partial struct ChineseIdCardNumber
     /// 已重写。获取用于哈希表的对象哈希。
     /// </summary>
     /// <returns></returns>
-    public override readonly int GetHashCode()
+    public override int GetHashCode()
     {
         return this.ToString().GetHashCode();
     }
@@ -104,12 +104,12 @@ public readonly partial struct ChineseIdCardNumber
     /// </summary>
     /// <param name="version"></param>
     /// <returns></returns>
-    public readonly string ToString(int version)
+    public string ToString(int version)
     {
         return version == ChineseIdCardNumberVersion.V1
             ? this.RegionCode.ToString("000000") + this.dateOfBirth.ToString("yyMMdd") + this.Sequence.ToString("000")
             : version == ChineseIdCardNumberVersion.V2
-            ? this.RegionCode.ToString("000000") + this.dateOfBirth.ToString("yyyyMMdd") + this.Sequence.ToString("000") + this.checkcode.ToString()
+            ? this.RegionCode.ToString("000000") + this.dateOfBirth.ToString("yyyyMMdd") + this.Sequence.ToString("000") + this.checkCode.ToString()
             : throw new NotSupportedException("Version Not supported.");
     }
 
@@ -140,7 +140,7 @@ public readonly partial struct ChineseIdCardNumber
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override readonly bool Equals(object? obj)
+    public override bool Equals(object? obj)
     {
         return obj != null && obj is ChineseIdCardNumber number && this == number;
     }
@@ -175,7 +175,7 @@ public readonly partial struct ChineseIdCardNumber
             ? new DateOnly(int.Parse("19" + match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))
             : new DateOnly(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value));
         ChineseIdCardNumber number = new(ver, int.Parse(match.Groups[1].Value), dateOfBirth, int.Parse(match.Groups[5].Value));
-        return ver == ChineseIdCardNumberVersion.V2 && number.checkcode != dataStr[17] ? throw new ArgumentException("校验错误") : number;
+        return ver == ChineseIdCardNumberVersion.V2 && number.checkCode != dataStr[17] ? throw new ArgumentException("校验错误") : number;
     }
 
     /// <summary>
@@ -225,7 +225,7 @@ public readonly partial struct ChineseIdCardNumber
         if (dateOfBirth > DateOnly.FromDateTime(DateTime.Now)) return false;
 
         number = new ChineseIdCardNumber(ver, int.Parse(match.Groups[1].Value), dateOfBirth, int.Parse(match.Groups[5].Value));
-        return ver != ChineseIdCardNumberVersion.V2 || number.checkcode == dataStr[17];
+        return ver != ChineseIdCardNumberVersion.V2 || number.checkCode == dataStr[17];
     }
 
     /// <summary>
@@ -242,7 +242,7 @@ public readonly partial struct ChineseIdCardNumber
     private const string CheckCodeSet = "10X98765432";
     private const string Pattern18 = @"^([1-9]\d{5})(\d{4})(\d{2})(\d{2})(\d{3})(\d|X)$";
     private const string Pattern15 = @"^([1-9]\d{5})(\d{2})(\d{2})(\d{2})(\d{3})$";
-    private const string QulifiedFormat = "{0:000000}{1:yyyyMMdd}{2:000}";
+    private const string QualifiedFormat = "{0:000000}{1:yyyyMMdd}{2:000}";
 
     private static char CalculateCheckCode(string data)
     {

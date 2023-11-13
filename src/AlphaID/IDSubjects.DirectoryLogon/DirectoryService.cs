@@ -33,13 +33,13 @@ public class DirectoryService
     /// Root DN.
     /// </summary>
     [MaxLength(150)]
-    public string RootDN { get; set; } = default!;
+    public string RootDn { get; set; } = default!;
 
     /// <summary>
     /// Default User Account OU Path
     /// </summary>
     [MaxLength(150)]
-    public string DefaultUserAccountOU { get; set; } = default!;
+    public string DefaultUserAccountOu { get; set; } = default!;
 
     /// <summary>
     /// UserName.
@@ -63,7 +63,7 @@ public class DirectoryService
     /// SAMAccountName prefix domain name.
     /// </summary>
     [MaxLength(10), Unicode(false)]
-    public string SAMDomainPart { get; set; } = default!;
+    public string SamDomainPart { get; set; } = default!;
 
     /// <summary>
     /// 外部登录提供器名称。
@@ -85,7 +85,7 @@ public class DirectoryService
     public DirectoryEntry GetRootEntry()
     {
         var host = new Uri($"LDAP://{this.ServerAddress}");
-        var fqdn = new Uri(host, this.RootDN);
+        var fqdn = new Uri(host, this.RootDn);
         var authenticationFlag = AuthenticationTypes.Signing | AuthenticationTypes.Sealing | AuthenticationTypes.Secure;
         DirectoryEntry entry = new($"LDAP://{fqdn.Authority}{fqdn.PathAndQuery}", null, null, authenticationFlag);
         if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
@@ -100,7 +100,7 @@ public class DirectoryService
     internal DirectoryEntry GetUserOuEntry()
     {
         var host = new Uri($"LDAP://{this.ServerAddress}");
-        var fqdn = new Uri(host, this.DefaultUserAccountOU);
+        var fqdn = new Uri(host, this.DefaultUserAccountOu);
         var authenticationFlag = AuthenticationTypes.Signing | AuthenticationTypes.Sealing | AuthenticationTypes.Secure;
         //var authenticationFlag = AuthenticationTypes.Secure;
         DirectoryEntry entry = new($"LDAP://{fqdn.Authority}{fqdn.PathAndQuery}", null, null, authenticationFlag);

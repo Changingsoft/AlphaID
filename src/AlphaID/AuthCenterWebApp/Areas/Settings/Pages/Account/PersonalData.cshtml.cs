@@ -7,14 +7,10 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 public class PersonalDataModel : PageModel
 {
     private readonly NaturalPersonManager userManager;
-    private readonly ILogger<PersonalDataModel> logger;
 
-    public PersonalDataModel(
-        NaturalPersonManager userManager,
-        ILogger<PersonalDataModel> logger)
+    public PersonalDataModel(NaturalPersonManager userManager)
     {
         this.userManager = userManager;
-        this.logger = logger;
     }
 
     public async Task<IActionResult> OnGet()

@@ -32,4 +32,16 @@ public class NaturalPersonIdentityErrorDescriber : IdentityErrorDescriber
             Description = Resources.DuplicatePhoneNumber,
         };
     }
+
+    /// <summary>
+    /// CannotChangePersonName
+    /// </summary>
+    /// <returns></returns>
+    public IdentityError CannotChangePersonName()
+    {
+        return new IdentityError()
+        {
+            Code = nameof(this.CannotChangePersonName), Description = Resources.CannotChangePersonName,
+        };
+    }
 }

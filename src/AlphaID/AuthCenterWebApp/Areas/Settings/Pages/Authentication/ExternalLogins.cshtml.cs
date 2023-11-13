@@ -106,7 +106,7 @@ public class ExternalLoginsModel : PageModel
         }
 
         // Clear the existing external cookie to ensure a clean login process
-        await this.HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme); //修正以使用IdeneityServer的方案。
+        await this.HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme); //修正以使用IdentityServer的方案。
 
         this.StatusMessage = "已添加外部登录。";
         return this.RedirectToPage();
@@ -121,9 +121,9 @@ public class ExternalLoginsModel : PageModel
     [Obsolete()]
     private async Task<ExternalLoginInfo> GetExternalLoginInfoAsync(string expectedXsrf = null)
     {
-        var auth = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme); //修正以使用IdeneityServer的方案。
-        var items = auth?.Properties?.Items;
-        if (auth?.Principal == null || items == null || !items.ContainsKey(LoginProviderKey))
+        var auth = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme); //修正以使用Identity Server的方案。
+        var items = auth.Properties?.Items;
+        if (auth.Principal == null || items == null || !items.ContainsKey(LoginProviderKey))
         {
             return null;
         }

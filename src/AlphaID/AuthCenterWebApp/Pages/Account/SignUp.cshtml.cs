@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-#nullable enable
+
 namespace AuthCenterWebApp.Pages.Account;
 
 //[SecurityHeaders]
@@ -45,7 +45,12 @@ public class SignUpModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
-    public string? ExternalLoginMessage { get; set; } = default!;
+    [BindProperty]
+    [Display(Name = "User name")]
+    [StringLength(20, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+    public string? UserName { get; set; }
+
+    public string? ExternalLoginMessage { get; set; }
 
     public async Task<IActionResult> OnGet(string? external)
     {
@@ -57,7 +62,7 @@ public class SignUpModel : PageModel
 
         var externalPrincipal = externalAuthResult.Principal;
 
-
+        this.UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
         this.Input = new InputModel
         {
             Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Upn),
@@ -70,7 +75,7 @@ public class SignUpModel : PageModel
         {
             this.Input.Mobile = phoneNumber.PhoneNumber;
         }
-        if (Enum.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ?? externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Sex result))
+        if (Enum.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ?? externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result))
         {
             this.Input.Sex = result;
         }
@@ -113,15 +118,16 @@ public class SignUpModel : PageModel
         var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, pinyinSurname, pinyinGivenName);
         var userName = this.Input.Email ?? phoneNumber.PhoneNumber;
-        var personBuilder = new PersonBuilder(userName);
+        var personBuilder = new PersonBuilder(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
         if (this.Input.Email != null)
             personBuilder.SetEmail(this.Input.Email);
 
-        var person = personBuilder.Person;
+        var person = personBuilder.Build();
+
         person.DateOfBirth = this.Input.DateOfBirth;
-        person.Sex = this.Input.Sex;
+        person.Gender = this.Input.Sex;
 
         var result = await this.naturalPersonManager.CreateAsync(person, this.Input.NewPassword);
         if (result.Succeeded)
@@ -158,7 +164,7 @@ public class SignUpModel : PageModel
 
     public class InputModel
     {
-        [Display(Name = "PhoneNumber phone number", Prompt = "1xxxxxxxxxx")]
+        [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = default!;
@@ -166,20 +172,20 @@ public class SignUpModel : PageModel
         [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string VerificationCode { get; init; } = default!;
+        public string VerificationCode { get; set; } = default!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; init; } = default!;
+        public string Surname { get; set; } = default!;
 
         [Display(Name = "Given name", Prompt = "Given name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
         [Display(Name = "Gender")]
-        public Sex? Sex { get; set; }
+        public Gender? Sex { get; set; }
 
         [Display(Name = "Birth date")]
         [DataType(DataType.Date)]
@@ -189,25 +195,25 @@ public class SignUpModel : PageModel
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
-        public string NewPassword { get; init; } = default!;
+        public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
-        public string ConfirmPassword { get; init; } = default!;
+        public string ConfirmPassword { get; set; } = default!;
 
         [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]
         [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
-        public string? Email { get; init; }
+        public string? Email { get; set; }
 
         [Display(Name = "Captcha code")]
         [Required(ErrorMessage = "Validate_Required")]
         [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
-        public string CaptchaCode { get; init; } = default!;
+        public string CaptchaCode { get; set; } = default!;
 
         [Display(Name = "Agree the")]
-        public bool Agree { get; init; }
+        public bool Agree { get; set; }
     }
 }

@@ -12,7 +12,8 @@ internal class SecurityRequirementsOperationFilter : IOperationFilter
     {
         var authAttributes = context.MethodInfo.DeclaringType!.GetCustomAttributes(true)
                             .Union(context.MethodInfo.GetCustomAttributes(true))
-                            .OfType<AuthorizeAttribute>();
+                            .OfType<AuthorizeAttribute>()
+                            .ToList();
 
         if (authAttributes.Any())
         {

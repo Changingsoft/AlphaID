@@ -8,12 +8,10 @@ namespace AlphaID.EntityFramework;
 public class NaturalPersonStore : NaturalPersonStoreBase
 {
     private readonly IdSubjectsDbContext context;
-    private readonly IdentityErrorDescriber? describer;
 
     public NaturalPersonStore(IdSubjectsDbContext context, IdentityErrorDescriber? describer = null)
     {
         this.context = context;
-        this.describer = describer;
     }
 
     public override IQueryable<NaturalPerson> Users => this.context.People;

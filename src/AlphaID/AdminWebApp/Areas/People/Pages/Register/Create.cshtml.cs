@@ -1,6 +1,7 @@
 using IDSubjects;
 using IDSubjects.ChineseName;
 using IDSubjects.Subjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,15 +19,27 @@ public class CreateModel : PageModel
     }
 
     [BindProperty]
+    [Display(Name = "User name")]
+    [PageRemote(PageHandler = "CheckUserName", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
+    [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+    public string UserName { get; set; } = default!;
+
+    [BindProperty]
     [Display(Name = "Phone number")]
     [PageRemote(PageHandler = "CheckMobile", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-    public string Mobile { get; set; } = default!;
+    public string? Mobile { get; set; } = default!;
 
+    [BindProperty]
+    [Display(Name = "Email")]
+    [PageRemote(PageHandler = "CheckEmail", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
+    [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+    public string? Email { get; set; } = default!;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
+    public IdentityResult? Result { get; set; }
 
     public void OnGet()
     {
@@ -34,7 +47,7 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+        if (this.Mobile != null && !MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
         {
             this.ModelState.AddModelError("", "移动电话号码无效。");
         }
@@ -42,28 +55,37 @@ public class CreateModel : PageModel
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        var userName = this.Input.Email ?? phoneNumber.PhoneNumber;
 
-
-        var builder = new PersonBuilder(userName);
-        builder.SetMobile(phoneNumber);
-
-        var (phoneticSurname, phoneticGivenName) = this.pinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
+        (string phoneticSurname, string phoneticGivenName) = this.pinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, phoneticSurname, phoneticGivenName);
 
-        builder.UseChinesePersonName(chinesePersonName);
+        var personName = new PersonNameInfo(chinesePersonName.FullName, this.Input.Surname, this.Input.GivenName);
 
-        var person = builder.Person;
+        var builder = new PersonBuilder();
+        builder
+            .SetUserName(this.UserName)
+            .SetPersonName(personName);
+        if (this.Email != null)
+            builder.SetEmail(this.Email);
+        if (this.Mobile != null)
+            builder.SetMobile(phoneNumber);
 
-        var result = await this.manager.CreateAsync(person);
+        var person = builder.Build();
 
-        if (result.Succeeded)
-            return this.RedirectToPage("../Detail/Index", new { id = person.Id });
+        person.DateOfBirth = this.Input.DateOfBirth.HasValue
+            ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value)
+            : null;
+        person.Gender = this.Input.Gender;
+        person.PhoneticSurname = chinesePersonName.PhoneticSurname;
+        person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
+        person.PersonName.SearchHint = $"{chinesePersonName.PhoneticSurname}{chinesePersonName.GivenName}";
 
-        foreach (var error in result.Errors)
-        {
-            this.ModelState.AddModelError("", error.Description);
-        }
+
+        this.Result = await this.manager.CreateAsync(person);
+
+        if (this.Result.Succeeded)
+            return this.RedirectToPage("../Detail/Index", new { anchor = person.Id });
+
         return this.Page();
     }
 
@@ -78,15 +100,28 @@ public class CreateModel : PageModel
             return new JsonResult(true);
 
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
-            return new JsonResult($"移动电话号码无效");
+            return new JsonResult("移动电话号码无效");
 
-        if (this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
+        if (!this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
         {
             return new JsonResult(true);
         }
         return new JsonResult("此移动电话已注册");
     }
 
+    public IActionResult OnPostCheckEmail(string email)
+    {
+        if (this.manager.Users.Any(p => p.Email == email))
+            return new JsonResult("Email is exists.");
+        return new JsonResult(true);
+    }
+
+    public IActionResult OnPostCheckUserName(string userName)
+    {
+        if (this.manager.Users.Any(p => p.UserName == userName))
+            return new JsonResult("User name is exists.");
+        return new JsonResult(true);
+    }
     /// <summary>
     /// 获取拼音。
     /// </summary>
@@ -95,7 +130,7 @@ public class CreateModel : PageModel
     {
         if (string.IsNullOrWhiteSpace(givenName))
             return this.Content(string.Empty);
-        var (phoneticSurname, phoneticGivenName) = this.pinyinConverter.Convert(surname, givenName);
+        (string phoneticSurname, string phoneticGivenName) = this.pinyinConverter.Convert(surname, givenName);
         var chinesePersonName = new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
         return this.Content($"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim());
     }
@@ -104,33 +139,32 @@ public class CreateModel : PageModel
     {
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; init; } = default!;
+        public string Surname { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Given name")]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Display name")]
-        public string DisplayName { get; init; } = default!;
+        public string DisplayName { get; set; } = default!;
 
-        public string PhoneticSurname { get; init; } = default!;
+        [Display(Name = "Phonetic surname")]
+        public string PhoneticSurname { get; set; } = default!;
 
-        public string PhoneticGivenName { get; init; } = default!;
+        [Display(Name = "Phonetic given name")]
+        public string PhoneticGivenName { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Phonetic display name")]
-        public string PhoneticDisplayName { get; init; } = default!;
+        public string PhoneticDisplayName { get; set; } = default!;
 
         [Display(Name = "Gender")]
-        public Sex Sex { get; init; }
+        public Gender? Gender { get; set; }
 
         [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
-        public DateTime? DateOfBirth { get; init; }
-
-
-        public string? Email { get; init; }
+        public DateTime? DateOfBirth { get; set; }
     }
 }

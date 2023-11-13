@@ -1,34 +1,34 @@
 ﻿@page
 @model PaymentsModel
 @{
-    ViewBag.Title = L["Payments of {0}", Model.Person.Name];
+    ViewBag.Title = L["Payments of {0}", Model.Person.PersonName.FullName];
 }
 <h2>@ViewBag.Title</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <td>@L["BankName"]</td>
-            <td>@L["AccountNumber"]</td>
-            <td>@L["AccountName"]</td>
-            <td>@L["Operations"]</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var account in Model.Person.BankAccounts)
-        {
+<form method="post" asp-page-handler="RemoveBankAccount">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@account.BankName</td>
-                <td>@account.AccountNumber</td>
-                <td>@account.AccountName</td>
-                <td>
-                    <form method="post" asp-page-handler="RemoveBankAccount" asp-route-accountnumber="@account.AccountNumber">
-                        <button type="submit" class="btn btn-primary">Remove</button>
-                    </form>
-                </td>
+                <td>@L["BankName"]</td>
+                <td>@L["AccountNumber"]</td>
+                <td>@L["AccountName"]</td>
+                <td>@L["Operations"]</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var account in Model.BankAccounts)
+            {
+                <tr>
+                    <td>@account.BankName</td>
+                    <td>@account.AccountNumber</td>
+                    <td>@account.AccountName</td>
+                    <td>
+                        <button type="submit" name="accountNumber" value="@account.AccountNumber" class="btn btn-primary" onclick="return confirm('Are you sure you want delete this account?');">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
 
 <hr />
 <form method="post" asp-page-handler="AddBankAccount">

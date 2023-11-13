@@ -11,14 +11,12 @@ public class TwoFactorAuthenticationModel : PageModel
 {
     private readonly NaturalPersonManager userManager;
     private readonly SignInManager<NaturalPerson> signInManager;
-    private readonly ILogger<TwoFactorAuthenticationModel> logger;
 
     public TwoFactorAuthenticationModel(
         NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, ILogger<TwoFactorAuthenticationModel> logger)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
-        this.logger = logger;
     }
 
     public bool HasAuthenticator { get; set; }

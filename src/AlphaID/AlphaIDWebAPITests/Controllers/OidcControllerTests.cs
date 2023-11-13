@@ -6,9 +6,9 @@ namespace AlphaIDWebAPITests.Controllers;
 [Collection(nameof(TestServerCollection))]
 public class OidcControllerTests
 {
-    private readonly AlphaIDAPIFactory factory;
+    private readonly AlphaIdApiFactory factory;
 
-    public OidcControllerTests(AlphaIDAPIFactory factory)
+    public OidcControllerTests(AlphaIdApiFactory factory)
     {
         this.factory = factory;
     }

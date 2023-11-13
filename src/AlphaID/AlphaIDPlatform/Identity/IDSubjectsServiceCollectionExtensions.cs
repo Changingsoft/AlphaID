@@ -1,10 +1,16 @@
-﻿using IDSubjects;
+﻿using AlphaIDPlatform.Identity;
+using IDSubjects;
+using IDSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace AlphaIDPlatform.Identity;
+// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.DependencyInjection;
+
+/// <summary>
+/// 
+/// </summary>
 public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>
@@ -13,7 +19,7 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
+    public static IdentityBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
     {
         services.AddHttpContextAccessor();
 

@@ -13,23 +13,23 @@ public interface IDirectoryServiceStore
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="serivce"></param>
+    /// <param name="service"></param>
     /// <returns></returns>
-    Task CreateAsync(DirectoryService serivce);
+    Task CreateAsync(DirectoryService service);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="serivce"></param>
+    /// <param name="service"></param>
     /// <returns></returns>
-    Task UpdateAsync(DirectoryService serivce);
+    Task UpdateAsync(DirectoryService service);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="serivce"></param>
+    /// <param name="service"></param>
     /// <returns></returns>
-    Task DeleteAsync(DirectoryService serivce);
+    Task DeleteAsync(DirectoryService service);
 
     /// <summary>
     /// Find by Id.

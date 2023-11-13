@@ -31,10 +31,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 //启用Controller
-builder.Services.AddControllers(o =>
-{
-
-});
+builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 
 //启用CORS
@@ -43,7 +40,7 @@ builder.Services.AddCors(options =>
     //添加默认策略。
     options.AddDefaultPolicy(policyBuilder =>
     {
-        policyBuilder.SetIsOriginAllowed(origin => true)
+        policyBuilder.SetIsOriginAllowed(_ => true)
         .AllowAnyMethod()
         .AllowCredentials()
         .AllowAnyHeader()
@@ -200,7 +197,7 @@ app.Run();
 namespace AlphaIDWebAPI
 {
     /// <summary>
-    /// Definations for Testing.
+    /// Definitions for Testing.
     /// </summary>
-    public partial class Program { }
+    public class Program { }
 }

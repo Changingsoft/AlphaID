@@ -49,20 +49,11 @@ public class LogonAccount
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public DirectoryEntry? GetDirectoryEntry()
     {
-        Guid directoryObjectGUID;
-        try
-        {
-            directoryObjectGUID = new(Convert.FromBase64String(this.LogonId));
-        }
-        catch (Exception)
-        {
+        Guid directoryObjectGuid = new(Convert.FromBase64String(this.LogonId));
 
-            throw;
-        }
-
-        using var root = new DirectoryEntry($"LDAP://{this.DirectoryService.ServerAddress}/{this.DirectoryService.RootDN}");
+        using var root = new DirectoryEntry($"LDAP://{this.DirectoryService.ServerAddress}/{this.DirectoryService.RootDn}");
         using var searcher = new DirectorySearcher(root);
-        searcher.Filter = $"(objectGUID={directoryObjectGUID.ToHexString()})";
+        searcher.Filter = $"(objectGUID={directoryObjectGuid.ToHexString()})";
         var result = searcher.FindOne();
         return result?.GetDirectoryEntry();
     }

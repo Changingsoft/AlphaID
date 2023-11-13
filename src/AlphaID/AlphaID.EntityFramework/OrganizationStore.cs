@@ -32,18 +32,6 @@ public class OrganizationStore : IOrganizationStore
         return await this.dbContext.Organizations.FindAsync(id);
     }
 
-    public Task<GenericOrganization?> FindByIdentityAsync(string identityType, string identityValue)
-    {
-        if (string.IsNullOrWhiteSpace(identityType) || string.IsNullOrWhiteSpace(identityValue))
-            return Task.FromResult(default(GenericOrganization));
-
-        identityType = identityType.Trim();
-        identityValue = identityValue.Trim();
-        var organization = this.dbContext.Organizations.FirstOrDefault(p => p.Usci == identityValue);
-
-        return Task.FromResult(organization);
-    }
-
     public async Task<IdOperationResult> UpdateAsync(GenericOrganization organization)
     {
         this.dbContext.Entry(organization).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

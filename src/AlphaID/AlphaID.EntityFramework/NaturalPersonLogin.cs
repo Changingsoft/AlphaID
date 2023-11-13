@@ -7,6 +7,7 @@ namespace AlphaID.EntityFramework;
 
 [Table("NaturalPersonLogin")]
 [Index(nameof(UserId))]
+[PrimaryKey(nameof(LoginProvider), nameof(ProviderKey))]
 public class NaturalPersonLogin
 {
     /// <summary>

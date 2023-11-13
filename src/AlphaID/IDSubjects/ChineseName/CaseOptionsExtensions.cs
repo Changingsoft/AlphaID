@@ -11,7 +11,7 @@ public static class CaseOptionsExtensions
     /// <param name="caseOptions"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static string? Normalize(this CaseOptions caseOptions, string value)
+    public static string? Normalize(this CaseOptions caseOptions, string? value)
     {
         if (value == null)
             return null;
@@ -24,7 +24,7 @@ public static class CaseOptionsExtensions
         {
             CaseOptions.Upper => value,
             CaseOptions.Lower => value.ToLower(),
-            CaseOptions.FirstLetter => value[0..1] + value[1..].ToLower(),
+            CaseOptions.FirstLetter => value[..1] + value[1..].ToLower(),
             _ => value,
         };
     }

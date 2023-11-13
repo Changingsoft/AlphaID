@@ -38,9 +38,9 @@ public class CreateDirectoryAccountModel : PageModel
             SamAccountName = accountName,
             UpnPart = accountName,
             EntryName = accountName,
-            Surname = person.LastName!,
-            GivenName = person.FirstName!,
-            DisplayName = person.Name,
+            Surname = person.PersonName.Surname!,
+            GivenName = person.PersonName.GivenName!,
+            DisplayName = person.PersonName.FullName,
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName,
             PinyinDisplayName = person.PhoneticSurname + person.PhoneticGivenName,
@@ -91,44 +91,44 @@ public class CreateDirectoryAccountModel : PageModel
     public class InputModel
     {
         [Display(Name = "Directory Service")]
-        public int ServiceId { get; init; }
+        public int ServiceId { get; set; }
 
         [Display(Name = "SAM Account Name")]
-        public string SamAccountName { get; init; } = default!;
+        public string SamAccountName { get; set; } = default!;
 
         [Display(Name = "UPN Prefix Part")]
-        public string UpnPart { get; init; } = default!;
+        public string UpnPart { get; set; } = default!;
 
         [Display(Name = "Directory Entry Name")]
-        public string EntryName { get; init; } = default!;
+        public string EntryName { get; set; } = default!;
 
-        public string Surname { get; init; } = default!;
+        public string Surname { get; set; } = default!;
 
-        public string GivenName { get; init; } = default!;
+        public string GivenName { get; set; } = default!;
 
-        public string DisplayName { get; init; } = default!;
+        public string DisplayName { get; set; } = default!;
 
-        public string? PinyinSurname { get; init; }
+        public string? PinyinSurname { get; set; }
 
-        public string? PinyinGivenName { get; init; }
+        public string? PinyinGivenName { get; set; }
 
-        public string? PinyinDisplayName { get; init; }
+        public string? PinyinDisplayName { get; set; }
 
         [Display(Name = "PhoneNumber Phone Number")]
-        public string Mobile { get; init; } = default!;
+        public string Mobile { get; set; } = default!;
 
         [Display(Name = "Email Address")]
-        public string? Email { get; init; }
+        public string? Email { get; set; }
 
         [Display(Name = "Password")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string NewPassword { get; init; } = default!;
+        public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm Password")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; init; } = default!;
+        public string ConfirmPassword { get; set; } = default!;
     }
 }

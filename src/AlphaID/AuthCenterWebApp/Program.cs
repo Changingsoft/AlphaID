@@ -2,22 +2,24 @@
 using AlphaID.PlatformServices.Aliyun;
 using AlphaID.PlatformServices.Primitives;
 using AlphaIDPlatform;
-using AlphaIDPlatform.Identity;
 using AlphaIDPlatform.Platform;
 using AlphaIDPlatform.RazorPages;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
+using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IDSubjects;
 using IDSubjects.ChineseName;
 using IDSubjects.RealName;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Globalization;
+// ReSharper disable All
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,12 +52,24 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
+//授权策略
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireOrganizationOwner", policy =>
+    {
+        policy.Requirements.Add(new OrganizationOwnerRequirement());
+    });
+});
+builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
+
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/");
     options.Conventions.AuthorizeAreaFolder("Profile", "/");
     options.Conventions.AuthorizeAreaFolder("Settings", "/");
-    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People", "{userAnchor}"));
+    options.Conventions.AuthorizeAreaFolder("Organization", "/Settings", "RequireOrganizationOwner");
+
+    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People"));
     options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));
 })
 .AddViewLocalization()
@@ -74,7 +88,7 @@ builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 
 var identityBuilder = builder.Services.AddIdSubjectsIdentity(options =>
 {
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789-";
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789.-_@";
     options.User.RequireUniqueEmail = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
@@ -187,7 +201,7 @@ await app.RunAsync();
 namespace AuthCenterWebApp
 {
     /// <summary>
-    /// Definations for Testing.
+    /// Definitions for Testing.
     /// </summary>
-    public partial class Program { }
+    public class Program { }
 }

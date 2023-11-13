@@ -154,18 +154,18 @@ public class ResetPasswordModel : PageModel
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string NewPassword { get; init; } = default!;
+        public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; init; } = default!;
+        public string ConfirmPassword { get; set; } = default!;
 
         [Display(Name = "User must change password on next login")]
-        public bool UserMustChangePasswordOnNextLogin { get; init; } = true;
+        public bool UserMustChangePasswordOnNextLogin { get; set; } = true;
 
         [Display(Name = "Unlock user (if locked)")]
-        public bool UnlockUser { get; init; } = true;
+        public bool UnlockUser { get; set; } = true;
     }
 }

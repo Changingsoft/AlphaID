@@ -9,7 +9,6 @@ namespace IDSubjects;
 public class OrganizationMemberManager
 {
     private readonly IOrganizationMemberStore store;
-    private readonly ILogger<OrganizationMemberManager>? logger;
 
     /// <summary>
     /// Init GenericOrganization Member Manager via GenericOrganization Member store.
@@ -19,7 +18,6 @@ public class OrganizationMemberManager
     public OrganizationMemberManager(IOrganizationMemberStore store, ILogger<OrganizationMemberManager>? logger = null)
     {
         this.store = store;
-        this.logger = logger;
     }
 
     /// <summary>
@@ -73,6 +71,7 @@ public class OrganizationMemberManager
     /// <returns></returns>
     public Task<IEnumerable<OrganizationMember>> GetVisibleMembersOfAsync(NaturalPerson person, NaturalPerson? visitor)
     {
+        //todo 该方法行为有误，要重新考虑。
         var members = this.store.OrganizationMembers.Where(p => p.PersonId == person.Id);
         Debug.Assert(members != null);
         var visibilityLevel = MembershipVisibility.Public;
@@ -112,20 +111,16 @@ public class OrganizationMemberManager
     /// <summary>
     /// Take person leave out the organization.
     /// </summary>
-    /// <param name="person"></param>
-    /// <param name="organization"></param>
+    /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> LeaveOrganizationAsync(NaturalPerson person, GenericOrganization organization)
+    public async Task<IdOperationResult> LeaveOrganizationAsync(OrganizationMember member)
     {
-        var members = await this.GetMembersAsync(organization);
-        var member = members.FirstOrDefault(m => m.PersonId == person.Id);
-        if (member != null)
-        {
-            if (member.IsOwner && members.Count(m => m.IsOwner) <= 1)
-                return IdOperationResult.Failed(Resources.LastOwnerCannotLeave);
-            return await this.store.DeleteAsync(member);
-        }
-        return IdOperationResult.Success;
+        var members = this.store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
+        
+        if (member.IsOwner && members.Count(m => m.IsOwner) <= 1)
+            return IdOperationResult.Failed(Resources.LastOwnerCannotLeave);
+
+        return await this.store.DeleteAsync(member);
     }
 
     /// <summary>

@@ -33,7 +33,7 @@
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources.zh-CN.resx">
-	    <Generator></Generator>
+		  <DependentUpon>Resources.resx</DependentUpon>
 	  </EmbeddedResource>
 	</ItemGroup>
 </Project>

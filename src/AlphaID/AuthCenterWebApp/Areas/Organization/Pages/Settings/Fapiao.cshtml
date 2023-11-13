@@ -1,0 +1,55 @@
+﻿@page
+@model FapiaoModel
+@{
+}
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Fapiao info"]</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.Name" class="form-label"></label>
+        <input asp-for="Input.Name" class="form-control" />
+        <span asp-description-for="Input.Name"></span>
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.TaxpayerId" class="form-label"></label>
+        <input asp-for="Input.TaxpayerId" class="form-control" />
+        <span asp-description-for="Input.TaxpayerId"></span>
+        <span asp-validation-for="Input.TaxpayerId" class="text-danger"></span>
+    </div>
+    <div class="row g-3">
+        <div class="col-md">
+            <label asp-for="Input.Address" class="form-label"></label>
+            <input asp-for="Input.Address" class="form-control" />
+            <span asp-description-for="Input.Address"></span>
+            <span asp-validation-for="Input.Address" class="text-danger"></span>
+        </div>
+        <div class="col-md">
+            <label asp-for="Input.Contact" class="form-label"></label>
+            <input asp-for="Input.Contact" class="form-control" />
+            <span asp-description-for="Input.Contact"></span>
+            <span asp-validation-for="Input.Contact" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-md">
+            <label asp-for="Input.Bank" class="form-label"></label>
+            <input asp-for="Input.Bank" class="form-control" />
+            <span asp-description-for="Input.Bank"></span>
+            <span asp-validation-for="Input.Bank" class="text-danger"></span>
+        </div>
+        <div class="col-md">
+            <label asp-for="Input.Account" class="form-label"></label>
+            <input asp-for="Input.Account" class="form-control" />
+            <span asp-description-for="Input.Account"></span>
+            <span asp-validation-for="Input.Account" class="text-danger"></span>
+        </div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="Save">@L["Save"]</button>
+    <button type="submit" class="btn btn-danger" asp-page-handler="Clear">@L["Clear"]</button>
+</form>
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

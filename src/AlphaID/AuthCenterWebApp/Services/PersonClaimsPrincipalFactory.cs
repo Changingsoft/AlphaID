@@ -1,7 +1,7 @@
-﻿using AlphaIDPlatform;
+﻿using AlphaIdPlatform;
 using IdentityModel;
-using IDSubjects;
-using IDSubjects.DependencyInjection;
+using IdSubjects;
+using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 

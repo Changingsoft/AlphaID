@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -7,8 +7,8 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
 {
     public class AddModel : PageModel
     {
-        private OrganizationIdentifierManager identifierManager;
-        OrganizationManager organizationManager;
+        private readonly OrganizationIdentifierManager identifierManager;
+        readonly OrganizationManager organizationManager;
 
         public AddModel(OrganizationIdentifierManager identifierManager, OrganizationManager organizationManager)
         {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects.DependencyInjection;
+namespace IdSubjects.DependencyInjection;
 /// <summary>
-/// Options for IDSubjects.
+/// Options for IdSubjects.
 /// </summary>
 public class IdSubjectsOptions : IdentityOptions
 {

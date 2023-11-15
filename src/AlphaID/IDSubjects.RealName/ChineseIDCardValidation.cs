@@ -8,7 +8,7 @@ namespace IDSubjects.RealName;
 /// <summary>
 /// 实名验证信息。
 /// </summary>
-[Table("RealNameValidation")]
+[Table("ChineseIdCardValidation")]
 public class ChineseIdCardValidation
 {
     /// <summary>

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using System.DirectoryServices;
 
-namespace IDSubjects.DirectoryLogon;
+namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// Logon Account Manager.
@@ -113,10 +113,6 @@ public class LogonAccountManager
             this.logger?.LogError(ex, "向目录服务创建用户账户时出错");
             throw;
         }
-        finally
-        {
-
-        }
     }
 
     /// <summary>
@@ -168,7 +164,7 @@ public class LogonAccountManager
         if (result == null)
         {
             this.logger?.LogInformation("找不到指定的目录对象。objectGUID是{objectGUID}", entryObjectGuid);
-            throw new ArgumentException(Resources.Specified_directory_entry_not_found, nameof(entryObjectGuid));
+            throw new ArgumentException(IdSubjects.Resources.Specified_directory_entry_not_found, nameof(entryObjectGuid));
         }
         using var userEntry = result.GetDirectoryEntry();
 

@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace IdSubjects;
 
-namespace IDSubjects;
+/// <summary>
+/// 
+/// </summary>
 public abstract class OrganizationIdentifierValidator
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="identifier"></param>
+    /// <returns></returns>
     public abstract IdOperationResult Validate(OrganizationIdentifier identifier);
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace IDSubjects.Tests.Fixtures;
+namespace IdSubjects.Tests.Fixtures;
 public class ServiceProviderFixture : IDisposable
 {
     public ServiceProviderFixture()

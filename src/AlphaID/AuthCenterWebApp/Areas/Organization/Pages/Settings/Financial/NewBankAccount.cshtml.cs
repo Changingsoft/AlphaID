@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,8 +6,8 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial
 {
     public class NewBankAccountModel : PageModel
     {
-        private OrganizationManager organizationManager;
-        OrganizationBankAccountManager bankAccountManager;
+        private readonly OrganizationManager organizationManager;
+        readonly OrganizationBankAccountManager bankAccountManager;
 
         public NewBankAccountModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
         {

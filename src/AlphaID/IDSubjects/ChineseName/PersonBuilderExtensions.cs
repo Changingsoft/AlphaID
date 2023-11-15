@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.ChineseName;
+﻿namespace IdSubjects.ChineseName;
 
 /// <summary>
 /// 针对<see cref="PersonBuilder"/>的扩展。

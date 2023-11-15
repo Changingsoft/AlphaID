@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IDSubjects.DirectoryLogon {
+namespace IdSubjects.DirectoryLogon {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace IDSubjects.DirectoryLogon {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IDSubjects.DirectoryLogon.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IdSubjects.DirectoryLogon.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

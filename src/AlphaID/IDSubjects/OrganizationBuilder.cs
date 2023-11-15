@@ -1,6 +1,4 @@
-﻿using IDSubjects.Subjects;
-
-namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// 组织构建器。

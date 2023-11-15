@@ -9,31 +9,31 @@
     <div class="mb-3">
         <label asp-for="Input.AccountNumber" class="form-label"></label>
         <input asp-for="Input.AccountNumber" class="form-control"/>
-        <span asp-description-for="Input.AccountNumber"></span>
+        <DescriptionForTagHelper asp-description-for="Input.AccountNumber"></DescriptionForTagHelper>
         <span asp-validation-for="Input.AccountNumber" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.AccountName" class="form-label"></label>
         <input asp-for="Input.AccountName" class="form-control" />
-        <span asp-description-for="Input.AccountName"></span>
+        <DescriptionForTagHelper asp-description-for="Input.AccountName"></DescriptionForTagHelper>
         <span asp-validation-for="Input.AccountName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.BankName" class="form-label"></label>
         <input asp-for="Input.BankName" class="form-control" />
-        <span asp-description-for="Input.BankName"></span>
+        <DescriptionForTagHelper asp-description-for="Input.BankName"></DescriptionForTagHelper>
         <span asp-validation-for="Input.BankName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Usage" class="form-label"></label>
         <input asp-for="Input.Usage" class="form-control" />
-        <span asp-description-for="Input.Usage"></span>
+        <DescriptionForTagHelper asp-description-for="Input.Usage"></DescriptionForTagHelper>
         <span asp-validation-for="Input.Usage" class="text-danger"></span>
     </div>
     <div class="form-check">
         <input asp-for="Input.SetDefault" class="form-check-input"/>
         <label asp-for="Input.SetDefault" class="form-check-label"></label>
-        <span asp-description-for="Input.SetDefault"></span>
+        <DescriptionForTagHelper asp-description-for="Input.SetDefault"></DescriptionForTagHelper>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
     <button type="submit" class="btn">@L["Create"]</button>

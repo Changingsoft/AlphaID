@@ -1,8 +1,8 @@
-﻿using IDSubjects;
-using IDSubjects.DependencyInjection;
-using IDSubjects.Invitations;
-using IDSubjects.Payments;
-using IDSubjects.Validators;
+﻿using IdSubjects;
+using IdSubjects.DependencyInjection;
+using IdSubjects.Invitations;
+using IdSubjects.Payments;
+using IdSubjects.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -10,20 +10,20 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Extensions for IDSubjects service injection.
+/// Extensions for IdSubjects service injection.
 /// </summary>
 public static class IdSubjectsServiceCollectionExtensions
 {
 
     /// <summary>
-    /// 向基础设施添加AlphaID自然人标识管理功能。
+    /// 向基础设施添加AlphaId自然人标识管理功能。
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjects(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
+    public static IdSubjectsBuilder AddIdSubjects(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
     {
-        // 由IDSubjects使用的服务。
+        // 由IdSubjects使用的服务。
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
@@ -45,7 +45,7 @@ public static class IdSubjectsServiceCollectionExtensions
             services.Configure(setupAction);
         }
 
-        return builder;
+        return new IdSubjectsBuilder(services, builder);
     }
 
 

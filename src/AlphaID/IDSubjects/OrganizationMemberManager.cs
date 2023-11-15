@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// GenericOrganization Member Manager.
@@ -14,8 +13,7 @@ public class OrganizationMemberManager
     /// Init GenericOrganization Member Manager via GenericOrganization Member store.
     /// </summary>
     /// <param name="store"></param>
-    /// <param name="logger"></param>
-    public OrganizationMemberManager(IOrganizationMemberStore store, ILogger<OrganizationMemberManager>? logger = null)
+    public OrganizationMemberManager(IOrganizationMemberStore store)
     {
         this.store = store;
     }

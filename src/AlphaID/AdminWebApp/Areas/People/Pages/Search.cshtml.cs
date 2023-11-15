@@ -1,5 +1,5 @@
-using IDSubjects;
-using IDSubjects.Subjects;
+using IdSubjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages;

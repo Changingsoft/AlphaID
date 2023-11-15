@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// 提供邮件发送能力。

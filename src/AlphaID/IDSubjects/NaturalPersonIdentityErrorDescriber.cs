@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// Error describer. 便于国际化。

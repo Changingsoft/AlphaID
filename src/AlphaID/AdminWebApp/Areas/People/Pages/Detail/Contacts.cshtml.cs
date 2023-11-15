@@ -1,5 +1,5 @@
-using IDSubjects;
-using IDSubjects.Subjects;
+using IdSubjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

@@ -1,12 +1,9 @@
-﻿using AlphaIDWebAPI.Models;
-using IDSubjects;
-using IDSubjects.RealName;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AlphaIdWebAPI.Models;
+using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlphaIDWebAPI.Controllers.RealName;
+namespace AlphaIdWebAPI.Controllers.RealName;
 
 /// <summary>
 /// 实名信息。
@@ -17,7 +14,6 @@ namespace AlphaIDWebAPI.Controllers.RealName;
 public class ChineseIdCardController : ControllerBase
 {
     private readonly NaturalPersonManager personManager;
-    private readonly ChineseIdCardManager chineseIdCardManager;
     private readonly ILogger<ChineseIdCardController> logger;
 
     /// <summary>
@@ -25,12 +21,10 @@ public class ChineseIdCardController : ControllerBase
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="logger"></param>
-    /// <param name="chineseIdCardManager"></param>
-    public ChineseIdCardController(NaturalPersonManager personManager, ILogger<ChineseIdCardController> logger, ChineseIdCardManager chineseIdCardManager)
+    public ChineseIdCardController(NaturalPersonManager personManager, ILogger<ChineseIdCardController> logger)
     {
         this.personManager = personManager;
         this.logger = logger;
-        this.chineseIdCardManager = chineseIdCardManager;
     }
 
     /// <summary>
@@ -39,26 +33,8 @@ public class ChineseIdCardController : ControllerBase
     /// <param name="personId"></param>
     /// <returns></returns>
     [HttpGet("{personId}")]
-    public async Task<ActionResult<ChineseIdCardModel>> GetChineseIdCardInfo(string personId)
+    public Task<ActionResult<ChineseIdCardModel>> GetChineseIdCardInfo(string personId)
     {
-        this.logger.LogInformation("End user {EndUser} get a chinese ID card info.", this.User.Identity!.Name);
-        this.logger.LogInformation("Incoming access token is {accessToken}", await this.HttpContext.GetTokenAsync(JwtBearerDefaults.AuthenticationScheme, "access_token"));
-        var person = await this.personManager.FindByIdAsync(personId);
-        if (person == null)
-        {
-            return this.NotFound();
-        }
-        var currentCard = await this.chineseIdCardManager.GetCurrentAsync(person);
-        return currentCard == null
-            ? this.NotFound()
-            : new ChineseIdCardModel(currentCard.ChineseIdCard.CardNumber,
-                currentCard.ChineseIdCard.Name,
-                currentCard.ChineseIdCard.Gender.ToString(),
-                currentCard.ChineseIdCard.DateOfBirth,
-                currentCard.ChineseIdCard.Ethnicity,
-                currentCard.ChineseIdCard.Address,
-                currentCard.ChineseIdCard.Issuer,
-                currentCard.ChineseIdCard.IssueDate,
-                currentCard.ChineseIdCard.Expires);
+        throw new NotImplementedException();
     }
 }

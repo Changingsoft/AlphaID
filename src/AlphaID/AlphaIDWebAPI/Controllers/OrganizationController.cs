@@ -1,9 +1,9 @@
-﻿using AlphaIDWebAPI.Models;
-using IDSubjects;
+﻿using AlphaIdWebAPI.Models;
+using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlphaIDWebAPI.Controllers;
+namespace AlphaIdWebAPI.Controllers;
 
 /// <summary>
 /// 组织信息。

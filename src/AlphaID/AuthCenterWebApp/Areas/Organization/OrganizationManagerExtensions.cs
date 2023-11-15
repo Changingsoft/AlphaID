@@ -1,4 +1,4 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
 namespace AuthCenterWebApp.Areas.Organization;
 

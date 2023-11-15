@@ -3,7 +3,7 @@ using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 组织。
@@ -74,12 +74,12 @@ public class GenericOrganization
     /// <summary>
     /// 创建记录的时间。
     /// </summary>
-    public virtual DateTimeOffset WhenCreated { get; protected internal set; } = DateTimeOffset.UtcNow;
+    public virtual DateTimeOffset WhenCreated { get; protected internal set; }
 
     /// <summary>
     /// 记录修改的时间。
     /// </summary>
-    public virtual DateTimeOffset WhenChanged { get; protected internal set; } = DateTimeOffset.UtcNow;
+    public virtual DateTimeOffset WhenChanged { get; protected internal set; }
 
     /// <summary>
     /// 是否有效。

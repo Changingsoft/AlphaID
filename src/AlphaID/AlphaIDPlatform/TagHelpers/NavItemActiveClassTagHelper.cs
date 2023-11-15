@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace AlphaIDPlatform.TagHelpers;
+namespace AlphaIdPlatform.TagHelpers;
 
 /// <summary>
 /// 根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。

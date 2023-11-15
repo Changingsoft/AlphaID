@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// Chinese ID Card OCR Service for DEBUG.

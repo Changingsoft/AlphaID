@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 银行账户。
@@ -42,7 +42,7 @@ public class OrganizationBankAccount
     /// 户名
     /// </summary>
     [MaxLength(100)]
-    public string AccountName { get; set; }
+    public string AccountName { get; set; } = default!;
 
     /// <summary>
     /// 开户行

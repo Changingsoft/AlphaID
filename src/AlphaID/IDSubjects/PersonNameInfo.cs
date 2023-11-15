@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 表示个人名称。

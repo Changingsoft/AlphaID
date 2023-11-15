@@ -1,4 +1,5 @@
 ﻿@page
+@using AlphaIdPlatform.Helpers
 @model CreateModel
 @{
     ViewBag.Title = L["Create person"];
@@ -11,38 +12,38 @@
             <div class="mb-3">
                 <label asp-for="UserName" class="form-label required"></label>
                 <input asp-for="UserName" class="form-control" />
-                <span asp-description-for="UserName"></span>
+                <DescriptionForTagHelper asp-description-for="UserName"></DescriptionForTagHelper>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control"/>
-                <span asp-description-for="Email"></span>
+                <DescriptionForTagHelper asp-description-for="Email"></DescriptionForTagHelper>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Mobile" class="form-label"></label>
                 <input asp-for="Mobile" class="form-control"/>
-                <span asp-description-for="Mobile"></span>
+                <DescriptionForTagHelper asp-description-for="Mobile"></DescriptionForTagHelper>
                 <span asp-validation-for="Mobile" class="text-danger"></span>
             </div>
             <div class="row">
                 <div class="col-md">
                     <label asp-for="Input.Surname" class="form-label"></label>
                     <input asp-for="Input.Surname" class="form-control"/>
-                    <span asp-description-for="Input.Surname"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.Surname"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.Surname" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.GivenName" class="form-label"></label>
                     <input asp-for="Input.GivenName" class="form-control"/>
-                    <span asp-description-for="Input.GivenName"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.GivenName"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.GivenName" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.DisplayName" class="form-label required"></label>
                     <input asp-for="Input.DisplayName" class="form-control"/>
-                    <span asp-description-for="Input.DisplayName"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.DisplayName"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
                 </div>
             </div>
@@ -50,19 +51,19 @@
                 <div class="col-md">
                     <label asp-for="Input.PhoneticSurname" class="form-label"></label>
                     <input asp-for="Input.PhoneticSurname" class="form-control"/>
-                    <span asp-description-for="Input.PhoneticSurname"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.PhoneticSurname"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.PhoneticSurname" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.PhoneticGivenName" class="form-label"></label>
                     <input asp-for="Input.PhoneticGivenName" class="form-control"/>
-                    <span asp-description-for="Input.PhoneticGivenName"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.PhoneticGivenName"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.PhoneticGivenName" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.PhoneticDisplayName" class="form-label"></label>
                     <input asp-for="Input.PhoneticDisplayName" class="form-control"/>
-                    <span asp-description-for="Input.PhoneticDisplayName"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.PhoneticDisplayName"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.PhoneticDisplayName" class="text-danger"></span>
                 </div>
             </div>
@@ -72,13 +73,13 @@
                     <select asp-for="Input.Gender" asp-items="@EnumHelper.GetSelectListItems<Gender>()" class="form-select">
                         <option>@SL["Unselected"]</option>
                     </select>
-                    <span asp-description-for="Input.Gender"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.Gender"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.Gender" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.DateOfBirth" class="form-label"></label>
                     <input asp-for="Input.DateOfBirth" class="form-control"/>
-                    <span asp-description-for="Input.DateOfBirth"></span>
+                    <DescriptionForTagHelper asp-description-for="Input.DateOfBirth"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                 </div>
             </div>

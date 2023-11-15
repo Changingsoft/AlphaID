@@ -13,30 +13,30 @@
             <div class="navbar">
                 <div class="container-xl">
                     <ul class="navbar-nav">
-                        <li class="nav-item" asp-path="/OpenIDConnect" asp-match-prefix="false">
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect" asp-match-prefix="false">
                             <a class="nav-link" asp-page="/Index">@L["Overview"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/Clients">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/Clients">
                             <a class="nav-link" asp-page="/Clients/Index">@L["Clients"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/Scopes">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/Scopes">
                             <a class="nav-link" asp-page="/Scopes/Index">@L["Scopes"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/ApiResources">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/ApiResources">
                             <a class="nav-link" asp-page="/ApiResources/Index">@L["API Resources"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/IdentityResources">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/IdentityResources">
                             <a class="nav-link" asp-page="/IdentityResources/Index">@L["Identity Resources"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/IdentityProviders">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/IdentityProviders">
                             <a class="nav-link" asp-page="/IdentityProviders/Index">@L["Identity Providers"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/Advanced">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/Advanced">
                             <a class="nav-link" asp-page="/Advanced/Index">@L["Advanced"]</a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/ActiveSessions">
+                        </NavItemActiveClassTagHelper>
+                        <NavItemActiveClassTagHelper class="nav-item" asp-path="/OpenIDConnect/ActiveSessions">
                             <a class="nav-link" asp-page="/ActiveSessions">@L["Active Sessions"]</a>
-                        </li>
+                        </NavItemActiveClassTagHelper>
                     </ul>
                 </div>
             </div>

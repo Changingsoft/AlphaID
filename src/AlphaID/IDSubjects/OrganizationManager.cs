@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// GenericOrganization Manager
@@ -25,6 +25,8 @@ public class OrganizationManager
     /// </summary>
     protected IOrganizationStore OrganizationStore { get; set; }
 
+    internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
+
     /// <summary>
     /// 创建一个组织。
     /// </summary>
@@ -32,7 +34,7 @@ public class OrganizationManager
     /// <returns></returns>
     public async Task<IdOperationResult> CreateAsync(GenericOrganization org)
     {
-        var utcNow = DateTimeOffset.UtcNow;
+        var utcNow = this.TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
         return await this.OrganizationStore.CreateAsync(org);
@@ -76,7 +78,7 @@ public class OrganizationManager
     /// <returns></returns>
     public async Task<IdOperationResult> UpdateAsync(GenericOrganization org)
     {
-        org.WhenChanged = DateTimeOffset.UtcNow;
+        org.WhenChanged = this.TimeProvider.GetUtcNow();
         return await this.OrganizationStore.UpdateAsync(org);
     }
 

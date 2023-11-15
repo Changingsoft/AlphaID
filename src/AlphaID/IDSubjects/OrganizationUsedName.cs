@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 组织的曾用名。

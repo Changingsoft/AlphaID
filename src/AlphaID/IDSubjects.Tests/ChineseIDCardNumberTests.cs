@@ -1,9 +1,9 @@
-﻿using IDSubjects.Subjects;
+﻿using IdSubjects.Subjects;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 
 public class ChineseIdCardNumberTests
 {

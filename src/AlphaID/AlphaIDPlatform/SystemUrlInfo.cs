@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform;
+﻿namespace AlphaIdPlatform;
 
 /// <summary>
 /// 系统URL选项。

@@ -1,7 +1,7 @@
-﻿using IDSubjects;
-using IDSubjects.Invitations;
+﻿using IdSubjects;
+using IdSubjects.Invitations;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 public class JoinOrganizationInvitationStore : IJoinOrganizationInvitationStore
 {
     private readonly IdSubjectsDbContext dbContext;

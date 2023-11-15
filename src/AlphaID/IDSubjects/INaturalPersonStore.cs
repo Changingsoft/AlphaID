@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 一个关于NaturalPerson的锚点接口以便于实现NaturalPersonStore.

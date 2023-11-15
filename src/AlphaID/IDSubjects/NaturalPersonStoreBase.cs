@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 

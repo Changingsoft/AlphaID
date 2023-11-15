@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 

@@ -1,6 +1,5 @@
-﻿using AlphaIDPlatform.Identity;
-using IDSubjects;
-using IDSubjects.DependencyInjection;
+﻿using AlphaIdPlatform.Identity;
+using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +18,7 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
+    public static IdSubjectsBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
     {
         services.AddHttpContextAccessor();
 

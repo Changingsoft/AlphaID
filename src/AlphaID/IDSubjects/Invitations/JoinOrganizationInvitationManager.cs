@@ -1,6 +1,6 @@
 ﻿using System.Transactions;
 
-namespace IDSubjects.Invitations;
+namespace IdSubjects.Invitations;
 
 /// <summary>
 /// 加入组织邀请管理器。
@@ -9,6 +9,8 @@ public class JoinOrganizationInvitationManager
 {
     private readonly IJoinOrganizationInvitationStore store;
     private readonly OrganizationMemberManager memberManager;
+
+    internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
     /// 
@@ -29,7 +31,7 @@ public class JoinOrganizationInvitationManager
     /// <exception cref="NotImplementedException"></exception>
     public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(NaturalPerson person)
     {
-        return this.store.Invitations.Where(i => i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > DateTimeOffset.UtcNow);
+        return this.store.Invitations.Where(i => i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > this.TimeProvider.GetLocalNow());
     }
 
     /// <summary>
@@ -58,7 +60,7 @@ public class JoinOrganizationInvitationManager
         if (existsMember != null)
             errors.Add("Person is a member of this organization.");
 
-        if (this.store.Invitations.Any(i => i.InviteeId == invitee.Id && i.OrganizationId == organization.Id && i.WhenExpired > DateTimeOffset.UtcNow))
+        if (this.store.Invitations.Any(i => i.InviteeId == invitee.Id && i.OrganizationId == organization.Id && i.WhenExpired > this.TimeProvider.GetUtcNow()))
             errors.Add("You've been sent invitation to this person.");
         if (errors.Any())
             return IdOperationResult.Failed(errors.ToArray());

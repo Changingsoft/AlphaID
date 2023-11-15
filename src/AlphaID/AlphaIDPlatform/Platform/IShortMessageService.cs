@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// Provide short message service.

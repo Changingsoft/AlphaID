@@ -1,5 +1,5 @@
 using AuthCenterWebApp.Services;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

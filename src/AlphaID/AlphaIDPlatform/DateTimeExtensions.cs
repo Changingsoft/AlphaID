@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform;
+﻿namespace AlphaIdPlatform;
 
 /// <summary>
 /// 针对日期时间的扩展方法。

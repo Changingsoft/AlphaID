@@ -1,11 +1,10 @@
-﻿using AlphaIDWebAPI.Models;
-using IDSubjects;
-using IDSubjects.RealName;
-using IDSubjects.Subjects;
+﻿using AlphaIdWebAPI.Models;
+using IdSubjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlphaIDWebAPI.Controllers;
+namespace AlphaIdWebAPI.Controllers;
 
 /// <summary>
 /// 与自然人有关的查询。
@@ -17,19 +16,16 @@ public class PersonController : ControllerBase
 {
     private readonly NaturalPersonManager personManager;
     private readonly OrganizationMemberManager organizationMemberManager;
-    private readonly ChineseIdCardManager? chineseIdCardManager;
 
     /// <summary>
     /// Init Person Controller.
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="organizationMemberManager"></param>
-    /// <param name="chineseIdCardManager"></param>
-    public PersonController(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager, ChineseIdCardManager? chineseIdCardManager)
+    public PersonController(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
     {
         this.personManager = personManager;
         this.organizationMemberManager = organizationMemberManager;
-        this.chineseIdCardManager = chineseIdCardManager;
     }
 
     /// <summary>
@@ -76,7 +72,7 @@ public class PersonController : ControllerBase
     /// <param name="keywords">关键词。可以通过手机号码、姓名汉字、姓名全拼</param>
     /// <returns>Return matched peoples, up to 50 records.</returns>
     [HttpGet("Search/{keywords}")]
-    public async Task<PersonSearchResult> Search(string keywords)
+    public PersonSearchResult Search(string keywords)
     {
         if (string.IsNullOrWhiteSpace(keywords))
         {
@@ -93,10 +89,7 @@ public class PersonController : ControllerBase
             if (result == null)
                 return new PersonSearchResult(Enumerable.Empty<PersonModel>());
 
-            ChineseIdCardValidation? card = null;
-            if (this.chineseIdCardManager != null)
-                card = await this.chineseIdCardManager.GetCurrentAsync(result);
-            return new PersonSearchResult(new PersonModel[] { new(result, card != null) });
+            return new PersonSearchResult(new PersonModel[] { new(result) });
         }
 
         var pinyinSearchSet = this.personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(keywords)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint);
@@ -112,10 +105,7 @@ public class PersonController : ControllerBase
         var final = new List<PersonModel>();
         foreach (var person in searchResults)
         {
-            ChineseIdCardValidation? chineseIdCard = null;
-            if (this.chineseIdCardManager != null)
-                chineseIdCard = await this.chineseIdCardManager.GetCurrentAsync(person);
-            final.Add(new PersonModel(person, chineseIdCard != null, members: await this.organizationMemberManager.GetMembersOfAsync(person)));
+            final.Add(new PersonModel(person, false));
         }
 
         return new PersonSearchResult(final, pinyinSearchSetCount > 30 || nameSearchSetCount > 30);

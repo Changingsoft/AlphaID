@@ -1,5 +1,5 @@
-using AlphaIDPlatform.Helpers;
-using IDSubjects;
+using AlphaIdPlatform.Helpers;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;

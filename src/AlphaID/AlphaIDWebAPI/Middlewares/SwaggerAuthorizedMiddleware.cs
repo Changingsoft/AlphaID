@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace AlphaIDWebAPI.Middlewares;
+namespace AlphaIdWebAPI.Middlewares;
 
 /// <summary>
 /// 为swagger提供授权访问的中间件。详见<see href="https://github.com/domaindrivendev/Swashbuckle.WebApi/issues/384#issuecomment-272310182"/>

@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.ChineseName;
+﻿namespace IdSubjects.ChineseName;
 
 /// <summary>
 /// 

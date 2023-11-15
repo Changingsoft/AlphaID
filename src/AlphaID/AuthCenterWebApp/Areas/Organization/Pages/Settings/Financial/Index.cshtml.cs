@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 public class IndexModel : PageModel
 {
     private readonly OrganizationManager organizationManager;
-    OrganizationBankAccountManager bankAccountManager;
+    readonly OrganizationBankAccountManager bankAccountManager;
     public IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
     {
         this.organizationManager = organizationManager;

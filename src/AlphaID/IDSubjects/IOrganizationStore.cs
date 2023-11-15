@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// Provide CURD for organization.

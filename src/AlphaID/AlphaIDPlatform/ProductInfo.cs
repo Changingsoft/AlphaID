@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform;
+﻿namespace AlphaIdPlatform;
 
 /// <summary>
 /// 产品信息。

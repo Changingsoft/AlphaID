@@ -1,6 +1,6 @@
-using IDSubjects;
-using IDSubjects.ChineseName;
-using IDSubjects.Subjects;
+using IdSubjects;
+using IdSubjects.ChineseName;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;

@@ -1,6 +1,7 @@
 ﻿using AdminWebApp.Infrastructure.DataStores;
-using AlphaID.DirectoryLogon.EntityFramework;
-using AlphaID.EntityFramework;
+using AlphaId.RealName.EntityFramework;
+using AlphaId.DirectoryLogon.EntityFramework;
+using AlphaId.EntityFramework;
 using DatabaseTool;
 using DatabaseTool.Migrators;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,13 @@ builder
                     sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
                     sql.UseNetTopologySuite();
                 });
-                options.UseLazyLoadingProxies();
+            });
+            services.AddDbContext<RealNameDbContext>(options =>
+            {
+                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+                {
+                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                });
             });
 
             services.AddDbContext<DirectoryLogonDbContext>(options =>
@@ -60,6 +67,7 @@ builder
             services.AddScoped<DatabaseMigrator, IdServerConfigurationDbMigrator>();
             services.AddScoped<DatabaseMigrator, IdServerPersistedGrantDbMigrator>();
             services.AddScoped<DatabaseMigrator, IdSubjectsDbMigrator>();
+            services.AddScoped<DatabaseMigrator, RealNameDbMigrator>();
             services.AddScoped<DatabaseMigrator, DirectoryLogonDbMigrator>();
             services.AddScoped<DatabaseMigrator, AdminCenterDbMigrator>();
         });

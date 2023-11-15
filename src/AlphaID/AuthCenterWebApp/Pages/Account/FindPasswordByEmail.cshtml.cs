@@ -1,6 +1,6 @@
-using AlphaIDPlatform;
-using AlphaIDPlatform.Platform;
-using IDSubjects;
+using AlphaIdPlatform;
+using AlphaIdPlatform.Platform;
+using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

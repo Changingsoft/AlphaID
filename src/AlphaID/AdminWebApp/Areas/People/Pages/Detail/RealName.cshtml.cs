@@ -1,5 +1,5 @@
-using IDSubjects;
-using IDSubjects.RealName;
+using IdSubjects;
+using IdSubjects.RealName;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail
@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
     public class RealNameModel : PageModel
     {
         private readonly NaturalPersonManager userManager;
-        RealNameManager realNameManager;
+        private readonly RealNameManager realNameManager;
 
         public RealNameModel(NaturalPersonManager userManager, RealNameManager realNameManager)
         {
@@ -17,9 +17,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public NaturalPerson Data { get; set; } = default!;
 
-        public RealNameInfo? RealName { get; set; }
-
-        public ChineseIdCardValidation? Card { get; set; }
+        public RealNameState? RealName { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -27,7 +25,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             if (person == null)
                 return this.NotFound();
 
-            this.RealName = this.realNameManager.GetRealNameInfo(person);
+            this.RealName = this.realNameManager.GetRealNameState(person);
 
             this.Data = person;
             return this.Page();

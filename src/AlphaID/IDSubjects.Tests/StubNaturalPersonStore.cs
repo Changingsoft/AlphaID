@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 
 internal class StubNaturalPersonStore : NaturalPersonStoreBase
 {

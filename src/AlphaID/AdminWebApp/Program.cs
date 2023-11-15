@@ -2,19 +2,20 @@ using AdminWebApp;
 using AdminWebApp.Domain.Security;
 using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
-using AlphaID.DirectoryLogon.EntityFramework;
-using AlphaID.EntityFramework;
-using AlphaID.PlatformServices.Aliyun;
-using AlphaID.PlatformServices.Primitives;
-using AlphaIDPlatform;
-using AlphaIDPlatform.Platform;
-using AlphaIDPlatform.RazorPages;
+using AlphaId.RealName.EntityFramework;
+using AlphaId.DirectoryLogon.EntityFramework;
+using AlphaId.EntityFramework;
+using AlphaId.PlatformServices.Aliyun;
+using AlphaId.PlatformServices.Primitives;
+using AlphaIdPlatform;
+using AlphaIdPlatform.Platform;
+using AlphaIdPlatform.RazorPages;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
-using IDSubjects.ChineseName;
-using IDSubjects.DirectoryLogon;
-using IDSubjects.RealName;
+using IdSubjects.ChineseName;
+using IdSubjects.DirectoryLogon;
+using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -139,17 +140,13 @@ builder.Services
         };
     });
 
-//注册IDSubjects DbContext.
+//注册IdSubjects DbContext.
 builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
     {
         sqlOptions.UseNetTopologySuite();
     });
-});
-builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
 });
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
@@ -166,18 +163,22 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 });
 
 //自然人管理器
-var identityBuilder = builder.Services.AddIdSubjects()
-    .AddDefaultStores();
+var idSubjectsBuilder = builder.Services.AddIdSubjects();
+idSubjectsBuilder.IdentityBuilder.AddDefaultStores();
 
-if(true)
+if (true)
 {
-    identityBuilder.AddRealName()
-        .AddRealNameStore<RealNameStore>();
+    idSubjectsBuilder.AddRealName()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
 }
 
-//实名身份验证器。
-builder.Services.AddScoped<ChineseIdCardManager>()
-    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
+if (true)
+{
+    idSubjectsBuilder.AddDirectoryLogin()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection")));
+}
 
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();

@@ -1,7 +1,7 @@
-﻿using IDSubjects.Subjects;
+﻿using IdSubjects.Subjects;
 using Xunit;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 
 public class UsciTests
 {

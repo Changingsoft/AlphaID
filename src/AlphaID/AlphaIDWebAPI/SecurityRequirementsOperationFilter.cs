@@ -3,7 +3,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
 
-namespace AlphaIDWebAPI;
+namespace AlphaIdWebAPI;
 
 internal class SecurityRequirementsOperationFilter : IOperationFilter
 {

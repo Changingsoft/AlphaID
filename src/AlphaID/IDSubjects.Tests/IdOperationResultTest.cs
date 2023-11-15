@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 public class IdOperationResultTest
 {
     [Fact]

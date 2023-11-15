@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 
-namespace AlphaIDPlatform.Platform;
+namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// Email Sender.

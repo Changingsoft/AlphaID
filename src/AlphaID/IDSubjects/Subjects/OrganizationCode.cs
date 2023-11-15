@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace IDSubjects.Subjects;
+namespace IdSubjects.Subjects;
 
 /// <summary>
 /// 表示组织机构代码。

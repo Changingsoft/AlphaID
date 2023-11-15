@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace AlphaIDPlatform.Platform;
+namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// ID card recognize exception.

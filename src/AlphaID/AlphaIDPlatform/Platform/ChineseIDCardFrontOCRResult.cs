@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// Result of ID Card Front.

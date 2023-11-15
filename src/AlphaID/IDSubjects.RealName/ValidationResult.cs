@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects.RealName;
+namespace IdSubjects.RealName;
 
 /// <summary>
 /// 
@@ -14,18 +14,6 @@ public class ValidationResult
     /// </summary>
     protected ValidationResult() { }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="validator"></param>
-    /// <param name="validateTime"></param>
-    /// <param name="accepted"></param>
-    public ValidationResult(string validator, DateTime validateTime, bool accepted)
-    {
-        this.Validator = validator;
-        this.ValidateTime = validateTime;
-        this.Accepted = accepted;
-    }
 
     /// <summary>
     /// 

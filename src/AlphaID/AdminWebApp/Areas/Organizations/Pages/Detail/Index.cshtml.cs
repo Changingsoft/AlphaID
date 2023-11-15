@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail;

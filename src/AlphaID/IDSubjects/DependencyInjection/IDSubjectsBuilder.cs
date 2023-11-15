@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdSubjects.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace IDSubjects.DependencyInjection;
+namespace IdSubjects.DependencyInjection;
 
 /// <summary>
-/// IDSubjects builder for DI.
+/// IdSubjects builder for DI.
 /// </summary>
 public class IdSubjectsBuilder
 {
@@ -15,12 +16,30 @@ public class IdSubjectsBuilder
     public IServiceCollection Services { get; }
 
     /// <summary>
+    /// 获取 AspNetCore Identity 基础设施提供的 IdentityBuilder.
+    /// </summary>
+    public IdentityBuilder IdentityBuilder { get; }
+
+    /// <summary>
     /// Create new builder using incoming service collection.
     /// </summary>
     /// <param name="services"></param>
-    public IdSubjectsBuilder(IServiceCollection services)
+    /// <param name="identityBuilder"></param>
+    public IdSubjectsBuilder(IServiceCollection services, IdentityBuilder identityBuilder)
     {
         this.Services = services;
+        this.IdentityBuilder = identityBuilder;
+    }
+
+    /// <summary>
+    /// 添加自然人管理拦截器。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddNaturalPersonManagerInterceptor<T>() where T : class, IInterceptor
+    {
+        this.Services.AddScoped<IInterceptor, T>();
+        return this;
     }
 
     /// <summary>

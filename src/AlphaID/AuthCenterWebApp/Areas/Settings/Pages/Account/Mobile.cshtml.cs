@@ -1,7 +1,7 @@
-using AlphaIDPlatform.Platform;
+using AlphaIdPlatform.Platform;
 using Duende.IdentityServer.Extensions;
-using IDSubjects;
-using IDSubjects.Subjects;
+using IdSubjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

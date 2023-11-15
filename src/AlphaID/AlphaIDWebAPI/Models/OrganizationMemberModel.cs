@@ -1,6 +1,6 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
-namespace AlphaIDWebAPI.Models;
+namespace AlphaIdWebAPI.Models;
 
 /// <summary>
 /// 组织的成员。

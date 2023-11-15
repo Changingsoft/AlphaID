@@ -1,4 +1,4 @@
-﻿using AlphaID.EntityFramework;
+﻿using AlphaId.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 

@@ -1,12 +1,11 @@
-﻿using IDSubjects;
-using IDSubjects.Invitations;
-using IDSubjects.Payments;
-using IDSubjects.RealName;
+﻿using IdSubjects;
+using IdSubjects.Invitations;
+using IdSubjects.Payments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 public class IdSubjectsDbContext : DbContext
 {
@@ -45,8 +44,6 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = default!;
 
-    public DbSet<ChineseIdCardValidation> RealNameValidations { get; protected set; } = default!;
-
     /// <summary>
     /// Organizations.
     /// </summary>
@@ -59,9 +56,6 @@ public class IdSubjectsDbContext : DbContext
     public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = default!;
 
     public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = default!;
-
-
-    public DbSet<RealNameInfo> RealNameInfos { get; protected set; } = default!;
 
     public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = default!;
 

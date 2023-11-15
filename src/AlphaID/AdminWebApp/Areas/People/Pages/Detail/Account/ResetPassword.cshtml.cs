@@ -1,5 +1,5 @@
-using AlphaIDPlatform.Platform;
-using IDSubjects;
+using AlphaIdPlatform.Platform;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

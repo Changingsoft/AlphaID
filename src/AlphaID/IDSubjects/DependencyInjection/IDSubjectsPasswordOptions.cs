@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects.DependencyInjection;
+namespace IdSubjects.DependencyInjection;
 
 /// <summary>
 /// 密码选项。

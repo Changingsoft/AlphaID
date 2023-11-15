@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects.Payments;
+namespace IdSubjects.Payments;
 
 /// <summary>
 /// 银行账户。

@@ -1,19 +1,19 @@
-﻿namespace IDSubjects.RealName;
+﻿namespace IdSubjects.RealName;
 
 /// <summary>
 /// 实名信息管理器。
 /// </summary>
 public class RealNameManager
 {
-    private readonly IRealNameStore store;
+    private readonly IRealNameStateStore stateStore;
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="store"></param>
-    public RealNameManager(IRealNameStore store)
+    /// <param name="stateStore"></param>
+    public RealNameManager(IRealNameStateStore stateStore)
     {
-        this.store = store;
+        this.stateStore = stateStore;
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public class RealNameManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public RealNameInfo? GetRealNameInfo(NaturalPerson person)
+    public RealNameState? GetRealNameState(NaturalPerson person)
     {
-        return this.store.FindByPersonId(person.Id);
+        return this.stateStore.FindById(person.Id);
     }
 }

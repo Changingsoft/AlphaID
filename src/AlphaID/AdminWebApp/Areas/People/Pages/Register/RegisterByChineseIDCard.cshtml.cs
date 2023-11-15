@@ -1,32 +1,13 @@
-using AlphaIDPlatform.Platform;
-using IDSubjects;
-using IDSubjects.ChineseName;
-using IDSubjects.RealName;
-using IDSubjects.Subjects;
+using AlphaIdPlatform.Platform;
+using IdSubjects;
+using IdSubjects.ChineseName;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace AdminWebApp.Areas.People.Pages.Register;
 
 public class RegisterByChineseIdCardModel : PageModel
 {
-    private readonly IChineseIdCardOcrService ocrService;
-    private readonly NaturalPersonManager personManager;
-    private readonly ChinesePersonNameFactory chinesePersonNameFactory;
-    private readonly ChineseIdCardManager chineseIdCardManager;
-    private readonly ILogger<RegisterByChineseIdCardModel> logger;
-
-    public RegisterByChineseIdCardModel(IChineseIdCardOcrService ocrService, NaturalPersonManager personManager, ChinesePersonNameFactory chinesePersonNameFactory, ChineseIdCardManager realNameValidator, ILogger<RegisterByChineseIdCardModel> logger)
-    {
-        this.ocrService = ocrService;
-        this.personManager = personManager;
-        this.chinesePersonNameFactory = chinesePersonNameFactory;
-        this.chineseIdCardManager = realNameValidator;
-        this.logger = logger;
-    }
-
     [BindProperty]
     public string IdCardFrontBase64 { get; set; } = default!;
 
@@ -46,110 +27,8 @@ public class RegisterByChineseIdCardModel : PageModel
     {
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public Task<IActionResult> OnPostAsync()
     {
-        if (!MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
-        {
-            this.ModelState.AddModelError(nameof(this.Mobile), "移动电话号码无效");
-        }
-
-        if (!this.ModelState.IsValid)
-            return this.Page();
-
-        var (personalFaceMimeType, personalFaceBytes) = await EnsureBase64Image(this.IdCardFrontBase64);
-        var (issuerFaceMimeType, issuerFaceBytes) = await EnsureBase64Image(this.IdCardBackBase64);
-
-        ChineseIdCardFrontOcrResult personalFaceResult;
-        ChineseIdCardBackOcrResult issuerFaceResult;
-        try
-        {
-            using var personalFaceStream = new MemoryStream(personalFaceBytes);
-            personalFaceResult = await this.ocrService.RecognizeIdCardFront(personalFaceStream);
-            using var issuerFaceStream = new MemoryStream(issuerFaceBytes);
-            issuerFaceResult = await this.ocrService.RecognizeIdCardBack(issuerFaceStream);
-        }
-        catch (ChineseIdCardOcrException ex)
-        {
-            this.logger.LogWarning(ex, "用户提供的图像无法识别为有效的身份证件。");
-            this.ModelState.AddModelError("", "无法识别为有效的身份证图片");
-            return this.Page();
-        }
-
-
-        //check if exists in database
-        var cardExists = this.chineseIdCardManager.Validations.Any(p => p.ChineseIdCard!.CardNumber == personalFaceResult.IdCardNumber);
-        if (cardExists)
-        {
-            this.ModelState.AddModelError("", "该身份证已经注册过。");
-            return this.Page();
-        }
-
-        var exists = this.personManager.Users.Where(p => p.PhoneNumber == phoneNumber.ToString()
-                                                         || p.UserName == phoneNumber.PhoneNumber);
-        if (!string.IsNullOrEmpty(this.Email))
-            exists = exists.Where(p => p.Email == this.Email
-                                       || p.UserName == this.Email);
-
-        if (exists.Any())
-        {
-            this.ModelState.AddModelError("", "该身份证、手机号或电子邮件地址已经注册过。");
-            return this.Page();
-        }
-
-        //ensure username, use email first, otherwise use phone number part.
-        var userName = this.Email ?? phoneNumber.PhoneNumber;
-
-        //ensure chinese person name
-        var chinesePersonName = this.chinesePersonNameFactory.Create(personalFaceResult.Name);
-        ChineseIdCardInfo cardInfo = new(personalFaceResult.Name,
-                                     personalFaceResult.SexString == "男" ? Gender.Male : Gender.Female,
-                                     personalFaceResult.Nationality,
-                                     personalFaceResult.DateOfBirth,
-                                     personalFaceResult.Address,
-                                     personalFaceResult.IdCardNumber,
-                                     issuerFaceResult.Issuer,
-                                     issuerFaceResult.IssueDate,
-                                     issuerFaceResult.ExpiresDate);
-
-
-        PersonBuilder builder = new(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
-        builder.UseChinesePersonName(chinesePersonName);
-        builder.SetMobile(phoneNumber, true);
-        if (!string.IsNullOrEmpty(this.Email))
-            builder.SetEmail(this.Email);
-
-        var result = await this.personManager.CreateAsync(builder.Build());
-        if (!result.Succeeded)
-        {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error.Description);
-            }
-            return this.Page();
-        }
-
-        //add chinese card
-        ChineseIdCardValidation card = new(new ChineseIdCardImage(personalFaceBytes, personalFaceMimeType, issuerFaceBytes, issuerFaceMimeType));
-        card.TryApplyChineseIdCardInfo(cardInfo);
-        card.TryApplyChinesePersonName(chinesePersonName);
-        await this.chineseIdCardManager.CommitAsync(builder.Build(), card);
-        await this.chineseIdCardManager.ValidateAsync(card, "System", true);
-
-        return this.RedirectToPage("../Detail/Index", new { id = builder.Build().Id });
+        throw new NotImplementedException();
     }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    private static Task<(string issuerFaceMimeType, byte[] issuerFaceBytes)> EnsureBase64Image(string iDCardBackBase64)
-    {
-        var bytes = Convert.FromBase64String(iDCardBackBase64);
-        using MemoryStream stream = new(bytes);
-        using Image image = Image.FromStream(stream);
-        string mime = image.RawFormat.Equals(ImageFormat.Jpeg)
-            ? "image/jpeg"
-            : image.RawFormat.Equals(ImageFormat.Png)
-                ? "image/png"
-                : image.RawFormat.Equals(ImageFormat.Bmp) ? "image/bmp" : throw new ArgumentException("不支持的图像格式");
-        return Task.FromResult((mime, bytes));
-    }
-
 }

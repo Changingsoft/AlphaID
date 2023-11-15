@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Diagnostics;
 
-namespace AlphaIDPlatform.RazorPages;
+namespace AlphaIdPlatform.RazorPages;
 
 /// <summary>
 /// 主语标识锚点路由模型约定

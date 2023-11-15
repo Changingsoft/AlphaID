@@ -1,17 +1,20 @@
-﻿using AlphaID.EntityFramework;
-using AlphaID.PlatformServices.Aliyun;
-using AlphaID.PlatformServices.Primitives;
-using AlphaIDPlatform;
-using AlphaIDPlatform.Platform;
-using AlphaIDPlatform.RazorPages;
+﻿using AlphaId.DirectoryLogon.EntityFramework;
+using AlphaId.RealName.EntityFramework;
+using AlphaId.EntityFramework;
+using AlphaId.PlatformServices.Aliyun;
+using AlphaId.PlatformServices.Primitives;
+using AlphaIdPlatform;
+using AlphaIdPlatform.Platform;
+using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
-using IDSubjects;
-using IDSubjects.ChineseName;
-using IDSubjects.RealName;
+using IdSubjects;
+using IdSubjects.ChineseName;
+using IdSubjects.DirectoryLogon;
+using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -86,13 +89,15 @@ builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
     });
 });
 
-var identityBuilder = builder.Services.AddIdSubjectsIdentity(options =>
+var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789.-_@";
     options.User.RequireUniqueEmail = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
-})
+});
+
+idSubjectsBuilder.IdentityBuilder
     .AddSignInManager<PersonSignInManager>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
     .AddDefaultTokenProviders()
@@ -100,8 +105,16 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity(options =>
 
 if (true) //todo 设置一个开关以决定是否启用实名认证模块
 {
-    identityBuilder.AddRealName()
-        .AddRealNameStore<RealNameStore>();
+    idSubjectsBuilder.AddRealName()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+}
+
+if (true)
+{
+    idSubjectsBuilder.AddDirectoryLogin()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
 }
 
 //添加邮件发送器。
@@ -160,10 +173,6 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(20);
 });
-
-//实名认证
-builder.Services.AddScoped<ChineseIdCardManager>()
-    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 //身份证OCR
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();

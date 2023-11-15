@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,8 +6,8 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
 {
     public class IndexModel : PageModel
     {
-        private OrganizationManager organizationManager;
-        private OrganizationIdentifierManager identifierManager;
+        private readonly OrganizationManager organizationManager;
+        private readonly OrganizationIdentifierManager identifierManager;
 
         public IndexModel(OrganizationManager organizationManager, OrganizationIdentifierManager identifierManager)
         {

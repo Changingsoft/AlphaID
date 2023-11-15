@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlphaIDWebAPI.Controllers.Oidc;
+namespace AlphaIdWebAPI.Controllers.Oidc;
 
 /// <summary>
 /// OIDC Client.

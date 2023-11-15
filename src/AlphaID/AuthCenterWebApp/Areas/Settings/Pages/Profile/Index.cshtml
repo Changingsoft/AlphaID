@@ -1,4 +1,6 @@
 ﻿@page
+@using AlphaIdPlatform.Security
+@using AlphaIdPlatform.Helpers
 @model AuthCenterWebApp.Areas.Settings.Pages.Profile.IndexModel
 @{
     ViewBag.Title = L["Profile"];
@@ -37,24 +39,24 @@
             <div class="mb-3">
                 <label asp-for="Input.DateOfBirth" class="form-label"></label>
                 <input asp-for="Input.DateOfBirth" class="form-control" />
-                <span asp-description-for="Input.DateOfBirth"></span>
+                <DescriptionForTagHelper asp-description-for="Input.DateOfBirth"></DescriptionForTagHelper>
                 <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Gender" class="form-label"></label>
                 <select asp-for="Input.Gender" asp-items="EnumHelper.GetSelectListItems<Gender>()" class="form-select"></select>
-                <span asp-description-for="Input.Gender"></span>
+                <DescriptionForTagHelper asp-description-for="Input.Gender"></DescriptionForTagHelper>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Bio" class="form-label"></label>
                 <input asp-for="Input.Bio" class="form-control" />
-                <span asp-description-for="Input.Bio"></span>
+                <DescriptionForTagHelper asp-description-for="Input.Bio"></DescriptionForTagHelper>
                 <span asp-validation-for="Input.Bio" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Website" class="form-label"></label>
                 <input asp-for="Input.Website" class="form-control" />
-                <span asp-description-for="Input.Website"></span>
+                <DescriptionForTagHelper asp-description-for="Input.Website"></DescriptionForTagHelper>
                 <span asp-validation-for="Input.Website" class="text-danger"></span>
             </div>
             

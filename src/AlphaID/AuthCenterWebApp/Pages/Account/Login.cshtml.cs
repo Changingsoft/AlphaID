@@ -1,10 +1,10 @@
-using AlphaIDPlatform.Identity;
+using AlphaIdPlatform.Identity;
 using AuthCenterWebApp.Services;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -194,7 +194,7 @@ public class LoginModel : PageModel
                 {
                     new()
                     {
-                        AuthenticationScheme = context!.IdP,
+                        AuthenticationScheme = context.IdP,
                         DisplayName = scheme!.DisplayName!,
                     }
                 };

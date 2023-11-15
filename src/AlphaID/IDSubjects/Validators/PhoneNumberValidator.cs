@@ -1,7 +1,7 @@
-﻿using IDSubjects.Subjects;
+﻿using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects.Validators;
+namespace IdSubjects.Validators;
 
 /// <summary>
 /// 移动电话号码验证器。

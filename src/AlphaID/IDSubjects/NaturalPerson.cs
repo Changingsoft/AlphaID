@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 表示一个自然人个体。
@@ -80,12 +80,12 @@ public class NaturalPerson
     /// <summary>
     /// When Created.
     /// </summary>
-    public virtual DateTimeOffset WhenCreated { get; protected internal set; } = DateTimeOffset.UtcNow;
+    public virtual DateTimeOffset WhenCreated { get; protected internal set; }
 
     /// <summary>
     /// When Changed.
     /// </summary>
-    public virtual DateTimeOffset WhenChanged { get; set; } = DateTimeOffset.UtcNow;
+    public virtual DateTimeOffset WhenChanged { get; set; }
 
     /// <summary>
     /// 启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。

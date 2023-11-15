@@ -1,19 +1,19 @@
-﻿using IDSubjects.DependencyInjection;
-using IDSubjects.Subjects;
+﻿using IdSubjects.DependencyInjection;
+using IdSubjects.Diagnostics;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Transactions;
 using TimeZoneConverter;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 自然人管理器。
 /// </summary>
 public class NaturalPersonManager : UserManager<NaturalPerson>
 {
-
     /// <summary>
     /// 
     /// </summary>
@@ -26,6 +26,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <param name="errors"></param>
     /// <param name="services"></param>
     /// <param name="logger"></param>
+    /// <param name="interceptors"></param>
     public NaturalPersonManager(IUserStore<NaturalPerson> store,
                                 IOptions<IdSubjectsOptions> optionsAccessor,
                                 IPasswordHasher<NaturalPerson> passwordHasher,
@@ -34,7 +35,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
                                 ILookupNormalizer keyNormalizer,
                                 NaturalPersonIdentityErrorDescriber errors,
                                 IServiceProvider services,
-                                ILogger<NaturalPersonManager> logger)
+                                ILogger<NaturalPersonManager> logger, IEnumerable<IInterceptor> interceptors)
         : base(store,
                optionsAccessor,
                passwordHasher,
@@ -45,19 +46,30 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
                services,
                logger)
     {
+        this.Interceptors = interceptors;
         this.Options = optionsAccessor.Value;
     }
 
     /// <summary>
-    /// 
+    /// 获取或设置IdSubjectsOptions。
     /// </summary>
     public new IdSubjectsOptions Options { get; set; }
 
     /// <summary>
-    /// Find person via mobile.
+    /// 获取拦截器。
     /// </summary>
-    /// <param name="mobile"></param>
-    /// <returns></returns>
+    public IEnumerable<IInterceptor> Interceptors { get; }
+
+    /// <summary>
+    /// 获取或设置时间提供器以便于可测试性。
+    /// </summary>
+    internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
+
+    /// <summary>
+    /// 通过移动电话号码查找自然人。
+    /// </summary>
+    /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准E.164格式。</param>
+    /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
     public virtual Task<NaturalPerson?> FindByMobileAsync(string mobile)
     {
         if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
@@ -76,7 +88,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     public virtual Task AccessSuccededAsync(NaturalPerson person, string authenticationMethod)
     {
         //todo 记录任何登录成功次数、上次登录时间，登录方式，登录IP等。
-        this.Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person, DateTimeOffset.UtcNow, authenticationMethod);
+        this.Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person, this.TimeProvider.GetUtcNow(), authenticationMethod);
         return Task.CompletedTask;
     }
 
@@ -105,7 +117,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
     {
-        var utcNow = DateTimeOffset.UtcNow;
+        var utcNow = this.TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
         user.PasswordLastSet = utcNow;
@@ -119,7 +131,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> CreateAsync(NaturalPerson user)
     {
-        var utcNow = DateTimeOffset.UtcNow;
+        var utcNow = this.TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
         return await base.CreateAsync(user);
@@ -132,8 +144,19 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     protected override async Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
     {
-        user.WhenChanged = DateTimeOffset.UtcNow;
-        return await base.UpdateUserAsync(user);
+        user.WhenChanged = this.TimeProvider.GetUtcNow();
+        var stack = new Stack<INaturalPersonManagerInterceptor>();
+        foreach (var interceptor in this.Interceptors.OfType<INaturalPersonManagerInterceptor>())
+        {
+            stack.Push(interceptor);
+            await interceptor.PreUpdateAsync(this, user);
+        }
+        var result = await base.UpdateUserAsync(user);
+        while (stack.TryPop(out var interceptor))
+        {
+            await interceptor.PostUpdateAsync(this, user);
+        }
+        return result;
     }
 
     /// <summary>
@@ -189,7 +212,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.ChangePasswordAsync(user, currentPassword, newPassword).ConfigureAwait(false);
         if (!result.Succeeded)
             return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
+        user.PasswordLastSet = this.TimeProvider.GetUtcNow();
         result = await this.UpdateUserAsync(user);
         if (!result.Succeeded)
         {
@@ -213,7 +236,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.ResetPasswordAsync(user, token, newPassword);
         if (!result.Succeeded)
             return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
+        user.PasswordLastSet = this.TimeProvider.GetUtcNow();
         result = await this.UpdateUserAsync(user);
         if (!result.Succeeded)
         {
@@ -289,7 +312,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         IdentityResult result = await base.AddPasswordAsync(user, password);
         if (!result.Succeeded)
             return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
+        user.PasswordLastSet = this.TimeProvider.GetUtcNow();
         result = await this.UpdateUserAsync(user);
         if (!result.Succeeded)
         {

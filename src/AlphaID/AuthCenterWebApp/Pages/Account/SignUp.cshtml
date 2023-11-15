@@ -1,4 +1,5 @@
 ﻿@page
+@using AlphaIdPlatform.Helpers
 @model AuthCenterWebApp.Pages.Account.SignUpModel
 @{
     Layout = "_AuthenticationLayout";
@@ -81,7 +82,7 @@
                 <div class="mb-3">
                     <label asp-for="Input.Email" class="form-label"></label>
                     <input asp-for="Input.Email" class="form-control" />
-                    <p asp-description-for="Input.Email"></p>
+                    <DescriptionForTagHelper asp-description-for="Input.Email"></DescriptionForTagHelper>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="mb-3">

@@ -2,7 +2,7 @@
 
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,7 @@
-﻿using IDSubjects.WechatWebLogin;
+﻿using IdSubjects.WechatWebLogin;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlphaID.WechatWebLogin.EntityFramework;
+namespace AlphaId.WechatWebLogin.EntityFramework;
 public class WechatWebLoginDbContext : DbContext
 {
     public WechatWebLoginDbContext(DbContextOptions<WechatWebLoginDbContext> options) : base(options)

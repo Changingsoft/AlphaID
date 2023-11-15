@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 
-namespace AlphaID.WechatWebLogin.EntityFramework;
+namespace AlphaId.WechatWebLogin.EntityFramework;
 
 internal static class ValueConversionExtensions
 {

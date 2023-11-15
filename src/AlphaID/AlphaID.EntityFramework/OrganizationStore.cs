@@ -1,6 +1,6 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 public class OrganizationStore : IOrganizationStore
 {

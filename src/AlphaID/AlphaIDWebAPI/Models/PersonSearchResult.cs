@@ -1,4 +1,4 @@
-﻿namespace AlphaIDWebAPI.Models;
+﻿namespace AlphaIdWebAPI.Models;
 
 /// <summary>
 /// 自然人搜索结果。

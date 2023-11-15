@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.Payments;
+﻿namespace IdSubjects.Payments;
 /// <summary>
 /// 提供持久化个人银行账户的能力。
 /// </summary>

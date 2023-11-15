@@ -1,15 +1,15 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 public class NaturalPersonStore : NaturalPersonStoreBase
 {
     private readonly IdSubjectsDbContext context;
 
-    public NaturalPersonStore(IdSubjectsDbContext context, IdentityErrorDescriber? describer = null)
+    public NaturalPersonStore(IdSubjectsDbContext context)
     {
         this.context = context;
     }

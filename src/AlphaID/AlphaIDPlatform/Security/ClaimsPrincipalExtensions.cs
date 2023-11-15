@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Security.Claims;
 
-namespace AlphaIDPlatform.Security;
+namespace AlphaIdPlatform.Security;
 
 /// <summary>
 /// Extensions for ClaimsPrincipal.

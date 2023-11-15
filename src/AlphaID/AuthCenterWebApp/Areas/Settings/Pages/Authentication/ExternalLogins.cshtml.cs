@@ -1,7 +1,7 @@
 ﻿#nullable disable
 
 using Duende.IdentityServer;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

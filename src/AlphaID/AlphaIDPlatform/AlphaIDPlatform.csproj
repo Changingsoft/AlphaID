@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="AlphaIDPlatformTests" />
+		<InternalsVisibleTo Include="AlphaIDPlatform.Tests" />
 	</ItemGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\IDSubjects.RealName\IDSubjects.RealName.csproj" />
-		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
+		<ProjectReference Include="..\IdSubjects.RealName\IdSubjects.RealName.csproj" />
+		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 	</ItemGroup>
 
 </Project>

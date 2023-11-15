@@ -11,10 +11,6 @@ public class ErrorModel : PageModel
 
     public bool ShowRequestId => !string.IsNullOrEmpty(this.RequestId);
 
-    public ErrorModel()
-    {
-    }
-
     public void OnGet()
     {
         this.RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier;

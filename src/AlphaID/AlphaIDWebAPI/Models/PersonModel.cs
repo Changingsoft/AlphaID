@@ -1,6 +1,6 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
-namespace AlphaIDWebAPI.Models;
+namespace AlphaIdWebAPI.Models;
 
 
 
@@ -22,6 +22,7 @@ public record PersonModel(string SubjectId,
                           string? PhoneticSearchHint,
                           IEnumerable<string>? MembersOfHint)
 {
+
     /// <summary>
     /// 
     /// </summary>
@@ -38,4 +39,10 @@ public record PersonModel(string SubjectId,
                person.PersonName.SearchHint,
                members?.Select(p => $"{p.Title} {p.Department} {p.Organization.Name}".Trim()))
     { }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Obsolete]
+    public bool RealNameValid { get; set; } = RealNameValid;
 }

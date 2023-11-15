@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 表示存储的二进制数据信息。

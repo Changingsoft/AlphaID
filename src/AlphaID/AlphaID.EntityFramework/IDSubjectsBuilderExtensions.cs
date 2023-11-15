@@ -1,12 +1,17 @@
-﻿using IDSubjects;
-using IDSubjects.Invitations;
-using IDSubjects.Payments;
+﻿using IdSubjects;
+using IdSubjects.Invitations;
+using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 public static class IdSubjectsBuilderExtensions
 {
+    /// <summary>
+    /// 向AspNetCore Identity基础结构添加默认的存取器实现。
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public static IdentityBuilder AddDefaultStores(this IdentityBuilder builder)
     {
         builder.Services.TryAddScoped<IOrganizationStore, OrganizationStore>();

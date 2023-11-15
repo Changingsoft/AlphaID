@@ -1,7 +1,7 @@
-﻿using IDSubjects.DirectoryLogon;
+﻿using IdSubjects.DirectoryLogon;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlphaID.DirectoryLogon.EntityFramework;
+namespace AlphaId.DirectoryLogon.EntityFramework;
 
 public class DirectoryLogonDbContext : DbContext
 {

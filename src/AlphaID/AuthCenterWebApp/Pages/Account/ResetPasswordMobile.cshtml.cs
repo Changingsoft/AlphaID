@@ -70,8 +70,8 @@ public class ResetPasswordMobileModel : PageModel
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = this.userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
-        if (person == null || !person.PhoneNumberConfirmed)
+        var person = await this.userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
+        if (person is not { PhoneNumberConfirmed: true })
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
         }

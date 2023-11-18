@@ -2,7 +2,8 @@
 using IdSubjects.Payments;
 
 namespace AlphaId.EntityFramework;
-public class PersonBankAccountStore : IPersonBankAccountStore
+
+internal class PersonBankAccountStore : IPersonBankAccountStore
 {
     private readonly IdSubjectsDbContext dbContext;
 

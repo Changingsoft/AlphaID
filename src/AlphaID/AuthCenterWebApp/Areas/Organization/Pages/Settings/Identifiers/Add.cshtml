@@ -16,7 +16,7 @@
     <div class="mb-3">
         <label asp-for="Value" class="form-label"></label>
         <input asp-for="Value" class="form-control"/>
-        <DescriptionForTagHelper asp-description-for="Value"></DescriptionForTagHelper>
+        <span asp-description-for="Value"></span>
         <span asp-validation-for="Value" class="text-danger"></span>
     </div>
     <button type="submit" class="btn">@L["Add"]</button>

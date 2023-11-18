@@ -10,7 +10,7 @@ namespace IdSubjects;
 [Owned]
 [Index(nameof(FullName))]
 [Index(nameof(SearchHint))]
-public class PersonNameInfo
+public record PersonNameInfo
 {
     /// <summary>
     /// For persistence.

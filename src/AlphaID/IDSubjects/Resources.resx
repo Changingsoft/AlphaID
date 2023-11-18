@@ -165,4 +165,10 @@
   <data name="Invalid region code." xml:space="preserve">
     <value>Invalid region code.</value>
   </data>
+  <data name="LessThenMinimumPasswordAge" xml:space="preserve">
+    <value>Current password age is less then minimum passowrd age requirement.</value>
+  </data>
+  <data name="ReuseOldPassword" xml:space="preserve">
+    <value>You cannot reuse old passwords.</value>
+  </data>
 </root>

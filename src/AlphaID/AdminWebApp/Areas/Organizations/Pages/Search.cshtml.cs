@@ -14,7 +14,7 @@ public class SearchModel : PageModel
 
     public IEnumerable<GenericOrganization> Results { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync()
+    public IActionResult OnGet()
     {
         var q = this.Request.Query["q"];
         if (string.IsNullOrWhiteSpace(q))

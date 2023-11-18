@@ -72,7 +72,7 @@ public class PersonController : ControllerBase
     /// <param name="keywords">关键词。可以通过手机号码、姓名汉字、姓名全拼</param>
     /// <returns>Return matched peoples, up to 50 records.</returns>
     [HttpGet("Search/{keywords}")]
-    public PersonSearchResult Search(string keywords)
+    public async Task<PersonSearchResult> SearchAsync(string keywords)
     {
         if (string.IsNullOrWhiteSpace(keywords))
         {
@@ -85,7 +85,7 @@ public class PersonController : ControllerBase
 
         if (MobilePhoneNumber.TryParse(keywords, out MobilePhoneNumber number))
         {
-            var result = this.personManager.Users.SingleOrDefault(p => p.PhoneNumber == number.ToString());
+            var result = await this.personManager.FindByMobileAsync(number.ToString(), this.HttpContext.RequestAborted);
             if (result == null)
                 return new PersonSearchResult(Enumerable.Empty<PersonModel>());
 

@@ -25,7 +25,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             if (person == null)
                 return this.NotFound();
 
-            this.RealName = this.realNameManager.GetRealNameState(person);
+            this.RealName = await this.realNameManager.GetRealNameStateAsync(person);
 
             this.Data = person;
             return this.Page();

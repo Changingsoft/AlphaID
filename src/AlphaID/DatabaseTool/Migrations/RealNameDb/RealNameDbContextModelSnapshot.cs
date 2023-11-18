@@ -89,6 +89,10 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ActionIndicator")
+                        .IsRequired()
+                        .HasColumnType("varchar(15)");
+
                     b.Property<DateTimeOffset>("ExpiresAt")
                         .HasColumnType("datetimeoffset");
 

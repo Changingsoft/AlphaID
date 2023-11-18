@@ -101,7 +101,7 @@ public class BindLoginModel : PageModel
 
             //登录过程。
             var user = await this.userManager.FindByEmailAsync(this.Input.Username)
-                ?? await this.userManager.FindByMobileAsync(this.Input.Username)
+                ?? await this.userManager.FindByMobileAsync(this.Input.Username, this.HttpContext.RequestAborted)
                 ?? await this.userManager.FindByNameAsync(this.Input.Username);
             if (user != null)
             {
@@ -142,7 +142,14 @@ public class BindLoginModel : PageModel
 
                 if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
                 {
+
+/* 项目“AuthCenterWebApp (net6.0)”的未合并的更改
+在此之前:
                     var principal = this.GenerateMustChangePasswordPrincipal(user);
+在此之后:
+                    var principal = GenerateMustChangePasswordPrincipal(user);
+*/
+                    var principal = BindLoginModel.GenerateMustChangePasswordPrincipal(user);
                     await this.signInManager.SignOutAsync();
                     await this.HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
                     return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
@@ -284,7 +291,7 @@ public class BindLoginModel : PageModel
     }
 
 
-    private ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
+    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
     {
         var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));

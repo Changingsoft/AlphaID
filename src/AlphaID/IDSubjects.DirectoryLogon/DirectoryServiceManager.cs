@@ -30,7 +30,7 @@ public class DirectoryServiceManager
     /// Create a directory service.
     /// </summary>
     /// <param name="directoryService"></param>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public async Task<IdOperationResult> CreateAsync(DirectoryService directoryService)
     {
         using var entry = directoryService.GetRootEntry();

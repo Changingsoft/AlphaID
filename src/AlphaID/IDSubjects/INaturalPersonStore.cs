@@ -18,4 +18,12 @@ public interface INaturalPersonStore :
     IUserAuthenticationTokenStore<NaturalPerson>,
     IUserAuthenticatorKeyStore<NaturalPerson>,
     IUserTwoFactorRecoveryCodeStore<NaturalPerson>
-{ }
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phoneNumber"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken);
+}

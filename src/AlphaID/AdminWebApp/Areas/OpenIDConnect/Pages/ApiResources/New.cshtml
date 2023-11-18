@@ -13,25 +13,25 @@
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
         <input asp-for="Input.Name" class="form-control" />
-        <DescriptionForTagHelper asp-description-for="Input.Name" class="form-hint"></DescriptionForTagHelper>
+        <span asp-description-for="Input.Name" class="form-hint"></span>
         <span asp-validation-for="Input.Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.DisplayName" class="form-label"></label>
         <input asp-for="Input.DisplayName" class="form-control" />
-        <DescriptionForTagHelper asp-description-for="Input.DisplayName" class="form-hint"></DescriptionForTagHelper>
+        <span asp-description-for="Input.DisplayName" class="form-hint"></span>
         <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Description" class="form-label"></label>
         <input asp-for="Input.Description" class="form-control" />
-        <DescriptionForTagHelper asp-description-for="Input.Description" class="form-hint"></DescriptionForTagHelper>
+        <span asp-description-for="Input.Description" class="form-hint"></span>
         <span asp-validation-for="Input.Description" class="text-danger"></span>
     </div>
     <div class="form-check">
         <input asp-for="Input.RequireResourceIndicator" class="form-check-input" />
         <label asp-for="Input.RequireResourceIndicator" class="form-check-label"></label>
-        <DescriptionForTagHelper asp-description-for="Input.RequireResourceIndicator" class="form-check-description"></DescriptionForTagHelper>
+        <span asp-description-for="Input.RequireResourceIndicator" class="form-check-description"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.AllowedAccessTokenSigningAlgorithms" class="form-label"></label>

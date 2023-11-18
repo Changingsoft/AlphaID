@@ -14,6 +14,7 @@
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,18 +24,6 @@
 		<ProjectReference Include="..\AlphaId.DirectoryLogon.EntityFramework\AlphaId.DirectoryLogon.EntityFramework.csproj" />
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Resources\Areas\Organizations\Pages\Detail\Fapiao.zh-cn.resx">
-			<DependentUpon>Fapiao.resx</DependentUpon>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\Pages\Shared\_LayoutRoot.zh-cn.resx">
-			<DependentUpon>_LayoutRoot.resx</DependentUpon>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\Pages\Shared\_LayoutRoot.zh_CN.zh-cn.resx">
-			<DependentUpon>_LayoutRoot.zh_CN.resx</DependentUpon>
-		</EmbeddedResource>
 	</ItemGroup>
 
 	<ProjectExtensions>

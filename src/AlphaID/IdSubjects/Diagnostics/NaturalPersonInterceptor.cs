@@ -1,9 +1,11 @@
-﻿namespace IdSubjects.Diagnostics;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace IdSubjects.Diagnostics;
 
 /// <summary>
-/// 
+/// 提供一个具有默认行为的拦截器。如果你不想实现所有拦截方法，可以继承此拦截器然后重写所需的方法。
 /// </summary>
-public abstract class NaturalPersonManagerInterceptor : INaturalPersonManagerInterceptor
+public abstract class NaturalPersonInterceptor : INaturalPersonInterceptor
 {
     /// <summary>
     /// 
@@ -11,9 +13,9 @@ public abstract class NaturalPersonManagerInterceptor : INaturalPersonManagerInt
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PreCreateAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task<IdentityResult> PreCreateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        return Task.CompletedTask;
+        return Task.FromResult(IdentityResult.Success);
     }
 
     /// <summary>
@@ -26,18 +28,17 @@ public abstract class NaturalPersonManagerInterceptor : INaturalPersonManagerInt
     public virtual Task PostCreateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
         return Task.CompletedTask;
-        throw new NotImplementedException();
     }
 
     /// <summary>
-    /// 
+    /// 在更新NaturalPerson前调用。
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="person"></param>
-    /// <returns></returns>
-    public virtual Task PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
+    /// <returns>始终返回表示成功的IdentityResult。</returns>
+    public virtual Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        return Task.CompletedTask;
+        return Task.FromResult(IdentityResult.Success);
     }
 
     /// <summary>
@@ -57,9 +58,9 @@ public abstract class NaturalPersonManagerInterceptor : INaturalPersonManagerInt
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PreDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task<IdentityResult> PreDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        return Task.CompletedTask;
+        return Task.FromResult(IdentityResult.Success);
     }
 
     /// <summary>

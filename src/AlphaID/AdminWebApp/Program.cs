@@ -5,6 +5,7 @@ using AdminWebApp.Services;
 using AlphaId.RealName.EntityFramework;
 using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
+using AlphaId.EntityFramework.SecurityAuditing;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaId.PlatformServices.Primitives;
 using AlphaIdPlatform;
@@ -16,6 +17,7 @@ using IdentityModel;
 using IdSubjects.ChineseName;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
+using IdSubjects.SecurityAuditing;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -23,8 +25,12 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
+using System.Data;
 using System.Globalization;
 using System.Security.Claims;
+using Newtonsoft.Json;
 // ReSharper disable StringLiteralTypo
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +40,35 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration)
     .Enrich.FromLogContext()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
+    .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information)
+    .WriteTo.Logger(lc =>
+    {
+        lc.ReadFrom.Configuration(context.Configuration);
+        lc.Filter.ByIncludingOnly(log =>
+            {
+                if (log.Properties.TryGetValue("SourceContext", out var pv))
+                {
+                    var source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                    if (source == "Duende.IdentityServer.Events.DefaultEventService" || source == "IdSubjects.SecurityAuditing.DefaultEventService")
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            })
+            .WriteTo.MSSqlServer(
+                builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+                sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
+                columnOptions: new ColumnOptions()
+                {
+                    AdditionalColumns = new[]
+                    {
+                        new SqlColumn("EventId", SqlDbType.Int){PropertyName = "EventId.Id"},
+                        new SqlColumn("Source", SqlDbType.NVarChar){PropertyName = "SourceContext"},
+                    },
+                }
+            );
+    });
 });
 
 //ConfigServices
@@ -140,14 +174,6 @@ builder.Services
         };
     });
 
-//注册IdSubjects DbContext.
-builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
-    {
-        sqlOptions.UseNetTopologySuite();
-    });
-});
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
@@ -164,7 +190,15 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 
 //自然人管理器
 var idSubjectsBuilder = builder.Services.AddIdSubjects();
-idSubjectsBuilder.IdentityBuilder.AddDefaultStores();
+idSubjectsBuilder
+    .AddDefaultStores()
+    .AddDbContext(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
+        {
+            sqlOptions.UseNetTopologySuite();
+        });
+    });
 
 if (true)
 {
@@ -229,6 +263,13 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IVerificationCodeService, NopVerificationCodeService>();
 }
 
+//安全审计日志
+builder.Services.AddAuditLog()
+    .AddDefaultStore()
+    .AddDbContext(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"));
+    });
 
 var app = builder.Build();
 

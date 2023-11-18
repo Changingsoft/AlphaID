@@ -2,8 +2,8 @@
 using IdSubjects.DependencyInjection;
 using IdSubjects.Invitations;
 using IdSubjects.Payments;
+using IdSubjects.SecurityAuditing;
 using IdSubjects.Validators;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // ReSharper disable once CheckNamespace
@@ -23,7 +23,11 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <returns></returns>
     public static IdSubjectsBuilder AddIdSubjects(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
     {
+        //IdSubjects需要访问HttpContext.
+        services.AddHttpContextAccessor();
+
         // 由IdSubjects使用的服务。
+        services.TryAddScoped<NaturalPersonManager>();
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
@@ -33,10 +37,14 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationBankAccountManager>();
         services.TryAddScoped<OrganizationIdentifierManager>();
         services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
+        services.TryAddScoped<PasswordHistoryManager>();
+
+        services.TryAddScoped<IEventService, DefaultEventService>();
+        services.TryAddScoped<IEventSink, DefaultEventSink>();
 
         //添加基础标识
-        var builder = services.AddIdentityCore<NaturalPerson>()
-            .AddUserManager<NaturalPersonManager>()
+        var identityBuilder = services.AddIdentityCore<NaturalPerson>()
+            .AddUserManager<NaturalPersonManager>() //as UserManager<NaturalPerson>
             .AddUserValidator<PhoneNumberValidator>()
             ;
 
@@ -45,7 +53,7 @@ public static class IdSubjectsServiceCollectionExtensions
             services.Configure(setupAction);
         }
 
-        return new IdSubjectsBuilder(services, builder);
+        return new IdSubjectsBuilder(services, identityBuilder);
     }
 
 

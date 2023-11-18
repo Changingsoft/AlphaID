@@ -1,7 +1,8 @@
 ﻿using IdSubjects;
 
 namespace AlphaId.EntityFramework;
-public class OrganizationIdentifierStore : IOrganizationIdentifierStore
+
+internal class OrganizationIdentifierStore : IOrganizationIdentifierStore
 {
     private readonly IdSubjectsDbContext dbContext;
 

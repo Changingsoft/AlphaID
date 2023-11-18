@@ -7,7 +7,7 @@ namespace IdSubjects;
 /// 表示存储的二进制数据信息。
 /// </summary>
 [Owned]
-public class BinaryDataInfo
+public record BinaryDataInfo
 {
     /// <summary>
     /// 

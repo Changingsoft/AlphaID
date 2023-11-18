@@ -166,4 +166,10 @@
 	  <value>统一社会信用代码
 </value>
   </data>
+  <data name="LessThenMinimumPasswordAge" xml:space="preserve">
+	  <value>当前密码小于最短使用期限。</value>
+  </data>
+  <data name="ReuseOldPassword" xml:space="preserve">
+	  <value>不允许使用旧密码。</value>
+  </data>
 </root>

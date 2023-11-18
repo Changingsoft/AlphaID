@@ -22,7 +22,7 @@ public class SearchModel : PageModel
 
         if (MobilePhoneNumber.TryParse(q, out MobilePhoneNumber mobile))
         {
-            var person = await this.personManager.FindByMobileAsync(mobile.ToString());
+            var person = await this.personManager.FindByMobileAsync(mobile.ToString(), this.HttpContext.RequestAborted);
             return person != null ? this.RedirectToPage("Detail/Index", new { id = person.Id }) : this.Page();
         }
 

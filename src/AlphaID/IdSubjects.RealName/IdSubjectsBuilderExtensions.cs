@@ -19,7 +19,7 @@ public static class IdSubjectsBuilderExtensions
     {
         //Add required services
         builder.Services.TryAddScoped<RealNameManager>();
-        builder.AddNaturalPersonManagerInterceptor<RealNameInterceptor>();
+        builder.AddInterceptor<RealNameInterceptor>();
 
         var realNameBuilder = new RealNameBuilder(builder.Services);
         return realNameBuilder;

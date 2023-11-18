@@ -1,4 +1,5 @@
-﻿namespace IdSubjects.RealName;
+﻿
+namespace IdSubjects.RealName;
 
 /// <summary>
 /// 实名信息管理器。
@@ -21,8 +22,13 @@ public class RealNameManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public RealNameState? GetRealNameState(NaturalPerson person)
+    public virtual async Task<RealNameState?> GetRealNameStateAsync(NaturalPerson person)
     {
-        return this.stateStore.FindById(person.Id);
+        return await this.stateStore.FindByIdAsync(person.Id);
+    }
+
+    internal async Task<IdOperationResult> UpdateAsync(RealNameState realNameState)
+    {
+        return await this.stateStore.UpdateAsync(realNameState);
     }
 }

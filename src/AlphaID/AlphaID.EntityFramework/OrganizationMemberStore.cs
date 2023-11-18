@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework;
 
-public class OrganizationMemberStore : IOrganizationMemberStore
+internal class OrganizationMemberStore : IOrganizationMemberStore
 {
     private readonly IdSubjectsDbContext dbContext;
 

@@ -7,7 +7,7 @@ namespace IdSubjects;
 /// 表示配送地址。
 /// </summary>
 [Owned]
-public class AddressInfo
+public record AddressInfo
 {
     /// <summary>
     /// 国家。

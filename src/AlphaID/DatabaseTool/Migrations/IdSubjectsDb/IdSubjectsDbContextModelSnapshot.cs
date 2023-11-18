@@ -481,6 +481,38 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("OrganizationUsedName");
                 });
 
+            modelBuilder.Entity("IdSubjects.PasswordHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WhenCreated");
+
+                    b.ToTable("PasswordHistory");
+                });
+
             modelBuilder.Entity("IdSubjects.Payments.PersonBankAccount", b =>
                 {
                     b.Property<string>("AccountNumber")
@@ -815,6 +847,17 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsRequired();
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("IdSubjects.PasswordHistory", b =>
+                {
+                    b.HasOne("IdSubjects.NaturalPerson", "Person")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("IdSubjects.Payments.PersonBankAccount", b =>

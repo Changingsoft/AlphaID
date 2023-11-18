@@ -10,8 +10,6 @@ namespace AuthCenterWebApp.Pages.Ciba;
 [SecurityHeaders]
 public class IndexModel : PageModel
 {
-    public BackchannelUserLoginRequest? LoginRequest { get; set; }
-
     private readonly IBackchannelAuthenticationInteractionService backchannelAuthenticationInteraction;
     private readonly ILogger<IndexModel> logger;
 
@@ -20,16 +18,17 @@ public class IndexModel : PageModel
         this.backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
         this.logger = logger;
     }
+    public BackchannelUserLoginRequest LoginRequest { get; set; } = default!;
 
     public async Task<IActionResult> OnGet(string id)
     {
-        this.LoginRequest = await this.backchannelAuthenticationInteraction.GetLoginRequestByInternalIdAsync(id);
-        if (this.LoginRequest == null)
+        var loginRequest = await this.backchannelAuthenticationInteraction.GetLoginRequestByInternalIdAsync(id);
+        if (loginRequest == null)
         {
             this.logger.LogWarning("Invalid backchannel login id {id}", id);
             return this.RedirectToPage("/Home/Error/LoginModel");
         }
-
+        this.LoginRequest = loginRequest;
         return this.Page();
     }
 }

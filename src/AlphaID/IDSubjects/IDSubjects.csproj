@@ -10,7 +10,9 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="IDSubjects.Tests" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="IdentityModel" Version="6.2.0" />
 		<PackageReference Include="Microsoft.Bcl.TimeProvider" Version="8.0.0" />

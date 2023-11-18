@@ -7,7 +7,7 @@ namespace IdSubjects;
 /// 
 /// </summary>
 [Owned]
-public class FapiaoInfo
+public record FapiaoInfo
 {
     /// <summary>
     /// 

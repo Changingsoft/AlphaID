@@ -38,4 +38,10 @@ public class RealNameState
     /// </summary>
     public virtual ICollection<RealNameValidation> Validations { get; protected set; } =
         new HashSet<RealNameValidation>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Column(TypeName = "varchar(15)")]
+    public ActionIndicator ActionIndicator { get; set; }
 }

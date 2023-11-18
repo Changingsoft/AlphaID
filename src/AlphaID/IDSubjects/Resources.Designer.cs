@@ -151,6 +151,15 @@ namespace IdSubjects {
         }
         
         /// <summary>
+        ///   查找类似 Current password age is less then minimum passowrd age requirement. 的本地化字符串。
+        /// </summary>
+        public static string LessThenMinimumPasswordAge {
+            get {
+                return ResourceManager.GetString("LessThenMinimumPasswordAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Male 的本地化字符串。
         /// </summary>
         public static string Male {
@@ -174,6 +183,15 @@ namespace IdSubjects {
         public static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 You cannot reuse old passwords. 的本地化字符串。
+        /// </summary>
+        public static string ReuseOldPassword {
+            get {
+                return ResourceManager.GetString("ReuseOldPassword", resourceCulture);
             }
         }
         

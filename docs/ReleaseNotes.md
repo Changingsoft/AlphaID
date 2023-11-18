@@ -36,6 +36,7 @@ Alpha ID 尚未正式发布，目前已实现的特性如下。在正式发布�
 ### 安全性 Security
 
 * 注册阶段实施 CHAPCHA 检查
+* 支持安全审计日志
 
 ### 外观 Appearances
 

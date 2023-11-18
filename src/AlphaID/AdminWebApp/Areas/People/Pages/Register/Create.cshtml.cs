@@ -47,9 +47,13 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (this.Mobile != null && !MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+        var builder = new PersonBuilder();
+        if (this.Mobile != null)
         {
-            this.ModelState.AddModelError("", "移动电话号码无效。");
+            if (MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+                builder.SetMobile(phoneNumber);
+            else
+                this.ModelState.AddModelError("", "移动电话号码无效。");
         }
 
         if (!this.ModelState.IsValid)
@@ -61,14 +65,12 @@ public class CreateModel : PageModel
 
         var personName = new PersonNameInfo(chinesePersonName.FullName, this.Input.Surname, this.Input.GivenName);
 
-        var builder = new PersonBuilder();
         builder
             .SetUserName(this.UserName)
             .SetPersonName(personName);
         if (this.Email != null)
             builder.SetEmail(this.Email);
-        if (this.Mobile != null)
-            builder.SetMobile(phoneNumber);
+
 
         var person = builder.Build();
 

@@ -31,6 +31,7 @@ public class IdSubjectsDbContext : DbContext
             .HaveConversion<NullableDateOnlyConverter>()
             .HaveColumnType("date");
     }
+
     /// <summary>
     /// 自然人。
     /// </summary>
@@ -44,14 +45,14 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = default!;
 
+    public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = default!;
+
     /// <summary>
     /// Organizations.
     /// </summary>
     public DbSet<GenericOrganization> Organizations { get; protected set; } = default!;
 
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = default!;
-
-    public DbSet<OrganizationUsedName> OrganizationUsedNames { get; protected set; } = default!;
 
     public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = default!;
 

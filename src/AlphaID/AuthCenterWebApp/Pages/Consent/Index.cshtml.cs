@@ -28,18 +28,20 @@ public class Index : PageModel
         this.logger = logger;
     }
 
-    public ViewModel? View { get; set; }
+    public ViewModel View { get; set; } = default!;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
     public async Task<IActionResult> OnGet(string returnUrl)
     {
-        this.View = await this.BuildViewModelAsync(returnUrl);
-        if (this.View == null)
+        
+        var view = await this.BuildViewModelAsync(returnUrl);
+        if (view == null)
         {
             return this.RedirectToPage("/Home/Error/LoginModel");
         }
+        this.View = view;
 
         this.Input = new InputModel
         {
@@ -97,21 +99,18 @@ public class Index : PageModel
             this.ModelState.AddModelError("", ConsentOptions.InvalidSelectionErrorMessage);
         }
 
-        if (grantedConsent != null)
+        // communicate outcome of consent back to identity server
+        await this.interaction.GrantConsentAsync(request, grantedConsent);
+
+        // redirect back to authorization endpoint
+        if (request.IsNativeClient())
         {
-            // communicate outcome of consent back to identity server
-            await this.interaction.GrantConsentAsync(request, grantedConsent);
-
-            // redirect back to authorization endpoint
-            if (request.IsNativeClient())
-            {
-                // The client is native, so this change in how to
-                // return the response is for better UX for the end user.
-                return this.LoadingPage(this.Input.ReturnUrl);
-            }
-
-            return this.Redirect(this.Input.ReturnUrl);
+            // The client is native, so this change in how to
+            // return the response is for better UX for the end user.
+            return this.LoadingPage(this.Input.ReturnUrl);
         }
+
+        return this.Redirect(this.Input.ReturnUrl);
 
         // we need to redisplay the consent UI
         this.View = await this.BuildViewModelAsync(this.Input.ReturnUrl, this.Input);

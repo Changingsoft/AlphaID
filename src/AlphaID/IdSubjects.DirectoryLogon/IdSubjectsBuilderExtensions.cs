@@ -19,7 +19,7 @@ public static class IdSubjectsBuilderExtensions
     {
         builder.Services.TryAddScoped<DirectoryServiceManager>();
         builder.Services.TryAddScoped<LogonAccountManager>();
-        builder.AddNaturalPersonManagerInterceptor<DirectoryLogonInterceptor>();
+        builder.AddInterceptor<DirectoryLogonInterceptor>();
 
         var directoryLogonBuilder = new DirectoryLogonBuilder(builder.Services);
         return directoryLogonBuilder;

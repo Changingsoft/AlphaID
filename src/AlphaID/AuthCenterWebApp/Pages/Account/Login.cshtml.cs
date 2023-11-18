@@ -5,6 +5,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using IdSubjects;
+using IdSubjects.SecurityAuditing;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,8 +22,9 @@ public class LoginModel : PageModel
 {
     private readonly NaturalPersonManager userManager;
     private readonly SignInManager<NaturalPerson> signInManager;
+    private readonly ILogger<LoginModel>? logger;
     private readonly IIdentityServerInteractionService interaction;
-    private readonly IEventService events;
+    private readonly Duende.IdentityServer.Services.IEventService events;
     private readonly IAuthenticationSchemeProvider schemeProvider;
     private readonly IIdentityProviderStore identityProviderStore;
 
@@ -35,13 +37,14 @@ public class LoginModel : PageModel
         IIdentityServerInteractionService interaction,
         IAuthenticationSchemeProvider schemeProvider,
         IIdentityProviderStore identityProviderStore,
-        IEventService events,
+        Duende.IdentityServer.Services.IEventService events,
         NaturalPersonManager userManager,
         SignInManager<NaturalPerson> signInManager,
         ILogger<LoginModel>? logger)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
+        this.logger = logger;
         this.interaction = interaction;
         this.schemeProvider = schemeProvider;
         this.identityProviderStore = identityProviderStore;
@@ -54,6 +57,7 @@ public class LoginModel : PageModel
         if (this.View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider
+            this.logger?.LogInformation("we only have one option for logging in and it's an external provider");
             return this.RedirectToPage("/ExternalLogin/Challenge", new { scheme = this.View.ExternalLoginScheme, schemeDisplayName = this.View.ExternalLoginDisplayName, returnUrl });
         }
 
@@ -70,6 +74,8 @@ public class LoginModel : PageModel
         {
             if (context != null)
             {
+                // 将用户的取消发送回 IdentityServer，以便它能拒绝 consent（即便客户端不需要consent）。
+                // 这将会把访问被拒绝的响应发送回客户端。
                 // if the user cancels, send a result back into IdentityServer as if they 
                 // denied the consent (even if this client does not require consent).
                 // this will send back an access denied OIDC error response to the client.
@@ -85,18 +91,16 @@ public class LoginModel : PageModel
 
                 return this.Redirect(this.Input.ReturnUrl!);
             }
-            else
-            {
-                //由于我们没有有效的上下文，那么我们只需返回主页
-                return this.Redirect("~/");
-            }
+
+            //由于我们没有有效的上下文，那么我们只需返回主页
+            return this.Redirect("~/");
         }
 
         if (this.ModelState.IsValid)
         {
             //登录过程。
             var user = await this.userManager.FindByEmailAsync(this.Input.Username)
-                ?? await this.userManager.FindByMobileAsync(this.Input.Username)
+                ?? await this.userManager.FindByMobileAsync(this.Input.Username, this.HttpContext.RequestAborted)
                 ?? await this.userManager.FindByNameAsync(this.Input.Username);
             if (user != null)
             {
@@ -104,8 +108,6 @@ public class LoginModel : PageModel
                 if (result.Succeeded)
                 {
                     await this.events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
-
-
 
                     if (context != null)
                     {
@@ -125,20 +127,26 @@ public class LoginModel : PageModel
                     {
                         return this.Redirect(this.Input.ReturnUrl);
                     }
-                    else if (string.IsNullOrEmpty(this.Input.ReturnUrl))
+
+                    if (string.IsNullOrEmpty(this.Input.ReturnUrl))
                     {
                         return this.Redirect("~/");
                     }
-                    else
-                    {
-                        // user might have clicked on a malicious link - should be logged
-                        throw new Exception("invalid return URL");
-                    }
+
+                    // user might have clicked on a malicious link - should be logged
+                    throw new Exception("invalid return URL");
                 }
 
                 if (result.MustChangePassword())
                 {
+
+/* 项目“AuthCenterWebApp (net6.0)”的未合并的更改
+在此之前:
                     var principal = this.GenerateMustChangePasswordPrincipal(user);
+在此之后:
+                    var principal = GenerateMustChangePasswordPrincipal(user);
+*/
+                    var principal = LoginModel.GenerateMustChangePasswordPrincipal(user);
                     await this.signInManager.SignOutAsync();
                     await this.HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
                     return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
@@ -242,7 +250,7 @@ public class LoginModel : PageModel
         };
     }
 
-    private ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
+    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
     {
         var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));

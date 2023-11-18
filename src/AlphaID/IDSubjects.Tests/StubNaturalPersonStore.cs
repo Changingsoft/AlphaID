@@ -36,6 +36,11 @@ internal class StubNaturalPersonStore : NaturalPersonStoreBase
         return Task.FromResult(this.set.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail));
     }
 
+    public override Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(this.set.FirstOrDefault(p => p.PhoneNumber == phoneNumber));
+    }
+
     public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
         return Task.FromResult(this.set.FirstOrDefault(p => p.Id == userId));

@@ -43,6 +43,6 @@ public record PersonModel(string SubjectId,
     /// <summary>
     /// 
     /// </summary>
-    [Obsolete]
-    public bool RealNameValid { get; set; } = RealNameValid;
+    [Obsolete("此属性已废弃并始终返回false。客户端应取得realname范围来获取个人的实名制信息。")]
+    public bool RealNameValid { get; set; } = false;
 }

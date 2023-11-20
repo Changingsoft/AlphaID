@@ -7,11 +7,9 @@ public class ServiceProviderFixture : IDisposable
     {
         var services = new ServiceCollection();
 
-        services.AddIdentityCore<NaturalPerson>()
-            .AddUserManager<NaturalPersonManager>()
-            .AddUserStore<StubNaturalPersonStore>()
-            .AddErrorDescriber<NaturalPersonIdentityErrorDescriber>();
-        services.AddScoped<NaturalPersonIdentityErrorDescriber>();
+        services.AddIdSubjects()
+            .AddPersonStore<StubNaturalPersonStore>()
+            .AddPasswordHistoryStore<StubPasswordHistoryStore>();
 
         this.RootServiceProvider = services.BuildServiceProvider();
         this.ServiceScopeFactory = this.RootServiceProvider.GetRequiredService<IServiceScopeFactory>();

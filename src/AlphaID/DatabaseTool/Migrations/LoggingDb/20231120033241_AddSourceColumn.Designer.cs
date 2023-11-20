@@ -4,6 +4,7 @@ using AlphaId.EntityFramework.SecurityAuditing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.LoggingDb
 {
     [DbContext(typeof(LoggingDbContext))]
-    partial class LoggingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231120033241_AddSourceColumn")]
+    partial class AddSourceColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

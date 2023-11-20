@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20231114085848_Init")]
+    [Migration("20231120015731_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -243,9 +243,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("CanEditPersonName")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ConcurrencyStamp")
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -298,6 +295,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTimeOffset?>("PasswordLastSet")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("PersonWhenChanged")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PhoneNumber")
@@ -482,6 +482,38 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("OrganizationUsedName");
+                });
+
+            modelBuilder.Entity("IdSubjects.PasswordHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WhenCreated");
+
+                    b.ToTable("PasswordHistory");
                 });
 
             modelBuilder.Entity("IdSubjects.Payments.PersonBankAccount", b =>
@@ -818,6 +850,17 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsRequired();
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("IdSubjects.PasswordHistory", b =>
+                {
+                    b.HasOne("IdSubjects.NaturalPerson", "Person")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("IdSubjects.Payments.PersonBankAccount", b =>

@@ -26,10 +26,6 @@ public class DefaultEventService : IEventService
     /// </summary>
     protected IEventSink Sink { get; }
 
-    /// <summary>
-    /// The clock
-    /// </summary>
-    protected ISystemClock Clock { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DefaultEventService"/> class.
@@ -37,13 +33,11 @@ public class DefaultEventService : IEventService
     /// <param name="options">The options.</param>
     /// <param name="context">The context.</param>
     /// <param name="sink">The sink.</param>
-    /// <param name="clock">The clock.</param>
-    public DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink, ISystemClock clock)
+    public DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink)
     {
         this.Options = options.Value;
         this.Context = context;
         this.Sink = sink;
-        this.Clock = clock;
     }
 
     /// <summary>
@@ -54,7 +48,7 @@ public class DefaultEventService : IEventService
     /// <exception cref="System.ArgumentNullException">evt</exception>
     public async Task RaiseAsync(AuditLogEvent evt)
     {
-        if (evt == null) throw new ArgumentNullException(nameof(evt));
+        ArgumentNullException.ThrowIfNull(evt);
 
         if (this.CanRaiseEvent(evt))
         {

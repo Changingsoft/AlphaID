@@ -3,7 +3,7 @@
 /// <summary>
 /// 更新用户信息成功事件。
 /// </summary>
-public class UpdatePersonSuccessEvent : AuditLogEvent
+internal class UpdatePersonSuccessEvent : AuditLogEvent
 {
     /// <summary>
     /// 

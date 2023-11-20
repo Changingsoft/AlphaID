@@ -1,10 +1,12 @@
 @page "{role?}"
 @model RoleMembersModel
 @{
-    ViewBag.Title = "Role Members";
+    ViewBag.Title = L["Role Members"];
 }
-
-<h3>Role Members</h3>
+@section Heads{
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
+}
+<h3>@L["Role Members"]</h3>
 
 <div class="row">
     <div class="col-3">
@@ -16,7 +18,7 @@
         </ul>
     </div>
     <div class="col-9">
-        <h2>Members</h2>
+        <h2>@L["Members"]</h2>
         @if (Model.RoleMembers != null)
         {
             if (Model.RoleMembers.Any())
@@ -32,9 +34,9 @@
             }
             else
             {
-                <p>No members</p>
+                <p>@L["No members"]</p>
             }
-            <button type="button" data-toggle="modal" data-target="#memberEditor" class="btn btn-primary">Add member</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#memberEditor" class="btn btn-primary">Add member</button>
         }
         else
         {
@@ -45,7 +47,7 @@
 <div class="modal fade" id="memberEditor" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">Add member</div>
+            <div class="modal-header">@L["Add member"]</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
                     <div class="mb-3">
@@ -58,8 +60,8 @@
                     </div>
                     <input asp-for="Input.PersonId" type="hidden" />
                     <input asp-for="Input.PhoneticSearchHint" type="hidden" />
-                    <button type="submit" class="btn btn-primary">Add</button>
-                    <button type="reset" class="btn btn-secondary">Clear</button>
+                    <button type="submit" class="btn btn-primary">@L["Add"]</button>
+                    <button type="reset" class="btn btn-secondary">@L["Clear"]</button>
                 </form>
             </div>
         </div>
@@ -68,7 +70,7 @@
 
 @section Scripts
     {
-
+        <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
             $("[name='personSearch']").autocomplete({

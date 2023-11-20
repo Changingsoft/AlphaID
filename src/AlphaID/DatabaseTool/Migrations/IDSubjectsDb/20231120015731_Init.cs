@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
 
 #nullable disable
@@ -18,17 +19,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     Id = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PersonName_Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    PersonName_MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    PersonName_GivenName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    PersonName_FullName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    PersonName_SearchHint = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    CanEditPersonName = table.Column<bool>(type: "bit", nullable: false),
-                    Gender = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
-                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    WhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Enabled = table.Column<bool>(type: "bit", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
@@ -42,8 +32,19 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    WhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    PersonWhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
+                    PersonName_Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PersonName_MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PersonName_GivenName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PersonName_FullName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    PersonName_SearchHint = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     NickName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Gender = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     PhoneticSurname = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     PhoneticGivenName = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: true),
                     ProfilePicture_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
@@ -156,6 +157,27 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     table.PrimaryKey("PK_NaturalPersonToken", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
                         name: "FK_NaturalPersonToken_NaturalPerson_UserId",
+                        column: x => x.UserId,
+                        principalTable: "NaturalPerson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PasswordHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    Data = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PasswordHistory_NaturalPerson_UserId",
                         column: x => x.UserId,
                         principalTable: "NaturalPerson",
                         principalColumn: "Id",
@@ -392,6 +414,16 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PasswordHistory_UserId",
+                table: "PasswordHistory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordHistory_WhenCreated",
+                table: "PasswordHistory",
+                column: "WhenCreated");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersonBankAccount_PersonId",
                 table: "PersonBankAccount",
                 column: "PersonId");
@@ -423,6 +455,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             migrationBuilder.DropTable(
                 name: "OrganizationUsedName");
+
+            migrationBuilder.DropTable(
+                name: "PasswordHistory");
 
             migrationBuilder.DropTable(
                 name: "PersonBankAccount");

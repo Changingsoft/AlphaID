@@ -3,7 +3,7 @@
 /// <summary>
 /// 更新自然人信息失败事件。
 /// </summary>
-public class UpdatePersonFailureEvent : AuditLogEvent
+internal class UpdatePersonFailureEvent : AuditLogEvent
 {
     /// <summary>
     /// 

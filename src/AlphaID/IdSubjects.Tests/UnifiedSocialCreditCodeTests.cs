@@ -3,38 +3,38 @@ using Xunit;
 
 namespace IdSubjects.Tests;
 
-public class UsciTests
+public class UnifiedSocialCreditCodeTests
 {
     [Fact]
-    public void CreateUsciTest()
+    public void CreateUscc()
     {
-        UnifiedSocialCreditCode usci = new("91530300217222042");
-        Assert.Equal("91530300217222042J", usci.ToString());
+        UnifiedSocialCreditCode code = new("91530300217222042");
+        Assert.Equal("91530300217222042J", code.ToString());
         Assert.ThrowsAny<Exception>(() => new UnifiedSocialCreditCode("12345"));
     }
 
     [Fact]
-    public void CreateUsciWithPartTest()
+    public void CreateUsccWithPart()
     {
         var uscc = new UnifiedSocialCreditCode("9", "1", "530300", "217222042");
         Assert.Equal("91530300217222042J", uscc.ToString());
     }
 
     [Fact]
-    public void ParseUsciTest()
+    public void ParseUscc()
     {
 
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse(""));
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse("91530300"));
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse("91530300217222042a"));
 
-        var usci = UnifiedSocialCreditCode.Parse("91530300217222042j"); //支持对小写的转换。
-        Assert.Equal("91530300217222042", usci.Code);
-        Assert.Equal('J', usci.CheckCode);
+        var code = UnifiedSocialCreditCode.Parse("91530300217222042j"); //支持对小写的转换。
+        Assert.Equal("91530300217222042", code.Code);
+        Assert.Equal('J', code.CheckCode);
     }
 
     [Fact]
-    public void TryParseUsciTest()
+    public void TryParseUscc()
     {
         Assert.False(UnifiedSocialCreditCode.TryParse("", out _));
         Assert.False(UnifiedSocialCreditCode.TryParse("123456", out _));
@@ -45,7 +45,7 @@ public class UsciTests
     }
 
     [Fact]
-    public void UsciEqualityTest()
+    public void UsccEquality()
     {
         var a = UnifiedSocialCreditCode.Parse("91530300217222042j");
         var b = UnifiedSocialCreditCode.Parse("91530300217222042J");

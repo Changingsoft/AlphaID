@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		
+		<NeutralLanguage>en-US</NeutralLanguage>
 	</PropertyGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="IDSubjects.Tests" />

@@ -240,9 +240,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("CanEditPersonName")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ConcurrencyStamp")
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -295,6 +292,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTimeOffset?>("PasswordLastSet")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("PersonWhenChanged")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PhoneNumber")

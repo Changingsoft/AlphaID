@@ -5,9 +5,45 @@
 @section Heads{
     @await RenderSectionAsync("Heads", false)
 }
-@section Scripts{
+@section Navbar{
+    <header class="navbar-expand-md">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu2" aria-controls="navbar-menu2" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-menu2">
+            <div class="navbar">
+                <div class="container-xl">
+                    <ul class="navbar-nav">
+                        <li class="nav-item" asp-path="/SystemSettings" asp-match-prefix="false">
+                            <a class="nav-link" asp-page="/Index">@L["Overview"]</a>
+                        </li>
+                        <li class="nav-item" asp-path="/SystemSettings/Security">
+                            <a class="nav-link" asp-page="/Security/Index">@L["Security"]</a>
+                        </li>
+                        <li class="nav-item" asp-path="/SystemSettings/DirectoryServices">
+                            <a class="nav-link" asp-page="/DirectoryServices/Index">@L["Directory Services"]</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </header>
+}
+<div class="page-header">
+    <div class="container-xl">
+        <ul class="breadcrumb mb-1">
+            <li class="breadcrumb-item"><a asp-page="/Index">@L["System Settings"]</a></li>
+            @await RenderSectionAsync("Breadcrumb", false)
+        </ul>
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        @RenderBody()
+    </div>
+</div>
+@section Scripts {
     @await RenderSectionAsync("Scripts", false)
 }
-
-
-@RenderBody()

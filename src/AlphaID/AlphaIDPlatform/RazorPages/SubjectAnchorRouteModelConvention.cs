@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Diagnostics;
 
-namespace AlphaIDPlatform.RazorPages;
+namespace AlphaIdPlatform.RazorPages;
 
 /// <summary>
 /// 主语标识锚点路由模型约定
@@ -78,7 +78,7 @@ public class SubjectAnchorRouteModelConvention : FolderRouteModelConvention
             var metadata = selector.EndpointMetadata.OfType<PageRouteMetadata>().SingleOrDefault();
             if (metadata == null || AttributeRouteModel.IsOverridePattern(metadata.RouteTemplate)) //没有元数据，或路由模板是覆盖模式时，跳过处理
                 continue;
-            Debug.Assert(!selector.AttributeRouteModel!.Template!.StartsWith("~"));
+            Debug.Assert(!selector.AttributeRouteModel!.Template!.StartsWith('~'));
             var absTemplate = selector.AttributeRouteModel!.Template!;
             Debug.Assert(absTemplate.StartsWith(pathPrefix, StringComparison.OrdinalIgnoreCase));
             var left = absTemplate[..pathPrefix.Length];

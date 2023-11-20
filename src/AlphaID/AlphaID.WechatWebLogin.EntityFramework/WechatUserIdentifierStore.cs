@@ -1,6 +1,6 @@
-﻿using IDSubjects.WechatWebLogin;
+﻿using IdSubjects.WechatWebLogin;
 
-namespace AlphaID.WechatWebLogin.EntityFramework;
+namespace AlphaId.WechatWebLogin.EntityFramework;
 
 public class WechatUserIdentifierStore : IWechatUserIdentifierStore
 {

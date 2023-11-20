@@ -1,4 +1,4 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
@@ -26,6 +26,8 @@ public class PersonSignInManager : SignInManager<NaturalPerson>
         this.personManager = userManager;
     }
 
+    internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
+
     /// <summary>
     /// 重写。当使用密码登录成功时，记录登录成功信息。
     /// </summary>
@@ -47,7 +49,7 @@ public class PersonSignInManager : SignInManager<NaturalPerson>
             return result;
         }
 
-        if (user.PasswordLastSet == null || user.PasswordLastSet.Value < DateTimeOffset.UtcNow.AddDays(0 - this.personManager.Options.Password.PasswordExpiresDay))
+        if (user.PasswordLastSet == null || user.PasswordLastSet.Value < this.TimeProvider.GetUtcNow().AddDays(0 - this.personManager.Options.Password.PasswordExpiresDay))
         {
             return new PersonSignInResult { MustChangePassword = true };
         }

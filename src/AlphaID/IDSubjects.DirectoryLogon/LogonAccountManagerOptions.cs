@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace IDSubjects.DirectoryLogon;
+namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// LogonAccount Manager Options

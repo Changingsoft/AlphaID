@@ -1,6 +1,6 @@
-﻿using IDSubjects.Subjects;
+﻿using IdSubjects.Subjects;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// Person builder.

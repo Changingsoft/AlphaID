@@ -7,7 +7,7 @@
     <div class="lead">
         @if (Model.LoginRequest.Client.LogoUri != null)
         {
-            <div class="client-logo"><img src="@Model.LoginRequest.Client.LogoUri"></div>
+            <div class="client-logo"><img src="@Model.LoginRequest.Client.LogoUri" alt="Client logo"></div>
         }
         <h1>
             @Model.LoginRequest.Client.ClientName

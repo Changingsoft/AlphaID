@@ -1,8 +1,13 @@
 ﻿using AdminWebApp.Infrastructure.DataStores;
-using AlphaID.DirectoryLogon.EntityFramework;
-using AlphaID.EntityFramework;
+using AlphaId.RealName.EntityFramework;
+using AlphaId.DirectoryLogon.EntityFramework;
+using AlphaId.EntityFramework;
+using AlphaId.EntityFramework.SecurityAuditing;
 using DatabaseTool;
 using DatabaseTool.Migrators;
+using IdSubjects.DirectoryLogon;
+using IdSubjects.RealName;
+using IdSubjects.SecurityAuditing;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -16,21 +21,37 @@ builder
         })
         .ConfigureServices((hostContext, services) =>
         {
-            services.AddDbContext<IdSubjectsDbContext>(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+            var idSubjectsBuilder = services.AddIdSubjects()
+                .AddDefaultStores()
+                .AddDbContext(options =>
                 {
-                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-                    sql.UseNetTopologySuite();
+                    options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+                    {
+                        sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                        sql.UseNetTopologySuite();
+                    });
                 });
-                options.UseLazyLoadingProxies();
-            });
 
-            services.AddDbContext<DirectoryLogonDbContext>(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("DirectoryLogonDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
-                options.UseLazyLoadingProxies();
-            });
+            idSubjectsBuilder.AddRealName()
+                .AddDefaultStores()
+                .AddDbContext(options =>
+                {
+                    options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+                    {
+                        sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    });
+                });
+
+            idSubjectsBuilder.AddDirectoryLogin()
+                .AddDefaultStores()
+                .AddDbContext(options =>
+                {
+                    options.UseSqlServer(hostContext.Configuration.GetConnectionString("DirectoryLogonDataConnection"), sql =>
+                    {
+                        sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    });
+                });
+
 
             //用于IdentityServer的ConfigurationDbContext和PersistenceGrantDbContext
             services.AddIdentityServer()
@@ -49,6 +70,16 @@ builder
                 options.UseSqlServer(hostContext.Configuration.GetConnectionString("AdminWebAppDataConnection"), sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
             });
 
+            services.AddAuditLog()
+                .AddDefaultStore()
+                .AddDbContext(options =>
+                {
+                    options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+                    {
+                        sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+                    });
+                });
+
             //数据库执行器
             services.AddScoped<DatabaseExecutor>().Configure<DatabaseExecutorOptions>(options =>
             {
@@ -60,8 +91,10 @@ builder
             services.AddScoped<DatabaseMigrator, IdServerConfigurationDbMigrator>();
             services.AddScoped<DatabaseMigrator, IdServerPersistedGrantDbMigrator>();
             services.AddScoped<DatabaseMigrator, IdSubjectsDbMigrator>();
+            services.AddScoped<DatabaseMigrator, RealNameDbMigrator>();
             services.AddScoped<DatabaseMigrator, DirectoryLogonDbMigrator>();
             services.AddScoped<DatabaseMigrator, AdminCenterDbMigrator>();
+            services.AddScoped<DatabaseMigrator, AuditLogDbMigrator>();
         });
 
 var host = builder.Build();

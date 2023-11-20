@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// 一个无实际操作的邮件发送器，用于调试阶段模拟邮件发送。该发送器不会向外部发送任何邮件，但会在日志中记录一条发送邮件内容的信息。

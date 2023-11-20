@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects.DependencyInjection;
+namespace IdSubjects.DependencyInjection;
 
 /// <summary>
 /// 密码选项。
@@ -23,7 +23,7 @@ public class IdSubjectsPasswordOptions : PasswordOptions
     public int RememberPasswordHistory { get; set; } = 0;
 
     /// <summary>
-    /// 重设密码的冷冻时间，用户自上一次设置密码以后必须经过冷冻时间才能再次重设密码。默认为0。
+    /// 重设密码的冷冻时间（分钟），用户自上一次设置密码以后必须经过冷冻时间才能再次重设密码。默认为0。
     /// </summary>
     public int ChangePasswordColdDown { get; set; } = 0;
 }

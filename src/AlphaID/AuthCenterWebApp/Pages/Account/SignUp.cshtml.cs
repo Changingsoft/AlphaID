@@ -1,10 +1,10 @@
-using AlphaIDPlatform;
-using AlphaIDPlatform.Platform;
+using AlphaIdPlatform;
+using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
 using IdentityModel;
-using IDSubjects;
-using IDSubjects.ChineseName;
-using IDSubjects.Subjects;
+using IdSubjects;
+using IdSubjects.ChineseName;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

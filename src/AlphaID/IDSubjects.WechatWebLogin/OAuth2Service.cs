@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
 
-namespace IDSubjects.WechatWebLogin;
+namespace IdSubjects.WechatWebLogin;
 
 /// <summary>
 /// OAuth2Service

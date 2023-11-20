@@ -1,4 +1,4 @@
-﻿namespace AlphaIDWebAPI;
+﻿namespace AlphaIdWebAPI;
 
 internal static class UriHelpers
 {

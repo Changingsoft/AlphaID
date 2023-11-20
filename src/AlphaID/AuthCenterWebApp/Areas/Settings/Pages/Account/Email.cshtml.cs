@@ -1,8 +1,8 @@
 ﻿#nullable disable
 
-using AlphaIDPlatform;
-using AlphaIDPlatform.Platform;
-using IDSubjects;
+using AlphaIdPlatform;
+using AlphaIdPlatform.Platform;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;

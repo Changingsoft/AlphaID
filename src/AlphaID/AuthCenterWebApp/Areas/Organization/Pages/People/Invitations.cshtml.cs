@@ -1,6 +1,6 @@
-using AlphaIDPlatform.Security;
-using IDSubjects;
-using IDSubjects.Invitations;
+using AlphaIdPlatform.Security;
+using IdSubjects;
+using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

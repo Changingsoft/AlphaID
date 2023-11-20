@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,17 +13,18 @@ namespace AuthCenterWebApp.Areas.Organization.Pages
             this.organizationManager = organizationManager;
         }
 
-        public IEnumerable<GenericOrganization> Organizations { get; set; } = default!;
+        public GenericOrganization[] Organizations { get; set; } = Array.Empty<GenericOrganization>();
 
         public IActionResult OnGet(string anchor)
         {
-            this.Organizations = this.organizationManager.SearchByName(anchor).ToList();
-            if (!this.Organizations.Any())
+            //hack 可能导致性能问题。
+            this.Organizations = this.organizationManager.FindByName(anchor).ToArray();
+            if (this.Organizations.Length == 0)
                 return this.NotFound();
 
-            if (this.Organizations.Count() == 1)
+            if (this.Organizations.Length == 1)
             {
-                return this.RedirectToPage("Index", new { anchor = this.Organizations.Single().Name });
+                return this.RedirectToPage("Index", new { anchor = this.Organizations[0].Name });
             }
             return this.Page();
         }

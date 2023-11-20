@@ -1,11 +1,6 @@
-﻿using IDSubjects.Subjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IdSubjects.Subjects;
 
-namespace IDSubjects;
+namespace IdSubjects;
 internal class UsccValidator:OrganizationIdentifierValidator
 {
     public override IdOperationResult Validate(OrganizationIdentifier identifier)

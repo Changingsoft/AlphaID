@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// Provide CURD for organization.
@@ -16,6 +16,20 @@ public interface IOrganizationStore
     /// <param name="id"></param>
     /// <returns></returns>
     Task<GenericOrganization?> FindByIdAsync(string id);
+
+    /// <summary>
+    /// 通过组织 Id 查找组织。
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    GenericOrganization? FindById(string id);
+
+    /// <summary>
+    /// 通过组织名称查找组织。
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    IEnumerable<GenericOrganization> FindByName(string name);
 
     /// <summary>
     /// Create organization.

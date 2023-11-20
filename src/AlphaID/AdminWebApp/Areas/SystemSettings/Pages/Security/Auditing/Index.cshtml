@@ -1,0 +1,31 @@
+﻿@page
+@model AdminWebApp.Areas.SystemSettings.Pages.Security.Auditing.IndexModel
+@{
+    ViewBag.Title = L["Security Auditing"];
+}
+<h2>@L["Security Auditing"]</h2>
+
+<p>@L["{0} results.", Model.Count]</p>
+<table class="table table-responsive text-nowrap text-truncate">
+    <thead>
+        <tr>
+            <td>@L["Source"]</td>
+            <td>@L["Event Id"]</td>
+            <td>@L["Time"]</td>
+            <td>@L["Level"]</td>
+            <td>@L["Message"]</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model.Log)
+        {
+            <tr>
+                <td>@entry.Source</td>
+                <td>@entry.EventId</td>
+                <td>@entry.TimeStamp</td>
+                <td>@entry.Level</td>
+                <td class="text-truncate">@entry.Message?.Substring(0, 30)</td>
+            </tr>
+        }
+    </tbody>
+</table>

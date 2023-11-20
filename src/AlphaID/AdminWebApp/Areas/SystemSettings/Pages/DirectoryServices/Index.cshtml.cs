@@ -1,4 +1,4 @@
-using IDSubjects.DirectoryLogon;
+using IdSubjects.DirectoryLogon;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryServices;
 

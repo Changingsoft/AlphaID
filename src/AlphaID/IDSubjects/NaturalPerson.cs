@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 表示一个自然人个体。
@@ -54,43 +54,6 @@ public class NaturalPerson
     /// </summary>
     [MaxLength(256)]
     public virtual string NormalizedUserName { get; protected internal set; } = default!;
-
-    /// <summary>
-    /// 用户名称
-    /// </summary>
-    public virtual PersonNameInfo PersonName { get; protected internal set; } = default!;
-
-    /// <summary>
-    /// Whether person can edit it's name.
-    /// </summary>
-    public virtual bool CanEditPersonName { get; set; } = false;
-
-    /// <summary>
-    /// 性别。
-    /// </summary>
-    [Column(TypeName = "varchar(6)")]
-    [Comment("性别")]
-    public virtual Gender? Gender { get; set; }
-
-    /// <summary>
-    /// 出生日期
-    /// </summary>
-    public virtual DateOnly? DateOfBirth { get; set; }
-
-    /// <summary>
-    /// When Created.
-    /// </summary>
-    public virtual DateTimeOffset WhenCreated { get; protected internal set; } = DateTimeOffset.UtcNow;
-
-    /// <summary>
-    /// When Changed.
-    /// </summary>
-    public virtual DateTimeOffset WhenChanged { get; set; } = DateTimeOffset.UtcNow;
-
-    /// <summary>
-    /// 启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
-    /// </summary>
-    public virtual bool Enabled { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the email address for this user.
@@ -176,12 +139,29 @@ public class NaturalPerson
     public virtual DateTimeOffset? LockoutEnd { get; protected internal set; }
 
     /// <summary>
-    /// 个人经历。
+    /// When Created.
     /// </summary>
-    [MaxLength(200)]
-    public virtual string? Bio { get; set; }
+    public virtual DateTimeOffset WhenCreated { get; protected internal set; }
 
-    
+    /// <summary>
+    /// When Changed.
+    /// </summary>
+    public virtual DateTimeOffset WhenChanged { get; set; }
+
+    /// <summary>
+    /// 获取有关自然人更新的时间。
+    /// </summary>
+    public virtual DateTimeOffset PersonWhenChanged { get; protected internal set; }
+
+    /// <summary>
+    /// 启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
+    /// </summary>
+    public virtual bool Enabled { get; set; } = true;
+
+    /// <summary>
+    /// 用户名称
+    /// </summary>
+    public virtual PersonNameInfo PersonName { get; protected internal set; } = default!;
 
     /// <summary>
     /// 昵称。
@@ -189,6 +169,25 @@ public class NaturalPerson
     [PersonalData]
     [MaxLength(20)]
     public virtual string? NickName { get; set; }
+
+    /// <summary>
+    /// 性别。
+    /// </summary>
+    [Column(TypeName = "varchar(6)")]
+    [Comment("性别")]
+    public virtual Gender? Gender { get; set; }
+
+    /// <summary>
+    /// 出生日期
+    /// </summary>
+    public virtual DateOnly? DateOfBirth { get; set; }
+
+    /// <summary>
+    /// 个人经历。
+    /// </summary>
+    [MaxLength(200)]
+    public virtual string? Bio { get; set; }
+
 
     /// <summary>
     /// 姓氏拼音

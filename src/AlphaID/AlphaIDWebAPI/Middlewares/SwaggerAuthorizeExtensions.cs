@@ -1,4 +1,4 @@
-﻿namespace AlphaIDWebAPI.Middlewares;
+﻿namespace AlphaIdWebAPI.Middlewares;
 
 /// <summary>
 /// 

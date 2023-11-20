@@ -1,12 +1,12 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
 {
     public class NewBankAccountModel : PageModel
     {
-        private OrganizationManager organizationManager;
-        OrganizationBankAccountManager bankAccountManager;
+        private readonly OrganizationManager organizationManager;
+        readonly OrganizationBankAccountManager bankAccountManager;
 
         public NewBankAccountModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
         {

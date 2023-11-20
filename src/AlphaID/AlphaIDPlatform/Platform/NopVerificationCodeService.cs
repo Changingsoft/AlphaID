@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// 一个无操作的短信验证码服务，用于调试或集成测试期间。该服务不会实际发送短信验证码，并且验证总是返回true。

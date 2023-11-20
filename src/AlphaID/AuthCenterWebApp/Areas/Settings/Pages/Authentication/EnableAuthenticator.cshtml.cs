@@ -1,7 +1,7 @@
 ﻿#nullable disable
 
-using AlphaIDPlatform;
-using IDSubjects;
+using AlphaIdPlatform;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

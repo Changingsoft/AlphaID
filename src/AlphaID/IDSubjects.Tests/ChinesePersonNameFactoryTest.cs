@@ -1,7 +1,7 @@
-﻿using IDSubjects.ChineseName;
+﻿using IdSubjects.ChineseName;
 using Xunit;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 
 public class ChinesePersonNameFactoryTest
 {

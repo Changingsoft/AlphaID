@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 
@@ -9,7 +9,7 @@ namespace IDSubjects;
 public abstract class NaturalPersonStoreBase : INaturalPersonStore
 {
     /// <summary>
-    /// 
+    /// 获取NaturalPerson的可查询集合。
     /// </summary>
     public abstract IQueryable<NaturalPerson> Users { get; }
 
@@ -74,6 +74,14 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public abstract Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phoneNumber"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public abstract Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken);
 
     /// <summary>
     /// 

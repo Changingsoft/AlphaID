@@ -1,6 +1,7 @@
+using AlphaIdPlatform;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AlphaIDWebAPI.Pages
+namespace AlphaIdWebAPI.Pages
 {
     /// <summary>
     /// 

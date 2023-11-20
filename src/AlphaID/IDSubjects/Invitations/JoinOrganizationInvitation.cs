@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects.Invitations;
+namespace IdSubjects.Invitations;
 
 /// <summary>
 /// 
@@ -42,12 +42,12 @@ public class JoinOrganizationInvitation
     /// <summary>
     /// 邀请发出时间。
     /// </summary>
-    public DateTimeOffset WhenCreated { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset WhenCreated { get; set; }
 
     /// <summary>
     /// 邀请过期时间。
     /// </summary>
-    public DateTimeOffset WhenExpired { get; set; } = DateTimeOffset.UtcNow.AddDays(2);
+    public DateTimeOffset WhenExpired { get; set; }
 
     /// <summary>
     /// 发出邀请的人

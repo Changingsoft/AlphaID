@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// 表示操作的结果。

@@ -1,4 +1,4 @@
-﻿using AlphaID.DirectoryLogon.EntityFramework;
+﻿using AlphaId.DirectoryLogon.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 

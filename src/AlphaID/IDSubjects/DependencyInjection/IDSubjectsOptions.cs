@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdSubjects.SecurityAuditing;
+using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects.DependencyInjection;
+namespace IdSubjects.DependencyInjection;
 /// <summary>
-/// Options for IDSubjects.
+/// Options for IdSubjects.
 /// </summary>
 public class IdSubjectsOptions : IdentityOptions
 {
@@ -10,4 +11,9 @@ public class IdSubjectsOptions : IdentityOptions
     /// 已替换，提供Password有关选项。
     /// </summary>
     public new IdSubjectsPasswordOptions Password { get; set; } = new();
+
+    /// <summary>
+    /// 提供事件相关配置。
+    /// </summary>
+    public AuditEventsOptions Events { get; set; } = new();
 }

@@ -2,15 +2,26 @@
 
 ## 需求
 
-### Your organization IT infrastructures
+### 您组织的IT基础设施
+
+在部署该系统前，如果您的组织通常具有这些IT基础设施服务，则可以支持某些功能特性，或提供更加优秀的应用体验。
 
 * 电子邮件系统
 
-An email system or email service will be used for email address validation, reset password, etc. Alpha ID uses SMTP protocol for mail sending.
+如果您的组织具有自己的电子邮件系统，则可以借助电子邮件系统来实施用户邮件真实性验证、邮件通知消息、通过邮件重设密码等功能。Alpha ID 使用标准的 SMTP 协议来处理邮件发送。
 
-* 短信接口
+* 短信服务
 
 Short message service will be used for phone number verification, reset password, receive notice, etc.
+
+### 现有标识基础设施
+
+如果您的组织现存有标识基础设施（例如 Active Directory），则 Alpha ID 的设计目标是替代并形成更通用的基础设施。这意味着 Active Directory 可以被 Alpha ID 纳管，但目前还存在一些限制：
+
+- Alpha ID 尚未支持 RADIUS 协议，您仍需要依托 Active Directory 和 NAPS 组件来提供 RADIUS 服务。
+- Alpha ID 尚未支持 Kerberos 协议，您仍需要依托 Active Directory 或其他类似组件来提供 Kerberos 协议服务。
+- Windows 体系下基于 Kerberos 或 NTLM 协议的应用无法替代，由于设计的原因，这些 Windows 体系的基础设施采用了部分私有实现，无法在标准框架下成功实施。
+- 如果您计划纳管 Active Directory，则 Alpha ID 需要部署在 Windows Server 平台上，原因是 Directory Services 组件目前仅在 Windows 平台上支持，我们正在寻求其他跨平台的替代方案。
 
 ## 预配置
 
@@ -22,7 +33,10 @@ Short message service will be used for phone number verification, reset password
 
 ## 升级
 
-运行 DatabaseTool 以准备升级
+如果您组织已存在 Alpha ID 旧版本，则执行升级部署。
+运行 DatabaseTool 以准备升级。
+
+**执行升级可能具有一定风险，在开始升级前请务必进行详细评估并备份数据。**
 
 
 ## 多实例和负载均衡
@@ -31,9 +45,9 @@ Alpha ID 支持多实例部署。
 
 运行实例所需资源有差异时，应在负载均衡器上调整分发比例，以避免遇到性能瓶颈。
 
-HTTP代理或负载均衡器可以使用根目录下的 /Heart，检测实例是否处于工作状态。
+HTTP代理或负载均衡器可以使用根目录下的 /HeartBeat，检测实例是否处于工作状态。
 
-## Limitations
+## 限制
 
 ### 与Active Directory结合使用时的限制
 

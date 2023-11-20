@@ -1,26 +1,47 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdSubjects.Diagnostics;
+using IdSubjects.Invitations;
+using IdSubjects.Payments;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace IDSubjects.DependencyInjection;
+namespace IdSubjects.DependencyInjection;
 
 /// <summary>
-/// IDSubjects builder for DI.
+/// IdSubjects builder for DI.
 /// </summary>
 public class IdSubjectsBuilder
 {
+    /// <summary>
+    /// Create new builder using incoming service collection.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="identityBuilder"></param>
+    public IdSubjectsBuilder(IServiceCollection services, IdentityBuilder identityBuilder)
+    {
+        this.Services = services;
+        this.IdentityBuilder = identityBuilder;
+    }
+
     /// <summary>
     /// Gets the service collection.
     /// </summary>
     public IServiceCollection Services { get; }
 
     /// <summary>
-    /// Create new builder using incoming service collection.
+    /// 获取 AspNetCore Identity 基础设施提供的 IdentityBuilder.
     /// </summary>
-    /// <param name="services"></param>
-    public IdSubjectsBuilder(IServiceCollection services)
+    public IdentityBuilder IdentityBuilder { get; }
+
+    /// <summary>
+    /// 添加自然人管理拦截器。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddInterceptor<T>() where T : class, IInterceptor
     {
-        this.Services = services;
+        this.Services.AddScoped<IInterceptor, T>();
+        return this;
     }
 
     /// <summary>
@@ -28,9 +49,21 @@ public class IdSubjectsBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IdSubjectsBuilder AddPersonStore<T>() where T : IUserStore<NaturalPerson>
+    public IdSubjectsBuilder AddPersonStore<T>() where T : class, INaturalPersonStore
     {
-        this.Services.TryAddScoped(typeof(IUserStore<NaturalPerson>), typeof(T));
+        this.Services.TryAddScoped<INaturalPersonStore, T>();
+        this.IdentityBuilder.AddUserStore<T>(); //As IUserStore<NaturalPerson>
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddPasswordHistoryStore<T>() where T : class, IPasswordHistoryStore
+    {
+        this.Services.TryAddScoped<IPasswordHistoryStore, T>();
         return this;
     }
 
@@ -39,9 +72,9 @@ public class IdSubjectsBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IdSubjectsBuilder AddOrganizationStore<T>() where T : IOrganizationStore
+    public IdSubjectsBuilder AddOrganizationStore<T>() where T : class, IOrganizationStore
     {
-        this.Services.TryAddScoped(typeof(IOrganizationStore), typeof(T));
+        this.Services.TryAddScoped<IOrganizationStore, T>();
         return this;
     }
 
@@ -50,9 +83,53 @@ public class IdSubjectsBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IdSubjectsBuilder AddOrganizationMemberStore<T>() where T : IOrganizationMemberStore
+    public IdSubjectsBuilder AddOrganizationMemberStore<T>() where T : class, IOrganizationMemberStore
     {
-        this.Services.TryAddScoped(typeof(IOrganizationMemberStore), typeof(T));
+        this.Services.TryAddScoped<IOrganizationMemberStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddPersonBankAccountStore<T>() where T : class, IPersonBankAccountStore
+    {
+        this.Services.TryAddScoped<IPersonBankAccountStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddJoinOrganizationInvitationStore<T>() where T : class, IJoinOrganizationInvitationStore
+    {
+        this.Services.TryAddScoped<IJoinOrganizationInvitationStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddOrganizationBankAccountStore<T>() where T : class, IOrganizationBankAccountStore
+    {
+        this.Services.TryAddScoped<IOrganizationBankAccountStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
+    {
+        this.Services.TryAddScoped<IOrganizationIdentifierStore, T>();
         return this;
     }
 }

@@ -1,20 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+
 	<ItemGroup>
-		<InternalsVisibleTo Include="IDSubjects.RealName.Tests"/>
+		<Compile Remove="ChineseIDCardImage.cs" />
+		<Compile Remove="ChineseIDCardInfo.cs" />
+		<Compile Remove="ChineseIDCardManager.cs" />
+		<Compile Remove="ChineseIDCardValidation.cs" />
+		<Compile Remove="IChineseIDCardValidationStore.cs" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.13" />
+		<InternalsVisibleTo Include="IDSubjects.RealName.Tests" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
+		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 	</ItemGroup>
 
 </Project>

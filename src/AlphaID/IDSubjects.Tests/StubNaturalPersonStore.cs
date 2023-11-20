@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 
 internal class StubNaturalPersonStore : NaturalPersonStoreBase
 {
@@ -34,6 +34,11 @@ internal class StubNaturalPersonStore : NaturalPersonStoreBase
     public override Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
     {
         return Task.FromResult(this.set.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail));
+    }
+
+    public override Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(this.set.FirstOrDefault(p => p.PhoneNumber == phoneNumber));
     }
 
     public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
-using AlphaIDPlatform.Identity;
+using AlphaIdPlatform.Identity;
 using Duende.IdentityServer.Services;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

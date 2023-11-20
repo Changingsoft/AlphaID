@@ -1,9 +1,9 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
-public class OrganizationMemberStore : IOrganizationMemberStore
+internal class OrganizationMemberStore : IOrganizationMemberStore
 {
     private readonly IdSubjectsDbContext dbContext;
 

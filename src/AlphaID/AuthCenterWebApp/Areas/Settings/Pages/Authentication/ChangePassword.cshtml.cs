@@ -1,4 +1,4 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -76,6 +76,7 @@ public class ChangePasswordModel : PageModel
             return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
         }
         this.Person = user;
+        this.ExternalLogins = await this.userManager.GetLoginsAsync(user);
 
         var changePasswordResult = await this.userManager.ChangePasswordAsync(user, this.Input.CurrentPassword, this.Input.NewPassword);
         if (!changePasswordResult.Succeeded)

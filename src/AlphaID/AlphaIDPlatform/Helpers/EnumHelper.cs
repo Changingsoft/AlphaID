@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace AlphaIDPlatform.Helpers;
+namespace AlphaIdPlatform.Helpers;
 
 /// <summary>
 /// 适用于枚举的帮助器类。

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 表示个人名称。
@@ -10,7 +10,7 @@ namespace IDSubjects;
 [Owned]
 [Index(nameof(FullName))]
 [Index(nameof(SearchHint))]
-public class PersonNameInfo
+public record PersonNameInfo
 {
     /// <summary>
     /// For persistence.

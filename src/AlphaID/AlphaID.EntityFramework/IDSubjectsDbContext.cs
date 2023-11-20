@@ -1,12 +1,11 @@
-﻿using IDSubjects;
-using IDSubjects.Invitations;
-using IDSubjects.Payments;
-using IDSubjects.RealName;
+﻿using IdSubjects;
+using IdSubjects.Invitations;
+using IdSubjects.Payments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 public class IdSubjectsDbContext : DbContext
 {
@@ -32,6 +31,7 @@ public class IdSubjectsDbContext : DbContext
             .HaveConversion<NullableDateOnlyConverter>()
             .HaveColumnType("date");
     }
+
     /// <summary>
     /// 自然人。
     /// </summary>
@@ -45,7 +45,7 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = default!;
 
-    public DbSet<ChineseIdCardValidation> RealNameValidations { get; protected set; } = default!;
+    public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = default!;
 
     /// <summary>
     /// Organizations.
@@ -54,14 +54,9 @@ public class IdSubjectsDbContext : DbContext
 
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = default!;
 
-    public DbSet<OrganizationUsedName> OrganizationUsedNames { get; protected set; } = default!;
-
     public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = default!;
 
     public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = default!;
-
-
-    public DbSet<RealNameInfo> RealNameInfos { get; protected set; } = default!;
 
     public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = default!;
 

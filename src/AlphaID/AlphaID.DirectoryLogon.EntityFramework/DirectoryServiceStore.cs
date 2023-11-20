@@ -1,6 +1,6 @@
-﻿using IDSubjects.DirectoryLogon;
+﻿using IdSubjects.DirectoryLogon;
 
-namespace AlphaID.DirectoryLogon.EntityFramework;
+namespace AlphaId.DirectoryLogon.EntityFramework;
 
 public class DirectoryServiceStore : IDirectoryServiceStore
 {

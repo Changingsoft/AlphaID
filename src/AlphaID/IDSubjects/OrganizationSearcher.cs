@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// 组织搜索器。

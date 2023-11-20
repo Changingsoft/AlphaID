@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.Subjects;
+﻿namespace IdSubjects.Subjects;
 
 /// <summary>
 /// 身份证号码的版本。

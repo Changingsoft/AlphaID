@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.Invitations;
+﻿namespace IdSubjects.Invitations;
 
 /// <summary>
 /// 

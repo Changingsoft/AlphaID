@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 表示社会性别。

@@ -1,7 +1,3 @@
-// Copyright (c) Duende Software. All rights reserved.
-// See LICENSE in the project root for license information.
-
-
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics.CodeAnalysis;
@@ -19,13 +15,13 @@ public class SecurityHeadersAttribute : ActionFilterAttribute
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
             if (!context.HttpContext.Response.Headers.ContainsKey("X-Content-Type-Options"))
             {
-                context.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                context.HttpContext.Response.Headers.Append("X-Content-Type-Options", "nosniff");
             }
 
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
             if (!context.HttpContext.Response.Headers.ContainsKey("X-Frame-Options"))
             {
-                context.HttpContext.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                context.HttpContext.Response.Headers.Append("X-Frame-Options", "SAMEORIGIN");
             }
 
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
@@ -38,19 +34,19 @@ public class SecurityHeadersAttribute : ActionFilterAttribute
             // once for standards compliant browsers
             if (!context.HttpContext.Response.Headers.ContainsKey("Content-Security-Policy"))
             {
-                context.HttpContext.Response.Headers.Add("Content-Security-Policy", csp);
+                context.HttpContext.Response.Headers.Append("Content-Security-Policy", csp);
             }
             // and once again for IE
             if (!context.HttpContext.Response.Headers.ContainsKey("X-Content-Security-Policy"))
             {
-                context.HttpContext.Response.Headers.Add("X-Content-Security-Policy", csp);
+                context.HttpContext.Response.Headers.Append("X-Content-Security-Policy", csp);
             }
 
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
             var referrerPolicy = "no-referrer";
             if (!context.HttpContext.Response.Headers.ContainsKey("Referrer-Policy"))
             {
-                context.HttpContext.Response.Headers.Add("Referrer-Policy", referrerPolicy);
+                context.HttpContext.Response.Headers.Append("Referrer-Policy", referrerPolicy);
             }
         }
     }

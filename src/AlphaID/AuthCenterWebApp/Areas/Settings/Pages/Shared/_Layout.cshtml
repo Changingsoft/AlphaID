@@ -1,4 +1,5 @@
-﻿@inject NaturalPersonManager UserManager
+﻿@using AlphaIdPlatform.Security
+@inject NaturalPersonManager UserManager
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
     var person = await UserManager.GetUserAsync(User);

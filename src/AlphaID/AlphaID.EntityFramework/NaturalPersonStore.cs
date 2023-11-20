@@ -1,20 +1,20 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
-public class NaturalPersonStore : NaturalPersonStoreBase
+internal class NaturalPersonStore : NaturalPersonStoreBase
 {
     private readonly IdSubjectsDbContext context;
 
-    public NaturalPersonStore(IdSubjectsDbContext context, IdentityErrorDescriber? describer = null)
+    public NaturalPersonStore(IdSubjectsDbContext context)
     {
         this.context = context;
     }
 
-    public override IQueryable<NaturalPerson> Users => this.context.People;
+    public override IQueryable<NaturalPerson> Users => this.context.People.AsNoTracking();
 
     public override Task AddClaimsAsync(NaturalPerson user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
     {
@@ -64,6 +64,11 @@ public class NaturalPersonStore : NaturalPersonStoreBase
     public override async Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
         return await this.context.People.FindAsync(new object?[] { userId }, cancellationToken: cancellationToken);
+    }
+
+    public override async Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
+    {
+        return await this.context.People.SingleOrDefaultAsync(p => p.PhoneNumber == phoneNumber, cancellationToken);
     }
 
     public override async Task<NaturalPerson?> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)

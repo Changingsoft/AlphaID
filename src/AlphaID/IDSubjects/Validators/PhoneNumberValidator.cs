@@ -1,7 +1,7 @@
-﻿using IDSubjects.Subjects;
+﻿using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects.Validators;
+namespace IdSubjects.Validators;
 
 /// <summary>
 /// 移动电话号码验证器。
@@ -26,16 +26,16 @@ public class PhoneNumberValidator : IUserValidator<NaturalPerson>
 
         if (MobilePhoneNumber.TryParse(phoneNumber, out var number))
         {
-            var owner = await naturalPersonManager.FindByMobileAsync(number.ToString());
+            var owner = await naturalPersonManager.FindByMobileAsync(number.ToString(), CancellationToken.None);
             if (owner != null && !string.Equals(user.Id, owner.Id))
             {
                 //手机号已存在且不隶属该用户，则提示手机号重复。
-                errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.DuplicatePhoneNumber());
+                errors.Add(naturalPersonManager.ErrorDescriber.DuplicatePhoneNumber());
             }
         }
         else
         {
-            errors.Add(naturalPersonManager.NaturalPersonIdentityErrorDescriber.InvalidPhoneNumberFormat());
+            errors.Add(naturalPersonManager.ErrorDescriber.InvalidPhoneNumberFormat());
         }
 
         return errors.Count > 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;

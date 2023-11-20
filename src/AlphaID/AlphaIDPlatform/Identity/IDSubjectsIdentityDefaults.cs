@@ -1,7 +1,7 @@
-﻿namespace AlphaIDPlatform.Identity;
+﻿namespace AlphaIdPlatform.Identity;
 
 /// <summary>
-/// IDSubjects Identity defaults.
+/// IdSubjects Identity defaults.
 /// </summary>
 public static class IdSubjectsIdentityDefaults
 {

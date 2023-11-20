@@ -1,11 +1,11 @@
-using AlphaID.DirectoryLogon.EntityFramework;
-using AlphaID.EntityFramework;
-using AlphaIDWebAPI;
-using AlphaIDWebAPI.Middlewares;
+using AlphaId.EntityFramework;
+using AlphaId.RealName.EntityFramework;
+using AlphaIdPlatform;
+using AlphaIdWebAPI;
+using AlphaIdWebAPI.Middlewares;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
-using IDSubjects.DirectoryLogon;
-using IDSubjects.RealName;
+using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Events;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,12 +25,13 @@ builder.Host.UseSerilog((context, configuration) =>
     .ReadFrom.Configuration(context.Configuration)
     .Enrich.FromLogContext()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
+    .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
 });
 
 //Configuration Services
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
+
 //启用Controller
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
@@ -81,9 +83,7 @@ builder.Services
     .AddAuthentication(options =>
     {
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
     //添加JWT验证。
     .AddJwtBearer(options =>
@@ -94,16 +94,7 @@ builder.Services
         {
             ValidateAudience = false,
         };
-    })
-    .AddOpenIdConnect(options =>
-    {
-        options.MetadataAddress = builder.Configuration["JwtOptions:MetadataAddress"];
-        options.ClientId = builder.Configuration["JwtOptions:ClientId"];
-        options.ClientSecret = builder.Configuration["JwtOptions:ClientSecret"];
-        options.ResponseType = OpenIdConnectResponseType.Code;
-    })
-    .AddCookie();
-//builder.Services.Configure<JwtBearerOptions>(builder.Configuration.GetSection("JwtBearerOptions"));
+    });
 
 //添加授权策略。
 builder.Services.AddAuthorization(options =>
@@ -121,36 +112,30 @@ builder.Services.AddAuthorization(options =>
 });
 
 //持久化
-builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
-    {
-        sqlOptions.UseNetTopologySuite();
-    });
-});
-builder.Services.AddDbContext<DirectoryLogonDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
-});
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
 }).AddScoped<ConfigurationStoreOptions>();
 
 
-//builder.Services.AddScoped<INaturalPersonStore, NaturalPersonStore>();
-builder.Services.AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>();
+var idSubjectsBuilder = builder.Services.AddIdSubjects();
+idSubjectsBuilder
+    .AddDefaultStores()
+    .AddDbContext(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
+        {
+            sqlOptions.UseNetTopologySuite();
+        });
+    });
 
-//ASP.NET Identity NaturalPersonManager.
-builder.Services.AddIdSubjects(options =>
+if (true)
 {
+    idSubjectsBuilder.AddRealName()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+}
 
-})
-    .AddDefaultStores();
-
-
-builder.Services.AddScoped<ChineseIdCardManager>()
-    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 var app = builder.Build();
 
@@ -194,7 +179,7 @@ app.MapControllers();
 //Run
 app.Run();
 
-namespace AlphaIDWebAPI
+namespace AlphaIdWebAPI
 {
     /// <summary>
     /// Definitions for Testing.

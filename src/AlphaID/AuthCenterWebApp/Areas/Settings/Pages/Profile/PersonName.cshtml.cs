@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,6 +15,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             this.personManager = personManager;
         }
 
+        [BindProperty]
         public InputMode Input { get; set; } = default!;
 
         public IdentityResult? Result { get; set; }
@@ -46,7 +47,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 return this.NotFound();
             }
 
-            await this.personManager.ChangePersonNameAsync(person, new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName));
+            this.Result = await this.personManager.ChangePersonNameAsync(person, new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName));
+            if (!this.Result.Succeeded)
+                return this.Page();
             person.PhoneticSurname = this.Input.PhoneticSurname;
             person.PhoneticGivenName = this.Input.PhoneticGivenName;
             person.NickName = this.Input.NickName;

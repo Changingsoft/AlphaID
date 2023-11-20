@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace AlphaIDPlatform.TagHelpers;
+namespace AlphaIdPlatform.TagHelpers;
 
 /// <summary>
 /// 
@@ -28,15 +28,8 @@ public sealed class DescriptionForTagHelper : TagHelper
     /// <exception cref="ArgumentNullException"></exception>
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (output == null)
-        {
-            throw new ArgumentNullException(nameof(output));
-        }
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(output);
 
         var description = this.For.Metadata.Description;
         if (description != null)

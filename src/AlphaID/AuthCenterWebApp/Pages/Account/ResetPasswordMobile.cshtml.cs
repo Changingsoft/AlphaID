@@ -1,6 +1,6 @@
-using AlphaIDPlatform.Platform;
-using IDSubjects;
-using IDSubjects.Subjects;
+using AlphaIdPlatform.Platform;
+using IdSubjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -70,8 +70,8 @@ public class ResetPasswordMobileModel : PageModel
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = this.userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
-        if (person == null || !person.PhoneNumberConfirmed)
+        var person = await this.userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
+        if (person is not { PhoneNumberConfirmed: true })
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
         }

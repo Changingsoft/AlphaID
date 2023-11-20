@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace IDSubjects.Subjects;
+namespace IdSubjects.Subjects;
 
 /// <summary>
 /// 表示一个中华人民共和国居民身份证号。
@@ -160,12 +160,12 @@ public readonly partial struct ChineseIdCardNumber
         int ver;
         if (dataStr.Length == 18)
         {
-            match = CardNumber18().Match(dataStr);
+            match = p18.Match(dataStr);
             ver = ChineseIdCardNumberVersion.V2;
         }
         else if (dataStr.Length == 15)
         {
-            match = CardNumber15().Match(dataStr);
+            match = p15.Match(dataStr);
             ver = ChineseIdCardNumberVersion.V1;
         }
         else
@@ -195,12 +195,12 @@ public readonly partial struct ChineseIdCardNumber
         int ver;
         if (dataStr.Length == 18)
         {
-            match = CardNumber18().Match(dataStr);
+            match = p18.Match(dataStr);
             ver = ChineseIdCardNumberVersion.V2;
         }
         else if (dataStr.Length == 15)
         {
-            match = CardNumber15().Match(dataStr);
+            match = p15.Match(dataStr);
             ver = ChineseIdCardNumberVersion.V1;
         }
         else
@@ -238,10 +238,8 @@ public readonly partial struct ChineseIdCardNumber
         return TryParse(s, out _);
     }
 
-    private static readonly int[] Weight = new int[] { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 };
+    private static readonly int[] Weight = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 };
     private const string CheckCodeSet = "10X98765432";
-    private const string Pattern18 = @"^([1-9]\d{5})(\d{4})(\d{2})(\d{2})(\d{3})(\d|X)$";
-    private const string Pattern15 = @"^([1-9]\d{5})(\d{2})(\d{2})(\d{2})(\d{3})$";
     private const string QualifiedFormat = "{0:000000}{1:yyyyMMdd}{2:000}";
 
     private static char CalculateCheckCode(string data)
@@ -253,9 +251,15 @@ public readonly partial struct ChineseIdCardNumber
         }
         return CheckCodeSet[sum % 11];
     }
-
+#if NET8_0
     [GeneratedRegex("^([1-9]\\d{5})(\\d{4})(\\d{2})(\\d{2})(\\d{3})(\\d|X)$")]
     private static partial Regex CardNumber18();
     [GeneratedRegex("^([1-9]\\d{5})(\\d{2})(\\d{2})(\\d{2})(\\d{3})$")]
     private static partial Regex CardNumber15();
+#endif
+
+    private const string Pattern18 = @"^([1-9]\d{5})(\d{4})(\d{2})(\d{2})(\d{3})(\d|X)$";
+    private const string Pattern15 = @"^([1-9]\\d{5})(\\d{2})(\\d{2})(\\d{2})(\\d{3})$";
+    private static readonly Regex p18 = new(Pattern18);
+    private static readonly Regex p15 = new(Pattern15);
 }

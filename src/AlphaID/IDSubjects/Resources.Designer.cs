@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IDSubjects {
+namespace IdSubjects {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace IDSubjects {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IDSubjects.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IdSubjects.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -124,7 +124,7 @@ namespace IDSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Invlid organization type. 的本地化字符串。
+        ///   查找类似 Invalid organization type. 的本地化字符串。
         /// </summary>
         public static string Invlid_organization_type_ {
             get {
@@ -147,6 +147,15 @@ namespace IDSubjects {
         public static string LegalEntityIdentifier {
             get {
                 return ResourceManager.GetString("LegalEntityIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Current password age is less then minimum passowrd age requirement. 的本地化字符串。
+        /// </summary>
+        public static string LessThenMinimumPasswordAge {
+            get {
+                return ResourceManager.GetString("LessThenMinimumPasswordAge", resourceCulture);
             }
         }
         
@@ -174,6 +183,15 @@ namespace IDSubjects {
         public static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 You cannot reuse old passwords. 的本地化字符串。
+        /// </summary>
+        public static string ReuseOldPassword {
+            get {
+                return ResourceManager.GetString("ReuseOldPassword", resourceCulture);
             }
         }
         

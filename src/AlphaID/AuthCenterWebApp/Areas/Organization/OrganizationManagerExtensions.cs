@@ -1,4 +1,4 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
 namespace AuthCenterWebApp.Areas.Organization;
 
@@ -7,34 +7,24 @@ public static class OrganizationManagerExtensions
     public static async Task<IEnumerable<GenericOrganization>> FindByAnchorAsync(this OrganizationManager manager, string anchor)
     {
         //Find by name first.
-        var orgs = manager.SearchByName(anchor).ToList();
+        var orgs = manager.FindByName(anchor).ToArray();
         //Find by ID if list is empty.
-        if (!orgs.Any())
+        if (orgs.Length != 0)
         {
-            var org = await manager.FindByIdAsync(anchor);
-            if (org != null)
-                orgs.Add(org);
+            return orgs;
         }
-        return orgs;
+        var org = await manager.FindByIdAsync(anchor);
+        return org != null ? new GenericOrganization[] { org } : Enumerable.Empty<GenericOrganization>();
     }
 
     public static bool TryGetSingleOrDefaultOrganization(this OrganizationManager manager, string anchor,
         out GenericOrganization? organization)
     {
-        var orgs = manager.SearchByName(anchor).ToList();
-        if (!orgs.Any())
+        if (manager.TryFindSingleOrDefaultByName(anchor, out organization))
         {
-            organization = default!;
+            organization ??= manager.FindById(anchor);
             return true;
         }
-        if (orgs.Count != 1)
-        {
-            organization = default!;
-            return false;
-        }
-
-        organization = orgs.Single();
-        return true;
-
+        return false;
     }
 }

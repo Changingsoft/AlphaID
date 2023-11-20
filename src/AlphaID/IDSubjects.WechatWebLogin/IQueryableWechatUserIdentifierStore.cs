@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.WechatWebLogin;
+﻿namespace IdSubjects.WechatWebLogin;
 
 /// <summary>
 /// 

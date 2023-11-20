@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.ChineseName;
+﻿namespace IdSubjects.ChineseName;
 
 /// <summary>
 /// 读音汉字字符。

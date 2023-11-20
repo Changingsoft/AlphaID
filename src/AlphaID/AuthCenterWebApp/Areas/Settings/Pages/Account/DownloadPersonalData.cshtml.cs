@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -52,7 +52,7 @@ public class DownloadPersonalDataModel : PageModel
 
         personalData.Add("Authenticator Key", await this.userManager.GetAuthenticatorKeyAsync(user));
 
-        this.Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
+        this.Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
         return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
     }
 }

@@ -1,19 +1,21 @@
-﻿using IDSubjects.DependencyInjection;
-using IDSubjects.Subjects;
+﻿using IdSubjects.DependencyInjection;
+using IdSubjects.Diagnostics;
+using IdSubjects.SecurityAuditing;
+using IdSubjects.SecurityAuditing.Events;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Transactions;
 using TimeZoneConverter;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 自然人管理器。
 /// </summary>
 public class NaturalPersonManager : UserManager<NaturalPerson>
 {
-
     /// <summary>
     /// 
     /// </summary>
@@ -26,7 +28,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <param name="errors"></param>
     /// <param name="services"></param>
     /// <param name="logger"></param>
-    public NaturalPersonManager(IUserStore<NaturalPerson> store,
+    /// <param name="interceptors"></param>
+    /// <param name="passwordHistoryManager"></param>
+    /// <param name="eventService"></param>
+    public NaturalPersonManager(INaturalPersonStore store,
                                 IOptions<IdSubjectsOptions> optionsAccessor,
                                 IPasswordHasher<NaturalPerson> passwordHasher,
                                 IEnumerable<IUserValidator<NaturalPerson>> userValidators,
@@ -34,7 +39,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
                                 ILookupNormalizer keyNormalizer,
                                 NaturalPersonIdentityErrorDescriber errors,
                                 IServiceProvider services,
-                                ILogger<NaturalPersonManager> logger)
+                                ILogger<NaturalPersonManager> logger,
+                                IEnumerable<IInterceptor> interceptors,
+                                PasswordHistoryManager passwordHistoryManager,
+                                IEventService eventService)
         : base(store,
                optionsAccessor,
                passwordHasher,
@@ -45,26 +53,112 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
                services,
                logger)
     {
+        this.Interceptors = interceptors;
+        this.PasswordHistoryManager = passwordHistoryManager;
+        this.EventService = eventService;
         this.Options = optionsAccessor.Value;
+        this.Store = store;
+        this.ErrorDescriber = errors;
+    }
+
+    /// <summary>
+    /// 获取或设置IdSubjectsOptions。
+    /// </summary>
+    public new IdSubjectsOptions Options { get; set; }
+
+    /// <summary>
+    /// 获取 INaturalPersonStore.
+    /// </summary>
+    public new INaturalPersonStore Store { get; }
+
+    /// <summary>
+    /// 获取拦截器。
+    /// </summary>
+    public IEnumerable<IInterceptor> Interceptors { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public new NaturalPersonIdentityErrorDescriber ErrorDescriber { get; }
+
+    /// <summary>
+    /// 获取或设置时间提供器以便于可测试性。
+    /// </summary>
+    internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
+
+    /// <summary>
+    /// 获取用于密码历史的管理器。
+    /// </summary>
+    public PasswordHistoryManager PasswordHistoryManager { get; }
+
+    /// <summary>
+    /// 获取审计事件服务。
+    /// </summary>
+    protected IEventService EventService { get; }
+
+    /// <summary>
+    /// 已重写。创建用户。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public override async Task<IdentityResult> CreateAsync(NaturalPerson user)
+    {
+        var utcNow = this.TimeProvider.GetUtcNow();
+        user.WhenCreated = utcNow;
+        user.WhenChanged = utcNow;
+        user.PersonWhenChanged = utcNow;
+        var result = await base.CreateAsync(user);
+        if (result.Succeeded)
+        {
+            await this.EventService.RaiseAsync(new CreatePersonSuccessEvent());
+        }
+        else
+        {
+            await this.EventService.RaiseAsync(new CreatePersonFailureEvent());
+        }
+
+        return result;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public new IdSubjectsOptions Options { get; set; }
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public override async Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
+    {
+        var utcNow = this.TimeProvider.GetUtcNow();
+        user.WhenCreated = utcNow;
+        user.WhenChanged = utcNow;
+        user.PersonWhenChanged = utcNow;
+        user.PasswordLastSet = utcNow;
+        var result = await base.CreateAsync(user, password);
+        if (result.Succeeded)
+        {
+            await this.EventService.RaiseAsync(new CreatePersonSuccessEvent());
+        }
+        else
+        {
+            await this.EventService.RaiseAsync(new CreatePersonFailureEvent());
+        }
+
+        return result;
+    }
 
     /// <summary>
-    /// Find person via mobile.
+    /// 通过移动电话号码查找自然人。
     /// </summary>
-    /// <param name="mobile"></param>
-    /// <returns></returns>
-    public virtual Task<NaturalPerson?> FindByMobileAsync(string mobile)
+    /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准E.164格式。</param>
+    /// <param name="cancellation"></param>
+    /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
+    public virtual async Task<NaturalPerson?> FindByMobileAsync(string mobile, CancellationToken cancellation)
     {
         if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
-            return Task.FromResult(default(NaturalPerson));
+            return null;
         var phoneNumberString = phoneNumber.ToString();
-        var person = this.Users.SingleOrDefault(p => p.PhoneNumber == phoneNumberString);
-        return Task.FromResult(person);
+        var person = await this.Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
+        return person;
     }
 
     /// <summary>
@@ -76,104 +170,114 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     public virtual Task AccessSuccededAsync(NaturalPerson person, string authenticationMethod)
     {
         //todo 记录任何登录成功次数、上次登录时间，登录方式，登录IP等。
-        this.Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person, DateTimeOffset.UtcNow, authenticationMethod);
+        this.Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person, this.TimeProvider.GetUtcNow(), authenticationMethod);
         return Task.CompletedTask;
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    public NaturalPersonIdentityErrorDescriber NaturalPersonIdentityErrorDescriber => this.ErrorDescriber as NaturalPersonIdentityErrorDescriber ?? throw new InvalidCastException();
-
-    /// <summary>
-    /// 强制更改用户的姓名信息。
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="personName"></param>
-    /// <returns></returns>
-    public async Task<IdentityResult> AdminChangePersonNameAsync(NaturalPerson person, PersonNameInfo personName)
-    {
-        person.PersonName = personName;
-        return await this.UpdateUserAsync(person);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="password"></param>
-    /// <returns></returns>
-    public override async Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
-    {
-        var utcNow = DateTimeOffset.UtcNow;
-        user.WhenCreated = utcNow;
-        user.WhenChanged = utcNow;
-        user.PasswordLastSet = utcNow;
-        return await base.CreateAsync(user, password);
-    }
-
-    /// <summary>
-    /// 已重写。创建用户。
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
-    public override async Task<IdentityResult> CreateAsync(NaturalPerson user)
-    {
-        var utcNow = DateTimeOffset.UtcNow;
-        user.WhenCreated = utcNow;
-        user.WhenChanged = utcNow;
-        return await base.CreateAsync(user);
-    }
-
-    /// <summary>
-    /// 
+    /// 已重写。若用户实现不对账户相关字段变更时，不应在用户实现中调用该方法。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
     protected override async Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
     {
-        user.WhenChanged = DateTimeOffset.UtcNow;
+        user.WhenChanged = this.TimeProvider.GetUtcNow();
         return await base.UpdateUserAsync(user);
     }
 
     /// <summary>
-    /// 尝试设置时区。
+    /// 更新Person信息。已重写并添加了审计日志和拦截器。
     /// </summary>
+    /// <remarks>
+    /// 该方法用于更新自然人其他信息，账户有关操作不使用该方法，并且不会出发审计和拦截。请使用账户管理相关专用方法来操作账户管理任务。
+    /// </remarks>
     /// <param name="user"></param>
-    /// <param name="tzName"></param>
     /// <returns></returns>
-    public virtual Task<IdentityResult> SetTimeZone(NaturalPerson user, string tzName)
+    public override async Task<IdentityResult> UpdateAsync(NaturalPerson user)
     {
-        if (TZConvert.KnownIanaTimeZoneNames.Any(p => p == tzName))
+        List<IdentityError> errors = new();
+        bool passPreUpdate = true;
+        var stack = new Stack<INaturalPersonInterceptor>();
+        foreach (var interceptor in this.Interceptors.OfType<INaturalPersonInterceptor>())
         {
-            user.TimeZone = tzName;
-            return Task.FromResult(IdentityResult.Success);
+            stack.Push(interceptor);
+            var interceptResult = await interceptor.PreUpdateAsync(this, user);
+            if (!interceptResult.Succeeded)
+                passPreUpdate = false;
+            errors.AddRange(interceptResult.Errors);
         }
-        return Task.FromResult(IdentityResult.Failed(new IdentityError() { Code = "Invalid_TzInfo", Description = "Invalid time zone name." }));
+        if (!passPreUpdate)
+            return IdentityResult.Failed(errors.ToArray());
+
+        user.PersonWhenChanged = this.TimeProvider.GetUtcNow();
+        var result = await base.UpdateAsync(user);
+        if (result.Succeeded)
+        {
+            await this.EventService.RaiseAsync(new UpdatePersonSuccessEvent());
+        }
+        else
+        {
+            await this.EventService.RaiseAsync(new UpdatePersonFailureEvent());
+        }
+
+        while (stack.TryPop(out var interceptor))
+        {
+            await interceptor.PostUpdateAsync(this, user);
+        }
+        return result;
     }
 
     /// <summary>
-    /// 已重写。移除本地登录密码。
-    /// 该方法还会清空<see cref="NaturalPerson.PasswordLastSet"/>的值。
+    /// 已重写，删除用户。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> RemovePasswordAsync(NaturalPerson user)
+    public override async Task<IdentityResult> DeleteAsync(NaturalPerson user)
     {
-        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdentityResult result = await base.RemovePasswordAsync(user);
-        if (!result.Succeeded)
-            return result;
-        user.PasswordLastSet = null;
-        result = await this.UpdateUserAsync(user);
-        if (!result.Succeeded)
+        bool passPreAction = true;
+        List<IdentityError> errors = new();
+        Stack<INaturalPersonInterceptor> stack = new();
+        foreach (var inceptor in this.Interceptors.OfType<INaturalPersonInterceptor>())
         {
-            this.Logger.LogError("用户密码已删除，但设置PasswordLastSet时出错，错误{error}，事务已回滚。", result);
-            return result;
+            stack.Push(inceptor);
+            var inceptorResult = await inceptor.PreDeleteAsync(this, user);
+            if (!inceptorResult.Succeeded)
+                passPreAction = false;
+            errors.AddRange(inceptorResult.Errors);
         }
-        trans.Complete();
-        return result;
+        if (!passPreAction)
+            return IdentityResult.Failed(errors.ToArray());
 
+        //正式执行删除。
+        var result = await base.DeleteAsync(user);
+
+        if (result.Succeeded)
+        {
+            await this.EventService.RaiseAsync(new DeletePersonSuccessEvent());
+        }
+        else
+        {
+            await this.EventService.RaiseAsync(new DeletePersonFailureEvent());
+        }
+
+        while (stack.TryPop(out var interceptor))
+        {
+            await interceptor.PostDeleteAsync(this, user);
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 已重写，添加密码。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public override async Task<IdentityResult> AddPasswordAsync(NaturalPerson user, string password)
+    {
+        user.PasswordLastSet = this.TimeProvider.GetUtcNow();
+        IdentityResult result = await base.AddPasswordAsync(user, password);
+        return result;
     }
 
     /// <summary>
@@ -185,17 +289,70 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> ChangePasswordAsync(NaturalPerson user, string currentPassword, string newPassword)
     {
+        //检查最短有效期。
+        if (this.Options.Password.ChangePasswordColdDown > 0)
+        {
+            if (user.PasswordLastSet.HasValue)
+            {
+                var coldDownEnd = this.TimeProvider.GetUtcNow()
+                    .AddMinutes(this.Options.Password.ChangePasswordColdDown);
+                if (user.PasswordLastSet.Value > coldDownEnd)
+                {
+                    await this.EventService.RaiseAsync(new ChangePasswordFailureEvent("MinimumPasswordAge"));
+                    return IdentityResult.Failed(this.ErrorDescriber.LessThenMinimumPasswordAge());
+                }
+            }
+        }
+
+        //检查密码历史记录
+        if (this.Options.Password.RememberPasswordHistory > 0)
+        {
+            if (this.PasswordHistoryManager.Hit(user, newPassword))
+            {
+                await this.EventService.RaiseAsync(new ChangePasswordFailureEvent("HitPasswordHistory"));
+                return IdentityResult.Failed(this.ErrorDescriber.ReuseOldPassword());
+            }
+        }
+
+        //执行拦截器。
+        Stack<IUserPasswordInterceptor> interceptorStack = new();
+        List<IdentityError> errors = new();
+        bool passInterceptors = true;
+        foreach (var interceptor in this.Interceptors.OfType<IUserPasswordInterceptor>())
+        {
+            interceptorStack.Push(interceptor);
+            var interceptorResult = await interceptor.PasswordChangingAsync(user, newPassword, CancellationToken.None);
+            if (!interceptorResult.Succeeded)
+                passInterceptors = false;
+            errors.AddRange(interceptorResult.Errors);
+        }
+        if (!passInterceptors)
+        {
+            await this.EventService.RaiseAsync(new ChangePasswordFailureEvent("Canceled by interceptors."));
+            return IdentityResult.Failed(errors.ToArray());
+        }
+
+        //正式进入更改密码。
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        user.PasswordLastSet = this.TimeProvider.GetUtcNow();
         IdentityResult result = await base.ChangePasswordAsync(user, currentPassword, newPassword).ConfigureAwait(false);
         if (!result.Succeeded)
-            return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateUserAsync(user);
-        if (!result.Succeeded)
         {
-            this.Logger.LogError("用户密码已更新，但设置PasswordLastSet时出错，事务已回滚。");
+            await this.EventService.RaiseAsync(new ChangePasswordFailureEvent("基础设施返回了错误。"));
             return result;
         }
+
+        //执行拦截器。
+        while (interceptorStack.TryPop(out var interceptor))
+        {
+            await interceptor.PasswordChangedAsync(user, CancellationToken.None);
+        }
+
+        //记录密码历史
+        if (this.Options.Password.RememberPasswordHistory > 0)
+            await this.PasswordHistoryManager.Pass(user, newPassword);
+
+        await this.EventService.RaiseAsync(new ChangePasswordSuccessEvent("基础设施返回了错误。"));
         trans.Complete();
         return result;
     }
@@ -209,19 +366,50 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public override async Task<IdentityResult> ResetPasswordAsync(NaturalPerson user, string token, string newPassword)
     {
-        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        user.PasswordLastSet = null;
         IdentityResult result = await base.ResetPasswordAsync(user, token, newPassword);
         if (!result.Succeeded)
-            return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateUserAsync(user);
+        {
+            await this.EventService.RaiseAsync(new ChangePasswordFailureEvent(result.Errors.ToString()));
+        }
+        else
+        {
+            await this.EventService.RaiseAsync(new ChangePasswordSuccessEvent("用户重置了密码。"));
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 已重写。移除本地登录密码。
+    /// 该方法还会清空<see cref="NaturalPerson.PasswordLastSet"/>的值。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public override async Task<IdentityResult> RemovePasswordAsync(NaturalPerson user)
+    {
+        user.PasswordLastSet = null;
+        IdentityResult result = await base.RemovePasswordAsync(user);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("清除PasswordLastSet时出错");
-            return result;
+            await this.EventService.RaiseAsync(new ChangePasswordFailureEvent(result.Errors.ToString()));
         }
-        trans.Complete();
-        return IdentityResult.Success;
+        else
+        {
+            await this.EventService.RaiseAsync(new ChangePasswordSuccessEvent("用户删除了密码。"));
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 强制更改用户的姓名信息。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="personName"></param>
+    /// <returns></returns>
+    public async Task<IdentityResult> AdminChangePersonNameAsync(NaturalPerson person, PersonNameInfo personName)
+    {
+        person.PersonName = personName;
+        return await this.UpdateAsync(person);
     }
 
 
@@ -235,30 +423,25 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public virtual async Task<IdentityResult> AdminResetPasswordAsync(NaturalPerson person, string newPassword, bool mustChangePassword, bool unlockUser)
     {
-        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdentityResult result = await this.UpdatePasswordHash(person, newPassword, true);
-        if (!result.Succeeded)
-            return result;
         if (mustChangePassword)
         {
             person.PasswordLastSet = null;
-            result = await this.UpdateAsync(person);
-            this.Logger.LogInformation("已将{user}的PasswordLastSet清除", person);
-            if (!result.Succeeded)
-            {
-                this.Logger.LogError("用户密码已设置，但清除PasswordLastSet时出错，事务已回滚。");
-                return result;
-            }
         }
+        IdentityResult result = await this.UpdatePasswordHash(person, newPassword, true);
+        if (!result.Succeeded)
+            return result;
+
         if (unlockUser)
             result = await this.UnlockPersonAsync(person);
         if (!result.Succeeded)
         {
-            this.Logger.LogError("用户密码已设置，但设置解锁时出错，消息是{error}，事务已回滚。", result);
-            return result;
+            await this.EventService.RaiseAsync(new ChangePasswordFailureEvent(result.Errors.ToString()));
         }
-        trans.Complete();
-        return IdentityResult.Success;
+        else
+        {
+            await this.EventService.RaiseAsync(new ChangePasswordSuccessEvent("管理员重置了用户密码。"));
+        }
+        return result;
     }
 
     /// <summary>
@@ -278,26 +461,20 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     }
 
     /// <summary>
-    /// 已重写，添加密码。
+    /// 尝试设置时区。
     /// </summary>
     /// <param name="user"></param>
-    /// <param name="password"></param>
+    /// <param name="tzName"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> AddPasswordAsync(NaturalPerson user, string password)
+    public virtual Task<IdentityResult> SetTimeZone(NaturalPerson user, string tzName)
     {
-        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdentityResult result = await base.AddPasswordAsync(user, password);
-        if (!result.Succeeded)
-            return result;
-        user.PasswordLastSet = DateTimeOffset.UtcNow;
-        result = await this.UpdateUserAsync(user);
-        if (!result.Succeeded)
+        if (TZConvert.KnownIanaTimeZoneNames.Any(p => p == tzName))
         {
-            this.Logger.LogError("添加密码时设置PasswordLastSet属性出错。消息是{result}，事务已回滚。", result);
-            return result;
+            user.TimeZone = tzName;
+            //todo 更新持久化？
+            return Task.FromResult(IdentityResult.Success);
         }
-        trans.Complete();
-        return IdentityResult.Success;
+        return Task.FromResult(IdentityResult.Failed(new IdentityError() { Code = "Invalid_TzInfo", Description = "Invalid time zone name." }));
     }
 
     /// <summary>
@@ -307,7 +484,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <param name="contentType"></param>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> SetProfilePictureAsync(NaturalPerson person, string contentType, byte[] bytes)
+    public virtual async Task<IdentityResult> SetProfilePictureAsync(NaturalPerson person, string contentType, byte[] bytes)
     {
         try
         {
@@ -320,7 +497,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         }
 
         person.ProfilePicture = new BinaryDataInfo(contentType, bytes);
-        var result = await this.UpdateUserAsync(person);
+        var result = await this.UpdateAsync(person);
         return result;
     }
 
@@ -329,10 +506,10 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> ClearProfilePictureAsync(NaturalPerson person)
+    public virtual async Task<IdentityResult> ClearProfilePictureAsync(NaturalPerson person)
     {
         person.ProfilePicture = null;
-        var result = await this.UpdateUserAsync(person);
+        var result = await this.UpdateAsync(person);
         if (result.Succeeded)
             this.Logger.LogInformation("用户头像已清除。");
         else
@@ -364,10 +541,7 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     /// <returns></returns>
     public virtual async Task<IdentityResult> ChangePersonNameAsync(NaturalPerson person, PersonNameInfo personNameInfo)
     {
-        if (!person.CanEditPersonName)
-            return IdentityResult.Failed(this.NaturalPersonIdentityErrorDescriber.CannotChangePersonName());
-
         person.PersonName = personNameInfo;
-        return await this.UpdateUserAsync(person);
+        return await this.UpdateAsync(person);
     }
 }

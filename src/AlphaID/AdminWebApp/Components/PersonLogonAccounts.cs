@@ -1,4 +1,4 @@
-﻿using IDSubjects.DirectoryLogon;
+﻿using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Components;

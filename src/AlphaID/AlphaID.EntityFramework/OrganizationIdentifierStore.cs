@@ -1,14 +1,10 @@
-﻿using IDSubjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IdSubjects;
 
-namespace AlphaID.EntityFramework;
-public class OrganizationIdentifierStore : IOrganizationIdentifierStore
+namespace AlphaId.EntityFramework;
+
+internal class OrganizationIdentifierStore : IOrganizationIdentifierStore
 {
-    private IdSubjectsDbContext dbContext;
+    private readonly IdSubjectsDbContext dbContext;
 
     public OrganizationIdentifierStore(IdSubjectsDbContext dbContext)
     {

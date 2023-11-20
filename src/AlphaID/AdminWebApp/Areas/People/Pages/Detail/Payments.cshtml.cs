@@ -1,5 +1,5 @@
-using IDSubjects;
-using IDSubjects.Payments;
+using IdSubjects;
+using IdSubjects.Payments;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail;
 public class PaymentsModel : PageModel
 {
     private readonly NaturalPersonManager personManager;
-    PersonBankAccountManager bankAccountManager;
+    readonly PersonBankAccountManager bankAccountManager;
 
     public PaymentsModel(NaturalPersonManager personManager, PersonBankAccountManager bankAccountManager)
     {

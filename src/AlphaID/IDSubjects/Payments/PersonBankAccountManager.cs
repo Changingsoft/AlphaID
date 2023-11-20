@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.Payments;
+﻿namespace IdSubjects.Payments;
 
 /// <summary>
 /// 银行账户管理器。

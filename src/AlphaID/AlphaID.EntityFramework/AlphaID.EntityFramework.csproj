@@ -1,19 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\IDSubjects.RealName\IDSubjects.RealName.csproj" />
-		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
+		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 	</ItemGroup>
 
 </Project>

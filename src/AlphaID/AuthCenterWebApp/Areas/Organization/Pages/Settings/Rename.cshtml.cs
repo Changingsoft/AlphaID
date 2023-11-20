@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 {
     public class RenameModel : PageModel
     {
-        OrganizationManager manager;
+        readonly OrganizationManager manager;
 
         public RenameModel(OrganizationManager manager)
         {

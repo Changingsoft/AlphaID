@@ -1,7 +1,8 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
-namespace AlphaID.EntityFramework;
-public class OrganizationBankAccountStore : IOrganizationBankAccountStore
+namespace AlphaId.EntityFramework;
+
+internal class OrganizationBankAccountStore : IOrganizationBankAccountStore
 {
     private readonly IdSubjectsDbContext dbContext;
 

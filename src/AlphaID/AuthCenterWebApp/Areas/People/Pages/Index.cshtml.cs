@@ -1,5 +1,5 @@
-using AlphaIDPlatform.Security;
-using IDSubjects;
+using AlphaIdPlatform.Security;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

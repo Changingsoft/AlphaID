@@ -1,39 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.13" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.25" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.13" />
-		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
-		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaID.PlatformServices.csproj" />
-		<ProjectReference Include="..\AlphaID.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj" />
-		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
-		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Areas\Organizations\Pages\Detail\Fapiao.zh-cn.resx">
-	    <DependentUpon>Fapiao.resx</DependentUpon>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Pages\Shared\_LayoutRoot.zh-cn.resx">
-	    <DependentUpon>_LayoutRoot.resx</DependentUpon>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Pages\Shared\_LayoutRoot.zh_CN.zh-cn.resx">
-	    <DependentUpon>_LayoutRoot.zh_CN.resx</DependentUpon>
-	  </EmbeddedResource>
+		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaId.RealName.EntityFramework\AlphaId.RealName.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaId.PlatformServices\AlphaId.PlatformServices.csproj" />
+		<ProjectReference Include="..\AlphaId.DirectoryLogon.EntityFramework\AlphaId.DirectoryLogon.EntityFramework.csproj" />
+		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
+		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
 
 	<ProjectExtensions>

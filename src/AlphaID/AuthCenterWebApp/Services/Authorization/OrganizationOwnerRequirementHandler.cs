@@ -1,5 +1,5 @@
 ﻿using AuthCenterWebApp.Areas.Organization;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
 

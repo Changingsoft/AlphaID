@@ -1,5 +1,5 @@
 using AuthCenterWebApp.Services;
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,9 +9,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
 {
     public class ChangeUserNameModel : PageModel
     {
-        NaturalPersonManager manager;
-        ILogger<ChangeUserNameModel>? logger;
-        PersonSignInManager signInManager;
+        readonly NaturalPersonManager manager;
+        readonly ILogger<ChangeUserNameModel>? logger;
+        readonly PersonSignInManager signInManager;
 
         public ChangeUserNameModel(NaturalPersonManager manager, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
         {

@@ -1,9 +1,9 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 [Table("NaturalPersonLogin")]
 [Index(nameof(UserId))]

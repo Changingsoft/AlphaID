@@ -1,4 +1,4 @@
-﻿namespace AlphaIDPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// 一个无操作的短信服务，用于调试或集成测试。该服务不会实际发送短信，它将生成一条消息性日志。

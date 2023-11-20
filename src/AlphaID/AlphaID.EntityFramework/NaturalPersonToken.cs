@@ -1,10 +1,10 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 [Table("NaturalPersonToken")]
 [PrimaryKey(nameof(UserId), nameof(LoginProvider), nameof(Name))]

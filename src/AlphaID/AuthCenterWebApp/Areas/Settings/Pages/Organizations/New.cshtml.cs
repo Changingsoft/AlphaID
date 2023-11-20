@@ -1,4 +1,4 @@
-using IDSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -77,11 +77,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
             return this.RedirectToPage("Index");
         }
 
-        public async Task<IActionResult> OnPostCheckName(string name)
+        public IActionResult OnPostCheckName(string name)
         {
-            if (this.organizationManager.SearchByName(name).Any())
-                return new JsonResult("Organization name exists.");
-            return new JsonResult(true);
+            return this.organizationManager.FindByName(name).Any() ? new JsonResult("Organization name exists.") : new JsonResult(true);
         }
 
         public class InputModel

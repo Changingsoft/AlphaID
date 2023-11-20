@@ -1,10 +1,10 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
-namespace AlphaID.EntityFramework;
+namespace AlphaId.EntityFramework;
 
 [Table("NaturalPersonClaim")]
 [Index(nameof(UserId))]

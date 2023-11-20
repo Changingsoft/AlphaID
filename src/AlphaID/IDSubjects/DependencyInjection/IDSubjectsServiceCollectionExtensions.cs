@@ -1,29 +1,33 @@
-﻿using IDSubjects;
-using IDSubjects.DependencyInjection;
-using IDSubjects.Invitations;
-using IDSubjects.Payments;
-using IDSubjects.Validators;
-using Microsoft.AspNetCore.Identity;
+﻿using IdSubjects;
+using IdSubjects.DependencyInjection;
+using IdSubjects.Invitations;
+using IdSubjects.Payments;
+using IdSubjects.SecurityAuditing;
+using IdSubjects.Validators;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Extensions for IDSubjects service injection.
+/// Extensions for IdSubjects service injection.
 /// </summary>
 public static class IdSubjectsServiceCollectionExtensions
 {
 
     /// <summary>
-    /// 向基础设施添加AlphaID自然人标识管理功能。
+    /// 向基础设施添加AlphaId自然人标识管理功能。
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjects(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
+    public static IdSubjectsBuilder AddIdSubjects(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
     {
-        // 由IDSubjects使用的服务。
+        //IdSubjects需要访问HttpContext.
+        services.AddHttpContextAccessor();
+
+        // 由IdSubjects使用的服务。
+        services.TryAddScoped<NaturalPersonManager>();
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
@@ -33,10 +37,14 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<OrganizationBankAccountManager>();
         services.TryAddScoped<OrganizationIdentifierManager>();
         services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
+        services.TryAddScoped<PasswordHistoryManager>();
+
+        services.TryAddScoped<IEventService, DefaultEventService>();
+        services.TryAddScoped<IEventSink, DefaultEventSink>();
 
         //添加基础标识
-        var builder = services.AddIdentityCore<NaturalPerson>()
-            .AddUserManager<NaturalPersonManager>()
+        var identityBuilder = services.AddIdentityCore<NaturalPerson>()
+            .AddUserManager<NaturalPersonManager>() //as UserManager<NaturalPerson>
             .AddUserValidator<PhoneNumberValidator>()
             ;
 
@@ -45,7 +53,7 @@ public static class IdSubjectsServiceCollectionExtensions
             services.Configure(setupAction);
         }
 
-        return builder;
+        return new IdSubjectsBuilder(services, identityBuilder);
     }
 
 

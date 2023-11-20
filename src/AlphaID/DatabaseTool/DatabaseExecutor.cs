@@ -8,7 +8,7 @@ namespace DatabaseTool;
 internal class DatabaseExecutor
 {
     private readonly DatabaseExecutorOptions options;
-    private ILogger<DatabaseExecutor>? logger;
+    private readonly ILogger<DatabaseExecutor>? logger;
 
     public DatabaseExecutor(IEnumerable<DatabaseMigrator> migrators, IOptions<DatabaseExecutorOptions> options, ILogger<DatabaseExecutor>? logger)
     {
@@ -21,6 +21,8 @@ internal class DatabaseExecutor
 
     public async Task ExecuteAsync()
     {
+
+
         //Step1: DropDatabase
         this.logger?.LogDebug("正在准备执行第1阶段（删除数据库）");
         if (this.options.DropDatabase)

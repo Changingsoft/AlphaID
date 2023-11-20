@@ -1,6 +1,6 @@
-﻿using IDSubjects;
+﻿using IdSubjects;
 
-namespace AlphaIDWebAPI.Models;
+namespace AlphaIdWebAPI.Models;
 
 /// <summary>
 /// GenericOrganization.

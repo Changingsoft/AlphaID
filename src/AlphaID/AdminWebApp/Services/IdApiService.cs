@@ -1,4 +1,4 @@
-﻿using AlphaIDPlatform;
+﻿using AlphaIdPlatform;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using System.Web;

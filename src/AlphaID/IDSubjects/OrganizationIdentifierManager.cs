@@ -1,4 +1,4 @@
-﻿namespace IDSubjects;
+﻿namespace IdSubjects;
 
 /// <summary>
 /// 
@@ -8,6 +8,10 @@ public class OrganizationIdentifierManager
     private readonly IOrganizationIdentifierStore store;
     private readonly IEnumerable<OrganizationIdentifierValidator> validators;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="store"></param>
     public OrganizationIdentifierManager(IOrganizationIdentifierStore store)
         : this(store, new List<OrganizationIdentifierValidator>() { new UsccValidator() })
     {
@@ -17,6 +21,7 @@ public class OrganizationIdentifierManager
     /// 
     /// </summary>
     /// <param name="store"></param>
+    /// <param name="validators"></param>
     public OrganizationIdentifierManager(IOrganizationIdentifierStore store, IEnumerable<OrganizationIdentifierValidator> validators)
     {
         this.store = store;

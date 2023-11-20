@@ -1,23 +1,30 @@
-﻿using AlphaID.EntityFramework;
-using AlphaID.PlatformServices.Aliyun;
-using AlphaID.PlatformServices.Primitives;
-using AlphaIDPlatform;
-using AlphaIDPlatform.Platform;
-using AlphaIDPlatform.RazorPages;
+﻿using AlphaId.DirectoryLogon.EntityFramework;
+using AlphaId.EntityFramework;
+using AlphaId.PlatformServices.Aliyun;
+using AlphaId.PlatformServices.Primitives;
+using AlphaId.RealName.EntityFramework;
+using AlphaIdPlatform;
+using AlphaIdPlatform.Platform;
+using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
-using IDSubjects;
-using IDSubjects.ChineseName;
-using IDSubjects.RealName;
+using IdSubjects;
+using IdSubjects.ChineseName;
+using IdSubjects.DirectoryLogon;
+using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
+using System.Data;
 using System.Globalization;
 // ReSharper disable All
 
@@ -29,8 +36,36 @@ builder.Host.UseSerilog((ctx, configuration) =>
     configuration
             .ReadFrom.Configuration(ctx.Configuration)
             .Enrich.FromLogContext()
-            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-            .WriteTo.EventLog(".NET Runtime", manageEventSource: true);
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level} {EventId}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+            .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information)
+            .WriteTo.Logger(lc =>
+            {
+                lc.ReadFrom.Configuration(ctx.Configuration);
+                lc.Filter.ByIncludingOnly(log =>
+                    {
+                        if (log.Properties.TryGetValue("SourceContext", out var pv))
+                        {
+                            var source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                            if (source == "Duende.IdentityServer.Events.DefaultEventService" || source == "IdSubjects.SecurityAuditing.DefaultEventService")
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
+                    })
+                    .WriteTo.MSSqlServer(
+                        builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+                        sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
+                        columnOptions: new ColumnOptions()
+                        {
+                            AdditionalColumns = new[]
+                            {
+                                new SqlColumn("EventId", SqlDbType.Int){PropertyName = "EventId.Id"},
+                                new SqlColumn("Source", SqlDbType.NVarChar){PropertyName = "SourceContext"},
+                            },
+                        }
+                        );
+            });
 });
 
 //程序资源
@@ -78,30 +113,43 @@ builder.Services.AddRazorPages(options =>
     options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
 });
 
-builder.Services.AddDbContext<IdSubjectsDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
-    {
-        sqlOptions.UseNetTopologySuite();
-    });
-});
 
-var identityBuilder = builder.Services.AddIdSubjectsIdentity(options =>
+var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789.-_@";
     options.User.RequireUniqueEmail = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
+    options.Password.ChangePasswordColdDown = 5;
+    options.Password.EnablePassExpires = true;
+    options.Password.RememberPasswordHistory = 1;
 })
+    .AddDefaultStores()
+    .AddDbContext(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
+        {
+            sqlOptions.UseNetTopologySuite();
+        });
+    });
+
+idSubjectsBuilder.IdentityBuilder
     .AddSignInManager<PersonSignInManager>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
-    .AddDefaultTokenProviders()
-    .AddDefaultStores();
+    .AddDefaultTokenProviders();
 
 if (true) //todo 设置一个开关以决定是否启用实名认证模块
 {
-    identityBuilder.AddRealName()
-        .AddRealNameStore<RealNameStore>();
+    idSubjectsBuilder.AddRealName()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+}
+
+if (true)
+{
+    idSubjectsBuilder.AddDirectoryLogin()
+        .AddDefaultStores()
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
 }
 
 //添加邮件发送器。
@@ -110,38 +158,39 @@ builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
 
 //添加IdentityServer
 builder.Services.AddIdentityServer(options =>
-{
-    options.Events.RaiseErrorEvents = true;
-    options.Events.RaiseInformationEvents = true;
-    options.Events.RaiseFailureEvents = true;
-    options.Events.RaiseSuccessEvents = true;
-
-    // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-    options.EmitStaticAudienceClaim = true;
-
-    //配置IdP标识
-    options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
-
-    //hack 将外部登录的方案修改为AspNetCoreIdentity的默认值？
-    options.DynamicProviders.SignInScheme = IdentityConstants.ExternalScheme;
-})
-.AddConfigurationStore(options =>
-{
-    options.ConfigureDbContext = b =>
     {
-        b.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
-    };
-})
-.AddOperationalStore(options =>
-{
-    options.ConfigureDbContext = b =>
+        options.Events.RaiseErrorEvents = true;
+        options.Events.RaiseInformationEvents = true;
+        options.Events.RaiseFailureEvents = true;
+        options.Events.RaiseSuccessEvents = true;
+
+        // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
+        options.EmitStaticAudienceClaim = true;
+
+        //配置IdP标识
+        options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
+
+        //hack 将外部登录的方案修改为AspNetCoreIdentity的默认值？
+        options.DynamicProviders.SignInScheme = IdentityConstants.ExternalScheme;
+    })
+    .AddConfigurationStore(options =>
     {
-        b.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
-    };
-})
-.AddAspNetIdentity<NaturalPerson>()
-.AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
-.AddServerSideSessions<ServerSideSessionStore>();
+        options.ConfigureDbContext = b =>
+        {
+            b.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
+        };
+    })
+    .AddOperationalStore(options =>
+    {
+        options.ConfigureDbContext = b =>
+        {
+            b.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
+        };
+    })
+    .AddAspNetIdentity<NaturalPerson>()
+    .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
+    .AddServerSideSessions<ServerSideSessionStore>()
+    .Services.AddTransient<Duende.IdentityServer.Services.IEventSink, AuditLogEventSink>();
 
 //短信服务
 builder.Services.AddScoped<IShortMessageService, SimpleShortMessageService>();
@@ -160,10 +209,6 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(20);
 });
-
-//实名认证
-builder.Services.AddScoped<ChineseIdCardManager>()
-    .AddScoped<IChineseIdCardValidationStore, RealNameValidationStore>();
 
 //身份证OCR
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();

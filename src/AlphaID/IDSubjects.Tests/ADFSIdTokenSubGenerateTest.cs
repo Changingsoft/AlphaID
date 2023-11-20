@@ -2,7 +2,7 @@
 using System.Text;
 using Xunit;
 
-namespace IDSubjects.Tests;
+namespace IdSubjects.Tests;
 public class AdfsIdTokenSubGenerateTest
 {
     /// <summary>

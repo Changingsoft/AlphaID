@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
@@ -12,18 +12,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaID.EntityFramework\AlphaID.EntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaIDPlatformServices\AlphaID.PlatformServices.csproj" />
-		<ProjectReference Include="..\DirectoryLogon\DirectoryLogon.csproj" />
-		<ProjectReference Include="..\AlphaID.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj" />
-		<ProjectReference Include="..\IDSubjects\IDSubjects.csproj" />
-		<ProjectReference Include="..\AlphaIDPlatform\AlphaIDPlatform.csproj" />
-		<ProjectReference Include="..\AlphaID.WechatWebLogin.EntityFramework\AlphaID.WechatWebLogin.EntityFramework.csproj" />
-		<ProjectReference Include="..\WechatWebLogin\WechatWebLogin.csproj" />
+		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaId.PlatformServices\AlphaID.PlatformServices.csproj" />
+		<ProjectReference Include="..\AlphaId.DirectoryLogon.EntityFramework\AlphaID.DirectoryLogon.EntityFramework.csproj" />
+		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
+		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
+		<ProjectReference Include="..\AlphaId.WechatWebLogin.EntityFramework\AlphaId.WechatWebLogin.EntityFramework.csproj" />
 	</ItemGroup>
 
 	<ProjectExtensions>

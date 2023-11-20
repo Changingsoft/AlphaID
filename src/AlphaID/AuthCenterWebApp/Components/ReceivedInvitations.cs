@@ -1,5 +1,5 @@
-﻿using IDSubjects;
-using IDSubjects.Invitations;
+﻿using IdSubjects;
+using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthCenterWebApp.Components;

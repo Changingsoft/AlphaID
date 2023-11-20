@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.DirectoryServices;
 
-namespace IDSubjects.DirectoryLogon;
+namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// Directory Service. e.g. Microsoft Active Directory.

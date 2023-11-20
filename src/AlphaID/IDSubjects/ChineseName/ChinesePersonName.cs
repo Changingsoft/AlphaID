@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IDSubjects.ChineseName;
+namespace IdSubjects.ChineseName;
 
 /// <summary>
 /// Chinese Person Name.

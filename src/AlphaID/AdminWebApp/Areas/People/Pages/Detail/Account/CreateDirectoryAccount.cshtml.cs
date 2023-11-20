@@ -1,5 +1,5 @@
-using IDSubjects;
-using IDSubjects.DirectoryLogon;
+using IdSubjects;
+using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

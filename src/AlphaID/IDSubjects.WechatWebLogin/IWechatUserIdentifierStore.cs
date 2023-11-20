@@ -1,4 +1,4 @@
-﻿namespace IDSubjects.WechatWebLogin;
+﻿namespace IdSubjects.WechatWebLogin;
 
 /// <summary>
 /// 提供微信用户标识存储能力。

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 
 /// </summary>
 [Owned]
-public class FapiaoInfo
+public record FapiaoInfo
 {
     /// <summary>
     /// 

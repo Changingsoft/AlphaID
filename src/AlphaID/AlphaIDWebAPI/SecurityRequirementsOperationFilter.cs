@@ -3,7 +3,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
 
-namespace AlphaIDWebAPI;
+namespace AlphaIdWebAPI;
 
 internal class SecurityRequirementsOperationFilter : IOperationFilter
 {
@@ -15,13 +15,13 @@ internal class SecurityRequirementsOperationFilter : IOperationFilter
                             .OfType<AuthorizeAttribute>()
                             .ToList();
 
-        if (authAttributes.Any())
+        if (authAttributes.Count != 0)
         {
             operation.Responses.Add(StatusCodes.Status401Unauthorized.ToString(), new OpenApiResponse { Description = nameof(HttpStatusCode.Unauthorized) });
             operation.Responses.Add(StatusCodes.Status403Forbidden.ToString(), new OpenApiResponse { Description = nameof(HttpStatusCode.Forbidden) });
         }
 
-        if (authAttributes.Any())
+        if (authAttributes.Count != 0)
         {
             operation.Security = new List<OpenApiSecurityRequirement>();
 

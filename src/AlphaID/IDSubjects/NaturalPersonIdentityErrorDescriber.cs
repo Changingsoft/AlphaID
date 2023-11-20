@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace IDSubjects;
+namespace IdSubjects;
 
 /// <summary>
 /// Error describer. 便于国际化。
@@ -42,6 +42,32 @@ public class NaturalPersonIdentityErrorDescriber : IdentityErrorDescriber
         return new IdentityError()
         {
             Code = nameof(this.CannotChangePersonName), Description = Resources.CannotChangePersonName,
+        };
+    }
+
+    /// <summary>
+    /// LessThenMinimumPasswordAge
+    /// </summary>
+    /// <returns></returns>
+    public IdentityError LessThenMinimumPasswordAge()
+    {
+        return new IdentityError()
+        {
+            Code = nameof(this.LessThenMinimumPasswordAge),
+            Description = Resources.LessThenMinimumPasswordAge,
+        };
+    }
+
+    /// <summary>
+    /// ReuseOldPassword
+    /// </summary>
+    /// <returns></returns>
+    public IdentityError ReuseOldPassword()
+    {
+        return new IdentityError()
+        {
+            Code = nameof(this.ReuseOldPassword),
+            Description = Resources.ReuseOldPassword,
         };
     }
 }

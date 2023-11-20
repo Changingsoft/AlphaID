@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace AlphaIDWebAPI;
+namespace AlphaIdWebAPI;
 
 internal static class CorsPolicyExtensions
 {

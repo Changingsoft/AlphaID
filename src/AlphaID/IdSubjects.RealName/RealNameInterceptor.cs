@@ -14,19 +14,21 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
         this.manager = manager;
     }
 
+    RealNameState? state = default;
+
     public override async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
         List<IdentityError> errors = new();
-        var realNameState = await this.manager.GetRealNameStateAsync(person);
-        if (realNameState == null)
+        this.state = await this.manager.GetRealNameStateAsync(person);
+        if (this.state == null)
         {
             this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
             return IdentityResult.Success;
         }
 
-        if (realNameState.ActionIndicator == ActionIndicator.PendingUpdate)
+        if (this.state.ActionIndicator == ActionIndicator.PendingUpdate)
         {
-            this.logger?.LogDebug("RealNameState指示了正在{person}等待更改，拦截器将放行此次更改。", person);
+            this.logger?.LogDebug("RealNameState指示了{person}等待更改，拦截器将放行此次更改。", person);
             return IdentityResult.Success;
         }
 
@@ -47,18 +49,17 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
 
     public override async Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        var realNameState = await this.manager.GetRealNameStateAsync(person);
-        if (realNameState == null)
+        if (this.state == null)
         {
             this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
             return;
         }
 
-        if (realNameState.ActionIndicator == ActionIndicator.PendingUpdate)
+        if (this.state.ActionIndicator == ActionIndicator.PendingUpdate)
         {
             this.logger?.LogDebug("RealNameState指示了正在{person}等待更改，拦截器将状态改为已更改。", person);
-            realNameState.ActionIndicator = ActionIndicator.Updated;
-            await this.manager.UpdateAsync(realNameState);
+            this.state.ActionIndicator = ActionIndicator.Updated;
+            await this.manager.UpdateAsync(this.state);
         }
     }
 }

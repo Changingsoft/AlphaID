@@ -1,0 +1,25 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.RealName.RequestWithChineseIdCardModel
+@{
+    ViewBag.Title = L["Validation Request with Chinese ID Card"];
+}
+@section Heads {
+
+}
+<h2>@L["Validation Request with Chinese ID Card"]</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="PersonalSide" class="form-label"></label>
+        <input type="file" asp-for="PersonalSide" class="sr-only d-none" accept="image/*">
+    </div>
+    <div class="mb-3">
+        <label asp-for="IssuerSide" class="form-label"></label>
+        <input type="file" asp-for="IssuerSide" class="sr-only d-none" accept="image/*">
+    </div>
+    <button type="submit" class="btn">@L["Commit"]</button>
+</form>
+
+@section Scripts {
+
+}

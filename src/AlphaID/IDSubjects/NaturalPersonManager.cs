@@ -531,17 +531,4 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         return await this.UpdateUserAsync(user);
 
     }
-
-    /// <summary>
-    /// 更改个人名称。
-    /// 
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="personNameInfo"></param>
-    /// <returns></returns>
-    public virtual async Task<IdentityResult> ChangePersonNameAsync(NaturalPerson person, PersonNameInfo personNameInfo)
-    {
-        person.PersonName = personNameInfo;
-        return await this.UpdateAsync(person);
-    }
 }

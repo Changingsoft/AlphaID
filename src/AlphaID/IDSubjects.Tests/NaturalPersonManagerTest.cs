@@ -17,19 +17,6 @@ public class NaturalPersonManagerTest
     }
 
     [Fact]
-    public async Task ChangeName()
-    {
-        using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-        var person = await this.naturalPersonMocker.CreateDefaultMockPersonAsync(manager);
-
-        var personName = new PersonNameInfo("张三", "张", "三");
-        var result = await manager.ChangePersonNameAsync(person, personName);
-        Assert.True(result.Succeeded);
-        Assert.Equal(personName, person.PersonName);
-    }
-
-    [Fact]
     public async Task SetTimeZone()
     {
         using var scope = this.serviceProviderFixture.ServiceScopeFactory.CreateScope();

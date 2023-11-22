@@ -7,13 +7,13 @@ namespace IdSubjects.RealName;
 /// <summary>
 /// 表示一个实名认证。
 /// </summary>
-[Table("RealNameValidation")]
-public class RealNameValidation
+[Table("RealNameAuthentication")]
+public class RealNameAuthentication
 {
     /// <summary>
     /// 
     /// </summary>
-    protected RealNameValidation() { }
+    protected RealNameAuthentication() { }
 
     /// <summary>
     /// 
@@ -22,7 +22,7 @@ public class RealNameValidation
     /// <param name="personName"></param>
     /// <param name="validatedAt"></param>
     /// <param name="validatedBy"></param>
-    public RealNameValidation(IdentityDocument document, PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
+    public RealNameAuthentication(IdentityDocument document, PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
     {
         this.Document = document;
         this.ValidatedAt = validatedAt;
@@ -34,7 +34,14 @@ public class RealNameValidation
     /// 
     /// </summary>
     [Key]
-    public int Id { get; protected set; }
+    [MaxLength(50), Unicode(false)]
+    public string Id { get; protected set; } = Guid.NewGuid().ToString().ToLower();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [MaxLength(50), Unicode(false)]
+    public string PersonId { get; protected internal set; } = default!;
 
     /// <summary>
     /// 指示一份身份证明文件的Id.
@@ -51,7 +58,7 @@ public class RealNameValidation
     /// <summary>
     /// 与此实名认证有关的个人名称信息。
     /// </summary>
-    public PersonNameInfo PersonName { get;protected set; } = default!;
+    public PersonNameInfo PersonName { get; protected set; } = default!;
 
     /// <summary>
     /// 认证通过的时间。
@@ -66,11 +73,21 @@ public class RealNameValidation
     /// <summary>
     /// 有效期限。
     /// </summary>
-    public DateTimeOffset? ExpiresAt {  get; protected set; }
+    public DateTimeOffset? ExpiresAt { get; protected set; }
 
     /// <summary>
     /// 备注和其他信息
     /// </summary>
     [MaxLength(200)]
     public string? Remark { get; set; }
+
+    /// <summary>
+    /// 是否已经应用。
+    /// </summary>
+    public bool Applied { get; protected internal set; }
+
+    public virtual void ApplyToPerson(NaturalPerson person)
+    {
+        person.PersonName = this.PersonName;
+    }
 }

@@ -27,9 +27,9 @@ public class RealNameBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public RealNameBuilder AddRealNameStore<T>() where T : class, IRealNameStateStore
+    public RealNameBuilder AddRealNameAuthenticationStore<T>() where T : class, IRealNameAuthenticationStore
     {
-        this.Services.TryAddScoped<IRealNameStateStore, T>();
+        this.Services.TryAddScoped<IRealNameAuthenticationStore, T>();
         return this;
     }
 }

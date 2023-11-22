@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace IdSubjects.RealName;
 
 /// <summary>
@@ -7,17 +8,16 @@ namespace IdSubjects.RealName;
 /// </summary>
 public class RealNameManager
 {
-    private readonly IRealNameStateStore stateStore;
+    private readonly IRealNameAuthenticationStore store;
     private readonly NaturalPersonManager naturalPersonManager;
-
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="stateStore"></param>
+    /// <param name="store"></param>
     /// <param name="naturalPersonManager"></param>
-    public RealNameManager(IRealNameStateStore stateStore, NaturalPersonManager naturalPersonManager)
+    public RealNameManager(IRealNameAuthenticationStore store, NaturalPersonManager naturalPersonManager)
     {
-        this.stateStore = stateStore;
+        this.store = store;
         this.naturalPersonManager = naturalPersonManager;
     }
 
@@ -27,47 +27,59 @@ public class RealNameManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns>与自然人相关的实名状态。如果没有，则返回null。</returns>
-    public virtual async Task<RealNameState?> GetRealNameStateAsync(NaturalPerson person)
+    public virtual IEnumerable<RealNameAuthentication> GetAuthentications(NaturalPerson person)
     {
-        return await this.stateStore.FindByIdAsync(person.Id);
+        return this.store.FindByPerson(person);
     }
 
     /// <summary>
     /// 向指定的自然人添加实名认证信息。
     /// </summary>
     /// <param name="person"></param>
-    /// <param name="validation"></param>
+    /// <param name="authentication"></param>
     /// <returns></returns>
-    public async Task AddValidationAsync(NaturalPerson person, RealNameValidation validation)
+    public async Task<IdOperationResult> AddAsync(NaturalPerson person, RealNameAuthentication authentication)
     {
-        var state = await this.GetRealNameStateAsync(person);
-        if(state == null)
-        {
-            state = new RealNameState(person.Id)
-            {
-                
-            };
-            await this.stateStore.CreateAsync(state);
-        }
-        state.Validations.Add(validation);
-        await this.stateStore.UpdateAsync(state);
+        authentication.PersonId = person.Id;
+        var result = await this.store.CreateAsync(authentication);
+        if (!result.Succeeded)
+            return result;
 
-        await this.naturalPersonManager.UpdateAsync(person);
+        //为person应用更改。
+        var identityResult = await this.naturalPersonManager.UpdateAsync(person);
+        if (!identityResult.Succeeded)
+            return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());
 
-    }
-
-    internal async Task<IdOperationResult> UpdateAsync(RealNameState realNameState)
-    {
-        return await this.stateStore.UpdateAsync(realNameState);
+        return IdOperationResult.Success;
     }
 
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="state"></param>
+    /// <param name="authentication"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> DeleteAsync(RealNameState state)
+    public async Task<IdOperationResult> RemoveAsync(RealNameAuthentication authentication)
     {
-        return await this.stateStore.DeleteAsync(state);
+        return await this.store.DeleteAsync(authentication);
+    }
+
+    internal async Task<IdOperationResult> UpdateAsync(RealNameAuthentication authentication)
+    {
+        return await this.store.UpdateAsync(authentication);
+    }
+
+    internal bool HasAuthenticated(NaturalPerson person)
+    {
+        return this.store.Authentications.Any(a => a.PersonId == person.Id);
+    }
+
+    internal IEnumerable<RealNameAuthentication> GetPendingAuthentications(NaturalPerson person)
+    {
+        return this.store.FindByPerson(person).Where(a => !a.Applied);
+    }
+
+    internal async Task ClearAsync(NaturalPerson person)
+    {
+        await this.store.DeleteByPersonIdAsync(person.Id);
     }
 }

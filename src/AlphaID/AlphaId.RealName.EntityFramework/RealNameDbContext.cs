@@ -29,7 +29,7 @@ public class RealNameDbContext : DbContext
             .HaveColumnType("date");
     }
 
-    public DbSet<RealNameState> RealNameStates { get; protected set; } = default!;
+    public DbSet<RealNameAuthentication> RealNameAuthentications { get; protected set; } = default!;
 
     public DbSet<IdentityDocument> IdentityDocuments { get; protected set; } = default!;
 

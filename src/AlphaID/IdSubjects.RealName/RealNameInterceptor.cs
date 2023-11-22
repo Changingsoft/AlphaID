@@ -14,21 +14,25 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
         this.manager = manager;
     }
 
-    RealNameState? state = default;
+    private IEnumerable<RealNameAuthentication> pendingAuthentications = Enumerable.Empty<RealNameAuthentication>();
 
     public override async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
         List<IdentityError> errors = new();
-        this.state = await this.manager.GetRealNameStateAsync(person);
-        if (this.state == null)
+        if (!this.manager.HasAuthenticated(person))
         {
             this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
             return IdentityResult.Success;
         }
 
-        if (this.state.ActionIndicator == ActionIndicator.PendingUpdate)
+        this.pendingAuthentications = this.manager.GetPendingAuthentications(person).ToList();
+        if (this.pendingAuthentications.Any())
         {
-            this.logger?.LogDebug("RealNameState指示了{person}等待更改，拦截器将放行此次更改。", person);
+            foreach (var authentication in this.pendingAuthentications)
+            {
+                authentication.ApplyToPerson(person);
+                this.logger?.LogDebug("拦截器使用{authentication}覆盖了{person}的信息。", authentication, person);
+            }
             return IdentityResult.Success;
         }
 
@@ -49,27 +53,17 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
 
     public override async Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        if (this.state == null)
+        foreach (var authentication in this.pendingAuthentications)
         {
-            this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
-            return;
+            authentication.Applied = true;
+            await this.manager.UpdateAsync(authentication);
+            this.logger?.LogDebug("已将{authentication}的应用状态改为已更改。", authentication);
         }
 
-        if (this.state.ActionIndicator == ActionIndicator.PendingUpdate)
-        {
-            this.logger?.LogDebug("RealNameState指示了正在{person}等待更改，拦截器将状态改为已更改。", person);
-            this.state.ActionIndicator = ActionIndicator.Updated;
-            await this.manager.UpdateAsync(this.state);
-        }
     }
 
     public override async Task PostDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        this.state = await this.manager.GetRealNameStateAsync(person);
-        if (this.state != null)
-        {
-            await this.manager.DeleteAsync(this.state);
-            this.logger?.LogDebug("用户{person}具有实名认证状态，已跟随删除。", person);
-        }
+        await this.manager.ClearAsync(person);
     }
 }

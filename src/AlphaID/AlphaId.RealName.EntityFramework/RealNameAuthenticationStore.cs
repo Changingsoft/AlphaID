@@ -3,11 +3,11 @@ using IdSubjects.RealName;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.RealName.EntityFramework;
-internal class RealNameStateStore : IRealNameAuthenticationStore
+internal class RealNameAuthenticationStore : IRealNameAuthenticationStore
 {
     private readonly RealNameDbContext dbContext;
 
-    public RealNameStateStore(RealNameDbContext dbContext)
+    public RealNameAuthenticationStore(RealNameDbContext dbContext)
     {
         this.dbContext = dbContext;
     }

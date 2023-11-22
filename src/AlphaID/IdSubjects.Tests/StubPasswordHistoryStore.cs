@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IdSubjects.Tests;
-internal class StubPasswordHistoryStore : IPasswordHistoryStore
+public class StubPasswordHistoryStore : IPasswordHistoryStore
 {
     private readonly HashSet<PasswordHistory> set = new HashSet<PasswordHistory>();
 

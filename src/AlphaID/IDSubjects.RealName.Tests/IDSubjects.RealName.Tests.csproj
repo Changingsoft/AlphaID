@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\IdSubjects.RealName\IdSubjects.RealName.csproj" />
+		<ProjectReference Include="..\IdSubjects.Tests\IdSubjects.Tests.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ public abstract class RealNameRequest
     /// 
     /// </summary>
     [Key]
-    public int Id { get; protected set; }
+    public int Id { get; protected internal set; }
 
     /// <summary>
     /// 

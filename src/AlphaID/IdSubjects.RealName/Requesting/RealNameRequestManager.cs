@@ -7,7 +7,7 @@ public class RealNameRequestManager
 {
     private readonly IRealNameRequestStore store;
     private readonly RealNameManager realNameManager;
-    private readonly IRealNameRequestAuditorProvider provider;
+    private readonly IRealNameRequestAuditorProvider? provider;
 
     /// <summary>
     /// 
@@ -15,7 +15,7 @@ public class RealNameRequestManager
     /// <param name="store"></param>
     /// <param name="realNameManager"></param>
     /// <param name="provider"></param>
-    public RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, IRealNameRequestAuditorProvider provider)
+    public RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, IRealNameRequestAuditorProvider? provider = null)
     {
         this.store = store;
         this.realNameManager = realNameManager;
@@ -37,6 +37,11 @@ public class RealNameRequestManager
         if (!result.Succeeded)
             return result;
 
+        if (this.provider == null)
+        {
+            return result;
+        }
+
         var auditors = this.provider.GetAuditors();
         var accept = true;
         foreach (var auditor in auditors)
@@ -49,6 +54,7 @@ public class RealNameRequestManager
             return result;
 
         return await this.AcceptAsync(person, request);
+
     }
 
     /// <summary>

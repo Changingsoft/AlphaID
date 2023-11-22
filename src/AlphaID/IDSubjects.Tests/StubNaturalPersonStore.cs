@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace IdSubjects.Tests;
 
-internal class StubNaturalPersonStore : NaturalPersonStoreBase
+public class StubNaturalPersonStore : NaturalPersonStoreBase
 {
     private readonly HashSet<NaturalPerson> set = new();
 

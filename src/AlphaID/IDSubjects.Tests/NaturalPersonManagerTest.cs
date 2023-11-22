@@ -5,8 +5,7 @@ using Xunit;
 
 namespace IdSubjects.Tests;
 
-[Collection(nameof(ServiceProviderCollection))]
-public class NaturalPersonManagerTest
+public class NaturalPersonManagerTest : IClassFixture<ServiceProviderFixture>
 {
     private readonly ServiceProviderFixture serviceProviderFixture;
     private readonly NaturalPersonMocker naturalPersonMocker = new();

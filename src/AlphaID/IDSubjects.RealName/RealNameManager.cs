@@ -38,7 +38,7 @@ public class RealNameManager
     /// <param name="person"></param>
     /// <param name="authentication"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AddAsync(NaturalPerson person, RealNameAuthentication authentication)
+    public async Task<IdOperationResult> AuthenticateAsync(NaturalPerson person, RealNameAuthentication authentication)
     {
         authentication.PersonId = person.Id;
         var result = await this.store.CreateAsync(authentication);

@@ -31,9 +31,17 @@ public class RealNameDbContext : DbContext
 
     public DbSet<RealNameAuthentication> RealNameAuthentications { get; protected set; } = default!;
 
+    public DbSet<DocumentedRealNameAuthentication> DocumentedRealNameAuthentications { get; protected set; } = default!;
+
     public DbSet<IdentityDocument> IdentityDocuments { get; protected set; } = default!;
 
     public DbSet<ChineseIdCardDocument> ChineseIdCardDocuments { get; protected set; } = default!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<IdentityDocument>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
+        modelBuilder.Entity<RealNameAuthentication>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
+    }
 
     /// <summary>
     /// Converts <see cref="DateOnly" /> to <see cref="DateTime"/> and vice versa.

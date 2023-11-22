@@ -1,0 +1,42 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace IdSubjects.RealName;
+
+/// <summary>
+/// 表示一个基于身份证明材料的实名认证。
+/// </summary>
+public class DocumentedRealNameAuthentication : RealNameAuthentication
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    protected DocumentedRealNameAuthentication() { }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="document"></param>
+    /// <param name="personName"></param>
+    /// <param name="validatedAt"></param>
+    /// <param name="validatedBy"></param>
+    public DocumentedRealNameAuthentication(IdentityDocument document, PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
+        : base(personName, validatedAt, validatedBy)
+    {
+        this.Document = document;
+        this.DocumentId = document.Id;
+    }
+
+    /// <summary>
+    /// 指示一份身份证明文件的Id.
+    /// </summary>
+    [MaxLength(50), Unicode(false)]
+    public string DocumentId { get; protected set; } = default!;
+
+    /// <summary>
+    /// 指示一个身份证明文件。
+    /// </summary>
+    [ForeignKey(nameof(DocumentId))]
+    public virtual IdentityDocument Document { get; protected set; } = default!;
+}

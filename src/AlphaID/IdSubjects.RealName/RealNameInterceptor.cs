@@ -6,12 +6,12 @@ namespace IdSubjects.RealName;
 internal class RealNameInterceptor : NaturalPersonInterceptor
 {
     private readonly ILogger<RealNameInterceptor>? logger;
-    private readonly RealNameManager manager;
+    private IRealNameAuthenticationStore store;
 
-    public RealNameInterceptor(ILogger<RealNameInterceptor>? logger, RealNameManager manager)
+    public RealNameInterceptor(ILogger<RealNameInterceptor>? logger, IRealNameAuthenticationStore store)
     {
         this.logger = logger;
-        this.manager = manager;
+        this.store = store;
     }
 
     private IEnumerable<RealNameAuthentication> pendingAuthentications = Enumerable.Empty<RealNameAuthentication>();
@@ -19,13 +19,14 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
     public override async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
         List<IdentityError> errors = new();
-        if (!this.manager.HasAuthenticated(person))
+        var personAuthentications = this.store.FindByPerson(person);
+        if (!personAuthentications.Any())
         {
             this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
             return IdentityResult.Success;
         }
 
-        this.pendingAuthentications = this.manager.GetPendingAuthentications(person).ToList();
+        this.pendingAuthentications = personAuthentications.Where(a => !a.Applied).ToList();
         if (this.pendingAuthentications.Any())
         {
             foreach (var authentication in this.pendingAuthentications)
@@ -56,7 +57,7 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
         foreach (var authentication in this.pendingAuthentications)
         {
             authentication.Applied = true;
-            await this.manager.UpdateAsync(authentication);
+            await this.store.UpdateAsync(authentication);
             this.logger?.LogDebug("已将{authentication}的应用状态改为已更改。", authentication);
         }
 
@@ -64,6 +65,6 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
 
     public override async Task PostDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        await this.manager.ClearAsync(person);
+        await this.store.DeleteByPersonIdAsync(person.Id);
     }
 }

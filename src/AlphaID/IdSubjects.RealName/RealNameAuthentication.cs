@@ -8,7 +8,7 @@ namespace IdSubjects.RealName;
 /// 表示一个实名认证。
 /// </summary>
 [Table("RealNameAuthentication")]
-public class RealNameAuthentication
+public abstract class RealNameAuthentication
 {
     /// <summary>
     /// 
@@ -18,13 +18,11 @@ public class RealNameAuthentication
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="document"></param>
     /// <param name="personName"></param>
     /// <param name="validatedAt"></param>
     /// <param name="validatedBy"></param>
-    public RealNameAuthentication(IdentityDocument document, PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
+    protected RealNameAuthentication(PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
     {
-        this.Document = document;
         this.ValidatedAt = validatedAt;
         this.ValidatedBy = validatedBy;
         this.PersonName = personName;
@@ -43,17 +41,7 @@ public class RealNameAuthentication
     [MaxLength(50), Unicode(false)]
     public string PersonId { get; protected internal set; } = default!;
 
-    /// <summary>
-    /// 指示一份身份证明文件的Id.
-    /// </summary>
-    [MaxLength(50), Unicode(false)]
-    public string DocumentId { get; protected set; } = default!;
 
-    /// <summary>
-    /// 指示一个身份证明文件。
-    /// </summary>
-    [ForeignKey(nameof(DocumentId))]
-    public virtual IdentityDocument Document { get; protected set; } = default!;
 
     /// <summary>
     /// 与此实名认证有关的个人名称信息。

@@ -25,6 +25,31 @@ namespace DatabaseTool.Migrations.RealNameDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("IdSubjects.RealName.IdentityDocument", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityDocument");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityDocument");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocumentAttachment", b =>
                 {
                     b.Property<string>("DocumentId")
@@ -51,80 +76,49 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.ToTable("IdentityDocumentAttachment");
                 });
 
-            modelBuilder.Entity("IdSubjects.RealName.IdentityDocument", b =>
+            modelBuilder.Entity("IdSubjects.RealName.RealNameAuthentication", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("Applied")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTimeOffset?>("ExpiresAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("PersonId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTimeOffset>("ValidatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ValidatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("WhenCreated")
-                        .HasColumnType("datetimeoffset");
-
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityDocument");
+                    b.ToTable("RealNameAuthentication");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityDocument");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("RealNameAuthentication");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("IdSubjects.RealName.RealNameState", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTimeOffset>("AcceptedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("AcceptedBy")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ActionIndicator")
-                        .IsRequired()
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<DateTimeOffset>("ExpiresAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RealNameState");
-                });
-
-            modelBuilder.Entity("IdSubjects.RealName.RealNameValidation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DocumentId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("RealNameStateId")
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentId");
-
-                    b.HasIndex("RealNameStateId");
-
-                    b.ToTable("RealNameValidation");
                 });
 
             modelBuilder.Entity("IdSubjects.RealName.ChineseIdCardDocument", b =>
@@ -175,6 +169,23 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.HasDiscriminator().HasValue("ChineseIdCardDocument");
                 });
 
+            modelBuilder.Entity("IdSubjects.RealName.DocumentedRealNameAuthentication", b =>
+                {
+                    b.HasBaseType("IdSubjects.RealName.RealNameAuthentication");
+
+                    b.Property<string>("DocumentId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("RealNameAuthentication");
+
+                    b.HasDiscriminator().HasValue("DocumentedRealNameAuthentication");
+                });
+
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocumentAttachment", b =>
                 {
                     b.HasOne("IdSubjects.RealName.IdentityDocument", "Document")
@@ -186,7 +197,51 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.Navigation("Document");
                 });
 
-            modelBuilder.Entity("IdSubjects.RealName.RealNameValidation", b =>
+            modelBuilder.Entity("IdSubjects.RealName.RealNameAuthentication", b =>
+                {
+                    b.OwnsOne("IdSubjects.PersonNameInfo", "PersonName", b1 =>
+                        {
+                            b1.Property<string>("RealNameAuthenticationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("FullName")
+                                .IsRequired()
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)");
+
+                            b1.Property<string>("GivenName")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("MiddleName")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("SearchHint")
+                                .HasMaxLength(60)
+                                .HasColumnType("nvarchar(60)");
+
+                            b1.Property<string>("Surname")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.HasKey("RealNameAuthenticationId");
+
+                            b1.HasIndex("FullName");
+
+                            b1.HasIndex("SearchHint");
+
+                            b1.ToTable("RealNameAuthentication");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RealNameAuthenticationId");
+                        });
+
+                    b.Navigation("PersonName")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IdSubjects.RealName.DocumentedRealNameAuthentication", b =>
                 {
                     b.HasOne("IdSubjects.RealName.IdentityDocument", "Document")
                         .WithMany()
@@ -194,21 +249,12 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdSubjects.RealName.RealNameState", null)
-                        .WithMany("Validations")
-                        .HasForeignKey("RealNameStateId");
-
                     b.Navigation("Document");
                 });
 
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocument", b =>
                 {
                     b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("IdSubjects.RealName.RealNameState", b =>
-                {
-                    b.Navigation("Validations");
                 });
 #pragma warning restore 612, 618
         }

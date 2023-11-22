@@ -48,7 +48,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "DocumentAttachment",
+                name: "IdentityDocumentAttachment",
                 columns: table => new
                 {
                     DocumentId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
@@ -107,7 +107,7 @@ namespace DatabaseTool.Migrations.RealNameDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DocumentAttachment");
+                name: "IdentityDocumentAttachment");
 
             migrationBuilder.DropTable(
                 name: "RealNameValidation");

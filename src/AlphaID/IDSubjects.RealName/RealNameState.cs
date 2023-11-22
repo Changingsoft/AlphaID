@@ -32,20 +32,14 @@ public class RealNameState
     public string PersonId { get; protected set; } = default!;
 
     /// <summary>
-    /// 
+    /// 创建时间。
     /// </summary>
-    public DateTimeOffset AcceptedAt { get; set; }
+    public DateTimeOffset WhenCreated { get; protected internal set; }
 
     /// <summary>
-    /// 
+    /// 更新时间。
     /// </summary>
-    public DateTimeOffset ExpiresAt { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [MaxLength(50)]
-    public string AcceptedBy { get; set; } = default!;
+    public DateTimeOffset WhenChanged { get; protected internal set; }
 
     /// <summary>
     /// 获取与此实名认证状态有关的实名认证资料。

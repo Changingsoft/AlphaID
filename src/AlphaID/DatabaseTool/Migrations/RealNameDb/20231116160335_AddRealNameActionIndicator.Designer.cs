@@ -28,7 +28,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("IdSubjects.RealName.DocumentAttachment", b =>
+            modelBuilder.Entity("IdSubjects.RealName.IdentityDocumentAttachment", b =>
                 {
                     b.Property<string>("DocumentId")
                         .HasMaxLength(50)
@@ -51,7 +51,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.HasKey("DocumentId", "Name");
 
-                    b.ToTable("DocumentAttachment");
+                    b.ToTable("IdentityDocumentAttachment");
                 });
 
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocument", b =>
@@ -178,7 +178,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.HasDiscriminator().HasValue("ChineseIdCardDocument");
                 });
 
-            modelBuilder.Entity("IdSubjects.RealName.DocumentAttachment", b =>
+            modelBuilder.Entity("IdSubjects.RealName.IdentityDocumentAttachment", b =>
                 {
                     b.HasOne("IdSubjects.RealName.IdentityDocument", "Document")
                         .WithMany("Attachments")

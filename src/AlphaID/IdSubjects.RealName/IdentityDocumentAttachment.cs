@@ -8,7 +8,7 @@ namespace IdSubjects.RealName;
 /// 表示一个附件。
 /// </summary>
 [PrimaryKey(nameof(DocumentId), nameof(Name))]
-public class DocumentAttachment
+public class IdentityDocumentAttachment
 {
     /// <summary>
     /// 

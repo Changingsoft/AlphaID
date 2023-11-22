@@ -62,4 +62,14 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
             await this.manager.UpdateAsync(this.state);
         }
     }
+
+    public override async Task PostDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
+    {
+        this.state = await this.manager.GetRealNameStateAsync(person);
+        if (this.state != null)
+        {
+            await this.manager.DeleteAsync(this.state);
+            this.logger?.LogDebug("用户{person}具有实名认证状态，已跟随删除。", person);
+        }
+    }
 }

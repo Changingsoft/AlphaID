@@ -23,10 +23,10 @@ public class RealNameManager
 
 
     /// <summary>
-    /// 
+    /// 获取与自然人相关的实名状态信息。
     /// </summary>
     /// <param name="person"></param>
-    /// <returns></returns>
+    /// <returns>与自然人相关的实名状态。如果没有，则返回null。</returns>
     public virtual async Task<RealNameState?> GetRealNameStateAsync(NaturalPerson person)
     {
         return await this.stateStore.FindByIdAsync(person.Id);
@@ -49,10 +49,7 @@ public class RealNameManager
             };
             await this.stateStore.CreateAsync(state);
         }
-
-        validation.Document.ApplyRealName(person);
         state.Validations.Add(validation);
-        state.ActionIndicator = ActionIndicator.PendingUpdate;
         await this.stateStore.UpdateAsync(state);
 
         await this.naturalPersonManager.UpdateAsync(person);
@@ -62,5 +59,15 @@ public class RealNameManager
     internal async Task<IdOperationResult> UpdateAsync(RealNameState realNameState)
     {
         return await this.stateStore.UpdateAsync(realNameState);
+    }
+
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    public async Task<IdOperationResult> DeleteAsync(RealNameState state)
+    {
+        return await this.stateStore.DeleteAsync(state);
     }
 }

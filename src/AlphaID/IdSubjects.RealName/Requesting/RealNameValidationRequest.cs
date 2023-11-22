@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.RealName;
+﻿namespace IdSubjects.RealName.Requesting;
 /// <summary>
 /// 表示一个实名验证请求
 /// </summary>

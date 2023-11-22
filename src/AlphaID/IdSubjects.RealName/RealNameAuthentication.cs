@@ -74,6 +74,10 @@ public abstract class RealNameAuthentication
     /// </summary>
     public bool Applied { get; protected internal set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="person"></param>
     public virtual void ApplyToPerson(NaturalPerson person)
     {
         person.PersonName = this.PersonName;

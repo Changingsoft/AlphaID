@@ -13,6 +13,24 @@ public class IdentityDocumentAttachment
     /// <summary>
     /// 
     /// </summary>
+    protected IdentityDocumentAttachment() { }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
+    public IdentityDocumentAttachment(string name, byte[] content, string contentType)
+    {
+        this.Name = name;
+        this.Content = content;
+        this.ContentType = contentType;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     [MaxLength(50), Unicode(false)]
     public string DocumentId { get; set; } = default!;
 

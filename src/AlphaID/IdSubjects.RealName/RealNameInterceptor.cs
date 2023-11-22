@@ -6,7 +6,7 @@ namespace IdSubjects.RealName;
 internal class RealNameInterceptor : NaturalPersonInterceptor
 {
     private readonly ILogger<RealNameInterceptor>? logger;
-    private IRealNameAuthenticationStore store;
+    private readonly IRealNameAuthenticationStore store;
 
     public RealNameInterceptor(ILogger<RealNameInterceptor>? logger, IRealNameAuthenticationStore store)
     {

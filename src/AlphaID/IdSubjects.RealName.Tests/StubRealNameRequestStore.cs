@@ -20,4 +20,9 @@ internal class StubRealNameRequestStore : IRealNameRequestStore
     }
 
     public IQueryable<RealNameRequest> Requests => this.set.AsQueryable();
+
+    public Task<RealNameRequest?> FindByIdAsync(int id)
+    {
+        return Task.FromResult(this.set.FirstOrDefault(r => r.Id == id));
+    }
 }

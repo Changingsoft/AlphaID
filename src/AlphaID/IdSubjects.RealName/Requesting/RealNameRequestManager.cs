@@ -8,6 +8,7 @@ public class RealNameRequestManager
     private readonly IRealNameRequestStore store;
     private readonly RealNameManager realNameManager;
     private readonly IRealNameRequestAuditorProvider? provider;
+    NaturalPersonManager naturalPersonManager;
 
     /// <summary>
     /// 
@@ -15,14 +16,26 @@ public class RealNameRequestManager
     /// <param name="store"></param>
     /// <param name="realNameManager"></param>
     /// <param name="provider"></param>
-    public RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, IRealNameRequestAuditorProvider? provider = null)
+    public RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, NaturalPersonManager naturalPersonManager, IRealNameRequestAuditorProvider? provider = null)
     {
         this.store = store;
         this.realNameManager = realNameManager;
+        this.naturalPersonManager = naturalPersonManager;
         this.provider = provider;
     }
 
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public IEnumerable<RealNameRequest> PendingRequests
+    {
+        get
+        {
+            return this.store.Requests.Where(r => !r.Accepted.HasValue);
+        }
+    }
 
     /// <summary>
     /// 
@@ -53,26 +66,28 @@ public class RealNameRequestManager
         if (!accept)
             return result;
 
-        return await this.AcceptAsync(person, request);
+        return await this.AcceptAsync(request);
 
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="naturalPerson"></param>
     /// <param name="request"></param>
     /// <param name="auditor"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AcceptAsync(NaturalPerson naturalPerson, RealNameRequest request, string? auditor = null)
+    public async Task<IdOperationResult> AcceptAsync(RealNameRequest request, string? auditor = null)
     {
-        request.Accept(auditor, this.TimeProvider.GetUtcNow());
+        var person = await this.naturalPersonManager.FindByIdAsync(request.PersonId);
+        if (person == null)
+            return IdOperationResult.Failed("Natural person not found.");
+        request.SetAudit(true, auditor, this.TimeProvider.GetUtcNow());
         var result = await this.UpdateAsync(request);
         if (!result.Succeeded)
             return result;
 
         var authentication = request.CreateAuthentication();
-        return await this.realNameManager.AuthenticateAsync(naturalPerson, authentication);
+        return await this.realNameManager.AuthenticateAsync(person, authentication);
     }
 
     /// <summary>
@@ -94,5 +109,21 @@ public class RealNameRequestManager
     public IEnumerable<RealNameRequest> GetRequests(NaturalPerson person)
     {
         return this.store.Requests.Where(x => x.PersonId == person.Id);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="anchor"></param>
+    /// <returns></returns>
+    public async Task<RealNameRequest?> FindByIdAsync(int anchor)
+    {
+        return await this.store.FindByIdAsync(anchor);
+    }
+
+    public async Task<IdOperationResult> RefuseAsync(RealNameRequest request, string? auditor = null)
+    {
+        request.SetAudit(false, auditor, this.TimeProvider.GetUtcNow());
+        return await this.UpdateAsync(request);
     }
 }

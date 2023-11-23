@@ -1,0 +1,6 @@
+﻿@using IdSubjects.RealName
+@model IdSubjects.RealName.RealNameAuthentication
+@if (Model is DocumentedRealNameAuthentication documentedRealNameAuthentication)
+{
+    <partial name="Shared/_DocumentedRealNameAuthenticationPartial" model="documentedRealNameAuthentication"/>
+}

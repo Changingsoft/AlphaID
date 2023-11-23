@@ -27,4 +27,9 @@ internal class RealNameRequestStore : IRealNameRequestStore
     }
 
     public IQueryable<RealNameRequest> Requests => this.dbContext.RealNameRequests.AsNoTracking();
+
+    public async Task<RealNameRequest?> FindByIdAsync(int id)
+    {
+        return await this.dbContext.RealNameRequests.FindAsync(id);
+    }
 }

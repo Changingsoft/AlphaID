@@ -1,11 +1,25 @@
 ﻿@{
-    Layout = "Shared/_Layout";
+    Layout = "/Pages/Shared/_Layout.cshtml";
 }
-
 @section Heads{
     @await RenderSectionAsync("Heads", false)
 }
+
+<div class="page-header">
+    <div class="container-xl">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-page="/Index">@L["Real Name"]</a></li>
+            @await RenderSectionAsync("Breadcrumb", false)
+        </ul>
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        @RenderBody()
+    </div>
+</div>
+
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)
 }
-@RenderBody()

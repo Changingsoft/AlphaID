@@ -11,7 +11,7 @@ public class ChineseIdCardFrontOcrResult
     public string Name { get; set; } = default!;
 
     /// <summary>
-    /// 性别
+    /// 性别，可能的值为：["男"|"女"]
     /// </summary>
     public string SexString { get; set; } = default!;
 

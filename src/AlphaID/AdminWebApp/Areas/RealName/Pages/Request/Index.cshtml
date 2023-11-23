@@ -1,0 +1,13 @@
+﻿@page "{anchor}"
+@model AdminWebApp.Areas.RealName.Pages.Request.IndexModel
+@{
+}
+@Html.DisplayFor(m => m.Data)
+@if (!Model.Data.Accepted.HasValue)
+{
+    <form method="post">
+
+        <button type="submit" name="button" value="accept" class="btn btn-primary">@L["Accept"]</button>
+        <button type="submit" name="button" value="refuse" class="btn btn-danger" onclick="return confirm('@(L["Are you sure you want to refuse this request?"])');">@L["Refuse"]</button>
+    </form>
+}

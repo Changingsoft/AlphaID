@@ -46,9 +46,9 @@ public abstract class RealNameRequest
     /// </summary>
     /// <param name="auditor"></param>
     /// <param name="time"></param>
-    public void Accept(string? auditor, DateTimeOffset time)
+    public void SetAudit(bool accept, string? auditor, DateTimeOffset time)
     {
-        this.Accepted = true;
+        this.Accepted = accept;
         this.Auditor = auditor;
         this.AcceptedAt = time;
     }

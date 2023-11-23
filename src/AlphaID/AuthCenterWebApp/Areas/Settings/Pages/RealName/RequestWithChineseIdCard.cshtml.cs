@@ -4,6 +4,8 @@ using IdSubjects.RealName;
 using IdSubjects.RealName.Requesting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 {
@@ -21,9 +23,11 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
         }
 
         [BindProperty]
+        [Display(Name = "身份证个人信息面")]
         public IFormFile PersonalSide { get; set; } = default!;
 
         [BindProperty]
+        [Display(Name = "身份证国徽面")]
         public IFormFile IssuerSide { get; set; } = default!;
 
         public IdOperationResult? Result { get; set; }
@@ -59,9 +63,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
             await this.IssuerSide.OpenReadStream().CopyToAsync(issuerSideStream);
             var issuerSideOcr = await this.chineseIdCardOcrService.RecognizeIdCardBack(issuerSideStream);
             var issuerSideInfo = new BinaryDataInfo(this.IssuerSide.ContentType, issuerSideStream.ToArray());
-
+            var sex = personalSideOcr.SexString switch
+            {
+                "男" => Sex.Male,
+                "女" => Sex.Female,
+                _ => throw new ArgumentOutOfRangeException(nameof(personalSideOcr.SexString))
+            };
+            
             var request = new ChineseIdCardRealNameRequest(personalSideOcr.Name,
-                Enum.Parse<Sex>(personalSideOcr.SexString),
+                sex,
                 personalSideOcr.Nationality,
                 DateOnly.FromDateTime(personalSideOcr.DateOfBirth),
                 personalSideOcr.Address,
@@ -74,7 +84,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 
             this.Result = await this.realNameRequestManager.CreateAsync(person, request);
             if (this.Result.Succeeded)
-                return this.RedirectToPage("Requests");
+                return this.RedirectToPage("Index");
 
             return this.Page();
         }

@@ -6,44 +6,26 @@
 }
 <h2>@L["Real-name State"]</h2>
 
+
 <h3>@L["Available Real-name Authentications"]</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Type</td>
-            <td>Validated at</td>
-            <td>Validated by</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var authentication in Model.Authentications)
-        {
-            <tr>
-                <td>@authentication.GetType()</td>
-                <td>@authentication.ValidatedAt</td>
-                <td>@authentication.ValidatedBy</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
+<div class="list-group list-group-flush">
+    @foreach (var authentication in Model.Authentications)
+    {
+        <div class="list-group-item">
+            @Html.DisplayFor(m => authentication)
+        </div>
+    }
+</div>
+<hr/>
 <h3>@L["Pending Requests"]</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Type</td>
-            <td>When committed</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var request in Model.Requests)
-        {
-            <tr>
-                <td>@request.GetType()</td>
-                <td>@request.WhenCommitted</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="list-group list-group-flush">
+    @foreach (var request in Model.Requests)
+    {
+        <div class="list-group-item">
+            @Html.DisplayFor(m => request)
+        </div>
+    }
+</div>
 
-<a asp-page="Request">@L["Start Request"]</a>
+
+<a asp-page="Request" class="btn">@L["Start Request"]</a>

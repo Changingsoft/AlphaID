@@ -22,5 +22,12 @@ public interface IRealNameRequestStore
     /// <summary>
     /// 
     /// </summary>
-    IQueryable<RealNameRequest> Requests { get; }
+    IQueryable<RealNameRequest?> Requests { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<RealNameRequest?> FindByIdAsync(int id);
 }

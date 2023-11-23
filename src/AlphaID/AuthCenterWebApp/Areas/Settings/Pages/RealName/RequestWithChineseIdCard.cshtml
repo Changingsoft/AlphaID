@@ -12,11 +12,13 @@
 <form method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="PersonalSide" class="form-label"></label>
-        <input type="file" asp-for="PersonalSide" class="sr-only d-none" accept="image/*">
+        <input type="file" asp-for="PersonalSide" accept="image/*">
+        <span asp-validation-for="PersonalSide" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="IssuerSide" class="form-label"></label>
-        <input type="file" asp-for="IssuerSide" class="sr-only d-none" accept="image/*">
+        <input type="file" asp-for="IssuerSide" accept="image/*">
+        <span asp-validation-for="IssuerSide" class="text-danger"></span>
     </div>
     <button type="submit" class="btn">@L["Commit"]</button>
 </form>

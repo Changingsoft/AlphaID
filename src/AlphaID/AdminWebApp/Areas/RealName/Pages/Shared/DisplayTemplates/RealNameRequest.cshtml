@@ -1,0 +1,6 @@
+﻿@using IdSubjects.RealName.Requesting
+@model IdSubjects.RealName.Requesting.RealNameRequest
+@if (Model is ChineseIdCardRealNameRequest chineseIdCardRealNameRequest)
+{
+    <partial name="_ChineseIdCardRealNameRequestPartial" model="chineseIdCardRealNameRequest"/>
+}

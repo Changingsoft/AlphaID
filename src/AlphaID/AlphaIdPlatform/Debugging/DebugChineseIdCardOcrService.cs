@@ -1,9 +1,11 @@
-﻿namespace AlphaIdPlatform.Platform;
+﻿using AlphaIdPlatform.Platform;
+
+namespace AlphaIdPlatform.Debugging;
 
 /// <summary>
 /// Chinese ID Card OCR Service for DEBUG.
 /// </summary>
-public class DebugIdCardOcrService : IChineseIdCardOcrService
+public class DebugChineseIdCardOcrService : IChineseIdCardOcrService
 {
     /// <summary>
     /// Recognize ID Card Back.
@@ -14,8 +16,9 @@ public class DebugIdCardOcrService : IChineseIdCardOcrService
     {
         return Task.FromResult(new ChineseIdCardBackOcrResult()
         {
-            Issuer = "DebugTestIssuer",
-            IssueDate = new DateTime(2020, 1, 1),
+            Issuer = "涿州市公安局",
+            IssueDate = new DateTime(2013, 5, 5),
+            ExpiresDate = null,
         });
     }
 
@@ -28,12 +31,12 @@ public class DebugIdCardOcrService : IChineseIdCardOcrService
     {
         return Task.FromResult(new ChineseIdCardFrontOcrResult()
         {
-            Name = "张三",
-            SexString = "男",
+            DateOfBirth = new DateTime(161, 7, 16),
+            Address = "河北省涿州市大树楼桑村",
+            IdCardNumber = "130681016107160036",
+            Name = "刘备",
             Nationality = "汉",
-            DateOfBirth = new DateTime(1999, 1, 1),
-            Address = "云南省曲靖市麒麟区",
-            IdCardNumber = "331023198605055652",
+            SexString = "男",
         });
 
     }

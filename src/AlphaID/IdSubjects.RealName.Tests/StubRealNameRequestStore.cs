@@ -18,4 +18,6 @@ internal class StubRealNameRequestStore : IRealNameRequestStore
         //do nothing.
         return Task.FromResult(IdOperationResult.Success);
     }
+
+    public IQueryable<RealNameRequest> Requests => this.set.AsQueryable();
 }

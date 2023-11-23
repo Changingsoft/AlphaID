@@ -84,6 +84,15 @@ public class RealNameRequestManager
     private async Task<IdOperationResult> UpdateAsync(RealNameRequest request)
     {
         return await this.store.UpdateAsync(request);
-        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 获取与自然人关联的实名认真请求。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns></returns>
+    public IEnumerable<RealNameRequest> GetRequests(NaturalPerson person)
+    {
+        return this.store.Requests.Where(x => x.PersonId == person.Id);
     }
 }

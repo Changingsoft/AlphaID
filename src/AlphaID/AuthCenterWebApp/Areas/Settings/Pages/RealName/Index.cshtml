@@ -1,7 +1,49 @@
 ﻿@page
+@using IdSubjects.RealName
 @model AuthCenterWebApp.Areas.Settings.Pages.RealName.IndexModel
 @{
+    ViewBag.Title = L["Real-name State"];
 }
-<h2>Real Name State</h2>
+<h2>@L["Real-name State"]</h2>
+
+<h3>@L["Available Real-name Authentications"]</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Type</td>
+            <td>Validated at</td>
+            <td>Validated by</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var authentication in Model.Authentications)
+        {
+            <tr>
+                <td>@authentication.GetType()</td>
+                <td>@authentication.ValidatedAt</td>
+                <td>@authentication.ValidatedBy</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>@L["Pending Requests"]</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Type</td>
+            <td>When committed</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model.Requests)
+        {
+            <tr>
+                <td>@request.GetType()</td>
+                <td>@request.WhenCommitted</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <a asp-page="Request">@L["Start Request"]</a>

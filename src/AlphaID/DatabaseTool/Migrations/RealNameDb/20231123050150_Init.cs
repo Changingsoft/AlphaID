@@ -34,6 +34,39 @@ namespace DatabaseTool.Migrations.RealNameDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "RealNameRequest",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    WhenCommitted = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Accepted = table.Column<bool>(type: "bit", nullable: true),
+                    Auditor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AcceptedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Discriminator = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    PersonalSide_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    PersonalSide_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    PersonalSide_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    IssuerSide_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    IssuerSide_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    IssuerSide_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Expires = table.Column<DateTime>(type: "date", nullable: true),
+                    IssueDate = table.Column<DateTime>(type: "date", nullable: true),
+                    Issuer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ethnicity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    Sex = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RealNameRequest", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IdentityDocumentAttachment",
                 columns: table => new
                 {
@@ -107,6 +140,9 @@ namespace DatabaseTool.Migrations.RealNameDb
 
             migrationBuilder.DropTable(
                 name: "RealNameAuthentication");
+
+            migrationBuilder.DropTable(
+                name: "RealNameRequest");
 
             migrationBuilder.DropTable(
                 name: "IdentityDocument");

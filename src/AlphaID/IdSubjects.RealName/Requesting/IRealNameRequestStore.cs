@@ -18,4 +18,9 @@ public interface IRealNameRequestStore
     /// <param name="request"></param>
     /// <returns></returns>
     Task<IdOperationResult> UpdateAsync(RealNameRequest request);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    IQueryable<RealNameRequest> Requests { get; }
 }

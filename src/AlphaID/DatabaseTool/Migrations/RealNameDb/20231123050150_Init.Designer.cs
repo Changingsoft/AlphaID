@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.RealNameDb
 {
     [DbContext(typeof(RealNameDbContext))]
-    [Migration("20231122070459_Init")]
+    [Migration("20231123050150_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -124,6 +124,47 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("IdSubjects.RealName.Requesting.RealNameRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("AcceptedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Auditor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("PersonId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTimeOffset>("WhenCommitted")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RealNameRequest");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("RealNameRequest");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("IdSubjects.RealName.ChineseIdCardDocument", b =>
                 {
                     b.HasBaseType("IdSubjects.RealName.IdentityDocument");
@@ -187,6 +228,47 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.ToTable("RealNameAuthentication");
 
                     b.HasDiscriminator().HasValue("DocumentedRealNameAuthentication");
+                });
+
+            modelBuilder.Entity("IdSubjects.RealName.Requesting.ChineseIdCardRealNameRequest", b =>
+                {
+                    b.HasBaseType("IdSubjects.RealName.Requesting.RealNameRequest");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Ethnicity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Expires")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("IssueDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Issuer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
+
+                    b.ToTable("RealNameRequest");
+
+                    b.HasDiscriminator().HasValue("ChineseIdCardRealNameRequest");
                 });
 
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocumentAttachment", b =>
@@ -253,6 +335,67 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .IsRequired();
 
                     b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("IdSubjects.RealName.Requesting.ChineseIdCardRealNameRequest", b =>
+                {
+                    b.OwnsOne("IdSubjects.BinaryDataInfo", "IssuerSide", b1 =>
+                        {
+                            b1.Property<int>("ChineseIdCardRealNameRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("MimeType")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(100)");
+
+                            b1.Property<DateTimeOffset>("UpdateTime")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.HasKey("ChineseIdCardRealNameRequestId");
+
+                            b1.ToTable("RealNameRequest");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ChineseIdCardRealNameRequestId");
+                        });
+
+                    b.OwnsOne("IdSubjects.BinaryDataInfo", "PersonalSide", b1 =>
+                        {
+                            b1.Property<int>("ChineseIdCardRealNameRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("MimeType")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(100)");
+
+                            b1.Property<DateTimeOffset>("UpdateTime")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.HasKey("ChineseIdCardRealNameRequestId");
+
+                            b1.ToTable("RealNameRequest");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ChineseIdCardRealNameRequestId");
+                        });
+
+                    b.Navigation("IssuerSide")
+                        .IsRequired();
+
+                    b.Navigation("PersonalSide")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocument", b =>

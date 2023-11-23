@@ -1,5 +1,6 @@
 ﻿using IdSubjects;
 using IdSubjects.RealName.Requesting;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.RealName.EntityFramework;
 
@@ -24,4 +25,6 @@ internal class RealNameRequestStore : IRealNameRequestStore
         await this.dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
+
+    public IQueryable<RealNameRequest> Requests => this.dbContext.RealNameRequests.AsNoTracking();
 }

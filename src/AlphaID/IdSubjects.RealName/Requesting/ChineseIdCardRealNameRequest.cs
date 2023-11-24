@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,12 +51,62 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     /// 
     /// </summary>
-    public BinaryDataInfo PersonalSide { get; set; }
+    [MaxLength(20)]
+    public string Name { get; set; } = default!;
 
     /// <summary>
     /// 
     /// </summary>
-    public BinaryDataInfo IssuerSide { get; set; }
+    public Sex Sex { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [MaxLength(20)]
+    public string Ethnicity { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateOnly DateOfBirth { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [MaxLength(150)]
+    public string Address { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [MaxLength(18), Unicode(false)]
+    public string CardNumber { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [MaxLength(20)]
+    public string Issuer { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateOnly IssueDate { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateOnly? Expires { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public BinaryDataInfo PersonalSide { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public BinaryDataInfo IssuerSide { get; set; } = default!;
 
     /// <summary>
     /// 
@@ -77,58 +129,13 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
             IssueDate = this.IssueDate,
             Expires = this.Expires
         };
-        document.Attachments.Add(new IdentityDocumentAttachment(nameof(this.PersonalSide), this.PersonalSide.Data, this.PersonalSide.MimeType));
-        document.Attachments.Add(new IdentityDocumentAttachment(nameof(this.IssuerSide), this.IssuerSide.Data, this.IssuerSide.MimeType));
+        document.Attachments.Add(new IdentityDocumentAttachment(ChineseIdCardDocument.PersonalSideAttachmentName, this.PersonalSide.Data, this.PersonalSide.MimeType));
+        document.Attachments.Add(new IdentityDocumentAttachment(ChineseIdCardDocument.IssuerSideAttachmentName, this.IssuerSide.Data, this.IssuerSide.MimeType));
 
         var authentication = new DocumentedRealNameAuthentication(document,
             new PersonNameInfo(this.Name),
             this.AcceptedAt.Value,
-            this.Auditor ?? "");
+            this.Auditor!);
         return authentication;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public DateOnly? Expires { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public DateOnly IssueDate { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Issuer { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string CardNumber { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Ethnicity { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public DateOnly DateOfBirth { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Sex Sex { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Address { get; set; }
 }

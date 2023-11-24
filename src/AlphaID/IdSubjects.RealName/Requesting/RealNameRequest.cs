@@ -34,6 +34,7 @@ public abstract class RealNameRequest
     /// <summary>
     /// 
     /// </summary>
+    [MaxLength(30)]
     public string? Auditor { get; protected set; }
 
     /// <summary>

@@ -56,6 +56,7 @@ public abstract class RealNameAuthentication
     /// <summary>
     /// 认证执行者。
     /// </summary>
+    [MaxLength(30)]
     public string ValidatedBy { get; protected set; } = default!;
 
     /// <summary>

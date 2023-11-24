@@ -60,6 +60,36 @@ public class ChineseIdCardDocument : IdentityDocument
     /// </summary>
     public DateOnly? Expires { get; set; }
 
+    /// <summary>
+    /// 获取身份证个人信息面附件。
+    /// </summary>
+    [NotMapped]
+    public IdentityDocumentAttachment? PersonalSide
+    {
+        get
+        {
+            return this.Attachments.FirstOrDefault(a => a.Name == PersonalSideAttachmentName);
+        }
+    }
+
+    public IdentityDocumentAttachment? IssuerSide
+    {
+        get
+        {
+            return this.Attachments.FirstOrDefault(a => a.Name == IssuerSideAttachmentName);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static readonly string PersonalSideAttachmentName = "个人信息面";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static readonly string IssuerSideAttachmentName = "签发者信息面";
+
     internal override void ApplyRealName(NaturalPerson person)
     {
         //todo 应用时要考虑姓氏和名字拆分？

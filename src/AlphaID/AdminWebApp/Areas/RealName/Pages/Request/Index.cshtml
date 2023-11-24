@@ -1,8 +1,15 @@
 ﻿@page "{anchor}"
+@using Newtonsoft.Json
 @model AdminWebApp.Areas.RealName.Pages.Request.IndexModel
 @{
 }
-@Html.DisplayFor(m => m.Data)
+
+<pre>
+@JsonConvert.SerializeObject(Model.Data, Formatting.Indented)
+</pre>
+
+<partial name="_ChineseIdCardRealNameRequestPartial" model="Model.Data"/>
+
 @if (!Model.Data.Accepted.HasValue)
 {
     <form method="post">

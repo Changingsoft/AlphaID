@@ -10,10 +10,11 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
     public class PersonNameModel : PageModel
     {
         private readonly NaturalPersonManager personManager;
-
-        public PersonNameModel(NaturalPersonManager personManager)
+        RealNameManager realNameManager;
+        public PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager)
         {
             this.personManager = personManager;
+            this.realNameManager = realNameManager;
         }
 
         [BindProperty]
@@ -28,6 +29,13 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             {
                 return this.NotFound();
             }
+
+            var hasRealName = this.realNameManager.GetAuthentications(person).Any();
+            if (hasRealName)
+            {
+                this.Result = IdentityResult.Failed(new IdentityError() { Code = "Cannot change name after real-name authentication", Description = "You cannot change name because your has been passed real-name authentication." });
+            }
+
             this.Input = new InputMode()
             {
                 Surname = person.PersonName.Surname,

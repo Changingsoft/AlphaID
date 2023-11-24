@@ -1,6 +1,8 @@
 ﻿
 
 
+using System.Runtime.CompilerServices;
+
 namespace IdSubjects.RealName;
 
 /// <summary>
@@ -20,6 +22,11 @@ public class RealNameManager
         this.store = store;
         this.naturalPersonManager = naturalPersonManager;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public IQueryable<RealNameAuthentication> Authentications => this.store.Authentications;
 
 
     /// <summary>
@@ -81,5 +88,10 @@ public class RealNameManager
     internal async Task ClearAsync(NaturalPerson person)
     {
         await this.store.DeleteByPersonIdAsync(person.Id);
+    }
+
+    public async Task<RealNameAuthentication?> FindByIdAsync(string id)
+    {
+        return await this.store.FindByIdAsync(id);
     }
 }

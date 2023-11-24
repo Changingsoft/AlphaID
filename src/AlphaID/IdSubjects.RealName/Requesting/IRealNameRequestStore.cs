@@ -22,7 +22,7 @@ public interface IRealNameRequestStore
     /// <summary>
     /// 
     /// </summary>
-    IQueryable<RealNameRequest?> Requests { get; }
+    IQueryable<RealNameRequest> Requests { get; }
 
     /// <summary>
     /// 

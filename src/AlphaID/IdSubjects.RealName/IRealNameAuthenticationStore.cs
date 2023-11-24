@@ -50,4 +50,11 @@ public interface IRealNameAuthenticationStore
     /// <param name="person"></param>
     /// <returns></returns>
     IQueryable<RealNameAuthentication> FindByPerson(NaturalPerson person);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<RealNameAuthentication?> FindByIdAsync(string id);
 }

@@ -1,0 +1,12 @@
+﻿@page "{anchor}"
+@using Newtonsoft.Json
+@model AdminWebApp.Areas.RealName.Pages.Authentication.IndexModel
+@{
+}
+
+<pre>
+@JsonConvert.SerializeObject(Model.Data, Formatting.Indented, new JsonSerializerSettings()
+{
+    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+})
+</pre>

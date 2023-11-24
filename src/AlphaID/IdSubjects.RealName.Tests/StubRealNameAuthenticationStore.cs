@@ -37,4 +37,9 @@ internal class StubRealNameAuthenticationStore:IRealNameAuthenticationStore
     {
         return this.set.Where(a => a.PersonId == person.Id).AsQueryable();
     }
+
+    public Task<RealNameAuthentication?> FindByIdAsync(string id)
+    {
+        return Task.FromResult(this.set.FirstOrDefault(a => a.Id == id));
+    }
 }

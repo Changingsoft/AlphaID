@@ -2,8 +2,6 @@ using AlphaIdPlatform.Security;
 using IdSubjects;
 using IdSubjects.RealName.Requesting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Identity.Client;
 
 namespace AdminWebApp.Areas.RealName.Pages.Request
 {

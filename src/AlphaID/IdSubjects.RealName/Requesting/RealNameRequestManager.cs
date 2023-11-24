@@ -37,6 +37,7 @@ public class RealNameRequestManager
         }
     }
 
+    public IQueryable<RealNameRequest> Requests => this.store.Requests;
     /// <summary>
     /// 
     /// </summary>

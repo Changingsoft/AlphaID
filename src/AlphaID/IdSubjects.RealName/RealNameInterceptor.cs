@@ -38,7 +38,7 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
         }
 
         //检查是否有对PersonName等作出的更改。
-        var origin = personManager.Users.Single(p => p.Id == person.Id);
+        var origin = await personManager.GetOriginalAsync(person);
         if (!origin.PersonName.Equals(person.PersonName))
         {
             this.logger?.LogDebug("自然人名称不相等。原始 {origin}，传入 {incoming}。", origin.PersonName, person.PersonName);

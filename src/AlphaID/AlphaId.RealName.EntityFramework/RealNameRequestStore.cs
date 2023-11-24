@@ -13,6 +13,13 @@ internal class RealNameRequestStore : IRealNameRequestStore
         this.dbContext = dbContext;
     }
 
+    public IQueryable<RealNameRequest> Requests => this.dbContext.RealNameRequests.AsNoTracking();
+
+    public async Task<RealNameRequest?> FindByIdAsync(int id)
+    {
+        return await this.dbContext.RealNameRequests.FindAsync(id);
+    }
+
     public async Task<IdOperationResult> CreateAsync(RealNameRequest request)
     {
         this.dbContext.RealNameRequests.Add(request);
@@ -24,12 +31,5 @@ internal class RealNameRequestStore : IRealNameRequestStore
     {
         await this.dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
-    }
-
-    public IQueryable<RealNameRequest> Requests => this.dbContext.RealNameRequests.AsNoTracking();
-
-    public async Task<RealNameRequest?> FindByIdAsync(int id)
-    {
-        return await this.dbContext.RealNameRequests.FindAsync(id);
     }
 }

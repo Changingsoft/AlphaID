@@ -8,13 +8,14 @@ public class RealNameRequestManager
     private readonly IRealNameRequestStore store;
     private readonly RealNameManager realNameManager;
     private readonly IRealNameRequestAuditorProvider? provider;
-    NaturalPersonManager naturalPersonManager;
+    private readonly NaturalPersonManager naturalPersonManager;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="store"></param>
     /// <param name="realNameManager"></param>
+    /// <param name="naturalPersonManager"></param>
     /// <param name="provider"></param>
     public RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, NaturalPersonManager naturalPersonManager, IRealNameRequestAuditorProvider? provider = null)
     {
@@ -37,6 +38,9 @@ public class RealNameRequestManager
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public IQueryable<RealNameRequest> Requests => this.store.Requests;
     /// <summary>
     /// 
@@ -122,6 +126,12 @@ public class RealNameRequestManager
         return await this.store.FindByIdAsync(anchor);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="auditor"></param>
+    /// <returns></returns>
     public async Task<IdOperationResult> RefuseAsync(RealNameRequest request, string? auditor = null)
     {
         request.SetAudit(false, auditor, this.TimeProvider.GetUtcNow());

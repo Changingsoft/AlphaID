@@ -54,6 +54,6 @@ public class IdentityDocumentAttachment
     /// <summary>
     /// 此附件数据的MIME类型。
     /// </summary>
-    [MaxLength(100),Unicode(false)]
+    [MaxLength(100), Unicode(false)]
     public string ContentType { get; set; } = default!;
 }

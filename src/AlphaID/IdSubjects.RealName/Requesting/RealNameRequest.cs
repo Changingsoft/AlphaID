@@ -18,8 +18,8 @@ public abstract class RealNameRequest
     /// <summary>
     /// 
     /// </summary>
-    [MaxLength(50),Unicode(false)]
-    public string PersonId { get; protected internal set; }
+    [MaxLength(50), Unicode(false)]
+    public string PersonId { get; protected internal set; } = default!;
 
     /// <summary>
     /// 
@@ -45,6 +45,7 @@ public abstract class RealNameRequest
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="accept"></param>
     /// <param name="auditor"></param>
     /// <param name="time"></param>
     public void SetAudit(bool accept, string? auditor, DateTimeOffset time)

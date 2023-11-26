@@ -1,9 +1,4 @@
-﻿
-
-
-using System.Runtime.CompilerServices;
-
-namespace IdSubjects.RealName;
+﻿namespace IdSubjects.RealName;
 
 /// <summary>
 /// 实名信息管理器。
@@ -90,6 +85,11 @@ public class RealNameManager
         await this.store.DeleteByPersonIdAsync(person.Id);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<RealNameAuthentication?> FindByIdAsync(string id)
     {
         return await this.store.FindByIdAsync(id);

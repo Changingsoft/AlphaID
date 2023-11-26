@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
-/// 
+/// 表示一个使用身份证的实名认证请求。
 /// </summary>
 public class ChineseIdCardRealNameRequest : RealNameRequest
 {

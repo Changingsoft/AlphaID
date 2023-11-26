@@ -6,7 +6,7 @@ namespace AlphaId.RealName.EntityFramework;
 
 internal class RealNameRequestStore : IRealNameRequestStore
 {
-    readonly RealNameDbContext dbContext;
+    private readonly RealNameDbContext dbContext;
 
     public RealNameRequestStore(RealNameDbContext dbContext)
     {

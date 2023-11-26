@@ -72,6 +72,9 @@ public class ChineseIdCardDocument : IdentityDocument
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public IdentityDocumentAttachment? IssuerSide
     {
         get

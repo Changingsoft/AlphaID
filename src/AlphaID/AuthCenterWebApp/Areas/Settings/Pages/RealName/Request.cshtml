@@ -1,8 +1,11 @@
-﻿@page
+﻿@page "{id}"
+@using Newtonsoft.Json
 @model AuthCenterWebApp.Areas.Settings.Pages.RealName.RequestModel
 @{
-    ViewBag.Title = L["Real Name Validation Request"];
 }
-<h2>@L["Real Name Validation Request"]</h2>
-
-<a asp-page="RequestWithChineseIdCard" class="btn">@L["Start request with Chinese ID Card"]</a>
+<pre>
+    @JsonConvert.SerializeObject(Model.Data, Formatting.Indented, new JsonSerializerSettings()
+{
+    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+})
+</pre>

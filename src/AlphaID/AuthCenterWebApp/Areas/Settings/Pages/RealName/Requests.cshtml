@@ -1,4 +1,32 @@
 ﻿@page
+@using IdSubjects.RealName.Requesting
 @model AuthCenterWebApp.Areas.Settings.Pages.RealName.RequestsModel
 @{
 }
+<table class="table">
+    <thead>
+        <tr>
+            <td>Type</td>
+            <td>Status</td>
+            <td>Audit at</td>
+            <td>Auditor</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model.RealNameRequests)
+        {
+            var requestType = request switch
+            {
+                ChineseIdCardRealNameRequest => L["Chinese ID Card Request"],
+                _ => L["Unknown"],
+            };
+            var chineseIdCardRequest = request as ChineseIdCardRealNameRequest;
+            <tr>
+                <td><a asp-page="Request" asp-route-id="@request.Id">@requestType</a></td>
+                <td>@request.Accepted</td>
+                <td>@request.AcceptedAt</td>
+                <td>@request.Auditor</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -5,17 +5,16 @@ using IdSubjects.RealName.Requesting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 
-namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
+namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
 {
-    public class RequestWithChineseIdCardModel : PageModel
+    public class WithChineseIdCardModel : PageModel
     {
         private readonly NaturalPersonManager naturalPersonManager;
         private readonly IChineseIdCardOcrService chineseIdCardOcrService;
         private readonly RealNameRequestManager realNameRequestManager;
 
-        public RequestWithChineseIdCardModel(IChineseIdCardOcrService chineseIdCardOcrService, NaturalPersonManager naturalPersonManager, RealNameRequestManager realNameRequestManager)
+        public WithChineseIdCardModel(IChineseIdCardOcrService chineseIdCardOcrService, NaturalPersonManager naturalPersonManager, RealNameRequestManager realNameRequestManager)
         {
             this.chineseIdCardOcrService = chineseIdCardOcrService;
             this.naturalPersonManager = naturalPersonManager;
@@ -84,7 +83,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 
             this.Result = await this.realNameRequestManager.CreateAsync(person, request);
             if (this.Result.Succeeded)
-                return this.RedirectToPage("Index");
+                return this.RedirectToPage("../Index");
 
             return this.Page();
         }

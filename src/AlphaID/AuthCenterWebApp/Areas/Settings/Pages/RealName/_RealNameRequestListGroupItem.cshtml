@@ -1,0 +1,35 @@
+﻿@using IdSubjects.RealName.Requesting
+@model IdSubjects.RealName.Requesting.RealNameRequest
+@{
+    var requestType = Model switch
+    {
+        ChineseIdCardRealNameRequest => L["Chinese ID Card Request"],
+        _ => L["Unknown"],
+    };
+}
+
+<div class="list-group-item">
+    <div class="row align-items-center">
+        <div class="col-auto"><span class="badge bg-blue"></span></div>
+        <div class="col text-truncate">
+            <a asp-page="Request" asp-route-id="@Model.Id" class="text-reset d-block">@requestType</a>
+            <div class="d-block text-secondary text-truncate mt-n1">
+                @if (Model.Accepted.HasValue)
+                {
+                    if (Model.Accepted.Value)
+                    {
+                        <span class="badge badge-success">@L["Accepted"]</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">@L["Refused"]</span>
+                    }
+                }
+                else
+                {
+                    <span class="badge badge-secondary">@L["Pending"]</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>

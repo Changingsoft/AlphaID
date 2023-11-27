@@ -26,5 +26,26 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
             this.Data = request;
             return this.Page();
         }
+
+        public async Task<IActionResult> OnGetChineseIdCardImage(int id, string side)
+        {
+            var request = await this.requestManager.FindByIdAsync(id);
+            if (request == null)
+            {
+                return this.NotFound();
+            }
+
+            if (request is not ChineseIdCardRealNameRequest chineseIdCardRealNameRequest)
+                return this.NotFound();
+
+            return side switch
+            {
+                "personal" => this.File(chineseIdCardRealNameRequest.PersonalSide.Data,
+                                        chineseIdCardRealNameRequest.PersonalSide.MimeType),
+                "issuer" => this.File(chineseIdCardRealNameRequest.IssuerSide.Data,
+                                        chineseIdCardRealNameRequest.IssuerSide.MimeType),
+                _ => this.NotFound(),
+            };
+        }
     }
 }

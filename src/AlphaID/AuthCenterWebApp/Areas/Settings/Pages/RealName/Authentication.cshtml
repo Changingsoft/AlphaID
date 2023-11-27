@@ -1,0 +1,35 @@
+﻿@page "{id}"
+@using IdSubjects.RealName
+@model AuthCenterWebApp.Areas.Settings.Pages.RealName.AuthenticationModel
+@{
+}
+<div class="card mb-3">
+    <div class="card-header">
+        Base info
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">Person Name</div>
+                <div class="datagrid-content">@Model.Data.PersonName</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Validated At</div>
+                <div class="datagrid-content">@Model.Data.ValidatedAt</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Validated By</div>
+                <div class="datagrid-content">@Model.Data.ValidatedBy</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Remark</div>
+                <div class="datagrid-content">@Model.Data.Remark</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Data is DocumentedRealNameAuthentication documentedRealNameAuthentication)
+{
+    <partial name="_IdentityDocumentPartial" model="documentedRealNameAuthentication.Document"/>
+}

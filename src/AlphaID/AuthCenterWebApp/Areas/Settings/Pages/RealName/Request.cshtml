@@ -1,11 +1,106 @@
 ﻿@page "{id}"
-@using Newtonsoft.Json
+@using IdSubjects.RealName.Requesting
 @model AuthCenterWebApp.Areas.Settings.Pages.RealName.RequestModel
 @{
+    var requestType = Model.Data switch
+    {
+        ChineseIdCardRealNameRequest => L["Chinese ID Card Request"],
+        _ => L["Unknown"],
+    };
+
 }
-<pre>
-    @JsonConvert.SerializeObject(Model.Data, Formatting.Indented, new JsonSerializerSettings()
+<h2>@requestType</h2>
+<div class="card mb-3">
+    <div class="card-header">
+        @L["Base info"]
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Committed time"]</div>
+                <div class="datagrid-content">@Model.Data.WhenCommitted</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Status"]</div>
+                <div class="datagrid-content">
+                    @if (Model.Data.Accepted.HasValue)
+                    {
+                        if (Model.Data.Accepted.Value)
+                        {
+                            <span class="badge badge-success">@L["Accepted"]</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">@L["Refused"]</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="badge bg-blue">@L["Pending"]</span>
+                    }
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Audit by"]</div>
+                <div class="datagrid-content">@Model.Data.Auditor</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Audit at"]</div>
+                <div class="datagrid-content">@Model.Data.AcceptedAt</div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Data is ChineseIdCardRealNameRequest chineseIdCardRealNameRequest)
 {
-    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-})
-</pre>
+    <div class="card">
+        <div class="card-header">
+            @L["Chinese ID Card Info"]
+        </div>
+        <div class="card-body">
+            <div class="datagrid">
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Name"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.Name</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Sex"]</div>
+                    <div class="datagrid-content">@Html.DisplayFor(m => chineseIdCardRealNameRequest.Sex)</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Ethnicity"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.Ethnicity</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Date of birth"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.DateOfBirth</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Address"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.Address</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Card number"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.CardNumber</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Issuer"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.Issuer</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Duration"]</div>
+                    <div class="datagrid-content">@chineseIdCardRealNameRequest.IssueDate - @(chineseIdCardRealNameRequest.Expires.HasValue ? chineseIdCardRealNameRequest.Expires.Value : "")</div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <img src="@(Url.Page("", pageHandler: "ChineseIdCardImage", new{id=chineseIdCardRealNameRequest.Id, side="personal"}))" alt="Personal side" />
+                </div>
+                <div class="col">
+                    <img src="@(Url.Page("", pageHandler: "ChineseIdCardImage", new{id=chineseIdCardRealNameRequest.Id, side="issuer"}))" alt="Issuer side" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

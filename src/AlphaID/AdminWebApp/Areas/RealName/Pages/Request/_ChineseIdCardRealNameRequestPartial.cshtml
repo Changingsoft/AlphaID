@@ -1,7 +1,0 @@
-﻿@using IdSubjects.RealName.Requesting
-@model IdSubjects.RealName.Requesting.RealNameRequest
-@if (Model is ChineseIdCardRealNameRequest request)
-{
-    <img class="" src="@(Url.Page("ChineseIdCardRealNameRequestImage", new{anchor = request.Id, side = "personal"}))" />
-    <img class="" src="@(Url.Page("ChineseIdCardRealNameRequestImage", new{anchor = request.Id, side = "issuer"}))" />
-}

@@ -9,24 +9,24 @@ namespace IdSubjects.RealName.Requesting;
 public class ChineseIdCardRealNameRequest : RealNameRequest
 {
     /// <summary>
-    /// 
+    /// Ctor for persistence.
     /// </summary>
     protected ChineseIdCardRealNameRequest() { }
 
     /// <summary>
-    /// 
+    /// 初始化。
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="sex"></param>
-    /// <param name="ethnicity"></param>
-    /// <param name="dateOfBirth"></param>
-    /// <param name="address"></param>
-    /// <param name="cardNumber"></param>
-    /// <param name="issuer"></param>
-    /// <param name="issueDate"></param>
-    /// <param name="expires"></param>
-    /// <param name="personalSide"></param>
-    /// <param name="issuerSide"></param>
+    /// <param name="name">姓名。</param>
+    /// <param name="sex">性别。</param>
+    /// <param name="ethnicity">民族。</param>
+    /// <param name="dateOfBirth">出生日期。</param>
+    /// <param name="address">住址。</param>
+    /// <param name="cardNumber">身份证号码。</param>
+    /// <param name="issuer">签发机关。</param>
+    /// <param name="issueDate">有效期起。</param>
+    /// <param name="expires">有效期至。</param>
+    /// <param name="personalSide">个人信息面。</param>
+    /// <param name="issuerSide">签发者信息面。</param>
     public ChineseIdCardRealNameRequest(string name, Sex sex, string ethnicity, DateOnly dateOfBirth, string address, string cardNumber, string issuer, DateOnly issueDate, DateOnly? expires, BinaryDataInfo personalSide, BinaryDataInfo issuerSide)
     {
         this.Name = name;
@@ -44,67 +44,67 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
 
 
     /// <summary>
-    /// 
+    /// 姓名。
     /// </summary>
     [MaxLength(20)]
     public string Name { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 性别。
     /// </summary>
     public Sex Sex { get; set; }
 
     /// <summary>
-    /// 
+    /// 民族。
     /// </summary>
     [MaxLength(20)]
     public string Ethnicity { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 出生日期。
     /// </summary>
     public DateOnly DateOfBirth { get; set; }
 
     /// <summary>
-    /// 
+    /// 住址。
     /// </summary>
     [MaxLength(150)]
     public string Address { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 身份证号码。
     /// </summary>
     [MaxLength(18), Unicode(false)]
     public string CardNumber { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 签发机关。
     /// </summary>
     [MaxLength(20)]
     public string Issuer { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 签发日期。
     /// </summary>
     public DateOnly IssueDate { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 有效期至。若为null，表示长期。
     /// </summary>
     public DateOnly? Expires { get; set; }
 
     /// <summary>
-    /// 
+    /// 个人信息面。
     /// </summary>
     public BinaryDataInfo PersonalSide { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 签发者信息面。
     /// </summary>
     public BinaryDataInfo IssuerSide { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 重写，创建RealNameAuthentication。
     /// </summary>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>

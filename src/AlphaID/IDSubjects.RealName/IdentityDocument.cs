@@ -19,7 +19,7 @@ namespace IdSubjects.RealName;
 public abstract class IdentityDocument
 {
     /// <summary>
-    /// 
+    /// Id.
     /// </summary>
     [MaxLength(50), Unicode(false)]
     public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -30,13 +30,13 @@ public abstract class IdentityDocument
     public virtual ICollection<IdentityDocumentAttachment> Attachments { get; protected set; } = new HashSet<IdentityDocumentAttachment>();
 
     /// <summary>
-    /// 
+    /// 获取创建时间。
     /// </summary>
-    public DateTimeOffset WhenCreated { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset WhenCreated { get; protected set; } = DateTimeOffset.UtcNow;
 
     /// <summary>
-    /// 将实名信息应用到Person.
+    /// 将实名信息应用到自然人。
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="person">要应用的自然人。</param>
     internal abstract void ApplyRealName(NaturalPerson person);
 }

@@ -11,16 +11,16 @@ namespace IdSubjects.RealName;
 public class IdentityDocumentAttachment
 {
     /// <summary>
-    /// 
+    /// Ctor for persistence.
     /// </summary>
     protected IdentityDocumentAttachment() { }
 
     /// <summary>
-    /// 
+    /// 初始化一个附件。
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="content"></param>
-    /// <param name="contentType"></param>
+    /// <param name="name">名称。</param>
+    /// <param name="content">二进制内容。</param>
+    /// <param name="contentType">内容的MIME类型。</param>
     public IdentityDocumentAttachment(string name, byte[] content, string contentType)
     {
         this.Name = name;
@@ -29,13 +29,13 @@ public class IdentityDocumentAttachment
     }
 
     /// <summary>
-    /// 
+    /// 该附件指向的证明材料Id.
     /// </summary>
     [MaxLength(50), Unicode(false)]
     public string DocumentId { get; set; } = default!;
 
     /// <summary>
-    /// 
+    /// 此附件所属的证明材料。
     /// </summary>
     [ForeignKey(nameof(DocumentId))]
     public virtual IdentityDocument Document { get; set; } = default!;

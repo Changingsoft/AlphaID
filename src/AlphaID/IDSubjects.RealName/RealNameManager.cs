@@ -1,14 +1,15 @@
 ﻿namespace IdSubjects.RealName;
 
 /// <summary>
-/// 实名信息管理器。
+/// 实名认证管理器。
 /// </summary>
 public class RealNameManager
 {
     private readonly IRealNameAuthenticationStore store;
     private readonly NaturalPersonManager naturalPersonManager;
+
     /// <summary>
-    /// 
+    /// 初始化实名认证管理器。
     /// </summary>
     /// <param name="store"></param>
     /// <param name="naturalPersonManager"></param>
@@ -19,7 +20,7 @@ public class RealNameManager
     }
 
     /// <summary>
-    /// 
+    /// 获取可查询的实名认证信息集合。
     /// </summary>
     public IQueryable<RealNameAuthentication> Authentications => this.store.Authentications;
 
@@ -47,7 +48,7 @@ public class RealNameManager
         if (!result.Succeeded)
             return result;
 
-        //为person应用更改。
+        //为 person 应用更改。
         var identityResult = await this.naturalPersonManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
             return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());
@@ -86,7 +87,7 @@ public class RealNameManager
     }
 
     /// <summary>
-    /// 
+    /// 查找指定的实名认证信息。
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace IdSubjects.RealName;
+
 internal class RealNameInterceptor : NaturalPersonInterceptor
 {
     private readonly ILogger<RealNameInterceptor>? logger;

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace IdSubjects.RealName;
 
 /// <summary>
-/// 表示中华人民共和国居民身份证。
+/// 表示中华人民共和国居民身份证文档。
 /// </summary>
 public class ChineseIdCardDocument : IdentityDocument
 {
@@ -73,7 +73,7 @@ public class ChineseIdCardDocument : IdentityDocument
     }
 
     /// <summary>
-    /// 
+    /// 获取身份证签发者信息面附件。
     /// </summary>
     public IdentityDocumentAttachment? IssuerSide
     {
@@ -84,12 +84,12 @@ public class ChineseIdCardDocument : IdentityDocument
     }
 
     /// <summary>
-    /// 
+    /// 身份证个人信息面名称。
     /// </summary>
     public static readonly string PersonalSideAttachmentName = "个人信息面";
 
     /// <summary>
-    /// 
+    /// 身份证签发者信息面名称。
     /// </summary>
     public static readonly string IssuerSideAttachmentName = "签发者信息面";
 

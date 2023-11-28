@@ -5,17 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace IdSubjects.RealName;
 
 /// <summary>
-/// 表示一个基于身份证明材料的实名认证。
+/// 表示一个基于证明材料的实名认证。
 /// </summary>
 public class DocumentedRealNameAuthentication : RealNameAuthentication
 {
     /// <summary>
-    /// 
+    /// Ctor for persistence.
     /// </summary>
     protected DocumentedRealNameAuthentication() { }
 
     /// <summary>
-    /// 
+    /// 使用证明材料和相关信息初始化实名认证。
     /// </summary>
     /// <param name="document"></param>
     /// <param name="personName"></param>

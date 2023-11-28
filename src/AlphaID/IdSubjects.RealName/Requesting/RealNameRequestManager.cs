@@ -1,7 +1,7 @@
 ﻿namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
-/// 
+/// 实名认证请求管理器。
 /// </summary>
 public class RealNameRequestManager
 {
@@ -11,7 +11,7 @@ public class RealNameRequestManager
     private readonly NaturalPersonManager naturalPersonManager;
 
     /// <summary>
-    /// 
+    /// 初始化实名认证请求管理器。
     /// </summary>
     /// <param name="store"></param>
     /// <param name="realNameManager"></param>
@@ -25,10 +25,13 @@ public class RealNameRequestManager
         this.provider = provider;
     }
 
+    /// <summary>
+    /// Time Provider.
+    /// </summary>
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    /// 
+    /// 获取待审核的实名认证请求。
     /// </summary>
     public IEnumerable<RealNameRequest> PendingRequests
     {
@@ -39,11 +42,12 @@ public class RealNameRequestManager
     }
 
     /// <summary>
-    /// 
+    /// 获取可查询的实名认证请求集合。
     /// </summary>
     public IQueryable<RealNameRequest> Requests => this.store.Requests;
+
     /// <summary>
-    /// 
+    /// 创建实名认证请求。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="request"></param>
@@ -76,7 +80,7 @@ public class RealNameRequestManager
     }
 
     /// <summary>
-    /// 
+    /// 审核通过一个实名认证请求。
     /// </summary>
     /// <param name="request"></param>
     /// <param name="auditor"></param>
@@ -96,7 +100,7 @@ public class RealNameRequestManager
     }
 
     /// <summary>
-    /// 
+    /// 更新实名认证信息。
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -117,17 +121,17 @@ public class RealNameRequestManager
     }
 
     /// <summary>
-    /// 
+    /// 通过Id查找实名认证请求。
     /// </summary>
-    /// <param name="anchor"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<RealNameRequest?> FindByIdAsync(int anchor)
+    public async Task<RealNameRequest?> FindByIdAsync(int id)
     {
-        return await this.store.FindByIdAsync(anchor);
+        return await this.store.FindByIdAsync(id);
     }
 
     /// <summary>
-    /// 
+    /// 审核拒绝一个实名认证请求。
     /// </summary>
     /// <param name="request"></param>
     /// <param name="auditor"></param>

@@ -4,13 +4,13 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace IdSubjects.RealName;
 /// <summary>
-/// 实名认证构造器。
+/// 实名认证服务构建器。
 /// </summary>
 public class RealNameBuilder
 {
 
     /// <summary>
-    /// 
+    /// 初始化实名认证服务构建器。
     /// </summary>
     /// <param name="services"></param>
     public RealNameBuilder(IServiceCollection services)
@@ -19,14 +19,14 @@ public class RealNameBuilder
     }
 
     /// <summary>
-    /// 
+    /// 获取服务集合。
     /// </summary>
     public IServiceCollection Services { get; }
 
     /// <summary>
     /// 添加实名认证存储。
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">一个实现<see cref="IRealNameAuthenticationStore"/>的可实例化类型。</typeparam>
     /// <returns></returns>
     public RealNameBuilder AddRealNameAuthenticationStore<T>() where T : class, IRealNameAuthenticationStore
     {
@@ -37,7 +37,7 @@ public class RealNameBuilder
     /// <summary>
     /// 添加实名请求存储。
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">一个实现<see cref="IRealNameRequestStore"/>的可实例化类型。</typeparam>
     /// <returns></returns>
     public RealNameBuilder AddRealNameRequestStore<T>() where T : class, IRealNameRequestStore
     {

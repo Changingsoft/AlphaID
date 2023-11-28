@@ -16,7 +16,7 @@ public abstract class RealNameAuthentication
     protected RealNameAuthentication() { }
 
     /// <summary>
-    /// 
+    /// 初始化实名认证信息。
     /// </summary>
     /// <param name="personName"></param>
     /// <param name="validatedAt"></param>
@@ -29,19 +29,17 @@ public abstract class RealNameAuthentication
     }
 
     /// <summary>
-    /// 
+    /// Id。
     /// </summary>
     [Key]
     [MaxLength(50), Unicode(false)]
     public string Id { get; protected set; } = Guid.NewGuid().ToString().ToLower();
 
     /// <summary>
-    /// 
+    /// 所属的自然人Id.
     /// </summary>
     [MaxLength(50), Unicode(false)]
     public string PersonId { get; protected internal set; } = default!;
-
-
 
     /// <summary>
     /// 与此实名认证有关的个人名称信息。
@@ -76,7 +74,7 @@ public abstract class RealNameAuthentication
     public bool Applied { get; protected internal set; }
 
     /// <summary>
-    /// 
+    /// 将实名认证信息应用到自然人。
     /// </summary>
     /// <param name="person"></param>
     public virtual void ApplyToPerson(NaturalPerson person)

@@ -66,4 +66,12 @@ public record PersonNameInfo
     [MaxLength(60)]
     public virtual string? SearchHint { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return this.FullName;
+    }
 }

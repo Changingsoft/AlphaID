@@ -26,6 +26,27 @@
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Authentications.zh-cn.resx">
+	    <DependentUpon>Authentications.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Authentication\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Authentication\_ChineseIdCardDocumentPartial.zh-cn.resx">
+	    <DependentUpon>_ChineseIdCardDocumentPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Authentication\_IdentityDocumentPartial.zh-cn.resx">
+	    <DependentUpon>_IdentityDocumentPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Request\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties />

@@ -98,20 +98,80 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Real-name Center" xml:space="preserve">
-		<value>Real-name Center</value>
-		<comment>Real-name Center</comment>
+	<data name="Chinese ID Card Request" xml:space="preserve">
+		<value>Chinese ID Card Request</value>
+		<comment>Chinese ID Card Request</comment>
 	</data>
-	<data name="Authentications" xml:space="preserve">
-		<value>Authentications</value>
-		<comment>Authentications</comment>
+	<data name="Unknown" xml:space="preserve">
+		<value>Unknown</value>
+		<comment>Unknown</comment>
 	</data>
-	<data name="10 Pending Requests" xml:space="preserve">
-		<value>10 Pending Requests</value>
-		<comment>10 Pending Requests</comment>
+	<data name="Base info" xml:space="preserve">
+		<value>Base info</value>
+		<comment>Base info</comment>
 	</data>
-	<data name="More" xml:space="preserve">
-		<value>More</value>
-		<comment>More</comment>
+	<data name="Committed time" xml:space="preserve">
+		<value>Committed time</value>
+		<comment>Committed time</comment>
+	</data>
+	<data name="Status" xml:space="preserve">
+		<value>Status</value>
+		<comment>Status</comment>
+	</data>
+	<data name="Accepted" xml:space="preserve">
+		<value>Accepted</value>
+		<comment>Accepted</comment>
+	</data>
+	<data name="Refused" xml:space="preserve">
+		<value>Refused</value>
+		<comment>Refused</comment>
+	</data>
+	<data name="Pending" xml:space="preserve">
+		<value>Pending</value>
+		<comment>Pending</comment>
+	</data>
+	<data name="Audit by" xml:space="preserve">
+		<value>Audit by</value>
+		<comment>Audit by</comment>
+	</data>
+	<data name="Audit at" xml:space="preserve">
+		<value>Audit at</value>
+		<comment>Audit at</comment>
+	</data>
+	<data name="Chinese ID Card Info" xml:space="preserve">
+		<value>Chinese ID Card Info</value>
+		<comment>Chinese ID Card Info</comment>
+	</data>
+	<data name="Name" xml:space="preserve">
+		<value>Name</value>
+		<comment>Name</comment>
+	</data>
+	<data name="Sex" xml:space="preserve">
+		<value>Sex</value>
+		<comment>Sex</comment>
+	</data>
+	<data name="Ethnicity" xml:space="preserve">
+		<value>Ethnicity</value>
+		<comment>Ethnicity</comment>
+	</data>
+	<data name="Date of birth" xml:space="preserve">
+		<value>Date of birth</value>
+		<comment>Date of birth</comment>
+	</data>
+	<data name="Address" xml:space="preserve">
+		<value>Address</value>
+		<comment>Address</comment>
+	</data>
+	<data name="Card number" xml:space="preserve">
+		<value>Card number</value>
+		<comment>Card number</comment>
+	</data>
+	<data name="Issuer" xml:space="preserve">
+		<value>Issuer</value>
+		<comment>Issuer</comment>
+	</data>
+	<data name="Duration" xml:space="preserve">
+		<value>Duration</value>
+		<comment>Duration</comment>
 	</data>
 </root>

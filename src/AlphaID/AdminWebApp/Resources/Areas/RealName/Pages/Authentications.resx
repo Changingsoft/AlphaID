@@ -98,20 +98,24 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Real-name Center" xml:space="preserve">
-		<value>Real-name Center</value>
-		<comment>Real-name Center</comment>
+	<data name="Real-name Authentications" xml:space="preserve">
+		<value>Real-name Authentications</value>
+		<comment>Real-name Authentications</comment>
 	</data>
-	<data name="Authentications" xml:space="preserve">
-		<value>Authentications</value>
-		<comment>Authentications</comment>
+	<data name="For" xml:space="preserve">
+		<value>For</value>
+		<comment>For</comment>
 	</data>
-	<data name="10 Pending Requests" xml:space="preserve">
-		<value>10 Pending Requests</value>
-		<comment>10 Pending Requests</comment>
+	<data name="Validated by" xml:space="preserve">
+		<value>Validated by</value>
+		<comment>Validated by</comment>
 	</data>
-	<data name="More" xml:space="preserve">
-		<value>More</value>
-		<comment>More</comment>
+	<data name="Validated at" xml:space="preserve">
+		<value>Validated at</value>
+		<comment>Validated at</comment>
+	</data>
+	<data name="Expires" xml:space="preserve">
+		<value>Expires</value>
+		<comment>Expires</comment>
 	</data>
 </root>

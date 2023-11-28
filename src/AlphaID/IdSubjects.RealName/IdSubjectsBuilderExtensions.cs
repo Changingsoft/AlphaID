@@ -1,6 +1,5 @@
 ﻿using IdSubjects.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
+using IdSubjects.RealName.Requesting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace IdSubjects.RealName;
@@ -17,8 +16,11 @@ public static class IdSubjectsBuilderExtensions
     /// <returns>返回一个实名认证构造器，见<see cref="RealNameBuilder"/>。</returns>
     public static RealNameBuilder AddRealName(this IdSubjectsBuilder builder)
     {
-        //Add required services
+        //Add services
         builder.Services.TryAddScoped<RealNameManager>();
+        builder.Services.TryAddScoped<RealNameRequestManager>();
+
+        //添加拦截器。
         builder.AddInterceptor<RealNameInterceptor>();
 
         var realNameBuilder = new RealNameBuilder(builder.Services);

@@ -1,0 +1,23 @@
+﻿@page
+@model AdminWebApp.Areas.RealName.Pages.AuthenticationsModel
+@{
+    ViewBag.Title = L["Real-name Authentications"];
+}
+<h1>@L["Real-name Authentications"]</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>@L["For"]</td>
+        <td>@L["Validated by"]</td>
+        <td>@L["Validated at"]</td>
+        <td>@L["Expires"]</td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var authentication in Model.Authentications)
+    {
+        <partial name="_RealNameAuthenticationRow" model="authentication"/>
+    }
+    </tbody>
+</table>

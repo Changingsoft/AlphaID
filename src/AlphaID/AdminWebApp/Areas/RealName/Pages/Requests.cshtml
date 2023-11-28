@@ -1,0 +1,21 @@
+﻿@page
+@model AdminWebApp.Areas.RealName.Pages.RequestsModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model.RealNameRequests)
+        {
+            <tr>
+                <td><a asp-page="Request/Index" asp-route-anchor="@request.Id">@request.Id</a></td>
+                <td>@request.PersonId</td>
+            </tr>
+        }
+    </tbody>
+</table>

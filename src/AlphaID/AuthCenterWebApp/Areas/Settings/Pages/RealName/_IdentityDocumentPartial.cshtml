@@ -1,0 +1,13 @@
+﻿@using IdSubjects.RealName
+@model IdSubjects.RealName.IdentityDocument
+@if (Model is ChineseIdCardDocument chineseIdCardDocument)
+{
+    <partial name="_ChineseIdCardDocumentPartial" model="chineseIdCardDocument"/>
+}
+<h2>@L["Attachments"]</h2>
+<ul>
+    @foreach (var attachment in Model.Attachments)
+    {
+        <li><a href="#">@attachment.Name</a></li>
+    }
+</ul>

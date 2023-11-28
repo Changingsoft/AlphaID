@@ -161,7 +161,7 @@ public class NaturalPerson
     /// <summary>
     /// 用户名称
     /// </summary>
-    public virtual PersonNameInfo PersonName { get; protected internal set; } = default!;
+    public virtual PersonNameInfo PersonName { get; set; } = default!;
 
     /// <summary>
     /// 昵称。

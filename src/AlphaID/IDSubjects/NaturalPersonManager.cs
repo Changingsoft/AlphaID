@@ -97,6 +97,32 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
     protected IEventService EventService { get; }
 
     /// <summary>
+    /// 通过移动电话号码查找自然人。
+    /// </summary>
+    /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准E.164格式。</param>
+    /// <param name="cancellation"></param>
+    /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
+    public virtual async Task<NaturalPerson?> FindByMobileAsync(string mobile, CancellationToken cancellation)
+    {
+        if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
+            return null;
+        var phoneNumberString = phoneNumber.ToString();
+        var person = await this.Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
+        return person;
+    }
+
+    /// <summary>
+    /// 获取 Natural Person 的原始未更改版本。
+    /// 此方法相当于从存取器获取位于持久化基础结构中的没有更改的原始版本。
+    /// </summary>
+    /// <param name="current"></param>
+    /// <returns></returns>
+    public virtual Task<NaturalPerson> GetOriginalAsync(NaturalPerson current)
+    {
+        return Task.FromResult(this.Store.Users.Single(p => p.Id == current.Id));
+    }
+
+    /// <summary>
     /// 已重写。创建用户。
     /// </summary>
     /// <param name="user"></param>
@@ -144,21 +170,6 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         }
 
         return result;
-    }
-
-    /// <summary>
-    /// 通过移动电话号码查找自然人。
-    /// </summary>
-    /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准E.164格式。</param>
-    /// <param name="cancellation"></param>
-    /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
-    public virtual async Task<NaturalPerson?> FindByMobileAsync(string mobile, CancellationToken cancellation)
-    {
-        if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
-            return null;
-        var phoneNumberString = phoneNumber.ToString();
-        var person = await this.Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
-        return person;
     }
 
     /// <summary>
@@ -530,18 +541,5 @@ public class NaturalPersonManager : UserManager<NaturalPerson>
         user.PhoneNumberConfirmed = true;
         return await this.UpdateUserAsync(user);
 
-    }
-
-    /// <summary>
-    /// 更改个人名称。
-    /// 
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="personNameInfo"></param>
-    /// <returns></returns>
-    public virtual async Task<IdentityResult> ChangePersonNameAsync(NaturalPerson person, PersonNameInfo personNameInfo)
-    {
-        person.PersonName = personNameInfo;
-        return await this.UpdateAsync(person);
     }
 }

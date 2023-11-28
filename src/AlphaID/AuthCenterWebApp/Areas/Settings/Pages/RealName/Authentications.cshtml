@@ -1,0 +1,25 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.RealName.AuthenticationsModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>@L["Person name"]</td>
+            <td>@L["Validated at"]</td>
+            <td>@L["Validated by"]</td>
+            <td>@L["Remark"]</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var authentication in Model.Authentications)
+        {
+            <tr>
+                <td><a asp-page="Authentication" asp-route-id="@authentication.Id">@authentication.PersonName</a></td>
+                <td>@authentication.ValidatedAt</td>
+                <td>@authentication.ValidatedBy</td>
+                <td>@authentication.Remark</td>
+            </tr>
+        }
+    </tbody>
+</table>

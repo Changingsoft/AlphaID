@@ -3,35 +3,43 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace IdSubjects.RealName;
+
 internal class RealNameInterceptor : NaturalPersonInterceptor
 {
     private readonly ILogger<RealNameInterceptor>? logger;
-    private readonly RealNameManager manager;
+    private readonly IRealNameAuthenticationStore store;
 
-    public RealNameInterceptor(ILogger<RealNameInterceptor>? logger, RealNameManager manager)
+    public RealNameInterceptor(ILogger<RealNameInterceptor>? logger, IRealNameAuthenticationStore store)
     {
         this.logger = logger;
-        this.manager = manager;
+        this.store = store;
     }
+
+    private IEnumerable<RealNameAuthentication> pendingAuthentications = Enumerable.Empty<RealNameAuthentication>();
 
     public override async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
         List<IdentityError> errors = new();
-        var realNameState = await this.manager.GetRealNameStateAsync(person);
-        if (realNameState == null)
+        var personAuthentications = this.store.FindByPerson(person);
+        if (!personAuthentications.Any())
         {
             this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
             return IdentityResult.Success;
         }
 
-        if (realNameState.ActionIndicator == ActionIndicator.PendingUpdate)
+        this.pendingAuthentications = personAuthentications.Where(a => !a.Applied).ToList();
+        if (this.pendingAuthentications.Any())
         {
-            this.logger?.LogDebug("RealNameState指示了正在{person}等待更改，拦截器将放行此次更改。", person);
+            foreach (var authentication in this.pendingAuthentications)
+            {
+                authentication.ApplyToPerson(person);
+                this.logger?.LogDebug("拦截器使用{authentication}覆盖了{person}的信息。", authentication, person);
+            }
             return IdentityResult.Success;
         }
 
         //检查是否有对PersonName等作出的更改。
-        var origin = personManager.Users.Single(p => p.Id == person.Id);
+        var origin = await personManager.GetOriginalAsync(person);
         if (!origin.PersonName.Equals(person.PersonName))
         {
             this.logger?.LogDebug("自然人名称不相等。原始 {origin}，传入 {incoming}。", origin.PersonName, person.PersonName);
@@ -47,18 +55,17 @@ internal class RealNameInterceptor : NaturalPersonInterceptor
 
     public override async Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        var realNameState = await this.manager.GetRealNameStateAsync(person);
-        if (realNameState == null)
+        foreach (var authentication in this.pendingAuthentications)
         {
-            this.logger?.LogDebug("没有找到{person}的实名记录，不执行操作。", person);
-            return;
+            authentication.Applied = true;
+            await this.store.UpdateAsync(authentication);
+            this.logger?.LogDebug("已将{authentication}的应用状态改为已更改。", authentication);
         }
 
-        if (realNameState.ActionIndicator == ActionIndicator.PendingUpdate)
-        {
-            this.logger?.LogDebug("RealNameState指示了正在{person}等待更改，拦截器将状态改为已更改。", person);
-            realNameState.ActionIndicator = ActionIndicator.Updated;
-            await this.manager.UpdateAsync(realNameState);
-        }
+    }
+
+    public override async Task PostDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
+    {
+        await this.store.DeleteByPersonIdAsync(person.Id);
     }
 }

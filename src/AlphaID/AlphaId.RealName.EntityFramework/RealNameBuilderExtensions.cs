@@ -12,7 +12,8 @@ public static class RealNameBuilderExtensions
     /// <returns></returns>
     public static RealNameBuilder AddDefaultStores(this RealNameBuilder builder)
     {
-        builder.AddRealNameStore<RealNameStateStore>();
+        builder.AddRealNameAuthenticationStore<RealNameAuthenticationStore>();
+        builder.AddRealNameRequestStore<RealNameRequestStore>();
         return builder;
     }
 

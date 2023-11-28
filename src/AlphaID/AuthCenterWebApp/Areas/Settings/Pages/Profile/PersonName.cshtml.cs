@@ -1,4 +1,5 @@
 using IdSubjects;
+using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,10 +10,11 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
     public class PersonNameModel : PageModel
     {
         private readonly NaturalPersonManager personManager;
-
-        public PersonNameModel(NaturalPersonManager personManager)
+        RealNameManager realNameManager;
+        public PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager)
         {
             this.personManager = personManager;
+            this.realNameManager = realNameManager;
         }
 
         [BindProperty]
@@ -27,6 +29,13 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             {
                 return this.NotFound();
             }
+
+            var hasRealName = this.realNameManager.GetAuthentications(person).Any();
+            if (hasRealName)
+            {
+                this.Result = IdentityResult.Failed(new IdentityError() { Code = "Cannot change name after real-name authentication", Description = "You cannot change name because your has been passed real-name authentication." });
+            }
+
             this.Input = new InputMode()
             {
                 Surname = person.PersonName.Surname,
@@ -47,9 +56,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 return this.NotFound();
             }
 
-            this.Result = await this.personManager.ChangePersonNameAsync(person, new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName));
-            if (!this.Result.Succeeded)
-                return this.Page();
+            person.PersonName = new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName);
             person.PhoneticSurname = this.Input.PhoneticSurname;
             person.PhoneticGivenName = this.Input.PhoneticGivenName;
             person.NickName = this.Input.NickName;

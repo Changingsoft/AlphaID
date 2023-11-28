@@ -1,0 +1,13 @@
+﻿@using IdSubjects.RealName
+@model IdSubjects.RealName.Sex?
+@if (Model.HasValue)
+{
+    if (Model.Value == Sex.Male)
+    {
+        <span>@L["Male"]</span>
+    }
+    else
+    {
+        <span>@L["Female"]</span>
+    }
+}

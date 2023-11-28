@@ -193,7 +193,7 @@
     <value>移动电话号码</value>
   </data>
   <data name="QQ" xml:space="preserve">
-    <value>QQ</value>
+	  <value>QQ号码</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>移除</value>

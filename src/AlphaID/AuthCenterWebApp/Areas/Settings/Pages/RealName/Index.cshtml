@@ -1,0 +1,28 @@
+﻿@page
+@model AuthCenterWebApp.Areas.Settings.Pages.RealName.IndexModel
+@{
+    ViewBag.Title = L["Real-name State"];
+}
+<h2>@L["Real-name State"]</h2>
+
+
+<h3>@L["Real-name Authentications"]</h3>
+<div class="list-group list-group-flush">
+    @foreach (var authentication in Model.Authentications)
+    {
+        <partial name="_RealNameAuthenticationListGroupItem" model="authentication"/>
+    }
+</div>
+<hr/>
+<h3>@L["Pending Requests"]</h3>
+<div class="list-group list-group-flush">
+    @foreach (var request in Model.Requests)
+    {
+        <partial name="_RealNameRequestListGroupItem" model="request"/>
+    }
+</div>
+
+
+<a asp-page="StartRequest/Index" class="btn">@L["Start Request"]</a>
+
+<a asp-page="Requests">@L["All request history"]</a>

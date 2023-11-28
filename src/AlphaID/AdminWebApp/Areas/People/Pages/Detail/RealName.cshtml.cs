@@ -17,7 +17,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public NaturalPerson Data { get; set; } = default!;
 
-        public RealNameState? RealName { get; set; }
+        public IEnumerable<RealNameAuthentication> RealNameAuthentications { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -25,7 +25,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
             if (person == null)
                 return this.NotFound();
 
-            this.RealName = await this.realNameManager.GetRealNameStateAsync(person);
+            this.RealNameAuthentications = this.realNameManager.GetAuthentications(person);
 
             this.Data = person;
             return this.Page();

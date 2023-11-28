@@ -9,6 +9,7 @@ using AlphaId.EntityFramework.SecurityAuditing;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaId.PlatformServices.Primitives;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using Duende.IdentityServer.EntityFramework.DbContexts;
@@ -261,6 +262,7 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IEmailSender, NopEmailSender>();
     builder.Services.AddScoped<IShortMessageService, NopShortMessageService>();
     builder.Services.AddScoped<IVerificationCodeService, NopVerificationCodeService>();
+    builder.Services.AddScoped<IChineseIdCardOcrService, DebugChineseIdCardOcrService>();
 }
 
 //安全审计日志

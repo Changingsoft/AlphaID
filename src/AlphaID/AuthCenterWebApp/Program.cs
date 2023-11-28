@@ -4,6 +4,7 @@ using AlphaId.PlatformServices.Aliyun;
 using AlphaId.PlatformServices.Primitives;
 using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
@@ -223,6 +224,7 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IEmailSender, NopEmailSender>();
     builder.Services.AddScoped<IShortMessageService, NopShortMessageService>();
     builder.Services.AddScoped<IVerificationCodeService, NopVerificationCodeService>();
+    builder.Services.AddScoped<IChineseIdCardOcrService, DebugChineseIdCardOcrService>();
 }
 
 var app = builder.Build();

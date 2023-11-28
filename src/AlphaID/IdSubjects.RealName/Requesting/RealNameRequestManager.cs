@@ -55,6 +55,7 @@ public class RealNameRequestManager
     public async Task<IdOperationResult> CreateAsync(NaturalPerson person, RealNameRequest request)
     {
         request.PersonId = person.Id;
+        request.WhenCommitted = this.TimeProvider.GetUtcNow();
         var result = await this.store.CreateAsync(request);
         if (!result.Succeeded)
             return result;

@@ -24,7 +24,7 @@ public abstract class RealNameRequest
     /// <summary>
     /// 提交时间。
     /// </summary>
-    public DateTimeOffset WhenCommitted { get; protected set; }
+    public DateTimeOffset WhenCommitted { get; protected internal set; }
 
     /// <summary>
     /// 审核是否通过。

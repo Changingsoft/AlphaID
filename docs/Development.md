@@ -6,12 +6,17 @@
 
 * [.NET](https://dotnet.microsoft.com/)
     * 本项目跟随 .NET LTS 策略，同时支持至少2个 LTS 版本，当前支持 6.0 和 8.0 。
+
+计划开发或研究示例程序时，您可能还需要安装下列环境组件：
+
 * Java Development Kit
 * Nodejs
 
 如果您计划研究 LDAP 功能特性，则需要安装合适的 LDAP 服务，首选 AD LDS 组件。
 
-我们推荐使用 [Visual Studio 2022](https://visualstudio.microsoft.com/) 作为集成开发环境。
+集成开发环境（IDE）：
+
+我们推荐使用 [Visual Studio 2022](https://visualstudio.microsoft.com/) ，推荐使用 [ReSharper](https://www.jetbrains.com/resharper/) 协助开发活动。
 
 ### 针对国际化和本地化的开发活动
 
@@ -25,6 +30,7 @@
 * 不实际发送邮件，但会在日志中记录消息性日志。
 * 不实际发送短信，但会在日志中记录消息性日志。
 * 不实际发送短信验证码，但会在日志中记录消息性日志，对验证码的验证总是返回true。
+* 不会实际执行OCR识别。
 
 在调试阶段，你可以使用[示例数据](SampleData.md)来模拟完整的应用场景。
 

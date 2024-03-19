@@ -66,7 +66,7 @@ public abstract class RealNameAuthentication
     /// 备注和其他信息
     /// </summary>
     [MaxLength(200)]
-    public string? Remark { get; set; }
+    public string? Remarks { get; set; }
 
     /// <summary>
     /// 是否已经应用。

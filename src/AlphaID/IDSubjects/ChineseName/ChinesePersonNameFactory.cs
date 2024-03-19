@@ -3,17 +3,11 @@
 /// <summary>
 /// Chinese Person Name Factory.
 /// </summary>
-public class ChinesePersonNameFactory
+/// <remarks>
+/// Initialize factory by using default name processor and pinyin converter.
+/// </remarks>
+public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinConverter)
 {
-    private readonly ChinesePersonNamePinyinConverter pinyinConverter;
-
-    /// <summary>
-    /// Initialize factory by using default name processor and pinyin converter.
-    /// </summary>
-    public ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinConverter)
-    {
-        this.pinyinConverter = pinyinConverter;
-    }
 
     /// <summary>
     /// 初始化默认的中国人姓名工厂。
@@ -54,13 +48,13 @@ public class ChinesePersonNameFactory
             throw new ArgumentException("名字太短");
 
         string givenName = fullName;
-        var (phoneticSurname, phoneticGivenName) = this.pinyinConverter.Convert(surname, givenName);
+        var (phoneticSurname, phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
         return new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
 
     }
 
-    private static readonly List<string> CompoundSurnamePrefixes = new()
-    {
+    private static readonly List<string> CompoundSurnamePrefixes =
+    [
         "欧阳",
         "太史",
         "端木",
@@ -143,6 +137,6 @@ public class ChinesePersonNameFactory
         "达奚",
         "褚师",
         "吴铭"
-    };
+    ];
 
 }

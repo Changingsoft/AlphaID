@@ -99,54 +99,41 @@
   </resheader>
   <data name="Add" xml:space="preserve">
 		<value>Add</value>
-		<comment>Add</comment>
 	</data>
   <data name="Add member" xml:space="preserve">
 		<value>Add member</value>
-		<comment>Add member</comment>
 	</data>
   <data name="Department" xml:space="preserve">
 		<value>Department</value>
-		<comment>Department</comment>
 	</data>
   <data name="Edit" xml:space="preserve">
 		<value>Edit</value>
-		<comment>Edit</comment>
 	</data>
   <data name="Members of {0}" xml:space="preserve">
 		<value>Members of {0}</value>
-		<comment>Members of {0}</comment>
 	</data>
   <data name="Membership" xml:space="preserve">
 		<value>Membership</value>
-		<comment>Membership</comment>
 	</data>
   <data name="Name, Display name, phonetic name, etc..." xml:space="preserve">
 		<value>Name, Display name, phonetic name, etc...</value>
-		<comment>Name, Display name, phonetic name, etc...</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Person" xml:space="preserve">
 		<value>Person</value>
-		<comment>Person</comment>
 	</data>
   <data name="Remark" xml:space="preserve">
 		<value>Remark</value>
-		<comment>Remark</comment>
 	</data>
   <data name="Remove" xml:space="preserve">
 		<value>Remove</value>
-		<comment>Remove</comment>
 	</data>
   <data name="Search members" xml:space="preserve">
 		<value>Search members</value>
-		<comment>Search members</comment>
 	</data>
   <data name="Title" xml:space="preserve">
 		<value>Title</value>
-		<comment>Title</comment>
 	</data>
 </root>

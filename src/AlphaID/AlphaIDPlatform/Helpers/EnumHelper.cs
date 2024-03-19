@@ -18,7 +18,7 @@ public class EnumHelper
     {
         var type = typeof(TEnum);
         var enumValues = type.GetEnumValues();
-        List<SelectListItem> listItems = new();
+        List<SelectListItem> listItems = [];
         foreach (TEnum enumValue in enumValues)
         {
             var member = type.GetMember(enumValue.ToString()).First();

@@ -4,33 +4,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account
 {
-    public class ExternalLoginsModel : PageModel
+    public class ExternalLoginsModel(NaturalPersonManager personManager) : PageModel
     {
-        private readonly NaturalPersonManager personManager;
-
-        public ExternalLoginsModel(NaturalPersonManager personManager)
-        {
-            this.personManager = personManager;
-        }
-
         public IEnumerable<UserLoginInfo> Logins { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var person = await this.personManager.FindByIdAsync(anchor);
+            var person = await personManager.FindByIdAsync(anchor);
             if (person == null) { return this.NotFound(); }
 
-            this.Logins = await this.personManager.GetLoginsAsync(person);
+            this.Logins = await personManager.GetLoginsAsync(person);
 
             return this.Page();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync(string anchor, string provider, string providerKey)
         {
-            var person = await this.personManager.FindByIdAsync(anchor);
+            var person = await personManager.FindByIdAsync(anchor);
             if (person == null) { return this.NotFound(); }
 
-            var result = await this.personManager.RemoveLoginAsync(person, provider, providerKey);
+            var result = await personManager.RemoveLoginAsync(person, provider, providerKey);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)

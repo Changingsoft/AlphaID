@@ -42,6 +42,8 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<IEventService, DefaultEventService>();
         services.TryAddScoped<IEventSink, DefaultEventSink>();
 
+        services.AddScoped<ISubjectGenerator, DefaultSubjectGenerator>();
+
         //添加基础标识
         var identityBuilder = services.AddIdentityCore<NaturalPerson>()
             .AddUserManager<NaturalPersonManager>() //as UserManager<NaturalPerson>

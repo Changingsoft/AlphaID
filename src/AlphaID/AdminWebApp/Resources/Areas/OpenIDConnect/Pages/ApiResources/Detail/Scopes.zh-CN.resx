@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Add Scope" xml:space="preserve">
+    <value>添加范围</value>
+  </data>
   <data name="Are you sure you want remove this claim?" xml:space="preserve">
     <value>您确认要移除该声明吗？</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="Scopes" xml:space="preserve">
+    <value>范围</value>
   </data>
 </root>

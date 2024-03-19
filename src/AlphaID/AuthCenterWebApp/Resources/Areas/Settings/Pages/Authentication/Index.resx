@@ -99,14 +99,11 @@
   </resheader>
   <data name="Change password" xml:space="preserve">
 		<value>Change password</value>
-		<comment>Change password</comment>
 	</data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
-		<comment>Overview</comment>
 	</data>
   <data name="Password and authentication" xml:space="preserve">
 		<value>Password and authentication</value>
-		<comment>Password and authentication</comment>
 	</data>
 </root>

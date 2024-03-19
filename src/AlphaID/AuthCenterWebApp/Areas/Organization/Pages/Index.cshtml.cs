@@ -4,21 +4,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages;
 
-public class IndexModel : PageModel
+public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
-    private readonly OrganizationManager organizationManager;
-
-    public IndexModel(OrganizationManager organizationManager)
-    {
-        this.organizationManager = organizationManager;
-    }
-
-
     public GenericOrganization Organization { get; set; } = default!;
 
     public IActionResult OnGet(string anchor)
     {
-        if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
             return this.RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return this.NotFound();

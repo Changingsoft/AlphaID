@@ -5,15 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail
 {
-    public class AdvancedModel : PageModel
+    public class AdvancedModel(NaturalPersonManager naturalPersonManager) : PageModel
     {
-        private readonly NaturalPersonManager naturalPersonManager;
-
-        public AdvancedModel(NaturalPersonManager naturalPersonManager)
-        {
-            this.naturalPersonManager = naturalPersonManager;
-        }
-
         public NaturalPerson Data { get; set; } = default!;
 
         [BindProperty]
@@ -21,9 +14,9 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public IdentityResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+            var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
             this.Data = person;
@@ -38,7 +31,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+            var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
             this.Data = person;
@@ -48,7 +41,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
             this.Data.Enabled = this.Input.Enabled;
 
-            this.Result = await this.naturalPersonManager.UpdateAsync(person);
+            this.Result = await naturalPersonManager.UpdateAsync(person);
             return this.Page();
         }
 

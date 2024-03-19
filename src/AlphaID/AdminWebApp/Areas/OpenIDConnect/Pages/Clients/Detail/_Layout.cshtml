@@ -9,8 +9,8 @@
     }
     ViewBag.Title = $"{client?.ClientName} - {ViewBag.Title}";
 }
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head{
+    @await RenderSectionAsync("head", false)
 }
 
 @section Breadcrumb{

@@ -8,19 +8,10 @@ using System.Text.Json;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class DownloadPersonalDataModel : PageModel
+public class DownloadPersonalDataModel(
+    NaturalPersonManager userManager,
+    ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly ILogger<DownloadPersonalDataModel> logger;
-
-    public DownloadPersonalDataModel(
-        NaturalPersonManager userManager,
-        ILogger<DownloadPersonalDataModel> logger)
-    {
-        this.userManager = userManager;
-        this.logger = logger;
-    }
-
     public IActionResult OnGet()
     {
         return this.NotFound();
@@ -28,13 +19,13 @@ public class DownloadPersonalDataModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await this.userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
         }
 
-        this.logger.LogInformation("User with ID '{UserId}' asked for their personal data.", this.userManager.GetUserId(this.User));
+        logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(this.User));
 
         // Only include personal data for download
         var personalData = new Dictionary<string, string>();
@@ -44,13 +35,13 @@ public class DownloadPersonalDataModel : PageModel
             personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
         }
 
-        var logins = await this.userManager.GetLoginsAsync(user);
+        var logins = await userManager.GetLoginsAsync(user);
         foreach (var l in logins)
         {
             personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
         }
 
-        personalData.Add("Authenticator Key", await this.userManager.GetAuthenticatorKeyAsync(user));
+        personalData.Add("Authenticator Key", await userManager.GetAuthenticatorKeyAsync(user));
 
         this.Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
         return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");

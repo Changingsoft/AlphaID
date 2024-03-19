@@ -2,16 +2,13 @@ using AlphaId.EntityFramework;
 using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
 using AlphaIdWebAPI;
-using AlphaIdWebAPI.Middlewares;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
+using IdentityModel;
 using IdSubjects.RealName;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -101,12 +98,19 @@ builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
     .RequireClaim("scope", "openid")
+    .RequireClaim(JwtClaimTypes.ClientId)
     .Build();
 
-    options.AddPolicy("RealNameScopeRequired", builder =>
+    options.AddPolicy("EndUser", policy =>
     {
-        builder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-        builder.RequireClaim("scope", "realname");
+        policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireClaim(JwtClaimTypes.Subject);
+    });
+
+    options.AddPolicy("RealNameScopeRequired", policyBuilder =>
+    {
+        policyBuilder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        policyBuilder.RequireClaim("scope", "realname");
     });
 
 });
@@ -129,7 +133,7 @@ idSubjectsBuilder
         });
     });
 
-if (true)
+if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
     idSubjectsBuilder.AddRealName()
         .AddDefaultStores()
@@ -147,6 +151,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    app.UseExceptionHandler("/Error");
     app.UseHttpsRedirection();
     app.UseHsts();
 }
@@ -158,8 +163,6 @@ app.UseRouting();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-if (bool.Parse(builder.Configuration["ProtectSwagger"]!))
-    app.UseSwaggerAuthorized();
 app.UseSwagger(options =>
 {
     options.RouteTemplate = "docs/{documentName}/docs.json";
@@ -184,5 +187,5 @@ namespace AlphaIdWebAPI
     /// <summary>
     /// Definitions for Testing.
     /// </summary>
-    public class Program { }
+    public class Program;
 }

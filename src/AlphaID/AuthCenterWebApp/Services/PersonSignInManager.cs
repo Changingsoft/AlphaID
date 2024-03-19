@@ -4,36 +4,31 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AuthCenterWebApp.Services;
 
-public class PersonSignInManager : SignInManager<NaturalPerson>
+/// <summary>
+/// 自然人登录管理器。继承自<see cref="SignInManager{TUser}"></see>
+/// </summary>
+public class PersonSignInManager(NaturalPersonManager userManager,
+                           IHttpContextAccessor contextAccessor,
+                           IUserClaimsPrincipalFactory<NaturalPerson> claimsFactory,
+                           IOptions<IdentityOptions> optionsAccessor,
+                           ILogger<SignInManager<NaturalPerson>> logger,
+                           IAuthenticationSchemeProvider schemes,
+                           IUserConfirmation<NaturalPerson> confirmation) : SignInManager<NaturalPerson>(userManager,
+           contextAccessor,
+           claimsFactory,
+           optionsAccessor,
+           logger,
+           schemes,
+           confirmation)
 {
-    private readonly NaturalPersonManager personManager;
-
-    public PersonSignInManager(NaturalPersonManager userManager,
-                               IHttpContextAccessor contextAccessor,
-                               IUserClaimsPrincipalFactory<NaturalPerson> claimsFactory,
-                               IOptions<IdentityOptions> optionsAccessor,
-                               ILogger<SignInManager<NaturalPerson>> logger,
-                               IAuthenticationSchemeProvider schemes,
-                               IUserConfirmation<NaturalPerson> confirmation)
-        : base(userManager,
-               contextAccessor,
-               claimsFactory,
-               optionsAccessor,
-               logger,
-               schemes,
-               confirmation)
-    {
-        this.personManager = userManager;
-    }
-
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    /// 重写。当使用密码登录成功时，记录登录成功信息。
+    /// 重写。当使用密码登录成功时，检查是否必须更改密码，并通知PersonManager记录登录成功信息。
     /// </summary>
-    /// <param name="user"></param>
-    /// <param name="password"></param>
-    /// <param name="lockoutOnFailure"></param>
+    /// <param name="user">自然人</param>
+    /// <param name="password">密码</param>
+    /// <param name="lockoutOnFailure">指示登录失败时是否锁定。</param>
     /// <returns></returns>
     public override async Task<SignInResult> CheckPasswordSignInAsync(NaturalPerson user, string password, bool lockoutOnFailure)
     {
@@ -44,16 +39,15 @@ public class PersonSignInManager : SignInManager<NaturalPerson>
         }
 
         //如果密码验证成功，则检查是否需要强制修改密码。
-        if (!this.personManager.Options.Password.EnablePassExpires)
+        if (userManager.Options.Password.EnablePassExpires)
         {
-            return result;
+            if (user.PasswordLastSet == null || user.PasswordLastSet.Value < this.TimeProvider.GetUtcNow().AddDays(0 - userManager.Options.Password.PasswordExpiresDay))
+            {
+                return new PersonSignInResult { MustChangePassword = true };
+            }
         }
-
-        if (user.PasswordLastSet == null || user.PasswordLastSet.Value < this.TimeProvider.GetUtcNow().AddDays(0 - this.personManager.Options.Password.PasswordExpiresDay))
-        {
-            return new PersonSignInResult { MustChangePassword = true };
-        }
-        await this.personManager.AccessSuccededAsync(user, "password");
+        
+        await userManager.AccessSuccededAsync(user, "password");
         return result;
     }
 }

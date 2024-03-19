@@ -98,4 +98,20 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="CORS" xml:space="preserve">
+		<value>CORS</value>
+		<comment>CORS</comment>
+	</data>
+	<data name="Remove" xml:space="preserve">
+		<value>Remove</value>
+		<comment>Remove</comment>
+	</data>
+	<data name="Add new origin" xml:space="preserve">
+		<value>Add new origin</value>
+		<comment>Add new origin</comment>
+	</data>
+	<data name="Add" xml:space="preserve">
+		<value>Add</value>
+		<comment>Add</comment>
+	</data>
 </root>

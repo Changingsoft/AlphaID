@@ -20,7 +20,6 @@ public class NaturalPerson
     /// </summary>
     protected NaturalPerson()
     {
-        this.Id = Guid.NewGuid().ToString();
     }
 
     /// <summary>
@@ -41,7 +40,7 @@ public class NaturalPerson
     /// </summary>
     [Key]
     [MaxLength(50), Unicode(false)]
-    public string Id { get; protected set; }
+    public string Id { get; protected set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// User Name
@@ -113,7 +112,7 @@ public class NaturalPerson
     public virtual string? ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
-    /// Gets or sets a flag indicating if two factor authentication is enabled for this user.
+    /// Gets or sets a flag indicating if two-factor authentication is enabled for this user.
     /// </summary>
     /// <value>True if 2fa is enabled, otherwise false.</value>
     [PersonalData]

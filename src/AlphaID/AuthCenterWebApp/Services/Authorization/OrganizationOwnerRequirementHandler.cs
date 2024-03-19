@@ -8,25 +8,14 @@ namespace AuthCenterWebApp.Services.Authorization;
 /// <summary>
 /// 用于处理用户是否是组织的所有者的授权处理程序。
 /// </summary>
-public class OrganizationOwnerRequirementHandler : AuthorizationHandler<OrganizationOwnerRequirement>
+public class OrganizationOwnerRequirementHandler(OrganizationManager organizationManager, OrganizationMemberManager memberManager, NaturalPersonManager personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
 {
-    private readonly OrganizationManager organizationManager;
-    private readonly OrganizationMemberManager memberManager;
-    private readonly NaturalPersonManager personManager;
-
-    public OrganizationOwnerRequirementHandler(OrganizationManager organizationManager, OrganizationMemberManager memberManager, NaturalPersonManager personManager)
-    {
-        this.organizationManager = organizationManager;
-        this.memberManager = memberManager;
-        this.personManager = personManager;
-    }
-
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OrganizationOwnerRequirement requirement)
     {
         var httpContext = context.Resource as HttpContext;
         Debug.Assert(httpContext != null);
 
-        var person = await this.personManager.GetUserAsync(context.User);
+        var person = await personManager.GetUserAsync(context.User);
         if (person == null)
             return;
 
@@ -34,12 +23,12 @@ public class OrganizationOwnerRequirementHandler : AuthorizationHandler<Organiza
         if (anchor == null)
             return;
 
-        if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
             return;
         if (organization == null)
             return;
 
-        var member = await this.memberManager.GetMemberAsync(person, organization);
+        var member = await memberManager.GetMemberAsync(person, organization);
         if (member == null)
             return;
 

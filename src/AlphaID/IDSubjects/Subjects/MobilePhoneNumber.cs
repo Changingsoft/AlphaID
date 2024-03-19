@@ -53,7 +53,7 @@ public struct MobilePhoneNumber
     public string PhoneNumber { get; set; }
 
     /// <summary>
-    /// 已重写。按E.164格式输出移动电话号码。
+    /// 已重写。按 E.164 格式输出移动电话号码。
     /// </summary>
     /// <returns></returns>
     public override readonly string ToString()

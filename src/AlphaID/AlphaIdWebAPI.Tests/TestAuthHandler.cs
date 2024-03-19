@@ -5,13 +5,9 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 
 namespace AlphaIdWebAPI.Tests;
-internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) 
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (this.Request.Headers.Authorization.Contains("Bearer"))
@@ -35,7 +31,7 @@ internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptio
             };
             var identity = new ClaimsIdentity(claims, "AuthenticationTypes.Federation");
             var principal = new ClaimsPrincipal(identity);
-            var ticket = new AuthenticationTicket(principal, "TestScheme");
+            var ticket = new AuthenticationTicket(principal, "Bearer");
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
         return Task.FromResult(AuthenticateResult.NoResult());

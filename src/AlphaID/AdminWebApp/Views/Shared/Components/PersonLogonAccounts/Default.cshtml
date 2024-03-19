@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IdSubjects.DirectoryLogon.LogonAccount>
+﻿@model IEnumerable<IdSubjects.DirectoryLogon.DirectoryAccount>
 
 <table class="table">
     <thead>
@@ -12,8 +12,8 @@
         @foreach(var account in Model)
             {
                 <tr>
-                    <td><a asp-page="/LogonAccount/Index" asp-route-PersonId="@account.PersonId">@account.LogonId</a></td>
-                    <td>@account.DirectoryService.Name</td>
+                    <td><a asp-page="/LogonAccount/Index" asp-route-PersonId="@account.PersonId">@account.ObjectId</a></td>
+                    <td>@account.DirectoryServiceDescriptor.Name</td>
                     <td></td>
                 </tr>
             }

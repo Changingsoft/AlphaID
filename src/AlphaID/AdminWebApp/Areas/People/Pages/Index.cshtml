@@ -1,9 +1,7 @@
 ﻿@page
 @model IndexModel
-@inject NaturalPersonManager PersonManager
 @{
     ViewBag.Title = L["People"];
-    var users = PersonManager.Users;
 }
 @section PageHeader{
     <div class="row align-items-center">
@@ -17,9 +15,8 @@
         <div class="col-auto">
             <div class="btn-list">
                 <a asp-page="/Register/Index" class="btn btn-primary d-none d-sm-inline-block">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                    Create new person
+                    <i class="ti ti-plus"></i>
+                    @L["Create new person"]
                 </a>
             </div>
         </div>
@@ -29,18 +26,6 @@
 
 <div class="row row-deck wor-cards">
     <div class="col-sm-6 col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="subheader">Registered People</div>
-                    <div class="ms-auto lh-1">
-                    </div>
-                </div>
-                <div class="d-flex align-items-baseline">
-                    <div class="h1 mb-3 me-2">@users.Count() People</div>
-
-                </div>
-            </div>
-        </div>
+        <vc:people-nav-panel></vc:people-nav-panel>
     </div>
 </div>

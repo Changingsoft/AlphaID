@@ -102,7 +102,6 @@
   </data>
   <data name="Already have account?" xml:space="preserve">
 	  <value>Already have account?</value>
-	  <comment>Already have account?</comment>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue</value>
@@ -121,11 +120,9 @@
   </data>
   <data name="Send code" xml:space="preserve">
 	  <value>Send code</value>
-	  <comment>Send code</comment>
   </data>
   <data name="Sign in" xml:space="preserve">
 	  <value>Sign in</value>
-	  <comment>Sign in</comment>
   </data>
   <data name="Terms of service" xml:space="preserve">
     <value>Terms of service</value>

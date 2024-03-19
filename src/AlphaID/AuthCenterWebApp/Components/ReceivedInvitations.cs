@@ -4,18 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuthCenterWebApp.Components;
 
-public class ReceivedInvitations : ViewComponent
+public class ReceivedInvitations(JoinOrganizationInvitationManager manager) : ViewComponent
 {
-    private readonly JoinOrganizationInvitationManager manager;
-
-    public ReceivedInvitations(JoinOrganizationInvitationManager manager)
-    {
-        this.manager = manager;
-    }
-
     public IViewComponentResult Invoke(NaturalPerson person)
     {
-        var invitations = this.manager.GetPendingInvitations(person);
+        var invitations = manager.GetPendingInvitations(person);
         return this.View(model: invitations);
     }
 }

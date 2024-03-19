@@ -4,20 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes;
 
-public class IndexModel : PageModel
+public class IndexModel(ConfigurationDbContext context) : PageModel
 {
-    private readonly ConfigurationDbContext context;
-
-    public IndexModel(ConfigurationDbContext context)
-    {
-        this.context = context;
-    }
-
     public IEnumerable<ApiScope> Results { get; set; } = default!;
 
     public IActionResult OnGet()
     {
-        this.Results = this.context.ApiScopes.OrderByDescending(p => p.Updated);
+        this.Results = context.ApiScopes.OrderByDescending(p => p.Updated);
         return this.Page();
     }
 }

@@ -5,22 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.RealName.Pages.Request
 {
-    public class IndexModel : PageModel
+    public class IndexModel(RealNameRequestManager requestManager) : PageModel
     {
-        private RealNameRequestManager requestManager;
-
-        public IndexModel(RealNameRequestManager requestManager)
-        {
-            this.requestManager = requestManager;
-        }
-
         public RealNameRequest Data { get; set; } = default!;
 
         public IdOperationResult? Result { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int anchor)
         {
-            var request = await this.requestManager.FindByIdAsync(anchor);
+            var request = await requestManager.FindByIdAsync(anchor);
             if (request == null)
             {
                 return this.NotFound();
@@ -32,7 +25,7 @@ namespace AdminWebApp.Areas.RealName.Pages.Request
 
         public async Task<IActionResult> OnPostAsync(int anchor, string button)
         {
-            var request = await this.requestManager.FindByIdAsync(anchor);
+            var request = await requestManager.FindByIdAsync(anchor);
             if (request == null)
             {
                 return this.NotFound();
@@ -45,12 +38,12 @@ namespace AdminWebApp.Areas.RealName.Pages.Request
 
             if (button == "accept")
             {
-                this.Result = await this.requestManager.AcceptAsync(request, this.User.DisplayName());
+                this.Result = await requestManager.AcceptAsync(request, this.User.DisplayName());
                 
             }
             else
             {
-                this.Result = await this.requestManager.RefuseAsync(request, this.User.DisplayName());
+                this.Result = await requestManager.RefuseAsync(request, this.User.DisplayName());
             }
 
             if (!this.Result.Succeeded)
@@ -64,7 +57,7 @@ namespace AdminWebApp.Areas.RealName.Pages.Request
 
         public async Task<IActionResult> OnGetChineseIdCardImage(int id, string side)
         {
-            var request = await this.requestManager.FindByIdAsync(id);
+            var request = await requestManager.FindByIdAsync(id);
             if (request == null)
             {
                 return this.NotFound();

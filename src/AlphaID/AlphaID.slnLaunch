@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "Default",
+    "Projects": [
+      {
+        "Name": "AlphaIdWebAPI\\AlphaIdWebAPI.csproj",
+        "Action": "Start",
+        "DebugTarget": ""
+      },
+      {
+        "Name": "AdminWebApp\\AdminWebApp.csproj",
+        "Action": "Start",
+        "DebugTarget": ""
+      },
+      {
+        "Name": "AuthCenterWebApp\\AuthCenterWebApp.csproj",
+        "Action": "Start",
+        "DebugTarget": ""
+      }
+    ]
+  },
+  {
+    "Name": "DatabaseTool",
+    "Projects": [
+      {
+        "Name": "DatabaseTool\\DatabaseTool.csproj",
+        "Action": "Start",
+        "DebugTarget": ""
+      }
+    ]
+  }
+]

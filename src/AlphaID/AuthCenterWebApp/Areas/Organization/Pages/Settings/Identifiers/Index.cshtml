@@ -9,8 +9,8 @@
     <table class="table">
         <thead>
             <tr>
-                <td>Type</td>
-                <td>Value</td>
+                <td>@L["Type"]</td>
+                <td>@L["Value"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -35,4 +35,4 @@
         </tbody>
     </table>
 </form>
-<a asp-page="Add" asp-route-anchor="@RouteData.Values["anchor"]" class="btn">Add Identifier</a>
+<a asp-page="Add" asp-route-anchor="@RouteData.Values["anchor"]" class="btn">@L["Add Identifier"]</a>

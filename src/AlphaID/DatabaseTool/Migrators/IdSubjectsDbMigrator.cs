@@ -3,23 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 namespace DatabaseTool.Migrators;
-internal class IdSubjectsDbMigrator : DatabaseMigrator
+internal class IdSubjectsDbMigrator(IdSubjectsDbContext db) : DatabaseMigrator
 {
-    private readonly IdSubjectsDbContext db;
-
-    public IdSubjectsDbMigrator(IdSubjectsDbContext db)
-    {
-        this.db = db;
-    }
-
     public override async Task DropDatabaseAsync()
     {
-        await this.db.Database.EnsureDeletedAsync();
+        await db.Database.EnsureDeletedAsync();
     }
 
-    public override async Task MigrateAsync()
+    public override Task MigrateAsync()
     {
-        await this.db.Database.MigrateAsync();
+        return db.Database.MigrateAsync();
     }
 
     public override Task PostMigrationAsync()
@@ -32,7 +25,7 @@ internal class IdSubjectsDbMigrator : DatabaseMigrator
         var idSubjectsDbSqlFiles = Directory.GetFiles("./TestingData/IDSubjectsDbContext", "*.sql");
         foreach (var file in idSubjectsDbSqlFiles)
         {
-            await this.db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
+            await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
         }
     }
 }

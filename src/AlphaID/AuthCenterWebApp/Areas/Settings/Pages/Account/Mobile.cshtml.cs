@@ -8,17 +8,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class MobileModel : PageModel
+public class MobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly IVerificationCodeService verificationCodeService;
-
-    public MobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService)
-    {
-        this.userManager = userManager;
-        this.verificationCodeService = verificationCodeService;
-    }
-
     [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = default!;
 
@@ -40,7 +31,7 @@ public class MobileModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.User.GetSubjectId());
+        var person = await userManager.FindByIdAsync(this.User.GetSubjectId());
         if (person == null)
             return this.BadRequest("无法处理用户Id.");
 
@@ -53,7 +44,7 @@ public class MobileModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.User.GetSubjectId());
+        var person = await userManager.FindByIdAsync(this.User.GetSubjectId());
         if (person == null)
             return this.BadRequest("无法处理用户Id.");
 
@@ -62,13 +53,13 @@ public class MobileModel : PageModel
             this.ModelState.AddModelError(nameof(this.NewMobile), "移动电话号码无效。");
             return this.Page();
         }
-        if (!await this.verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.VerificationCode))
         {
             this.ModelState.AddModelError(nameof(this.VerificationCode), "验证码无效。");
             return this.Page();
         }
 
-        var result = await this.userManager.SetPhoneNumberAsync(person, this.NewMobile);
+        var result = await userManager.SetPhoneNumberAsync(person, this.NewMobile);
         if (result.Succeeded)
         {
             this.OperationMessage = "移动电话号码已变更。";
@@ -87,7 +78,7 @@ public class MobileModel : PageModel
             return this.Page();
         }
 
-        await this.verificationCodeService.SendAsync(phoneNumber.ToString());
+        await verificationCodeService.SendAsync(phoneNumber.ToString());
 
         this.VerificationCodeSent = true;
         return this.Page();

@@ -1,7 +1,6 @@
 ﻿using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.PlatformServices.Aliyun;
-using AlphaId.PlatformServices.Primitives;
 using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
@@ -12,10 +11,13 @@ using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
+using IdentityModel;
 using IdSubjects;
 using IdSubjects.ChineseName;
+using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -27,6 +29,7 @@ using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System.Data;
 using System.Globalization;
+using Westwind.AspNetCore.Markdown;
 // ReSharper disable All
 
 
@@ -55,15 +58,15 @@ builder.Host.UseSerilog((ctx, configuration) =>
                         return false;
                     })
                     .WriteTo.MSSqlServer(
-                        builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+                        builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
                         sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
                         columnOptions: new ColumnOptions()
                         {
-                            AdditionalColumns = new[]
-                            {
+                            AdditionalColumns =
+                            [
                                 new SqlColumn("EventId", SqlDbType.Int){PropertyName = "EventId.Id"},
                                 new SqlColumn("Source", SqlDbType.NVarChar){PropertyName = "SourceContext"},
-                            },
+                            ],
                         }
                         );
             });
@@ -114,21 +117,12 @@ builder.Services.AddRazorPages(options =>
     options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
 });
 
-
-var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity(options =>
-{
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz0123456789.-_@";
-    options.User.RequireUniqueEmail = true;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 8;
-    options.Password.ChangePasswordColdDown = 5;
-    options.Password.EnablePassExpires = true;
-    options.Password.RememberPasswordHistory = 1;
-})
+builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
+var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity()
     .AddDefaultStores()
     .AddDbContext(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)), sqlOptions =>
         {
             sqlOptions.UseNetTopologySuite();
         });
@@ -139,18 +133,18 @@ idSubjectsBuilder.IdentityBuilder
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
     .AddDefaultTokenProviders();
 
-if (true) //todo 设置一个开关以决定是否启用实名认证模块
+if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
     idSubjectsBuilder.AddRealName()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 }
 
-if (true)
+if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
 {
     idSubjectsBuilder.AddDirectoryLogin()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 }
 
 //添加邮件发送器。
@@ -171,8 +165,7 @@ builder.Services.AddIdentityServer(options =>
         //配置IdP标识
         options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
 
-        //hack 将外部登录的方案修改为AspNetCoreIdentity的默认值？
-        options.DynamicProviders.SignInScheme = IdentityConstants.ExternalScheme;
+        options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
     })
     .AddConfigurationStore(options =>
     {
@@ -183,6 +176,7 @@ builder.Services.AddIdentityServer(options =>
     })
     .AddOperationalStore(options =>
     {
+        options.EnableTokenCleanup = true;
         options.ConfigureDbContext = b =>
         {
             b.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
@@ -193,14 +187,8 @@ builder.Services.AddIdentityServer(options =>
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<Duende.IdentityServer.Services.IEventSink, AuditLogEventSink>();
 
-//短信服务
-builder.Services.AddScoped<IShortMessageService, SimpleShortMessageService>();
-builder.Services.AddScoped<IVerificationCodeService, SimpleShortMessageService>();
-builder.Services.Configure<SimpleShortMessageServiceOptions>(options =>
-{
-    options.ClientId = "bbb867eb-f1e2-4deb-8a21-832f963b4a74";
-    options.ClientSecret = "XIKHAcDO6oVYIAQQs8cewfaJwGxVV5u5x-6Yi-lu";
-});
+//todo 替换 Duende.IdentityServer.Hosting.DynamicProviders.OidcConfigureOptions
+builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, AdvancedOidcConfigureOptions>();
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
@@ -214,9 +202,15 @@ builder.Services.AddSession(options =>
 //身份证OCR
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
 
-//todo 由于BotDetect Captcha需要支持同步流，应改进此配置。
+//xxx 由于BotDetect Captcha需要支持同步流，应改进此配置。
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
     .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
+
+builder.Services.AddMarkdown(config =>
+{
+    config.AddMarkdownProcessingFolder("/_docs/");
+});
+builder.Services.AddMvc();
 
 //当Debug模式时，覆盖注册先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
@@ -229,12 +223,20 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
+//IdentityModelEventSource.ShowPII = true;
+
 app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseHsts();
+}
+app.UseExceptionHandler("/Home/Error");
 app.UseRequestLocalization();
+app.UseMarkdown();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer(); //内部会调用UseAuthentication。
@@ -242,13 +244,14 @@ app.UseAuthorization();
 app.UseSession();
 app.UseCaptcha(app.Configuration);
 app.MapRazorPages();
+app.MapControllers();
 
 await app.RunAsync();
 
 namespace AuthCenterWebApp
 {
     /// <summary>
-    /// Definitions for Testing.
+    /// for Testing.
     /// </summary>
     public class Program { }
 }

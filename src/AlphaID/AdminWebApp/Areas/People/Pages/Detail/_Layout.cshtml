@@ -2,15 +2,11 @@
 @{
     Layout = "Shared/_Layout";
 
-    var anchor = ViewContext.RouteData.Values["anchor"]?.ToString();
-    NaturalPerson? person = null;
-    if (anchor != null)
-    {
-        person = await Manager.FindByIdAsync(anchor);
-    }
+    var anchor = ViewContext.RouteData.Values["anchor"]!;
+    NaturalPerson? person = await Manager.FindByIdAsync(anchor.ToString()!);
 }
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head{
+    @await RenderSectionAsync("head", false)
 }
 @section PageHeader{
     <h1>@person?.PersonName.FullName</h1>
@@ -21,6 +17,7 @@
             <div class="card-body">
                 <div class="list-group list-group-transparent">
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/PersonalInfo" asp-page="/Detail/PersonalInfo" asp-route-anchor="@anchor">@L["Personal Info"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Contacts" asp-page="/Detail/Contacts" asp-route-anchor="@anchor">@L["Contacts"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Membership" asp-page="/Detail/Membership/Index" asp-route-anchor="@anchor">@L["Memberships"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Payments" asp-page="/Detail/Payments" asp-route-anchor="@anchor">@L["Payments"]</a>

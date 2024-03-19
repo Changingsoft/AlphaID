@@ -1,31 +1,25 @@
-﻿namespace IdSubjects;
+﻿using IdSubjects.Validators;
+
+namespace IdSubjects;
 
 /// <summary>
 /// 
 /// </summary>
-public class OrganizationIdentifierManager
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="store"></param>
+/// <param name="validators"></param>
+public class OrganizationIdentifierManager(IOrganizationIdentifierStore store, IEnumerable<OrganizationIdentifierValidator> validators)
 {
-    private readonly IOrganizationIdentifierStore store;
-    private readonly IEnumerable<OrganizationIdentifierValidator> validators;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="store"></param>
     public OrganizationIdentifierManager(IOrganizationIdentifierStore store)
-        : this(store, new List<OrganizationIdentifierValidator>() { new UsccValidator() })
+        : this(store, [new UsccValidator()])
     {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="store"></param>
-    /// <param name="validators"></param>
-    public OrganizationIdentifierManager(IOrganizationIdentifierStore store, IEnumerable<OrganizationIdentifierValidator> validators)
-    {
-        this.store = store;
-        this.validators = validators;
     }
 
     /// <summary>
@@ -35,16 +29,16 @@ public class OrganizationIdentifierManager
     /// <returns></returns>
     public async Task<IdOperationResult> AddIdentifierAsync(OrganizationIdentifier identifier)
     {
-        List<string> errors = new();
-        foreach (var validator in this.validators)
+        List<string> errors = [];
+        foreach (var validator in validators)
         {
             errors.AddRange(validator.Validate(identifier).Errors);
         }
-        if (errors.Any())
-            return IdOperationResult.Failed(errors.ToArray());
-        if (this.store.Identifiers.Any(i => i.Type == identifier.Type && i.Value == identifier.Value))
+        if (errors.Count != 0)
+            return IdOperationResult.Failed([.. errors]);
+        if (store.Identifiers.Any(i => i.Type == identifier.Type && i.Value == identifier.Value))
             return IdOperationResult.Failed("Identifier has already exists.");
-        return await this.store.CreateAsync(identifier);
+        return await store.CreateAsync(identifier);
     }
 
     /// <summary>
@@ -52,9 +46,9 @@ public class OrganizationIdentifierManager
     /// </summary>
     /// <param name="identifier"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RemoveIdentifierAsync(OrganizationIdentifier identifier)
+    public Task<IdOperationResult> RemoveIdentifierAsync(OrganizationIdentifier identifier)
     {
-        return await this.store.DeleteAsync(identifier);
+        return store.DeleteAsync(identifier);
     }
 
     /// <summary>
@@ -64,6 +58,6 @@ public class OrganizationIdentifierManager
     /// <returns></returns>
     public IEnumerable<OrganizationIdentifier> GetIdentifiers(GenericOrganization organization)
     {
-        return this.store.Identifiers.Where(i => i.OrganizationId == organization.Id);
+        return store.Identifiers.Where(i => i.OrganizationId == organization.Id);
     }
 }

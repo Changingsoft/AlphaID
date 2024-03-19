@@ -7,17 +7,11 @@ using System.Security.Claims;
 
 namespace AuthCenterWebApp.Services;
 
-public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPerson>
+public class PersonClaimsPrincipalFactory(NaturalPersonManager userManager,
+                                    IOptions<IdSubjectsOptions> optionsAccessor,
+                                    IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<NaturalPerson>(userManager, optionsAccessor)
 {
-    private readonly SystemUrlInfo systemUrl;
-
-    public PersonClaimsPrincipalFactory(NaturalPersonManager userManager,
-                                        IOptions<IdSubjectsOptions> optionsAccessor,
-                                        IOptions<SystemUrlInfo> systemUrlOptions)
-        : base(userManager, optionsAccessor)
-    {
-        this.systemUrl = systemUrlOptions.Value;
-    }
+    private readonly SystemUrlInfo systemUrl = systemUrlOptions.Value;
 
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)
     {
@@ -41,7 +35,7 @@ public class PersonClaimsPrincipalFactory : UserClaimsPrincipalFactory<NaturalPe
         if (user.NickName != null)
             id.AddClaim(new Claim(JwtClaimTypes.NickName, user.NickName));
         if (user.Address != null)
-            //todo 考虑用地址格式器格式化地址。
+            //todo 考虑实现地址格式器格式化地址。
             id.AddClaim(new Claim(JwtClaimTypes.Address, $"{user.Address.Country},{user.Address.Region},{user.Address.Locality},{user.Address.PostalCode},{user.Address.Street1},{user.Address.Street2},{user.Address.Street3},{user.Address.Receiver},{user.Address.Contact}"));
         if (user.WebSite != null)
             id.AddClaim(new Claim(JwtClaimTypes.WebSite, user.WebSite));

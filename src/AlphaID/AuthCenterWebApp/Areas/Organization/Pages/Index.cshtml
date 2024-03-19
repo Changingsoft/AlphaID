@@ -4,16 +4,14 @@
     ViewBag.Title = Model.Organization.Name;
 }
 
-<div class="page-header">
+@section PageHeader
+{
     <div class="container-xl">
-        <h1>@Model.Organization.Name</h1>
+        <h2 class="page-title">@Model.Organization.Name</h2>
         <p>@Model.Organization.Description</p>
         <p>@Model.Organization.Domicile @Model.Organization.Contact</p>
     </div>
-</div>
-<div class="page-body">
-    <div class="container-xl">
-        <h2>@L["Activities"]</h2>
-        
-    </div>
+}
+<div class="container-xl">
+    <h2>@L["Activities"]</h2>
 </div>

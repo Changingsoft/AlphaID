@@ -1,34 +1,35 @@
 ﻿@page
-@model             ClaimsModel
+@model ClaimsModel
 @{
+    ViewBag.Title = L["Claims"];
 }
-<h4>Claims</h4>
+<h4>@L["Claims"]</h4>
 <form method="post" asp-page-handler="RemoveClaim">
 
-<table class="table">
-    <thead>
-        <tr>
-            <td>Type</td>
-            <td>Value</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var c in Model.Data.Claims)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>@c.Type</td>
-                <td>@c.Value</td>
-                <td><button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('Are you sure you want to remove this cliam?');">Remove</button></td>
+                <td>@L["Type"]</td>
+                <td>@L["Value"]</td>
+                <td></td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Data.Claims)
+            {
+                <tr>
+                    <td>@c.Type</td>
+                    <td>@c.Value</td>
+                    <td><button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('Are you sure you want to remove this cliam?');">@L["Remove"]</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </form>
 
 <form class="card" method="post" asp-page-handler="AddClaim">
     <div class="card-body">
-        <h3 class="card-title">Add claim</h3>
+        <h3 class="card-title">@L["Add claim"]</h3>
         <div class="row row-cards">
             <div class="col-5">
                 <div class="mb-3">
@@ -47,7 +48,7 @@
             <div class="col-2">
                 <div class="mb-3">
                     <div asp-validation-summary="All" class="text-danger"></div>
-                    <button type="submit" class="btn btn-primary" name="su" value="1">Add</button>
+                    <button type="submit" class="btn btn-primary" name="su" value="1">@L["Add"]</button>
                 </div>
             </div>
         </div>

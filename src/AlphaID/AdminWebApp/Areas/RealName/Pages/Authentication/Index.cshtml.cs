@@ -3,20 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.RealName.Pages.Authentication
 {
-    public class IndexModel : PageModel
+    public class IndexModel(RealNameManager realNameManager) : PageModel
     {
-        RealNameManager realNameManager;
-
-        public IndexModel(RealNameManager realNameManager)
-        {
-            this.realNameManager = realNameManager;
-        }
-
         public RealNameAuthentication Data { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var authentication = await this.realNameManager.FindByIdAsync(anchor);
+            var authentication = await realNameManager.FindByIdAsync(anchor);
             if (authentication == null)
             {
                 return this.NotFound();

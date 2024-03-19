@@ -5,9 +5,15 @@ namespace IdSubjects;
 /// <summary>
 /// Person builder.
 /// </summary>
-public class PersonBuilder
+/// <remarks>
+/// Create a builder use user name and person name info.
+/// </remarks>
+/// <param name="userName"></param>
+/// <param name="personName"></param>
+/// <exception cref="ArgumentException"></exception>
+public class PersonBuilder(string userName, PersonNameInfo personName)
 {
-    private readonly NaturalPerson person;
+    private readonly NaturalPerson person = new(userName, personName);
 
     /// <summary>
     /// Initialize a person builder.
@@ -24,17 +30,6 @@ public class PersonBuilder
     public PersonBuilder(string userName, string fullName)
         : this(userName, new PersonNameInfo(fullName))
     {
-    }
-
-    /// <summary>
-    /// Create a builder use user name and person name info.
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="personName"></param>
-    /// <exception cref="ArgumentException"></exception>
-    public PersonBuilder(string userName, PersonNameInfo personName)
-    {
-        this.person = new NaturalPerson(userName, personName);
     }
 
     /// <summary>

@@ -7,33 +7,23 @@ using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Consent;
 
 [Authorize]
 [SecurityHeaders]
-public class Index : PageModel
+public class Index(
+    IIdentityServerInteractionService interaction,
+    IEventService events,
+    ILogger<Index> logger) : PageModel
 {
-    private readonly IIdentityServerInteractionService interaction;
-    private readonly IEventService events;
-    private readonly ILogger<Index> logger;
-
-    public Index(
-        IIdentityServerInteractionService interaction,
-        IEventService events,
-        ILogger<Index> logger)
-    {
-        this.interaction = interaction;
-        this.events = events;
-        this.logger = logger;
-    }
-
     public ViewModel View { get; set; } = default!;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet(string returnUrl)
+    public async Task<IActionResult> OnGetAsync(string returnUrl)
     {
         
         var view = await this.BuildViewModelAsync(returnUrl);
@@ -51,10 +41,10 @@ public class Index : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         // validate return url is still valid
-        var request = await this.interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
+        var request = await interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
         if (request == null) return this.RedirectToPage("/Home/Error/LoginModel");
 
         ConsentResponse grantedConsent = default!;
@@ -65,7 +55,7 @@ public class Index : PageModel
             grantedConsent = new ConsentResponse { Error = AuthorizationError.AccessDenied };
 
             // emit event
-            await this.events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
+            await events.RaiseAsync(new ConsentDeniedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues));
         }
         // user clicked 'yes' - validate the data
         else if (this.Input.Button == "yes")
@@ -87,7 +77,7 @@ public class Index : PageModel
                 };
 
                 // emit event
-                await this.events.RaiseAsync(new ConsentGrantedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
+                await events.RaiseAsync(new ConsentGrantedEvent(this.User.GetSubjectId(), request.Client.ClientId, request.ValidatedResources.RawScopeValues, grantedConsent.ScopesValuesConsented, grantedConsent.RememberConsent));
             }
             else
             {
@@ -100,7 +90,7 @@ public class Index : PageModel
         }
 
         // communicate outcome of consent back to identity server
-        await this.interaction.GrantConsentAsync(request, grantedConsent);
+        await interaction.GrantConsentAsync(request, grantedConsent);
 
         // redirect back to authorization endpoint
         if (request.IsNativeClient())
@@ -119,14 +109,14 @@ public class Index : PageModel
 
     private async Task<ViewModel?> BuildViewModelAsync(string returnUrl, InputModel? model = null)
     {
-        var request = await this.interaction.GetAuthorizationContextAsync(returnUrl);
+        var request = await interaction.GetAuthorizationContextAsync(returnUrl);
         if (request != null)
         {
             return this.CreateConsentViewModel(model, returnUrl, request);
         }
         else
         {
-            this.logger.LogError("No consent request matching request: {returnUrl}", returnUrl);
+            logger.LogError("No consent request matching request: {returnUrl}", returnUrl);
         }
         return null;
     }
@@ -218,5 +208,19 @@ public class Index : PageModel
             Emphasize = true,
             Checked = check
         };
+    }
+
+    public class InputModel
+    {
+        public string Button { get; set; } = default!;
+        public IEnumerable<string> ScopesConsented { get; set; } = default!;
+
+        [Display(Name = "Remember my decision")]
+        public bool RememberConsent { get; set; } = true;
+
+        public string ReturnUrl { get; set; } = default!;
+
+        [Display(Name = "Description")]
+        public string? Description { get; set; }
     }
 }

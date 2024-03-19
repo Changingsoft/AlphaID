@@ -8,7 +8,7 @@ namespace AdminWebApp.Pages.Account;
 [AllowAnonymous()]
 public class SignOutModel : PageModel
 {
-    public async Task<IActionResult> OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
         var signedOutUri = this.Url.Page("/Account/SignedOut");
         await this.HttpContext.SignOutAsync();

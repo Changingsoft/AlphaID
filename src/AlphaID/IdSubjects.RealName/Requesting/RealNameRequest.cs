@@ -40,7 +40,7 @@ public abstract class RealNameRequest
     /// <summary>
     /// 审核时间。
     /// </summary>
-    public DateTimeOffset? AcceptedAt { get; protected set; }
+    public DateTimeOffset? AuditTime { get; protected set; }
 
     /// <summary>
     /// 设置审核状态。
@@ -52,7 +52,7 @@ public abstract class RealNameRequest
     {
         this.Accepted = accept;
         this.Auditor = auditor;
-        this.AcceptedAt = time;
+        this.AuditTime = time;
     }
 
     /// <summary>

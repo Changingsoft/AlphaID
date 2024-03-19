@@ -2,37 +2,30 @@
 
 namespace AlphaId.WechatWebLogin.EntityFramework;
 
-public class WechatUserIdentifierStore : IWechatUserIdentifierStore
+public class WechatUserIdentifierStore(WechatWebLoginDbContext dbContext) : IWechatUserIdentifierStore
 {
-    private readonly WechatWebLoginDbContext dbContext;
-
-    public WechatUserIdentifierStore(WechatWebLoginDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
-    public IQueryable<WechatUserIdentifier> WechatUserIdentifiers => this.dbContext.WechatUserIdentifiers;
+    public IQueryable<WechatUserIdentifier> WechatUserIdentifiers => dbContext.WechatUserIdentifiers;
 
     public async Task CreateAsync(WechatUserIdentifier item)
     {
-        this.dbContext.WechatUserIdentifiers.Add(item);
-        _ = await this.dbContext.SaveChangesAsync();
+        dbContext.WechatUserIdentifiers.Add(item);
+        _ = await dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(WechatUserIdentifier item)
     {
-        this.dbContext.WechatUserIdentifiers.Remove(item);
-        _ = await this.dbContext.SaveChangesAsync();
+        dbContext.WechatUserIdentifiers.Remove(item);
+        _ = await dbContext.SaveChangesAsync();
     }
 
     public async Task<WechatUserIdentifier?> FindAsync(string wxAppId, string openId)
     {
-        return await this.dbContext.WechatUserIdentifiers.FindAsync(wxAppId, openId);
+        return await dbContext.WechatUserIdentifiers.FindAsync(wxAppId, openId);
     }
 
     public async Task UpdateAsync(WechatUserIdentifier item)
     {
-        this.dbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        _ = await this.dbContext.SaveChangesAsync();
+        dbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        _ = await dbContext.SaveChangesAsync();
     }
 }

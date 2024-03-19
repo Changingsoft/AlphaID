@@ -99,34 +99,26 @@
   </resheader>
   <data name="Account name" xml:space="preserve">
 		<value>Account name</value>
-		<comment>Account name</comment>
 	</data>
   <data name="Age" xml:space="preserve">
 		<value>Age</value>
-		<comment>Age</comment>
 	</data>
   <data name="Gender" xml:space="preserve">
 		<value>Gender</value>
-		<comment>Gender</comment>
 	</data>
   <data name="Mobile phone number" xml:space="preserve">
 		<value>Mobile phone number</value>
-		<comment>Mobile phone number</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="No results." xml:space="preserve">
 		<value>No results.</value>
-		<comment>No results.</comment>
 	</data>
   <data name="Search People" xml:space="preserve">
 		<value>Search People</value>
-		<comment>Search People</comment>
 	</data>
   <data name="Search Result" xml:space="preserve">
 		<value>Search Result</value>
-		<comment>Search Result</comment>
 	</data>
 </root>

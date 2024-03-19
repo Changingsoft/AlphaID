@@ -5,25 +5,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 {
-    public class RequestsModel : PageModel
+    public class RequestsModel(RealNameRequestManager realNameRequestManager, NaturalPersonManager naturalPersonManager) : PageModel
     {
-        private readonly RealNameRequestManager realNameRequestManager;
-        private readonly NaturalPersonManager naturalPersonManager;
+        public IEnumerable<RealNameRequest> RealNameRequests { get; set; } = [];
 
-        public RequestsModel(RealNameRequestManager realNameRequestManager, NaturalPersonManager naturalPersonManager)
+        public async Task<IActionResult> OnGetAsync()
         {
-            this.realNameRequestManager = realNameRequestManager;
-            this.naturalPersonManager = naturalPersonManager;
-        }
-
-        public IEnumerable<RealNameRequest> RealNameRequests { get; set; } = Enumerable.Empty<RealNameRequest>();
-
-        public async Task<IActionResult> OnGet()
-        {
-            var person = await this.naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(this.User);
             if (person == null)
                 return this.NotFound();
-            this.RealNameRequests = this.realNameRequestManager.GetRequests(person);
+            this.RealNameRequests = realNameRequestManager.GetRequests(person);
             return this.Page();
         }
     }

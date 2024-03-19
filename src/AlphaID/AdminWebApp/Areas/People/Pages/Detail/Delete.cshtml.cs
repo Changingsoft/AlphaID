@@ -4,15 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
-public class DeleteModel : PageModel
+public class DeleteModel(NaturalPersonManager userManager) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-
-    public DeleteModel(NaturalPersonManager userManager)
-    {
-        this.userManager = userManager;
-    }
-
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -23,7 +16,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.Anchor);
+        var person = await userManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -32,7 +25,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await this.userManager.FindByIdAsync(this.Anchor);
+        var person = await userManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
@@ -48,7 +41,7 @@ public class DeleteModel : PageModel
 
         try
         {
-            var result = await this.userManager.DeleteAsync(this.Person);
+            var result = await userManager.DeleteAsync(this.Person);
             if (result.Succeeded)
                 return this.RedirectToPage("DeleteSuccess");
             else
@@ -70,7 +63,7 @@ public class DeleteModel : PageModel
     public class DeletePersonForm
     {
 
-        [Display(Name = "Display name")]
+        [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         [Required(ErrorMessage = "Validate_Required")]
         public string DisplayName { get; set; } = default!;
     }

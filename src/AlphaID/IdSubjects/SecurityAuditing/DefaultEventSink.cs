@@ -6,18 +6,12 @@ namespace IdSubjects.SecurityAuditing;
 /// <summary>
 /// 
 /// </summary>
-public class DefaultEventSink : IEventSink
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="logger"></param>
+public class DefaultEventSink(ILogger<DefaultEventService> logger) : IEventSink
 {
-    private readonly ILogger<DefaultEventService> logger;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="logger"></param>
-    public DefaultEventSink(ILogger<DefaultEventService> logger)
-    {
-        this.logger = logger;
-    }
 
     /// <summary>
     /// 
@@ -26,7 +20,7 @@ public class DefaultEventSink : IEventSink
     /// <returns></returns>
     public Task PersistAsync(AuditLogEvent evt)
     {
-        this.logger.LogInformation(evt.EventId, "{@event}", evt);
+        logger.LogInformation(evt.EventId, "{@event}", evt);
         return Task.CompletedTask;
     }
 }

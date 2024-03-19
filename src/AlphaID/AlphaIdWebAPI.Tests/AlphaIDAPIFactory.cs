@@ -14,13 +14,6 @@ public class AlphaIdApiFactory : WebApplicationFactory<Program>
     {
         base.ConfigureWebHost(builder);
         builder.UseEnvironment("Development");
-        builder.ConfigureServices(services =>
-        {
-            //services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
-            //{
-            //    options.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>("https://localhost:49726/.well-known/openid-configuration", new OpenIdConnectConfigurationRetriever(), AuthCenterWebAppFactory.Instance.CreateClient());
-            //});
-        });
         builder.ConfigureTestServices(services =>
         {
             services.AddAuthentication(options =>

@@ -11,6 +11,10 @@
 @addTagHelper *, AuthCenterWebApp
 @addTagHelper *, AlphaIdPlatform
 @addTagHelper "BotDetect.Web.Mvc.CaptchaTagHelper, BotDetect.Web.Mvc"
+@addTagHelper *, Westwind.AspNetCore.Markdown
+
 
 @inject IViewLocalizer L
 @inject IOptions<ProductInfo> Product
+@* ReSharper disable once InconsistentNaming *@
+@inject IHtmlLocalizer<SharedResource> SL

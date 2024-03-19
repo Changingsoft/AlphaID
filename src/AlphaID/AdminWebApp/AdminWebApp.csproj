@@ -1,20 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.25" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="6.3.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.13" />
-		<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.3" />
+		<PackageReference Include="MinVer" Version="5.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.0" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.16.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -27,6 +32,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\IdentityProviders\New.zh-cn.resx">
+	    <DependentUpon>New.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\People\Pages\Detail\Membership\Of.zh-cn.resx">
+	    <DependentUpon>Of.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\People\Pages\Detail\PersonalInfo.zh-cn.resx">
+	    <DependentUpon>PersonalInfo.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Authentications.zh-cn.resx">
 	    <DependentUpon>Authentications.resx</DependentUpon>
 	  </EmbeddedResource>
@@ -44,6 +58,21 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Request\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\SystemSettings\Pages\DirectoryServices\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\SystemSettings\Pages\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\Components\OrganizationNavPanel\Default.zh-cn.resx">
+	    <DependentUpon>Default.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\Components\PeopleNavPanel\Default.zh-cn.resx">
+	    <DependentUpon>Default.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultTitleNavBarPartial.zh-cn.resx">
+	    <DependentUpon>_DefaultTitleNavBarPartial.resx</DependentUpon>
 	  </EmbeddedResource>
 	</ItemGroup>
 

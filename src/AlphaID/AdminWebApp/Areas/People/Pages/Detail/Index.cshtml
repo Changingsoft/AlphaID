@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = $"{Model.Data.PersonName.FullName}";
 }
-@section Heads{
+@section head{
     <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
     <style>
         .label {
@@ -110,7 +110,7 @@
 </div>
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">Account</h3>
+        <h3 class="card-title">@L["Account"]</h3>
     </div>
     <div class="card-body">
         <div class="datagrid">
@@ -127,7 +127,7 @@
                     <a href="mailto:@Model.Data.Email">@Model.Data.Email</a>
                     @if (Model.Data.EmailConfirmed)
                     {
-                        <span class="badge badge-outline text-green">Confirmed</span>
+                        <span class="badge badge-outline text-green">@L["Confirmed"]</span>
                     }
                 </div>
             </div>
@@ -137,7 +137,7 @@
                     @Model.Data.PhoneNumber
                     @if (Model.Data.PhoneNumberConfirmed)
                     {
-                        <span class="badge badge-outline text-green">Confirmed</span>
+                        <span class="badge badge-outline text-green">@L["Confirmed"]</span>
                     }
                 </div>
             </div>

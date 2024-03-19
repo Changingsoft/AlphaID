@@ -1,12 +1,13 @@
 ﻿@{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "Tabler/_PageWrapper";
 }
 
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head {
+    @await RenderSectionAsync("head", false)
 }
 
-@section Navbar{
+@section Header {
+    <partial name="_DefaultTitleNavBarPartial" />
     <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="navbar">
@@ -31,9 +32,21 @@
         </div>
     </header>
 }
+@section PageHeader
+{
+    <div class="container-xl">
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
+}
+<div class="container-xl">
+    @RenderBody()
+</div>
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
 
-@RenderBody()
-
-@section Scripts{
+@section Scripts {
     @await RenderSectionAsync("Scripts", false)
 }

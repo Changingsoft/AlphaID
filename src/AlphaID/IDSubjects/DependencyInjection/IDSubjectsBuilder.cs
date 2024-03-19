@@ -10,28 +10,23 @@ namespace IdSubjects.DependencyInjection;
 /// <summary>
 /// IdSubjects builder for DI.
 /// </summary>
-public class IdSubjectsBuilder
+/// <remarks>
+/// Create new builder using incoming service collection.
+/// </remarks>
+/// <param name="services"></param>
+/// <param name="identityBuilder"></param>
+public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder identityBuilder)
 {
-    /// <summary>
-    /// Create new builder using incoming service collection.
-    /// </summary>
-    /// <param name="services"></param>
-    /// <param name="identityBuilder"></param>
-    public IdSubjectsBuilder(IServiceCollection services, IdentityBuilder identityBuilder)
-    {
-        this.Services = services;
-        this.IdentityBuilder = identityBuilder;
-    }
 
     /// <summary>
     /// Gets the service collection.
     /// </summary>
-    public IServiceCollection Services { get; }
+    public IServiceCollection Services { get; } = services;
 
     /// <summary>
     /// 获取 AspNetCore Identity 基础设施提供的 IdentityBuilder.
     /// </summary>
-    public IdentityBuilder IdentityBuilder { get; }
+    public IdentityBuilder IdentityBuilder { get; } = identityBuilder;
 
     /// <summary>
     /// 添加自然人管理拦截器。

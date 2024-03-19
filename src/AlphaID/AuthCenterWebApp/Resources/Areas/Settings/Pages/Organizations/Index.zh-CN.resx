@@ -105,16 +105,17 @@
   </data>
   <data name="Organizations" xml:space="preserve">
 		<value>组织</value>
-		<comment>Organizations</comment>
 	</data>
   <data name="Owner" xml:space="preserve">
     <value>所有者</value>
   </data>
   <data name="You are the owner of this organization." xml:space="preserve">
 		<value>你是组织的所有者。</value>
-		<comment>You are the owner of this organization.</comment>
 	</data>
   <data name="Your organizations" xml:space="preserve">
     <value>您的组织</value>
+  </data>
+  <data name="New organization" xml:space="preserve">
+	  <value>创建新的组织</value>
   </data>
 </root>

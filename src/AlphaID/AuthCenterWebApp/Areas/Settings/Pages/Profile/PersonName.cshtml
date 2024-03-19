@@ -36,12 +36,6 @@
         <span asp-description-for="Input.PhoneticGivenName"></span>
         <span asp-validation-for="Input.PhoneticGivenName" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="Input.NickName" class="form-label"></label>
-        <input asp-for="Input.NickName" class="form-control" />
-        <span asp-description-for="Input.NickName"></span>
-        <span asp-validation-for="Input.NickName" class="text-danger"></span>
-    </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn">@L["Apply changes"]</button>
+    <button type="submit" class="btn">@SL["Apply changes"]</button>
 </form>

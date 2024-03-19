@@ -99,38 +99,33 @@
   </resheader>
   <data name="Created at" xml:space="preserve">
 		<value>Created at</value>
-		<comment>Created at</comment>
 	</data>
   <data name="Description" xml:space="preserve">
 		<value>Description</value>
-		<comment>Description</comment>
 	</data>
   <data name="Display name" xml:space="preserve">
 		<value>Display name</value>
-		<comment>Display name</comment>
 	</data>
   <data name="Emphasize" xml:space="preserve">
 		<value>Emphasize</value>
-		<comment>Emphasize</comment>
 	</data>
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
-		<comment>Enabled</comment>
 	</data>
   <data name="Identity Resources" xml:space="preserve">
 		<value>Identity Resources</value>
-		<comment>Identity Resources</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="New identity resource" xml:space="preserve">
 		<value>New identity resource</value>
-		<comment>New identity resource</comment>
 	</data>
   <data name="Show in discovery doc" xml:space="preserve">
 		<value>Show in discovery doc</value>
-		<comment>Show in discovery doc</comment>
 	</data>
+  <data name="Required" xml:space="preserve">
+	  <value>Required</value>
+	  <comment>Required</comment>
+  </data>
 </root>

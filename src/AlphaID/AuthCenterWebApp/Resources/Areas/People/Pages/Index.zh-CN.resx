@@ -123,4 +123,7 @@
   <data name="Organizations" xml:space="preserve">
     <value>组织</value>
   </data>
+  <data name="Activities" xml:space="preserve">
+	  <value>活动</value>
+  </data>
 </root>

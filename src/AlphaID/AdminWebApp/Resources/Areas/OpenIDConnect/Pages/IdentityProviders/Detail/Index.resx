@@ -99,30 +99,23 @@
   </resheader>
   <data name="Created at" xml:space="preserve">
 		<value>Created at</value>
-		<comment>Created at</comment>
 	</data>
   <data name="Display Name" xml:space="preserve">
 		<value>Display Name</value>
-		<comment>Display Name</comment>
 	</data>
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
-		<comment>Enabled</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Scheme" xml:space="preserve">
 		<value>Scheme</value>
-		<comment>Scheme</comment>
 	</data>
   <data name="Summary" xml:space="preserve">
 		<value>Summary</value>
-		<comment>Summary</comment>
 	</data>
   <data name="Type" xml:space="preserve">
 		<value>Type</value>
-		<comment>Type</comment>
 	</data>
 </root>

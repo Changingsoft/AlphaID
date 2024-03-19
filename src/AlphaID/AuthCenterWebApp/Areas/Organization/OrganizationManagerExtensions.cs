@@ -14,7 +14,7 @@ public static class OrganizationManagerExtensions
             return orgs;
         }
         var org = await manager.FindByIdAsync(anchor);
-        return org != null ? new GenericOrganization[] { org } : Enumerable.Empty<GenericOrganization>();
+        return org != null ? [org] : [];
     }
 
     public static bool TryGetSingleOrDefaultOrganization(this OrganizationManager manager, string anchor,

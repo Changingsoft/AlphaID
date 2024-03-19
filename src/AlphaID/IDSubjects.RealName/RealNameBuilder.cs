@@ -6,22 +6,17 @@ namespace IdSubjects.RealName;
 /// <summary>
 /// 实名认证服务构建器。
 /// </summary>
-public class RealNameBuilder
+/// <remarks>
+/// 初始化实名认证服务构建器。
+/// </remarks>
+/// <param name="services"></param>
+public class RealNameBuilder(IServiceCollection services)
 {
-
-    /// <summary>
-    /// 初始化实名认证服务构建器。
-    /// </summary>
-    /// <param name="services"></param>
-    public RealNameBuilder(IServiceCollection services)
-    {
-        this.Services = services;
-    }
 
     /// <summary>
     /// 获取服务集合。
     /// </summary>
-    public IServiceCollection Services { get; }
+    public IServiceCollection Services { get; } = services;
 
     /// <summary>
     /// 添加实名认证存储。

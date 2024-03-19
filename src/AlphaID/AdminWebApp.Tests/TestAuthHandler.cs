@@ -5,13 +5,9 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 
 namespace AdminWebApp.Tests;
-internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) 
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (this.Request.Headers.Authorization.Contains("TestScheme"))

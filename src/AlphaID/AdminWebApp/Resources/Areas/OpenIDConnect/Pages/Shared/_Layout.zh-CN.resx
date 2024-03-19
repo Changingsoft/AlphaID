@@ -100,9 +100,6 @@
   <data name="Active Sessions" xml:space="preserve">
     <value>活跃会话</value>
   </data>
-  <data name="Advanced" xml:space="preserve">
-    <value>高级</value>
-  </data>
   <data name="API Resources" xml:space="preserve">
     <value>API 资源</value>
   </data>

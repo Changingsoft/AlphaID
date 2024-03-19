@@ -27,7 +27,7 @@ public abstract class IdentityDocument
     /// <summary>
     /// 与此身份证件关联的附件。
     /// </summary>
-    public virtual ICollection<IdentityDocumentAttachment> Attachments { get; protected set; } = new HashSet<IdentityDocumentAttachment>();
+    public virtual ICollection<IdentityDocumentAttachment> Attachments { get; protected set; } = [];
 
     /// <summary>
     /// 获取创建时间。

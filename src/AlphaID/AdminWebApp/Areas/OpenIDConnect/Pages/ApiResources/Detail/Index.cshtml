@@ -4,32 +4,32 @@
 }
 <h3>@Model.Data.DisplayName</h3>
 
-<h4>Overview</h4>
+<h4>@L["Overview"]</h4>
 <dl class="row">
-    <dt class="col-3">Resource ID</dt>
-    <dd class="col-9">@Model.Data.Id</dd>
-    <dt class="col-3">Created at</dt>
+    <dt class="col-3">@L["Resource ID"]</dt>
+    <dd class="col-9">@Model.Data.Name</dd>
+    <dt class="col-3">@L["Created at"]</dt>
     <dd class="col-9">@Model.Data.Created</dd>
-    <dt class="col-3">Last update at</dt>
+    <dt class="col-3">@L["Last update at"]</dt>
     <dd class="col-9">@Model.Data.Updated</dd>
-    <dt class="col-3">允许的Access Token签名算法</dt>
+    <dt class="col-3">@L["Allowed access token signing algorithms"]</dt>
     <dd class="col-9">@Model.Data.AllowedAccessTokenSigningAlgorithms</dd>
-    <dt class="col-3">Show in discovery document</dt>
+    <dt class="col-3">@L["Show in discovery document"]</dt>
     <dd class="col-9">@Model.Data.ShowInDiscoveryDocument</dd>
-    <dt class="col-3">Require Resource Indicator</dt>
+    <dt class="col-3">@L["Require Resource Indicator"]</dt>
     <dd class="col-9">@Model.Data.RequireResourceIndicator</dd>
 </dl>
 
-<h4>Secrets</h4>
+<h4>@L["Secrets"]</h4>
 
 <table class="table">
     <thead>
         <tr>
-            <td>Type</td>
-            <td>Hash</td>
-            <td>Description</td>
-            <td>Created</td>
-            <td>Expires</td>
+            <td>@L["Type"]</td>
+            <td>@L["Hash"]</td>
+            <td>@L["Description"]</td>
+            <td>@L["Created at"]</td>
+            <td>@L["Expires in"]</td>
         </tr>
     </thead>
     <tbody>
@@ -46,7 +46,7 @@
     </tbody>
 </table>
 
-<h4>Scopes</h4>
+<h4>@L["Scopes"]</h4>
 <ul>
     @foreach (var scope in Model.Data.Scopes)
     {
@@ -54,12 +54,12 @@
     }
 </ul>
 
-<h4>Claims</h4>
+<h4>@L["Claims"]</h4>
 
 <table class="table">
     <thead>
         <tr>
-            <td>Type</td>
+            <td>@L["Type"]</td>
         </tr>
     </thead>
     <tbody>
@@ -72,13 +72,13 @@
     </tbody>
 </table>
 
-<h4>Properties</h4>
+<h4>@L["Properties"]</h4>
 
 <table class="table">
     <thead>
         <tr>
-            <td>Key</td>
-            <td>Value</td>
+            <td>@SL["Key"]</td>
+            <td>@SL["Value"]</td>
         </tr>
     </thead>
     <tbody>
@@ -93,12 +93,12 @@
 </table>
 
 
-<h4>Operations</h4>
+<h4>@L["Operations"]</h4>
 @if (Model.Data.NonEditable)
 {
-    <p>This is a system resource, can not be delete.</p>
+    <p>@L["This is a system resource, can not be delete."]</p>
 }
 else
 {
-    <a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">Delete API Resource</a>
+    <a asp-page="Delete" asp-route-id="@Model.Data.Id" class="btn btn-danger">@L["Delete API Resource"]</a>
 }

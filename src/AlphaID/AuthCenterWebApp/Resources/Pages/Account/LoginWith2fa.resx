@@ -99,26 +99,20 @@
   </resheader>
   <data name="Account" xml:space="preserve">
 		<value>Account</value>
-		<comment>Account</comment>
 	</data>
   <data name="Don't have access to your authenticator device? You can" xml:space="preserve">
 		<value>Don't have access to your authenticator device? You can</value>
-		<comment>Don't have access to your authenticator device? You can</comment>
 	</data>
   <data name="log in with a recovery code" xml:space="preserve">
 		<value>log in with a recovery code</value>
-		<comment>log in with a recovery code</comment>
 	</data>
   <data name="Sign in" xml:space="preserve">
 		<value>Sign in</value>
-		<comment>Sign in</comment>
 	</data>
   <data name="Two-fact authentication" xml:space="preserve">
 		<value>Two-fact authentication</value>
-		<comment>Two-fact authentication</comment>
 	</data>
   <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve">
 		<value>Your login is protected with an authenticator app. Enter your authenticator code below.</value>
-		<comment>Your login is protected with an authenticator app. Enter your authenticator code below.</comment>
 	</data>
 </root>

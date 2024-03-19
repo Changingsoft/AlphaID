@@ -5,15 +5,8 @@ using System.Diagnostics;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
-public class IndexModel : PageModel
+public class IndexModel(NaturalPersonManager userManager) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-
-    public IndexModel(NaturalPersonManager userManager)
-    {
-        this.userManager = userManager;
-    }
-
     public NaturalPerson Data { get; set; } = default!;
 
     public IList<UserLoginInfo> ExternalLogins { get; set; } = default!;
@@ -22,18 +15,18 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
         this.Data = person;
-        this.ExternalLogins = await this.userManager.GetLoginsAsync(person);
+        this.ExternalLogins = await userManager.GetLoginsAsync(person);
         return this.Page();
     }
 
     public async Task<IActionResult> OnGetPhotoAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -48,13 +41,13 @@ public class IndexModel : PageModel
             return this.BadRequest();
 
         var file = this.Request.Form.Files[0];
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         Debug.Assert(person != null);
 
         await using var stream = file.OpenReadStream();
         byte[] data = new byte[stream.Length];
         await stream.ReadAsync(data, 0, data.Length);
-        var result = await this.userManager.SetProfilePictureAsync(person, file.ContentType, data);
+        var result = await userManager.SetProfilePictureAsync(person, file.ContentType, data);
         if (result.Succeeded)
             return new JsonResult(true);
         else
@@ -63,15 +56,15 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostClearProfilePictureAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
         this.Data = person;
-        this.ExternalLogins = await this.userManager.GetLoginsAsync(person);
+        this.ExternalLogins = await userManager.GetLoginsAsync(person);
 
         person.ProfilePicture = null;
-        this.Result = await this.userManager.ClearProfilePictureAsync(person);
+        this.Result = await userManager.ClearProfilePictureAsync(person);
         return this.Page();
     }
 }

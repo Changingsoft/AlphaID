@@ -5,18 +5,12 @@ namespace IdSubjects;
 /// <summary>
 /// 
 /// </summary>
-public class OrganizationBankAccountManager
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="store"></param>
+public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
 {
-    private readonly IOrganizationBankAccountStore store;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="store"></param>
-    public OrganizationBankAccountManager(IOrganizationBankAccountStore store)
-    {
-        this.store = store;
-    }
 
     /// <summary>
     /// 
@@ -25,7 +19,7 @@ public class OrganizationBankAccountManager
     /// <returns></returns>
     public IEnumerable<OrganizationBankAccount> GetBankAccounts(GenericOrganization organization)
     {
-        return this.store.BankAccounts.Where(b => b.OrganizationId == organization.Id);
+        return store.BankAccounts.Where(b => b.OrganizationId == organization.Id);
     }
 
     /// <summary>
@@ -35,7 +29,7 @@ public class OrganizationBankAccountManager
     /// <returns></returns>
     public OrganizationBankAccount? GetDefault(GenericOrganization organization)
     {
-        return this.store.BankAccounts.FirstOrDefault(b => b.OrganizationId == organization.Id && b.Default);
+        return store.BankAccounts.FirstOrDefault(b => b.OrganizationId == organization.Id && b.Default);
     }
 
     /// <summary>
@@ -51,14 +45,14 @@ public class OrganizationBankAccountManager
     public async Task<IdOperationResult> AddAsync(GenericOrganization organization, string accountNumber, string accountName,
         string bank, string? usage, bool isDefault = false)
     {
-        if(this.store.BankAccounts.Any(b => b.OrganizationId == organization.Id && b.AccountNumber == accountNumber))
+        if(store.BankAccounts.Any(b => b.OrganizationId == organization.Id && b.AccountNumber == accountNumber))
             return IdOperationResult.Failed("Bank account exists.");
 
         var bankAccount = new OrganizationBankAccount(organization, accountNumber, accountName, bank)
         {
             Usage = usage,
         };
-        var result = await this.store.CreateAsync((bankAccount));
+        var result = await store.CreateAsync((bankAccount));
         if (!result.Succeeded)
             return result;
 
@@ -87,10 +81,10 @@ public class OrganizationBankAccountManager
             if (currentDefault == bankAccount)
                 return IdOperationResult.Success;
             currentDefault.Default = false;
-            await this.store.UpdateAsync(currentDefault);
+            await store.UpdateAsync(currentDefault);
         }
         bankAccount.Default = true;
-        await this.store.UpdateAsync(bankAccount);
+        await store.UpdateAsync(bankAccount);
         trans.Complete();
         return IdOperationResult.Success;
     }
@@ -100,9 +94,9 @@ public class OrganizationBankAccountManager
     /// </summary>
     /// <param name="bankAccount"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> Update(OrganizationBankAccount bankAccount)
+    public Task<IdOperationResult> Update(OrganizationBankAccount bankAccount)
     {
-        return await this.store.UpdateAsync(bankAccount);
+        return store.UpdateAsync(bankAccount);
     }
 
     /// <summary>
@@ -110,8 +104,8 @@ public class OrganizationBankAccountManager
     /// </summary>
     /// <param name="bankAccount"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RemoveAsync(OrganizationBankAccount bankAccount)
+    public Task<IdOperationResult> RemoveAsync(OrganizationBankAccount bankAccount)
     {
-        return await this.store.DeleteAsync(bankAccount);
+        return store.DeleteAsync(bankAccount);
     }
 }

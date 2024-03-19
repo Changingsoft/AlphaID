@@ -8,19 +8,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
 {
-    public class WithChineseIdCardModel : PageModel
+    public class WithChineseIdCardModel(IChineseIdCardOcrService chineseIdCardOcrService, NaturalPersonManager naturalPersonManager, RealNameRequestManager realNameRequestManager) : PageModel
     {
-        private readonly NaturalPersonManager naturalPersonManager;
-        private readonly IChineseIdCardOcrService chineseIdCardOcrService;
-        private readonly RealNameRequestManager realNameRequestManager;
-
-        public WithChineseIdCardModel(IChineseIdCardOcrService chineseIdCardOcrService, NaturalPersonManager naturalPersonManager, RealNameRequestManager realNameRequestManager)
-        {
-            this.chineseIdCardOcrService = chineseIdCardOcrService;
-            this.naturalPersonManager = naturalPersonManager;
-            this.realNameRequestManager = realNameRequestManager;
-        }
-
         [BindProperty]
         [Display(Name = "身份证个人信息面")]
         public IFormFile PersonalSide { get; set; } = default!;
@@ -33,7 +22,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await this.naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(this.User);
             if (person == null)
             {
                 return this.BadRequest("Can not find person.");
@@ -47,7 +36,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
             if (!this.ModelState.IsValid)
                 return this.Page();
 
-            var person = await this.naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(this.User);
             if (person == null)
             {
                 return this.BadRequest("Can not find person.");
@@ -55,12 +44,12 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
 
             var personalSideStream = new MemoryStream();
             await this.PersonalSide.OpenReadStream().CopyToAsync(personalSideStream);
-            var personalSideOcr = await this.chineseIdCardOcrService.RecognizeIdCardFront(personalSideStream);
+            var personalSideOcr = await chineseIdCardOcrService.RecognizeIdCardFront(personalSideStream);
             var personalSideInfo = new BinaryDataInfo(this.PersonalSide.ContentType, personalSideStream.ToArray());
 
             var issuerSideStream = new MemoryStream();
             await this.IssuerSide.OpenReadStream().CopyToAsync(issuerSideStream);
-            var issuerSideOcr = await this.chineseIdCardOcrService.RecognizeIdCardBack(issuerSideStream);
+            var issuerSideOcr = await chineseIdCardOcrService.RecognizeIdCardBack(issuerSideStream);
             var issuerSideInfo = new BinaryDataInfo(this.IssuerSide.ContentType, issuerSideStream.ToArray());
             var sex = personalSideOcr.SexString switch
             {
@@ -81,7 +70,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
                 personalSideInfo,
                 issuerSideInfo);
 
-            this.Result = await this.realNameRequestManager.CreateAsync(person, request);
+            this.Result = await realNameRequestManager.CreateAsync(person, request);
             if (this.Result.Succeeded)
                 return this.RedirectToPage("../Index");
 

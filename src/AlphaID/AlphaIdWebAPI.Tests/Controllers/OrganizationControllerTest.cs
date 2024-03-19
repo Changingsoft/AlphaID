@@ -6,19 +6,12 @@ using Xunit;
 namespace AlphaIdWebAPI.Tests.Controllers;
 
 [Collection(nameof(TestServerCollection))]
-public class OrganizationControllerTest
+public class OrganizationControllerTest(AlphaIdApiFactory factory)
 {
-    private readonly AlphaIdApiFactory factory;
-
-    public OrganizationControllerTest(AlphaIdApiFactory factory)
-    {
-        this.factory = factory;
-    }
-
     [Fact]
     public async Task GetExistsOrganization()
     {
-        var client = this.factory.CreateAuthenticatedClient();
+        var client = factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5");
         response.EnsureSuccessStatusCode();
@@ -29,22 +22,31 @@ public class OrganizationControllerTest
     [Fact]
     public async Task GetOrganizationMemberAsync()
     {
-        var client = this.factory.CreateAuthenticatedClient();
+        var client = factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5/Members");
         response.EnsureSuccessStatusCode();
 
-        var data = await response.Content.ReadFromJsonAsync<OrganizationMemberModel[]>();
+        var data = await response.Content.ReadFromJsonAsync<IEnumerable<MembershipModel>>();
         Assert.NotEmpty(data!);
     }
 
     [Fact]
     public async Task SearchWillExcludeDisabledOrgs()
     {
-        var client = this.factory.CreateAuthenticatedClient();
-        var response = await client.GetAsync($"/api/Organization/Search/{WebUtility.UrlEncode("改名后的有限公司")}");
+        var client = factory.CreateAuthenticatedClient();
+        var response = await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("改名后的有限公司")}");
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadFromJsonAsync<OrganizationSearchResult>();
-        Assert.DoesNotContain(json!.Organizations, p => p.Name.Contains("改名后的有限公司"));
+        var json = await response.Content.ReadFromJsonAsync<IEnumerable<OrganizationModel>>();
+        Assert.Empty(json!);
     }
+
+    internal record OrganizationModel(string? Domicile, string? Contact, string? LegalPersonName, DateTime? Expires)
+    {
+        public string SubjectId { get; set; } = default!;
+        public string Name { get; set; } = default!;
+    }
+
+    internal record OrganizationSearchResult(IEnumerable<OrganizationModel> Organizations, bool More);
+
 }

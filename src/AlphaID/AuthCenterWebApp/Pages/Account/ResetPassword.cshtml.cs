@@ -10,15 +10,8 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordModel : PageModel
+public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-
-    public ResetPasswordModel(NaturalPersonManager userManager)
-    {
-        this.userManager = userManager;
-    }
-
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
@@ -45,14 +38,14 @@ public class ResetPasswordModel : PageModel
             return this.Page();
         }
 
-        var user = await this.userManager.FindByEmailAsync(this.Input.Email);
+        var user = await userManager.FindByEmailAsync(this.Input.Email);
         if (user == null)
         {
             // Don't reveal that the user does not exist
             return this.RedirectToPage("./ResetPasswordConfirmation");
         }
 
-        var result = await this.userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
+        var result = await userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
         if (result.Succeeded)
         {
             return this.RedirectToPage("./ResetPasswordConfirmation");

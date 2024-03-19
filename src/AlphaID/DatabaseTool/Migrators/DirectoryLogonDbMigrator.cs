@@ -3,23 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 namespace DatabaseTool.Migrators;
-internal class DirectoryLogonDbMigrator : DatabaseMigrator
+internal class DirectoryLogonDbMigrator(DirectoryLogonDbContext db) : DatabaseMigrator
 {
-    private readonly DirectoryLogonDbContext db;
-
-    public DirectoryLogonDbMigrator(DirectoryLogonDbContext db)
-    {
-        this.db = db;
-    }
-
     public override async Task DropDatabaseAsync()
     {
-        await this.db.Database.EnsureDeletedAsync();
+        await db.Database.EnsureDeletedAsync();
     }
 
-    public override async Task MigrateAsync()
+    public override Task MigrateAsync()
     {
-        await this.db.Database.MigrateAsync();
+        return db.Database.MigrateAsync();
     }
 
     public override Task PostMigrationAsync()
@@ -32,7 +25,7 @@ internal class DirectoryLogonDbMigrator : DatabaseMigrator
         var directoryLogonDataSqlFiles = Directory.GetFiles("./TestingData/DirectoryLogonData", "*.sql");
         foreach (var file in directoryLogonDataSqlFiles)
         {
-            await this.db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
+            await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
         }
     }
 }

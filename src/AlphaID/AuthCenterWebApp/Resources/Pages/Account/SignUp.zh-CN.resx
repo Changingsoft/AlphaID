@@ -131,7 +131,6 @@
   </data>
   <data name="Create your {0}" xml:space="preserve">
 	  <value>创建您的{0}</value>
-	  <comment>Create your {0}</comment>
   </data>
   <data name="Female" xml:space="preserve">
     <value>女</value>

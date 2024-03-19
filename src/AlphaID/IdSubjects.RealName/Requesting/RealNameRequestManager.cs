@@ -3,27 +3,15 @@
 /// <summary>
 /// 实名认证请求管理器。
 /// </summary>
-public class RealNameRequestManager
+/// <remarks>
+/// 初始化实名认证请求管理器。
+/// </remarks>
+/// <param name="store"></param>
+/// <param name="realNameManager"></param>
+/// <param name="naturalPersonManager"></param>
+/// <param name="provider"></param>
+public class RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, NaturalPersonManager naturalPersonManager, IRealNameRequestAuditorProvider? provider = null)
 {
-    private readonly IRealNameRequestStore store;
-    private readonly RealNameManager realNameManager;
-    private readonly IRealNameRequestAuditorProvider? provider;
-    private readonly NaturalPersonManager naturalPersonManager;
-
-    /// <summary>
-    /// 初始化实名认证请求管理器。
-    /// </summary>
-    /// <param name="store"></param>
-    /// <param name="realNameManager"></param>
-    /// <param name="naturalPersonManager"></param>
-    /// <param name="provider"></param>
-    public RealNameRequestManager(IRealNameRequestStore store, RealNameManager realNameManager, NaturalPersonManager naturalPersonManager, IRealNameRequestAuditorProvider? provider = null)
-    {
-        this.store = store;
-        this.realNameManager = realNameManager;
-        this.naturalPersonManager = naturalPersonManager;
-        this.provider = provider;
-    }
 
     /// <summary>
     /// Time Provider.
@@ -37,14 +25,14 @@ public class RealNameRequestManager
     {
         get
         {
-            return this.store.Requests.Where(r => !r.Accepted.HasValue);
+            return store.Requests.Where(r => !r.Accepted.HasValue);
         }
     }
 
     /// <summary>
     /// 获取可查询的实名认证请求集合。
     /// </summary>
-    public IQueryable<RealNameRequest> Requests => this.store.Requests;
+    public IQueryable<RealNameRequest> Requests => store.Requests;
 
     /// <summary>
     /// 创建实名认证请求。
@@ -56,16 +44,16 @@ public class RealNameRequestManager
     {
         request.PersonId = person.Id;
         request.WhenCommitted = this.TimeProvider.GetUtcNow();
-        var result = await this.store.CreateAsync(request);
+        var result = await store.CreateAsync(request);
         if (!result.Succeeded)
             return result;
 
-        if (this.provider == null)
+        if (provider == null)
         {
             return result;
         }
 
-        var auditors = this.provider.GetAuditors();
+        var auditors = provider.GetAuditors();
         var accept = true;
         foreach (var auditor in auditors)
         {
@@ -88,7 +76,7 @@ public class RealNameRequestManager
     /// <returns></returns>
     public async Task<IdOperationResult> AcceptAsync(RealNameRequest request, string? auditor = null)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(request.PersonId);
+        var person = await naturalPersonManager.FindByIdAsync(request.PersonId);
         if (person == null)
             return IdOperationResult.Failed("Natural person not found.");
         request.SetAudit(true, auditor, this.TimeProvider.GetUtcNow());
@@ -97,7 +85,7 @@ public class RealNameRequestManager
             return result;
 
         var authentication = request.CreateAuthentication();
-        return await this.realNameManager.AuthenticateAsync(person, authentication);
+        return await realNameManager.AuthenticateAsync(person, authentication);
     }
 
     /// <summary>
@@ -106,9 +94,9 @@ public class RealNameRequestManager
     /// <param name="request"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    private async Task<IdOperationResult> UpdateAsync(RealNameRequest request)
+    private Task<IdOperationResult> UpdateAsync(RealNameRequest request)
     {
-        return await this.store.UpdateAsync(request);
+        return store.UpdateAsync(request);
     }
 
     /// <summary>
@@ -118,7 +106,7 @@ public class RealNameRequestManager
     /// <returns></returns>
     public IEnumerable<RealNameRequest> GetRequests(NaturalPerson person)
     {
-        return this.store.Requests.Where(x => x.PersonId == person.Id);
+        return store.Requests.Where(x => x.PersonId == person.Id);
     }
 
     /// <summary>
@@ -126,9 +114,9 @@ public class RealNameRequestManager
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<RealNameRequest?> FindByIdAsync(int id)
+    public Task<RealNameRequest?> FindByIdAsync(int id)
     {
-        return await this.store.FindByIdAsync(id);
+        return store.FindByIdAsync(id);
     }
 
     /// <summary>
@@ -137,9 +125,9 @@ public class RealNameRequestManager
     /// <param name="request"></param>
     /// <param name="auditor"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RefuseAsync(RealNameRequest request, string? auditor = null)
+    public Task<IdOperationResult> RefuseAsync(RealNameRequest request, string? auditor = null)
     {
         request.SetAudit(false, auditor, this.TimeProvider.GetUtcNow());
-        return await this.UpdateAsync(request);
+        return this.UpdateAsync(request);
     }
 }

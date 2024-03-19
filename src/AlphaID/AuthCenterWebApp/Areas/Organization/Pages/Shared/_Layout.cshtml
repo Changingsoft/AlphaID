@@ -2,7 +2,7 @@
 @inject OrganizationMemberManager MemberManager
 @inject OrganizationManager OrganizationManager
 @{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "Tabler/_PageWrapper";
     var isOwner = false;
     var anchor = ViewContext.RouteData.Values["anchor"]?.ToString();
     if (User.Identity!.IsAuthenticated)
@@ -21,11 +21,12 @@
     }
 }
 
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head {
+    @await RenderSectionAsync("head", false)
 }
 
-@section Navbar{
+@section Header {
+    <partial name="_DefaultTitleNavBarPartial" />
     <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="navbar">
@@ -77,12 +78,24 @@
             </div>
         </div>
     </header>
-
 }
 
-@RenderBody()
+@section PageHeader
+{
+    <div class="container-xl">
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
+}
+<div class="container-xl">
+    @RenderBody()
+</div>
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
 
 @section Scripts
-    {
+{
     @await RenderSectionAsync("Scripts", false)
 }

@@ -2,8 +2,8 @@
     Layout = "Shared/_Layout";
 }
 
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head{
+    @await RenderSectionAsync("head", false)
 }
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)
@@ -30,3 +30,7 @@
     </div>
 
 </div>
+@section PageComponents
+{
+    @await RenderSectionAsync("PageComponents", false)
+}

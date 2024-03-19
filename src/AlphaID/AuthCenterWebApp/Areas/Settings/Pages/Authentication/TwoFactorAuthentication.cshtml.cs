@@ -7,18 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
-public class TwoFactorAuthenticationModel : PageModel
+public class TwoFactorAuthenticationModel(
+    NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, ILogger<TwoFactorAuthenticationModel> logger) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly SignInManager<NaturalPerson> signInManager;
-
-    public TwoFactorAuthenticationModel(
-        NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, ILogger<TwoFactorAuthenticationModel> logger)
-    {
-        this.userManager = userManager;
-        this.signInManager = signInManager;
-    }
-
     public bool HasAuthenticator { get; set; }
 
     public int RecoveryCodesLeft { get; set; }
@@ -33,29 +24,29 @@ public class TwoFactorAuthenticationModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await this.userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
         }
 
-        this.HasAuthenticator = await this.userManager.GetAuthenticatorKeyAsync(user) != null;
-        this.Is2FaEnabled = await this.userManager.GetTwoFactorEnabledAsync(user);
-        this.IsMachineRemembered = await this.signInManager.IsTwoFactorClientRememberedAsync(user);
-        this.RecoveryCodesLeft = await this.userManager.CountRecoveryCodesAsync(user);
+        this.HasAuthenticator = await userManager.GetAuthenticatorKeyAsync(user) != null;
+        this.Is2FaEnabled = await userManager.GetTwoFactorEnabledAsync(user);
+        this.IsMachineRemembered = await signInManager.IsTwoFactorClientRememberedAsync(user);
+        this.RecoveryCodesLeft = await userManager.CountRecoveryCodesAsync(user);
 
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await this.userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(this.User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
         }
 
-        await this.signInManager.ForgetTwoFactorClientAsync();
+        await signInManager.ForgetTwoFactorClientAsync();
         this.StatusMessage = "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
         return this.RedirectToPage();
     }

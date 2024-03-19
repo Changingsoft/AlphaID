@@ -8,15 +8,8 @@ using System.Security.Cryptography;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 {
-    public class CreateSecretModel : PageModel
+    public class CreateSecretModel(ConfigurationDbContext configurationDbContext) : PageModel
     {
-        private readonly ConfigurationDbContext configurationDbContext;
-
-        public CreateSecretModel(ConfigurationDbContext configurationDbContext)
-        {
-            this.configurationDbContext = configurationDbContext;
-        }
-
         public Client Client { get; set; } = default!;
 
         [BindProperty]
@@ -24,7 +17,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public IActionResult OnGet(int anchor)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
             {
                 return this.NotFound();
@@ -47,7 +40,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public async Task<IActionResult> OnPostAsync(int anchor)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
             {
                 return this.NotFound();
@@ -71,13 +64,14 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
                 secret.Expiration = this.Input.Expires.Value;
 
             this.Client.ClientSecrets.Add(secret);
-            await this.configurationDbContext.SaveChangesAsync();
+            await configurationDbContext.SaveChangesAsync();
             return this.RedirectToPage("Secrets", new { anchor });
         }
 
         public class InputModel
         {
             [Display(Name = "Secret")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Secret { get; set; } = default!;
 
             [Display(Name = "Expires")]

@@ -123,7 +123,7 @@ public readonly struct UnifiedSocialCreditCode
     /// <returns></returns>
     public override string ToString()
     {
-        return this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true) + this.CheckCode.ToString();
+        return this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true) + this.CheckCode;
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public readonly struct UnifiedSocialCreditCode
                 throw new ArgumentException("无效字符");
             sum += charIndex * Weight[i];
         }
-        return Charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在0-30范围内。
+        return Charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在 0-30 范围内。
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public readonly struct UnifiedSocialCreditCode
     /// <summary>
     /// Readonly weight for corresponding position.
     /// </summary>
-    private static readonly int[] Weight = new int[] { 1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28 };
+    private static readonly int[] Weight = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
 
     #region Public static methods
 

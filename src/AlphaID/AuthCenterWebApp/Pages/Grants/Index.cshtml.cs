@@ -10,37 +10,24 @@ using System.ComponentModel.DataAnnotations;
 namespace AuthCenterWebApp.Pages.Grants;
 
 [Authorize]
-public class Index : PageModel
+public class Index(IIdentityServerInteractionService interaction,
+    IClientStore clients,
+    IResourceStore resourceStore,
+    IEventService events) : PageModel
 {
-    private readonly IIdentityServerInteractionService interaction;
-    private readonly IClientStore clients;
-    private readonly IResourceStore resources;
-    private readonly IEventService events;
-
-    public Index(IIdentityServerInteractionService interaction,
-        IClientStore clients,
-        IResourceStore resources,
-        IEventService events)
-    {
-        this.interaction = interaction;
-        this.clients = clients;
-        this.resources = resources;
-        this.events = events;
-    }
-
     public ViewModel View { get; set; } = default!;
 
     public async Task OnGet()
     {
-        var grants = await this.interaction.GetAllUserGrantsAsync();
+        var grants = await interaction.GetAllUserGrantsAsync();
 
         var list = new List<GrantViewModel>();
         foreach (var grant in grants)
         {
-            var client = await this.clients.FindClientByIdAsync(grant.ClientId);
+            var client = await clients.FindClientByIdAsync(grant.ClientId);
             if (client != null)
             {
-                var resources = await this.resources.FindResourcesByScopeAsync(grant.Scopes);
+                var resources = await resourceStore.FindResourcesByScopeAsync(grant.Scopes);
 
                 var item = new GrantViewModel()
                 {
@@ -69,11 +56,29 @@ public class Index : PageModel
     [Required(ErrorMessage = "Validate_Required")]
     public string ClientId { get; set; } = default!;
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
-        await this.interaction.RevokeUserConsentAsync(this.ClientId);
-        await this.events.RaiseAsync(new GrantsRevokedEvent(this.User.GetSubjectId(), this.ClientId));
+        await interaction.RevokeUserConsentAsync(this.ClientId);
+        await events.RaiseAsync(new GrantsRevokedEvent(this.User.GetSubjectId(), this.ClientId));
 
         return this.RedirectToPage("/Grants/Index");
+    }
+
+    public class ViewModel
+    {
+        public IEnumerable<GrantViewModel> Grants { get; set; } = default!;
+    }
+
+    public class GrantViewModel
+    {
+        public string ClientId { get; set; } = default!;
+        public string ClientName { get; set; } = default!;
+        public string? ClientUrl { get; set; }
+        public string? ClientLogoUrl { get; set; }
+        public string? Description { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? Expires { get; set; }
+        public IEnumerable<string> IdentityGrantNames { get; set; } = default!;
+        public IEnumerable<string> ApiGrantNames { get; set; } = default!;
     }
 }

@@ -7,7 +7,7 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 @if (Model.CurrentLogins?.Count > 0)
 {
-    <h3>已注册登录</h3>
+    <h3>@L["External Logins"]</h3>
     <table class="table">
         <tbody>
             @foreach (var login in Model.CurrentLogins)

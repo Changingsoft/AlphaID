@@ -4,20 +4,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 {
-    public class RequestModel : PageModel
+    public class RequestModel(RealNameRequestManager requestManager) : PageModel
     {
-        private readonly RealNameRequestManager requestManager;
-
-        public RequestModel(RealNameRequestManager requestManager)
-        {
-            this.requestManager = requestManager;
-        }
-
         public RealNameRequest Data { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var request = await this.requestManager.FindByIdAsync(id);
+            var request = await requestManager.FindByIdAsync(id);
             if (request == null)
             {
                 return this.NotFound();
@@ -29,7 +22,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 
         public async Task<IActionResult> OnGetChineseIdCardImage(int id, string side)
         {
-            var request = await this.requestManager.FindByIdAsync(id);
+            var request = await requestManager.FindByIdAsync(id);
             if (request == null)
             {
                 return this.NotFound();

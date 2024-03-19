@@ -35,9 +35,9 @@
     </div>
     <div class="mb-3">
         <label asp-for="Input.Visibility" class="form-label"></label>
-        <select asp-for="Input.Visibility" asp-items="@Model.MembershipVisibilities" class="form-select"></select>
+        <select asp-for="Input.Visibility" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()" class="form-select"></select>
     </div>
-    <button type="submit" class="btn btn-primary">@L["Apply changes"]</button>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
     <a asp-page="Index" asp-route-anchor="@RouteData.Values["anchor"]" class="btn">@L["Back"]</a>
 </form>
 

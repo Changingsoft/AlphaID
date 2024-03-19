@@ -99,18 +99,14 @@
   </resheader>
   <data name="Account" xml:space="preserve">
 		<value>Account</value>
-		<comment>Account</comment>
 	</data>
   <data name="Recovery code verification" xml:space="preserve">
 		<value>Recovery code verification</value>
-		<comment>Recovery code verification</comment>
 	</data>
   <data name="Sign in" xml:space="preserve">
 		<value>Sign in</value>
-		<comment>Sign in</comment>
 	</data>
   <data name="You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again." xml:space="preserve">
 		<value>You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again.</value>
-		<comment>You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again.</comment>
 	</data>
 </root>

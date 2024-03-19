@@ -98,4 +98,32 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="If your domain has been changed, you may change CORS settings for correct client behavior." xml:space="preserve">
+		<value>If your domain has been changed, you may change CORS settings for correct client behavior.</value>
+		<comment>If your domain has been changed, you may change CORS settings for correct client behavior.</comment>
+	</data>
+	<data name="Callback URI" xml:space="preserve">
+		<value>Callback URI</value>
+		<comment>Callback URI</comment>
+	</data>
+	<data name="Delete" xml:space="preserve">
+		<value>Delete</value>
+		<comment>Delete</comment>
+	</data>
+	<data name="New callback URI" xml:space="preserve">
+		<value>New callback URI</value>
+		<comment>New callback URI</comment>
+	</data>
+	<data name="Add" xml:space="preserve">
+		<value>Add</value>
+		<comment>Add</comment>
+	</data>
+	<data name="Post logout redirect URIs" xml:space="preserve">
+		<value>Post logout redirect URIs</value>
+		<comment>Post logout redirect URIs</comment>
+	</data>
+	<data name="New sign out callback URI" xml:space="preserve">
+		<value>New sign out callback URI</value>
+		<comment>New sign out callback URI</comment>
+	</data>
 </root>

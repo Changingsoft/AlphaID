@@ -120,6 +120,12 @@
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="Account name" xml:space="preserve">
+	  <value>Account name</value>
+  </data>
+  <data name="Account number" xml:space="preserve">
+	  <value>Account number</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
@@ -129,8 +135,14 @@
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
   </data>
+  <data name="Bank name" xml:space="preserve">
+	  <value>Bank name</value>
+  </data>
+  <data name="Bio" xml:space="preserve">
+    <value>Bio</value>
+  </data>
   <data name="Birth date" xml:space="preserve">
-    <value>Birth date</value>
+    <value>Birthdate</value>
   </data>
   <data name="Captcha code" xml:space="preserve">
     <value>Captcha code</value>
@@ -174,6 +186,15 @@
   <data name="Given name" xml:space="preserve">
     <value>Given name</value>
   </data>
+  <data name="Identifier Type" xml:space="preserve">
+	  <value>Identifier Type</value>
+  </data>
+  <data name="Identifier Value" xml:space="preserve">
+	  <value>Identifier Value</value>
+  </data>
+  <data name="Legal Entity Identifier" xml:space="preserve">
+    <value>Legal Entity Identifier</value>
+  </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
@@ -198,6 +219,13 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Phone number" xml:space="preserve">
+	  <value>Phone number</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+	  <value>Privacy</value>
+	  <comment>Privacy</comment>
+  </data>
   <data name="Recovery code" xml:space="preserve">
     <value>Recovery code</value>
   </data>
@@ -216,6 +244,9 @@
   <data name="Representative" xml:space="preserve">
     <value>Representative</value>
   </data>
+  <data name="Short description about yourself." xml:space="preserve">
+    <value>Short description about yourself.</value>
+  </data>
   <data name="Surname" xml:space="preserve">
     <value>Surname</value>
   </data>
@@ -230,6 +261,9 @@
   </data>
   <data name="Unified social credit code" xml:space="preserve">
     <value>Unified social credit code</value>
+  </data>
+  <data name="Usage" xml:space="preserve">
+	  <value>Usage</value>
   </data>
   <data name="User name" xml:space="preserve">
     <value>User name</value>
@@ -249,7 +283,10 @@
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
-	  <value>Legal Entity Identifier</value>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="Your personal website." xml:space="preserve">
+    <value>Your personal website.</value>
   </data>
 </root>

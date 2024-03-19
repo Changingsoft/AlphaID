@@ -48,22 +48,25 @@ INSERT [dbo].[Clients] ([Id], [Enabled], [ClientId], [ProtocolType], [RequireCli
 SET IDENTITY_INSERT [dbo].[Clients] OFF
 SET IDENTITY_INSERT [dbo].[ClientGrantTypes] ON 
 INSERT [dbo].[ClientGrantTypes] ([Id], [GrantType], [ClientId]) VALUES (1, N'authorization_code', 4)
+INSERT [dbo].[ClientGrantTypes] ([Id], [GrantType], [ClientId]) VALUES (2, N'client_credentials', 4)
+INSERT [dbo].[ClientGrantTypes] ([Id], [GrantType], [ClientId]) VALUES (3, N'password', 4)
 SET IDENTITY_INSERT [dbo].[ClientGrantTypes] OFF
 SET IDENTITY_INSERT [dbo].[ClientPostLogoutRedirectUris] ON 
 INSERT [dbo].[ClientPostLogoutRedirectUris] ([Id], [PostLogoutRedirectUri], [ClientId]) VALUES (1, N'https://localhost:61315/signout-callback-oidc', 4)
 SET IDENTITY_INSERT [dbo].[ClientPostLogoutRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientRedirectUris] ON 
 INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (1, N'https://localhost:61315/signin-oidc', 4)
+INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (2, N'https://localhost:61316/docs/oauth2-redirect.html', 4)
 SET IDENTITY_INSERT [dbo].[ClientRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientScopes] ON 
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (1, N'openid', 4)
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (3, N'profile', 4)
-INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (4, N'user_impersonation', 4)
 SET IDENTITY_INSERT [dbo].[ClientScopes] OFF
 SET IDENTITY_INSERT [dbo].[ClientSecrets] ON 
 INSERT [dbo].[ClientSecrets] ([Id], [ClientId], [Description], [Value], [Expiration], [Type], [Created]) VALUES (1, 4, NULL, N'bpHsoigKdYWDrsxWC2qSXbUViZMkA0xg72mcf9ktD1M=', NULL, N'SharedSecret', CAST(N'2022-12-23T20:39:00.0000000' AS DateTime2))
 SET IDENTITY_INSERT [dbo].[ClientSecrets] OFF
 SET IDENTITY_INSERT [dbo].[ClientCorsOrigins] ON
+INSERT [dbo].[ClientCorsOrigins] ([Id], [Origin], [ClientId]) VALUES (1, N'https://localhost:61316', 4)
 SET IDENTITY_INSERT [dbo].[ClientCorsOrigins] OFF
 SET IDENTITY_INSERT [dbo].[ClientIdPRestrictions] ON
 SET IDENTITY_INSERT [dbo].[ClientIdPRestrictions] OFF

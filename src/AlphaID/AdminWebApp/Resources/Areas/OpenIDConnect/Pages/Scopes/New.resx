@@ -99,10 +99,8 @@
   </resheader>
   <data name="Create" xml:space="preserve">
 		<value>Create</value>
-		<comment>Create</comment>
 	</data>
   <data name="Create scope" xml:space="preserve">
 		<value>Create scope</value>
-		<comment>Create scope</comment>
 	</data>
 </root>

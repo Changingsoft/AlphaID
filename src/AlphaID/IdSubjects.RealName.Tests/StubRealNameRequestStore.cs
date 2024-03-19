@@ -3,7 +3,7 @@
 namespace IdSubjects.RealName.Tests;
 internal class StubRealNameRequestStore : IRealNameRequestStore
 {
-    private readonly HashSet<RealNameRequest> set = new();
+    private readonly HashSet<RealNameRequest> set = [];
 
     public Task<IdOperationResult> CreateAsync(RealNameRequest request)
     {

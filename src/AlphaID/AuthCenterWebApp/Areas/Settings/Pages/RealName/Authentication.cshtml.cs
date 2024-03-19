@@ -5,25 +5,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 {
-    public class AuthenticationModel : PageModel
+    public class AuthenticationModel(RealNameManager realNameManager, NaturalPersonManager naturalPersonManager) : PageModel
     {
-        RealNameManager realNameManager;
-        NaturalPersonManager naturalPersonManager;
-
-        public AuthenticationModel(RealNameManager realNameManager, NaturalPersonManager naturalPersonManager)
-        {
-            this.realNameManager = realNameManager;
-            this.naturalPersonManager = naturalPersonManager;
-        }
-
         public RealNameAuthentication Data { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            var person = await this.naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(this.User);
             if (person == null) { return this.NotFound(); }
 
-            var authentications = this.realNameManager.GetAuthentications(person);
+            var authentications = realNameManager.GetAuthentications(person);
             var authentication = authentications.FirstOrDefault(a => a.Id == id);
             if (authentication == null) { return this.NotFound(); }
 

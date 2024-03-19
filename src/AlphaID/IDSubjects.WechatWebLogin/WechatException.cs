@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace IdSubjects.WechatWebLogin;
+﻿namespace IdSubjects.WechatWebLogin;
 
 /// <summary>
 /// 微信异常。
@@ -29,15 +27,6 @@ public class WechatException : Exception
     /// <param name="message"></param>
     /// <param name="innerException"></param>
     public WechatException(string message, Exception innerException) : base(message, innerException)
-    {
-    }
-
-    /// <summary>
-    /// Initialize exception for serialize.
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected WechatException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
 }

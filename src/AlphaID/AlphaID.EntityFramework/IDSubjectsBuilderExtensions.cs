@@ -1,12 +1,6 @@
-﻿using IdSubjects;
-using IdSubjects.DependencyInjection;
-using IdSubjects.Invitations;
-using IdSubjects.Payments;
-using Microsoft.AspNetCore.Identity;
+﻿using IdSubjects.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Runtime.CompilerServices;
 
 namespace AlphaId.EntityFramework;
 public static class IdSubjectsBuilderExtensions

@@ -2,20 +2,13 @@ using IdSubjects.RealName.Requesting;
 
 namespace AdminWebApp.Areas.RealName.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel(RealNameRequestManager requestManager) : PageModel
     {
-        private RealNameRequestManager requestManager;
-
-        public IndexModel(RealNameRequestManager requestManager)
-        {
-            this.requestManager = requestManager;
-        }
-
-        public IEnumerable<RealNameRequest> PendingRequests { get; set; } = Enumerable.Empty<RealNameRequest>();
+        public IEnumerable<RealNameRequest> PendingRequests { get; set; } = [];
 
         public void OnGet()
         {
-            this.PendingRequests = this.requestManager.PendingRequests.Take(10);
+            this.PendingRequests = requestManager.PendingRequests.Take(10);
         }
     }
 }

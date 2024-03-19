@@ -7,13 +7,9 @@ using System.Text.Encodings.Web;
 
 namespace AuthCenterWebApp.Tests;
 
-internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) 
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
-        : base(options, logger, encoder, clock)
-    {
-    }
-
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {

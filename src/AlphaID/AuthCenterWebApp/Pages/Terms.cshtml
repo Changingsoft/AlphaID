@@ -3,7 +3,19 @@
 @{
     ViewBag.Title = L["Terms of service"];
 }
-<h1>@ViewBag.Title</h1>
-<div>
-
+@section PageHeader
+{
+    <div class="row g-2 align-items-center">
+        <div class="col">
+            <h2 class="page-title">
+                @ViewBag.Title
+            </h2>
+        </div>
+    </div>
+}
+<div class="card">
+    <div class="card-body">
+        <markdown filename="~/_docs/Terms.md"></markdown>
+    </div>
 </div>
+

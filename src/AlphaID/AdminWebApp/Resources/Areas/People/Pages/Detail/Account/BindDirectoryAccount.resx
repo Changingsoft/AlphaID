@@ -99,42 +99,32 @@
   </resheader>
   <data name="Actions" xml:space="preserve">
 		<value>Actions</value>
-		<comment>Actions</comment>
 	</data>
   <data name="Bind" xml:space="preserve">
 		<value>Bind</value>
-		<comment>Bind</comment>
 	</data>
   <data name="Bind exists account" xml:space="preserve">
 		<value>Bind exists account</value>
-		<comment>Bind exists account</comment>
 	</data>
   <data name="Display Name" xml:space="preserve">
 		<value>Display Name</value>
-		<comment>Display Name</comment>
 	</data>
   <data name="Mobile" xml:space="preserve">
 		<value>Mobile</value>
-		<comment>Mobile</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="Name, phonetic name, etc..." xml:space="preserve">
 		<value>Name, phonetic name, etc...</value>
-		<comment>Name, phonetic name, etc...</comment>
 	</data>
   <data name="SAM Account Name" xml:space="preserve">
 		<value>SAM Account Name</value>
-		<comment>SAM Account Name</comment>
 	</data>
   <data name="Search" xml:space="preserve">
 		<value>Search</value>
-		<comment>Search</comment>
 	</data>
   <data name="User Principal Name" xml:space="preserve">
 		<value>User Principal Name</value>
-		<comment>User Principal Name</comment>
 	</data>
 </root>

@@ -1,0 +1,10 @@
+﻿@model AdminWebApp.Areas.OpenIDConnect.Components.OidcNavPanel.OidcStatistics
+
+<div class="card">
+    <div class="card-header">
+        <a asp-area="OpenIdConnect" asp-page="/Index">@L["OAuth/OIDC"]</a>
+    </div>
+    <div class="card-body">
+        <p>@Model.ClientCount @L["Clients"] | @Model.ScopeCount @L["Scopes"]</p>
+    </div>
+</div>

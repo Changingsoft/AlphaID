@@ -99,22 +99,17 @@
   </resheader>
   <data name="Bind exists account" xml:space="preserve">
 		<value>Bind exists account</value>
-		<comment>Bind exists account</comment>
 	</data>
   <data name="Create new account" xml:space="preserve">
 		<value>Create new account</value>
-		<comment>Create new account</comment>
 	</data>
   <data name="Directory Accounts" xml:space="preserve">
 		<value>Directory Accounts</value>
-		<comment>Directory Accounts</comment>
 	</data>
   <data name="Logon ID" xml:space="preserve">
 		<value>Logon ID</value>
-		<comment>Logon ID</comment>
 	</data>
   <data name="Person ID" xml:space="preserve">
 		<value>Person ID</value>
-		<comment>Person ID</comment>
 	</data>
 </root>

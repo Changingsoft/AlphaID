@@ -1,12 +1,12 @@
 ﻿@page
 @model AccessDeniedModel
 @{
-    ViewBag.Title = "拒绝访问";
+    Layout = "Tabler/_Page_center";
+    ViewBag.Title = "Access denied";
 }
 
-<div class="page-body">
-    <div class="container-xl">
-        <h1>拒绝访问</h1>
-        <p>您没有权限执行此操作。</p>
-    </div>
-</div>
+<h1>@ViewBag.Title</h1>
+<p>You don't have permission to do this.</p>
+<p>Close the browser, or sign out your account.</p>
+
+<a asp-page="SignOut" class="btn btn-secondary">Sign out</a>

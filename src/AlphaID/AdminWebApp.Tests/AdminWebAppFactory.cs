@@ -19,7 +19,7 @@ public class AdminWebAppFactory : WebApplicationFactory<Program>
                 options.DefaultScheme = "TestScheme";
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options => { });
+            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", _ => { });
         });
 
     }

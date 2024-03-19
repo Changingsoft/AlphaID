@@ -99,18 +99,11 @@
   </resheader>
   <data name="Advanced" xml:space="preserve">
 		<value>Advanced</value>
-		<comment>Advanced</comment>
-	</data>
-  <data name="Apply changes" xml:space="preserve">
-		<value>Apply changes</value>
-		<comment>Apply changes</comment>
 	</data>
   <data name="Export personal data" xml:space="preserve">
 		<value>Export personal data</value>
-		<comment>Export personal data</comment>
 	</data>
   <data name="Misc" xml:space="preserve">
 		<value>Misc</value>
-		<comment>Misc</comment>
 	</data>
 </root>

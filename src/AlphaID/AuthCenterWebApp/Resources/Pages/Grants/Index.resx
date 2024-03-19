@@ -99,38 +99,29 @@
   </resheader>
   <data name="API Grants" xml:space="preserve">
 		<value>API Grants</value>
-		<comment>API Grants</comment>
 	</data>
   <data name="Below is the list of applications you have given permission to and the resources they have access to." xml:space="preserve">
 		<value>Below is the list of applications you have given permission to and the resources they have access to.</value>
-		<comment>Below is the list of applications you have given permission to and the resources they have access to.</comment>
 	</data>
   <data name="Client Application Permissions" xml:space="preserve">
 		<value>Client Application Permissions</value>
-		<comment>Client Application Permissions</comment>
 	</data>
   <data name="Created" xml:space="preserve">
 		<value>Created</value>
-		<comment>Created</comment>
 	</data>
   <data name="Description" xml:space="preserve">
 		<value>Description</value>
-		<comment>Description</comment>
 	</data>
   <data name="Expires" xml:space="preserve">
 		<value>Expires</value>
-		<comment>Expires</comment>
 	</data>
   <data name="Identity Grants" xml:space="preserve">
 		<value>Identity Grants</value>
-		<comment>Identity Grants</comment>
 	</data>
   <data name="Revoke Access" xml:space="preserve">
 		<value>Revoke Access</value>
-		<comment>Revoke Access</comment>
 	</data>
   <data name="You have not given access to any applications" xml:space="preserve">
 		<value>You have not given access to any applications</value>
-		<comment>You have not given access to any applications</comment>
 	</data>
 </root>

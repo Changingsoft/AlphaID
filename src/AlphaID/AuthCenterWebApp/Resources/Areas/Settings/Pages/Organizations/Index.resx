@@ -99,24 +99,24 @@
   </resheader>
   <data name="Are you sure you want to leave from this organization?" xml:space="preserve">
 	  <value>Are you sure you want to leave from this organization?</value>
-	  <comment>Are you sure you want leave this organization?</comment>
   </data>
   <data name="Leave" xml:space="preserve">
 	  <value>Leave</value>
-	  <comment>Leave</comment>
   </data>
   <data name="Organizations" xml:space="preserve">
     <value>Organizations</value>
   </data>
   <data name="Owner" xml:space="preserve">
 	  <value>Owner</value>
-	  <comment>Owner</comment>
   </data>
   <data name="You are the owner of this organization." xml:space="preserve">
     <value>You are the owner of this organization.</value>
   </data>
   <data name="Your organizations" xml:space="preserve">
 	  <value>Your organizations</value>
-	  <comment>Your organizations</comment>
+  </data>
+  <data name="New organization" xml:space="preserve">
+	  <value>New organization</value>
+	  <comment>New organization</comment>
   </data>
 </root>

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace AlphaIdPlatform.Platform;
+﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
 /// ID card recognize exception.
@@ -26,12 +24,4 @@ public class ChineseIdCardOcrException : Exception
     /// <param name="inner"></param>
     public ChineseIdCardOcrException(string message, Exception inner) : base(message, inner) { }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected ChineseIdCardOcrException(
-      SerializationInfo info,
-      StreamingContext context) : base(info, context) { }
 }

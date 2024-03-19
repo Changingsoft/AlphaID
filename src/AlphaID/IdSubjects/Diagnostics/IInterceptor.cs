@@ -8,6 +8,4 @@
 /// 拦截器可以用来查看、更改或取消 Alpha ID 执行的操作。
 /// </para>
 /// </remarks>
-public interface IInterceptor
-{
-}
+public interface IInterceptor;

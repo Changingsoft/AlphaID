@@ -5,15 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 {
-    public class FapiaoModel : PageModel
+    public class FapiaoModel(OrganizationManager organizationManager) : PageModel
     {
-        private readonly OrganizationManager organizationManager;
-
-        public FapiaoModel(OrganizationManager organizationManager)
-        {
-            this.organizationManager = organizationManager;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
@@ -21,7 +14,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public IActionResult OnGet(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -44,7 +37,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public async Task<IActionResult> OnPostSaveAsync(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -73,19 +66,19 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
                 organization.Fapiao.Account = this.Input.Account;
             }
 
-            this.Result = await this.organizationManager.UpdateAsync(organization);
+            this.Result = await organizationManager.UpdateAsync(organization);
             return this.Page();
         }
 
         public async Task<IActionResult> OnPostClearAsync(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
 
             organization.Fapiao = null;
-            this.Result = await this.organizationManager.UpdateAsync(organization);
+            this.Result = await organizationManager.UpdateAsync(organization);
             this.Input = default!;
             return this.Page();
         }

@@ -120,4 +120,10 @@
   <data name="API Resources" xml:space="preserve">
     <value>API资源</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="Create API resource" xml:space="preserve">
+    <value>创建API资源</value>
+  </data>
 </root>

@@ -4,19 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members;
 
-public class IndexModel : PageModel
+public class IndexModel(OrganizationManager manager, NaturalPersonManager personManager, OrganizationMemberManager memberManager) : PageModel
 {
-    private readonly OrganizationManager organizationManager;
-    private readonly NaturalPersonManager personManager;
-    private readonly OrganizationMemberManager memberManager;
-
-    public IndexModel(OrganizationManager manager, NaturalPersonManager personManager, OrganizationMemberManager memberManager)
-    {
-        this.organizationManager = manager;
-        this.personManager = personManager;
-        this.memberManager = memberManager;
-    }
-
     public GenericOrganization Organization { get; set; } = default!;
 
     public IEnumerable<OrganizationMember> Members { get; set; } = default!;
@@ -36,33 +25,37 @@ public class IndexModel : PageModel
 
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
-    public string PersonId { get; set; } = default!;
+    public string UserName { get; set; } = default!;
+
+    [BindProperty]
+    [Display(Name = "MembershipVisibility")]
+    public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Public;
 
     public IdOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var org = await this.organizationManager.FindByIdAsync(anchor);
+        var org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
-        this.Members = await this.memberManager.GetMembersAsync(org);
+        this.Members = await memberManager.GetMembersAsync(org);
 
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostAddMemberAsync(string anchor)
     {
-        var org = await this.organizationManager.FindByIdAsync(anchor);
+        var org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
-        this.Members = await this.memberManager.GetMembersAsync(org);
+        this.Members = await memberManager.GetMembersAsync(org);
 
-        var person = await this.personManager.FindByIdAsync(this.PersonId);
+        var person = await personManager.FindByNameAsync(this.UserName);
         if (person == null)
         {
-            this.ModelState.AddModelError(nameof(this.PersonId), "找不到人员");
+            this.ModelState.AddModelError(nameof(this.UserName), "找不到人员");
             return this.Page();
         }
 
@@ -71,9 +64,10 @@ public class IndexModel : PageModel
             Title = this.Title,
             Department = this.Department,
             Remark = this.Remark,
+            Visibility = this.Visibility,
         };
 
-        var result = await this.memberManager.CreateAsync(member);
+        var result = await memberManager.CreateAsync(member);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -87,20 +81,20 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
     {
-        var org = await this.organizationManager.FindByIdAsync(anchor);
+        var org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
-        this.Members = await this.memberManager.GetMembersAsync(org);
+        this.Members = await memberManager.GetMembersAsync(org);
 
         var member = this.Members.FirstOrDefault(m => m.PersonId == personId);
         if (member == null)
             return this.Page();
 
-        this.Result = await this.memberManager.LeaveOrganizationAsync(member);
+        this.Result = await memberManager.LeaveOrganizationAsync(member);
         if (this.Result.Succeeded)
         {
-            this.Members = await this.memberManager.GetMembersAsync(org);
+            this.Members = await memberManager.GetMembersAsync(org);
         }
         return this.Page();
     }

@@ -99,46 +99,35 @@
   </resheader>
   <data name="Advanced" xml:space="preserve">
 		<value>Advanced</value>
-		<comment>Advanced</comment>
 	</data>
   <data name="Callbacks" xml:space="preserve">
 		<value>Callbacks</value>
-		<comment>Callbacks</comment>
 	</data>
   <data name="Claims" xml:space="preserve">
 		<value>Claims</value>
-		<comment>Claims</comment>
 	</data>
   <data name="Clients" xml:space="preserve">
 		<value>Clients</value>
-		<comment>Clients</comment>
 	</data>
   <data name="Consent" xml:space="preserve">
 		<value>Consent</value>
-		<comment>Consent</comment>
 	</data>
   <data name="CORS" xml:space="preserve">
 		<value>CORS</value>
-		<comment>CORS</comment>
 	</data>
   <data name="Grant types" xml:space="preserve">
 		<value>Grant types</value>
-		<comment>Grant types</comment>
 	</data>
   <data name="IdP Restriction" xml:space="preserve">
 		<value>IdP Restriction</value>
-		<comment>IdP Restriction</comment>
 	</data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
-		<comment>Overview</comment>
 	</data>
   <data name="Scopes" xml:space="preserve">
 		<value>Scopes</value>
-		<comment>Scopes</comment>
 	</data>
   <data name="Secrets" xml:space="preserve">
 		<value>Secrets</value>
-		<comment>Secrets</comment>
 	</data>
 </root>

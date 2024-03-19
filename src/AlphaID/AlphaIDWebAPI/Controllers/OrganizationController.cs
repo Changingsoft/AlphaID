@@ -1,4 +1,4 @@
-﻿using AlphaIdWebAPI.Models;
+﻿using AlphaIdPlatform.Security;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,24 +8,17 @@ namespace AlphaIdWebAPI.Controllers;
 /// <summary>
 /// 组织信息。
 /// </summary>
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="organizationStore"></param>
+/// <param name="memberManager"></param>
+/// <param name="personManager"></param>
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class OrganizationController : ControllerBase
+public class OrganizationController(IOrganizationStore organizationStore, OrganizationMemberManager memberManager, NaturalPersonManager personManager) : ControllerBase
 {
-    private readonly IOrganizationStore organizationStore;
-    private readonly OrganizationMemberManager memberManager;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="organizationStore"></param>
-    /// <param name="memberManager"></param>
-    public OrganizationController(IOrganizationStore organizationStore, OrganizationMemberManager memberManager)
-    {
-        this.organizationStore = organizationStore;
-        this.memberManager = memberManager;
-    }
 
     /// <summary>
     /// 获取组织信息。
@@ -35,7 +28,7 @@ public class OrganizationController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<OrganizationModel>> GetAsync(string id)
     {
-        var org = await this.organizationStore.FindByIdAsync(id);
+        var org = await organizationStore.FindByIdAsync(id);
         return org == null ? this.NotFound() : new OrganizationModel(org);
     }
 
@@ -45,14 +38,44 @@ public class OrganizationController : ControllerBase
     /// <param name="id">组织的SubjectId</param>
     /// <returns></returns>
     [HttpGet("{id}/Members")]
-    public async Task<IEnumerable<OrganizationMemberModel>> GetMembersAsync(string id)
+    public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
     {
-        var org = await this.organizationStore.FindByIdAsync(id);
-        if (org == null)
-            return Enumerable.Empty<OrganizationMemberModel>();
-        var members = await this.memberManager.GetMembersAsync(org);
+        NaturalPerson? visitor = default;
+        var visitorSubjectId = this.User.SubjectId();
+        if (visitorSubjectId != null)
+            visitor = await personManager.FindByIdAsync(this.User.SubjectId()!);
 
-        return from member in members select new OrganizationMemberModel(member);
+        //todo 从令牌确定访问者。
+        var org = await organizationStore.FindByIdAsync(id);
+        if (org == null)
+            return [];
+        var members = await memberManager.GetVisibleMembersAsync(org, visitor);
+
+        return from member in members select new MemberModel(member);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Name"></param>
+    /// <param name="UserName"></param>
+    /// <param name="Title"></param>
+    /// <param name="Department"></param>
+    /// <param name="Remarks"></param>
+    public record MemberModel(
+        string Name,
+        string UserName,
+        string? Title,
+        string? Department,
+        string? Remarks)
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="member"></param>
+        public MemberModel(OrganizationMember member)
+            : this(member.Person.PersonName.FullName, member.Person.UserName, member.Title, member.Department, member.Remark)
+        { }
     }
 
     /// <summary>
@@ -61,15 +84,44 @@ public class OrganizationController : ControllerBase
     /// <remarks>
     /// 支持通过登记的统一社会信用代码、组织机构代码、组织名称的一部分进行查找。
     /// </remarks>
-    /// <param name="keywords">关键字</param>
+    /// <param name="q">关键字</param>
     /// <returns></returns>
-    [HttpGet("Search/{keywords}")]
+    [HttpGet("Suggestions")]
     [AllowAnonymous]
-    public OrganizationSearchResult Search(string keywords)
+    public IEnumerable<OrganizationModel> Search(string q)
     {
-        var searchResults = this.organizationStore.Organizations.Where(p => p.Name.Contains(keywords) && p.Enabled);
+        var searchResults = organizationStore.Organizations.Where(p => p.Name.Contains(q) && p.Enabled);
 
-        var result = new OrganizationSearchResult(searchResults.Take(50).Select(p => new OrganizationModel(p)), searchResults.Count() > 50);
+        var result = searchResults.Take(50).Select(p => new OrganizationModel(p));
         return result;
     }
+
+    /// <summary>
+    /// GenericOrganization.
+    /// </summary>
+    /// <param name="SubjectId">Id</param>
+    /// <param name="Name">名称。</param>
+    /// <param name="Domicile">住所。</param>
+    /// <param name="Contact">联系方式。</param>
+    /// <param name="LegalPersonName">组织的负责人或代表人名称。</param>
+    public record OrganizationModel(string SubjectId,
+                                    string Name,
+                                    string? Domicile,
+                                    string? Contact,
+                                    string? LegalPersonName)
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="organization"></param>
+        public OrganizationModel(GenericOrganization organization)
+            : this(organization.Id,
+                   organization.Name,
+                   organization.Domicile,
+                   organization.Contact,
+                   organization.Representative)
+        { }
+
+    }
+
 }

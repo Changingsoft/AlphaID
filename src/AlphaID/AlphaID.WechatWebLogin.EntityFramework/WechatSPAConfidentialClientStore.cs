@@ -3,37 +3,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.WechatWebLogin.EntityFramework;
 
-public class WechatSpaConfidentialClientStore : IWechatAppClientStore
+public class WechatSpaConfidentialClientStore(WechatWebLoginDbContext dbContext) : IWechatAppClientStore
 {
-    private readonly WechatWebLoginDbContext dbContext;
-
-    public WechatSpaConfidentialClientStore(WechatWebLoginDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
-    public IQueryable<WechatAppClient> Clients => this.dbContext.WechatAppClients;
+    public IQueryable<WechatAppClient> Clients => dbContext.WechatAppClients;
 
     public async Task CreateAsync(WechatAppClient item)
     {
-        this.dbContext.WechatAppClients.Add(item);
-        _ = await this.dbContext.SaveChangesAsync();
+        dbContext.WechatAppClients.Add(item);
+        _ = await dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(WechatAppClient item)
     {
-        this.dbContext.WechatAppClients.Remove(item);
-        _ = await this.dbContext.SaveChangesAsync();
+        dbContext.WechatAppClients.Remove(item);
+        _ = await dbContext.SaveChangesAsync();
     }
 
     public async Task<WechatAppClient?> FindAsync(string clientId)
     {
-        return await this.dbContext.WechatAppClients.FindAsync(clientId);
+        return await dbContext.WechatAppClients.FindAsync(clientId);
     }
 
     public async Task UpdateAsync(WechatAppClient item)
     {
-        this.dbContext.Entry(item).State = EntityState.Modified;
-        _ = await this.dbContext.SaveChangesAsync();
+        dbContext.Entry(item).State = EntityState.Modified;
+        _ = await dbContext.SaveChangesAsync();
     }
 }

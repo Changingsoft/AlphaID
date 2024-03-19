@@ -99,34 +99,26 @@
   </resheader>
   <data name="Domicile" xml:space="preserve">
 		<value>Domicile</value>
-		<comment>Domicile</comment>
 	</data>
   <data name="Last 10 updates" xml:space="preserve">
 		<value>Last 10 updates</value>
-		<comment>Last 10 updates</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="New organization" xml:space="preserve">
 		<value>New organization</value>
-		<comment>New organization</comment>
 	</data>
   <data name="Organizations" xml:space="preserve">
 		<value>Organizations</value>
-		<comment>Organizations</comment>
 	</data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
-		<comment>Overview</comment>
 	</data>
   <data name="Representative" xml:space="preserve">
 		<value>Representative</value>
-		<comment>Representative</comment>
 	</data>
   <data name="USCI" xml:space="preserve">
 		<value>USCI</value>
-		<comment>USCI</comment>
 	</data>
 </root>

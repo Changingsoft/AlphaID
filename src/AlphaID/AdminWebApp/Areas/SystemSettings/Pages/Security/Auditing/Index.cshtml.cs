@@ -1,21 +1,12 @@
 using IdSubjects.SecurityAuditing;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security.Auditing
 {
-    public class IndexModel : PageModel
+    public class IndexModel(AuditLogViewer auditLogViewer) : PageModel
     {
-        readonly AuditLogViewer auditLogViewer;
-
-        public IndexModel(AuditLogViewer auditLogViewer)
-        {
-            this.auditLogViewer = auditLogViewer;
-        }
-
         public int Count { get; set; }
 
-        public IEnumerable<AuditLogEntry> Log { get; set; } = Enumerable.Empty<AuditLogEntry>();
+        public IEnumerable<AuditLogEntry> Log { get; set; } = [];
 
         public void OnGet(int? s = null, int? l = null)
         {
@@ -24,8 +15,8 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.Security.Auditing
             if(take > 1000)
                 take = 1000;
 
-            this.Count = this.auditLogViewer.Log.Count();
-            this.Log = this.auditLogViewer.Log.Skip(skip).Take(take);
+            this.Count = auditLogViewer.Log.Count();
+            this.Log = auditLogViewer.Log.Skip(skip).Take(take);
         }
     }
 }

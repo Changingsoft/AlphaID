@@ -2,19 +2,12 @@
 
 namespace AlphaId.DirectoryLogon.EntityFramework;
 
-public class QueryableLogonAccountStore : IQueryableLogonAccountStore
+public class QueryableLogonAccountStore(DirectoryLogonDbContext dbContext) : IQueryableLogonAccountStore
 {
-    private readonly DirectoryLogonDbContext dbContext;
+    public IQueryable<DirectoryAccount> LogonAccounts => dbContext.LogonAccounts;
 
-    public QueryableLogonAccountStore(DirectoryLogonDbContext dbContext)
+    public async Task<DirectoryAccount?> FindByLogonIdAsync(string logonId)
     {
-        this.dbContext = dbContext;
-    }
-
-    public IQueryable<LogonAccount> LogonAccounts => this.dbContext.LogonAccounts;
-
-    public async Task<LogonAccount?> FindByLogonIdAsync(string logonId)
-    {
-        return await this.dbContext.LogonAccounts.FindAsync(logonId);
+        return await dbContext.LogonAccounts.FindAsync(logonId);
     }
 }

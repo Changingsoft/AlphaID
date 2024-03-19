@@ -141,6 +141,9 @@
   <data name="New identity resource" xml:space="preserve">
     <value>新标识资源</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>必须的</value>
+  </data>
   <data name="Show in discovery doc" xml:space="preserve">
     <value>在发现文档中显示</value>
   </data>

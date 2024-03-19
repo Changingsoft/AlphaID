@@ -7,15 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class GrantTypesModel : PageModel
+public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public GrantTypesModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Duende.IdentityServer.EntityFramework.Entities.Client Data { get; set; } = default!;
 
     [BindProperty]
@@ -25,7 +18,7 @@ public class GrantTypesModel : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -35,9 +28,9 @@ public class GrantTypesModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPost(int anchor)
+    public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -76,21 +69,21 @@ public class GrantTypesModel : PageModel
                 }
             }
         }
-        this.dbContext.Clients.Update(this.Data);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Data);
+        await dbContext.SaveChangesAsync();
         this.OperationMessage = "操作已成功！";
         return this.Page();
     }
 
-    private static readonly List<GrantTypeItem> GrantTypes = new()
-    {
+    private static readonly List<GrantTypeItem> GrantTypes =
+    [
         new GrantTypeItem(GrantType.Implicit, "隐式"),
         new GrantTypeItem(GrantType.AuthorizationCode, "授权码"),
         new GrantTypeItem(GrantType.ClientCredentials, "客户端凭证"),
         new GrantTypeItem(GrantType.ResourceOwnerPassword, "资源所有者密码"),
         new GrantTypeItem(GrantType.DeviceFlow, "设备码"),
         new GrantTypeItem(GrantType.Hybrid, "混合"),
-    };
+    ];
 
     /// <summary>
     /// 

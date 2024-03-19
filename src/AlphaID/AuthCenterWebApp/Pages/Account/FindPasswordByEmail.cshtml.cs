@@ -13,18 +13,9 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class FindPasswordByEmailModel : PageModel
+public class FindPasswordByEmailModel(IEmailSender emailSender, NaturalPersonManager userManager, IOptions<ProductInfo> production) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly IEmailSender emailSender;
-    private readonly ProductInfo production;
-
-    public FindPasswordByEmailModel(IEmailSender emailSender, NaturalPersonManager userManager, IOptions<ProductInfo> production)
-    {
-        this.emailSender = emailSender;
-        this.userManager = userManager;
-        this.production = production.Value;
-    }
+    private readonly ProductInfo production = production.Value;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -37,8 +28,8 @@ public class FindPasswordByEmailModel : PageModel
     {
         if (this.ModelState.IsValid)
         {
-            var user = await this.userManager.FindByEmailAsync(this.Input.Email);
-            if (user == null || !await this.userManager.IsEmailConfirmedAsync(user))
+            var user = await userManager.FindByEmailAsync(this.Input.Email);
+            if (user == null || !await userManager.IsEmailConfirmedAsync(user))
             {
                 // Don't reveal that the user does not exist or is not confirmed
                 return this.RedirectToPage("FindPasswordByEmailConfirmation");
@@ -46,7 +37,7 @@ public class FindPasswordByEmailModel : PageModel
 
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
-            var code = await this.userManager.GeneratePasswordResetTokenAsync(user);
+            var code = await userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = this.Url.Page(
                 "/Account/ResetPassword",
@@ -54,7 +45,7 @@ public class FindPasswordByEmailModel : PageModel
                 values: new { code },
                 protocol: this.Request.Scheme);
 
-            await this.emailSender.SendEmailAsync(
+            await emailSender.SendEmailAsync(
                 this.Input.Email,
                 $"重置{this.production.Name}账户密码",
                 $"<p>您已请求通过邮件重设{this.production.Name}密码。请点击<a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>这里</a>，开始重设密码。</p>" +

@@ -1,11 +1,12 @@
 ﻿@page
 @model AdvancedModel
 @{
+    ViewBag.Title = L["Advanced"];
 }
-<h3>Advanced</h3>
+<h3>@L["Advanced"]</h3>
 
 <form method="post">
-    <h4>Basics</h4>
+    <h4>@L["Basics"]</h4>
     <div class="form-check">
         <input asp-for="Input.AllowAccessTokensViaBrowser" class="form-check-input" />
         <label asp-for="Input.AllowAccessTokensViaBrowser" class="form-check-label"></label>
@@ -17,7 +18,7 @@
         <span asp-description-for="Input.RequireRequestObject" class="form-check-description"></span>
     </div>
 
-    <h4>Authentication / Session management</h4>
+    <h4>@L["Authentication / Session management"]</h4>
     <div class="mb-3">
         <label asp-for="Input.FrontChannelLogoutUri" class="form-label"></label>
         <input asp-for="Input.FrontChannelLogoutUri" class="form-control" />
@@ -57,7 +58,7 @@
         <span asp-description-for="Input.CoordinateLifetimeWithUserSession" class="form-check-description"></span>
     </div>
 
-    <h4>Token</h4>
+    <h4>@L["Token"]</h4>
     <div class="mb-3">
         <label asp-for="Input.IdentityTokenLifetime" class="form-label"></label>
         <input asp-for="Input.IdentityTokenLifetime" class="form-control" />
@@ -87,7 +88,6 @@
         <label asp-for="Input.IncludeJwtId" class="form-check-label"></label>
         <span asp-description-for="Input.IncludeJwtId" class="form-check-description"></span>
     </div>
-
     <div class="form-check">
         <input asp-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-input" />
         <label asp-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-label"></label>
@@ -106,7 +106,7 @@
         <span asp-validation-for="Input.PairWiseSubjectSalt"></span>
     </div>
 
-    <h4>Refresh Token</h4>
+    <h4>@L["Refresh Token"]</h4>
     <div class="mb-3">
         <label asp-for="Input.AbsoluteRefreshTokenLifetime" class="form-label"></label>
         <input asp-for="Input.AbsoluteRefreshTokenLifetime" class="form-control" />
@@ -137,7 +137,7 @@
         <span asp-description-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-description"></span>
     </div>
 
-    <h4>Consent Screen</h4>
+    <h4>@L["Consent Screen"]</h4>
     <div class="mb-3">
         <label asp-for="Input.ConsentLifetime" class="form-label"></label>
         <input asp-for="Input.ConsentLifetime" class="form-control" />
@@ -145,7 +145,7 @@
         <span asp-validation-for="Input.ConsentLifetime"></span>
     </div>
 
-    <h4>Device flow</h4>
+    <h4>@L["Device flow"]</h4>
     <div class="mb-3">
         <label asp-for="Input.UserCodeType" class="form-label"></label>
         <input asp-for="Input.UserCodeType" class="form-control" />
@@ -159,7 +159,7 @@
         <span asp-validation-for="Input.DeviceCodeLifetime"></span>
     </div>
 
-    <h4>CIBA</h4>
+    <h4>@L["CIBA"]</h4>
     <div class="mb-3">
         <label asp-for="Input.CibaLifetime" class="form-label"></label>
         <input asp-for="Input.CibaLifetime" class="form-control" />
@@ -173,7 +173,7 @@
         <span asp-validation-for="Input.PollingInterval"></span>
     </div>
 
-    <h4>DPoP</h4>
+    <h4>@L["DPoP"]</h4>
     <div class="form-check">
         <input asp-for="Input.RequireDPoP" class="form-check-input" />
         <label asp-for="Input.RequireDPoP" class="form-check-label"></label>
@@ -196,7 +196,7 @@
         <span asp-validation-for="Input.DPoPClockSkew"></span>
     </div>
 
-    <h4>Third-Party Initiated Login</h4>
+    <h4>@L["Third-Party Initiated Login"]</h4>
     <div class="mb-3">
         <label asp-for="Input.InitiateLoginUri" class="form-label"></label>
         <input asp-for="Input.InitiateLoginUri" class="form-control" />
@@ -205,17 +205,17 @@
     </div>
 
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@L["Apply changes"]</button>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
 </form>
 
 
-<h4>Properties</h4>
+<h4>@L["Properties"]</h4>
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
             <tr>
-                <td>Key</td>
-                <td>Value</td>
+                <td>@L["Key"]</td>
+                <td>@L["Value"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -225,7 +225,7 @@
                 <tr>
                     <td>@prop.Key</td>
                     <td>@prop.Value</td>
-                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId", value="@prop.Id">Remove</button></td>
+                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId" , value="@prop.Id">@L["Remove"]</button></td>
                 </tr>
             }
         </tbody>
@@ -234,7 +234,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h4>Add property</h4>
+        <h4>@L["Add property"]</h4>
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
@@ -249,7 +249,7 @@
                 <span asp-validation-for="AddProperty.Value" class="text-danger"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">@L["Add"]</button>
         </form>
     </div>
 </div>

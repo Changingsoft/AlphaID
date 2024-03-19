@@ -101,7 +101,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Remark")
+                    b.Property<string>("Remarks")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -133,7 +133,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.Property<bool?>("Accepted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("AcceptedAt")
+                    b.Property<DateTimeOffset?>("AuditTime")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Auditor")

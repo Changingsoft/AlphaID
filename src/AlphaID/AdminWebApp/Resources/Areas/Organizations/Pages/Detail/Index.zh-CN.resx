@@ -153,6 +153,9 @@
   <data name="Established At" xml:space="preserve">
     <value>成立日期</value>
   </data>
+  <data name="Fapiao Info" xml:space="preserve">
+    <value>发票信息</value>
+  </data>
   <data name="Invoice title" xml:space="preserve">
     <value>发票</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>
+  </data>
+  <data name="Not specified." xml:space="preserve">
+    <value>未指定。</value>
   </data>
   <data name="Overview" xml:space="preserve">
     <value>概览</value>
@@ -171,6 +177,9 @@
   <data name="Status" xml:space="preserve">
     <value>状态</value>
   </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+    <value>纳税人识别号</value>
+  </data>
   <data name="USCI" xml:space="preserve">
     <value>统一社会信用代码</value>
   </data>
@@ -179,14 +188,5 @@
   </data>
   <data name="Website" xml:space="preserve">
     <value>网站</value>
-  </data>
-  <data name="Not specified." xml:space="preserve">
-    <value>未指定。</value>
-  </data>
-  <data name="Fapiao Info" xml:space="preserve">
-    <value>发票信息</value>
-  </data>
-  <data name="Taxpayer ID" xml:space="preserve">
-    <value>纳税人识别号</value>
   </data>
 </root>

@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "Tabler/_Page";
+}
+@section head
+{
+    @await RenderSectionAsync("head", false)
+}
+
+@await RenderSectionAsync("Header", false)
+<div class="page-wrapper">
+    <div class="page-header">
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
+    <div class="page-body">
+        @RenderBody()
+    </div>
+    <footer class="footer footer-transparent d-print-none">
+        @await RenderSectionAsync("PageFooter", false)
+    </footer>
+</div>
+
+@section PageComponents
+{
+    @await RenderSectionAsync("PageComponents", false)
+}
+@section Scripts
+{
+    @await RenderSectionAsync("Scripts", false)
+}

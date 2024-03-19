@@ -129,4 +129,10 @@
   <data name="Your personal account" xml:space="preserve">
     <value>您的个人账户</value>
   </data>
+  <data name="Organizations" xml:space="preserve">
+	  <value>组织</value>
+  </data>
+  <data name="Real-name Authentication" xml:space="preserve">
+	  <value>实名认证</value>
+  </data>
 </root>

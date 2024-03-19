@@ -3,19 +3,12 @@
 /// <summary>
 /// UserInRole Manager.
 /// </summary>
-public class UserInRoleManager
+/// <remarks>
+/// Ctor.
+/// </remarks>
+/// <param name="store"></param>
+public class UserInRoleManager(IUserInRoleStore store)
 {
-    private readonly IUserInRoleStore store;
-
-
-    /// <summary>
-    /// Ctor.
-    /// </summary>
-    /// <param name="store"></param>
-    public UserInRoleManager(IUserInRoleStore store)
-    {
-        this.store = store;
-    }
 
     /// <summary>
     /// Gets roles of user.
@@ -24,7 +17,7 @@ public class UserInRoleManager
     /// <returns></returns>
     public IEnumerable<string> GetRoles(string userId)
     {
-        return from userInRole in this.store.UserInRoles
+        return from userInRole in store.UserInRoles
                where userInRole.UserId == userId
                select userInRole.RoleName;
     }
@@ -36,7 +29,7 @@ public class UserInRoleManager
     /// <returns></returns>
     public IEnumerable<UserInRole> GetUserInRoles(string roleName)
     {
-        return from userInRole in this.store.UserInRoles
+        return from userInRole in store.UserInRoles
                where userInRole.RoleName == roleName
                select userInRole;
     }
@@ -46,19 +39,17 @@ public class UserInRoleManager
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="roleName"></param>
-    /// <param name="userName"></param>
-    /// <param name="userSearchHint"></param>
     /// <returns></returns>
-    public async Task AddRole(string userId, string roleName, string userName, string userSearchHint)
+    public Task AddRole(string userId, string roleName)
     {
+        if (store.UserInRoles.Any(p => p.UserId == userId && p.RoleName == roleName))
+            return Task.CompletedTask;
         UserInRole userInRole = new()
         {
             RoleName = roleName,
             UserId = userId,
-            UserName = userName,
-            UserSearchHint = userSearchHint,
         };
-        await this.store.CreateAsync(userInRole);
+        return store.CreateAsync(userInRole);
     }
 
     /// <summary>
@@ -69,8 +60,8 @@ public class UserInRoleManager
     /// <returns></returns>
     public async Task RemoveRole(string userId, string roleName)
     {
-        var userInRole = this.store.UserInRoles.FirstOrDefault(p => p.UserId == userId && p.RoleName == roleName);
+        var userInRole = store.UserInRoles.FirstOrDefault(p => p.UserId == userId && p.RoleName == roleName);
         if (userInRole != null)
-            await this.store.DeleteAsync(userInRole);
+            await store.DeleteAsync(userInRole);
     }
 }

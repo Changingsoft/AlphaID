@@ -6,7 +6,7 @@
 public static class PersonalDataProtectionExtensions
 {
     /// <summary>
-    /// 获取移动电话号码的后4位。
+    /// 获取移动电话号码后4位。
     /// </summary>
     /// <param name="mobile"></param>
     /// <returns></returns>

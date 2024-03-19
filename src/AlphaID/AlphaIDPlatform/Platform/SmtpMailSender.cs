@@ -8,21 +8,14 @@ namespace AlphaIdPlatform.Platform;
 /// <summary>
 /// Email Sender.
 /// </summary>
-public class SmtpMailSender : IEmailSender
+/// <remarks>
+/// Initialize Email sender via options and logger.
+/// </remarks>
+/// <param name="options">Options to configure this mail sender.</param>
+/// <param name="logger">Logger for logging of this mail sender.</param>
+public class SmtpMailSender(IOptions<SmtpMailSenderOptions> options, ILogger<SmtpMailSender>? logger) : IEmailSender
 {
-    private readonly SmtpMailSenderOptions options;
-    private readonly ILogger<SmtpMailSender>? logger;
-
-    /// <summary>
-    /// Initialize Email sender via options and logger.
-    /// </summary>
-    /// <param name="options">Options to configure this mail sender.</param>
-    /// <param name="logger">Logger for logging of this mail sender.</param>
-    public SmtpMailSender(IOptions<SmtpMailSenderOptions> options, ILogger<SmtpMailSender>? logger)
-    {
-        this.options = options.Value;
-        this.logger = logger;
-    }
+    private readonly SmtpMailSenderOptions options = options.Value;
 
     /// <summary>
     /// Send email to specified recipient with subject and html message body.
@@ -56,11 +49,11 @@ public class SmtpMailSender : IEmailSender
         try
         {
             await smtpClient.SendMailAsync(message);
-            this.logger?.LogInformation("已向{email}发送了标题为'{subject}'的邮件。", to.Address, subject);
+            logger?.LogInformation("已向{email}发送了标题为'{subject}'的邮件。", to.Address, subject);
         }
         catch (Exception ex)
         {
-            this.logger?.LogError(ex, "发送邮件时发生异常，消息是{message}", ex.Message);
+            logger?.LogError(ex, "发送邮件时发生异常，消息是{message}", ex.Message);
             throw;
         }
 

@@ -2,15 +2,15 @@
 @model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.AdvancedModel
 @{
 }
-<h2>Advanced</h2>
+<h2>@L["Advanced"]</h2>
 
-<h3>Properties</h3>
+<h3>@L["Properties"]</h3>
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
             <tr>
-                <td>Key</td>
-                <td>Value</td>
+                <td>@L["Key"]</td>
+                <td>@L["Value"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -20,7 +20,7 @@
                 <tr>
                     <td>@prop.Key</td>
                     <td>@prop.Value</td>
-                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId" value="@prop.Id" onclick="return confirm('Are you sure you want remove it?');">Remove</button></td>
+                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId" value="@prop.Id" onclick="return confirm('@L["Are you sure you want remove it?"]');">@L["Remove"]</button></td>
                 </tr>
             }
         </tbody>
@@ -29,7 +29,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3>Add property</h3>
+        <h3>@L["Add property"]</h3>
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
@@ -44,7 +44,7 @@
                 <span asp-validation-for="NewValue"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">@L["Add"]</button>
         </form>
     </div>
 </div>

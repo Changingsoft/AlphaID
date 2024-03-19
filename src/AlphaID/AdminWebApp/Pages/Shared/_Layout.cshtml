@@ -1,94 +1,35 @@
 ﻿@{
-    Layout = "_LayoutBase";
+    Layout = "Tabler/_PageWrapper";
 }
 
-@section Heads
-    {
-    @await RenderSectionAsync("Heads", false)
+@section head
+{
+    @await RenderSectionAsync("head", false)
 }
 
-@section Navbar
-    {
-    <header class="navbar-expand-md">
-        <div class="collapse navbar-collapse" id="navbar-menu">
-            <div class="navbar">
-                <div class="container-xl">
-                    <ul class="navbar-nav">
-                        <li class="nav-item" asp-path="/" asp-match-prefix="false">
-                            <a class="nav-link" asp-area="" asp-page="/Index">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-home-2"></use>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @L["Home"]
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item" asp-path="/People">
-                            <a class="nav-link" asp-area="People" asp-page="/Index">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-user"></use>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @L["People"]
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item" asp-path="/RealName">
-                            <a class="nav-link" asp-area="RealName" asp-page="/Index">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-user"></use>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @L["Real Name"]
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item" asp-path="/Organizations">
-                            <a class="nav-link" asp-area="Organizations" asp-page="/Index">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-building"></use>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @L["Organizations"]
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect">
-                            <a class="nav-link" asp-area="OpenIDConnect" asp-page="/Index">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    @* <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-affiliate"></use>
-                                </svg> *@
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" x="0px" y="0px" width="24" height="24" viewBox="0 0 32 32" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M 19 4 L 15 5.9375 L 15 25.625 C 9.855469 24.953125 6.9375 22.601563 6.9375 19.65625 C 6.9375 16.894531 9.921875 14.554688 14 13.8125 L 14 11.3125 C 7.722656 12.109375 3 15.542969 3 19.65625 C 3 23.949219 7.519531 27.472656 15 28.09375 L 19 26.21875 Z M 20 11.375 L 20 13.90625 C 21.3125 14.1875 22.503906 14.644531 23.5 15.21875 L 21.375 16.40625 L 29 18.0625 L 28.46875 12.4375 L 26.4375 13.5625 C 24.6875 12.5 22.46875 11.742188 20 11.375 Z"></path>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @L["OpenID Connect"]
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last"></div>
-                </div>
-            </div>
-        </div>
-    </header>
-    @await RenderSectionAsync("Navbar", false)
+@section Header
+{
+    @* 导航条 *@
+    <partial name="_DefaultTitleNavBarPartial" />
+    @await RenderSectionAsync("Header", false)
+}
+@section PageHeader
+{
+    <div class="container-xl">
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
 }
 
-@RenderBody()
+<div class="container-xl">
+    @RenderBody()
+</div>
 
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
 @section Scripts
-    {
+{
     @await RenderSectionAsync("Scripts", false)
 }

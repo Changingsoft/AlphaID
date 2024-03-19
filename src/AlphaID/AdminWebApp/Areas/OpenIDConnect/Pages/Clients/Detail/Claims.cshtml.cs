@@ -6,15 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class ClaimsModel : PageModel
+public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public ClaimsModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Client Data { get; set; } = default!;
 
     [BindProperty]
@@ -22,7 +15,7 @@ public class ClaimsModel : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -31,7 +24,7 @@ public class ClaimsModel : PageModel
 
     public async Task<IActionResult> OnPostAddClaimAsync(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -51,15 +44,15 @@ public class ClaimsModel : PageModel
             Type = this.Input.Type,
             Value = this.Input.Value,
         });
-        this.dbContext.Clients.Update(this.Data);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Data);
+        await dbContext.SaveChangesAsync();
 
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostRemoveClaimAsync(int anchor, int claimId)
     {
-        var data = this.dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.Claims).Include(p => p.PostLogoutRedirectUris).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -68,8 +61,8 @@ public class ClaimsModel : PageModel
         if (item != null)
         {
             this.Data.Claims.Remove(item);
-            this.dbContext.Clients.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.Clients.Update(this.Data);
+            await dbContext.SaveChangesAsync();
         }
         return this.Page();
     }
@@ -77,10 +70,12 @@ public class ClaimsModel : PageModel
     public class AddClaimModel
     {
         [Display(Name = "Type")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
         public string Type { get; set; } = default!;
 
-        [Display(Name = "Type")]
+        [Display(Name = "Value")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
         public string Value { get; set; } = default!;
     }

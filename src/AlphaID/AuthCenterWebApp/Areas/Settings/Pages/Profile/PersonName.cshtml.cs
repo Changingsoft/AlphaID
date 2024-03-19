@@ -7,30 +7,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 {
-    public class PersonNameModel : PageModel
+    public class PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager) : PageModel
     {
-        private readonly NaturalPersonManager personManager;
-        RealNameManager realNameManager;
-        public PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager)
-        {
-            this.personManager = personManager;
-            this.realNameManager = realNameManager;
-        }
-
         [BindProperty]
         public InputMode Input { get; set; } = default!;
 
         public IdentityResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var person = await this.personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(this.User);
             if (person == null)
             {
                 return this.NotFound();
             }
 
-            var hasRealName = this.realNameManager.GetAuthentications(person).Any();
+            var hasRealName = realNameManager.GetAuthentications(person).Any();
             if (hasRealName)
             {
                 this.Result = IdentityResult.Failed(new IdentityError() { Code = "Cannot change name after real-name authentication", Description = "You cannot change name because your has been passed real-name authentication." });
@@ -43,14 +35,13 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 GivenName = person.PersonName.GivenName,
                 PhoneticSurname = person.PhoneticSurname,
                 PhoneticGivenName = person.PhoneticGivenName,
-                NickName = person.NickName,
             };
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var person = await this.personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(this.User);
             if (person == null)
             {
                 return this.NotFound();
@@ -59,37 +50,32 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             person.PersonName = new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName);
             person.PhoneticSurname = this.Input.PhoneticSurname;
             person.PhoneticGivenName = this.Input.PhoneticGivenName;
-            person.NickName = this.Input.NickName;
 
-            this.Result = await this.personManager.UpdateAsync(person);
+            this.Result = await personManager.UpdateAsync(person);
             return this.Page();
         }
 
         public class InputMode
         {
             [Display(Name = "Surname")]
-            [StringLength(10)]
+            [StringLength(10, ErrorMessage = "Validate_StringLength")]
             public string? Surname { get; set; }
 
-            [Display(Name = "MiddleName")]
-            [StringLength(10)]
+            [Display(Name = "Middle name")]
+            [StringLength(10, ErrorMessage = "Validate_StringLength")]
             public string? MiddleName { get; set; }
 
-            [Display(Name = "GivenName")]
-            [StringLength(10)]
+            [Display(Name = "Given name")]
+            [StringLength(10, ErrorMessage = "Validate_StringLength")]
             public string? GivenName { get; set; }
 
-            [Display(Name = "PhoneticSurname")]
-            [StringLength(10)]
+            [Display(Name = "Phonetic surname")]
+            [StringLength(10, ErrorMessage = "Validate_StringLength")]
             public string? PhoneticSurname { get; set; }
 
-            [Display(Name = "PhoneticGivenName")]
-            [StringLength(10)]
+            [Display(Name = "Phonetic given name")]
+            [StringLength(10, ErrorMessage = "Validate_StringLength")]
             public string? PhoneticGivenName { get; set; }
-
-            [Display(Name = "NickName")]
-            [StringLength(10)]
-            public string? NickName { get; set; }
         }
     }
 }

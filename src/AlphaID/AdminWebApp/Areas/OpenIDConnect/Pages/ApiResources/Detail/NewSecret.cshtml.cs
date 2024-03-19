@@ -6,21 +6,14 @@ using System.Security.Cryptography;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
-    public class NewSecretModel : PageModel
+    public class NewSecretModel(ConfigurationDbContext dbContext) : PageModel
     {
-        private readonly ConfigurationDbContext dbContext;
-
-        public NewSecretModel(ConfigurationDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
         public IActionResult OnGet(int id)
         {
-            var data = this.dbContext.ApiResources.FirstOrDefault(p => p.Id == id);
+            var data = dbContext.ApiResources.FirstOrDefault(p => p.Id == id);
             if (data == null)
                 return this.NotFound();
 
@@ -34,7 +27,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            var data = this.dbContext.ApiResources.Include(p => p.Secrets).FirstOrDefault(p => p.Id == id);
+            var data = dbContext.ApiResources.Include(p => p.Secrets).FirstOrDefault(p => p.Id == id);
             if (data == null)
                 return this.NotFound();
 
@@ -49,8 +42,8 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 Type = "SharedSecret",
                 Created = DateTime.UtcNow,
             });
-            this.dbContext.ApiResources.Update(data);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.ApiResources.Update(data);
+            await dbContext.SaveChangesAsync();
             return this.RedirectToPage("Secrets", new { id });
         }
         private string GeneratePassword()

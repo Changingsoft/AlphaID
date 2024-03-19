@@ -5,20 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
-public class EditPersonNameModel : PageModel
+public class EditPersonNameModel(NaturalPersonManager naturalPersonManager) : PageModel
 {
-    private readonly NaturalPersonManager naturalPersonManager;
-
-    public EditPersonNameModel(NaturalPersonManager naturalPersonManager)
-    {
-        this.naturalPersonManager = naturalPersonManager;
-    }
-
     public InputModel Input { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+        var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
         {
             return this.NotFound();
@@ -35,7 +28,7 @@ public class EditPersonNameModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+        var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null) { return this.NotFound(); }
 
         if (!this.ModelState.IsValid)
@@ -43,7 +36,7 @@ public class EditPersonNameModel : PageModel
 
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, this.Input.PinyinSurname, this.Input.PinyinGivenName);
         var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName);
-        await this.naturalPersonManager.AdminChangePersonNameAsync(person, personName);
+        await naturalPersonManager.AdminChangePersonNameAsync(person, personName);
         return this.RedirectToPage("Index");
     }
 
@@ -54,6 +47,7 @@ public class EditPersonNameModel : PageModel
         public string? Surname { get; set; }
 
         [Display(Name = "Given name")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string GivenName { get; set; } = default!;
 
@@ -62,6 +56,7 @@ public class EditPersonNameModel : PageModel
         public string? PinyinSurname { get; set; }
 
         [Display(Name = "Phonetic given name")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
         public string PinyinGivenName { get; set; } = default!;
     }

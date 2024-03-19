@@ -10,17 +10,8 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class FindPasswordByMobileModel : PageModel
+public class FindPasswordByMobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly IVerificationCodeService verificationCodeService;
-
-    public FindPasswordByMobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService)
-    {
-        this.userManager = userManager;
-        this.verificationCodeService = verificationCodeService;
-    }
-
     [Display(Name = "PhoneNumber phone number")]
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
@@ -43,16 +34,16 @@ public class FindPasswordByMobileModel : PageModel
         var code = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         var normalPhoneNumber = phoneNumber.ToString();
 
-        var person = await this.userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
+        var person = await userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
         {
             //²»Ö´ÐÐ²Ù×÷
             return this.RedirectToPage("ResetPasswordMobile", new { code, phone = this.Mobile });
         }
 
-        code = await this.userManager.GeneratePasswordResetTokenAsync(person);
+        code = await userManager.GeneratePasswordResetTokenAsync(person);
 
-        await this.verificationCodeService.SendAsync(normalPhoneNumber);
+        await verificationCodeService.SendAsync(normalPhoneNumber);
         return this.RedirectToPage("ResetPasswordMobile", new { code, phone = this.Mobile });
     }
 }

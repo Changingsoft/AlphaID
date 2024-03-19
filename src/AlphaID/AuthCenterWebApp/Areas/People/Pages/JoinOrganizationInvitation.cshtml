@@ -3,17 +3,12 @@
 @model AuthCenterWebApp.Areas.People.Pages.JoinOrganizationInvitationModel
 @{
 }
-
-<div class="page-body">
-    <div class="container-xl">
-        <h2>@L["Join organization"]</h2>
-        <p>@L["{0} invite you join in {1}", Model.Invitation.Inviter, Model.Invitation.Organization.Name]</p>
-        <form method="post">
-            <div class="mb-3">
-                <select name="visibility" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()" class="form-select"></select>
-            </div>
-            <button type="submit" name="button" value="Accept" class="btn btn-success">@L["Accept"]</button>
-            <button type="submit" name="button" value="Refuse" class="btn btn-danger">@L["Refuse"]</button>
-        </form>
+<h2>@L["Join organization"]</h2>
+<p>@L["{0} invite you join in {1}", Model.Invitation.Inviter, Model.Invitation.Organization.Name]</p>
+<form method="post">
+    <div class="mb-3">
+        <select name="visibility" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()" class="form-select"></select>
     </div>
-</div>
+    <button type="submit" name="button" value="Accept" class="btn btn-success">@L["Accept"]</button>
+    <button type="submit" name="button" value="Refuse" class="btn btn-danger">@L["Refuse"]</button>
+</form>

@@ -11,21 +11,19 @@ namespace AlphaIdPlatform.RazorPages;
 /// 该约定将在指定的路径为界，将主语参数加入路径中，然后再拼接尾随路径和其他路由模板，从而组成更具有语义的友好URL。
 /// </para>
 /// </remarks>
-public class SubjectAnchorRouteModelConvention : FolderRouteModelConvention
+/// <remarks>
+/// 使用路径、可选的区域名称和锚点模板初始化约定。
+/// </remarks>
+/// <param name="folderPath">路径名称。路径名称应总是以“/”开头，不要添加结尾的“/”。</param>
+/// <param name="areaName">可选的区域名称。</param>
+/// <param name="anchorTemplate">锚点模板。</param>
+public class SubjectAnchorRouteModelConvention(string folderPath, string? areaName = null, string anchorTemplate = "{anchor}") : FolderRouteModelConvention(folderPath, areaName)
 {
-    /// <summary>
-    /// 使用路径、可选的区域名称和锚点模板初始化约定。
-    /// </summary>
-    /// <param name="folderPath">路径名称。路径名称应总是以“/”开头，不要添加结尾的“/”。</param>
-    /// <param name="areaName">可选的区域名称。</param>
-    /// <param name="anchorTemplate">锚点模板。</param>
-    public SubjectAnchorRouteModelConvention(string folderPath, string? areaName = null, string anchorTemplate = "{anchor}")
-        : base(folderPath, areaName) => this.AnchorTemplate = anchorTemplate;
 
     /// <summary>
     /// 获取锚点模板。
     /// </summary>
-    public string AnchorTemplate { get; }
+    public string AnchorTemplate { get; } = anchorTemplate;
 
     /// <summary>
     /// 应用此约定。
@@ -72,9 +70,8 @@ public class SubjectAnchorRouteModelConvention : FolderRouteModelConvention
 
         var pathPrefix = Path.Join(this.AreaName ?? "", this.FolderPath).Trim('/');
 
-        for (var i = 0; i < model.Selectors.Count; i++)
+        foreach (var selector in model.Selectors)
         {
-            var selector = model.Selectors[i];
             var metadata = selector.EndpointMetadata.OfType<PageRouteMetadata>().SingleOrDefault();
             if (metadata == null || AttributeRouteModel.IsOverridePattern(metadata.RouteTemplate)) //没有元数据，或路由模板是覆盖模式时，跳过处理
                 continue;
@@ -87,6 +84,5 @@ public class SubjectAnchorRouteModelConvention : FolderRouteModelConvention
             selector.AttributeRouteModel.Template = AttributeRouteModel.CombineTemplates(newPathPrefix, right);
             selector.EndpointMetadata.Clear();
         }
-
     }
 }

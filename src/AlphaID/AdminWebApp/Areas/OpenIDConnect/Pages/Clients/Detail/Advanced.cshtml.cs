@@ -6,15 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class AdvancedModel : PageModel
+public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public AdvancedModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Client Data { get; set; } = default!;
 
     [BindProperty]
@@ -25,7 +18,7 @@ public class AdvancedModel : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients
+        var data = dbContext.Clients
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
@@ -71,7 +64,7 @@ public class AdvancedModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = this.dbContext.Clients
+        var data = dbContext.Clients
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
@@ -116,14 +109,14 @@ public class AdvancedModel : PageModel
         this.Data.UserCodeType = this.Input.UserCodeType;
         this.Data.UserSsoLifetime = this.Input.UserSsoLifetime;
 
-        this.dbContext.Clients.Update(this.Data);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Data);
+        await dbContext.SaveChangesAsync();
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostRemoveAsync(int anchor, int propId)
     {
-        var data = this.dbContext.Clients
+        var data = dbContext.Clients
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
@@ -134,15 +127,15 @@ public class AdvancedModel : PageModel
         if (item != null)
         {
             this.Data.Properties.Remove(item);
-            this.dbContext.Clients.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.Clients.Update(this.Data);
+            await dbContext.SaveChangesAsync();
         }
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostAddAsync(int anchor)
     {
-        var data = this.dbContext.Clients
+        var data = dbContext.Clients
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
@@ -158,8 +151,8 @@ public class AdvancedModel : PageModel
             return this.Page();
 
         this.Data.Properties.Add(new ClientProperty { Key = this.AddProperty.Key, Value = this.AddProperty.Value });
-        this.dbContext.Clients.Update(this.Data);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Data);
+        await dbContext.SaveChangesAsync();
         return this.Page();
     }
 
@@ -235,6 +228,7 @@ public class AdvancedModel : PageModel
         public bool IncludeJwtId { get; set; }
 
         [Display(Name = "Client Claims Prefix", Description = "If set, the prefix client claim types will be prefixed with. Defaults to client_. The intent is to make sure they don¡¯t accidentally collide with user claims.")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string ClientClaimsPrefix { get; set; } = "client_";
 
         [Display(Name = "Pairwise Subject Salt", Description = "Salt value used in pair-wise subjectId generation for users of this client. Currently not implemented.")]
@@ -266,9 +260,11 @@ public class AdvancedModel : PageModel
     public class AddPropertyModel
     {
         [Display(Name = "Key")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string Key { get; set; } = default!;
 
         [Display(Name = "Value")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string Value { get; set; } = default!;
     }
 }

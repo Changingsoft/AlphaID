@@ -4,15 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail;
 
-public class DeleteModel : PageModel
+public class DeleteModel(OrganizationManager organizationManager) : PageModel
 {
-    private readonly OrganizationManager organizationManager;
-
-    public DeleteModel(OrganizationManager organizationManager)
-    {
-        this.organizationManager = organizationManager;
-    }
-
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -25,7 +18,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
+        var org = await organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -34,7 +27,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await this.organizationManager.FindByIdAsync(this.Anchor);
+        var org = await organizationManager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
         this.Organization = org;
@@ -52,7 +45,7 @@ public class DeleteModel : PageModel
 
         try
         {
-            var result = await this.organizationManager.DeleteAsync(this.Organization);
+            var result = await organizationManager.DeleteAsync(this.Organization);
             if (result.Succeeded)
                 return this.RedirectToPage("DeleteSuccess");
             this.Result = result;

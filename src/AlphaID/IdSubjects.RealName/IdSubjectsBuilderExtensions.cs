@@ -21,7 +21,8 @@ public static class IdSubjectsBuilderExtensions
         builder.Services.TryAddScoped<RealNameRequestManager>();
 
         //添加拦截器。
-        builder.AddInterceptor<RealNameInterceptor>();
+        builder.AddInterceptor<RealNameUpdateInterceptor>();
+        builder.AddInterceptor<RealNameDeleteInterceptor>();
 
         var realNameBuilder = new RealNameBuilder(builder.Services);
         return realNameBuilder;

@@ -5,15 +5,8 @@ using System.ComponentModel.DataAnnotations;
 namespace AdminWebApp.Areas.Organizations.Pages;
 
 [BindProperties]
-public class NewModel : PageModel
+public class NewModel(OrganizationManager manager) : PageModel
 {
-    private readonly OrganizationManager manager;
-
-    public NewModel(OrganizationManager manager)
-    {
-        this.manager = manager;
-    }
-
     [Display(Name = "Name")]
     [Required(ErrorMessage = "Validate_Required")]
     public string Name { get; set; } = default!;
@@ -55,7 +48,7 @@ public class NewModel : PageModel
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        var nameExists = this.manager.FindByName(this.Name);
+        var nameExists = manager.FindByName(this.Name);
         if (nameExists.Any())
         {
             if (!this.RegisterWithSameNameAnyway)
@@ -81,7 +74,7 @@ public class NewModel : PageModel
 
         try
         {
-            var result = await this.manager.CreateAsync(org);
+            var result = await manager.CreateAsync(org);
             if (result.Succeeded)
                 return this.RedirectToPage("Detail/Index", new { anchor = org.Id });
 

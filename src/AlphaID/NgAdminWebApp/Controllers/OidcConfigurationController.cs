@@ -3,15 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NgAdminWebApp.Controllers;
 
-public class OidcConfigurationController : Controller
+public class OidcConfigurationController(
+    IClientRequestParametersProvider clientRequestParametersProvider) : Controller
 {
-    public OidcConfigurationController(
-        IClientRequestParametersProvider clientRequestParametersProvider)
-    {
-        this.ClientRequestParametersProvider = clientRequestParametersProvider;
-    }
-
-    public IClientRequestParametersProvider ClientRequestParametersProvider { get; }
+    public IClientRequestParametersProvider ClientRequestParametersProvider { get; } = clientRequestParametersProvider;
 
     [HttpGet("_configuration/{clientId}")]
     public IActionResult GetClientRequestParameters([FromRoute] string clientId)

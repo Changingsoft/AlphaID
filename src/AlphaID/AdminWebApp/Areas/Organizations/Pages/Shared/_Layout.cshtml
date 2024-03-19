@@ -1,11 +1,16 @@
 ﻿@{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "Tabler/_PageWrapper";
 }
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head{
+    @await RenderSectionAsync("head", false)
+}
+@section Header
+{
+    <partial name="_DefaultTitleNavBarPartial" />
 }
 
-<div class="page-header">
+@section PageHeader
+{
     <div class="container-xl">
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index">@L["Organizations"]</a></li>
@@ -13,12 +18,15 @@
         </ul>
         @await RenderSectionAsync("PageHeader", false)
     </div>
+}
+<div class="container-xl">
+    @RenderBody()
 </div>
-<div class="page-body">
-    <div class="container-xl">
-        @RenderBody()
-    </div>
-</div>
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
 
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)

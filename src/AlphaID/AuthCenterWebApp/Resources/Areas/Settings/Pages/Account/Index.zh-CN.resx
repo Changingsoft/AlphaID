@@ -129,10 +129,19 @@
   <data name="Change your user name" xml:space="preserve">
     <value>更改账户名</value>
   </data>
+  <data name="Directory Service" xml:space="preserve">
+	  <value>目录服务</value>
+  </data>
   <data name="Manage personal data" xml:space="preserve">
     <value>管理个人数据</value>
   </data>
+  <data name="Object Id" xml:space="preserve">
+	  <value>对象ID</value>
+  </data>
   <data name="Personal Data" xml:space="preserve">
     <value>个人数据</value>
+  </data>
+  <data name="Managed Directory Accounts" xml:space="preserve">
+	  <value>托管的目录账户</value>
   </data>
 </root>

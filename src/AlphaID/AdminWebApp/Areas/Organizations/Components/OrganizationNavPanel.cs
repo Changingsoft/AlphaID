@@ -3,17 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.Organizations.Components;
 
-public class OrganizationNavPanel : ViewComponent
+public class OrganizationNavPanel(IOrganizationStore organizationStore) : ViewComponent
 {
-    private readonly IOrganizationStore organizationStore;
-
-    public OrganizationNavPanel(IOrganizationStore organizationStore)
-    {
-        this.organizationStore = organizationStore;
-    }
-
     public IViewComponentResult Invoke()
     {
-        return this.View(model: this.organizationStore.Organizations.Count());
+        return this.View(model: organizationStore.Organizations.Count());
     }
 }

@@ -106,4 +106,12 @@
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="Identifiers" xml:space="preserve">
+	  <value>Identifiers</value>
+	  <comment>Identifiers</comment>
+  </data>
+  <data name="Financial" xml:space="preserve">
+	  <value>Financial</value>
+	  <comment>Financial</comment>
+  </data>
 </root>

@@ -99,18 +99,14 @@
   </resheader>
   <data name="Accept" xml:space="preserve">
 		<value>Accept</value>
-		<comment>Accept</comment>
 	</data>
   <data name="Join organization" xml:space="preserve">
 		<value>Join organization</value>
-		<comment>Join organization</comment>
 	</data>
   <data name="Refuse" xml:space="preserve">
 		<value>Refuse</value>
-		<comment>Refuse</comment>
 	</data>
   <data name="{0} invite you join in {1}" xml:space="preserve">
 		<value>{0} invite you join in {1}</value>
-		<comment>{0} invite you join in {1}</comment>
 	</data>
 </root>

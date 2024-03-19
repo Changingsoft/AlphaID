@@ -4,22 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace AuthCenterWebApp.Tests.Pages;
-public class HomePageTest : IClassFixture<AuthCenterWebAppFactory>
+public class HomePageTest(AuthCenterWebAppFactory factory) : IClassFixture<AuthCenterWebAppFactory>
 {
-    private readonly AuthCenterWebAppFactory factory;
-
-    public HomePageTest(AuthCenterWebAppFactory factory)
-    {
-        this.factory = factory;
-    }
-
     [Theory]
     [InlineData("/")]
     [InlineData("/Index")]
     public async Task AnonymousAccessHomePage(string url)
     {
-        var client = this.factory.CreateClient();
-        var productInfo = this.factory.Services.GetRequiredService<IOptions<ProductInfo>>();
+        var client = factory.CreateClient();
+        var productInfo = factory.Services.GetRequiredService<IOptions<ProductInfo>>();
 
         var response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();

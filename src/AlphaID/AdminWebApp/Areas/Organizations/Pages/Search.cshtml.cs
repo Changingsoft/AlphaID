@@ -3,15 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.Organizations.Pages;
 
-public class SearchModel : PageModel
+public class SearchModel(OrganizationSearcher searcher) : PageModel
 {
-    private readonly OrganizationSearcher searcher;
-
-    public SearchModel(OrganizationSearcher searcher)
-    {
-        this.searcher = searcher;
-    }
-
     public IEnumerable<GenericOrganization> Results { get; set; } = default!;
 
     public IActionResult OnGet()
@@ -20,7 +13,7 @@ public class SearchModel : PageModel
         if (string.IsNullOrWhiteSpace(q))
             return this.Page();
 
-        this.Results = this.searcher.Search(q!);
+        this.Results = searcher.Search(q!);
         return this.Page();
     }
 }

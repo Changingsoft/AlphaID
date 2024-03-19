@@ -1,10 +1,9 @@
 ﻿@page
-@using AlphaIdPlatform.Helpers
 @model IndexModel
 @{
     ViewBag.Title = L["Memberships"];
 }
-@section Heads{
+@section head{
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
 }
 @Html.DisplayFor(m => m.Result)
@@ -35,9 +34,9 @@
                     <td>@member.Department</td>
                     <td>@member.Title</td>
                     <td>@member.Remark</td>
-                    <td>@member.Visibility</td>
+                    <td>@Html.DisplayFor(m => member.Visibility)</td>
                     <td>
-                        <a asp-page="Of" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">Edit</a>
+                        <a asp-page="Of" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">@L["Edit"]</a>
                         <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@L["Are you sure you want leave person from organization?"]');">@L["Leave"]</button>
                     </td>
                 </tr>
@@ -45,16 +44,16 @@
         </tbody>
     </table>
 </form>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberEditor">Join organization</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberEditor">@L["Join organization"]</button>
 
 <div class="modal fade" id="memberEditor">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">Join organization</div>
+            <div class="modal-header">@L["Join organization"]</div>
             <div class="modal-body">
                 <form method="post" asp-page-handler="JoinOrganization">
                     <div class="mb-3">
-                        <label for="organizationSearch" class="form-label">Search organization</label>
+                        <label for="organizationSearch" class="form-label">@L["Search organization"]</label>
                         <input id="organizationSearch" name="organizationSearch" type="text" class="form-control" />
                     </div>
                     <div class="mb-3">

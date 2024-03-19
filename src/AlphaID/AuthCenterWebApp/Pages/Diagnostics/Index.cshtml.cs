@@ -9,20 +9,13 @@ using System.Text.Json;
 namespace AuthCenterWebApp.Pages.Diagnostics;
 
 [Authorize]
-public class Index : PageModel
+public class Index(IWebHostEnvironment env) : PageModel
 {
-    private readonly IWebHostEnvironment env;
-
-    public Index(IWebHostEnvironment env)
-    {
-        this.env = env;
-    }
-
     public ViewModel View { get; set; } = default!;
 
-    public async Task<IActionResult> OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
-        if (!this.env.IsDevelopment())
+        if (!env.IsDevelopment())
             return this.NotFound();
 
         this.View = new ViewModel(await this.HttpContext.AuthenticateAsync());
@@ -58,6 +51,6 @@ public class Index : PageModel
         }
 
         public AuthenticateResult AuthenticateResult { get; }
-        public IEnumerable<string> Clients { get; } = new List<string>();
+        public IEnumerable<string> Clients { get; } = [];
     }
 }

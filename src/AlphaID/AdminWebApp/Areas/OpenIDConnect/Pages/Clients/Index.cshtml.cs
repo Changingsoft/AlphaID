@@ -4,20 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 
-public class IndexModel : PageModel
+public class IndexModel(ConfigurationDbContext context) : PageModel
 {
-    private readonly ConfigurationDbContext context;
-
-    public IndexModel(ConfigurationDbContext context)
-    {
-        this.context = context;
-    }
-
     public IEnumerable<Client> Clients { get; set; } = default!;
 
     public void OnGet()
     {
-        this.Clients = this.context.Clients
+        this.Clients = context.Clients
             .Include(p => p.AllowedGrantTypes)
             .Include(p => p.RedirectUris)
             .Include(p => p.AllowedScopes);

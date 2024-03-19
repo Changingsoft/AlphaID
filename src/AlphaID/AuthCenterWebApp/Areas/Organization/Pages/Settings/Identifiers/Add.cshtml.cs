@@ -5,17 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
 {
-    public class AddModel : PageModel
+    public class AddModel(OrganizationIdentifierManager identifierManager, OrganizationManager organizationManager) : PageModel
     {
-        private readonly OrganizationIdentifierManager identifierManager;
-        readonly OrganizationManager organizationManager;
-
-        public AddModel(OrganizationIdentifierManager identifierManager, OrganizationManager organizationManager)
-        {
-            this.identifierManager = identifierManager;
-            this.organizationManager = organizationManager;
-        }
-
         [BindProperty]
         [Display(Name = "Identifier Type")]
         public OrganizationIdentifierType Type { get; set; }
@@ -28,7 +19,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
 
         public IActionResult OnGet(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -37,7 +28,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -50,7 +41,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
                 Organization = organization, OrganizationId = organization.Id, Type = this.Type, Value = this.Value,
             };
 
-            this.Result = await this.identifierManager.AddIdentifierAsync(identifier);
+            this.Result = await identifierManager.AddIdentifierAsync(identifier);
             if (this.Result.Succeeded)
                 return this.RedirectToPage("Index", new { anchor });
 

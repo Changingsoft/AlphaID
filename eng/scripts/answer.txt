@@ -1,0 +1,7 @@
+[ADAMInstall]
+InstallType=Unique
+LocalLDAPPortToListenOn=389
+LocalSSLPortToListenOn=636
+NewApplicationPartitionToCreate="DC=example,DC=com"
+AddPermissionsToServiceAccount=Yes
+ImportLDIFFiles="MS-adamschemaw2k3.LDF"

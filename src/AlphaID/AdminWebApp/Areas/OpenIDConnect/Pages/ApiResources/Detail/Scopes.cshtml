@@ -3,7 +3,7 @@
 @{
 }
 
-<h2>Scopes</h2>
+<h2>@L["Scopes"]</h2>
 <form method="post" asp-page-handler="Remove">
 
 
@@ -18,7 +18,7 @@
             {
                 <tr>
                     <td>@scope.Scope</td>
-                    <td><button type="submit" name="scopeId" value="@scope.Id" class="btn btn-danger" onclick="return confirm('@L["Are you sure you want remove this claim?"]');">Remove</button></td>
+                    <td><button type="submit" name="scopeId" value="@scope.Id" class="btn btn-danger" onclick="return confirm('@L["Are you sure you want remove this claim?"]');">@L["Remove"]</button></td>
                 </tr>
             }
         </tbody>
@@ -27,7 +27,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3>Add Scope</h3>
+        <h3>@L["Add Scope"]</h3>
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
@@ -38,7 +38,7 @@
                     <option value="@scope">@scope</option>
                 }
             </select>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">@L["Add"]</button>
         </form>
     </div>
 </div>

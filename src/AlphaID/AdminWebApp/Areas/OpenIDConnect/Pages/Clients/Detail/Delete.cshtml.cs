@@ -1,26 +1,21 @@
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class DeleteModel : PageModel
+public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public DeleteModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     [BindProperty]
+    [Display(Name = "Client name")]
     public string ClientName { get; set; } = default!;
 
     public Client Data { get; set; } = default!;
 
     public IActionResult OnGet(int anchor)
     {
-        var client = this.dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
+        var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
         if (client == null)
         {
             return this.NotFound();
@@ -30,9 +25,9 @@ public class DeleteModel : PageModel
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPost(int anchor)
+    public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var client = this.dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
+        var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
         if (client == null)
         {
             return this.RedirectToPage("../Index");
@@ -45,8 +40,8 @@ public class DeleteModel : PageModel
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        this.dbContext.Clients.Remove(client);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Remove(client);
+        await dbContext.SaveChangesAsync();
         return this.RedirectToPage("../Index");
 
     }

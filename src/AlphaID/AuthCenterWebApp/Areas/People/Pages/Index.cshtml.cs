@@ -5,36 +5,26 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager) : PageModel
     {
-        private readonly NaturalPersonManager personManager;
-        private readonly OrganizationMemberManager organizationMemberManager;
-
-
-        public IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
-        {
-            this.personManager = personManager;
-            this.organizationMemberManager = organizationMemberManager;
-        }
-
         public NaturalPerson Person { get; set; } = default!;
 
         public bool UserIsOwner { get; set; }
 
-        public IEnumerable<OrganizationMember> Members { get; set; } = Enumerable.Empty<OrganizationMember>();
+        public IEnumerable<OrganizationMember> Members { get; set; } = [];
 
         public async Task<IActionResult> OnGetAsync(string anchor)
         {
             //Support both userAnchor and user ID.
-            var person = await this.personManager.FindByNameAsync(anchor)
-                ?? await this.personManager.FindByIdAsync(anchor);
+            var person = await personManager.FindByNameAsync(anchor)
+                ?? await personManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
             this.Person = person;
 
-            NaturalPerson? visitor = await this.personManager.GetUserAsync(this.User);
+            NaturalPerson? visitor = await personManager.GetUserAsync(this.User);
 
-            this.Members = await this.organizationMemberManager.GetVisibleMembersOfAsync(person, visitor);
+            this.Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
 
             if (!this.User.Identity!.IsAuthenticated)
             {

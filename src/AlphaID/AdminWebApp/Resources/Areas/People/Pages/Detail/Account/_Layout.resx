@@ -99,26 +99,20 @@
   </resheader>
   <data name="Account" xml:space="preserve">
 		<value>Account</value>
-		<comment>Account</comment>
 	</data>
   <data name="Advanced" xml:space="preserve">
 		<value>Advanced</value>
-		<comment>Advanced</comment>
 	</data>
   <data name="Directory Accounts" xml:space="preserve">
 		<value>Directory Accounts</value>
-		<comment>Directory Accounts</comment>
 	</data>
   <data name="External Logins" xml:space="preserve">
 		<value>External Logins</value>
-		<comment>External Logins</comment>
 	</data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
-		<comment>Overview</comment>
 	</data>
   <data name="Security" xml:space="preserve">
 		<value>Security</value>
-		<comment>Security</comment>
 	</data>
 </root>

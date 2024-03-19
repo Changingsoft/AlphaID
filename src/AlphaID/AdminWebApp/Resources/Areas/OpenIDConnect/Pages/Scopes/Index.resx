@@ -99,38 +99,29 @@
   </resheader>
   <data name="Description" xml:space="preserve">
 		<value>Description</value>
-		<comment>Description</comment>
 	</data>
   <data name="Display name" xml:space="preserve">
 		<value>Display name</value>
-		<comment>Display name</comment>
 	</data>
   <data name="Emphasize" xml:space="preserve">
 		<value>Emphasize</value>
-		<comment>Emphasize</comment>
 	</data>
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
-		<comment>Enabled</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="New scope" xml:space="preserve">
 		<value>New scope</value>
-		<comment>New scope</comment>
 	</data>
   <data name="Required" xml:space="preserve">
 		<value>Required</value>
-		<comment>Required</comment>
 	</data>
   <data name="Scopes" xml:space="preserve">
 		<value>Scopes</value>
-		<comment>Scopes</comment>
 	</data>
   <data name="Show in discovery document" xml:space="preserve">
 		<value>Show in discovery document</value>
-		<comment>Show in discovery document</comment>
 	</data>
 </root>

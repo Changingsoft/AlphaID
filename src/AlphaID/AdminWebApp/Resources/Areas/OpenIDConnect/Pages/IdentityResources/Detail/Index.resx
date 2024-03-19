@@ -99,58 +99,44 @@
   </resheader>
   <data name="Created" xml:space="preserve">
 		<value>Created</value>
-		<comment>Created</comment>
 	</data>
   <data name="Display name" xml:space="preserve">
 		<value>Display name</value>
-		<comment>Display name</comment>
 	</data>
   <data name="Emphasize" xml:space="preserve">
 		<value>Emphasize</value>
-		<comment>Emphasize</comment>
 	</data>
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
-		<comment>Enabled</comment>
 	</data>
   <data name="Key" xml:space="preserve">
 		<value>Key</value>
-		<comment>Key</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Properties" xml:space="preserve">
 		<value>Properties</value>
-		<comment>Properties</comment>
 	</data>
   <data name="Show in discovery document" xml:space="preserve">
 		<value>Show in discovery document</value>
-		<comment>Show in discovery document</comment>
 	</data>
   <data name="Summary" xml:space="preserve">
 		<value>Summary</value>
-		<comment>Summary</comment>
 	</data>
   <data name="System resource, can not be delete." xml:space="preserve">
 		<value>System resource, can not be delete.</value>
-		<comment>System resource, can not be delete.</comment>
 	</data>
   <data name="Updated" xml:space="preserve">
 		<value>Updated</value>
-		<comment>Updated</comment>
 	</data>
   <data name="User Claims" xml:space="preserve">
 		<value>User Claims</value>
-		<comment>User Claims</comment>
 	</data>
   <data name="Value" xml:space="preserve">
 		<value>Value</value>
-		<comment>Value</comment>
 	</data>
 </root>

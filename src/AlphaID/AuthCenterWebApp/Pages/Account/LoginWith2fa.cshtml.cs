@@ -13,28 +13,13 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class LoginWith2FaModel : PageModel
+public class LoginWith2FaModel(
+    SignInManager<NaturalPerson> signInManager,
+    NaturalPersonManager userManager,
+    ILogger<LoginWith2FaModel> logger,
+    IIdentityServerInteractionService interactionService,
+    IEventService eventService) : PageModel
 {
-    private readonly SignInManager<NaturalPerson> signInManager;
-    private readonly NaturalPersonManager userManager;
-    private readonly ILogger<LoginWith2FaModel> logger;
-    private readonly IIdentityServerInteractionService interactionService;
-    private readonly IEventService eventService;
-
-    public LoginWith2FaModel(
-        SignInManager<NaturalPerson> signInManager,
-        NaturalPersonManager userManager,
-        ILogger<LoginWith2FaModel> logger,
-        IIdentityServerInteractionService interactionService,
-        IEventService eventService)
-    {
-        this.signInManager = signInManager;
-        this.userManager = userManager;
-        this.logger = logger;
-        this.interactionService = interactionService;
-        this.eventService = eventService;
-    }
-
     [BindProperty]
     public InputModel Input { get; set; }
 
@@ -57,7 +42,7 @@ public class LoginWith2FaModel : PageModel
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
     {
         // Ensure the user has gone through the username & password screen first
-        _ = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
+        _ = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
         this.ReturnUrl = returnUrl;
         this.RememberMe = rememberMe;
 
@@ -72,18 +57,18 @@ public class LoginWith2FaModel : PageModel
         }
 
         returnUrl ??= this.Url.Content("~/");
-        var context = await this.interactionService.GetAuthorizationContextAsync(returnUrl);
+        var context = await interactionService.GetAuthorizationContextAsync(returnUrl);
 
-        var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
+        var user = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
         var authenticatorCode = this.Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-        var result = await this.signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, this.Input.RememberMachine);
-        _ = await this.userManager.GetUserIdAsync(user);
+        var result = await signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, this.Input.RememberMachine);
+        _ = await userManager.GetUserIdAsync(user);
 
         if (result.Succeeded)
         {
-            this.logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
-            await this.eventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+            logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+            await eventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
             if (context != null)
             {
@@ -115,12 +100,12 @@ public class LoginWith2FaModel : PageModel
         }
         else if (result.IsLockedOut)
         {
-            this.logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
+            logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
             return this.RedirectToPage("./Lockout");
         }
         else
         {
-            this.logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
+            logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
             this.ModelState.AddModelError(string.Empty, "身份验证器代码无效。");
             return this.Page();
         }

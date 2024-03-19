@@ -5,19 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
-    public class SecretsModel : PageModel
+    public class SecretsModel(ConfigurationDbContext dbContext) : PageModel
     {
-        private readonly ConfigurationDbContext dbContext;
-
-        public SecretsModel(ConfigurationDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
-
         public ApiResource Data { get; set; } = default!;
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await dbContext.ApiResources
                 .Include(p => p.Secrets)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
@@ -30,7 +23,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
         public async Task<IActionResult> OnPostRemoveAsync(int id, int secretId)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await dbContext.ApiResources
                 .Include(p => p.Secrets)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
@@ -41,8 +34,8 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
             if (item != null)
             {
                 this.Data.Secrets.Remove(item);
-                this.dbContext.ApiResources.Update(this.Data);
-                await this.dbContext.SaveChangesAsync();
+                dbContext.ApiResources.Update(this.Data);
+                await dbContext.SaveChangesAsync();
             }
             return this.Page();
         }

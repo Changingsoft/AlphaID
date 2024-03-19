@@ -102,21 +102,29 @@
   </data>
   <data name="Change your email" xml:space="preserve">
 	  <value>Change your email</value>
-	  <comment>Change your email</comment>
   </data>
   <data name="Change your phone number" xml:space="preserve">
 	  <value>Change your phone number</value>
-	  <comment>Change your phone number</comment>
   </data>
   <data name="Change your user name" xml:space="preserve">
     <value>Change your user name</value>
   </data>
   <data name="Manage personal data" xml:space="preserve">
 	  <value>Manage personal data</value>
-	  <comment>Manage personal data</comment>
   </data>
   <data name="Personal Data" xml:space="preserve">
 	  <value>Personal Data</value>
-	  <comment>Personal Data</comment>
+  </data>
+  <data name="Managed Directory Accounts" xml:space="preserve">
+	  <value>Managed Directory Accounts</value>
+	  <comment>Managed Directory Accounts</comment>
+  </data>
+  <data name="Directory Service" xml:space="preserve">
+	  <value>Directory Service</value>
+	  <comment>Directory Service</comment>
+  </data>
+  <data name="Object Id" xml:space="preserve">
+	  <value>Object Id</value>
+	  <comment>Object Id</comment>
   </data>
 </root>

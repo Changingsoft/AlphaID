@@ -99,18 +99,14 @@
   </resheader>
   <data name="Delete" xml:space="preserve">
 		<value>Delete</value>
-		<comment>Delete</comment>
 	</data>
   <data name="Deleting" xml:space="preserve">
 		<value>Deleting</value>
-		<comment>Deleting</comment>
 	</data>
   <data name="Entering scope name ({0}) for confirm." xml:space="preserve">
 		<value>Entering scope name ({0}) for confirm.</value>
-		<comment>Entering scope name ({0}) for confirm.</comment>
 	</data>
   <data name="Please check the resources related to this scope. The scope could be delete without any resources related to it." xml:space="preserve">
 		<value>Please check the resources related to this scope. The scope could be delete without any resources related to it.</value>
-		<comment>Please check the resources related to this scope. The scope could be delete without any resources related to it.</comment>
 	</data>
 </root>

@@ -6,12 +6,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlphaId.RealName.EntityFramework;
 
-public class RealNameDbContext : DbContext
+public class RealNameDbContext(DbContextOptions<RealNameDbContext> options) : DbContext(options)
 {
-    public RealNameDbContext(DbContextOptions<RealNameDbContext> options) : base(options)
-    {
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);

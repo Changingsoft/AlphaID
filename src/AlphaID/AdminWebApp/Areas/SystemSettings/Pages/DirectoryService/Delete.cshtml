@@ -1,0 +1,18 @@
+﻿@page "{anchor}"
+@model DeleteModel
+@{
+}
+
+<h1>Deleting @Model.Data.Name</h1>
+<p>Are you sure you want to delete this directory service?</p>
+<p>Relationship will be deleted, but related resources (person, directory account) will not be taken any effective.</p>
+<p>Please enter the service name (@Model.Data.Name) to confirm.</p>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="ServiceName" class="form-label"></label>
+        <input asp-for="ServiceName" class="form-control" />
+        <span asp-validation-for="ServiceName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-danger">@L["DELETE"]</button>
+    <a asp-page="Index" class="btn btn-secondary">@L["Cancel"]</a>
+</form>

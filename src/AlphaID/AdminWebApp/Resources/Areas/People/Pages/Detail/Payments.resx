@@ -99,26 +99,20 @@
   </resheader>
   <data name="AccountName" xml:space="preserve">
 		<value>AccountName</value>
-		<comment>AccountName</comment>
 	</data>
   <data name="AccountNumber" xml:space="preserve">
 		<value>AccountNumber</value>
-		<comment>AccountNumber</comment>
 	</data>
   <data name="Add" xml:space="preserve">
 		<value>Add</value>
-		<comment>Add</comment>
 	</data>
   <data name="BankName" xml:space="preserve">
 		<value>BankName</value>
-		<comment>BankName</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Payments of {0}" xml:space="preserve">
 		<value>Payments of {0}</value>
-		<comment>Payments of {0}</comment>
 	</data>
 </root>

@@ -5,20 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources.Detail;
 
-public class IndexModel : PageModel
+public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public IndexModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public IdentityResource Data { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var idr = await this.dbContext.IdentityResources
+        var idr = await dbContext.IdentityResources
             .Include(p => p.UserClaims)
             .Include(p => p.Properties)
             .AsSingleQuery()

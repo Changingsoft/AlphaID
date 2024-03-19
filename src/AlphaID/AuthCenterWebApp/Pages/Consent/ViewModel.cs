@@ -20,7 +20,7 @@ public class ScopeViewModel
     public bool Emphasize { get; set; }
     public bool Required { get; set; }
     public bool Checked { get; set; }
-    public IEnumerable<ResourceViewModel> Resources { get; set; } = Enumerable.Empty<ResourceViewModel>();
+    public IEnumerable<ResourceViewModel> Resources { get; set; } = [];
 }
 
 public class ResourceViewModel

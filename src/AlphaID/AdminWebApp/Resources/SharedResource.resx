@@ -117,11 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A friendly name that appears on the user interface." xml:space="preserve">
+	  <value>A friendly name that appears on the user interface.</value>
+  </data>
+  <data name="A unique name to identity this provider." xml:space="preserve">
+	  <value>A unique name to identity this provider.</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Account name" xml:space="preserve">
+	  <value>Account name</value>
+  </data>
+  <data name="Account number" xml:space="preserve">
+	  <value>Account number</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="Allowed access token signing algorithms" xml:space="preserve">
     <value>Allowed access token signing algorithms</value>
   </data>
-  <data name="Client ID" xml:space="preserve">
-    <value>Client ID</value>
+  <data name="Apply changes" xml:space="preserve">
+	  <value>Apply changes</value>
+	  <comment>Apply changes</comment>
+  </data>
+  <data name="Are you sure you want to delete it?" xml:space="preserve">
+	  <value>Are you sure you want to delete it?</value>
+	  <comment>Are you sure you want to delete it?</comment>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>Bank</value>
+  </data>
+  <data name="Bank name" xml:space="preserve">
+	  <value>Bank name</value>
+  </data>
+  <data name="Client Id" xml:space="preserve">
+	  <value>Client Id</value>
+  </data>
+  <data name="Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID." xml:space="preserve">
+	  <value>Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.</value>
   </data>
   <data name="Client name" xml:space="preserve">
     <value>Client name</value>
@@ -132,8 +167,14 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="Date of birth" xml:space="preserve">
     <value>Date of birth</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Department</value>
@@ -153,6 +194,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Emphasize" xml:space="preserve">
+    <value>Emphasize</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
@@ -171,11 +215,17 @@
   <data name="Given name" xml:space="preserve">
     <value>Given name</value>
   </data>
+  <data name="Is owner" xml:space="preserve">
+	  <value>Is owner</value>
+  </data>
   <data name="Key" xml:space="preserve">
     <value>Key</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
+  </data>
+  <data name="Membership visibility" xml:space="preserve">
+	  <value>Membership visibility</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -191,7 +241,9 @@
   </data>
   <data name="Other" xml:space="preserve">
 	  <value>Other</value>
-	  <comment>Other</comment>
+  </data>
+  <data name="Overview" xml:space="preserve">
+	  <value>Overview</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -208,17 +260,33 @@
   <data name="Phonetic surname" xml:space="preserve">
     <value>Phonetic surname</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+	  <value>Privacy</value>
+	  <comment>Privacy</comment>
+  </data>
   <data name="Remark" xml:space="preserve">
     <value>Remark</value>
   </data>
   <data name="Require resource indicator" xml:space="preserve">
     <value>Require resource indicator</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="Resource ID" xml:space="preserve">
+	  <value>Resource ID</value>
+  </data>
   <data name="Resource name" xml:space="preserve">
     <value>Resource name</value>
   </data>
   <data name="Root DN" xml:space="preserve">
     <value>Root DN</value>
+  </data>
+  <data name="Scheme" xml:space="preserve">
+	  <value>Scheme</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+	  <value>Search</value>
   </data>
   <data name="Secret" xml:space="preserve">
     <value>Secret</value>
@@ -235,6 +303,19 @@
   <data name="Surname" xml:space="preserve">
     <value>Surname</value>
   </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+	  <value>Taxpayer ID</value>
+  </data>
+  <data name="Terms of service" xml:space="preserve">
+	  <value>Terms of service</value>
+	  <comment>Terms of service</comment>
+  </data>
+  <data name="The client id already exists." xml:space="preserve">
+	  <value>The client id already exists.</value>
+  </data>
+  <data name="The {0} field is required." xml:space="preserve">
+	  <value>The {0} field is required.</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -244,9 +325,14 @@
   <data name="Unified social credit code" xml:space="preserve">
     <value>Unified social credit code</value>
   </data>
+  <data name="Unique ID of the client." xml:space="preserve">
+	  <value>Unique ID of the client.</value>
+  </data>
+  <data name="Unique identifier for resource in OIDC workflow." xml:space="preserve">
+	  <value>Unique identifier for resource in OIDC workflow.</value>
+  </data>
   <data name="Unselected" xml:space="preserve">
 	  <value>Unselected</value>
-	  <comment>Unselected</comment>
   </data>
   <data name="UPN suffix" xml:space="preserve">
     <value>UPN suffix</value>
@@ -277,17 +363,5 @@
   </data>
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
-  </data>
-  <data name="Taxpayer ID" xml:space="preserve">
-	  <value>Taxpayer ID</value>
-  </data>
-  <data name="Bank" xml:space="preserve">
-    <value>Bank</value>
-  </data>
-  <data name="Account" xml:space="preserve">
-    <value>Account</value>
-  </data>
-  <data name="Address" xml:space="preserve">
-    <value>Address</value>
   </data>
 </root>

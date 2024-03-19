@@ -3,39 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial;
 
-public class IndexModel : PageModel
+public class IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager) : PageModel
 {
-    private readonly OrganizationManager organizationManager;
-    readonly OrganizationBankAccountManager bankAccountManager;
-    public IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
-    {
-        this.organizationManager = organizationManager;
-        this.bankAccountManager = bankAccountManager;
-    }
-
     public GenericOrganization Data { get; set; } = default!;
 
-    public IEnumerable<OrganizationBankAccount> BankAccounts { get; set; } = Enumerable.Empty<OrganizationBankAccount>();
+    public IEnumerable<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
     public IdOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var data = await this.organizationManager.FindByIdAsync(anchor);
+        var data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+        this.BankAccounts = bankAccountManager.GetBankAccounts(data);
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
-        var data = await this.organizationManager.FindByIdAsync(anchor);
+        var data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+        this.BankAccounts = bankAccountManager.GetBankAccounts(data);
 
         var bankAccount = this.BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null)
@@ -43,19 +35,19 @@ public class IndexModel : PageModel
             return this.Page();
         }
 
-        this.Result = await this.bankAccountManager.RemoveAsync(bankAccount);
+        this.Result = await bankAccountManager.RemoveAsync(bankAccount);
         if(this.Result.Succeeded)
-            this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+            this.BankAccounts = bankAccountManager.GetBankAccounts(data);
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
-        var data = await this.organizationManager.FindByIdAsync(anchor);
+        var data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
-        this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+        this.BankAccounts = bankAccountManager.GetBankAccounts(data);
 
         var bankAccount = this.BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null)
@@ -63,9 +55,9 @@ public class IndexModel : PageModel
             return this.Page();
         }
 
-        this.Result = await this.bankAccountManager.SetDefault(bankAccount);
+        this.Result = await bankAccountManager.SetDefault(bankAccount);
         if (this.Result.Succeeded)
-            this.BankAccounts = this.bankAccountManager.GetBankAccounts(data);
+            this.BankAccounts = bankAccountManager.GetBankAccounts(data);
         return this.Page();
     }
 

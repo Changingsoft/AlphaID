@@ -3,7 +3,7 @@
 namespace IdSubjects.Tests;
 public class StubPasswordHistoryStore : IPasswordHistoryStore
 {
-    private readonly HashSet<PasswordHistory> set = new HashSet<PasswordHistory>();
+    private readonly HashSet<PasswordHistory> set = [];
 
     public Task<IdentityResult> CreateAsync(PasswordHistory history)
     {

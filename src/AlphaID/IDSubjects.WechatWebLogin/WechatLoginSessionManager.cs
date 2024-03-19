@@ -3,26 +3,14 @@
 /// <summary>
 /// 
 /// </summary>
-public class WechatLoginSessionManager
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="store"></param>
+/// <param name="oAuth2Service"></param>
+public class WechatLoginSessionManager(IWechatLoginSessionStore store,
+    OAuth2Service oAuth2Service)
 {
-    private readonly IWechatLoginSessionStore store;
-    private readonly OAuth2Service oAuth2Service;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="store"></param>
-    /// <param name="oAuth2Service"></param>
-    public WechatLoginSessionManager(IWechatLoginSessionStore store,
-        OAuth2Service oAuth2Service)
-    {
-        this.store = store;
-        this.oAuth2Service = oAuth2Service;
-    }
-
-
-
-
     /// <summary>
     /// 构造回调URI
     /// </summary>
@@ -33,7 +21,7 @@ public class WechatLoginSessionManager
         var session = await this.FindAsync(sessionId) ?? throw new ArgumentException("会话无效。");
 
         //向federal.changingsoft.com发起资源所有者密码凭据授予流（ROPC），拿取访问WebAPI的令牌
-        var oAuth2Result = await this.oAuth2Service.GetResourceOwnerPasswordCredentialTokenAsync(session.ClientId, session.ClientSecret, session.WechatUser!.UserPrincipalName, session.WechatUser.UserSecret, session.Resource);
+        var oAuth2Result = await oAuth2Service.GetResourceOwnerPasswordCredentialTokenAsync(session.ClientId, session.ClientSecret, session.WechatUser!.UserPrincipalName, session.WechatUser.UserSecret, session.Resource);
 
         var queryData = new Dictionary<string, string?>
         {
@@ -56,9 +44,9 @@ public class WechatLoginSessionManager
     /// </summary>
     /// <param name="session"></param>
     /// <returns></returns>
-    public async Task UpdateAsync(WechatLoginSession session)
+    public Task UpdateAsync(WechatLoginSession session)
     {
-        await this.store.UpdateAsync(session);
+        return store.UpdateAsync(session);
     }
 
     /// <summary>
@@ -68,8 +56,8 @@ public class WechatLoginSessionManager
     /// <returns></returns>
     public async Task<WechatLoginSession?> FindAsync(string sessionId)
     {
-        await this.store.CleanExpiredSessionsAsync();
-        return await this.store.FindAsync(sessionId);
+        await store.CleanExpiredSessionsAsync();
+        return await store.FindAsync(sessionId);
     }
 
     // ReSharper disable IdentifierTypo

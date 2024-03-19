@@ -1,51 +1,39 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace IdSubjects.SecurityAuditing.Events;
 /// <summary>
 /// 
 /// </summary>
-public abstract class AuditLogEvent
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="category"></param>
+/// <param name="eventId"></param>
+/// <param name="type"></param>
+/// <param name="message"></param>
+public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEventTypes type, string? message = null)
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="category"></param>
-    /// <param name="eventId"></param>
-    /// <param name="type"></param>
-    /// <param name="message"></param>
-    protected AuditLogEvent(string category, EventId eventId, AuditLogEventTypes type, string? message = null)
-    {
-        this.Category = category;
-        this.EventId = eventId;
-        this.EventType = type;
-        this.Message = message;
-    }
     /// <summary>
     /// 事件Id.
     /// </summary>
-    public EventId EventId { get; }
+    public EventId EventId { get; } = eventId;
 
     /// <summary>
     /// 任务类别。
     /// </summary>
-    public string Category { get; set; }
+    public string Category { get; set; } = category;
 
     /// <summary>
     /// 
     /// </summary>
-    public AuditLogEventTypes EventType { get; set; }
+    public AuditLogEventTypes EventType { get; set; } = type;
 
     /// <summary>
     /// 
     /// </summary>
-    public string? Message { get; set; }
+    public string? Message { get; set; } = message;
 
     /// <summary>
     /// Gets or sets the per-request activity identifier.
@@ -118,8 +106,7 @@ public abstract class AuditLogEvent
         return JsonSerializer.Serialize(this, Options);
     }
 
-
-    static readonly JsonSerializerOptions Options = new()
+    private static readonly JsonSerializerOptions Options = new()
     {
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = true

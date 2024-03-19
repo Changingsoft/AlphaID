@@ -1,20 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace IdSubjects.RealName.Tests;
-public class RealNameManagerTest : IClassFixture<ServiceProviderFixture>
-{
-    private readonly ServiceProviderFixture serviceProvider;
 
-    public RealNameManagerTest(ServiceProviderFixture serviceProvider)
-    {
-        this.serviceProvider = serviceProvider;
-    }
+[Collection(nameof(ServiceProviderCollection))]
+public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
+{
+    private readonly NaturalPerson person = new("zhangsan", new PersonNameInfo("张小三"));
 
     [Fact]
     public async Task AddAuthentication()
     {
-        var person = new NaturalPerson("zhangsan", new PersonNameInfo("张小三"));
         var authentication = new DocumentedRealNameAuthentication(
             new ChineseIdCardDocument()
             {
@@ -31,22 +26,28 @@ public class RealNameManagerTest : IClassFixture<ServiceProviderFixture>
             DateTimeOffset.UtcNow,
             "Test validator");
 
-        using var scope = this.serviceProvider.ScopeFactory.CreateScope();
+        using var scope = serviceProvider.ScopeFactory.CreateScope();
         var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-        await personManager.CreateAsync(person);
+        await personManager.CreateAsync(this.person);
 
         //Test
         var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
-        var result = await realManager.AuthenticateAsync(person, authentication);
+        var result = await realManager.AuthenticateAsync(this.person, authentication);
 
         Assert.True(result.Succeeded);
-        Assert.Equal("张三", person.PersonName.FullName);
+        Assert.Equal("张三", this.person.PersonName.FullName);
     }
 
-    [Fact(Skip = "由于引用问题无法完成此测试，需改进测试方案。")]
+    [Fact]
     public async Task CannotChangeNameWhenRealNameAuthenticationExists()
     {
-        var person = new NaturalPerson("zhangsan", new PersonNameInfo("张小三"));
+        using var scope = serviceProvider.ScopeFactory.CreateScope();
+        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        await personManager.CreateAsync(this.person);
+
+        var target = (await personManager.FindByIdAsync(this.person.Id))!;
+
+        var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
         var authentication = new DocumentedRealNameAuthentication(
             new ChineseIdCardDocument()
             {
@@ -62,17 +63,11 @@ public class RealNameManagerTest : IClassFixture<ServiceProviderFixture>
             new("张三", "张", "三"),
             DateTimeOffset.UtcNow,
             "Test validator");
+        await realManager.AuthenticateAsync(target, authentication);
 
-        using var scope = this.serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-        await personManager.CreateAsync(person);
 
-        var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
-        await realManager.AuthenticateAsync(person, authentication);
-
-        person.PersonName = new("张三三");
-        var result = await personManager.UpdateAsync(person);
+        target.PersonName = new("张三三");
+        var result = await personManager.UpdateAsync(target);
         Assert.False(result.Succeeded);
-        Assert.Equal("张三", person.PersonName.FullName);
     }
 }

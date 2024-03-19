@@ -3,18 +3,12 @@
 /// <summary>
 /// 组织搜索器。
 /// </summary>
-public class OrganizationSearcher
+/// <remarks>
+/// 初始化组织搜索器。
+/// </remarks>
+/// <param name="organizationStore"></param>
+public class OrganizationSearcher(IOrganizationStore organizationStore)
 {
-    private readonly IOrganizationStore organizationStore;
-
-    /// <summary>
-    /// 初始化组织搜索器。
-    /// </summary>
-    /// <param name="organizationStore"></param>
-    public OrganizationSearcher(IOrganizationStore organizationStore)
-    {
-        this.organizationStore = organizationStore;
-    }
 
     /// <summary>
     /// 搜索。
@@ -25,11 +19,11 @@ public class OrganizationSearcher
     {
         keywords = keywords.Trim();
         if (string.IsNullOrEmpty(keywords))
-            return Enumerable.Empty<GenericOrganization>();
+            return [];
 
         var result = new HashSet<GenericOrganization>();
 
-        var mainResult = this.organizationStore.Organizations.Where(p => p.Name.Contains(keywords) || p.UsedNames.Any(n => n.Name.Contains(keywords)));
+        var mainResult = organizationStore.Organizations.Where(p => p.Name.Contains(keywords) || p.UsedNames.Any(n => n.Name.Contains(keywords)));
         
         result.UnionWith(mainResult);
         return result;

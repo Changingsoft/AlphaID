@@ -4,23 +4,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail
 {
-    public class FapiaoModel : PageModel
+    public class FapiaoModel(OrganizationManager organizationManager) : PageModel
     {
-        private readonly OrganizationManager organizationManager;
-
-        public FapiaoModel(OrganizationManager organizationManager)
-        {
-            this.organizationManager = organizationManager;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
         public IdOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var organization = await this.organizationManager.FindByIdAsync(anchor);
+            var organization = await organizationManager.FindByIdAsync(anchor);
             if (organization == null)
                 return this.NotFound();
 
@@ -42,7 +35,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public async Task<IActionResult> OnPostSaveAsync(string anchor)
         {
-            var organization = await this.organizationManager.FindByIdAsync(anchor);
+            var organization = await organizationManager.FindByIdAsync(anchor);
             if (organization == null)
                 return this.NotFound();
 
@@ -70,39 +63,45 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
                 organization.Fapiao.Account = this.Input.Account;
             }
 
-            this.Result = await this.organizationManager.UpdateAsync(organization);
+            this.Result = await organizationManager.UpdateAsync(organization);
             return this.Page();
         }
 
         public async Task<IActionResult> OnPostClearAsync(string anchor)
         {
-            var organization = await this.organizationManager.FindByIdAsync(anchor);
+            var organization = await organizationManager.FindByIdAsync(anchor);
             if (organization == null)
                 return this.NotFound();
 
             organization.Fapiao = null;
-            this.Result = await this.organizationManager.UpdateAsync(organization);
+            this.Result = await organizationManager.UpdateAsync(organization);
             return this.Page();
         }
 
         public class InputModel
         {
             [Display(Name = "Name")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Name { get; set; } = default!;
 
             [Display(Name = "Taxpayer ID")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string TaxpayerId { get; set; } = default!;
 
             [Display(Name = "Address")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Address { get; set; } = default!;
 
             [Display(Name = "Contact")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Contact { get; set; } = default!;
 
             [Display(Name = "Bank")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Bank { get; set; } = default!;
 
             [Display(Name = "Account")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Account { get; set; } = default!;
         }
 

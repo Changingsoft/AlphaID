@@ -4,20 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes.Detail;
 
-public class IndexModel : PageModel
+public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public IndexModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public ApiScope Data { get; set; } = default!;
 
     public IActionResult OnGet(int id)
     {
-        var result = this.dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
+        var result = dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
         if (result == null)
         {
             return this.NotFound();

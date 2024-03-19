@@ -6,23 +6,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
-    public class ClaimsModel : PageModel
+    public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
     {
-        private readonly ConfigurationDbContext dbContext;
-
-        public ClaimsModel(ConfigurationDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
-
         [BindProperty]
         [Display(Name = "New claim type")]
         public string NewClaim { get; set; } = default!;
 
         public ApiResource Data { get; set; } = default!;
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await dbContext.ApiResources
                 .Include(p => p.UserClaims)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
@@ -35,7 +28,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
         public async Task<IActionResult> OnPostAddAsync(int id)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await dbContext.ApiResources
                 .Include(p => p.UserClaims)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
@@ -52,14 +45,14 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
             {
                 Type = this.NewClaim,
             });
-            this.dbContext.ApiResources.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.ApiResources.Update(this.Data);
+            await dbContext.SaveChangesAsync();
             return this.Page();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync(int id, int claimId)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await dbContext.ApiResources
                 .Include(p => p.UserClaims)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
@@ -70,8 +63,8 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
             if (item != null)
             {
                 this.Data.UserClaims.Remove(item);
-                this.dbContext.ApiResources.Update(this.Data);
-                await this.dbContext.SaveChangesAsync();
+                dbContext.ApiResources.Update(this.Data);
+                await dbContext.SaveChangesAsync();
             }
             return this.Page();
         }

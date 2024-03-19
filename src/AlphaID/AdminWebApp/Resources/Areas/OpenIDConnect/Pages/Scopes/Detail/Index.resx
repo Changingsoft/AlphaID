@@ -99,46 +99,35 @@
   </resheader>
   <data name="Base info" xml:space="preserve">
 		<value>Base info</value>
-		<comment>Base info</comment>
 	</data>
   <data name="Delete scope" xml:space="preserve">
 		<value>Delete scope</value>
-		<comment>Delete scope</comment>
 	</data>
   <data name="Description" xml:space="preserve">
 		<value>Description</value>
-		<comment>Description</comment>
 	</data>
   <data name="Display name" xml:space="preserve">
 		<value>Display name</value>
-		<comment>Display name</comment>
 	</data>
   <data name="Emphasize" xml:space="preserve">
 		<value>Emphasize</value>
-		<comment>Emphasize</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
-		<comment>Overview</comment>
 	</data>
   <data name="Related resources" xml:space="preserve">
 		<value>Related resources</value>
-		<comment>Related resources</comment>
 	</data>
   <data name="Show in Disco" xml:space="preserve">
 		<value>Show in Disco</value>
-		<comment>Show in Disco</comment>
 	</data>
   <data name="Status" xml:space="preserve">
 		<value>Status</value>
-		<comment>Status</comment>
 	</data>
 </root>

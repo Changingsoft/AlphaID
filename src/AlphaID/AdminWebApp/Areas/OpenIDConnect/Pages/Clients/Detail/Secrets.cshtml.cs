@@ -5,20 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class SecretsModel : PageModel
+public class SecretsModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public SecretsModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Client Data { get; set; } = default!;
 
     public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
         {
             return this.NotFound();

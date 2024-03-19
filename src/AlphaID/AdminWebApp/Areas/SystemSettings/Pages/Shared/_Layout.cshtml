@@ -1,11 +1,12 @@
 ﻿@{
-    Layout = "/Pages/Shared/_LayoutBase.cshtml";
+    Layout = "Tabler/_PageWrapper";
 }
 
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head{
+    @await RenderSectionAsync("head", false)
 }
-@section Navbar{
+@section Header{
+    <partial name="_DefaultTitleNavBarPartial" />
     <header class="navbar-expand-md">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu2" aria-controls="navbar-menu2" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,7 +31,8 @@
 
     </header>
 }
-<div class="page-header">
+@section PageHeader
+{
     <div class="container-xl">
         <ul class="breadcrumb mb-1">
             <li class="breadcrumb-item"><a asp-page="/Index">@L["System Settings"]</a></li>
@@ -38,12 +40,19 @@
         </ul>
         @await RenderSectionAsync("PageHeader", false)
     </div>
+}
+<div class="container-xl">
+    @RenderBody()
 </div>
-<div class="page-body">
-    <div class="container-xl">
-        @RenderBody()
-    </div>
-</div>
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
+@section PageComponents
+{
+    @await RenderSectionAsync("PageComponents", false)
+}
 @section Scripts {
     @await RenderSectionAsync("Scripts", false)
 }

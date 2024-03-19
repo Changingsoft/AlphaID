@@ -4,15 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account
 {
-    public class IndexModel : PageModel
+    public class IndexModel(NaturalPersonManager userManager) : PageModel
     {
-        private readonly NaturalPersonManager userManager;
-
-        public IndexModel(NaturalPersonManager userManager)
-        {
-            this.userManager = userManager;
-        }
-
         public NaturalPerson Data { get; set; } = default!;
 
         public bool HasPassword { get; set; }
@@ -22,14 +15,14 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
 
         public string? OperationResultMessage { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(anchor);
+            var person = await userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 
             this.Data = person;
-            this.HasPassword = await this.userManager.HasPasswordAsync(this.Data);
+            this.HasPassword = await userManager.HasPasswordAsync(this.Data);
             this.Input = new()
             {
                 UserName = this.Data.UserName
@@ -40,25 +33,25 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var person = await this.userManager.FindByIdAsync(anchor);
+            var person = await userManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
 
             this.Data = person;
-            this.HasPassword = await this.userManager.HasPasswordAsync(this.Data);
+            this.HasPassword = await userManager.HasPasswordAsync(this.Data);
 
             if (!this.ModelState.IsValid)
             {
                 return this.Page();
             }
 
-            if (this.userManager.Users.Any(p => p.Id != this.Data.Id && p.UserName == this.Input.UserName))
+            if (userManager.Users.Any(p => p.Id != this.Data.Id && p.UserName == this.Input.UserName))
             {
                 this.ModelState.AddModelError("", "不能与其他账户名相同");
                 return this.Page();
             }
 
-            await this.userManager.SetUserNameAsync(this.Data, this.Input.UserName);
+            await userManager.SetUserNameAsync(this.Data, this.Input.UserName);
             this.OperationResultMessage = "操作已成功。";
             return this.Page();
         }

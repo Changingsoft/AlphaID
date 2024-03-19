@@ -11,6 +11,6 @@ internal class EmptyRealNameAuditorProvider : IRealNameRequestAuditorProvider
     /// <returns></returns>
     public IEnumerable<IRealNameRequestAuditor> GetAuditors()
     {
-        return Enumerable.Empty<IRealNameRequestAuditor>();
+        return [];
     }
 }

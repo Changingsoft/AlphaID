@@ -99,10 +99,8 @@
   </resheader>
   <data name="Search" xml:space="preserve">
 		<value>Search</value>
-		<comment>Search</comment>
 	</data>
   <data name="Username, email, full name, phone number..." xml:space="preserve">
 		<value>Username, email, full name, phone number...</value>
-		<comment>Username, email, full name, phone number...</comment>
 	</data>
 </root>

@@ -2,13 +2,13 @@
 @model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.ClaimsModel
 @{
 }
-<h2>User Claims</h2>
+<h2>@L["User Claims"]</h2>
 
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
             <tr>
-                <td>Type</td>
+                <td>@L["Type"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -26,7 +26,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3>Add Claim</h3>
+        <h3>@L["Add Claim"]</h3>
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
@@ -36,7 +36,7 @@
                 <span asp-validation-for="NewClaim" class="text-danger"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">@L["Add"]</button>
         </form>
     </div>
 </div>

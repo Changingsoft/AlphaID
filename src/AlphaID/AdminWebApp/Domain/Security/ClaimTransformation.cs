@@ -7,21 +7,13 @@ namespace AdminWebApp.Domain.Security;
 /// <summary>
 /// Claim transformation for role-based claims.
 /// </summary>
-public class ClaimTransformation : IClaimsTransformation
+/// <remarks>
+/// Initialize.
+/// </remarks>
+/// <param name="environment"></param>
+/// <param name="manager"></param>
+public class ClaimTransformation(IHostEnvironment environment, UserInRoleManager manager) : IClaimsTransformation
 {
-    private readonly IHostEnvironment environment;
-    private readonly UserInRoleManager manager;
-
-    /// <summary>
-    /// Initialize.
-    /// </summary>
-    /// <param name="environment"></param>
-    /// <param name="manager"></param>
-    public ClaimTransformation(IHostEnvironment environment, UserInRoleManager manager)
-    {
-        this.environment = environment;
-        this.manager = manager;
-    }
 
     /// <summary>
     /// 
@@ -44,11 +36,11 @@ public class ClaimTransformation : IClaimsTransformation
         var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier) ?? principal.FindFirst(JwtClaimTypes.Subject);
         if (userIdClaim != null)
         {
-            roleSet.UnionWith(this.manager.GetRoles(userIdClaim.Value));
+            roleSet.UnionWith(manager.GetRoles(userIdClaim.Value));
         }
 
         //for debugging. always add Administrators role to user.
-        if (this.environment.IsDevelopment())
+        if (environment.IsDevelopment())
         {
             roleSet.Add(RoleConstants.AdministratorsRole.Name);
         }

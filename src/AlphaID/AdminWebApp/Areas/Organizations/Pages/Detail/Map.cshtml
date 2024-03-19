@@ -3,4 +3,50 @@
 @{
     ViewBag.Title = L["Map"];
 }
+@section head
+{
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css">
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+}
 <h2>@L["Map"]</h2>
+<div id="viewDiv"></div>
+@section Scripts
+{
+    <script src="https://js.arcgis.com/4.29/"></script>
+    <script>
+        require([
+            "esri/config",
+            "esri/Map", 
+            "esri/views/MapView",
+            "esri/intl"
+        ], function (esriConfig, Map, MapView) {
+
+            esriConfig.apiKey = "AAPKc59bb9b3e2d941918da905555d1901d1ZfnGrYMgAZP71Wo953jwbgUjnCrLNnbN85ZNZ8DCsrnh7lIwyo9T5PBHZYKU4aj2";
+
+            const map = new Map({
+                basemap: {
+                    style: {
+                        id: "arcgis/streets",
+                        language: "zh-CN"
+                    }
+                } // basemap styles service
+            });
+
+            const view = new MapView({
+                map: map,
+                center: [101.75, 24.8], // Longitude, latitude
+                zoom: 7, // Zoom level
+                container: "viewDiv" // Div element
+            });
+        });
+    </script>
+}

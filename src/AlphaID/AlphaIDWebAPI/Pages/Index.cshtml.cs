@@ -6,21 +6,17 @@ namespace AlphaIdWebAPI.Pages
     /// <summary>
     /// 
     /// </summary>
-    public class IndexModel : PageModel
+    /// <remarks>
+    /// 
+    /// </remarks>
+    /// <param name="productionInfo"></param>
+    public class IndexModel(IOptions<ProductInfo> productionInfo) : PageModel
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="productionInfo"></param>
-        public IndexModel(IOptions<ProductInfo> productionInfo)
-        {
-            this.ProductionInfo = productionInfo.Value;
-        }
 
         /// <summary>
         /// 
         /// </summary>
-        public ProductInfo ProductionInfo { get; }
+        public ProductInfo ProductionInfo { get; } = productionInfo.Value;
 
         /// <summary>
         /// 

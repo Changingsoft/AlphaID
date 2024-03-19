@@ -4,15 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail;
 
-public class ChangeNameModel : PageModel
+public class ChangeNameModel(OrganizationManager manager) : PageModel
 {
-    private readonly OrganizationManager manager;
-
-    public ChangeNameModel(OrganizationManager manager)
-    {
-        this.manager = manager;
-    }
-
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -21,7 +14,7 @@ public class ChangeNameModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await this.manager.FindByIdAsync(this.Anchor);
+        var org = await manager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
 
@@ -34,11 +27,11 @@ public class ChangeNameModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await this.manager.FindByIdAsync(this.Anchor);
+        var org = await manager.FindByIdAsync(this.Anchor);
         if (org == null)
             return this.NotFound();
 
-        var result = await this.manager.ChangeNameAsync(org, this.Input.NewName, DateOnly.FromDateTime(this.Input.ChangeDate), this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
+        var result = await manager.ChangeNameAsync(org, this.Input.NewName, DateOnly.FromDateTime(this.Input.ChangeDate), this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -54,9 +47,11 @@ public class ChangeNameModel : PageModel
     public class InputModel
     {
         [Display(Name = "Current name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string CurrentName { get; set; } = default!;
 
         [Display(Name = "New name")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(100, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string NewName { get; set; } = default!;
 

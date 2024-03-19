@@ -2,10 +2,11 @@
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.Helpers
 @model AuthCenterWebApp.Areas.Settings.Pages.Profile.IndexModel
+@inject IOptions<ProductInfo> Product
 @{
     ViewBag.Title = L["Profile"];
 }
-@section Heads{
+@section head {
     <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
     <style>
         .label {
@@ -31,9 +32,45 @@
     <h2>@L["Profile"]</h2>
     <a href="@User.ProfileUrl()" class="btn btn-sm">@L["Go to your profile"]</a>
 </div>
-<a asp-page="PersonName" class="btn">@L["Edit person name"]</a>
-<a asp-page="/RealName/Index" class="btn">@L["Real-name authentication"]</a>
+
 <hr />
+<div class="row g-3">
+    <div class="col-md">
+        <div class="form-label">@L["Surname"]</div>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PersonName.Surname">
+    </div>
+    <div class="col-md">
+        <div class="form-label">@L["Given name"]</div>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PersonName.GivenName">
+    </div>
+    <div class="col-md">
+        <div class="form-label">@L["Full name"]</div>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PersonName.FullName">
+    </div>
+    <div class="col-md">
+        <a asp-page="PersonName" class="btn">@L["Edit person name"]</a>
+        @if (Product.Value.Feature.RealName)
+        {
+            <a asp-page="/RealName/Index" class="btn">@L["Real-name authentication"]</a>
+        }
+    </div>
+</div>
+<div class="row g-3">
+    <div class="col-md">
+        <div class="form-label">@L["Phonetic surname"]</div>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PhoneticSurname">
+    </div>
+    <div class="col-md">
+        <div class="form-label">@L["Phonetic given name"]</div>
+        <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PhoneticGivenName">
+    </div>
+    <div class="col-md">
+        
+    </div>
+    <div class="col-md">
+        
+    </div>
+</div>
 <div class="row">
     <div class="col-9">
         <form method="post">
@@ -45,7 +82,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Input.DateOfBirth" class="form-label"></label>
-                <input asp-for="Input.DateOfBirth" class="form-control"/>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
                 <span asp-description-for="Input.DateOfBirth"></span>
                 <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
@@ -56,7 +93,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Website" class="form-label"></label>
-                <input asp-for="Input.Website" class="form-control"/>
+                <input asp-for="Input.Website" class="form-control" />
                 <span asp-description-for="Input.Website"></span>
                 <span asp-validation-for="Input.Website" class="text-danger"></span>
             </div>
@@ -100,7 +137,7 @@
         </div>
     </div>
 </div>
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
     <script>

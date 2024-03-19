@@ -99,22 +99,17 @@
   </resheader>
   <data name="API Resources" xml:space="preserve">
 		<value>API Resources</value>
-		<comment>API Resources</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="New API resource" xml:space="preserve">
 		<value>New API resource</value>
-		<comment>New API resource</comment>
 	</data>
   <data name="No results found." xml:space="preserve">
 		<value>No results found.</value>
-		<comment>No results found.</comment>
 	</data>
   <data name="Resource ID" xml:space="preserve">
 		<value>Resource ID</value>
-		<comment>Resource ID</comment>
 	</data>
 </root>

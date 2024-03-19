@@ -141,4 +141,7 @@
   <data name="Real Name" xml:space="preserve">
     <value>实名制</value>
   </data>
+  <data name="Personal Info" xml:space="preserve">
+	  <value>个人资料</value>
+  </data>
 </root>

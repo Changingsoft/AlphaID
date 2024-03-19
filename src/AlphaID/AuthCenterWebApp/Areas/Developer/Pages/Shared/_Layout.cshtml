@@ -1,8 +1,18 @@
 ﻿@{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "Tabler/_PageWrapper";
+}
+
+@section Header
+{
+    <partial name="_DefaultTitleNavBarPartial"/>
 }
 
 @RenderBody()
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
 
 @section Scripts
     {

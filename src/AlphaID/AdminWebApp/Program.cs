@@ -7,7 +7,6 @@ using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.EntityFramework.SecurityAuditing;
 using AlphaId.PlatformServices.Aliyun;
-using AlphaId.PlatformServices.Primitives;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Platform;
@@ -32,6 +31,7 @@ using System.Data;
 using System.Globalization;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using Westwind.AspNetCore.Markdown;
 // ReSharper disable StringLiteralTypo
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,31 +58,31 @@ builder.Host.UseSerilog((context, configuration) =>
                 return false;
             })
             .WriteTo.MSSqlServer(
-                builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+                builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
                 sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
                 columnOptions: new ColumnOptions()
                 {
-                    AdditionalColumns = new[]
-                    {
+                    AdditionalColumns =
+                    [
                         new SqlColumn("EventId", SqlDbType.Int){PropertyName = "EventId.Id"},
                         new SqlColumn("Source", SqlDbType.NVarChar){PropertyName = "SourceContext"},
-                    },
+                    ],
                 }
             );
     });
 });
 
-//ConfigServices
+//äº§å“å’Œç³»ç»ŸURLä¿¡æ¯ã€‚
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
-//³ÌĞò×ÊÔ´
+//ç¨‹åºèµ„æº
 builder.Services.AddLocalization(options =>
 {
     options.ResourcesPath = "Resources";
 });
 
-//ÇøÓòºÍ±¾µØ»¯
+//åŒºåŸŸå’Œæœ¬åœ°åŒ–
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
@@ -96,7 +96,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 
-//ÅäÖÃRazorPages.
+//é…ç½®RazorPages.
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/", "RequireAdminRole");
@@ -113,10 +113,10 @@ builder.Services.AddRazorPages(options =>
     })
     .AddSessionStateTempDataProvider();
 
-//ÆôÓÃAPI Controller
+//å¯ç”¨API Controller
 builder.Services.AddControllers();
 
-//ÅäÖÃÊÚÈ¨²ßÂÔ¡£
+//é…ç½®æˆæƒç­–ç•¥ã€‚
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdminRole", policy =>
@@ -125,11 +125,11 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
-//ÆôÓÃ·şÎñÆ÷Session
+//å¯ç”¨æœåŠ¡å™¨Session
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
-//ÅäÖÃÉí·İÑéÖ¤¡£
+//é…ç½®èº«ä»½éªŒè¯ã€‚
 builder.Services
     .AddAuthentication(options =>
     {
@@ -144,9 +144,9 @@ builder.Services
         options.ClientSecret = builder.Configuration["OidcClient:ClientSecret"];
         options.ResponseType = OpenIdConnectResponseType.Code;
         options.SaveTokens = true;
-        options.GetClaimsFromUserInfoEndpoint = true; //´ÓUserInfoEndPointÈ¡µÃ¸ü¶àÓÃ»§ĞÅÏ¢¡£
+        options.GetClaimsFromUserInfoEndpoint = true; //ä»UserInfoEndPointå–å¾—æ›´å¤šç”¨æˆ·ä¿¡æ¯ã€‚
 
-        //hack ½«nameÉùÃ÷Ìí¼Óµ½ÍêÈ«ÀàĞÍ¡°http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name¡±ÉÏ¡£
+        //hack å°†nameå£°æ˜æ·»åŠ åˆ°å®Œå…¨ç±»å‹â€œhttp://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameâ€ä¸Šã€‚
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, JwtClaimTypes.Name);
         //options.ClaimActions.MapJsonKey("profile", JwtClaimTypes.Profile);
         options.ClaimActions.MapJsonKey("picture", JwtClaimTypes.Picture);
@@ -166,7 +166,7 @@ builder.Services
                     }
                     else
                     {
-                        //Ö¸Ê¾ÈÏÖ¤ÖĞĞÄÖ±½ÓÊ¹ÓÃAD FSÀ´´¦ÀíÓÃ»§µÇÂ¼¡£
+                        //æŒ‡ç¤ºè®¤è¯ä¸­å¿ƒç›´æ¥ä½¿ç”¨AD FSæ¥å¤„ç†ç”¨æˆ·ç™»å½•ã€‚
                         //context.ProtocolMessage.SetParameter("acr_values", "idp:federal.changingsoft.com");
                     }
                 }
@@ -186,77 +186,71 @@ builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OperationalDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(OperationalDbContext)));
 });
 
-//×ÔÈ»ÈË¹ÜÀíÆ÷
+//è‡ªç„¶äººç®¡ç†å™¨
 var idSubjectsBuilder = builder.Services.AddIdSubjects();
 idSubjectsBuilder
     .AddDefaultStores()
     .AddDbContext(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)), sqlOptions =>
         {
             sqlOptions.UseNetTopologySuite();
         });
     });
 
-if (true)
+if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
     idSubjectsBuilder.AddRealName()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 }
 
-if (true)
+if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
 {
     idSubjectsBuilder.AddDirectoryLogin()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection")));
+        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 }
 
-//Éí·İÖ¤OCRÊ¶±ğ
+//èº«ä»½è¯OCRè¯†åˆ«
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
 
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
 
-builder.Services.AddScoped<LogonAccountManager>()
-    .AddScoped<ILogonAccountStore, LogonAccountStore>()
+builder.Services.AddScoped<DirectoryAccountManager>()
+    .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>()
     .AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>()
-    .AddScoped<IDirectoryServiceStore, DirectoryServiceStore>();
+    .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
 
-//¶ÌĞÅ¡¢¶ÌĞÅÑéÖ¤Âë·şÎñ
-builder.Services.AddScoped<IShortMessageService, SimpleShortMessageService>();
-builder.Services.AddScoped<IVerificationCodeService, SimpleShortMessageService>();
-builder.Services.Configure<SimpleShortMessageServiceOptions>(options =>
-{
-    options.ClientId = "bbb867eb-f1e2-4deb-8a21-832f963b4a74";
-    options.ClientSecret = "XIKHAcDO6oVYIAQQs8cewfaJwGxVV5u5x-6Yi-lu";
-});
 
-//Ìí¼ÓÓÊ¼ş·¢ËÍÆ÷¡£
+//æ·»åŠ é‚®ä»¶å‘é€å™¨ã€‚
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
 
 builder.Services.AddScoped<IdApiService>();
 
 
-//ÁîÅÆ×ª»»·şÎñ
+//ä»¤ç‰Œè½¬æ¢æœåŠ¡
 builder.Services.AddScoped<IClaimsTransformation, ClaimTransformation>();
 
-//Ä¿Â¼·şÎñ
+//ç›®å½•æœåŠ¡
 builder.Services.AddScoped<DirectoryServiceManager>()
-    .AddScoped<IDirectoryServiceStore, DirectoryServiceStore>();
-builder.Services.AddScoped<LogonAccountManager>()
-    .AddScoped<ILogonAccountStore, LogonAccountStore>();
+    .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
+builder.Services.AddScoped<DirectoryAccountManager>()
+    .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>();
 
-//°²È«½ÇÉ«¹ÜÀí
+//å®‰å…¨è§’è‰²ç®¡ç†
 builder.Services.AddScoped<UserInRoleManager>()
     .AddScoped<IUserInRoleStore, UserInRoleStore>();
 
-//µ±DebugÄ£Ê½Ê±£¬¸²¸Ç×¢²áÏÈÇ°ÅäÖÃÒÔ½â³ıÍâ²¿ÒÀÀµ
+builder.Services.AddMarkdown();
+
+//å½“Debugæ¨¡å¼æ—¶ï¼Œè¦†ç›–æ³¨å†Œå…ˆå‰é…ç½®ä»¥è§£é™¤å¤–éƒ¨ä¾èµ–
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddScoped<IEmailSender, NopEmailSender>();
@@ -265,12 +259,12 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IChineseIdCardOcrService, DebugChineseIdCardOcrService>();
 }
 
-//°²È«Éó¼ÆÈÕÖ¾
+//å®‰å…¨å®¡è®¡æ—¥å¿—
 builder.Services.AddAuditLog()
     .AddDefaultStore()
     .AddDbContext(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)));
     });
 
 var app = builder.Build();
@@ -289,8 +283,9 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseRequestLocalization();
+app.UseMarkdown();
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
@@ -304,5 +299,5 @@ app.Run();
 
 namespace AdminWebApp
 {
-    public class Program { }
+    public class Program;
 }

@@ -7,19 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {
-    public class InvitationsModel : PageModel
+    public class InvitationsModel(NaturalPersonManager naturalPersonManager, JoinOrganizationInvitationManager joinOrganizationInvitationManager, OrganizationManager organizationManager) : PageModel
     {
-        private readonly NaturalPersonManager naturalPersonManager;
-        private readonly JoinOrganizationInvitationManager joinOrganizationInvitationManager;
-        private readonly OrganizationManager organizationManager;
-
-        public InvitationsModel(NaturalPersonManager naturalPersonManager, JoinOrganizationInvitationManager joinOrganizationInvitationManager, OrganizationManager organizationManager)
-        {
-            this.naturalPersonManager = naturalPersonManager;
-            this.joinOrganizationInvitationManager = joinOrganizationInvitationManager;
-            this.organizationManager = organizationManager;
-        }
-
         [BindProperty]
         [Display(Name = "Invitee")]
         public string Invitee { get; set; } = default!;
@@ -28,7 +17,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public IActionResult OnGet(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("../Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -37,24 +26,24 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            if (!this.organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("../Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
-            var person = await this.naturalPersonManager.FindByNameAsync(this.Invitee);
+            var person = await naturalPersonManager.FindByNameAsync(this.Invitee);
             if (person == null)
                 this.ModelState.AddModelError(nameof(this.Invitee), "Cannot find person.");
 
             if (!this.ModelState.IsValid)
                 return this.Page();
 
-            this.Result = await this.joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, this.User.DisplayName() ?? "");
+            this.Result = await joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, this.User.DisplayName() ?? "");
             return this.Page();
         }
 
         public IActionResult OnGetFindPerson(string term)
         {
-            var searchResults = this.naturalPersonManager.Users.Where(p => p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.PersonName.FullName.StartsWith(term))
+            var searchResults = naturalPersonManager.Users.Where(p => p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.PersonName.FullName.StartsWith(term))
                 .Select(p => new FindPersonModel() { UserName = p.UserName, Name = p.PersonName.FullName });
             return new JsonResult(searchResults);
         }

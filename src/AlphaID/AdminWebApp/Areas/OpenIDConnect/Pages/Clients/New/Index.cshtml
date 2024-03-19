@@ -1,0 +1,48 @@
+﻿@page
+@model AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New.IndexModel
+@{
+    ViewBag.Title = L["Create new client"];
+}
+<h2>@ViewBag.Title</h2>
+<p>Which client type will use?</p>
+<div class="row row-cards row-deck">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3>Client-side Application</h3>
+                <p>A client that running on client-side. For example, a javascript program, a single page application (SPA).</p>
+                <p>The client cannot have any secret.</p>
+                <a class="btn btn-primary">Go</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3>Server-side Application</h3>
+                <p>A client that running on server. For example, a php website, an asp.net core website.</p>
+                <p>The client have at least one secret, for issue token work-flow.</p>
+                <a class="btn btn-primary">Go</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3>Daemon Application</h3>
+                <p>A client that running on server and without any end-user interactions. For example, a task scheduler program.</p>
+                <p>The client have at least one secret, for issue token work-flow.</p>
+                <a class="btn btn-primary">Go</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h3>Custom</h3>
+                <p>Create client with advanced options.</p>
+                <a class="btn btn-primary" asp-page="Custom">Go</a>
+            </div>
+        </div>
+    </div>
+</div>

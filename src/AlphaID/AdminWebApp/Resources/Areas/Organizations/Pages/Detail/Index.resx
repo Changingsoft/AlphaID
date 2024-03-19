@@ -99,98 +99,74 @@
   </resheader>
   <data name="Address and contact" xml:space="preserve">
 		<value>Address and contact</value>
-		<comment>Address and contact</comment>
 	</data>
   <data name="Bank and Account" xml:space="preserve">
 		<value>Bank and Account</value>
-		<comment>Bank and Account</comment>
 	</data>
   <data name="Business term" xml:space="preserve">
 		<value>Business term</value>
-		<comment>Business term</comment>
 	</data>
   <data name="Change name" xml:space="preserve">
 		<value>Change name</value>
-		<comment>Change name</comment>
 	</data>
   <data name="Changed at" xml:space="preserve">
 		<value>Changed at</value>
-		<comment>Changed at</comment>
 	</data>
   <data name="Contact" xml:space="preserve">
 		<value>Contact</value>
-		<comment>Contact</comment>
 	</data>
   <data name="Created at" xml:space="preserve">
 		<value>Created at</value>
-		<comment>Created at</comment>
 	</data>
   <data name="Danger zone" xml:space="preserve">
 		<value>Danger zone</value>
-		<comment>Danger zone</comment>
 	</data>
   <data name="Delete organization" xml:space="preserve">
 		<value>Delete organization</value>
-		<comment>Delete organization</comment>
 	</data>
   <data name="Domicile" xml:space="preserve">
 		<value>Domicile</value>
-		<comment>Domicile</comment>
 	</data>
   <data name="Edit" xml:space="preserve">
 		<value>Edit</value>
-		<comment>Edit</comment>
 	</data>
   <data name="Established At" xml:space="preserve">
 		<value>Established At</value>
-		<comment>Established At</comment>
 	</data>
+  <data name="Fapiao Info" xml:space="preserve">
+	  <value>Fapiao Info</value>
+  </data>
   <data name="Invoice title" xml:space="preserve">
 		<value>Invoice title</value>
-		<comment>Invoice title</comment>
 	</data>
   <data name="Members" xml:space="preserve">
 		<value>Members</value>
-		<comment>Members</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
-	</data>
-  <data name="Overview" xml:space="preserve">
-		<value>Overview</value>
-		<comment>Overview</comment>
-	</data>
-  <data name="Representative" xml:space="preserve">
-		<value>Representative</value>
-		<comment>Representative</comment>
-	</data>
-  <data name="Status" xml:space="preserve">
-		<value>Status</value>
-		<comment>Status</comment>
-	</data>
-  <data name="USCI" xml:space="preserve">
-		<value>USCI</value>
-		<comment>USCI</comment>
-	</data>
-  <data name="Used name" xml:space="preserve">
-		<value>Used name</value>
-		<comment>Used name</comment>
-	</data>
-  <data name="Website" xml:space="preserve">
-		<value>Website</value>
-		<comment>Website</comment>
 	</data>
   <data name="Not specified." xml:space="preserve">
 	  <value>Not specified.</value>
-	  <comment>Not specified.</comment>
   </data>
-  <data name="Fapiao Info" xml:space="preserve">
-	  <value>Fapiao Info</value>
-	  <comment>Fapiao Info</comment>
-  </data>
+  <data name="Overview" xml:space="preserve">
+		<value>Overview</value>
+	</data>
+  <data name="Representative" xml:space="preserve">
+		<value>Representative</value>
+	</data>
+  <data name="Status" xml:space="preserve">
+		<value>Status</value>
+	</data>
   <data name="Taxpayer ID" xml:space="preserve">
 	  <value>Taxpayer ID</value>
-	  <comment>Taxpayer ID</comment>
   </data>
+  <data name="USCI" xml:space="preserve">
+		<value>USCI</value>
+	</data>
+  <data name="Used name" xml:space="preserve">
+		<value>Used name</value>
+	</data>
+  <data name="Website" xml:space="preserve">
+		<value>Website</value>
+	</data>
 </root>

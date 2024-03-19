@@ -6,15 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class CorsModel : PageModel
+public class CorsModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public CorsModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Client Data { get; set; } = default!;
 
     [BindProperty]
@@ -23,7 +16,7 @@ public class CorsModel : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -32,7 +25,7 @@ public class CorsModel : PageModel
 
     public async Task<IActionResult> OnPostRemoveAsync(int anchor, int originId)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -41,15 +34,15 @@ public class CorsModel : PageModel
         if (item != null)
         {
             this.Data.AllowedCorsOrigins.Remove(item);
-            this.dbContext.Clients.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.Clients.Update(this.Data);
+            await dbContext.SaveChangesAsync();
         }
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostAddAsync(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -66,8 +59,8 @@ public class CorsModel : PageModel
         {
             Origin = this.NewOrigin,
         });
-        this.dbContext.Clients.Update(this.Data);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Data);
+        await dbContext.SaveChangesAsync();
         return this.Page();
     }
 }

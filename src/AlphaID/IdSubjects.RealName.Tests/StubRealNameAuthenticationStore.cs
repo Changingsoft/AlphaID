@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IdSubjects.RealName.Tests;
-internal class StubRealNameAuthenticationStore:IRealNameAuthenticationStore
+﻿namespace IdSubjects.RealName.Tests;
+internal class StubRealNameAuthenticationStore : IRealNameAuthenticationStore
 {
-    private HashSet<RealNameAuthentication> set = new();
+    private readonly HashSet<RealNameAuthentication> set = [];
 
     public IQueryable<RealNameAuthentication> Authentications => this.set.AsQueryable();
     public Task<IdOperationResult> CreateAsync(RealNameAuthentication authentication)

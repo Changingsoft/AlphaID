@@ -21,12 +21,15 @@ public class AdfsIdTokenSubGenerateTest
 
         var expected = "e2eap+PlN90Mi5sSodneUrCZKBxlkdzSsoPpiHeC5VQ=";
 
-        byte[] originBytes = Array.Empty<byte>();
-        originBytes = originBytes
-            .Concat(Encoding.Unicode.GetBytes(clientId))
-            .Concat(Encoding.Unicode.GetBytes(anchorValue))
-            .Concat(Convert.FromBase64String(ppidPrivacyEntropy))
-            .ToArray();
+        byte[] originBytes = [];
+        originBytes =
+        [
+            .. originBytes
+,
+            .. Encoding.Unicode.GetBytes(clientId),
+            .. Encoding.Unicode.GetBytes(anchorValue),
+            .. Convert.FromBase64String(ppidPrivacyEntropy),
+        ];
         var result = Convert.ToBase64String(SHA256.HashData(originBytes));
 
         Assert.Equal(expected, result);

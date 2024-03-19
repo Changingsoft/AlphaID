@@ -99,10 +99,8 @@
   </resheader>
   <data name="Success" xml:space="preserve">
 		<value>Success</value>
-		<comment>Success</comment>
 	</data>
   <data name="You have successfully authorized the device" xml:space="preserve">
 		<value>You have successfully authorized the device</value>
-		<comment>You have successfully authorized the device</comment>
 	</data>
 </root>

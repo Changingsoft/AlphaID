@@ -6,21 +6,17 @@ namespace IdSubjects.SecurityAuditing;
 /// <summary>
 /// 审计日志构建器。
 /// </summary>
-public class AuditLogBuilder
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="services"></param>
+public class AuditLogBuilder(IServiceCollection services)
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="services"></param>
-    public AuditLogBuilder(IServiceCollection services)
-    {
-        this.Services = services;
-    }
 
     /// <summary>
     /// 
     /// </summary>
-    public IServiceCollection Services { get; }
+    public IServiceCollection Services { get; } = services;
 
     /// <summary>
     /// 添加审计日志存取器。

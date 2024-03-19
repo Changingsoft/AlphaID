@@ -99,26 +99,20 @@
   </resheader>
   <data name="Display Name" xml:space="preserve">
 		<value>Display Name</value>
-		<comment>Display Name</comment>
 	</data>
   <data name="External Logins" xml:space="preserve">
 		<value>External Logins</value>
-		<comment>External Logins</comment>
 	</data>
   <data name="Key" xml:space="preserve">
 		<value>Key</value>
-		<comment>Key</comment>
 	</data>
   <data name="Notes that person will only rebind external login by itself that if unbind." xml:space="preserve">
 		<value>Notes that person will only rebind external login by itself that if unbind.</value>
-		<comment>Notes that person will only rebind external login by itself that if unbind.</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Provider" xml:space="preserve">
 		<value>Provider</value>
-		<comment>Provider</comment>
 	</data>
 </root>

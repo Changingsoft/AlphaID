@@ -22,9 +22,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
         public IEnumerable<string> AllScopes { get; set; }
 
-        public IEnumerable<string> RemainingScopes { get; set; } = Array.Empty<string>();
+        public IEnumerable<string> RemainingScopes { get; set; } = [];
 
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             var resource = await this.dbContext.ApiResources
                 .Include(p => p.Scopes)

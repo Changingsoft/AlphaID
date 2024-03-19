@@ -5,19 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
-    public class IndexModel : PageModel
+    public class IndexModel(ConfigurationDbContext context) : PageModel
     {
-        private readonly ConfigurationDbContext context;
-
-        public IndexModel(ConfigurationDbContext context)
-        {
-            this.context = context;
-        }
-
         public ApiResource Data { get; set; } = default!;
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var resource = await this.context.ApiResources
+            var resource = await context.ApiResources
                 .Include(p => p.Secrets)
                 .Include(p => p.Scopes)
                 .Include(p => p.UserClaims)

@@ -7,17 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Register;
 
-public class CreateModel : PageModel
+public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, NaturalPersonManager manager) : PageModel
 {
-    private readonly ChinesePersonNamePinyinConverter pinyinConverter;
-    private readonly NaturalPersonManager manager;
-
-    public CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, NaturalPersonManager manager)
-    {
-        this.pinyinConverter = pinyinConverter;
-        this.manager = manager;
-    }
-
     [BindProperty]
     [Display(Name = "User name")]
     [PageRemote(PageHandler = "CheckUserName", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
@@ -60,7 +51,7 @@ public class CreateModel : PageModel
             return this.Page();
 
 
-        (string phoneticSurname, string phoneticGivenName) = this.pinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
+        (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, phoneticSurname, phoneticGivenName);
 
         var personName = new PersonNameInfo(chinesePersonName.FullName, this.Input.Surname, this.Input.GivenName);
@@ -83,7 +74,7 @@ public class CreateModel : PageModel
         person.PersonName.SearchHint = $"{chinesePersonName.PhoneticSurname}{chinesePersonName.GivenName}";
 
 
-        this.Result = await this.manager.CreateAsync(person);
+        this.Result = await manager.CreateAsync(person);
 
         if (this.Result.Succeeded)
             return this.RedirectToPage("../Detail/Index", new { anchor = person.Id });
@@ -104,7 +95,7 @@ public class CreateModel : PageModel
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
             return new JsonResult("移动电话号码无效");
 
-        if (!this.manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
+        if (!manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
         {
             return new JsonResult(true);
         }
@@ -113,14 +104,14 @@ public class CreateModel : PageModel
 
     public IActionResult OnPostCheckEmail(string email)
     {
-        if (this.manager.Users.Any(p => p.Email == email))
+        if (manager.Users.Any(p => p.Email == email))
             return new JsonResult("Email is exists.");
         return new JsonResult(true);
     }
 
     public IActionResult OnPostCheckUserName(string userName)
     {
-        if (this.manager.Users.Any(p => p.UserName == userName))
+        if (manager.Users.Any(p => p.UserName == userName))
             return new JsonResult("User name is exists.");
         return new JsonResult(true);
     }
@@ -132,7 +123,7 @@ public class CreateModel : PageModel
     {
         if (string.IsNullOrWhiteSpace(givenName))
             return this.Content(string.Empty);
-        (string phoneticSurname, string phoneticGivenName) = this.pinyinConverter.Convert(surname, givenName);
+        (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
         var chinesePersonName = new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
         return this.Content($"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim());
     }
@@ -149,7 +140,7 @@ public class CreateModel : PageModel
         public string GivenName { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        [Display(Name = "Display name")]
+        [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         public string DisplayName { get; set; } = default!;
 
         [Display(Name = "Phonetic surname")]

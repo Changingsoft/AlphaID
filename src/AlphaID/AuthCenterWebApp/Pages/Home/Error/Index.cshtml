@@ -1,35 +1,36 @@
 @page
 @model AuthCenterWebApp.Pages.Home.Error.Index
+@{
+    Layout = "Tabler/_Page_Center";
+}
+<div class="container container-tight py-4">
+    <div class="error-page">
+        <div class="lead">
+            <h1>@L["Error"]</h1>
+        </div>
 
-<div class="error-page">
-    <div class="lead">
-        <h1>@L["Error"]</h1>
-    </div>
+        <div class="alert alert-danger">
+            @L["An error occurred while processing your request."]
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="alert alert-danger">
-                @L["An error occurred while processing your request."]
-
-                @if (Model.View.Error != null)
-                {
-                    <strong>
-                        <em>
-                            : @Model.View.Error.Error
-                        </em>
-                    </strong>
-
-                    if (Model.View.Error.ErrorDescription != null)
-                    {
-                        <div>@Model.View.Error.ErrorDescription</div>
-                    }
-                }
-            </div>
-
-            @if (Model.View.Error?.RequestId != null)
+            @if (Model.View.Error != null)
             {
-                <div class="request-id">Request Id: @Model.View.Error.RequestId</div>
+                <strong>
+                    <em>
+                        : @Model.View.Error.Error
+                    </em>
+                </strong>
+
+                if (Model.View.Error.ErrorDescription != null)
+                {
+                    <div>@Model.View.Error.ErrorDescription</div>
+                }
             }
         </div>
+
+        @if (Model.View.Error?.RequestId != null)
+        {
+            <div class="request-id">Request Id: @Model.View.Error.RequestId</div>
+        }
+        <a asp-page="/Index" asp-area="" class="btn btn-secondary">@L["Go home"]</a>
     </div>
 </div>

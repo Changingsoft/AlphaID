@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<NeutralLanguage>en-US</NeutralLanguage>
@@ -10,15 +10,20 @@
 	<ItemGroup>
 		<!-- ReSharper disable once VulnerablePackage -->
 		<PackageReference Include="Captcha" Version="4.4.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="7.0.13" />
-		<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.3" />
+		<PackageReference Include="MinVer" Version="5.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 		<PackageReference Include="Serilog.Expressions" Version="4.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.6" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.6" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.0" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.1" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.1" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.16.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,6 +38,75 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="AuthCenterWebAppTests" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\Developer\Pages\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Financial\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Financial\NewBankAccount.zh-cn.resx">
+	    <DependentUpon>NewBankAccount.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Identifiers\Add.zh-cn.resx">
+	    <DependentUpon>Add.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Identifiers\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ExternalLogins.zh-cn.resx">
+	    <DependentUpon>ExternalLogins.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\TwoFactorAuthentication.zh-cn.resx">
+	    <DependentUpon>TwoFactorAuthentication.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\_Layout.zh-cn.resx">
+	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Authentication.zh-cn.resx">
+	    <DependentUpon>Authentication.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Authentications.zh-cn.resx">
+	    <DependentUpon>Authentications.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Request.zh-cn.resx">
+	    <DependentUpon>Request.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Requests.zh-cn.resx">
+	    <DependentUpon>Requests.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\StartRequest\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\StartRequest\WithChineseIdCard.zh-cn.resx">
+	    <DependentUpon>WithChineseIdCard.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\_ChineseIdCardDocumentPartial.zh-cn.resx">
+	    <DependentUpon>_ChineseIdCardDocumentPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\_IdentityDocumentPartial.zh-cn.resx">
+	    <DependentUpon>_IdentityDocumentPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\_RealNameAuthenticationListGroupItem.zh-cn.resx">
+	    <DependentUpon>_RealNameAuthenticationListGroupItem.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\_RealNameRequestListGroupItem.zh-cn.resx">
+	    <DependentUpon>_RealNameRequestListGroupItem.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\DisplayTemplates\MembershipVisibility.zh-cn.resx">
+	    <DependentUpon>MembershipVisibility.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultFooterPartial.zh-cn.resx">
+	    <DependentUpon>_DefaultFooterPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_IdOperationResultPartial.zh-cn.resx">
+	    <DependentUpon>_IdOperationResultPartial.resx</DependentUpon>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

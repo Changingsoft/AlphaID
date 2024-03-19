@@ -1,76 +1,43 @@
-﻿using AlphaIdWebAPI.Tests.Models;
-using Newtonsoft.Json;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 
 namespace AlphaIdWebAPI.Tests.Controllers;
 
 [Collection(nameof(TestServerCollection))]
-public class PersonControllerTests
+public class PersonControllerTests(AlphaIdApiFactory factory)
 {
-    private readonly AlphaIdApiFactory factory;
-
-    public PersonControllerTests(AlphaIdApiFactory factory)
+    [Theory]
+    [InlineData("刘备")]
+    [InlineData("liubei")]
+    public async Task SearchPerson(string keywords)
     {
-        this.factory = factory;
-    }
+        var client = factory.CreateAuthenticatedClient();
 
-
-    [Fact(Skip = "暂时跳过")]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public async Task GetNonExistsPerson()
-    {
-        var client = this.factory.CreateAuthenticatedClient();
-        var personId = "abcdefg";
-        var response = await client.GetAsync($"/api/Person/{personId}");
-
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var response = await client.GetAsync($"/api/Person/Suggestions?q={WebUtility.UrlEncode(keywords)}");
+        response.EnsureSuccessStatusCode();
+        var data = await response.Content.ReadFromJsonAsync<IEnumerable<SearchPersonModel>>();
+        Assert.True(data!.Any());
+        var one = data!.First();
+        Assert.NotNull(one.AvatarUrl);
     }
 
     [Fact]
-    public async Task GetExistsPerson()
+    public async Task GetUserInfo()
     {
-        var client = this.factory.CreateAuthenticatedClient();
-        var response = await client.GetAsync("/api/person/d2480421-8a15-4292-8e8f-06985a1f645b");
-        response.EnsureSuccessStatusCode();
+        var client = factory.CreateAuthenticatedClient();
 
-        var data = await response.Content.ReadFromJsonAsync<PersonModel>();
-        Assert.NotNull(data);
-    }
-
-    [Fact]
-    public async Task GetPersonMembersOf()
-    {
-        var client = this.factory.CreateAuthenticatedClient();
-        var response = await client.GetAsync("/api/Person/bf16436b-d15f-44b7-bd61-831eacee5063/MembersOf");
+        var response = await client.GetAsync("/api/Person/liubei");
         response.EnsureSuccessStatusCode();
-        var data = await response.Content.ReadFromJsonAsync<OrganizationMemberModel[]>();
-        Assert.Single(data!);
+        var data = await response.Content.ReadFromJsonAsync<UserInfoModel>();
+        Assert.Equal("d2480421-8a15-4292-8e8f-06985a1f645b", data!.SubjectId);
+        Assert.Equal("刘备", data!.Name);
+        Assert.Equal("LIUBEI", data!.SearchHint);
+        Assert.NotNull(data!.AvatarUrl);
 
     }
 
-    [Fact]
-    public async Task SearchPersonByPhoneticHint()
-    {
-        var client = this.factory.CreateAuthenticatedClient();
+    internal record SearchPersonModel(string UserName, string Name, string? AvatarUrl);
 
-        var response = await client.GetAsync($"/api/Person/Search/{WebUtility.UrlEncode("关羽")}");
-        _ = await response.Content.ReadAsStringAsync();
-        response.EnsureSuccessStatusCode();
-        var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());
-        Assert.Single(data!.Persons);
-    }
-
-    [Fact]
-    public async Task SearchPersonByMobilePhone()
-    {
-        var client = this.factory.CreateAuthenticatedClient();
-
-        var response = await client.GetAsync("/api/Person/Search/13812340001");
-        response.EnsureSuccessStatusCode();
-        var data = JsonConvert.DeserializeObject<PersonSearchResult>(await response.Content.ReadAsStringAsync());
-        Assert.Single(data!.Persons);
-    }
+    internal record UserInfoModel(string SubjectId, string Name, string? SearchHint, string? AvatarUrl);
 }

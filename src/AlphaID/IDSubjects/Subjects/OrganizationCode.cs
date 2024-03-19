@@ -66,7 +66,7 @@ public struct OrganizationCode
     /// <returns></returns>
     public readonly string ToString(bool asMachineFormat)
     {
-        return asMachineFormat ? this.code + this.CheckCode.ToString() : this.code + "-" + this.CheckCode.ToString();
+        return asMachineFormat ? this.code + this.CheckCode : this.code + "-" + this.CheckCode;
     }
 
     /// <summary>
@@ -120,12 +120,12 @@ public struct OrganizationCode
                 throw new ArgumentException("无效字符");
             sum += charIndex * Weight[i];
         }
-        return CheckCodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在0-10范围内。
+        return CheckCodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在 0-10 范围内。
     }
 
     private const string CheckCodeCharset = "0123456789X";
     private const string Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static readonly int[] Weight = new int[] { 3, 7, 9, 10, 5, 8, 4, 2 };
+    private static readonly int[] Weight = [3, 7, 9, 10, 5, 8, 4, 2];
     private const string Pattern = @"^([0-9A-Z]{8})-?([0-9X])$";
 
     /// <summary>

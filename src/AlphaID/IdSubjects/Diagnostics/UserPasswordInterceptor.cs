@@ -14,8 +14,7 @@ public class UserPasswordInterceptor : IUserPasswordInterceptor
     /// <param name="plainPassword"></param>
     /// <param name="cancellation"></param>
     /// <returns></returns>
-    public virtual Task<IdentityResult> PasswordChangingAsync(NaturalPerson person, string plainPassword,
-        CancellationToken cancellation)
+    public virtual Task<IdentityResult> PasswordChangingAsync(NaturalPerson person, string? plainPassword, CancellationToken cancellation)
     {
         return Task.FromResult(IdentityResult.Success);
     }

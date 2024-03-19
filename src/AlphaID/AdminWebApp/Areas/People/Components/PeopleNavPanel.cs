@@ -3,17 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Components;
 
-public class PeopleNavPanel : ViewComponent
+public class PeopleNavPanel(NaturalPersonManager personManager) : ViewComponent
 {
-    private readonly NaturalPersonManager personManager;
-
-    public PeopleNavPanel(NaturalPersonManager personManager)
-    {
-        this.personManager = personManager;
-    }
-
     public IViewComponentResult Invoke()
     {
-        return this.View(model: this.personManager.Users.Count());
+        return this.View(model: personManager.Users.Count());
     }
 }

@@ -5,15 +5,8 @@ using System.Transactions;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
-public class SecurityModel : PageModel
+public class SecurityModel(NaturalPersonManager manager) : PageModel
 {
-    private readonly NaturalPersonManager manager;
-
-    public SecurityModel(NaturalPersonManager manager)
-    {
-        this.manager = manager;
-    }
-
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -26,7 +19,7 @@ public class SecurityModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.manager.FindByIdAsync(this.Anchor);
+        var person = await manager.FindByIdAsync(this.Anchor);
         if (person == null) { return this.NotFound(); }
 
         this.Data = person;
@@ -40,14 +33,14 @@ public class SecurityModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await this.manager.FindByIdAsync(this.Anchor);
+        var person = await manager.FindByIdAsync(this.Anchor);
         if (person == null) { return this.NotFound(); }
 
         this.Data = person;
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await this.manager.SetTwoFactorEnabledAsync(this.Data, this.Input.TwoFactorEnabled);
-        await this.manager.SetLockoutEnabledAsync(this.Data, this.Input.LockoutEnabled);
+        await manager.SetTwoFactorEnabledAsync(this.Data, this.Input.TwoFactorEnabled);
+        await manager.SetLockoutEnabledAsync(this.Data, this.Input.LockoutEnabled);
         trans.Complete();
         this.OperationMessage = "ÒÑ¸üÐÂ";
         return this.Page();

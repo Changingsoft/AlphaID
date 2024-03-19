@@ -1,9 +1,10 @@
 ﻿@page
-@model             IndexModel
+@model IndexModel
 @{
+    ViewBag.Title = L["Overview"];
 }
 
-<h2>Overview</h2>
+<h2>@L["Overview"]</h2>
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.ClientName" class="form-label"></label>
@@ -41,18 +42,18 @@
         <span asp-validation-for="Input.ClientUri" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">Apply Changes</button>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
     <p class="text-success">@Model.OperationMessage</p>
 </form>
 
 
-<h4>Danger zone</h4>
+<h4>@L["Danger zone"]</h4>
 
 @if (Model.Client.NonEditable)
 {
-    <p>System client, do not delete.</p>
+    <p>@L["System client, do not delete."]</p>
 }
 else
 {
-    <a asp-page="Delete" asp-route-anchor="@Model.Client.Id" class="btn btn-danger">Delete client</a>
+    <a asp-page="Delete" asp-route-anchor="@Model.Client.Id" class="btn btn-danger">@L["Delete client"]</a>
 }

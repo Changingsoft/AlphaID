@@ -1,35 +1,36 @@
 ﻿using IdSubjects;
 using IdSubjects.Invitations;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework;
-public class JoinOrganizationInvitationStore : IJoinOrganizationInvitationStore
+public class JoinOrganizationInvitationStore(IdSubjectsDbContext dbContext) : IJoinOrganizationInvitationStore
 {
-    private readonly IdSubjectsDbContext dbContext;
-
-    public JoinOrganizationInvitationStore(IdSubjectsDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
-    public IQueryable<JoinOrganizationInvitation> Invitations => this.dbContext.JoinOrganizationInvitations;
+    public IQueryable<JoinOrganizationInvitation> Invitations => dbContext.JoinOrganizationInvitations;
     public async Task<IdOperationResult> CreateAsync(JoinOrganizationInvitation invitation)
     {
-        this.dbContext.JoinOrganizationInvitations.Add(invitation);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.JoinOrganizationInvitations.Add(invitation);
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 
     public async Task<IdOperationResult> UpdateAsync(JoinOrganizationInvitation invitation)
     {
-        //todo 是否要考虑attach或者其他操作以避免外来对象无法正确更新到数据库。
-        await this.dbContext.SaveChangesAsync();
+        if (dbContext.Entry(invitation).State == EntityState.Detached)
+        {
+            var origin = await dbContext.JoinOrganizationInvitations.FindAsync(invitation.Id);
+            if (origin != null)
+            {
+                dbContext.Entry(origin).CurrentValues.SetValues(invitation);
+            }
+        }
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 
     public async Task<IdOperationResult> DeleteAsync(JoinOrganizationInvitation invitation)
     {
-        this.dbContext.JoinOrganizationInvitations.Remove(invitation);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.JoinOrganizationInvitations.Remove(invitation);
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 }

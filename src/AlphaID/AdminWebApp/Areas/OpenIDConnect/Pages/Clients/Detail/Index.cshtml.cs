@@ -6,15 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class IndexModel : PageModel
+public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public IndexModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Client Client { get; set; } = default!;
 
     [BindProperty]
@@ -48,7 +41,7 @@ public class IndexModel : PageModel
             return this.NotFound();
         this.Client = data;
 
-        if (this.Input.ClientId != this.Client.ClientId && this.dbContext.Clients.Any(p => p.ClientId == this.Input.ClientId))
+        if (this.Input.ClientId != this.Client.ClientId && dbContext.Clients.Any(p => p.ClientId == this.Input.ClientId))
             this.ModelState.AddModelError("", "Client Anchor ÒÑ´æÔÚ¡£");
 
         if (!this.ModelState.IsValid)
@@ -62,15 +55,15 @@ public class IndexModel : PageModel
         this.Client.ClientUri = this.Input.ClientUri;
         this.Client.RequireClientSecret = this.Input.RequireClientSecret;
 
-        this.dbContext.Clients.Update(this.Client);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Client);
+        await dbContext.SaveChangesAsync();
         this.OperationMessage = "Applied";
         return this.Page();
     }
 
-    private async Task<Client?> GetClient(int anchor)
+    private Task<Client?> GetClient(int anchor)
     {
-        return await this.dbContext.Clients
+        return dbContext.Clients
             .Include(p => p.AllowedScopes)
             .Include(p => p.AllowedGrantTypes)
             .Include(p => p.RedirectUris)
@@ -85,10 +78,12 @@ public class IndexModel : PageModel
     public class InputModel
     {
         [Display(Name = "Client name")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientName { get; set; } = default!;
 
-        [Display(Name = "Client Anchor")]
+        [Display(Name = "Client ID")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string ClientId { get; set; } = default!;
 

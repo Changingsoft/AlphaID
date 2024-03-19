@@ -10,17 +10,8 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordMobileModel : PageModel
+public class ResetPasswordMobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly IVerificationCodeService verificationCodeService;
-
-    public ResetPasswordMobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService)
-    {
-        this.userManager = userManager;
-        this.verificationCodeService = verificationCodeService;
-    }
-
     [BindProperty]
     public string Code { get; set; } = default!;
 
@@ -70,18 +61,18 @@ public class ResetPasswordMobileModel : PageModel
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = await this.userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
+        var person = await userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
         }
 
-        if (!await this.verificationCodeService.VerifyAsync(this.PhoneNumber, this.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(this.PhoneNumber, this.VerificationCode))
         {
             return this.RedirectToPage("ResetPasswordConfirmation");
         }
 
-        var result = await this.userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
+        var result = await userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
         if (result.Succeeded)
         {
             return this.RedirectToPage("ResetPasswordConfirmation");

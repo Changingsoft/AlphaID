@@ -8,18 +8,9 @@ using System.Text;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
-public class ResetPasswordModel : PageModel
+public class ResetPasswordModel(NaturalPersonManager userManager, IShortMessageService shortMessageService, IOptions<IdentityOptions> options) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly IShortMessageService shortMessageService;
-    private readonly IdentityOptions identityOptions;
-
-    public ResetPasswordModel(NaturalPersonManager userManager, IShortMessageService shortMessageService, IOptions<IdentityOptions> options)
-    {
-        this.userManager = userManager;
-        this.shortMessageService = shortMessageService;
-        this.identityOptions = options.Value;
-    }
+    private readonly IdentityOptions identityOptions = options.Value;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -29,9 +20,9 @@ public class ResetPasswordModel : PageModel
     public string? OperationResult { get; set; }
 
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
         {
             return this.NotFound();
@@ -43,7 +34,7 @@ public class ResetPasswordModel : PageModel
 
     public async Task<IActionResult> OnPostAutoReset(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -56,10 +47,10 @@ public class ResetPasswordModel : PageModel
         }
 
         var password = this.GeneratePassword();
-        var result = await this.userManager.AdminResetPasswordAsync(this.Person, password, true, true);
+        var result = await userManager.AdminResetPasswordAsync(this.Person, password, true, true);
         if (result.Succeeded)
         {
-            await this.shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
+            await shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
             this.OperationResult = "密码已重置并告知用户。";
             return this.Page();
         }
@@ -75,12 +66,12 @@ public class ResetPasswordModel : PageModel
 
     public async Task<IActionResult> OnPostManualReset(string anchor)
     {
-        var person = await this.userManager.FindByIdAsync(anchor);
+        var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
 
-        var result = await this.userManager.AdminResetPasswordAsync(this.Person, this.Input.NewPassword, this.Input.UserMustChangePasswordOnNextLogin, this.Input.UnlockUser);
+        var result = await userManager.AdminResetPasswordAsync(this.Person, this.Input.NewPassword, this.Input.UserMustChangePasswordOnNextLogin, this.Input.UnlockUser);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)

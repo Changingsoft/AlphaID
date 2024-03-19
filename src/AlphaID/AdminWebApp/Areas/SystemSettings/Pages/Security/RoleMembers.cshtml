@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = L["Role Members"];
 }
-@section Heads{
+@section head{
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
 }
 <h3>@L["Role Members"]</h3>
@@ -27,7 +27,7 @@
                     <ul>
                         @foreach (var member in Model.RoleMembers)
                         {
-                            <li>@member.UserName <button type="submit" asp-page-handler="RemoveMember" asp-route-personId="@member.UserId" class="btn btn-outline-danger btn-sm" onclick="return confirm('确实要移除吗？');">移除</button></li>
+                            <li>@member.UserId <button type="submit" asp-page-handler="RemoveMember" asp-route-personId="@member.UserId" class="btn btn-outline-danger btn-sm" onclick="return confirm('确实要移除吗？');">移除</button></li>
                         }
                     </ul>
                 </form>
@@ -44,29 +44,32 @@
         }
     </div>
 </div>
-<div class="modal fade" id="memberEditor" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">@L["Add member"]</div>
-            <div class="modal-body">
-                <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
-                    <div class="mb-3">
-                        <label for="personSearch" class="form-label">Search person</label>
-                        <input id="personSearch" name="personSearch" class="form-control" />
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Input.UserName" class="form-label"></label>
-                        <input asp-for="Input.UserName" class="form-control" readonly />
-                    </div>
-                    <input asp-for="Input.PersonId" type="hidden" />
-                    <input asp-for="Input.PhoneticSearchHint" type="hidden" />
-                    <button type="submit" class="btn btn-primary">@L["Add"]</button>
-                    <button type="reset" class="btn btn-secondary">@L["Clear"]</button>
-                </form>
+@section PageComponents
+{
+    <div class="modal fade" id="memberEditor" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">@L["Add member"]</div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
+                        <div class="mb-3">
+                            <label for="personSearch" class="form-label">Search person</label>
+                            <input id="personSearch" name="personSearch" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.UserName" class="form-label"></label>
+                            <input asp-for="Input.UserName" class="form-control" readonly />
+                        </div>
+                        <input asp-for="Input.PhoneticSearchHint" type="hidden" />
+                        <button type="submit" class="btn btn-primary">@L["Add"]</button>
+                        <button type="reset" class="btn btn-secondary">@L["Clear"]</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+}
 
 @section Scripts
     {
@@ -79,8 +82,7 @@
                 appendTo: "#memberEditor",
                 select: function (event, ui) {
                     $(this).val(ui.item.name);
-                    $("[name='Input.PersonId']").val(ui.item.subjectId);
-                    $("[name='Input.UserName']").val(ui.item.name);
+                    $("[name='Input.UserName']").val(ui.item.userName);
                     $("[name='Input.PhoneticSearchHint']").val(ui.item.phoneticSearchHint);
 
                     return false;

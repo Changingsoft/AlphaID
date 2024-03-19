@@ -1,7 +1,7 @@
 ﻿@page
 @model AdminWebApp.Areas.People.Pages.Detail.Account.IndexModel
 @{
-    ViewBag.Title = L["Account"];
+    ViewBag.Title = SL["Overview"];
 }
 <h2>@ViewBag.Title</h2>
 @if (Model.OperationResultMessage != null)
@@ -22,7 +22,7 @@
 </form>
 
 <p>Local login: @Model.HasPassword</p>
-<p>Two Factor Authentication (TOTP): @(Model.Data.TwoFactorEnabled)</p>
+<p>Two-Factor Authentication (TOTP): @(Model.Data.TwoFactorEnabled)</p>
 <p>Login failed counter：@Model.Data.AccessFailedCount</p>
 <p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
 @if (!Model.HasPassword)

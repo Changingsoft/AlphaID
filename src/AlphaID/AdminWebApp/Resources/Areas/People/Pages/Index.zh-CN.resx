@@ -123,4 +123,7 @@
   <data name="People" xml:space="preserve">
     <value>个人</value>
   </data>
+  <data name="Create new person" xml:space="preserve">
+	  <value>创建新自然人</value>
+  </data>
 </root>

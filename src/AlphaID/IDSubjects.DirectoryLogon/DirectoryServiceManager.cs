@@ -1,55 +1,71 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.DirectoryServices.AccountManagement;
 
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// Directory service manager.
 /// </summary>
-public class DirectoryServiceManager
+/// <remarks>
+/// Init DirectoryServiceManager.
+/// </remarks>
+/// <param name="directoryServiceDescriptorStore"></param>
+/// <param name="logger"></param>
+public class DirectoryServiceManager(IDirectoryServiceDescriptorStore directoryServiceDescriptorStore, ILogger<DirectoryServiceManager>? logger = null)
 {
-    private readonly IDirectoryServiceStore directoryServiceStore;
-    private readonly ILogger<DirectoryServiceManager>? logger;
-
-    /// <summary>
-    /// Init DirectoryServiceManager.
-    /// </summary>
-    /// <param name="directoryServiceStore"></param>
-    /// <param name="logger"></param>
-    public DirectoryServiceManager(IDirectoryServiceStore directoryServiceStore, ILogger<DirectoryServiceManager>? logger = null)
-    {
-        this.directoryServiceStore = directoryServiceStore;
-        this.logger = logger;
-    }
 
     /// <summary>
     /// Gets list of DirectoryService.
     /// </summary>
-    public IEnumerable<DirectoryService> Services => this.directoryServiceStore.Services;
+    public IEnumerable<DirectoryServiceDescriptor> Services => directoryServiceDescriptorStore.Services;
 
     /// <summary>
     /// Create a directory service.
     /// </summary>
-    /// <param name="directoryService"></param>
+    /// <param name="directoryServiceDescriptor"></param>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    public async Task<IdOperationResult> CreateAsync(DirectoryService directoryService)
+    public async Task<IdOperationResult> CreateAsync(DirectoryServiceDescriptor directoryServiceDescriptor)
     {
-        using var entry = directoryService.GetRootEntry();
+        if (!directoryServiceDescriptor.DefaultUserAccountContainer.EndsWith(directoryServiceDescriptor.RootDn))
+            return IdOperationResult.Failed("默认UserContainer必须是RootDN的子集。");
+
         try
         {
-            var name = entry.Properties["name"].Value?.ToString();
+            using PrincipalContext context = directoryServiceDescriptor.GetRootContext();
 
             //没有异常，说明访问成功，可以持久化DirectoryService配置。
-            await this.directoryServiceStore.CreateAsync(directoryService);
+            await directoryServiceDescriptorStore.CreateAsync(directoryServiceDescriptor);
             return IdOperationResult.Success;
         }
         catch (Exception)
         {
-            this.logger?.LogInformation("创建目录服务时出错，测试目录服务连接没有成功。");
+            logger?.LogInformation("创建目录服务时出错，测试目录服务连接没有成功。");
             return IdOperationResult.Failed("创建目录服务时出错，测试目录服务连接没有成功。");
         }
-        finally
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="directoryServiceDescriptor"></param>
+    /// <returns></returns>
+    public async Task<IdOperationResult> UpdateAsync(DirectoryServiceDescriptor directoryServiceDescriptor)
+    {
+        if (!directoryServiceDescriptor.DefaultUserAccountContainer.EndsWith(directoryServiceDescriptor.RootDn))
+            return IdOperationResult.Failed("默认UserContainer必须是RootDN的子集。");
+
+        try
         {
-            entry.Dispose();
+            using PrincipalContext context = directoryServiceDescriptor.GetRootContext();
+
+            //没有异常，说明访问成功，可以持久化DirectoryService配置。
+            await directoryServiceDescriptorStore.UpdateAsync(directoryServiceDescriptor);
+            return IdOperationResult.Success;
+        }
+        catch (Exception)
+        {
+            logger?.LogInformation("创建目录服务时出错，测试目录服务连接没有成功。");
+            return IdOperationResult.Failed("创建目录服务时出错，测试目录服务连接没有成功。");
         }
     }
 
@@ -58,9 +74,9 @@ public class DirectoryServiceManager
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> DeleteAsync(DirectoryService data)
+    public async Task<IdOperationResult> DeleteAsync(DirectoryServiceDescriptor data)
     {
-        await this.directoryServiceStore.DeleteAsync(data);
+        await directoryServiceDescriptorStore.DeleteAsync(data);
         return IdOperationResult.Success;
     }
 
@@ -69,8 +85,8 @@ public class DirectoryServiceManager
     /// </summary>
     /// <param name="serviceId"></param>
     /// <returns></returns>
-    public Task<DirectoryService?> FindByIdAsync(int serviceId)
+    public Task<DirectoryServiceDescriptor?> FindByIdAsync(int serviceId)
     {
-        return this.directoryServiceStore.FindByIdAsync(serviceId);
+        return directoryServiceDescriptorStore.FindByIdAsync(serviceId);
     }
 }

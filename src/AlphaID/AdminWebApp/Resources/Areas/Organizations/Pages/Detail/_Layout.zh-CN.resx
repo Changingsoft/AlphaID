@@ -117,23 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Fapiao" xml:space="preserve">
+	  <value>发票</value>
+  </data>
   <data name="Financial" xml:space="preserve">
     <value>财务</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>常规</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>地图</value>
+  </data>
   <data name="Members" xml:space="preserve">
     <value>成员</value>
   </data>
   <data name="Overview" xml:space="preserve">
     <value>概览</value>
-  </data>
-  <data name="Fapiao" xml:space="preserve">
-	  <value>发票</value>
-	  <comment>Fapiao</comment>
-  </data>
-  <data name="Map" xml:space="preserve">
-    <value>地图</value>
   </data>
 </root>

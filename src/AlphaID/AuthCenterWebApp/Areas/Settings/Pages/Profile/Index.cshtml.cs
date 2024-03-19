@@ -8,26 +8,19 @@ using System.Diagnostics;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 {
-    public class IndexModel : PageModel
+    public class IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager) : PageModel
     {
-        private readonly NaturalPersonManager personManager;
-        private readonly PersonSignInManager signInManager;
-
-        public IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager)
-        {
-            this.personManager = personManager;
-            this.signInManager = signInManager;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
+
+        public NaturalPerson Person { get; set; } = default!;
 
         public IdentityResult? Result { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await this.personManager.GetUserAsync(this.User);
-            Debug.Assert(person != null);
+            var person = await personManager.GetUserAsync(this.User);
+            this.Person = person ?? throw new InvalidOperationException("无法从登录找到用户信息，请联系系统管理员。");
             this.Input = new InputModel()
             {
                 Bio = person.Bio,
@@ -40,7 +33,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var person = await this.personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(this.User);
             Debug.Assert(person != null);
 
             if (!this.ModelState.IsValid)
@@ -51,11 +44,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             person.Gender = this.Input.Gender;
             person.DateOfBirth = this.Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value) : null;
 
-            this.Result = await this.personManager.UpdateAsync(person);
-            if (!this.Result.Succeeded)
-            {
-                //todo log
-            }
+            this.Result = await personManager.UpdateAsync(person);
             return this.Page();
         }
 
@@ -65,16 +54,16 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 return this.BadRequest();
 
             var file = this.Request.Form.Files[0];
-            var person = await this.personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(this.User);
             if (person == null)
                 return this.BadRequest();
             await using var stream = file.OpenReadStream();
             byte[] data = new byte[stream.Length];
             await stream.ReadAsync(data, 0, data.Length);
-            var result = await this.personManager.SetProfilePictureAsync(person, file.ContentType, data);
+            var result = await personManager.SetProfilePictureAsync(person, file.ContentType, data);
             if (result.Succeeded)
             {
-                await this.signInManager.RefreshSignInAsync(person);
+                await signInManager.RefreshSignInAsync(person);
                 return new JsonResult(true);
             }
             else
@@ -83,13 +72,13 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
         public async Task<IActionResult> OnPostClearProfilePictureAsync()
         {
-            var person = await this.personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(this.User);
             if (person == null)
                 return this.BadRequest();
-            this.Result = await this.personManager.ClearProfilePictureAsync(person);
+            this.Result = await personManager.ClearProfilePictureAsync(person);
             if (this.Result.Succeeded)
             {
-                await this.signInManager.RefreshSignInAsync(person);
+                await signInManager.RefreshSignInAsync(person);
             }
             return this.Page();
         }
@@ -97,7 +86,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         public class InputModel
         {
             [Display(Name = "Bio", Description = "Short description about yourself.")]
-            [StringLength(200)]
+            [StringLength(200, ErrorMessage = "Validate_StringLength")]
             public string? Bio { get; set; }
 
             [Display(Name = "Website", Description = "Your personal website.")]

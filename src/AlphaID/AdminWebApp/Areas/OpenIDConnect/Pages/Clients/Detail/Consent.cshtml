@@ -1,8 +1,9 @@
 ﻿@page
 @model ConsentModel
 @{
+    ViewBag.Title = L["Consent"];
 }
-<h1>Consent</h1>
+<h1>@L["Consent"]</h1>
 
 <form method="post">
     <div class="form-check">
@@ -14,6 +15,6 @@
         <label asp-for="Input.AllowRememberConsent" class="form-check-label"></label>
     </div>
 
-    <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
     <p class="text-success">@Model.OperationMessage</p>
 </form>

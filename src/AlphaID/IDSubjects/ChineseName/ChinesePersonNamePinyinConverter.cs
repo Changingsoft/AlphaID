@@ -6,44 +6,36 @@ namespace IdSubjects.ChineseName;
 /// <summary>
 /// 中国人名字拼音转换器。
 /// </summary>
-public class ChinesePersonNamePinyinConverter
+/// <remarks>
+/// 初始化转换器。
+/// </remarks>
+/// <param name="nameCharacterSpacing">设置一个值，指示名称汉字间是否有空格。</param>
+/// <param name="withTone">设置一个值，指示获取的汉字读音是否包含音调。</param>
+/// <param name="interceptors">设置转换拦截器集合。</param>
+public class ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool withTone, ICollection<IChinesePersonNamePinyinInterceptor> interceptors)
 {
-    /// <summary>
-    /// 初始化转换器。
-    /// </summary>
-    /// <param name="nameCharacterSpacing">设置一个值，指示名称汉字间是否有空格。</param>
-    /// <param name="withTone">设置一个值，指示获取的汉字读音是否包含音调。</param>
-    /// <param name="interceptors">设置转换拦截器集合。</param>
-    public ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool withTone, ICollection<IChinesePersonNamePinyinInterceptor> interceptors)
-    {
-        this.NameCharacterSpacing = nameCharacterSpacing;
-        this.WithTone = withTone;
-        this.Interceptors = interceptors;
-    }
 
     /// <summary>
     /// 初始化拼音转换器。
     /// 使用默认的拼音拦截器。
     /// </summary>
-    public ChinesePersonNamePinyinConverter() : this(false, false, new IChinesePersonNamePinyinInterceptor[] { new DefaultChinesePersonNamePinyinInterceptor() })
-    {
-
-    }
+    public ChinesePersonNamePinyinConverter() : this(false, false, [new DefaultChinesePersonNamePinyinInterceptor()])
+    { }
 
     /// <summary>
     /// 获取或设置一个值，用来表示汉字读音之间是否需要空格。
     /// </summary>
-    public bool NameCharacterSpacing { get; set; }
+    public bool NameCharacterSpacing { get; set; } = nameCharacterSpacing;
 
     /// <summary>
     /// 获取或设置一个值，指示拼音是否包括音调。
     /// </summary>
-    public bool WithTone { get; set; }
+    public bool WithTone { get; set; } = withTone;
 
     /// <summary>
     /// 获取转换时用来处理拼音的拦截器集合。
     /// </summary>
-    public ICollection<IChinesePersonNamePinyinInterceptor> Interceptors { get; }
+    public ICollection<IChinesePersonNamePinyinInterceptor> Interceptors { get; } = interceptors;
 
     /// <summary>
     /// 将一个汉字转换成读音汉字。
@@ -54,7 +46,7 @@ public class ChinesePersonNamePinyinConverter
     {
         if (!ChineseChar.IsValidChar(chineseChar))
         {
-            return new PhoneticChineseChar(chineseChar, new[] { $"{char.ToUpper(chineseChar)}" });
+            return new PhoneticChineseChar(chineseChar, [$"{char.ToUpper(chineseChar)}"]);
         }
 
         var cc = new ChineseChar(chineseChar);
@@ -63,7 +55,7 @@ public class ChinesePersonNamePinyinConverter
         {
             pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[..^1] : cc.Pinyins[i].ToUpper());
         }
-        return new PhoneticChineseChar(chineseChar, pinyinList.ToArray());
+        return new PhoneticChineseChar(chineseChar, [.. pinyinList]);
 
     }
 

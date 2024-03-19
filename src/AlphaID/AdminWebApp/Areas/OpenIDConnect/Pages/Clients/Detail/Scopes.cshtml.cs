@@ -6,15 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
-public class ScopesModel : PageModel
+public class ScopesModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public ScopesModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public Client Data { get; set; } = default!;
 
     [BindProperty]
@@ -24,21 +17,21 @@ public class ScopesModel : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
 
-        this.ScopeItems = this.dbContext.IdentityResources.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
-            .Union(this.dbContext.ApiScopes.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
+        this.ScopeItems = dbContext.IdentityResources.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
+            .Union(dbContext.ApiScopes.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
             .ToList();
 
         return this.Page();
     }
 
-    public async Task<IActionResult> OnPost(int anchor)
+    public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = this.dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
+        var data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return this.NotFound();
         this.Data = data;
@@ -66,8 +59,8 @@ public class ScopesModel : PageModel
                     break;
             }
         }
-        this.dbContext.Clients.Update(this.Data);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.Clients.Update(this.Data);
+        await dbContext.SaveChangesAsync();
         this.OperationMessage = "操作已成功！";
 
 

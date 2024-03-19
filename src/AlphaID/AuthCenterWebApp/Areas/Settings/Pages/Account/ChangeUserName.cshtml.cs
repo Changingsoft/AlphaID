@@ -7,19 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account
 {
-    public class ChangeUserNameModel : PageModel
+    public class ChangeUserNameModel(NaturalPersonManager manager, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager) : PageModel
     {
-        readonly NaturalPersonManager manager;
-        readonly ILogger<ChangeUserNameModel>? logger;
-        readonly PersonSignInManager signInManager;
-
-        public ChangeUserNameModel(NaturalPersonManager manager, ILogger<ChangeUserNameModel>? logger, PersonSignInManager signInManager)
-        {
-            this.manager = manager;
-            this.logger = logger;
-            this.signInManager = signInManager;
-        }
-
         [BindProperty]
         [Display(Name = "User name")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
@@ -30,10 +19,10 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await this.manager.GetUserAsync(this.User);
+            var person = await manager.GetUserAsync(this.User);
             if (person == null)
             {
-                this.logger?.LogWarning("从用户的登录信息无法查询到用户");
+                logger?.LogWarning("从用户的登录信息无法查询到用户");
                 return this.NotFound();
             }
             return this.Page();
@@ -41,19 +30,19 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var person = await this.manager.GetUserAsync(this.User);
+            var person = await manager.GetUserAsync(this.User);
             if (person == null)
             {
-                this.logger?.LogWarning("从用户的登录信息无法查询到用户");
+                logger?.LogWarning("从用户的登录信息无法查询到用户");
                 return this.NotFound();
             }
             if (!this.ModelState.IsValid)
                 return this.Page();
 
-            this.Result = await this.manager.SetUserNameAsync(person, this.UserName);
+            this.Result = await manager.SetUserNameAsync(person, this.UserName);
             if(this.Result.Succeeded)
             {
-                await this.signInManager.RefreshSignInAsync(person);
+                await signInManager.RefreshSignInAsync(person);
             }
             return this.Page();
         }

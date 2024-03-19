@@ -2,22 +2,20 @@
 @model AuthCenterWebApp.Areas.Organization.Pages.People.InvitationsModel
 @{
 }
-@section Heads{
+@section head{
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css"/>
 }
 
-<div class="page-body">
-    <div class="container-xl">
-        @Html.DisplayFor(m => m.Result)
-        <h1>@L["Invitations"]</h1>
+<div class="container-xl">
+    @Html.DisplayFor(m => m.Result)
+    <h1>@L["Invitations"]</h1>
 
-        <form method="post">
-            <div class="mb-3">
-                <input asp-for="Invitee" class="form-control"/>
-            </div>
-            <button type="submit" class="btn">@L["Invite"]</button>
-        </form>
-    </div>
+    <form method="post">
+        <div class="mb-3">
+            <input asp-for="Invitee" class="form-control" />
+        </div>
+        <button type="submit" class="btn">@L["Invite"]</button>
+    </form>
 </div>
 
 @section Scripts{

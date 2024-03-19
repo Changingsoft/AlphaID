@@ -21,7 +21,7 @@ public class PhoneNumberValidator : IUserValidator<NaturalPerson>
         var phoneNumber = await naturalPersonManager.GetPhoneNumberAsync(user);
         if (phoneNumber == null)
         {
-            return errors.Count > 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;
+            return errors.Count > 0 ? IdentityResult.Failed([.. errors]) : IdentityResult.Success;
         }
 
         if (MobilePhoneNumber.TryParse(phoneNumber, out var number))
@@ -38,6 +38,6 @@ public class PhoneNumberValidator : IUserValidator<NaturalPerson>
             errors.Add(naturalPersonManager.ErrorDescriber.InvalidPhoneNumberFormat());
         }
 
-        return errors.Count > 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;
+        return errors.Count > 0 ? IdentityResult.Failed([.. errors]) : IdentityResult.Success;
     }
 }

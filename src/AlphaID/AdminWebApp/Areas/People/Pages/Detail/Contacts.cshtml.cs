@@ -1,29 +1,23 @@
 using IdSubjects;
 using IdSubjects.Subjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail
 {
-    public class ContactsModel : PageModel
+    public class ContactsModel(NaturalPersonManager manager) : PageModel
     {
-        private readonly NaturalPersonManager manager;
-
-        public ContactsModel(NaturalPersonManager manager)
-        {
-            this.manager = manager;
-        }
-
         public NaturalPerson Data { get; set; } = default!;
 
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public string? OperationMessage { get; set; }
+        public IdentityResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var data = await this.manager.FindByIdAsync(anchor);
+            var data = await manager.FindByIdAsync(anchor);
             if (data == null)
                 return this.NotFound();
 
@@ -38,7 +32,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var data = await this.manager.FindByIdAsync(anchor);
+            var data = await manager.FindByIdAsync(anchor);
             if (data == null)
                 return this.NotFound();
 
@@ -51,11 +45,11 @@ namespace AdminWebApp.Areas.People.Pages.Detail
                 return this.Page();
             }
 
-            if (this.manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == phoneNumber.ToString()))
+            if (manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == phoneNumber.ToString()))
             {
                 this.ModelState.AddModelError("", "移动电话号码已被注册。");
             }
-            if (this.manager.Users.Any(p => p.Id != anchor && p.Email == this.Input.Email))
+            if (manager.Users.Any(p => p.Id != anchor && p.Email == this.Input.Email))
             {
                 this.ModelState.AddModelError("", "电子邮件地址已被注册。");
             }
@@ -65,17 +59,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail
                 return this.Page();
             }
 
-            var result = await this.manager.UpdateAsync(this.Data);
-            if (result.Succeeded)
-            {
-                this.OperationMessage = "修改成功！";
-                return this.Page();
-            }
-
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error.Description);
-            }
+            this.Result = await manager.UpdateAsync(this.Data);
             return this.Page();
         }
 

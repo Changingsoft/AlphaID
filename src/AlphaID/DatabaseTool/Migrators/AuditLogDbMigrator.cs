@@ -1,29 +1,17 @@
 ﻿using AlphaId.EntityFramework.SecurityAuditing;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatabaseTool.Migrators;
-internal class AuditLogDbMigrator:DatabaseMigrator
+internal class AuditLogDbMigrator(LoggingDbContext dbContext) : DatabaseMigrator
 {
-    private readonly LoggingDbContext dbContext;
-
-    public AuditLogDbMigrator(LoggingDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public override async Task DropDatabaseAsync()
     {
-        await this.dbContext.Database.EnsureDeletedAsync();
+        await dbContext.Database.EnsureDeletedAsync();
     }
 
-    public override async Task MigrateAsync()
+    public override Task MigrateAsync()
     {
-        await this.dbContext.Database.MigrateAsync();
+        return dbContext.Database.MigrateAsync();
     }
 
     public override Task PostMigrationAsync()

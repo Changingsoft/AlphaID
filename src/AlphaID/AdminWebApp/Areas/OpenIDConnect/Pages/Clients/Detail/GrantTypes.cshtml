@@ -1,9 +1,10 @@
 ﻿@page
 @model GrantTypesModel
 @{
+    ViewBag.Title = L["Grant types"];
 }
 
-<h2>Grant types</h2>
+<h2>@L["Grant types"]</h2>
 <form method="post">
     <ul class="list-group">
         @for (var i = 0; i < Model.AllowedGrantTypes.Count; i++)
@@ -21,7 +22,7 @@
         }
     </ul>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <p class="text-warning">* Some grant type combined is conflicted, system will check conflict before applying changes.</p>
-    <button type="submit" class="btn btn-primary">Apply changes</button>
+    <p class="text-warning">* @L["Some grant type combined is conflicted, system will check conflict before applying changes."]</p>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
     <p>@Model.OperationMessage</p>
 </form>

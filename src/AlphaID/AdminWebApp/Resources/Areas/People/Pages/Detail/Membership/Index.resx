@@ -99,46 +99,47 @@
   </resheader>
   <data name="Are you sure you want leave person from organization?" xml:space="preserve">
 		<value>Are you sure you want leave person from organization?</value>
-		<comment>Are you sure you want leave person from organization?</comment>
 	</data>
   <data name="Department" xml:space="preserve">
 		<value>Department</value>
-		<comment>Department</comment>
 	</data>
   <data name="Join" xml:space="preserve">
 		<value>Join</value>
-		<comment>Join</comment>
 	</data>
   <data name="Leave" xml:space="preserve">
 		<value>Leave</value>
-		<comment>Leave</comment>
 	</data>
   <data name="Memberships" xml:space="preserve">
 		<value>Memberships</value>
-		<comment>Memberships</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
-		<comment>Operations</comment>
 	</data>
   <data name="Organization" xml:space="preserve">
 		<value>Organization</value>
-		<comment>Organization</comment>
 	</data>
   <data name="Owner" xml:space="preserve">
 		<value>Owner</value>
-		<comment>Owner</comment>
 	</data>
   <data name="Remark" xml:space="preserve">
 		<value>Remark</value>
-		<comment>Remark</comment>
 	</data>
   <data name="Title" xml:space="preserve">
 		<value>Title</value>
-		<comment>Title</comment>
 	</data>
   <data name="Visibility" xml:space="preserve">
 		<value>Visibility</value>
-		<comment>Visibility</comment>
 	</data>
+  <data name="Search organization" xml:space="preserve">
+	  <value>Search organization</value>
+	  <comment>Search organization</comment>
+  </data>
+  <data name="Join organization" xml:space="preserve">
+	  <value>Join organization</value>
+	  <comment>Join organization</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+	  <value>Edit</value>
+	  <comment>Edit</comment>
+  </data>
 </root>

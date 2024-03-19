@@ -1,46 +1,47 @@
 ﻿@page
 @model CallbackUrisModel
 @{
+    ViewBag.Title = L["Callback URI"];
 }
 
-<p class="text-warning">If your domain has been changed, you may change CORS settings for correct client behavior.</p>
-<h2>Callback URI</h2>
+<p class="text-warning">@L["If your domain has been changed, you may change CORS settings for correct client behavior."]</p>
+<h2>@L["Callback URI"]</h2>
 <form method="post">
     <ul class="list-group">
         @foreach (var uri in Model.Data.RedirectUris)
         {
             <li class="list-group-item">
                 @uri.RedirectUri
-                <button type="submit" asp-page-handler="RemoveCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-rid="@uri.Id">Delete</button>
+                <button type="submit" asp-page-handler="RemoveCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-rid="@uri.Id">@L["Delete"]</button>
             </li>
         }
     </ul>
 </form>
 <form method="post">
     <div class="mb-3">
-        <label for="callback-uri" class="form-label">New callback URI</label>
+        <label for="callback-uri" class="form-label">@L["New callback URI"]</label>
         <input id="callback-uri" name="callback_uri" type="text" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="AddCallBackUrl">Add</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="AddCallBackUrl">@L["Add"]</button>
 </form>
 
-<h2>Post logout redirect URIs</h2>
+<h2>@L["Post logout redirect URIs"]</h2>
 <form method="post">
     <ul class="list-group list-group-flush">
         @foreach (var uri in Model.Data.PostLogoutRedirectUris)
         {
             <li class="list-group-item">
                 @uri.PostLogoutRedirectUri
-                <button type="submit" asp-page-handler="RemoveSignOutCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-srid="@uri.Id">Delete</button>
+                <button type="submit" asp-page-handler="RemoveSignOutCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-srid="@uri.Id">@L["Delete"]</button>
             </li>
         }
     </ul>
 </form>
 <form method="post">
     <div class="mb-3">
-        <label for="signout-callback-uri" class="form-label">New sign out callback URI</label>
+        <label for="signout-callback-uri" class="form-label">@L["New sign out callback URI"]</label>
         <input id="signout-callback-uri" name="callback_uri" type="text" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="AddSignOutCallbackUrl">Add</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="AddSignOutCallbackUrl">@L["Add"]</button>
 </form>
 

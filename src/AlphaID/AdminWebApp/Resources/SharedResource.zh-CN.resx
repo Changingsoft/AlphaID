@@ -117,11 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A friendly name that appears on the user interface." xml:space="preserve">
+	  <value>在用户界面上显示的友好名称。</value>
+  </data>
+  <data name="A unique name to identity this provider." xml:space="preserve">
+	  <value>标识此提供器的唯一名称。</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="Account name" xml:space="preserve">
+	  <value>账户名</value>
+  </data>
+  <data name="Account number" xml:space="preserve">
+	  <value>账号</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>地址</value>
+  </data>
   <data name="Allowed access token signing algorithms" xml:space="preserve">
     <value>可用的 Access token 签名算法</value>
   </data>
-  <data name="Client ID" xml:space="preserve">
-    <value>客户端ID</value>
+  <data name="Apply changes" xml:space="preserve">
+	  <value>应用更改</value>
+  </data>
+  <data name="Are you sure you want to delete it?" xml:space="preserve">
+    <value>您确认要删除它吗？</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>银行</value>
+  </data>
+  <data name="Bank name" xml:space="preserve">
+	  <value>银行名</value>
+  </data>
+  <data name="Client Id" xml:space="preserve">
+	  <value>客户端Id</value>
+  </data>
+  <data name="Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID." xml:space="preserve">
+    <value>客户端必须在授权请求中指示Resource ID，以便在颁发的令牌受众声明中包含此资源。</value>
   </data>
   <data name="Client name" xml:space="preserve">
     <value>客户端名称</value>
@@ -132,8 +165,14 @@
   <data name="Contact" xml:space="preserve">
     <value>联系信息</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
   <data name="Date of birth" xml:space="preserve">
     <value>生日</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>部门</value>
@@ -153,6 +192,9 @@
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
   </data>
+  <data name="Emphasize" xml:space="preserve">
+    <value>强调</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>启用</value>
   </data>
@@ -171,11 +213,17 @@
   <data name="Given name" xml:space="preserve">
     <value>名字</value>
   </data>
+  <data name="Is owner" xml:space="preserve">
+	  <value>是所有者</value>
+  </data>
   <data name="Key" xml:space="preserve">
     <value>键</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>男</value>
+  </data>
+  <data name="Membership visibility" xml:space="preserve">
+	  <value>成员身份可见性</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>
@@ -192,6 +240,9 @@
   <data name="Other" xml:space="preserve">
     <value>其他</value>
   </data>
+  <data name="Overview" xml:space="preserve">
+	  <value>概览</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
@@ -207,17 +258,29 @@
   <data name="Phonetic surname" xml:space="preserve">
     <value>读音姓氏</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+	  <value>隐私</value>
+  </data>
   <data name="Remark" xml:space="preserve">
     <value>备注</value>
   </data>
   <data name="Require resource indicator" xml:space="preserve">
     <value>需要资源指示器</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>必需的</value>
+  </data>
+  <data name="Resource ID" xml:space="preserve">
+	  <value>资源ID</value>
+  </data>
   <data name="Resource name" xml:space="preserve">
     <value>资源名称</value>
   </data>
   <data name="Root DN" xml:space="preserve">
     <value>根DN</value>
+  </data>
+  <data name="Scheme" xml:space="preserve">
+	  <value>方案</value>
   </data>
   <data name="Secret" xml:space="preserve">
     <value>秘密</value>
@@ -234,6 +297,18 @@
   <data name="Surname" xml:space="preserve">
     <value>姓氏</value>
   </data>
+  <data name="Taxpayer ID" xml:space="preserve">
+	  <value>纳税人识别号</value>
+  </data>
+  <data name="Terms of service" xml:space="preserve">
+	  <value>服务条款</value>
+  </data>
+  <data name="The client id already exists." xml:space="preserve">
+	  <value>客户端Id已存在。</value>
+  </data>
+  <data name="The {0} field is required." xml:space="preserve">
+	  <value>{0}是必需的。</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>职务</value>
   </data>
@@ -242,6 +317,12 @@
   </data>
   <data name="Unified social credit code" xml:space="preserve">
     <value>统一社会信用代码</value>
+  </data>
+  <data name="Unique ID of the client." xml:space="preserve">
+	  <value>客户端的唯一标识。</value>
+  </data>
+  <data name="Unique identifier for resource in OIDC workflow." xml:space="preserve">
+    <value>在OIDC工作流中唯一标识一个资源。</value>
   </data>
   <data name="Unselected" xml:space="preserve">
     <value>未选择</value>
@@ -276,16 +357,7 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
-  <data name="Taxpayer ID" xml:space="preserve">
-	  <value>纳税人识别号</value>
-  </data>
-  <data name="Bank" xml:space="preserve">
-    <value>银行</value>
-  </data>
-  <data name="Account" xml:space="preserve">
-    <value>账户</value>
-  </data>
-  <data name="Address" xml:space="preserve">
-    <value>地址</value>
+  <data name="Search" xml:space="preserve">
+	  <value>搜索</value>
   </data>
 </root>

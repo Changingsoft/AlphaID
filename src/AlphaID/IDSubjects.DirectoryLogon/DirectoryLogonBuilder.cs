@@ -6,30 +6,25 @@ namespace IdSubjects.DirectoryLogon;
 /// <summary>
 /// 目录管理构造器。
 /// </summary>
-public class DirectoryLogonBuilder
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="services"></param>
+public class DirectoryLogonBuilder(IServiceCollection services)
 {
     /// <summary>
     /// 
     /// </summary>
-    public IServiceCollection Services { get; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="services"></param>
-    public DirectoryLogonBuilder(IServiceCollection services)
-    {
-        this.Services = services;
-    }
+    public IServiceCollection Services { get; } = services;
 
     /// <summary>
     /// 向基础结构添加目录服务存取器。
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public DirectoryLogonBuilder AddDirectoryServiceStore<T>() where T : class, IDirectoryServiceStore
+    public DirectoryLogonBuilder AddDirectoryServiceStore<T>() where T : class, IDirectoryServiceDescriptorStore
     {
-        this.Services.TryAddScoped<IDirectoryServiceStore, T>();
+        this.Services.TryAddScoped<IDirectoryServiceDescriptorStore, T>();
         return this;
     }
 
@@ -38,9 +33,9 @@ public class DirectoryLogonBuilder
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public DirectoryLogonBuilder AddLogonAccountStore<T>() where T : class, ILogonAccountStore
+    public DirectoryLogonBuilder AddLogonAccountStore<T>() where T : class, IDirectoryAccountStore
     {
-        this.Services.TryAddScoped<ILogonAccountStore, T>();
+        this.Services.TryAddScoped<IDirectoryAccountStore, T>();
         return this;
     }
 }

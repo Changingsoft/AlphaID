@@ -9,7 +9,7 @@
             <h1>@L["Identity Resources"]</h1>
         </div>
         <div class="col-auto">
-            <a asp-page="Create" class="btn btn-primary">
+            <a asp-page="New" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-plus"></use>
                 </svg>
@@ -23,10 +23,11 @@
     <table class="table card-table">
         <thead>
             <tr>
+                <td>@L["Enabled"]</td>
                 <td>@L["Name"]</td>
                 <td>@L["Display name"]</td>
                 <td>@L["Description"]</td>
-                <td>@L["Enabled"]</td>
+                <td>@L["Required"]</td>
                 <td>@L["Emphasize"]</td>
                 <td>@L["Show in discovery doc"]</td>
                 <td>@L["Created at"]</td>
@@ -36,10 +37,11 @@
             @foreach (var idr in Model.Results)
             {
                 <tr>
+                    <td><input asp-for="@idr.Enabled" class="form-check-input" disabled /></td>
                     <td><a asp-page="Detail/Index" asp-route-id="@idr.Id">@idr.Name</a></td>
                     <td>@idr.DisplayName</td>
                     <td>@idr.Description</td>
-                    <td><input asp-for="@idr.Enabled" class="form-check-input" disabled /></td>
+                    <td><input asp-for="@idr.Required" class="form-check-input" disabled /></td>
                     <td><input asp-for="@idr.Emphasize" class="form-check-input" disabled /></td>
                     <td><input asp-for="@idr.ShowInDiscoveryDocument" class="form-check-input" disabled /></td>
                     <td>@idr.Created</td>

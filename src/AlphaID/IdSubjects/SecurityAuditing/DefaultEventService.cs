@@ -1,6 +1,5 @@
 ﻿using IdSubjects.DependencyInjection;
 using IdSubjects.SecurityAuditing.Events;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -9,36 +8,28 @@ namespace IdSubjects.SecurityAuditing;
 /// <summary>
 /// 默认事件服务。
 /// </summary>
-public class DefaultEventService : IEventService
+/// <remarks>
+/// Initializes a new instance of the <see cref="DefaultEventService"/> class.
+/// </remarks>
+/// <param name="options">The options.</param>
+/// <param name="context">The context.</param>
+/// <param name="sink">The sink.</param>
+public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink) : IEventService
 {
     /// <summary>
     /// The options
     /// </summary>
-    protected IdSubjectsOptions Options { get; }
+    protected IdSubjectsOptions Options { get; } = options.Value;
 
     /// <summary>
     /// The context
     /// </summary>
-    protected IHttpContextAccessor Context { get; }
+    protected IHttpContextAccessor Context { get; } = context;
 
     /// <summary>
     /// The sink
     /// </summary>
-    protected IEventSink Sink { get; }
-
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DefaultEventService"/> class.
-    /// </summary>
-    /// <param name="options">The options.</param>
-    /// <param name="context">The context.</param>
-    /// <param name="sink">The sink.</param>
-    public DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink)
-    {
-        this.Options = options.Value;
-        this.Context = context;
-        this.Sink = sink;
-    }
+    protected IEventSink Sink { get; } = sink;
 
     /// <summary>
     /// Raises the specified event.
@@ -92,7 +83,7 @@ public class DefaultEventService : IEventService
     /// </summary>
     /// <param name="evt">The evt.</param>
     /// <returns></returns>
-    protected virtual async Task PrepareEventAsync(AuditLogEvent evt)
+    protected virtual Task PrepareEventAsync(AuditLogEvent evt)
     {
         evt.ActivityId = this.Context.HttpContext?.TraceIdentifier;
         evt.TimeStamp = DateTime.UtcNow;
@@ -100,7 +91,7 @@ public class DefaultEventService : IEventService
 
         if (this.Context.HttpContext?.Connection.LocalIpAddress != null)
         {
-            evt.LocalIpAddress = this.Context.HttpContext.Connection.LocalIpAddress.ToString() + ":" + this.Context.HttpContext.Connection.LocalPort;
+            evt.LocalIpAddress = this.Context.HttpContext.Connection.LocalIpAddress + ":" + this.Context.HttpContext.Connection.LocalPort;
         }
         else
         {
@@ -109,6 +100,6 @@ public class DefaultEventService : IEventService
 
         evt.RemoteIpAddress = this.Context.HttpContext?.Connection.RemoteIpAddress != null ? this.Context.HttpContext.Connection.RemoteIpAddress.ToString() : "unknown";
 
-        await evt.PrepareAsync();
+        return evt.PrepareAsync();
     }
 }

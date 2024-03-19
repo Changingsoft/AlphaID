@@ -1,27 +1,19 @@
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
 {
-    public class NewBankAccountModel : PageModel
+    public class NewBankAccountModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager) : PageModel
     {
-        private readonly OrganizationManager organizationManager;
-        readonly OrganizationBankAccountManager bankAccountManager;
-
-        public NewBankAccountModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
-        {
-            this.organizationManager = organizationManager;
-            this.bankAccountManager = bankAccountManager;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
         public IdOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var org = await this.organizationManager.FindByIdAsync(anchor);
+            var org = await organizationManager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
 
@@ -30,14 +22,14 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var org = await this.organizationManager.FindByIdAsync(anchor);
+            var org = await organizationManager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
 
             if (!this.ModelState.IsValid)
                 return this.Page();
 
-            this.Result = await this.bankAccountManager.AddAsync(org, this.Input.AccountNumber, this.Input.AccountName,
+            this.Result = await bankAccountManager.AddAsync(org, this.Input.AccountNumber, this.Input.AccountName,
                 this.Input.BankName, this.Input.Usage, this.Input.SetDefault);
 
             if (!this.Result.Succeeded)
@@ -48,10 +40,13 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
 
         public class InputModel
         {
+        [Required(ErrorMessage = "Validate_Required")]
             public string AccountNumber { get; set; } = default!;
 
+        [Required(ErrorMessage = "Validate_Required")]
             public string AccountName { get; set; } = default!;
 
+        [Required(ErrorMessage = "Validate_Required")]
             public string BankName { get; set; } = default!;
 
             public string? Usage { get; set; }

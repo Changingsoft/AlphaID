@@ -1,6 +1,6 @@
-﻿using AlphaIdWebAPI.Models;
+﻿using AlphaIdPlatform;
+using AlphaIdPlatform.Security;
 using IdSubjects;
-using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,106 +9,179 @@ namespace AlphaIdWebAPI.Controllers;
 /// <summary>
 /// 与自然人有关的查询。
 /// </summary>
+/// <remarks>
+/// Init Person Controller.
+/// </remarks>
+/// <param name="personManager"></param>
+/// <param name="urlInfo"></param>
+/// <param name="memberManager"></param>
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PersonController : ControllerBase
+public class PersonController(NaturalPersonManager personManager, IOptions<SystemUrlInfo> urlInfo, OrganizationMemberManager memberManager) : ControllerBase
 {
-    private readonly NaturalPersonManager personManager;
-    private readonly OrganizationMemberManager organizationMemberManager;
+    private readonly SystemUrlInfo urlInfo = urlInfo.Value;
 
     /// <summary>
-    /// Init Person Controller.
+    /// 通过 UserName 获取指定用户的信息。
     /// </summary>
-    /// <param name="personManager"></param>
-    /// <param name="organizationMemberManager"></param>
-    public PersonController(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
-    {
-        this.personManager = personManager;
-        this.organizationMemberManager = organizationMemberManager;
-    }
-
-    /// <summary>
-    /// Get people base information by ID.
-    /// </summary>
-    /// <param name="id">Subject ID</param>
+    /// <param name="userName"></param>
     /// <returns></returns>
-    /// <response code="200">Base info of person.</response>
-    /// <response code="204">Person not found.</response>
-    [HttpGet("{id}")]
+    [HttpGet("{userName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PersonModel?>> GetAsync(string id)
+    public async Task<ActionResult<PersonInfoModel>> GetUserInfoAsync(string userName)
     {
-        var person = await this.personManager.FindByIdAsync(id);
+        var person = await personManager.FindByNameAsync(userName);
         if (person == null)
-        {
             return this.NotFound();
-        }
-        var members = await this.organizationMemberManager.GetMembersOfAsync(person);
-        return new PersonModel(person, members: members);
+
+        return new PersonInfoModel(person.Id, person.PersonName.FullName, person.PersonName.SearchHint,
+            new Uri(this.urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString());
     }
 
-    /// <summary>
-    /// 获取自然人所隶属的组织。
-    /// </summary>
-    /// <param name="id">自然人的SubjectId</param>
-    /// <returns></returns>
-    [HttpGet("{id}/MembersOf")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IEnumerable<OrganizationMemberModel>> MemberOfAsync(string id)
-    {
-        var person = await this.personManager.FindByIdAsync(id);
-        if (person == null)
-            return Enumerable.Empty<OrganizationMemberModel>();
-
-        var members = await this.organizationMemberManager.GetMembersOfAsync(person);
-        return from member in members select new OrganizationMemberModel(member);
-    }
 
     /// <summary>
     /// 查找某个自然人。
     /// </summary>
-    /// <param name="keywords">关键词。可以通过手机号码、姓名汉字、姓名全拼</param>
+    /// <param name="q">关键词。关键词非空长度必须大于2个字符时，才会返回可用结果。可以通过用户名、全名来查找自然人。</param>
     /// <returns>Return matched peoples, up to 50 records.</returns>
-    [HttpGet("Search/{keywords}")]
-    public async Task<PersonSearchResult> SearchAsync(string keywords)
+    [HttpGet("Suggestions")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public IEnumerable<SuggestedPersonModel> SearchAsync(string q)
     {
-        if (string.IsNullOrWhiteSpace(keywords))
+        if (string.IsNullOrWhiteSpace(q))
         {
-            return new PersonSearchResult(Enumerable.Empty<PersonModel>());
+            return [];
         }
 
-        keywords = keywords.Trim();
-        if (keywords.Length < 2)
-            return new PersonSearchResult(Enumerable.Empty<PersonModel>());
+        q = q.Trim();
+        if (q.Length < 2)
+            return [];
 
-        if (MobilePhoneNumber.TryParse(keywords, out MobilePhoneNumber number))
+        HashSet<SuggestedPersonModel> set = [];
+
+        if (q.Length >= 3)
         {
-            var result = await this.personManager.FindByMobileAsync(number.ToString(), this.HttpContext.RequestAborted);
-            if (result == null)
-                return new PersonSearchResult(Enumerable.Empty<PersonModel>());
-
-            return new PersonSearchResult(new PersonModel[] { new(result) });
+            var pinyinSearchSet = personManager.Users
+                .Where(p => p.PersonName.SearchHint!.StartsWith(q))
+                .OrderBy(p => p.PersonName.SearchHint!.Length)
+                .ThenBy(p => p.PersonName.SearchHint)
+                .Take(10).Select(p => new SuggestedPersonModel(p)
+                {
+                    AvatarUrl = new Uri(this.urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
+                });
+            set.UnionWith(pinyinSearchSet);
         }
 
-        var pinyinSearchSet = this.personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(keywords)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint);
-        var pinyinSearchSetCount = pinyinSearchSet.Count();
-        var pinyinSearchResult = new List<NaturalPerson>(pinyinSearchSet.Take(30));
-
-        var nameSearchSet = this.personManager.Users.Where(p => p.PersonName.FullName.StartsWith(keywords)).OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName);
-        var nameSearchSetCount = nameSearchSet.Count();
-        var nameSearchResult = new List<NaturalPerson>(nameSearchSet.Take(30));
-
-        var searchResults = pinyinSearchResult.UnionBy(nameSearchResult, p => p.Id);
-
-        var final = new List<PersonModel>();
-        foreach (var person in searchResults)
+        if (q.Length >= 4)
         {
-            final.Add(new PersonModel(person, false));
+            var userNameSearchSet = personManager.Users
+                .Where(p => p.UserName.StartsWith(q))
+                .OrderBy(p => p.UserName.Length)
+                .ThenBy(p => p.UserName)
+                .Take(10).Select(p => new SuggestedPersonModel(p)
+                {
+                    AvatarUrl = new Uri(this.urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
+                });
+            set.UnionWith(userNameSearchSet);
         }
 
-        return new PersonSearchResult(final, pinyinSearchSetCount > 30 || nameSearchSetCount > 30);
+        var nameSearchSet = personManager.Users
+            .Where(p => p.PersonName.FullName.StartsWith(q))
+            .OrderBy(p => p.PersonName.FullName.Length)
+            .ThenBy(p => p.PersonName.FullName)
+            .Take(10).Select(p => new SuggestedPersonModel(p)
+            {
+                AvatarUrl = new Uri(this.urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
+            });
+        set.UnionWith(nameSearchSet);
+
+
+        return set;
+    }
+
+    /// <summary>
+    /// 获取指定用户的组织成员身份。
+    /// </summary>
+    /// <param name="userName">用户名。</param>
+    /// <returns></returns>
+    [HttpGet("{userName}/Memberships")]
+    public async Task<ActionResult<IEnumerable<MembershipModel>>> GetMemberships(string userName)
+    {
+        NaturalPerson? visitor = default;
+        var visitorSubjectId = this.User.SubjectId();
+        if (visitorSubjectId != null)
+            visitor = await personManager.FindByIdAsync(this.User.SubjectId()!);
+
+        var person = await personManager.FindByNameAsync(userName);
+        if (person == null)
+            return new ActionResult<IEnumerable<MembershipModel>>([]);
+
+        var members = memberManager.GetVisibleMembersOf(person, visitor);
+        return new ActionResult<IEnumerable<MembershipModel>>(members.Select(m => new MembershipModel(m)));
+    }
+
+    /// <summary>
+    /// 用户信息。
+    /// </summary>
+    /// <param name="SubjectId">Subject Id</param>
+    /// <param name="Name">全名</param>
+    /// <param name="SearchHint">搜索提示</param>
+    /// <param name="AvatarUrl">头像Url</param>
+    public record PersonInfoModel(string SubjectId,
+        string Name,
+        string? SearchHint,
+        string? AvatarUrl);
+
+    /// <summary>
+    /// 自然人
+    /// </summary>
+    /// <param name="UserName">用户名</param>
+    /// <param name="Name">全名</param>
+    /// <param name="AvatarUrl"></param>
+    public record SuggestedPersonModel(string UserName,
+                              string Name,
+                              string? AvatarUrl = null)
+    {
+
+        /// <summary>
+        /// 通过NaturalPerson初始化自然人。
+        /// </summary>
+        /// <param name="person"></param>
+        public SuggestedPersonModel(NaturalPerson person)
+            : this(person.UserName,
+                   person.PersonName.FullName)
+        { }
+    }
+
+    /// <summary>
+    /// 组织的成员。
+    /// </summary>
+    /// <param name="Department">部门</param>
+    /// <param name="Title">职务</param>
+    /// <param name="OrganizationId">组织标识符</param>
+    /// <param name="OrganizationName">组织名称</param>
+    /// <param name="Remark">备注</param>
+    public record MembershipModel(
+        string OrganizationId,
+        string OrganizationName,
+        string? Title,
+        string? Department,
+        string? Remark)
+    {
+        /// <summary>
+        /// Init.
+        /// </summary>
+        /// <param name="member"></param>
+        public MembershipModel(OrganizationMember member)
+            : this(member.OrganizationId,
+                member.Organization.Name,
+                member.Title,
+                member.Department,
+                member.Remark)
+        { }
     }
 
 }

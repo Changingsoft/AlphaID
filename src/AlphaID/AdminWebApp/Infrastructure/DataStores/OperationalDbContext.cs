@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Infrastructure.DataStores;
 
-public class OperationalDbContext : DbContext
+public class OperationalDbContext(DbContextOptions<OperationalDbContext> options) : DbContext(options)
 {
-    public OperationalDbContext(DbContextOptions<OperationalDbContext> options) : base(options)
-    {
-    }
-
     public DbSet<UserInRole> UserInRoles { get; protected set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

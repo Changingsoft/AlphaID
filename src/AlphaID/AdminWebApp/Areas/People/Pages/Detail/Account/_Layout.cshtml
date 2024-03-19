@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "../_Layout";
-    var anchor = ViewContext.RouteData.Values["anchor"];
+    var anchor = ViewContext.RouteData.Values["anchor"]!;
 }
 <h2>@L["Account"]</h2>
 <div class="card">
@@ -9,11 +9,10 @@
             <div class="card-body">
                 <div class="list-group list-group-transparent">
                     @* ReSharper disable Mvc.ActionNotResolved *@
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account" asp-match-prefix="false" asp-page="/Detail/Account/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account" asp-match-prefix="false" asp-page="/Detail/Account/Index" asp-route-anchor="@anchor">@SL["Overview"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account/ExternalLogins" asp-page="/Detail/Account/ExternalLogins" asp-route-anchor="@anchor">@L["External Logins"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account/DirectoryAccounts" asp-page="/Detail/Account/DirectoryAccounts" asp-route-anchor="@anchor">@L["Directory Accounts"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account/Security" asp-page="/Detail/Account/Security" asp-route-anchor="@anchor">@L["Security"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/People/Detail/@(anchor)/Account/Advanced" asp-page="/Detail/Account/Advanced" asp-route-anchor="@anchor">@L["Advanced"]</a>
                     @* ReSharper restateStore Mvc.ActionNotResolved *@
                 </div>
             </div>

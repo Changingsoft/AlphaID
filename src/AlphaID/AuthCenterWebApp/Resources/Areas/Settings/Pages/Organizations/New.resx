@@ -99,10 +99,8 @@
   </resheader>
   <data name="Create" xml:space="preserve">
 		<value>Create</value>
-		<comment>Create</comment>
 	</data>
   <data name="New organization" xml:space="preserve">
 		<value>New organization</value>
-		<comment>New organization</comment>
 	</data>
 </root>

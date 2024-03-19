@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = L["Organizations"];
 }
+@section head
+{
+}
 @section PageHeader{
     <div class="row align-items-center">
         <div class="col"><h1>@L["Overview"]</h1></div>
@@ -15,16 +18,7 @@
 
 <div class="row row-deck row-cards mb-3">
     <div class="col-sm-6 col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="subheader">@L["Organizations"]</div>
-                    <div class="ms-auto lh-1">
-                    </div>
-                </div>
-                <div class="h1 mb-3">@Model.OrgCount</div>
-            </div>
-        </div>
+        <vc:organization-nav-panel></vc:organization-nav-panel>
     </div>
 </div>
 
@@ -49,3 +43,7 @@
     </tbody>
 </table>
 
+<a asp-page="Map">View in Map</a>
+@section Scripts
+{
+}

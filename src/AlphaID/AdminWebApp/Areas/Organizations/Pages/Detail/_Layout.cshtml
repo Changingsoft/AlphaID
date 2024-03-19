@@ -9,6 +9,11 @@
         org = await Manager.FindByIdAsync(anchor);
     }
 }
+
+@section head{
+    @await RenderSectionAsync("head", false)
+}
+
 @section PageHeader{
     <h1 class="page-title">@org?.Name</h1>
 }

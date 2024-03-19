@@ -3,19 +3,12 @@ using Duende.IdentityServer.EntityFramework.Entities;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources;
 
-public class IndexModel : PageModel
+public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public IndexModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public IQueryable<ApiResource> Results { get; set; } = default!;
 
     public void OnGet()
     {
-        this.Results = this.dbContext.ApiResources;
+        this.Results = dbContext.ApiResources;
     }
 }

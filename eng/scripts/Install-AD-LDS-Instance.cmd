@@ -1,0 +1,3 @@
+:: 该脚本用于通过应答文件静默安装一个AD LDS实例。
+echo 正在安装 AD LDS 实例...
+"C:\Windows\ADAM\adaminstall.exe" /answer:"%~dp0answer.txt"

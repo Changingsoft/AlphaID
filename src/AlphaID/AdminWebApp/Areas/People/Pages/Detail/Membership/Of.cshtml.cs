@@ -6,17 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Membership
 {
-    public class OfModel : PageModel
+    public class OfModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager) : PageModel
     {
-        private readonly OrganizationMemberManager memberManager;
-        private readonly NaturalPersonManager naturalPersonManager;
-
-        public OfModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager)
-        {
-            this.memberManager = memberManager;
-            this.naturalPersonManager = naturalPersonManager;
-        }
-
         public OrganizationMember Member { get; set; } = default!;
 
         [BindProperty]
@@ -26,12 +17,12 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
 
         public IEnumerable<SelectListItem> MembershipVisibilities { get; set; } = EnumHelper.GetSelectListItems<MembershipVisibility>();
 
-        public async Task<IActionResult> OnGet(string anchor, string orgId)
+        public async Task<IActionResult> OnGetAsync(string anchor, string orgId)
         {
-            var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+            var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
-            var members = await this.memberManager.GetMembersOfAsync(person);
+            var members = await memberManager.GetMembersOfAsync(person);
             var member = members.FirstOrDefault(p => p.OrganizationId == orgId);
             if (member == null)
                 return this.NotFound();
@@ -49,10 +40,10 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
 
         public async Task<IActionResult> OnPostAsync(string anchor, string orgId)
         {
-            var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+            var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
-            var members = await this.memberManager.GetMembersOfAsync(person);
+            var members = await memberManager.GetMembersOfAsync(person);
             var member = members.FirstOrDefault(p => p.OrganizationId == orgId);
             if (member == null)
                 return this.NotFound();
@@ -64,7 +55,7 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
             member.IsOwner = this.Input.IsOwner;
             member.Visibility = this.Input.Visibility;
 
-            this.OperationResult = await this.memberManager.UpdateAsync(member);
+            this.OperationResult = await memberManager.UpdateAsync(member);
 
             return this.Page();
         }

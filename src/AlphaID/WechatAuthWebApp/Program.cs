@@ -34,5 +34,5 @@ app.Run();
 
 namespace WechatAuthWebApp
 {
-    public class Program { }
+    public class Program;
 }

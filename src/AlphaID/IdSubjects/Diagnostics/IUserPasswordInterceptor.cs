@@ -14,12 +14,13 @@ public interface IUserPasswordInterceptor : IInterceptor
 {
     /// <summary>
     /// 在执行密码修改前调用。
+    /// 当发生添加、移除、修改、重置密码操作时，均为密码变更操作，此方法都会被调用。
     /// </summary>
     /// <param name="person"></param>
-    /// <param name="plainPassword"></param>
+    /// <param name="plainPassword">密码。如果为null，操作为移除密码。</param>
     /// <param name="cancellation"></param>
     /// <returns></returns>
-    Task<IdentityResult> PasswordChangingAsync(NaturalPerson person, string plainPassword, CancellationToken cancellation);
+    Task<IdentityResult> PasswordChangingAsync(NaturalPerson person, string? plainPassword, CancellationToken cancellation);
 
     /// <summary>
     /// 在执行密码修改后调用。

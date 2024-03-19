@@ -98,4 +98,16 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="ID Provider Restrictions" xml:space="preserve">
+		<value>ID Provider Restrictions</value>
+		<comment>ID Provider Restrictions</comment>
+	</data>
+	<data name="Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty." xml:space="preserve">
+		<value>Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.</value>
+		<comment>Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.</comment>
+	</data>
+	<data name="Add Id Provider" xml:space="preserve">
+		<value>Add Id Provider</value>
+		<comment>Add Id Provider</comment>
+	</data>
 </root>

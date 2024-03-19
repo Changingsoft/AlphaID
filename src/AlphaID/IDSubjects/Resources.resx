@@ -129,14 +129,26 @@
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>
+  <data name="Invalid administrative code" xml:space="preserve">
+    <value>Invalid administrative code</value>
+  </data>
+  <data name="Invalid region code." xml:space="preserve">
+    <value>Invalid region code.</value>
+  </data>
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>Phone number is invalid.</value>
+  </data>
+  <data name="Invlid organization type." xml:space="preserve">
+    <value>Invalid organization type.</value>
   </data>
   <data name="LastOwnerCannotLeave" xml:space="preserve">
     <value>You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization.</value>
   </data>
   <data name="LegalEntityIdentifier" xml:space="preserve">
     <value>Legal Entity Identifier</value>
+  </data>
+  <data name="LessThenMinimumPasswordAge" xml:space="preserve">
+    <value>Current password age is less then minimum passowrd age requirement.</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
@@ -147,28 +159,16 @@
   <data name="Other" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="ReuseOldPassword" xml:space="preserve">
+    <value>You cannot reuse old passwords.</value>
+  </data>
+  <data name="Specified directory entry not found" xml:space="preserve">
+    <value>Specified directory entry not found.</value>
+  </data>
   <data name="StringIsNullOrWhiteSpace" xml:space="preserve">
     <value>{0} can not be null or white space.</value>
   </data>
   <data name="UnifiedSocialCreditCode" xml:space="preserve">
     <value>Unified Social Credit Code</value>
-  </data>
-  <data name="Specified directory entry not found" xml:space="preserve">
-    <value>Specified directory entry not found.</value>
-  </data>
-  <data name="Invalid administrative code" xml:space="preserve">
-    <value>Invalid administrative code</value>
-  </data>
-  <data name="Invlid organization type." xml:space="preserve">
-    <value>Invalid organization type.</value>
-  </data>
-  <data name="Invalid region code." xml:space="preserve">
-    <value>Invalid region code.</value>
-  </data>
-  <data name="LessThenMinimumPasswordAge" xml:space="preserve">
-    <value>Current password age is less then minimum passowrd age requirement.</value>
-  </data>
-  <data name="ReuseOldPassword" xml:space="preserve">
-    <value>You cannot reuse old passwords.</value>
   </data>
 </root>

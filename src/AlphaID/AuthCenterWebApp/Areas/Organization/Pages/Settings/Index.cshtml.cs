@@ -5,15 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 {
-    public class IndexModel : PageModel
+    public class IndexModel(OrganizationManager manager) : PageModel
     {
-        private readonly OrganizationManager manager;
-
-        public IndexModel(OrganizationManager manager)
-        {
-            this.manager = manager;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
@@ -21,7 +14,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public IActionResult OnGet(string anchor)
         {
-            if (!this.manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -39,7 +32,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            if (!this.manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
+            if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
                 return this.RedirectToPage("/Who", new { anchor });
             if (organization == null)
                 return this.NotFound();
@@ -52,7 +45,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
             organization.Contact = this.Input.Contact;
             organization.Representative = this.Input.Representative;
 
-            await this.manager.UpdateAsync(organization);
+            await manager.UpdateAsync(organization);
             this.OperationResult = IdOperationResult.Success;
             return this.Page();
         }

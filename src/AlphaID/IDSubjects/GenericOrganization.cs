@@ -127,5 +127,5 @@ public class GenericOrganization
     /// <summary>
     /// 曾用名。
     /// </summary>
-    public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = new HashSet<OrganizationUsedName>();
+    public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = [];
 }

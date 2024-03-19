@@ -1,0 +1,21 @@
+﻿@page
+@model AuthCenterWebApp.Pages.PrivacyModel
+@{
+    ViewBag.Title = SL["Privacy"];
+}
+@section PageHeader
+{
+    <div class="row g-2 align-items-center">
+        <div class="col">
+            <h2 class="page-title">
+                @ViewBag.Title
+            </h2>
+        </div>
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+        <markdown filename="~/_docs/Privacy.md"></markdown>
+    </div>
+</div>

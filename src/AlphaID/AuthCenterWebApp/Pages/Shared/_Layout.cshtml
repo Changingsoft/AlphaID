@@ -1,20 +1,35 @@
-@{
-    Layout = "_LayoutBase";
+﻿@{
+    Layout = "Tabler/_PageWrapper";
 }
 
-@section Heads
-    {
-    @await RenderSectionAsync("Heads", false)
+@section head
+{
+    @await RenderSectionAsync("head", false)
 }
 
-@section Navbar
-    {
-    @await RenderSectionAsync("Navbar", false)
+@section Header
+{
+    @* 导航条 *@
+    <partial name="_DefaultTitleNavBarPartial"/>
+    @await RenderSectionAsync("Header", false)
+}
+@section PageHeader
+{
+    <div class="container-xl">
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
 }
 
-@RenderBody()
+<div class="container-xl">
+    @RenderBody()
+</div>
 
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial"/>
+}
 @section Scripts
-    {
+{
     @await RenderSectionAsync("Scripts", false)
 }

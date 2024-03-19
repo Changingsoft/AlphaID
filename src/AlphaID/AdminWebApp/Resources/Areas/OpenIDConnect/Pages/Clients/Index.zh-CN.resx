@@ -129,4 +129,7 @@
   <data name="Scopes" xml:space="preserve">
     <value>范围</value>
   </data>
+  <data name="Clients" xml:space="preserve">
+	  <value>客户端</value>
+  </data>
 </root>

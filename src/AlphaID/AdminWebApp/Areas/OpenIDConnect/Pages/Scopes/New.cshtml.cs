@@ -4,15 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes;
 
-public class NewModel : PageModel
+public class NewModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private readonly ConfigurationDbContext dbContext;
-
-    public NewModel(ConfigurationDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
@@ -24,7 +17,7 @@ public class NewModel : PageModel
         };
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         var now = DateTime.UtcNow;
         var scope = new Duende.IdentityServer.EntityFramework.Entities.ApiScope()
@@ -45,8 +38,8 @@ public class NewModel : PageModel
 
         try
         {
-            this.dbContext.ApiScopes.Add(scope);
-            await this.dbContext.SaveChangesAsync();
+            dbContext.ApiScopes.Add(scope);
+            await dbContext.SaveChangesAsync();
             return this.RedirectToPage("Detail/Index", new { id = scope.Id });
         }
         catch (Exception ex)
@@ -61,7 +54,7 @@ public class NewModel : PageModel
         [Display(Name = "Name")]
         public string Name { get; set; } = default!;
 
-        [Display(Name = "Display name")]
+        [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         public string? DisplayName { get; set; }
 
         [Display(Name = "Description")]

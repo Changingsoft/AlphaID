@@ -276,12 +276,12 @@ public partial class CreateIdentitySchema : Migration
         migrationBuilder.CreateIndex(
             name: "IX_PersistedGrants_SubjectId_ClientId_Type",
             table: "PersistedGrants",
-            columns: new[] { "SubjectId", "ClientId", "Type" });
+            columns: ["SubjectId", "ClientId", "Type"]);
 
         migrationBuilder.CreateIndex(
             name: "IX_PersistedGrants_SubjectId_SessionId_Type",
             table: "PersistedGrants",
-            columns: new[] { "SubjectId", "SessionId", "Type" });
+            columns: ["SubjectId", "SessionId", "Type"]);
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)

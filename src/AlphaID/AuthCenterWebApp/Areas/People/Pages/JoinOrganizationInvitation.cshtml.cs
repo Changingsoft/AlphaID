@@ -5,18 +5,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages
 {
-    public class JoinOrganizationInvitationModel : PageModel
+    public class JoinOrganizationInvitationModel(NaturalPersonManager personManager, JoinOrganizationInvitationManager invitationsManager) : PageModel
     {
-        private readonly NaturalPersonManager personManager;
-        private readonly JoinOrganizationInvitationManager invitationsManager;
-
-        public JoinOrganizationInvitationModel(NaturalPersonManager personManager, JoinOrganizationInvitationManager invitationsManager)
-        {
-            this.personManager = personManager;
-            this.invitationsManager = invitationsManager;
-        }
-
-
         public NaturalPerson Person { get; set; } = default!;
 
         public JoinOrganizationInvitation Invitation { get; set; } = default!;
@@ -25,13 +15,13 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public async Task<IActionResult> OnGetAsync(string anchor, int invitationId)
         {
-            var person = await this.personManager.FindByNameAsync(anchor);
+            var person = await personManager.FindByNameAsync(anchor);
             if (person == null)
             {
                 return this.NotFound();
             }
             this.Person = person;
-            var invitations = this.invitationsManager.GetPendingInvitations(person);
+            var invitations = invitationsManager.GetPendingInvitations(person);
             var invitation = invitations.FirstOrDefault(i => i.Id == invitationId);
             if (invitation == null)
             {
@@ -45,13 +35,13 @@ namespace AuthCenterWebApp.Areas.People.Pages
 
         public async Task<IActionResult> OnPostAsync(string anchor, int invitationId, string button, MembershipVisibility visibility)
         {
-            var person = await this.personManager.FindByNameAsync(anchor);
+            var person = await personManager.FindByNameAsync(anchor);
             if (person == null)
             {
                 return this.NotFound();
             }
             this.Person = person;
-            var invitations = this.invitationsManager.GetPendingInvitations(person);
+            var invitations = invitationsManager.GetPendingInvitations(person);
             var invitation = invitations.FirstOrDefault(i => i.Id == invitationId);
             if (invitation == null)
             {
@@ -62,11 +52,11 @@ namespace AuthCenterWebApp.Areas.People.Pages
             if (button == "Accept")
             {
                 invitation.ExpectVisibility = visibility;
-                this.Result = await this.invitationsManager.AcceptAsync(invitation);
+                this.Result = await invitationsManager.AcceptAsync(invitation);
             }
             else
             {
-                this.Result = await this.invitationsManager.RefuseAsync(invitation);
+                this.Result = await invitationsManager.RefuseAsync(invitation);
             }
             return this.Page();
         }

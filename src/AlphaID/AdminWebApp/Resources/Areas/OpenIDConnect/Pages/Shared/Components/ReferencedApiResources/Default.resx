@@ -99,14 +99,11 @@
   </resheader>
   <data name="Anchor" xml:space="preserve">
 		<value>Anchor</value>
-		<comment>Anchor</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="Referenced API resources" xml:space="preserve">
 		<value>Referenced API resources</value>
-		<comment>Referenced API resources</comment>
 	</data>
 </root>

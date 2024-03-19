@@ -1,13 +1,11 @@
 @page
 @model AuthCenterWebApp.Pages.Account.AccessDeniedModel
 @{
-    Layout = "_AuthenticationLayout";
+    Layout = "Tabler/_Page_Center";
 }
-<div class="page page-center">
-    <div class="container container-tight py-4">
-        <div class="text-center mb-4">
-            <h1>@L["Access Denied"]</h1>
-            <p>@L["You do not have permission to access that resource."]</p>
-        </div>
+<div class="container container-tight py-4">
+    <div class="text-center mb-4">
+        <h1>@L["Access Denied"]</h1>
+        <p>@L["You do not have permission to access that resource."]</p>
     </div>
 </div>

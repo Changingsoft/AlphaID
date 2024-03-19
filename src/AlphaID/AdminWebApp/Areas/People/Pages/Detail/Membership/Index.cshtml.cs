@@ -4,19 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Membership;
 
-public class IndexModel : PageModel
+public class IndexModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager) : PageModel
 {
-    private readonly NaturalPersonManager personManager;
-    private readonly OrganizationManager organizationManager;
-    private readonly OrganizationMemberManager memberManager;
-
-    public IndexModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager)
-    {
-        this.personManager = personManager;
-        this.organizationManager = organizationManager;
-        this.memberManager = memberManager;
-    }
-
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -31,23 +20,23 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await this.personManager.FindByIdAsync(this.Anchor);
+        var person = await personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
-        this.OrganizationMembers = await this.memberManager.GetMembersOfAsync(person);
+        this.OrganizationMembers = await memberManager.GetMembersOfAsync(person);
         return this.Page();
     }
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await this.personManager.FindByIdAsync(this.Anchor);
+        var person = await personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
-        this.OrganizationMembers = await this.memberManager.GetMembersOfAsync(person);
+        this.OrganizationMembers = await memberManager.GetMembersOfAsync(person);
 
-        var org = await this.organizationManager.FindByIdAsync(this.Input.OrganizationId);
+        var org = await organizationManager.FindByIdAsync(this.Input.OrganizationId);
         if (org == null)
         {
             this.ModelState.AddModelError(nameof(this.Input.OrganizationId), "Organization Not Found.");
@@ -60,9 +49,10 @@ public class IndexModel : PageModel
             Department = this.Input.Department,
             Remark = this.Input.Remark,
             IsOwner = this.Input.IsOwner,
+            Visibility = this.Input.Visibility,
         };
 
-        var result = await this.memberManager.CreateAsync(member);
+        var result = await memberManager.CreateAsync(member);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -76,12 +66,12 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await this.personManager.FindByIdAsync(this.Anchor);
+        var person = await personManager.FindByIdAsync(this.Anchor);
         if (person == null)
             return this.NotFound();
         this.Person = person;
 
-        var members = await this.memberManager.GetMembersOfAsync(this.Person);
+        var members = await memberManager.GetMembersOfAsync(this.Person);
         var member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
         if (member == null)
         {
@@ -89,8 +79,8 @@ public class IndexModel : PageModel
             return this.Page();
         }
 
-        this.Result = await this.memberManager.RemoveAsync(member);
-        return this.Page();
+        this.Result = await memberManager.RemoveAsync(member);
+        return this.RedirectToPage();
     }
 
     public class InputModel
@@ -100,15 +90,15 @@ public class IndexModel : PageModel
         public string OrganizationId { get; set; } = default!;
 
         [Display(Name = "Department")]
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Department { get; set; }
 
         [Display(Name = "Title")]
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Title { get; set; }
 
         [Display(Name = "Remark")]
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
         public string? Remark { get; set; }
 
         [Display(Name = "Owner")]

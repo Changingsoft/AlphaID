@@ -20,7 +20,7 @@ public static class HttpClientExtensions
         IHtmlFormElement form,
         IHtmlElement submitButton)
     {
-        return client.SendAsync(form, submitButton, new Dictionary<string, string>());
+        return client.SendAsync(form, submitButton, []);
     }
 
     /// <summary>

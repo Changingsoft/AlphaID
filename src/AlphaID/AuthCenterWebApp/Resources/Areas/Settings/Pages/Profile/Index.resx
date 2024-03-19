@@ -102,32 +102,30 @@
   </data>
   <data name="Cancel" xml:space="preserve">
 	  <value>Cancel</value>
-	  <comment>Cancel</comment>
   </data>
   <data name="Change profile picture" xml:space="preserve">
     <value>Change profile picture</value>
   </data>
   <data name="Crop" xml:space="preserve">
 	  <value>Crop</value>
-	  <comment>Crop</comment>
   </data>
   <data name="Crop the image" xml:space="preserve">
 	  <value>Crop the image</value>
-	  <comment>Crop the image</comment>
   </data>
   <data name="Edit person name" xml:space="preserve">
     <value>Edit person name</value>
   </data>
   <data name="Go to your profile" xml:space="preserve">
 	  <value>Go to your profile</value>
-	  <comment>Go to your profile</comment>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="Real-name authentication" xml:space="preserve">
+	  <value>Real-name authentication</value>
+  </data>
   <data name="Remove" xml:space="preserve">
 	  <value>Remove</value>
-	  <comment>Remove</comment>
   </data>
   <data name="Update profile" xml:space="preserve">
     <value>Update profile</value>

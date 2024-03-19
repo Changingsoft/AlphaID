@@ -6,15 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 {
-    public class EditSecretModel : PageModel
+    public class EditSecretModel(ConfigurationDbContext configurationDbContext) : PageModel
     {
-        private readonly ConfigurationDbContext configurationDbContext;
-
-        public EditSecretModel(ConfigurationDbContext configurationDbContext)
-        {
-            this.configurationDbContext = configurationDbContext;
-        }
-
         public Client Client { get; set; } = default!;
 
         public ClientSecret Secret { get; set; } = default!;
@@ -24,7 +17,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public IActionResult OnGet(int anchor, int secretId)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -42,7 +35,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public async Task<IActionResult> OnPostAsync(int anchor, int secretId)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -56,14 +49,14 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
             this.Secret.Expiration = this.Input.Expires;
             this.Secret.Description = this.Input.Description;
-            this.configurationDbContext.Clients.Update(this.Client);
-            await this.configurationDbContext.SaveChangesAsync();
+            configurationDbContext.Clients.Update(this.Client);
+            await configurationDbContext.SaveChangesAsync();
             return this.RedirectToPage("Secrets", new { anchor });
         }
 
-        public async Task<IActionResult> OnPostRemoveSecret(int anchor, int secretId)
+        public async Task<IActionResult> OnPostRemoveSecretAsync(int anchor, int secretId)
         {
-            var client = this.configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -73,8 +66,8 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             this.Secret = secret;
 
             this.Client.ClientSecrets.Remove(this.Secret);
-            this.configurationDbContext.Clients.Update(this.Client);
-            await this.configurationDbContext.SaveChangesAsync();
+            configurationDbContext.Clients.Update(this.Client);
+            await configurationDbContext.SaveChangesAsync();
             return this.RedirectToPage("Secrets", new { anchor });
         }
         public class InputModel

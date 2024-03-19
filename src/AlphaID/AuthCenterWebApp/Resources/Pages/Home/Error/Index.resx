@@ -99,10 +99,8 @@
   </resheader>
   <data name="An error occurred while processing your request." xml:space="preserve">
 		<value>An error occurred while processing your request.</value>
-		<comment>An error occurred while processing your request.</comment>
 	</data>
   <data name="Error" xml:space="preserve">
 		<value>Error</value>
-		<comment>Error</comment>
 	</data>
 </root>

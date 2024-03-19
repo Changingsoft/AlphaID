@@ -1,10 +1,3 @@
 ﻿namespace IdSubjects.SecurityAuditing.Events;
 
-internal class ChangePasswordFailureEvent : AuditLogEvent
-{
-    public ChangePasswordFailureEvent(string message)
-        : base(AuditLogEventCategories.AccountManagement, EventIds.ChangePasswordFailure, AuditLogEventTypes.Failure, message)
-    {
-        throw new NotImplementedException();
-    }
-}
+internal class ChangePasswordFailureEvent(string message) : AuditLogEvent(AuditLogEventCategories.AccountManagement, EventIds.ChangePasswordFailure, AuditLogEventTypes.Failure, message);

@@ -5,15 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 {
-    public class ConsentModel : PageModel
+    public class ConsentModel(ConfigurationDbContext configurationDbContext) : PageModel
     {
-        private readonly ConfigurationDbContext configurationDbContext;
-
-        public ConsentModel(ConfigurationDbContext configurationDbContext)
-        {
-            this.configurationDbContext = configurationDbContext;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
@@ -23,7 +16,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public IActionResult OnGet(int anchor)
         {
-            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -35,9 +28,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPost(int anchor)
+        public async Task<IActionResult> OnPostAsync(int anchor)
         {
-            var client = this.configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
+            var client = configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
                 return this.NotFound();
             this.Client = client;
@@ -47,8 +40,8 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
             this.Client.RequireConsent = this.Input.RequireConsent;
             this.Client.AllowRememberConsent = this.Input.AllowRememberConsent;
-            this.configurationDbContext.Clients.Update(this.Client);
-            await this.configurationDbContext.SaveChangesAsync();
+            configurationDbContext.Clients.Update(this.Client);
+            await configurationDbContext.SaveChangesAsync();
             this.OperationMessage = "Applied";
             return this.Page();
         }

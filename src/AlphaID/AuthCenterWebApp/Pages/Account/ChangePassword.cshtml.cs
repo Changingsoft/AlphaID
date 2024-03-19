@@ -13,19 +13,8 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ChangePasswordModel : PageModel
+public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction) : PageModel
 {
-    private readonly NaturalPersonManager userManager;
-    private readonly SignInManager<NaturalPerson> signInManager;
-    private readonly IIdentityServerInteractionService interaction;
-
-    public ChangePasswordModel(NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction)
-    {
-        this.userManager = userManager;
-        this.signInManager = signInManager;
-        this.interaction = interaction;
-    }
-
     public bool RememberMe { get; set; }
 
     public string? ReturnUrl { get; set; }
@@ -43,7 +32,7 @@ public class ChangePasswordModel : PageModel
             throw new InvalidOperationException("Unable to load must change password authentication user.");
         }
         string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        _ = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
+        _ = await userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
         this.RememberMe = rememberMe;
         this.ReturnUrl = returnUrl;
 
@@ -59,17 +48,17 @@ public class ChangePasswordModel : PageModel
             throw new InvalidOperationException("Unable to load must change password authentication user.");
         }
         string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        var person = await this.userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        var identityResult = await this.userManager.ChangePasswordAsync(person, this.Input.OldPassword, this.Input.NewPassword);
+        var person = await userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
+        var identityResult = await userManager.ChangePasswordAsync(person, this.Input.OldPassword, this.Input.NewPassword);
         if (identityResult.Succeeded)
         {
             //Sign out MustChangePasswordScheme
             await this.HttpContext.SignOutAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
 
-            //Signin user with out password.
-            await this.signInManager.SignInAsync(person, rememberMe);
+            //Signin user without password.
+            await signInManager.SignInAsync(person, rememberMe);
 
-            var context = await this.interaction.GetAuthorizationContextAsync(returnUrl);
+            var context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
             if (context != null)
             {

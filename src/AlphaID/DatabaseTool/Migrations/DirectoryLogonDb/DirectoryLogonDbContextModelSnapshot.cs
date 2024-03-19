@@ -24,7 +24,30 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DirectoryLogon.DirectoryService", b =>
+            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>
+                {
+                    b.Property<string>("PersonId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ObjectId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("PersonId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("LogonAccount");
+                });
+
+            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryServiceDescriptor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,19 +55,13 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DefaultUserAccountOU")
+                    b.Property<bool>("AutoCreateAccount")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("DefaultUserAccountContainer")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("ExternalLoginProvider")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("ExternalLoginProviderName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -56,13 +73,12 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("RootDN")
+                    b.Property<string>("RootDn")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("SAMDomainPart")
-                        .IsRequired()
+                    b.Property<string>("SamDomainPart")
                         .HasMaxLength(10)
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
@@ -71,6 +87,10 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("UpnSuffix")
                         .IsRequired()
@@ -87,39 +107,54 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                     b.ToTable("DirectoryService");
                 });
 
-            modelBuilder.Entity("DirectoryLogon.LogonAccount", b =>
+            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>
                 {
-                    b.Property<string>("LogonId")
-                        .HasMaxLength(128)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(128)")
-                        .UseCollation("Chinese_PRC_CS_AS");
-
-                    b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LogonId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("LogonAccount");
-                });
-
-            modelBuilder.Entity("DirectoryLogon.LogonAccount", b =>
-                {
-                    b.HasOne("DirectoryLogon.DirectoryService", "DirectoryService")
+                    b.HasOne("IdSubjects.DirectoryLogon.DirectoryServiceDescriptor", "DirectoryServiceDescriptor")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DirectoryService");
+                    b.Navigation("DirectoryServiceDescriptor");
+                });
+
+            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryServiceDescriptor", b =>
+                {
+                    b.OwnsOne("IdSubjects.DirectoryLogon.ExternalLoginProviderInfo", "ExternalLoginProvider", b1 =>
+                        {
+                            b1.Property<int>("DirectoryServiceDescriptorId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("DisplayName")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("RegisteredClientId")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("SubjectGenerator")
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(50)");
+
+                            b1.HasKey("DirectoryServiceDescriptorId");
+
+                            b1.ToTable("DirectoryService");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DirectoryServiceDescriptorId");
+                        });
+
+                    b.Navigation("ExternalLoginProvider");
                 });
 #pragma warning restore 612, 618
         }

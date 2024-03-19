@@ -7,8 +7,8 @@ public class ChineseNamePinyinConvertContext
 {
     internal ChineseNamePinyinConvertContext()
     {
-        this.SurnameChars = new List<PhoneticChineseChar>();
-        this.GivenNameChars = new List<PhoneticChineseChar>();
+        this.SurnameChars = [];
+        this.GivenNameChars = [];
     }
 
     internal ChineseNamePinyinConvertContext(IEnumerable<PhoneticChineseChar> surnameChars, IEnumerable<PhoneticChineseChar> givenNameChars)

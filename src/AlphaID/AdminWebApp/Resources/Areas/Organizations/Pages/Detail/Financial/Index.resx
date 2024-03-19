@@ -99,62 +99,47 @@
   </resheader>
   <data name="Account ID" xml:space="preserve">
 		<value>Account ID</value>
-		<comment>Account ID</comment>
 	</data>
   <data name="Add account" xml:space="preserve">
 		<value>Add account</value>
-		<comment>Add account</comment>
 	</data>
+  <data name="Are you sure you want to remove this bank account info from this organization?" xml:space="preserve">
+	  <value>Are you sure you want to remove this bank account info from this organization?</value>
+  </data>
   <data name="Bank" xml:space="preserve">
 		<value>Bank</value>
-		<comment>Bank</comment>
 	</data>
   <data name="Bank accounts" xml:space="preserve">
 		<value>Bank accounts</value>
-		<comment>Bank accounts</comment>
 	</data>
   <data name="Clear" xml:space="preserve">
 		<value>Clear</value>
-		<comment>Clear</comment>
 	</data>
   <data name="Default" xml:space="preserve">
 		<value>Default</value>
-		<comment>Default</comment>
 	</data>
   <data name="Fapiao info" xml:space="preserve">
 		<value>Fapiao info</value>
-		<comment>Fapiao info</comment>
 	</data>
   <data name="Financial" xml:space="preserve">
 		<value>Financial</value>
-		<comment>Financial</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
-	</data>
-  <data name="Save" xml:space="preserve">
-		<value>Save</value>
-		<comment>Save</comment>
-	</data>
-  <data name="Usage" xml:space="preserve">
-		<value>Usage</value>
-		<comment>Usage</comment>
 	</data>
   <data name="Operations" xml:space="preserve">
 	  <value>Operations</value>
-	  <comment>Operations</comment>
-  </data>
-  <data name="Set default" xml:space="preserve">
-	  <value>Set default</value>
-	  <comment>Set default</comment>
-  </data>
-  <data name="Are you sure you want to remove this bank account info from this organization?" xml:space="preserve">
-	  <value>Are you sure you want to remove this bank account info from this organization?</value>
-	  <comment>Are you sure you want to remove this bank account info from this organization?</comment>
   </data>
   <data name="Remove" xml:space="preserve">
 	  <value>Remove</value>
-	  <comment>Remove</comment>
   </data>
+  <data name="Save" xml:space="preserve">
+		<value>Save</value>
+	</data>
+  <data name="Set default" xml:space="preserve">
+	  <value>Set default</value>
+  </data>
+  <data name="Usage" xml:space="preserve">
+		<value>Usage</value>
+	</data>
 </root>

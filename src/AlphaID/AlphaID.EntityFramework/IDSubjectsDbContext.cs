@@ -7,13 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlphaId.EntityFramework;
 
-public class IdSubjectsDbContext : DbContext
+public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : DbContext(options)
 {
-    public IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : base(options)
-    {
-
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);

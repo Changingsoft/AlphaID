@@ -2,8 +2,8 @@
 @model AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail.IdPRestrictionModel
 @{
 }
-<h2>Id Provider Restrictions</h2>
-<p>Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty.</p>
+<h2>@L["ID Provider Restrictions"]</h2>
+<p>@L["Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty."]</p>
 
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
@@ -11,7 +11,7 @@
         {
             <li class="list-group-item">
                 @restriction.Provider
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm();" name="itemId" value="@restriction.Id">Remove</button>
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('@SL["Remove"]');" name="itemId" value="@restriction.Id">@SL["Remove"]</button>
             </li>
         }
     </ul>
@@ -19,7 +19,7 @@
 
 <div class="card">
     <div class="card-header">
-        <p>Add Id Provider</p>
+        <p>@L["Add Id Provider"]</p>
     </div>
     <div class="card-body">
         <form method="post" asp-page-handler="Add">

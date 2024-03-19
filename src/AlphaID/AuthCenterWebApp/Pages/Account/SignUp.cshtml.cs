@@ -1,6 +1,7 @@
 using AlphaIdPlatform;
 using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
+using Duende.IdentityServer;
 using IdentityModel;
 using IdSubjects;
 using IdSubjects.ChineseName;
@@ -18,29 +19,14 @@ namespace AuthCenterWebApp.Pages.Account;
 
 //[SecurityHeaders]
 [AllowAnonymous]
-public class SignUpModel : PageModel
+public class SignUpModel(NaturalPersonManager naturalPersonManager,
+                   IVerificationCodeService verificationCodeService,
+                   ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
+                   IOptions<ProductInfo> production,
+                   SignInManager<NaturalPerson> signInManager,
+                   IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
 {
-    private readonly NaturalPersonManager naturalPersonManager;
-    private readonly IVerificationCodeService verificationCodeService;
-    private readonly ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter;
-    private readonly ProductInfo production;
-    private readonly SignInManager<NaturalPerson> signInManager;
-    private readonly IStringLocalizer<SignUpModel> stringLocalizer;
-
-    public SignUpModel(NaturalPersonManager naturalPersonManager,
-                       IVerificationCodeService verificationCodeService,
-                       ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
-                       IOptions<ProductInfo> production,
-                       SignInManager<NaturalPerson> signInManager,
-                       IStringLocalizer<SignUpModel> stringLocalizer)
-    {
-        this.naturalPersonManager = naturalPersonManager;
-        this.verificationCodeService = verificationCodeService;
-        this.chinesePersonNamePinyinConverter = chinesePersonNamePinyinConverter;
-        this.production = production.Value;
-        this.signInManager = signInManager;
-        this.stringLocalizer = stringLocalizer;
-    }
+    private readonly ProductInfo production = production.Value;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -52,9 +38,9 @@ public class SignUpModel : PageModel
 
     public string? ExternalLoginMessage { get; set; }
 
-    public async Task<IActionResult> OnGet(string? external)
+    public async Task<IActionResult> OnGetAsync(string? external)
     {
-        var externalAuthResult = await this.HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+        var externalAuthResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         if (!externalAuthResult.Succeeded)
         {
             return this.Page();
@@ -98,12 +84,12 @@ public class SignUpModel : PageModel
 
         if (!MobilePhoneNumber.TryParse(this.Input.Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError("Input.PhoneNumber", this.stringLocalizer["Invalid mobile phone number."]);
+            this.ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
         }
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        if (!await this.verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.Input.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.Input.VerificationCode))
         {
             this.ModelState.AddModelError("Input.VerificationCode", "验证码无效");
         }
@@ -111,11 +97,11 @@ public class SignUpModel : PageModel
             return this.Page();
 
         //如果来自外埠登录？
-        var externalLoginResult = await this.HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+        var externalLoginResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
 
 
-        var (pinyinSurname, pinyinGivenName) = this.chinesePersonNamePinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
+        var (pinyinSurname, pinyinGivenName) = chinesePersonNamePinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
         var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, pinyinSurname, pinyinGivenName);
         var userName = this.Input.Email ?? phoneNumber.PhoneNumber;
         var personBuilder = new PersonBuilder(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
@@ -129,7 +115,7 @@ public class SignUpModel : PageModel
         person.DateOfBirth = this.Input.DateOfBirth;
         person.Gender = this.Input.Sex;
 
-        var result = await this.naturalPersonManager.CreateAsync(person, this.Input.NewPassword);
+        var result = await naturalPersonManager.CreateAsync(person, this.Input.NewPassword);
         if (result.Succeeded)
         {
             if (externalLoginResult.Succeeded)
@@ -138,11 +124,11 @@ public class SignUpModel : PageModel
                 var userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
                       externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
                       throw new Exception("Unknown userid");
-                await this.naturalPersonManager.AddLoginAsync(person, new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value, externalLoginResult.Properties.Items["schemeDisplayName"]));
+                await naturalPersonManager.AddLoginAsync(person, new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value, externalLoginResult.Properties.Items["schemeDisplayName"]));
             }
 
             //login user. redirect to user profile center.
-            await this.signInManager.SignInAsync(person, false);
+            await signInManager.SignInAsync(person, false);
             return this.RedirectToPage("SignUpSuccess");
         }
         foreach (var error in result.Errors)
@@ -158,7 +144,7 @@ public class SignUpModel : PageModel
         {
             return new JsonResult("移动电话号码无效。");
         }
-        await this.verificationCodeService.SendAsync(phoneNumber.ToString());
+        await verificationCodeService.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }
 

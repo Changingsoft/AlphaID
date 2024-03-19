@@ -3,34 +3,27 @@ using IdSubjects.Payments;
 
 namespace AlphaId.EntityFramework;
 
-internal class PersonBankAccountStore : IPersonBankAccountStore
+internal class PersonBankAccountStore(IdSubjectsDbContext dbContext) : IPersonBankAccountStore
 {
-    private readonly IdSubjectsDbContext dbContext;
-
-    public PersonBankAccountStore(IdSubjectsDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
-    public IQueryable<PersonBankAccount> BankAccounts => this.dbContext.PersonBankAccounts;
+    public IQueryable<PersonBankAccount> BankAccounts => dbContext.PersonBankAccounts;
 
     public async Task<IdOperationResult> CreateAsync(PersonBankAccount bankAccount)
     {
-        this.dbContext.PersonBankAccounts.Add(bankAccount);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.PersonBankAccounts.Add(bankAccount);
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 
     public async Task<IdOperationResult> UpdateAsync(PersonBankAccount bankAccount)
     {
-        await this.dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 
     public async Task<IdOperationResult> DeleteAsync(PersonBankAccount bankAccount)
     {
-        this.dbContext.PersonBankAccounts.Remove(bankAccount);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.PersonBankAccounts.Remove(bankAccount);
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 }

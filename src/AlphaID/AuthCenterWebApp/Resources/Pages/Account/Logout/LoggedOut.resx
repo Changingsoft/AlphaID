@@ -99,18 +99,14 @@
   </resheader>
   <data name="OK" xml:space="preserve">
 		<value>OK</value>
-		<comment>OK</comment>
 	</data>
   <data name="Return back to" xml:space="preserve">
 		<value>Return back to</value>
-		<comment>Return back to</comment>
 	</data>
   <data name="Signed out" xml:space="preserve">
 		<value>Signed out</value>
-		<comment>Signed out</comment>
 	</data>
   <data name="You've successfully signed out of the login." xml:space="preserve">
 		<value>You've successfully signed out of the login.</value>
-		<comment>You've successfully signed out of the login.</comment>
 	</data>
 </root>

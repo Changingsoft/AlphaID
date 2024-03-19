@@ -34,4 +34,9 @@ public class ProductInfo
     /// Logo image path.
     /// </summary>
     public string LogoImagePath { get; set; } = "/logo.png";
+
+    /// <summary>
+    /// 该系统所使用的特性。
+    /// </summary>
+    public FeatureSwitch Feature { get; set; } = new();
 }

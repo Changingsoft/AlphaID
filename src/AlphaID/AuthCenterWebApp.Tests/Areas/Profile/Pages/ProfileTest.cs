@@ -1,17 +1,10 @@
 ﻿namespace AuthCenterWebApp.Tests.Areas.Profile.Pages;
-public class ProfileTest : IClassFixture<AuthCenterWebAppFactory>
+public class ProfileTest(AuthCenterWebAppFactory factory) : IClassFixture<AuthCenterWebAppFactory>
 {
-    private readonly AuthCenterWebAppFactory factory;
-
-    public ProfileTest(AuthCenterWebAppFactory factory)
-    {
-        this.factory = factory;
-    }
-
     [Fact]
     public async Task GetDefaultPictureWhenPersonNotSpecified()
     {
-        var client = this.factory.CreateAuthenticatedClient();
+        var client = factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("People/guanyu/Avatar");
         response.EnsureSuccessStatusCode();

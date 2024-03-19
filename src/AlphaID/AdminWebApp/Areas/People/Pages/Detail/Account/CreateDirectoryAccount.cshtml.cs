@@ -5,27 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
-public class CreateDirectoryAccountModel : PageModel
+public class CreateDirectoryAccountModel(DirectoryServiceManager directoryServiceManager, DirectoryAccountManager directoryAccountManager, NaturalPersonManager naturalPersonManager) : PageModel
 {
-    private readonly DirectoryServiceManager directoryServiceManager;
-    private readonly LogonAccountManager logonAccountManager;
-    private readonly NaturalPersonManager naturalPersonManager;
-
-    public CreateDirectoryAccountModel(DirectoryServiceManager directoryServiceManager, LogonAccountManager logonAccountManager, NaturalPersonManager naturalPersonManager)
-    {
-        this.directoryServiceManager = directoryServiceManager;
-        this.logonAccountManager = logonAccountManager;
-        this.naturalPersonManager = naturalPersonManager;
-    }
-
-    public IEnumerable<DirectoryService> DirectoryServices => this.directoryServiceManager.Services;
+    public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+        var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
 
@@ -52,33 +41,21 @@ public class CreateDirectoryAccountModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var person = await this.naturalPersonManager.FindByIdAsync(anchor);
+        var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
             return this.NotFound();
+
+        var directoryService = await directoryServiceManager.FindByIdAsync(this.Input.ServiceId);
+        if (directoryService == null)
+            this.ModelState.AddModelError("", "请选择一个目录服务");
 
         if (!this.ModelState.IsValid)
             return this.Page();
 
-        var directoryService = this.directoryServiceManager.FindByIdAsync(this.Input.ServiceId);
-        if (directoryService == null)
-            this.ModelState.AddModelError("", "请选择一个目录服务");
-
-        CreateAccountRequest request = new()
-        {
-            AccountName = this.Input.EntryName,
-            SamAccountName = this.Input.SamAccountName,
-            UpnLeftPart = this.Input.UpnPart,
-            DisplayName = this.Input.DisplayName,
-            Surname = this.Input.Surname,
-            GivenName = this.Input.GivenName,
-            Email = this.Input.Email,
-            E164Mobile = this.Input.Mobile,
-            ServiceId = this.Input.ServiceId,
-            InitPassword = this.Input.NewPassword,
-        };
         try
         {
-            await this.logonAccountManager.CreateAsync(person, request);
+            var logonAccount = new DirectoryAccount(directoryService!, person.Id);
+            await directoryAccountManager.CreateAsync(naturalPersonManager, logonAccount);
             return this.RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception ex)
@@ -94,18 +71,24 @@ public class CreateDirectoryAccountModel : PageModel
         public int ServiceId { get; set; }
 
         [Display(Name = "SAM Account Name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string SamAccountName { get; set; } = default!;
 
         [Display(Name = "UPN Prefix Part")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string UpnPart { get; set; } = default!;
 
         [Display(Name = "Directory Entry Name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string EntryName { get; set; } = default!;
 
+        [Required(ErrorMessage = "Validate_Required")]
         public string Surname { get; set; } = default!;
 
+        [Required(ErrorMessage = "Validate_Required")]
         public string GivenName { get; set; } = default!;
 
+        [Required(ErrorMessage = "Validate_Required")]
         public string DisplayName { get; set; } = default!;
 
         public string? PinyinSurname { get; set; }
@@ -115,17 +98,20 @@ public class CreateDirectoryAccountModel : PageModel
         public string? PinyinDisplayName { get; set; }
 
         [Display(Name = "PhoneNumber Phone Number")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string Mobile { get; set; } = default!;
 
         [Display(Name = "Email Address")]
         public string? Email { get; set; }
 
         [Display(Name = "Password")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; } = default!;
 
         [Display(Name = "Confirm Password")]
+        [Required(ErrorMessage = "Validate_Required")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]

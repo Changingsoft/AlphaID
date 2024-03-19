@@ -2,7 +2,7 @@
 @model ScopesModel
 @{
 }
-<h3>Client allowed scopes</h3>
+<h3>@L["Client allowed scopes"]</h3>
 
 <form method="post">
     <ul class="list-group">
@@ -21,8 +21,7 @@
             </li>
         }
     </ul>
-    <button type="submit" class="btn btn-primary">Apply changes</button>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
     <p>@Model.OperationMessage</p>
 </form>
 
-<p>@L["About all available scopes, see <a href=\"#\">here</a>."]</p>

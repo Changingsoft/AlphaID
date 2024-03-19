@@ -1,26 +1,19 @@
 ﻿using AdminWebApp.Domain.Security;
 
 namespace AdminWebApp.Infrastructure.DataStores;
-public class UserInRoleStore : IUserInRoleStore
+public class UserInRoleStore(OperationalDbContext dbContext) : IUserInRoleStore
 {
-    private readonly OperationalDbContext dbContext;
-
-    public UserInRoleStore(OperationalDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
-    public IQueryable<UserInRole> UserInRoles => this.dbContext.UserInRoles;
+    public IQueryable<UserInRole> UserInRoles => dbContext.UserInRoles;
 
     public async Task CreateAsync(UserInRole item)
     {
-        this.dbContext.UserInRoles.Add(item);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.UserInRoles.Add(item);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(UserInRole item)
     {
-        this.dbContext.UserInRoles.Remove(item);
-        await this.dbContext.SaveChangesAsync();
+        dbContext.UserInRoles.Remove(item);
+        await dbContext.SaveChangesAsync();
     }
 }

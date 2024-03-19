@@ -15,7 +15,7 @@
 /// <param name="Title"> Title name. </param>
 public record DirectorySearchItem(string Name,
                                   string? SamAccountName,
-                                  string UserPrincipalName,
+                                  string? UserPrincipalName,
                                   Guid ObjectGuid,
                                   string Dn,
                                   string? DisplayName,

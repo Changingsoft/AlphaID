@@ -99,18 +99,18 @@
   </resheader>
   <data name="Grant types" xml:space="preserve">
 		<value>Grant types</value>
-		<comment>Grant types</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="New client" xml:space="preserve">
 		<value>New client</value>
-		<comment>New client</comment>
 	</data>
   <data name="Scopes" xml:space="preserve">
 		<value>Scopes</value>
-		<comment>Scopes</comment>
 	</data>
+  <data name="Clients" xml:space="preserve">
+	  <value>Clients</value>
+	  <comment>Clients</comment>
+  </data>
 </root>

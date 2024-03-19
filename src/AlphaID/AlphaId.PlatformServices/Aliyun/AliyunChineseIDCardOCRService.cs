@@ -9,17 +9,13 @@ namespace AlphaId.PlatformServices.Aliyun;
 /// <summary>
 /// 阿里云身份证识别服务。
 /// </summary>
-public class AliyunChineseIdCardOcrService : IChineseIdCardOcrService
+/// <remarks>
+/// 
+/// </remarks>
+public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options) : IChineseIdCardOcrService
 {
-    private readonly AliyunChineseIdCardOcrServiceOptions options;
+    private readonly AliyunChineseIdCardOcrServiceOptions options = options.Value;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options)
-    {
-        this.options = options.Value;
-    }
     /// <summary>
     /// 识别身份证背面（国徽面）。
     /// </summary>

@@ -2,19 +2,13 @@ using System.Net;
 
 namespace AdminWebApp.Tests;
 
-public class HomePageTest : IClassFixture<AdminWebAppFactory>
+[Collection(nameof(TestServerCollection))]
+public class HomePageTest(AdminWebAppFactory factory)
 {
-    private readonly AdminWebAppFactory factory;
-
-    public HomePageTest(AdminWebAppFactory factory)
-    {
-        this.factory = factory;
-    }
-
     [Fact]
     public async Task UnauthenticatedUserRedirect()
     {
-        var client = this.factory.CreateClient(new()
+        var client = factory.CreateClient(new()
         {
             AllowAutoRedirect = false,
         });
@@ -25,7 +19,7 @@ public class HomePageTest : IClassFixture<AdminWebAppFactory>
     [Fact]
     public async Task AuthenticatedUserOk()
     {
-        var client = this.factory.CreateAuthenticatedClient();
+        var client = factory.CreateAuthenticatedClient();
 
         var response = await client.GetAsync("/");
         Assert.True(response.IsSuccessStatusCode);

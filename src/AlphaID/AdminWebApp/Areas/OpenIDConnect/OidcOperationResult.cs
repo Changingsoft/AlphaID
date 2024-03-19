@@ -2,7 +2,7 @@
 
 public class OidcOperationResult
 {
-    private readonly List<string> errors = new();
+    private readonly List<string> errors = [];
 
     /// <summary>
     /// 错误列表。

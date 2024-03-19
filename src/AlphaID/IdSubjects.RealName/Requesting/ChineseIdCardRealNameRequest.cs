@@ -86,7 +86,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     /// 签发日期。
     /// </summary>
-    public DateOnly IssueDate { get; set; } = default!;
+    public DateOnly IssueDate { get; set; }
 
     /// <summary>
     /// 有效期至。若为null，表示长期。
@@ -110,7 +110,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <exception cref="InvalidOperationException"></exception>
     public override RealNameAuthentication CreateAuthentication()
     {
-        if (!this.AcceptedAt.HasValue)
+        if (!this.AuditTime.HasValue)
             throw new InvalidOperationException("未审核通过的请求不能创建认证信息。");
         var document = new ChineseIdCardDocument()
         {
@@ -129,7 +129,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
 
         var authentication = new DocumentedRealNameAuthentication(document,
             new PersonNameInfo(this.Name),
-            this.AcceptedAt.Value,
+            this.AuditTime.Value,
             this.Auditor!);
         return authentication;
     }

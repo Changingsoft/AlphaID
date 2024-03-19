@@ -8,14 +8,8 @@ using System.ComponentModel.DataAnnotations;
 namespace AuthCenterWebApp.Pages.Ciba;
 
 [Authorize]
-public class AllModel : PageModel
+public class AllModel(IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService) : PageModel
 {
-    private readonly IBackchannelAuthenticationInteractionService backchannelAuthenticationInteraction;
-    public AllModel(IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService)
-    {
-        this.backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
-    }
-
     public IEnumerable<BackchannelUserLoginRequest> Logins { get; set; } = default!;
 
     [BindProperty, Required]
@@ -25,6 +19,6 @@ public class AllModel : PageModel
 
     public async Task OnGet()
     {
-        this.Logins = await this.backchannelAuthenticationInteraction.GetPendingLoginRequestsForCurrentUserAsync();
+        this.Logins = await backchannelAuthenticationInteractionService.GetPendingLoginRequestsForCurrentUserAsync();
     }
 }

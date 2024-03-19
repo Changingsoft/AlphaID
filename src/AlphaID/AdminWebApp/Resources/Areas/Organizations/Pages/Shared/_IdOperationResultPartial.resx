@@ -99,10 +99,8 @@
   </resheader>
   <data name="Errors:" xml:space="preserve">
 		<value>Errors:</value>
-		<comment>Errors:</comment>
 	</data>
   <data name="Operation Succeeded" xml:space="preserve">
 		<value>Operation Succeeded</value>
-		<comment>Operation Succeeded</comment>
 	</data>
 </root>

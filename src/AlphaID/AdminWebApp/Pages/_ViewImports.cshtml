@@ -15,7 +15,9 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, AdminWebApp
 @addTagHelper *, AlphaIdPlatform
+@addTagHelper *, Westwind.AspNetCore.Markdown
 
 @inject IViewLocalizer L
 @inject IOptions<ProductInfo> Product
-@inject IHtmlLocalizer<SharedResource> Sl
+@* ReSharper disable once InconsistentNaming *@
+@inject IHtmlLocalizer<SharedResource> SL

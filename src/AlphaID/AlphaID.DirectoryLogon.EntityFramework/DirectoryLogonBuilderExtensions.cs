@@ -7,8 +7,8 @@ public static class DirectoryLogonBuilderExtensions
 {
     public static DirectoryLogonBuilder AddDefaultStores(this DirectoryLogonBuilder builder)
     {
-        builder.AddDirectoryServiceStore<DirectoryServiceStore>();
-        builder.AddLogonAccountStore<LogonAccountStore>();
+        builder.AddDirectoryServiceStore<DirectoryServiceDescriptorStore>();
+        builder.AddLogonAccountStore<DirectoryAccountStore>();
         return builder;
     }
 

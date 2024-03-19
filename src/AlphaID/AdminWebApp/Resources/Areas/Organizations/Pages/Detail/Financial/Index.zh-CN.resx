@@ -123,6 +123,9 @@
   <data name="Add account" xml:space="preserve">
     <value>新增账号</value>
   </data>
+  <data name="Are you sure you want to remove this bank account info from this organization?" xml:space="preserve">
+    <value>您确认要移除组织的银行账户信息吗？</value>
+  </data>
   <data name="Bank" xml:space="preserve">
     <value>银行</value>
   </data>
@@ -144,22 +147,19 @@
   <data name="Name" xml:space="preserve">
     <value>名称</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存</value>
-  </data>
-  <data name="Usage" xml:space="preserve">
-    <value>用途</value>
-  </data>
   <data name="Operations" xml:space="preserve">
     <value>操作</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
   </data>
   <data name="Set default" xml:space="preserve">
     <value>设为默认</value>
   </data>
-  <data name="Are you sure you want to remove this bank account info from this organization?" xml:space="preserve">
-    <value>您确认要移除组织的银行账户信息吗？</value>
-  </data>
-  <data name="Remove" xml:space="preserve">
-    <value>移除</value>
+  <data name="Usage" xml:space="preserve">
+    <value>用途</value>
   </data>
 </root>

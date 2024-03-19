@@ -3,16 +3,12 @@
 /// <summary>
 /// GenericOrganization Manager
 /// </summary>
-public class OrganizationManager
+/// <remarks>
+/// 
+/// </remarks>
+/// <param name="store"></param>
+public class OrganizationManager(IOrganizationStore store)
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="store"></param>
-    public OrganizationManager(IOrganizationStore store)
-    {
-        this.Store = store;
-    }
 
     /// <summary>
     /// 
@@ -22,7 +18,7 @@ public class OrganizationManager
     /// <summary>
     /// 获取组织存取器。
     /// </summary>
-    protected IOrganizationStore Store { get; }
+    protected IOrganizationStore Store { get; } = store;
 
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
@@ -31,12 +27,12 @@ public class OrganizationManager
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> CreateAsync(GenericOrganization org)
+    public Task<IdOperationResult> CreateAsync(GenericOrganization org)
     {
         var utcNow = this.TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
-        return await this.Store.CreateAsync(org);
+        return this.Store.CreateAsync(org);
     }
 
     /// <summary>
@@ -88,9 +84,9 @@ public class OrganizationManager
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
+    public Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
     {
-        return await this.Store.DeleteAsync(organization);
+        return this.Store.DeleteAsync(organization);
     }
 
     /// <summary>
@@ -98,9 +94,9 @@ public class OrganizationManager
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<GenericOrganization?> FindByIdAsync(string id)
+    public Task<GenericOrganization?> FindByIdAsync(string id)
     {
-        return await this.Store.FindByIdAsync(id);
+        return this.Store.FindByIdAsync(id);
     }
 
     /// <summary>
@@ -118,10 +114,10 @@ public class OrganizationManager
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> UpdateAsync(GenericOrganization org)
+    public Task<IdOperationResult> UpdateAsync(GenericOrganization org)
     {
         org.WhenChanged = this.TimeProvider.GetUtcNow();
-        return await this.Store.UpdateAsync(org);
+        return this.Store.UpdateAsync(org);
     }
 
     /// <summary>

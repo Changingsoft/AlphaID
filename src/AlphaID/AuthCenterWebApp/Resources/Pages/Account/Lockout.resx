@@ -99,14 +99,11 @@
   </resheader>
   <data name="Account" xml:space="preserve">
 		<value>Account</value>
-		<comment>Account</comment>
 	</data>
   <data name="Locked out" xml:space="preserve">
 		<value>Locked out</value>
-		<comment>Locked out</comment>
 	</data>
   <data name="Your account was locked out, please try again later." xml:space="preserve">
 		<value>Your account was locked out, please try again later.</value>
-		<comment>Your account was locked out, please try again later.</comment>
 	</data>
 </root>

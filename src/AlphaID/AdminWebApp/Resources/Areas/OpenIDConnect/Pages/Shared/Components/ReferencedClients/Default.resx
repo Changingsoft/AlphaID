@@ -99,14 +99,11 @@
   </resheader>
   <data name="Client Anchor" xml:space="preserve">
 		<value>Client Anchor</value>
-		<comment>Client Anchor</comment>
 	</data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
-		<comment>Name</comment>
 	</data>
   <data name="Referenced Clients" xml:space="preserve">
 		<value>Referenced Clients</value>
-		<comment>Referenced Clients</comment>
 	</data>
 </root>

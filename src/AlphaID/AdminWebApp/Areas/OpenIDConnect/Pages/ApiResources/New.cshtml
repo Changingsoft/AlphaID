@@ -6,12 +6,12 @@
     <li class="breadcrumb-item"><a asp-page="Index">@L["API Resources"]</a></li>
 }
 @section PageHeader{
-<h1>Create API resource</h1>
+<h1>@L["Create API resource"]</h1>
 }
 
 <form method="post">
     <div class="mb-3">
-        <label asp-for="Input.Name" class="form-label"></label>
+        <label asp-for="Input.Name" class="form-label required"></label>
         <input asp-for="Input.Name" class="form-control" />
         <span asp-description-for="Input.Name" class="form-hint"></span>
         <span asp-validation-for="Input.Name" class="text-danger"></span>
@@ -40,5 +40,5 @@
     </div>
 
     <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">创建</button>
+    <button type="submit" class="btn btn-primary">@L["Create"]</button>
 </form>

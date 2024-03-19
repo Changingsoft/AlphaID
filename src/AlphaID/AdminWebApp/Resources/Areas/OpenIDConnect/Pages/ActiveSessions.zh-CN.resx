@@ -99,7 +99,6 @@
   </resheader>
   <data name="Active Sessions" xml:space="preserve">
 	  <value>活动会话</value>
-	  <comment>Active Sessions</comment>
   </data>
   <data name="Created" xml:space="preserve">
     <value>创建于</value>

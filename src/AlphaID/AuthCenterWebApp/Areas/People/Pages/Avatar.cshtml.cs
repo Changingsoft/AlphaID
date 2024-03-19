@@ -4,18 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages
 {
-    public class AvatarModel : PageModel
+    public class AvatarModel(NaturalPersonManager personManager) : PageModel
     {
-        private readonly NaturalPersonManager personManager;
-
-        public AvatarModel(NaturalPersonManager personManager)
-        {
-            this.personManager = personManager;
-        }
-
         public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var person = await this.personManager.FindByNameAsync(anchor) ?? await this.personManager.FindByIdAsync(anchor);
+            var person = await personManager.FindByNameAsync(anchor) ?? await personManager.FindByIdAsync(anchor);
             if (person == null)
                 return this.NotFound();
             if (person.ProfilePicture != null)

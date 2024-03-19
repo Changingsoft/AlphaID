@@ -3,26 +3,18 @@
 /// <summary>
 /// 实名认证管理器。
 /// </summary>
-public class RealNameManager
+/// <remarks>
+/// 初始化实名认证管理器。
+/// </remarks>
+/// <param name="store"></param>
+/// <param name="naturalPersonManager"></param>
+public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonManager naturalPersonManager)
 {
-    private readonly IRealNameAuthenticationStore store;
-    private readonly NaturalPersonManager naturalPersonManager;
-
-    /// <summary>
-    /// 初始化实名认证管理器。
-    /// </summary>
-    /// <param name="store"></param>
-    /// <param name="naturalPersonManager"></param>
-    public RealNameManager(IRealNameAuthenticationStore store, NaturalPersonManager naturalPersonManager)
-    {
-        this.store = store;
-        this.naturalPersonManager = naturalPersonManager;
-    }
 
     /// <summary>
     /// 获取可查询的实名认证信息集合。
     /// </summary>
-    public IQueryable<RealNameAuthentication> Authentications => this.store.Authentications;
+    public IQueryable<RealNameAuthentication> Authentications => store.Authentications;
 
 
     /// <summary>
@@ -32,7 +24,7 @@ public class RealNameManager
     /// <returns>与自然人相关的实名状态。如果没有，则返回null。</returns>
     public virtual IEnumerable<RealNameAuthentication> GetAuthentications(NaturalPerson person)
     {
-        return this.store.FindByPerson(person);
+        return store.FindByPerson(person);
     }
 
     /// <summary>
@@ -44,12 +36,12 @@ public class RealNameManager
     public async Task<IdOperationResult> AuthenticateAsync(NaturalPerson person, RealNameAuthentication authentication)
     {
         authentication.PersonId = person.Id;
-        var result = await this.store.CreateAsync(authentication);
+        var result = await store.CreateAsync(authentication);
         if (!result.Succeeded)
             return result;
 
         //为 person 应用更改。
-        var identityResult = await this.naturalPersonManager.UpdateAsync(person);
+        var identityResult = await naturalPersonManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
             return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());
 
@@ -61,29 +53,29 @@ public class RealNameManager
     /// </summary>
     /// <param name="authentication"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RemoveAsync(RealNameAuthentication authentication)
+    public Task<IdOperationResult> RemoveAsync(RealNameAuthentication authentication)
     {
-        return await this.store.DeleteAsync(authentication);
+        return store.DeleteAsync(authentication);
     }
 
-    internal async Task<IdOperationResult> UpdateAsync(RealNameAuthentication authentication)
+    internal Task<IdOperationResult> UpdateAsync(RealNameAuthentication authentication)
     {
-        return await this.store.UpdateAsync(authentication);
+        return store.UpdateAsync(authentication);
     }
 
     internal bool HasAuthenticated(NaturalPerson person)
     {
-        return this.store.Authentications.Any(a => a.PersonId == person.Id);
+        return store.Authentications.Any(a => a.PersonId == person.Id);
     }
 
     internal IEnumerable<RealNameAuthentication> GetPendingAuthentications(NaturalPerson person)
     {
-        return this.store.FindByPerson(person).Where(a => !a.Applied);
+        return store.FindByPerson(person).Where(a => !a.Applied);
     }
 
     internal async Task ClearAsync(NaturalPerson person)
     {
-        await this.store.DeleteByPersonIdAsync(person.Id);
+        await store.DeleteByPersonIdAsync(person.Id);
     }
 
     /// <summary>
@@ -91,8 +83,8 @@ public class RealNameManager
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<RealNameAuthentication?> FindByIdAsync(string id)
+    public Task<RealNameAuthentication?> FindByIdAsync(string id)
     {
-        return await this.store.FindByIdAsync(id);
+        return store.FindByIdAsync(id);
     }
 }

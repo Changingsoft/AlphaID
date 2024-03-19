@@ -99,126 +99,103 @@
   </resheader>
   <data name="Address" xml:space="preserve">
 		<value>Address</value>
-		<comment>Address</comment>
 	</data>
   <data name="Are you sure you want to remove the picture of this profile?" xml:space="preserve">
 		<value>Are you sure you want to remove the picture of this profile?</value>
-		<comment>Are you sure you want to remove the picture of this profile?</comment>
 	</data>
   <data name="Authentication statistics" xml:space="preserve">
 		<value>Authentication statistics</value>
-		<comment>Authentication statistics</comment>
 	</data>
   <data name="Cancel" xml:space="preserve">
 		<value>Cancel</value>
-		<comment>Cancel</comment>
 	</data>
   <data name="Change person name" xml:space="preserve">
 		<value>Change person name</value>
-		<comment>Change person name</comment>
 	</data>
   <data name="Change profile picture" xml:space="preserve">
 		<value>Change profile picture</value>
-		<comment>Change profile picture</comment>
 	</data>
   <data name="Change username" xml:space="preserve">
 		<value>Change username</value>
-		<comment>Change username</comment>
 	</data>
   <data name="Changed at" xml:space="preserve">
 		<value>Changed at</value>
-		<comment>Changed at</comment>
 	</data>
   <data name="Contacts" xml:space="preserve">
 		<value>Contacts</value>
-		<comment>Contacts</comment>
 	</data>
   <data name="Created at" xml:space="preserve">
 		<value>Created at</value>
-		<comment>Created at</comment>
 	</data>
   <data name="Crop" xml:space="preserve">
 		<value>Crop</value>
-		<comment>Crop</comment>
 	</data>
   <data name="Crop the image" xml:space="preserve">
 		<value>Crop the image</value>
-		<comment>Crop the image</comment>
 	</data>
   <data name="Danger zone" xml:space="preserve">
 		<value>Danger zone</value>
-		<comment>Danger zone</comment>
 	</data>
   <data name="Date of birth (Age)" xml:space="preserve">
 		<value>Date of birth (Age)</value>
-		<comment>Date of birth (Age)</comment>
 	</data>
   <data name="Delete person" xml:space="preserve">
 		<value>Delete person</value>
-		<comment>Delete person</comment>
 	</data>
   <data name="Display" xml:space="preserve">
 		<value>Display</value>
-		<comment>Display</comment>
 	</data>
   <data name="Email" xml:space="preserve">
 		<value>Email</value>
-		<comment>Email</comment>
 	</data>
   <data name="External Logins" xml:space="preserve">
 		<value>External Logins</value>
-		<comment>External Logins</comment>
 	</data>
   <data name="Gender" xml:space="preserve">
 		<value>Gender</value>
-		<comment>Gender</comment>
 	</data>
   <data name="Given name" xml:space="preserve">
 		<value>Given name</value>
-		<comment>Given name</comment>
 	</data>
   <data name="Misc" xml:space="preserve">
 		<value>Misc</value>
-		<comment>Misc</comment>
 	</data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
-		<comment>Overview</comment>
 	</data>
   <data name="Person ID" xml:space="preserve">
 		<value>Person ID</value>
-		<comment>Person ID</comment>
 	</data>
   <data name="Person Name" xml:space="preserve">
 		<value>Person Name</value>
-		<comment>Person Name</comment>
 	</data>
   <data name="Phone number" xml:space="preserve">
 		<value>Phone number</value>
-		<comment>Phone number</comment>
 	</data>
   <data name="QQ" xml:space="preserve">
 		<value>QQ</value>
-		<comment>QQ</comment>
 	</data>
   <data name="Remove" xml:space="preserve">
 		<value>Remove</value>
-		<comment>Remove</comment>
 	</data>
   <data name="Status" xml:space="preserve">
 		<value>Status</value>
-		<comment>Status</comment>
 	</data>
   <data name="Surname" xml:space="preserve">
 		<value>Surname</value>
-		<comment>Surname</comment>
 	</data>
   <data name="Username" xml:space="preserve">
 		<value>Username</value>
-		<comment>Username</comment>
 	</data>
   <data name="Website" xml:space="preserve">
 		<value>Website</value>
-		<comment>Website</comment>
 	</data>
+  <data name="Confirmed" xml:space="preserve">
+	  <value>Confirmed</value>
+	  <comment>Confirmed</comment>
+  </data>
+  <data name="Account" xml:space="preserve">
+	  <value>Account</value>
+	  <comment>Account</comment>
+  </data>
 </root>

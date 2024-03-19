@@ -4,15 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail
 {
-    public class GeneralModel : PageModel
+    public class GeneralModel(OrganizationManager manager) : PageModel
     {
-        private readonly OrganizationManager manager;
-
-        public GeneralModel(OrganizationManager manager)
-        {
-            this.manager = manager;
-        }
-
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
@@ -20,7 +13,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public async Task<IActionResult> OnGetAsync(string anchor)
         {
-            var org = await this.manager.FindByIdAsync(anchor);
+            var org = await manager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
 
@@ -40,7 +33,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
-            var org = await this.manager.FindByIdAsync(anchor);
+            var org = await manager.FindByIdAsync(anchor);
             if (org == null)
                 return this.NotFound();
 
@@ -55,7 +48,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
             org.TermBegin = this.Input.TermBegin.HasValue ? DateOnly.FromDateTime(this.Input.TermBegin.Value) : null;
             org.TermEnd = this.Input.TermEnd.HasValue ? DateOnly.FromDateTime(this.Input.TermEnd.Value) : null;
 
-            await this.manager.UpdateAsync(org);
+            await manager.UpdateAsync(org);
             this.OperationResult = IdOperationResult.Success;
             return this.Page();
         }
@@ -63,6 +56,7 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         public class InputModel
         {
             [Display(Name = "Name")]
+            [Required(ErrorMessage = "Validate_Required")]
             public string Name { get; set; } = default!;
 
             [Display(Name = "Domicile")]

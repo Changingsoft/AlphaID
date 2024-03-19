@@ -1,10 +1,11 @@
 ﻿@{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "Tabler/_PageWrapper";
 }
-@section Heads{
-    @await RenderSectionAsync("Heads", false)
+@section head{
+    @await RenderSectionAsync("head", false)
 }
-@section Navbar{
+@section Header{
+    <partial name="_DefaultTitleNavBarPartial" />
     <header class="navbar-expand-md">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu2" aria-controls="navbar-menu2" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,9 +32,6 @@
                         <li class="nav-item" asp-path="/OpenIDConnect/IdentityProviders">
                             <a class="nav-link" asp-page="/IdentityProviders/Index">@L["Identity Providers"]</a>
                         </li>
-                        <li class="nav-item" asp-path="/OpenIDConnect/Advanced">
-                            <a class="nav-link" asp-page="/Advanced/Index">@L["Advanced"]</a>
-                        </li>
                         <li class="nav-item" asp-path="/OpenIDConnect/ActiveSessions">
                             <a class="nav-link" asp-page="/ActiveSessions">@L["Active Sessions"]</a>
                         </li>
@@ -43,8 +41,8 @@
         </div>
     </header>
 }
-
-<div class="page-header">
+@section PageHeader
+{
     <div class="container-xl">
         <ul class="breadcrumb mb-1">
             <li class="breadcrumb-item"><a asp-page="/Index">OIDC</a></li>
@@ -52,12 +50,16 @@
         </ul>
         @await RenderSectionAsync("PageHeader", false)
     </div>
+
+}
+<div class="container-xl">
+    @RenderBody()
 </div>
-<div class="page-body">
-    <div class="container-xl">
-        @RenderBody()
-    </div>
-</div>
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial" />
+}
 
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)

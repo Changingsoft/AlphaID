@@ -1,15 +1,16 @@
 ﻿@page
 @model CorsModel
 @{
+    ViewBag.Title = L["CORS"];
 }
-<h3>CORS</h3>
+<h3>@L["CORS"]</h3>
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
         @foreach (var origin in Model.Data.AllowedCorsOrigins)
         {
             <li class="list-group-item">
                 @origin.Origin
-                <button type="submit" class="btn btn-sm btn-danger" name="originId" value="@origin.Id" onclick="return confirm('Are you sure remove this item?');">Remove</button>
+                <button type="submit" class="btn btn-sm btn-danger" name="originId" value="@origin.Id" onclick="return confirm('Are you sure remove this item?');">@L["Remove"]</button>
             </li>
         }
     </ul>
@@ -18,13 +19,13 @@
 <div class="card">
     <div class="card-body">
         <form method="post" asp-page-handler="Add">
-            <h4>Add new origin</h4>
+            <h4>@L["Add new origin"]</h4>
             <div class="mb-3">
                 <label asp-for="NewOrigin" class="form-label"></label>
                 <input asp-for="NewOrigin" class="form-control" />
                 <span asp-validation-for="NewOrigin" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">@L["Add"]</button>
         </form>
     </div>
 </div>

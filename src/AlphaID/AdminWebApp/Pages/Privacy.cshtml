@@ -1,8 +1,22 @@
 ﻿@page
 @model PrivacyModel
 @{
+    Layout = "Shared/_Layout_Narrow";
     ViewBag.Title = SL["Privacy"];
 }
-<h1>@ViewBag.Title</h1>
+@section PageHeader
+{
+    <div class="row g-2 align-items-center">
+        <div class="col">
+            <h2 class="page-title">
+                @ViewBag.Title
+            </h2>
+        </div>
+    </div>
+}
 
-<markdown filename="~/_docs/Privacy.md"></markdown>
+<div class="card">
+    <div class="card-body">
+        <markdown filename="~/_docs/Privacy.md"></markdown>
+    </div>
+</div>

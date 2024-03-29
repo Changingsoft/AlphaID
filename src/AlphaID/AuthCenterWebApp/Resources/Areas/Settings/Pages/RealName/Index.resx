@@ -100,15 +100,15 @@
   <data name="All request history" xml:space="preserve">
 		<value>All request history</value>
 	</data>
-  <data name="Pending Requests" xml:space="preserve">
-		<value>Pending Requests</value>
-	</data>
-  <data name="Real-name Authentications" xml:space="preserve">
-		<value>Real-name Authentications</value>
-	</data>
-  <data name="Real-name State" xml:space="preserve">
-		<value>Real-name State</value>
-	</data>
+  <data name="Pending requests" xml:space="preserve">
+	  <value>Pending requests</value>
+  </data>
+  <data name="Real-name authentications" xml:space="preserve">
+	  <value>Real-name authentications</value>
+  </data>
+  <data name="Real-name state" xml:space="preserve">
+	  <value>Real-name state</value>
+  </data>
   <data name="Start Request" xml:space="preserve">
 		<value>Start Request</value>
 	</data>

@@ -137,10 +137,10 @@
 		<value>Properties</value>
 		<comment>Properties</comment>
 	</data>
-  <data name="Require Resource Indicator" xml:space="preserve">
-		<value>Require Resource Indicator</value>
-		<comment>Require Resource Indicator</comment>
-	</data>
+  <data name="Require resource indicator" xml:space="preserve">
+	  <value>Require resource indicator</value>
+	  <comment>Require Resource Indicator</comment>
+  </data>
   <data name="Resource ID" xml:space="preserve">
 		<value>Resource ID</value>
 		<comment>Resource ID</comment>

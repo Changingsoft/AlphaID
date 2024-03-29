@@ -142,7 +142,7 @@
     <value>Bio</value>
   </data>
   <data name="Birth date" xml:space="preserve">
-    <value>Birthdate</value>
+	  <value>Birth date</value>
   </data>
   <data name="Captcha code" xml:space="preserve">
     <value>Captcha code</value>
@@ -186,14 +186,14 @@
   <data name="Given name" xml:space="preserve">
     <value>Given name</value>
   </data>
-  <data name="Identifier Type" xml:space="preserve">
-	  <value>Identifier Type</value>
+  <data name="Identifier type" xml:space="preserve">
+	  <value>Identifier type</value>
   </data>
-  <data name="Identifier Value" xml:space="preserve">
-	  <value>Identifier Value</value>
+  <data name="Identifier value" xml:space="preserve">
+	  <value>Identifier value</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
-    <value>Legal Entity Identifier</value>
+  <data name="Legal entity identifier" xml:space="preserve">
+	  <value>Legal entity identifier</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>

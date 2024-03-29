@@ -186,13 +186,13 @@
   <data name="Given name" xml:space="preserve">
     <value>名字</value>
   </data>
-  <data name="Identifier Type" xml:space="preserve">
+  <data name="Identifier type" xml:space="preserve">
 	  <value>标识类型</value>
   </data>
-  <data name="Identifier Value" xml:space="preserve">
+  <data name="Identifier value" xml:space="preserve">
 	  <value>标识值</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
+  <data name="Legal entity identifier" xml:space="preserve">
 	  <value>全球法人实体标识（LEI）</value>
   </data>
   <data name="Male" xml:space="preserve">

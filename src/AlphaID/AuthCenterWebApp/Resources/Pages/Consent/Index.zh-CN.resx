@@ -120,11 +120,8 @@
   <data name="Account" xml:space="preserve">
     <value>账户</value>
   </data>
-  <data name="Application Access" xml:space="preserve">
+  <data name="Application access" xml:space="preserve">
     <value>应用程序访问</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>描述</value>
   </data>
   <data name="Description or name of device" xml:space="preserve">
     <value>描述或命名这个设备</value>
@@ -135,10 +132,10 @@
   <data name="No, Do Not Allow" xml:space="preserve">
     <value>否，不允许</value>
   </data>
-  <data name="Personal Information" xml:space="preserve">
+  <data name="Personal information" xml:space="preserve">
     <value>个人信息</value>
   </data>
-  <data name="Remember My Decision" xml:space="preserve">
+  <data name="Remember my decision" xml:space="preserve">
     <value>记住我的决定</value>
   </data>
   <data name="Uncheck the permissions you do not wish to grant." xml:space="preserve">

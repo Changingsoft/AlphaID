@@ -102,8 +102,8 @@
 		<value>Manage your external logins</value>
 		<comment>Manage your external logins</comment>
 	</data>
-	<data name="External Logins" xml:space="preserve">
-		<value>External Logins</value>
+	<data name="External logins" xml:space="preserve">
+		<value>External logins</value>
 		<comment>External Logins</comment>
 	</data>
 	<data name="Revoke" xml:space="preserve">

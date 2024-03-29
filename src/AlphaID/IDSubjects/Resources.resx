@@ -121,7 +121,7 @@
     <value>Cannot change person name.</value>
   </data>
   <data name="DunsNumber" xml:space="preserve">
-    <value>Duns Number</value>
+	  <value>Duns number</value>
   </data>
   <data name="DuplicatePhoneNumber" xml:space="preserve">
     <value>Phone number is already taken.</value>
@@ -144,8 +144,8 @@
   <data name="LastOwnerCannotLeave" xml:space="preserve">
     <value>You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization.</value>
   </data>
-  <data name="LegalEntityIdentifier" xml:space="preserve">
-    <value>Legal Entity Identifier</value>
+  <data name="Legal entity identifier" xml:space="preserve">
+	  <value>Legal entity identifier</value>
   </data>
   <data name="LessThenMinimumPasswordAge" xml:space="preserve">
     <value>Current password age is less then minimum passowrd age requirement.</value>
@@ -153,7 +153,7 @@
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
-  <data name="MembershipExists" xml:space="preserve">
+  <data name="Membership exists" xml:space="preserve">
     <value>The membership already exists.</value>
   </data>
   <data name="Other" xml:space="preserve">

@@ -111,8 +111,8 @@
 	  <value>Type</value>
 	  <comment>Type</comment>
   </data>
-  <data name="Add Claim" xml:space="preserve">
-	  <value>Add Claim</value>
+  <data name="Add claim" xml:space="preserve">
+	  <value>Add claim</value>
 	  <comment>Add Claim</comment>
   </data>
   <data name="Add" xml:space="preserve">

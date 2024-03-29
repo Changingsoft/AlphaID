@@ -148,9 +148,9 @@
   <data name="Email" xml:space="preserve">
 		<value>Email</value>
 	</data>
-  <data name="External Logins" xml:space="preserve">
-		<value>External Logins</value>
-	</data>
+  <data name="External logins" xml:space="preserve">
+	  <value>External logins</value>
+  </data>
   <data name="Gender" xml:space="preserve">
 		<value>Gender</value>
 	</data>
@@ -163,12 +163,12 @@
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
 	</data>
-  <data name="Person ID" xml:space="preserve">
+  <data name="Person Id" xml:space="preserve">
 		<value>Person ID</value>
 	</data>
-  <data name="Person Name" xml:space="preserve">
-		<value>Person Name</value>
-	</data>
+  <data name="Person name" xml:space="preserve">
+	  <value>Person name</value>
+  </data>
   <data name="Phone number" xml:space="preserve">
 		<value>Phone number</value>
 	</data>

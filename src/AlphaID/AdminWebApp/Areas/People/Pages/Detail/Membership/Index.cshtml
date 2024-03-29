@@ -37,7 +37,7 @@
                     <td>@Html.DisplayFor(m => member.Visibility)</td>
                     <td>
                         <a asp-page="Of" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">@L["Edit"]</a>
-                        <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@L["Are you sure you want leave person from organization?"]');">@L["Leave"]</button>
+                        <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@L["Let the person leave the organization?"]');">@L["Leave"]</button>
                     </td>
                 </tr>
             }

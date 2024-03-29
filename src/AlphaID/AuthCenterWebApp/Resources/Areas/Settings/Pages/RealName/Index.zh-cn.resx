@@ -14,13 +14,13 @@
 	<data name="All request history" xml:space="preserve">
 		<value>所有请求历史</value>
 	</data>
-	<data name="Pending Requests" xml:space="preserve">
+	<data name="Pending requests" xml:space="preserve">
 		<value>待定请求</value>
 	</data>
-	<data name="Real-name Authentications" xml:space="preserve">
+	<data name="Real-name authentications" xml:space="preserve">
 		<value>实名认证</value>
 	</data>
-	<data name="Real-name State" xml:space="preserve">
+	<data name="Real-name state" xml:space="preserve">
 		<value>实名状态</value>
 	</data>
 	<data name="Start Request" xml:space="preserve">

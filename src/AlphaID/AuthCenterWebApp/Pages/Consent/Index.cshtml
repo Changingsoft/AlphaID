@@ -39,7 +39,7 @@
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <span class="glyphicon glyphicon-user"></span>
-                                    @L["Personal Information"]
+                                    @L["Personal information"]
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.IdentityScopes)
@@ -57,7 +57,7 @@
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <span class="glyphicon glyphicon-tasks"></span>
-                                    @L["Application Access"]
+                                    @L["Application access"]
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.ApiScopes)
@@ -73,7 +73,7 @@
                         <div class="card mb-3">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                @L["Description"]
+                                @SL["Description"]
                             </div>
                             <div class="card-body">
                                 <input class="form-control" placeholder="@L["Description or name of device"]" asp-for="Input.Description" autofocus>

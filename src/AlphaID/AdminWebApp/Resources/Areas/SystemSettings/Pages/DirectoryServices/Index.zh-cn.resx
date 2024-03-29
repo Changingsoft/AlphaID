@@ -14,7 +14,7 @@
 	<data name="Add directory service" xml:space="preserve">
 		<value>添加目录服务</value>
 	</data>
-	<data name="External Login Provider" xml:space="preserve">
+	<data name="External login provider" xml:space="preserve">
 		<value>外部登录提供器</value>
 	</data>
 	<data name="Name" xml:space="preserve">

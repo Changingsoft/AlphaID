@@ -147,7 +147,7 @@
   <data name="Properties" xml:space="preserve">
     <value>属性</value>
   </data>
-  <data name="Require Resource Indicator" xml:space="preserve">
+  <data name="Require resource indicator" xml:space="preserve">
     <value>需要资源指示</value>
   </data>
   <data name="Resource ID" xml:space="preserve">

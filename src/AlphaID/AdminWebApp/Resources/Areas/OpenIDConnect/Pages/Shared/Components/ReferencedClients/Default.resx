@@ -103,7 +103,7 @@
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
 	</data>
-  <data name="Referenced Clients" xml:space="preserve">
-		<value>Referenced Clients</value>
-	</data>
+  <data name="Referenced clients" xml:space="preserve">
+	  <value>Referenced clients</value>
+  </data>
 </root>

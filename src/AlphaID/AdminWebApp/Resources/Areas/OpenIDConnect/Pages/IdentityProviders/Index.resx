@@ -100,15 +100,15 @@
   <data name="Created at" xml:space="preserve">
 		<value>Created at</value>
 	</data>
-  <data name="DisplayName" xml:space="preserve">
-		<value>DisplayName</value>
-	</data>
+  <data name="Display name" xml:space="preserve">
+	  <value>Display name</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
 	</data>
-  <data name="Identity Providers" xml:space="preserve">
-		<value>Identity Providers</value>
-	</data>
+  <data name="Identity providers" xml:space="preserve">
+	  <value>Identity providers</value>
+  </data>
   <data name="New identity provider" xml:space="preserve">
 		<value>New identity provider</value>
 	</data>

@@ -118,11 +118,11 @@
   <data name="Payments" xml:space="preserve">
 		<value>Payments</value>
 	</data>
-  <data name="Real Name" xml:space="preserve">
-		<value>Real Name</value>
-	</data>
-  <data name="Personal Info" xml:space="preserve">
-	  <value>Personal Info</value>
+  <data name="Real name" xml:space="preserve">
+	  <value>Real name</value>
+  </data>
+  <data name="Personal info" xml:space="preserve">
+	  <value>Personal info</value>
 	  <comment>Personal Info</comment>
   </data>
 </root>

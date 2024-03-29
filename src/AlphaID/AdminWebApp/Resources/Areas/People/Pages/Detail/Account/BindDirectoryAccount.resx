@@ -106,9 +106,9 @@
   <data name="Bind exists account" xml:space="preserve">
 		<value>Bind exists account</value>
 	</data>
-  <data name="Display Name" xml:space="preserve">
-		<value>Display Name</value>
-	</data>
+  <data name="Display name" xml:space="preserve">
+	  <value>Display name</value>
+  </data>
   <data name="Mobile" xml:space="preserve">
 		<value>Mobile</value>
 	</data>

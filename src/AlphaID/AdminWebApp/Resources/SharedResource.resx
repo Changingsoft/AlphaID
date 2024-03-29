@@ -206,8 +206,8 @@
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>
-  <data name="Front Channel Logout URI" xml:space="preserve">
-    <value>Front Channel Logout URI</value>
+  <data name="Front channel logout URI" xml:space="preserve">
+	  <value>Front channel logout URI</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>

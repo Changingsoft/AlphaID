@@ -171,7 +171,7 @@
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
   </data>
-  <data name="External Logins" xml:space="preserve">
+  <data name="External logins" xml:space="preserve">
     <value>外部登录</value>
   </data>
   <data name="Gender" xml:space="preserve">
@@ -186,10 +186,10 @@
   <data name="Overview" xml:space="preserve">
     <value>概览</value>
   </data>
-  <data name="Person ID" xml:space="preserve">
+  <data name="Person Id" xml:space="preserve">
     <value>个人ID</value>
   </data>
-  <data name="Person Name" xml:space="preserve">
+  <data name="Person name" xml:space="preserve">
     <value>个人名称</value>
   </data>
   <data name="Phone number" xml:space="preserve">

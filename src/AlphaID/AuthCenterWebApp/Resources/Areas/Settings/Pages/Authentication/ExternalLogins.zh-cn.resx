@@ -14,7 +14,7 @@
 	<data name="Add another service to log in." xml:space="preserve">
 		<value>添加其他登录服务。</value>
 	</data>
-	<data name="External Logins" xml:space="preserve">
+	<data name="External logins" xml:space="preserve">
 		<value>外部登录</value>
 	</data>
 	<data name="Manage your external logins" xml:space="preserve">

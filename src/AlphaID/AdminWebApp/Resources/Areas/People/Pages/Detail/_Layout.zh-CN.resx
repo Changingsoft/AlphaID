@@ -138,10 +138,10 @@
   <data name="Payments" xml:space="preserve">
     <value>付款信息</value>
   </data>
-  <data name="Real Name" xml:space="preserve">
+  <data name="Real name" xml:space="preserve">
     <value>实名制</value>
   </data>
-  <data name="Personal Info" xml:space="preserve">
+  <data name="Personal info" xml:space="preserve">
 	  <value>个人资料</value>
   </data>
 </root>

@@ -103,13 +103,13 @@
   <data name="Create new account" xml:space="preserve">
 		<value>Create new account</value>
 	</data>
-  <data name="Directory Accounts" xml:space="preserve">
-		<value>Directory Accounts</value>
-	</data>
-  <data name="Logon ID" xml:space="preserve">
-		<value>Logon ID</value>
-	</data>
-  <data name="Person ID" xml:space="preserve">
+  <data name="Directory accounts" xml:space="preserve">
+	  <value>Directory accounts</value>
+  </data>
+  <data name="Logon Id" xml:space="preserve">
+	  <value>Logon Id</value>
+  </data>
+  <data name="Person Id" xml:space="preserve">
 		<value>Person ID</value>
 	</data>
 </root>

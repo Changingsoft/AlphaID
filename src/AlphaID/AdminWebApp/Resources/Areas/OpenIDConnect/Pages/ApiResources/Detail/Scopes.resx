@@ -108,8 +108,8 @@
 	  <value>Remove</value>
 	  <comment>Remove</comment>
   </data>
-  <data name="Add Scope" xml:space="preserve">
-	  <value>Add Scope</value>
+  <data name="Add scope" xml:space="preserve">
+	  <value>Add scope</value>
 	  <comment>Add Scope</comment>
   </data>
   <data name="Add" xml:space="preserve">

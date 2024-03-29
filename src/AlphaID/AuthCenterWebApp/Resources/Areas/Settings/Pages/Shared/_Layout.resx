@@ -113,8 +113,8 @@
 	  <value>Organizations</value>
 	  <comment>Organizations</comment>
   </data>
-  <data name="Real-name Authentication" xml:space="preserve">
-	  <value>Real-name Authentication</value>
+  <data name="Real-name authentication" xml:space="preserve">
+	  <value>Real-name authentication</value>
 	  <comment>Real-name Authentication</comment>
   </data>
 </root>

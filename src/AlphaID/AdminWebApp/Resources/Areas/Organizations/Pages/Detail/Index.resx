@@ -100,9 +100,9 @@
   <data name="Address and contact" xml:space="preserve">
 		<value>Address and contact</value>
 	</data>
-  <data name="Bank and Account" xml:space="preserve">
-		<value>Bank and Account</value>
-	</data>
+  <data name="Bank and account" xml:space="preserve">
+	  <value>Bank and account</value>
+  </data>
   <data name="Business term" xml:space="preserve">
 		<value>Business term</value>
 	</data>
@@ -130,11 +130,11 @@
   <data name="Edit" xml:space="preserve">
 		<value>Edit</value>
 	</data>
-  <data name="Established At" xml:space="preserve">
-		<value>Established At</value>
-	</data>
-  <data name="Fapiao Info" xml:space="preserve">
-	  <value>Fapiao Info</value>
+  <data name="Established at" xml:space="preserve">
+	  <value>Established at</value>
+  </data>
+  <data name="Fapiao info" xml:space="preserve">
+	  <value>Fapiao info</value>
   </data>
   <data name="Invoice title" xml:space="preserve">
 		<value>Invoice title</value>

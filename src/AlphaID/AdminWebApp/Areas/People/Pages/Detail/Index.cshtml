@@ -26,7 +26,7 @@
     <div class="col-10">
         <div class="card card-sm">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@L["Person Name"]</h3>
+                <h3 class="card-title">@L["Person name"]</h3>
                 <a asp-page="EditPersonName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change person name"]</a>
             </div>
             <div class="card-body">
@@ -150,13 +150,13 @@
                 <div class="datagrid-content">10 failed:2 lock:1</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Person ID"]</div>
+                <div class="datagrid-title">@L["Person Id"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["External Logins"]</div>
+                <div class="datagrid-title">@L["External logins"]</div>
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>

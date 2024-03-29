@@ -204,7 +204,7 @@
   <data name="Female" xml:space="preserve">
     <value>女</value>
   </data>
-  <data name="Front Channel Logout URI" xml:space="preserve">
+  <data name="Front channel logout URI" xml:space="preserve">
     <value>前端通道注销URI</value>
   </data>
   <data name="Gender" xml:space="preserve">

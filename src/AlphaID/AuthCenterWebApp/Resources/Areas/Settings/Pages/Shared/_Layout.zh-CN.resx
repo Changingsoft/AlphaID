@@ -132,7 +132,7 @@
   <data name="Organizations" xml:space="preserve">
 	  <value>组织</value>
   </data>
-  <data name="Real-name Authentication" xml:space="preserve">
+  <data name="Real-name authentication" xml:space="preserve">
 	  <value>实名认证</value>
   </data>
 </root>

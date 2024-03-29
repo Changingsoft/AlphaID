@@ -103,7 +103,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     public async Task<IdOperationResult> CreateAsync(OrganizationMember member)
     {
         if (store.OrganizationMembers.Any(p => p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
-            return IdOperationResult.Failed(Resources.MembershipExists);
+            return IdOperationResult.Failed(Resources.Membership_exists);
         await store.CreateAsync(member);
         return IdOperationResult.Success;
     }

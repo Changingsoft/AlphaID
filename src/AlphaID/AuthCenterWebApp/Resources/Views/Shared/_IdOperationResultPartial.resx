@@ -98,8 +98,8 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Operation Succeeded" xml:space="preserve">
-		<value>Operation Succeeded</value>
+	<data name="Operation succeeded" xml:space="preserve">
+		<value>Operation succeeded</value>
 		<comment>Operation Succeeded</comment>
 	</data>
 	<data name="Errors:" xml:space="preserve">

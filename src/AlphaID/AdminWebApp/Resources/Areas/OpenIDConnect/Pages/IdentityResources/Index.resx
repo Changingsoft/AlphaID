@@ -112,9 +112,9 @@
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
 	</data>
-  <data name="Identity Resources" xml:space="preserve">
-		<value>Identity Resources</value>
-	</data>
+  <data name="Identity resources" xml:space="preserve">
+	  <value>Identity resources</value>
+  </data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
 	</data>

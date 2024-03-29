@@ -106,7 +106,7 @@
   <data name="More" xml:space="preserve">
 		<value>More</value>
 	</data>
-  <data name="Real-name Center" xml:space="preserve">
-		<value>Real-name Center</value>
-	</data>
+  <data name="Real-name center" xml:space="preserve">
+	  <value>Real-name center</value>
+  </data>
 </root>

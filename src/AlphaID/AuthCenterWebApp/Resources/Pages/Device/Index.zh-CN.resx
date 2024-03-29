@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Application Access" xml:space="preserve">
+  <data name="Application access" xml:space="preserve">
     <value>应用程序访问</value>
   </data>
   <data name="Description" xml:space="preserve">
@@ -129,7 +129,7 @@
   <data name="No, Do Not Allow" xml:space="preserve">
     <value>否，不允许</value>
   </data>
-  <data name="Personal Information" xml:space="preserve">
+  <data name="Personal information" xml:space="preserve">
     <value>个人信息</value>
   </data>
   <data name="Please confirm that the authorization request matches the code:" xml:space="preserve">
@@ -138,7 +138,7 @@
   <data name="Please enter the code displayed on your device." xml:space="preserve">
     <value>请输入在您设备上看到的代码。</value>
   </data>
-  <data name="Remember My Decision" xml:space="preserve">
+  <data name="Remember my decision" xml:space="preserve">
     <value>记住我的决定</value>
   </data>
   <data name="Submit" xml:space="preserve">

@@ -40,8 +40,7 @@ public class PhoneticChineseChar(char origin, string[] pinyins)
     /// <param name="index"></param>
     public void Select(int index)
     {
-        if (index >= this.Pinyins.Length)
-            throw new ArgumentOutOfRangeException(nameof(index));
+        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, this.Pinyins.Length);
         this.selectedIndex = index;
     }
 

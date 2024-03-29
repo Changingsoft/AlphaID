@@ -212,4 +212,17 @@ public class Consent(
         public string Id { get; set; } = default!;
         public string Description { get; set; } = default!;
     }
+
+    public class ViewModel
+    {
+        public string ClientName { get; set; } = default!;
+        public string? ClientUrl { get; set; }
+        public string? ClientLogoUrl { get; set; }
+
+        public string? BindingMessage { get; set; }
+
+        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = default!;
+        public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = default!;
+    }
+
 }

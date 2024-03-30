@@ -20,32 +20,32 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
         public IActionResult OnGet(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
-            return this.Page();
+                return NotFound();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
             var identifier = new OrganizationIdentifier()
             {
-                Organization = organization, OrganizationId = organization.Id, Type = this.Type, Value = this.Value,
+                Organization = organization, OrganizationId = organization.Id, Type = Type, Value = Value,
             };
 
-            this.Result = await identifierManager.AddIdentifierAsync(identifier);
-            if (this.Result.Succeeded)
-                return this.RedirectToPage("Index", new { anchor });
+            Result = await identifierManager.AddIdentifierAsync(identifier);
+            if (Result.Succeeded)
+                return RedirectToPage("Index", new { anchor });
 
-            return this.Page();
+            return Page();
         }
     }
 }

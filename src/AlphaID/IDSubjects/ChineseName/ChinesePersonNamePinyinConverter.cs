@@ -53,7 +53,7 @@ public class ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool wi
         var pinyinList = new List<string>();
         for (int i = 0; i < cc.PinyinCount; i++)
         {
-            pinyinList.Add(!this.WithTone ? cc.Pinyins[i].ToUpper()[..^1] : cc.Pinyins[i].ToUpper());
+            pinyinList.Add(!WithTone ? cc.Pinyins[i].ToUpper()[..^1] : cc.Pinyins[i].ToUpper());
         }
         return new PhoneticChineseChar(chineseChar, [.. pinyinList]);
 
@@ -71,17 +71,17 @@ public class ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool wi
         {
             foreach (var surnameChar in surname)
             {
-                context.SurnameChars.Add(this.Convert(surnameChar));
+                context.SurnameChars.Add(Convert(surnameChar));
             }
         }
 
 
         foreach (var givenNameChar in givenName)
         {
-            context.GivenNameChars.Add(this.Convert(givenNameChar));
+            context.GivenNameChars.Add(Convert(givenNameChar));
         }
 
-        foreach (var interceptor in this.Interceptors)
+        foreach (var interceptor in Interceptors)
         {
             interceptor.AfterConvert(context);
         }
@@ -90,7 +90,7 @@ public class ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool wi
         var surnameBuilder = new StringBuilder();
         foreach (var surnameChar in context.SurnameChars)
         {
-            if (this.NameCharacterSpacing)
+            if (NameCharacterSpacing)
                 surnameBuilder.Append($" {surnameChar.Selected}");
             else
                 surnameBuilder.Append(surnameChar.Selected);
@@ -99,7 +99,7 @@ public class ChinesePersonNamePinyinConverter(bool nameCharacterSpacing, bool wi
         var givenNameBuilder = new StringBuilder();
         foreach (var givenNameChar in context.GivenNameChars)
         {
-            if (this.NameCharacterSpacing)
+            if (NameCharacterSpacing)
                 givenNameBuilder.Append($" {givenNameChar.Selected}");
             else
                 givenNameBuilder.Append(givenNameChar.Selected);

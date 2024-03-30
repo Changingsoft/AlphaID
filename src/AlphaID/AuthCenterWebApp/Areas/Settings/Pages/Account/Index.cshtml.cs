@@ -10,8 +10,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
 
         public async Task OnGet()
         {
-            var person = await naturalPersonManager.GetUserAsync(this.User) ?? throw new InvalidOperationException("找不到用户。");
-            this.DirectoryAccounts = directoryAccountManager.GetLogonAccounts(person);
+            var person = await naturalPersonManager.GetUserAsync(User) ?? throw new InvalidOperationException("找不到用户。");
+            DirectoryAccounts = directoryAccountManager.GetLogonAccounts(person);
         }
     }
 }

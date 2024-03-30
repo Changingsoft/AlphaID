@@ -18,27 +18,27 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
         public IActionResult OnGet(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("../Who", new { anchor });
+                return RedirectToPage("../Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
-            return this.Page();
+                return NotFound();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("../Who", new { anchor });
+                return RedirectToPage("../Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
-            var person = await naturalPersonManager.FindByNameAsync(this.Invitee);
+                return NotFound();
+            var person = await naturalPersonManager.FindByNameAsync(Invitee);
             if (person == null)
-                this.ModelState.AddModelError(nameof(this.Invitee), "Cannot find person.");
+                ModelState.AddModelError(nameof(Invitee), "Cannot find person.");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Result = await joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, this.User.DisplayName() ?? "");
-            return this.Page();
+            Result = await joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, User.DisplayName() ?? "");
+            return Page();
         }
 
         public IActionResult OnGetFindPerson(string term)

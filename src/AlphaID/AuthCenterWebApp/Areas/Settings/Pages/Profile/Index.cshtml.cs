@@ -19,47 +19,47 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
-            this.Person = person ?? throw new InvalidOperationException("无法从登录找到用户信息，请联系系统管理员。");
-            this.Input = new InputModel()
+            var person = await personManager.GetUserAsync(User);
+            Person = person ?? throw new InvalidOperationException("无法从登录找到用户信息，请联系系统管理员。");
+            Input = new InputModel()
             {
                 Bio = person.Bio,
                 Website = person.WebSite,
                 Gender = person.Gender,
                 DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue),
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             Debug.Assert(person != null);
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            person.Bio = this.Input.Bio;
-            person.WebSite = this.Input.Website;
-            person.Gender = this.Input.Gender;
-            person.DateOfBirth = this.Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value) : null;
+            person.Bio = Input.Bio;
+            person.WebSite = Input.Website;
+            person.Gender = Input.Gender;
+            person.DateOfBirth = Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(Input.DateOfBirth.Value) : null;
 
-            this.Result = await personManager.UpdateAsync(person);
-            return this.Page();
+            Result = await personManager.UpdateAsync(person);
+            return Page();
         }
 
         public async Task<ActionResult> OnPostUpdateProfilePictureAsync()
         {
-            if (!this.Request.Form.Files.Any())
-                return this.BadRequest();
+            if (!Request.Form.Files.Any())
+                return BadRequest();
 
-            var file = this.Request.Form.Files[0];
-            var person = await personManager.GetUserAsync(this.User);
+            var file = Request.Form.Files[0];
+            var person = await personManager.GetUserAsync(User);
             if (person == null)
-                return this.BadRequest();
+                return BadRequest();
             await using var stream = file.OpenReadStream();
             byte[] data = new byte[stream.Length];
-            await stream.ReadAsync(data, 0, data.Length);
+            await stream.ReadAsync(data);
             var result = await personManager.SetProfilePictureAsync(person, file.ContentType, data);
             if (result.Succeeded)
             {
@@ -72,15 +72,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
         public async Task<IActionResult> OnPostClearProfilePictureAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             if (person == null)
-                return this.BadRequest();
-            this.Result = await personManager.ClearProfilePictureAsync(person);
-            if (this.Result.Succeeded)
+                return BadRequest();
+            Result = await personManager.ClearProfilePictureAsync(person);
+            if (Result.Succeeded)
             {
                 await signInManager.RefreshSignInAsync(person);
             }
-            return this.Page();
+            return Page();
         }
 
         public class InputModel

@@ -26,7 +26,7 @@ public class SignUpModel(NaturalPersonManager naturalPersonManager,
                    SignInManager<NaturalPerson> signInManager,
                    IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
 {
-    private readonly ProductInfo production = production.Value;
+    private readonly ProductInfo _production = production.Value;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -40,16 +40,16 @@ public class SignUpModel(NaturalPersonManager naturalPersonManager,
 
     public async Task<IActionResult> OnGetAsync(string? external)
     {
-        var externalAuthResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        var externalAuthResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         if (!externalAuthResult.Succeeded)
         {
-            return this.Page();
+            return Page();
         }
 
         var externalPrincipal = externalAuthResult.Principal;
 
-        this.UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
-        this.Input = new InputModel
+        UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
+        Input = new InputModel
         {
             Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Upn),
             GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ?? externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
@@ -59,63 +59,63 @@ public class SignUpModel(NaturalPersonManager naturalPersonManager,
                      ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
         if (MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
         {
-            this.Input.Mobile = phoneNumber.PhoneNumber;
+            Input.Mobile = phoneNumber.PhoneNumber;
         }
         if (Enum.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ?? externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result))
         {
-            this.Input.Sex = result;
+            Input.Sex = result;
         }
         if (DateOnly.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ?? externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out var dateOfBirth))
         {
-            this.Input.DateOfBirth = dateOfBirth;
+            Input.DateOfBirth = dateOfBirth;
         }
-        this.ExternalLoginMessage = $"您正在从外部登录并创建{this.production.Name}，请补全相关内容以创建{this.production.Name}。";
-        return this.Page();
+        ExternalLoginMessage = $"您正在从外部登录并创建{_production.Name}，请补全相关内容以创建{_production.Name}。";
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
 
-        if (!this.Input.Agree)
+        if (!Input.Agree)
         {
-            this.ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{this.production.Name}。");
-            return this.Page();
+            ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
+            return Page();
         }
 
-        if (!MobilePhoneNumber.TryParse(this.Input.Mobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(Input.Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
+            ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
         }
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.Input.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
         {
-            this.ModelState.AddModelError("Input.VerificationCode", "验证码无效");
+            ModelState.AddModelError("Input.VerificationCode", "验证码无效");
         }
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         //如果来自外埠登录？
-        var externalLoginResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        var externalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
 
 
-        var (pinyinSurname, pinyinGivenName) = chinesePersonNamePinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
-        var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, pinyinSurname, pinyinGivenName);
-        var userName = this.Input.Email ?? phoneNumber.PhoneNumber;
+        var (pinyinSurname, pinyinGivenName) = chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
+        var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
+        var userName = Input.Email ?? phoneNumber.PhoneNumber;
         var personBuilder = new PersonBuilder(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
-        if (this.Input.Email != null)
-            personBuilder.SetEmail(this.Input.Email);
+        if (Input.Email != null)
+            personBuilder.SetEmail(Input.Email);
 
         var person = personBuilder.Build();
 
-        person.DateOfBirth = this.Input.DateOfBirth;
-        person.Gender = this.Input.Sex;
+        person.DateOfBirth = Input.DateOfBirth;
+        person.Gender = Input.Sex;
 
-        var result = await naturalPersonManager.CreateAsync(person, this.Input.NewPassword);
+        var result = await naturalPersonManager.CreateAsync(person, Input.NewPassword);
         if (result.Succeeded)
         {
             if (externalLoginResult.Succeeded)
@@ -129,13 +129,13 @@ public class SignUpModel(NaturalPersonManager naturalPersonManager,
 
             //login user. redirect to user profile center.
             await signInManager.SignInAsync(person, false);
-            return this.RedirectToPage("SignUpSuccess");
+            return RedirectToPage("SignUpSuccess");
         }
         foreach (var error in result.Errors)
         {
-            this.ModelState.AddModelError("", error.Description);
+            ModelState.AddModelError("", error.Description);
         }
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostSendVerificationCodeAsync(string mobile)

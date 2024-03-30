@@ -14,18 +14,18 @@ public class DownloadPersonalDataModel(
 {
     public IActionResult OnGet()
     {
-        return this.NotFound();
+        return NotFound();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(this.User));
+        logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(User));
 
         // Only include personal data for download
         var personalData = new Dictionary<string, string>();
@@ -43,7 +43,7 @@ public class DownloadPersonalDataModel(
 
         personalData.Add("Authenticator Key", await userManager.GetAuthenticatorKeyAsync(user));
 
-        this.Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
+        Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
         return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
     }
 }

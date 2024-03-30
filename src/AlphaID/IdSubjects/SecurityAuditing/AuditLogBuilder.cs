@@ -25,7 +25,7 @@ public class AuditLogBuilder(IServiceCollection services)
     /// <returns></returns>
     public AuditLogBuilder AddLogStore<T>() where T : class, IQueryableAuditLogStore
     {
-        this.Services.TryAddScoped<IQueryableAuditLogStore, T>();
+        Services.TryAddScoped<IQueryableAuditLogStore, T>();
         return this;
     }
 }

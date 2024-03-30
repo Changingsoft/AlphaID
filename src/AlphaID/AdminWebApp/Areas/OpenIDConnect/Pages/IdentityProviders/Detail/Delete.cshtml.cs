@@ -16,11 +16,11 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         var idp = await dbContext.IdentityProviders.FindAsync(id);
         if (idp == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
 
-        this.Data = idp;
-        return this.Page();
+        Data = idp;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int id)
@@ -28,19 +28,19 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         var idp = await dbContext.IdentityProviders.FindAsync(id);
         if (idp == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
 
-        this.Data = idp;
+        Data = idp;
 
-        if (this.SchemeName != this.Data.Scheme)
-            this.ModelState.AddModelError(nameof(this.SchemeName), "Scheme name not matched.");
+        if (SchemeName != Data.Scheme)
+            ModelState.AddModelError(nameof(SchemeName), "Scheme name not matched.");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        dbContext.IdentityProviders.Remove(this.Data);
+        dbContext.IdentityProviders.Remove(Data);
         await dbContext.SaveChangesAsync();
-        return this.RedirectToPage("../Index");
+        return RedirectToPage("../Index");
     }
 }

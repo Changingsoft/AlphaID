@@ -29,7 +29,7 @@ public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinCon
             throw new ArgumentException("名字太短");
 
         string surname = default!;
-        foreach (var prefix in CompoundSurnamePrefixes)
+        foreach (var prefix in s_compoundSurnamePrefixes)
         {
             if (fullName.StartsWith(prefix))
             {
@@ -53,7 +53,7 @@ public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinCon
 
     }
 
-    private static readonly List<string> CompoundSurnamePrefixes =
+    private static readonly List<string> s_compoundSurnamePrefixes =
     [
         "欧阳",
         "太史",

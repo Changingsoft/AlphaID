@@ -23,9 +23,9 @@ public class IdentityDocumentAttachment
     /// <param name="contentType">内容的MIME类型。</param>
     public IdentityDocumentAttachment(string name, byte[] content, string contentType)
     {
-        this.Name = name;
-        this.Content = content;
-        this.ContentType = contentType;
+        Name = name;
+        Content = content;
+        ContentType = contentType;
     }
 
     /// <summary>

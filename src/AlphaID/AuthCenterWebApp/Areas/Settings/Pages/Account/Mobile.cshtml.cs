@@ -31,56 +31,56 @@ public class MobileModel(NaturalPersonManager userManager, IVerificationCodeServ
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.FindByIdAsync(this.User.GetSubjectId());
+        var person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
-            return this.BadRequest("无法处理用户Id.");
+            return BadRequest("无法处理用户Id.");
 
-        this.MobileValid = person.PhoneNumberConfirmed;
-        this.Mobile = person.PhoneNumber ?? "";
-        this.NewMobile = person.PhoneNumber ?? "";
+        MobileValid = person.PhoneNumberConfirmed;
+        Mobile = person.PhoneNumber ?? "";
+        NewMobile = person.PhoneNumber ?? "";
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.FindByIdAsync(this.User.GetSubjectId());
+        var person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
-            return this.BadRequest("无法处理用户Id.");
+            return BadRequest("无法处理用户Id.");
 
-        if (!MobilePhoneNumber.TryParse(this.NewMobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(NewMobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError(nameof(this.NewMobile), "移动电话号码无效。");
-            return this.Page();
+            ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
+            return Page();
         }
-        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode))
         {
-            this.ModelState.AddModelError(nameof(this.VerificationCode), "验证码无效。");
-            return this.Page();
+            ModelState.AddModelError(nameof(VerificationCode), "验证码无效。");
+            return Page();
         }
 
-        var result = await userManager.SetPhoneNumberAsync(person, this.NewMobile);
+        var result = await userManager.SetPhoneNumberAsync(person, NewMobile);
         if (result.Succeeded)
         {
-            this.OperationMessage = "移动电话号码已变更。";
-            return this.Page();
+            OperationMessage = "移动电话号码已变更。";
+            return Page();
         }
 
-        this.OperationMessage = "无法变更移动电话号码。";
-        return this.Page();
+        OperationMessage = "无法变更移动电话号码。";
+        return Page();
     }
 
     public async Task<IActionResult> OnPostSendVerificationCode()
     {
-        if (!MobilePhoneNumber.TryParse(this.NewMobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(NewMobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError(nameof(this.NewMobile), "移动电话号码无效。");
-            return this.Page();
+            ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
+            return Page();
         }
 
         await verificationCodeService.SendAsync(phoneNumber.ToString());
 
-        this.VerificationCodeSent = true;
-        return this.Page();
+        VerificationCodeSent = true;
+        return Page();
     }
 }

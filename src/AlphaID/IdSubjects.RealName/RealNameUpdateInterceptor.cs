@@ -6,7 +6,7 @@ namespace IdSubjects.RealName;
 
 internal class RealNameUpdateInterceptor(ILogger<RealNameUpdateInterceptor>? logger, IRealNameAuthenticationStore store) : NaturalPersonUpdateInterceptor
 {
-    private IEnumerable<RealNameAuthentication> pendingAuthentications = [];
+    private IEnumerable<RealNameAuthentication> _pendingAuthentications = [];
 
     public override async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
@@ -18,10 +18,10 @@ internal class RealNameUpdateInterceptor(ILogger<RealNameUpdateInterceptor>? log
             return IdentityResult.Success;
         }
 
-        this.pendingAuthentications = [.. personAuthentications.Where(a => !a.Applied)];
-        if (this.pendingAuthentications.Any())
+        _pendingAuthentications = [.. personAuthentications.Where(a => !a.Applied)];
+        if (_pendingAuthentications.Any())
         {
-            foreach (var authentication in this.pendingAuthentications)
+            foreach (var authentication in _pendingAuthentications)
             {
                 authentication.ApplyToPerson(person);
                 logger?.LogDebug("拦截器使用{authentication}覆盖了{person}的信息。", authentication, person);
@@ -49,7 +49,7 @@ internal class RealNameUpdateInterceptor(ILogger<RealNameUpdateInterceptor>? log
 
     public override async Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
-        foreach (var authentication in this.pendingAuthentications)
+        foreach (var authentication in _pendingAuthentications)
         {
             authentication.Applied = true;
             await store.UpdateAsync(authentication);

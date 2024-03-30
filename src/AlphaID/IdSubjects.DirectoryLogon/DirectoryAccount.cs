@@ -25,9 +25,9 @@ public class DirectoryAccount
     /// <param name="personId"></param>
     public DirectoryAccount(DirectoryServiceDescriptor serviceDescriptor, string personId)
     {
-        this.DirectoryServiceDescriptor = serviceDescriptor;
-        this.ServiceId = serviceDescriptor.Id;
-        this.PersonId = personId;
+        DirectoryServiceDescriptor = serviceDescriptor;
+        ServiceId = serviceDescriptor.Id;
+        PersonId = personId;
     }
 
     /// <summary>
@@ -56,15 +56,15 @@ public class DirectoryAccount
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal UserPrincipal? GetUserPrincipal()
     {
-        var context = this.DirectoryServiceDescriptor.GetRootContext();
-        return UserPrincipal.FindByIdentity(context, this.ObjectId);
+        var context = DirectoryServiceDescriptor.GetRootContext();
+        return UserPrincipal.FindByIdentity(context, ObjectId);
 
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal void SetPassword(string? password, bool mustChangePassword = false)
     {
-        using var user = this.GetUserPrincipal();
+        using var user = GetUserPrincipal();
         ArgumentNullException.ThrowIfNull(user);
 
         user.SetPassword(password);

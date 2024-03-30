@@ -10,7 +10,7 @@ public class IndexModel(ConfigurationDbContext context) : PageModel
 
     public IActionResult OnGet()
     {
-        this.Results = context.ApiScopes.OrderByDescending(p => p.Updated);
-        return this.Page();
+        Results = context.ApiScopes.OrderByDescending(p => p.Updated);
+        return Page();
     }
 }

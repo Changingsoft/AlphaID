@@ -17,32 +17,32 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         public IActionResult OnGet(string anchor)
         {
             if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (manager.Organizations.Any(o => o.Name == this.Name))
-                this.ModelState.AddModelError(nameof(this.Name), "The name is in use.");
+            if (manager.Organizations.Any(o => o.Name == Name))
+                ModelState.AddModelError(nameof(Name), "The name is in use.");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Result = await manager.ChangeNameAsync(organization, this.Name, DateOnly.FromDateTime(DateTime.UtcNow), true);
-            if (!this.Result.Succeeded)
-                return this.Page();
+            Result = await manager.ChangeNameAsync(organization, Name, DateOnly.FromDateTime(DateTime.UtcNow), true);
+            if (!Result.Succeeded)
+                return Page();
 
             //Redirect with new name
-            return this.RedirectToPage("/Index", new { anchor = this.Name });
+            return RedirectToPage("/Index", new { anchor = Name });
         }
     }
 }

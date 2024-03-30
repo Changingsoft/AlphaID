@@ -5,7 +5,7 @@ namespace IdSubjects.RealName.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly NaturalPerson person = new("zhangsan", new PersonNameInfo("张小三"));
+    private readonly NaturalPerson _person = new("zhangsan", new PersonNameInfo("张小三"));
 
     [Fact]
     public async Task AddAuthentication()
@@ -28,14 +28,14 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 
         using var scope = serviceProvider.ScopeFactory.CreateScope();
         var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-        await personManager.CreateAsync(this.person);
+        await personManager.CreateAsync(_person);
 
         //Test
         var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
-        var result = await realManager.AuthenticateAsync(this.person, authentication);
+        var result = await realManager.AuthenticateAsync(_person, authentication);
 
         Assert.True(result.Succeeded);
-        Assert.Equal("张三", this.person.PersonName.FullName);
+        Assert.Equal("张三", _person.PersonName.FullName);
     }
 
     [Fact]
@@ -43,9 +43,9 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
     {
         using var scope = serviceProvider.ScopeFactory.CreateScope();
         var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-        await personManager.CreateAsync(this.person);
+        await personManager.CreateAsync(_person);
 
-        var target = (await personManager.FindByIdAsync(this.person.Id))!;
+        var target = (await personManager.FindByIdAsync(_person.Id))!;
 
         var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
         var authentication = new DocumentedRealNameAuthentication(

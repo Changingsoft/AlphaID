@@ -8,6 +8,6 @@ public class PersonLogonAccounts(IQueryableLogonAccountStore store) : ViewCompon
     public IViewComponentResult Invoke(string personId)
     {
         var result = store.LogonAccounts.Where(t => t.PersonId == personId);
-        return this.View(model: result);
+        return View(model: result);
     }
 }

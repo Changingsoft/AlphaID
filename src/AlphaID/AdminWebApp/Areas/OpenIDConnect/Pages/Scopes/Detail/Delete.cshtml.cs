@@ -18,10 +18,10 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         var result = dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
         if (result == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
-        this.Data = result;
-        return this.Page();
+        Data = result;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int id)
@@ -29,27 +29,27 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         var result = dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
         if (result == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
-        this.Data = result;
+        Data = result;
 
-        if (this.ScopeName != this.Data.Name)
-            this.ModelState.AddModelError(nameof(this.ScopeName), "名称错误。");
+        if (ScopeName != Data.Name)
+            ModelState.AddModelError(nameof(ScopeName), "名称错误。");
 
 
-        var referenced = dbContext.Clients.Any(p => p.AllowedScopes.Any(s => s.Scope == this.Data.Name))
-            || dbContext.ApiResources.Any(p => p.Scopes.Any(s => s.Scope == this.Data.Name));
+        var referenced = dbContext.Clients.Any(p => p.AllowedScopes.Any(s => s.Scope == Data.Name))
+            || dbContext.ApiResources.Any(p => p.Scopes.Any(s => s.Scope == Data.Name));
         if (referenced)
         {
-            this.ModelState.AddModelError("", "仍有客户端或API资源引用该范围，不能删除该范围。");
+            ModelState.AddModelError("", "仍有客户端或API资源引用该范围，不能删除该范围。");
         }
 
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        dbContext.ApiScopes.Remove(this.Data);
+        dbContext.ApiScopes.Remove(Data);
         await dbContext.SaveChangesAsync();
-        return this.RedirectToPage("../Index");
+        return RedirectToPage("../Index");
     }
 }

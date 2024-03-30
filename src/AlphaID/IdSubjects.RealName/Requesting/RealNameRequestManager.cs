@@ -43,7 +43,7 @@ public class RealNameRequestManager(IRealNameRequestStore store, RealNameManager
     public async Task<IdOperationResult> CreateAsync(NaturalPerson person, RealNameRequest request)
     {
         request.PersonId = person.Id;
-        request.WhenCommitted = this.TimeProvider.GetUtcNow();
+        request.WhenCommitted = TimeProvider.GetUtcNow();
         var result = await store.CreateAsync(request);
         if (!result.Succeeded)
             return result;
@@ -64,7 +64,7 @@ public class RealNameRequestManager(IRealNameRequestStore store, RealNameManager
         if (!accept)
             return result;
 
-        return await this.AcceptAsync(request);
+        return await AcceptAsync(request);
 
     }
 
@@ -79,8 +79,8 @@ public class RealNameRequestManager(IRealNameRequestStore store, RealNameManager
         var person = await naturalPersonManager.FindByIdAsync(request.PersonId);
         if (person == null)
             return IdOperationResult.Failed("Natural person not found.");
-        request.SetAudit(true, auditor, this.TimeProvider.GetUtcNow());
-        var result = await this.UpdateAsync(request);
+        request.SetAudit(true, auditor, TimeProvider.GetUtcNow());
+        var result = await UpdateAsync(request);
         if (!result.Succeeded)
             return result;
 
@@ -127,7 +127,7 @@ public class RealNameRequestManager(IRealNameRequestStore store, RealNameManager
     /// <returns></returns>
     public Task<IdOperationResult> RefuseAsync(RealNameRequest request, string? auditor = null)
     {
-        request.SetAudit(false, auditor, this.TimeProvider.GetUtcNow());
-        return this.UpdateAsync(request);
+        request.SetAudit(false, auditor, TimeProvider.GetUtcNow());
+        return UpdateAsync(request);
     }
 }

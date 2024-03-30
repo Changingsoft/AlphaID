@@ -9,11 +9,11 @@ public class SearchModel(OrganizationSearcher searcher) : PageModel
 
     public IActionResult OnGet()
     {
-        var q = this.Request.Query["q"];
+        var q = Request.Query["q"];
         if (string.IsNullOrWhiteSpace(q))
-            return this.Page();
+            return Page();
 
-        this.Results = searcher.Search(q!);
-        return this.Page();
+        Results = searcher.Search(q!);
+        return Page();
     }
 }

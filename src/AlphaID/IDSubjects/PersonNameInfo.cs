@@ -26,10 +26,10 @@ public record PersonNameInfo
     /// <param name="middleName"></param>
     public PersonNameInfo(string fullName, string? surname = null, string? givenName = null, string? middleName = null)
     {
-        this.Surname = surname;
-        this.GivenName = givenName;
-        this.FullName = fullName;
-        this.MiddleName = middleName;
+        Surname = surname;
+        GivenName = givenName;
+        FullName = fullName;
+        MiddleName = middleName;
     }
 
     /// <summary>
@@ -72,6 +72,6 @@ public record PersonNameInfo
     /// <returns></returns>
     public override string ToString()
     {
-        return this.FullName;
+        return FullName;
     }
 }

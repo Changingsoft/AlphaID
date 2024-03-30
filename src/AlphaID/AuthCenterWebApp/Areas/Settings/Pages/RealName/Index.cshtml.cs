@@ -14,15 +14,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             if (person == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            this.Authentications = realNameManager.GetAuthentications(person);
-            this.Requests = realNameRequestManager.GetRequests(person).Where(r => !r.Accepted.HasValue);
-            return this.Page();
+            Authentications = realNameManager.GetAuthentications(person);
+            Requests = realNameRequestManager.GetRequests(person).Where(r => !r.Accepted.HasValue);
+            return Page();
         }
     }
 }

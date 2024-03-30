@@ -19,22 +19,22 @@ namespace AuthCenterWebApp.Areas.People.Pages
             var person = await personManager.FindByNameAsync(anchor)
                 ?? await personManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
-            this.Person = person;
+                return NotFound();
+            Person = person;
 
-            NaturalPerson? visitor = await personManager.GetUserAsync(this.User);
+            NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-            this.Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
+            Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
 
-            if (!this.User.Identity!.IsAuthenticated)
+            if (!User.Identity!.IsAuthenticated)
             {
-                return this.Page();
+                return Page();
             }
 
-            if (this.User.SubjectId() == this.Person.Id)
-                this.UserIsOwner = true;
+            if (User.SubjectId() == Person.Id)
+                UserIsOwner = true;
 
-            return this.Page();
+            return Page();
         }
     }
 }

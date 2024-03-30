@@ -19,51 +19,51 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 
         public IActionResult OnGet()
         {
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            this.Name = this.Name.Trim().Trim('\r', '\n').Replace(" ", string.Empty);
+            Name = Name.Trim().Trim('\r', '\n').Replace(" ", string.Empty);
             using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-            if (organizationManager.Organizations.Any(p => p.Name == this.Name))
-                this.ModelState.AddModelError(nameof(this.Name), "Organization already exists.");
+            if (organizationManager.Organizations.Any(p => p.Name == Name))
+                ModelState.AddModelError(nameof(Name), "Organization already exists.");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            var organization = new GenericOrganization(this.Name)
+            var organization = new GenericOrganization(Name)
             {
-                Domicile = this.Input.Domicile,
-                Representative = this.Input.Representative,
+                Domicile = Input.Domicile,
+                Representative = Input.Representative,
             };
 
             var result = await organizationManager.CreateAsync(organization);
             if (!result.Succeeded)
             {
-                this.ModelState.AddModelError("", result.Errors.Aggregate((x, y) => $"{x}, {y}"));
-                return this.Page();
+                ModelState.AddModelError("", result.Errors.Aggregate((x, y) => $"{x}, {y}"));
+                return Page();
             }
             //Add current person as owner.
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             Debug.Assert(person != null);
 
             var member = new OrganizationMember(organization, person)
             {
-                Title = this.Input.Title,
-                Department = this.Input.Department,
-                Remark = this.Input.Remark,
+                Title = Input.Title,
+                Department = Input.Department,
+                Remark = Input.Remark,
                 IsOwner = true,
             };
             var joinOrgResult = await memberManager.CreateAsync(member);
             if (!joinOrgResult.Succeeded)
             {
-                this.ModelState.AddModelError("", joinOrgResult.Errors.Aggregate((x, y) => $"{x}, {y}"));
-                return this.Page();
+                ModelState.AddModelError("", joinOrgResult.Errors.Aggregate((x, y) => $"{x}, {y}"));
+                return Page();
             }
             trans.Complete();
 
-            return this.RedirectToPage("Index");
+            return RedirectToPage("Index");
         }
 
         public IActionResult OnPostCheckName(string name)

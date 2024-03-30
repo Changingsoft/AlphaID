@@ -26,7 +26,7 @@ public class AdminWebAppFactory : WebApplicationFactory<Program>
 
     public virtual HttpClient CreateAuthenticatedClient(WebApplicationFactoryClientOptions? options = null)
     {
-        HttpClient client = options != null ? this.CreateClient(options) : this.CreateClient();
+        HttpClient client = options != null ? CreateClient(options) : CreateClient();
         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
         return client;
     }

@@ -20,8 +20,8 @@ public record ExternalLoginProviderInfo
     /// <param name="registeredClientId"></param>
     public ExternalLoginProviderInfo(string name, string registeredClientId)
     {
-        this.Name = name;
-        this.RegisteredClientId = registeredClientId;
+        Name = name;
+        RegisteredClientId = registeredClientId;
     }
 
     /// <summary>

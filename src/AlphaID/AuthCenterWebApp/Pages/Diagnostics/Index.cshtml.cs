@@ -16,18 +16,18 @@ public class Index(IWebHostEnvironment env) : PageModel
     public async Task<IActionResult> OnGetAsync()
     {
         if (!env.IsDevelopment())
-            return this.NotFound();
+            return NotFound();
 
-        this.View = new ViewModel(await this.HttpContext.AuthenticateAsync());
+        View = new ViewModel(await HttpContext.AuthenticateAsync());
 
-        return this.Page();
+        return Page();
     }
 
     public class ViewModel
     {
         public ViewModel(AuthenticateResult result)
         {
-            this.AuthenticateResult = result;
+            AuthenticateResult = result;
             if (result.Properties == null)
             {
                 return;
@@ -47,7 +47,7 @@ public class Index(IWebHostEnvironment env) : PageModel
             var bytes = Base64Url.Decode(encoded);
             var value = Encoding.UTF8.GetString(bytes);
 
-            this.Clients = JsonSerializer.Deserialize<string[]>(value)!;
+            Clients = JsonSerializer.Deserialize<string[]>(value)!;
         }
 
         public AuthenticateResult AuthenticateResult { get; }

@@ -58,7 +58,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
 
         if (isDefault)
         {
-            return await this.SetDefault(bankAccount);
+            return await SetDefault(bankAccount);
         }
 
         return result;
@@ -75,7 +75,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
             return IdOperationResult.Success;
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var currentDefault = this.GetDefault(bankAccount.Organization);
+        var currentDefault = GetDefault(bankAccount.Organization);
         if (currentDefault != null)
         {
             if (currentDefault == bankAccount)

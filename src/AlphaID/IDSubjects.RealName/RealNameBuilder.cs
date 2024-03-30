@@ -25,7 +25,7 @@ public class RealNameBuilder(IServiceCollection services)
     /// <returns></returns>
     public RealNameBuilder AddRealNameAuthenticationStore<T>() where T : class, IRealNameAuthenticationStore
     {
-        this.Services.TryAddScoped<IRealNameAuthenticationStore, T>();
+        Services.TryAddScoped<IRealNameAuthenticationStore, T>();
         return this;
     }
 
@@ -36,7 +36,7 @@ public class RealNameBuilder(IServiceCollection services)
     /// <returns></returns>
     public RealNameBuilder AddRealNameRequestStore<T>() where T : class, IRealNameRequestStore
     {
-        this.Services.TryAddScoped<IRealNameRequestStore, T>();
+        Services.TryAddScoped<IRealNameRequestStore, T>();
         return this;
     }
 }

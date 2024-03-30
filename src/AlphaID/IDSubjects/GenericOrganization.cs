@@ -26,7 +26,7 @@ public class GenericOrganization
     /// </summary>
     public GenericOrganization(string name) : this()
     {
-        this.Name = name;
+        Name = name;
     }
 
     /// <summary>

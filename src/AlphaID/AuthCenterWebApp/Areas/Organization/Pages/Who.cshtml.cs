@@ -10,15 +10,15 @@ namespace AuthCenterWebApp.Areas.Organization.Pages
 
         public IActionResult OnGet(string anchor)
         {
-            this.Organizations = organizationManager.FindByName(anchor).ToArray();
-            if (this.Organizations.Length == 0)
-                return this.NotFound();
+            Organizations = organizationManager.FindByName(anchor).ToArray();
+            if (Organizations.Length == 0)
+                return NotFound();
 
-            if (this.Organizations.Length == 1)
+            if (Organizations.Length == 1)
             {
-                return this.RedirectToPage("Index", new { anchor = this.Organizations[0].Name });
+                return RedirectToPage("Index", new { anchor = Organizations[0].Name });
             }
-            return this.Page();
+            return Page();
         }
     }
 }

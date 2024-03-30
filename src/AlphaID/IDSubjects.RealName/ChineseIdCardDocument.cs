@@ -68,7 +68,7 @@ public class ChineseIdCardDocument : IdentityDocument
     {
         get
         {
-            return this.Attachments.FirstOrDefault(a => a.Name == PersonalSideAttachmentName);
+            return Attachments.FirstOrDefault(a => a.Name == PersonalSideAttachmentName);
         }
     }
 
@@ -79,7 +79,7 @@ public class ChineseIdCardDocument : IdentityDocument
     {
         get
         {
-            return this.Attachments.FirstOrDefault(a => a.Name == IssuerSideAttachmentName);
+            return Attachments.FirstOrDefault(a => a.Name == IssuerSideAttachmentName);
         }
     }
 
@@ -96,7 +96,7 @@ public class ChineseIdCardDocument : IdentityDocument
     internal override void ApplyRealName(NaturalPerson person)
     {
         //todo 应用时要考虑姓氏和名字拆分？
-        var personName = new PersonNameInfo(this.Name);
+        var personName = new PersonNameInfo(Name);
         person.PersonName = personName;
     }
 }

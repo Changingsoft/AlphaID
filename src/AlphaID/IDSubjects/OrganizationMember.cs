@@ -23,10 +23,10 @@ public class OrganizationMember
     /// <param name="person"></param>
     public OrganizationMember(GenericOrganization organization, NaturalPerson person)
     {
-        this.OrganizationId = organization.Id;
-        this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-        this.PersonId = person.Id;
-        this.Person = person ?? throw new ArgumentNullException(nameof(person));
+        OrganizationId = organization.Id;
+        Organization = organization ?? throw new ArgumentNullException(nameof(organization));
+        PersonId = person.Id;
+        Person = person ?? throw new ArgumentNullException(nameof(person));
     }
 
     /// <summary>
@@ -87,6 +87,6 @@ public class OrganizationMember
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{this.Organization.Name}|{this.Person.UserName}|{(this.IsOwner ? "Owner" : "")}|{this.Visibility}";
+        return $"{Organization.Name}|{Person.UserName}|{(IsOwner ? "Owner" : "")}|{Visibility}";
     }
 }

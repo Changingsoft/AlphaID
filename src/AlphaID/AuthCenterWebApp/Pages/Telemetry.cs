@@ -13,7 +13,7 @@ namespace AuthCenterWebApp.Pages;
 /// </summary>
 public static class Telemetry
 {
-    private static readonly string ServiceVersion = typeof(Telemetry).Assembly.GetName().Version!.ToString();
+    private static readonly string s_serviceVersion = typeof(Telemetry).Assembly.GetName().Version!.ToString();
 
     /// <summary>
     /// Service name for telemetry.
@@ -65,23 +65,24 @@ public static class Telemetry
         /// <summary>
         /// Meter for the IdentityServer host project
         /// </summary>
-        private static readonly Meter Meter = new Meter(ServiceName, ServiceVersion);
+        private static readonly Meter s_meter = new(ServiceName, s_serviceVersion);
 
-        private static Counter<long> ConsentCounter = Meter.CreateCounter<long>(Counters.Consent);
+        private static readonly Counter<long> s_consentCounter = s_meter.CreateCounter<long>(Counters.Consent);
 
         /// <summary>
         /// Helper method to increase <see cref="Counters.Consent"/> counter. The scopes
         /// are expanded and called one by one to not cause a combinatory explosion of scopes.
         /// </summary>
         /// <param name="clientId">Client id</param>
-        /// <param name="scopes">Scope names. Each element is added on it's own to the counter</param>
+        /// <param name="scopes">Scope names. Each element is added on its own to the counter</param>
+        /// <param name="remember"></param>
         public static void ConsentGranted(string clientId, IEnumerable<string> scopes, bool remember)
         {
             ArgumentNullException.ThrowIfNull(scopes);
 
             foreach (var scope in scopes)
             {
-                ConsentCounter.Add(1,
+                s_consentCounter.Add(1,
                     new(Tags.Client, clientId),
                     new(Tags.Scope, scope),
                     new(Tags.Remember, remember),
@@ -100,43 +101,44 @@ public static class Telemetry
             ArgumentNullException.ThrowIfNull(scopes);
             foreach (var scope in scopes)
             {
-                ConsentCounter.Add(1, new(Tags.Client, clientId), new(Tags.Scope, scope), new(Tags.Consent, TagValues.Denied));
+                s_consentCounter.Add(1, new(Tags.Client, clientId), new(Tags.Scope, scope), new(Tags.Consent, TagValues.Denied));
             }
         }
 
-        private static Counter<long> GrantsRevokedCounter = Meter.CreateCounter<long>(Counters.GrantsRevoked);
+        private static readonly Counter<long> s_grantsRevokedCounter = s_meter.CreateCounter<long>(Counters.GrantsRevoked);
 
         /// <summary>
         /// Helper method to increase the <see cref="Counters.GrantsRevoked"/> counter.
         /// </summary>
         /// <param name="clientId">Client id to revoke for, or null for all.</param>
         public static void GrantsRevoked(string? clientId)
-            => GrantsRevokedCounter.Add(1, tag: new(Tags.Client, clientId));
+            => s_grantsRevokedCounter.Add(1, tag: new(Tags.Client, clientId));
 
-        private static Counter<long> UserLoginCounter = Meter.CreateCounter<long>(Counters.UserLogin);
+        private static readonly Counter<long> s_userLoginCounter = s_meter.CreateCounter<long>(Counters.UserLogin);
 
         /// <summary>
         /// Helper method to increase <see cref="Counters.UserLogin"/> counter.
         /// </summary>
         /// <param name="clientId">Client Id, if available</param>
         public static void UserLogin(string? clientId, string idp)
-            => UserLoginCounter.Add(1, new(Tags.Client, clientId), new(Tags.Idp, idp));
+            => s_userLoginCounter.Add(1, new(Tags.Client, clientId), new(Tags.Idp, idp));
 
         /// <summary>
-        /// Helper method to increase <see cref="Counters.UserLogin" counter on failure.
+        /// Helper method to increase <see cref="Counters.UserLogin" /> counter on failure.
         /// </summary>
         /// <param name="clientId">Client Id, if available</param>
+        /// <param name="idp"></param>
         /// <param name="error">Error message</param>
         public static void UserLoginFailure(string? clientId, string idp, string error)
-            => UserLoginCounter.Add(1, new(Tags.Client, clientId), new(Tags.Idp, idp), new(Tags.Error, error));
+            => s_userLoginCounter.Add(1, new(Tags.Client, clientId), new(Tags.Idp, idp), new(Tags.Error, error));
 
-        private static Counter<long> UserLogoutCounter = Meter.CreateCounter<long>(Counters.UserLogout);
+        private static readonly Counter<long> s_userLogoutCounter = s_meter.CreateCounter<long>(Counters.UserLogout);
 
         /// <summary>
         /// Helper method to increase the <see cref="Counters.UserLogout"/> counter.
         /// </summary>
         /// <param name="idp">Idp/authentication scheme for external authentication, or "local" for built in.</param>
         public static void UserLogout(string? idp)
-            => UserLogoutCounter.Add(1, tag: new(Tags.Idp, idp));
+            => s_userLogoutCounter.Add(1, tag: new(Tags.Idp, idp));
     }
 }

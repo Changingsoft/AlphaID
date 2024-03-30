@@ -7,7 +7,7 @@ namespace IdSubjects.Subjects;
 /// </summary>
 public struct OrganizationCode
 {
-    private string code;
+    private string _code;
 
     /// <summary>
     /// 使用组织机构代码（不含校验位）创建组织机构代码。
@@ -20,8 +20,8 @@ public struct OrganizationCode
         var trimmedCode = code.Trim().ToUpper();
         if (trimmedCode.Length != 8)
             throw new ArgumentException("Code length error.");
-        this.code = trimmedCode;
-        this.CheckCode = Check(trimmedCode);
+        this._code = trimmedCode;
+        CheckCode = Check(trimmedCode);
     }
 
     /// <summary>
@@ -29,10 +29,7 @@ public struct OrganizationCode
     /// </summary>
     public string Code
     {
-        readonly get
-        {
-            return this.code;
-        }
+        readonly get => _code;
         set
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -40,8 +37,8 @@ public struct OrganizationCode
             var trimmedCode = value.Trim().ToUpper();
             if (trimmedCode.Length != 8)
                 throw new ArgumentException("Code length error.");
-            this.code = trimmedCode;
-            this.CheckCode = Check(trimmedCode);
+            _code = trimmedCode;
+            CheckCode = Check(trimmedCode);
         }
     }
 
@@ -54,9 +51,9 @@ public struct OrganizationCode
     /// 已重写，输出组织机构代码的可读形式。
     /// </summary>
     /// <returns></returns>
-    public override readonly string ToString()
+    public readonly override string ToString()
     {
-        return this.ToString(false);
+        return ToString(false);
     }
 
     /// <summary>
@@ -66,16 +63,16 @@ public struct OrganizationCode
     /// <returns></returns>
     public readonly string ToString(bool asMachineFormat)
     {
-        return asMachineFormat ? this.code + this.CheckCode : this.code + "-" + this.CheckCode;
+        return asMachineFormat ? _code + CheckCode : _code + "-" + CheckCode;
     }
 
     /// <summary>
     /// 已重写。获取组织机构代码的HashCode.
     /// </summary>
     /// <returns></returns>
-    public override readonly int GetHashCode()
+    public readonly override int GetHashCode()
     {
-        return this.ToString().GetHashCode();
+        return ToString().GetHashCode();
     }
 
     /// <summary>
@@ -83,7 +80,7 @@ public struct OrganizationCode
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public override readonly bool Equals(object? obj)
+    public readonly override bool Equals(object? obj)
     {
         return obj is OrganizationCode code1 ? this == code1 : base.Equals(obj);
     }
@@ -96,7 +93,7 @@ public struct OrganizationCode
     /// <returns></returns>
     public static bool operator ==(OrganizationCode a, OrganizationCode b)
     {
-        return a.code == b.code && a.CheckCode == b.CheckCode;
+        return a._code == b._code && a.CheckCode == b.CheckCode;
     }
 
     /// <summary>
@@ -112,20 +109,20 @@ public struct OrganizationCode
 
     private static char Check(string code)
     {
-        int sum = 0;
-        for (int i = 0; i < 8; i++)
+        var sum = 0;
+        for (var i = 0; i < 8; i++)
         {
             var charIndex = Charset.IndexOf(code[i]);
             if (charIndex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charIndex * Weight[i];
+            sum += charIndex * s_weight[i];
         }
         return CheckCodeCharset[(11 - (sum % 11)) % 11]; //处理当余数为0时，11-0 = 11，超出字符集范围，再次取模得0，约束在 0-10 范围内。
     }
 
     private const string CheckCodeCharset = "0123456789X";
     private const string Charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static readonly int[] Weight = [3, 7, 9, 10, 5, 8, 4, 2];
+    private static readonly int[] s_weight = [3, 7, 9, 10, 5, 8, 4, 2];
     private const string Pattern = @"^([0-9A-Z]{8})-?([0-9X])$";
 
     /// <summary>
@@ -144,7 +141,7 @@ public struct OrganizationCode
             throw new ArgumentException("Invalid input value format.");
 
         OrganizationCode newCode = new(match.Groups[1].Value);
-        char inputCheckCode = char.Parse(match.Groups[2].Value);
+        var inputCheckCode = char.Parse(match.Groups[2].Value);
         return inputCheckCode != newCode.CheckCode ? throw new ArgumentException("Invalid Checksum.") : newCode;
     }
 
@@ -167,7 +164,7 @@ public struct OrganizationCode
 
         OrganizationCode newCode = new(match.Groups[1].Value);
 
-        if (!char.TryParse(match.Groups[2].Value, out char inputCheckCode))
+        if (!char.TryParse(match.Groups[2].Value, out var inputCheckCode))
             return false;
         if (inputCheckCode != newCode.CheckCode)
             return false;

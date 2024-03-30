@@ -28,31 +28,31 @@ public class DeletePersonalDataModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        this.RequirePassword = await userManager.HasPasswordAsync(user);
-        return this.Page();
+        RequirePassword = await userManager.HasPasswordAsync(user);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        this.RequirePassword = await userManager.HasPasswordAsync(user);
-        if (this.RequirePassword)
+        RequirePassword = await userManager.HasPasswordAsync(user);
+        if (RequirePassword)
         {
-            if (!await userManager.CheckPasswordAsync(user, this.Input.Password))
+            if (!await userManager.CheckPasswordAsync(user, Input.Password))
             {
-                this.ModelState.AddModelError(string.Empty, "Incorrect password.");
-                return this.Page();
+                ModelState.AddModelError(string.Empty, "Incorrect password.");
+                return Page();
             }
         }
 
@@ -67,6 +67,6 @@ public class DeletePersonalDataModel(
 
         logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
-        return this.Redirect("~/");
+        return Redirect("~/");
     }
 }

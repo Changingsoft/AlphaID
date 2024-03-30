@@ -24,7 +24,7 @@ public class DirectoryLogonBuilder(IServiceCollection services)
     /// <returns></returns>
     public DirectoryLogonBuilder AddDirectoryServiceStore<T>() where T : class, IDirectoryServiceDescriptorStore
     {
-        this.Services.TryAddScoped<IDirectoryServiceDescriptorStore, T>();
+        Services.TryAddScoped<IDirectoryServiceDescriptorStore, T>();
         return this;
     }
 
@@ -35,7 +35,7 @@ public class DirectoryLogonBuilder(IServiceCollection services)
     /// <returns></returns>
     public DirectoryLogonBuilder AddLogonAccountStore<T>() where T : class, IDirectoryAccountStore
     {
-        this.Services.TryAddScoped<IDirectoryAccountStore, T>();
+        Services.TryAddScoped<IDirectoryAccountStore, T>();
         return this;
     }
 }

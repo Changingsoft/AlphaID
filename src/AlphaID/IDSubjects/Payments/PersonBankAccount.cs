@@ -24,9 +24,9 @@ public class PersonBankAccount
     /// <param name="bankName"></param>
     public PersonBankAccount(string accountNumber, string? accountName, string? bankName)
     {
-        this.AccountNumber = accountNumber;
-        this.AccountName = accountName;
-        this.BankName = bankName;
+        AccountNumber = accountNumber;
+        AccountName = accountName;
+        BankName = bankName;
     }
 
     /// <summary>

@@ -38,26 +38,26 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources
 
         public void OnGet()
         {
-            this.Input = new InputModel();
+            Input = new InputModel();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (dbContext.IdentityResources.Any(p => p.Name == this.Input.Name))
-                this.ModelState.AddModelError("Name", "Name is exists.");
+            if (dbContext.IdentityResources.Any(p => p.Name == Input.Name))
+                ModelState.AddModelError("Name", "Name is exists.");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
             var identityResource = new IdentityResource
             {
                 Enabled = true,
-                Name = this.Input.Name,
-                DisplayName = this.Input.DisplayName,
-                Description = this.Input.Description,
-                Required = this.Input.Required,
-                Emphasize = this.Input.Emphasize,
-                ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument,
+                Name = Input.Name,
+                DisplayName = Input.DisplayName,
+                Description = Input.Description,
+                Required = Input.Required,
+                Emphasize = Input.Emphasize,
+                ShowInDiscoveryDocument = Input.ShowInDiscoveryDocument,
                 UserClaims = null,
                 Properties = null,
                 Created = DateTime.Now,
@@ -67,7 +67,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources
             };
             dbContext.IdentityResources.Add(identityResource);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Index");
+            return RedirectToPage("Index");
         }
 
         public record InputModel

@@ -7,14 +7,14 @@ public class ChineseNamePinyinConvertContext
 {
     internal ChineseNamePinyinConvertContext()
     {
-        this.SurnameChars = [];
-        this.GivenNameChars = [];
+        SurnameChars = [];
+        GivenNameChars = [];
     }
 
     internal ChineseNamePinyinConvertContext(IEnumerable<PhoneticChineseChar> surnameChars, IEnumerable<PhoneticChineseChar> givenNameChars)
     {
-        this.SurnameChars = new List<PhoneticChineseChar>(surnameChars);
-        this.GivenNameChars = new List<PhoneticChineseChar>(givenNameChars);
+        SurnameChars = new List<PhoneticChineseChar>(surnameChars);
+        GivenNameChars = new List<PhoneticChineseChar>(givenNameChars);
     }
 
     /// <summary>

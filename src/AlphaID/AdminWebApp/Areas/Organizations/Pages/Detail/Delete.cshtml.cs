@@ -18,43 +18,43 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await organizationManager.FindByIdAsync(this.Anchor);
+        var org = await organizationManager.FindByIdAsync(Anchor);
         if (org == null)
-            return this.NotFound();
-        this.Organization = org;
-        return this.Page();
+            return NotFound();
+        Organization = org;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await organizationManager.FindByIdAsync(this.Anchor);
+        var org = await organizationManager.FindByIdAsync(Anchor);
         if (org == null)
-            return this.NotFound();
-        this.Organization = org;
+            return NotFound();
+        Organization = org;
 
-        if (!this.ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return this.Page();
+            return Page();
         }
 
-        if (this.Input.Name != this.Organization.Name)
+        if (Input.Name != Organization.Name)
         {
-            this.ModelState.AddModelError("", "输入的组织名称不一致");
-            return this.Page();
+            ModelState.AddModelError("", "输入的组织名称不一致");
+            return Page();
         }
 
         try
         {
-            var result = await organizationManager.DeleteAsync(this.Organization);
+            var result = await organizationManager.DeleteAsync(Organization);
             if (result.Succeeded)
-                return this.RedirectToPage("DeleteSuccess");
-            this.Result = result;
-            return this.Page();
+                return RedirectToPage("DeleteSuccess");
+            Result = result;
+            return Page();
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
-            return this.Page();
+            ModelState.AddModelError("", ex.Message);
+            return Page();
         }
     }
 

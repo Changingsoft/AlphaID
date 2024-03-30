@@ -31,9 +31,9 @@ public class PersonControllerTests(AlphaIdApiFactory factory)
         response.EnsureSuccessStatusCode();
         var data = await response.Content.ReadFromJsonAsync<UserInfoModel>();
         Assert.Equal("d2480421-8a15-4292-8e8f-06985a1f645b", data!.SubjectId);
-        Assert.Equal("刘备", data!.Name);
-        Assert.Equal("LIUBEI", data!.SearchHint);
-        Assert.NotNull(data!.AvatarUrl);
+        Assert.Equal("刘备", data.Name);
+        Assert.Equal("LIUBEI", data.SearchHint);
+        Assert.NotNull(data.AvatarUrl);
 
     }
 

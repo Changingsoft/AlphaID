@@ -21,21 +21,21 @@ public class ConfirmEmailChangeModel(NaturalPersonManager userManager, SignInMan
     {
         if (userId == null || email == null || code == null)
         {
-            return this.RedirectToPage("/Index");
+            return RedirectToPage("/Index");
         }
 
         var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userId}'.");
+            return NotFound($"Unable to load user with ID '{userId}'.");
         }
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
         var result = await userManager.ChangeEmailAsync(user, email, code);
         if (!result.Succeeded)
         {
-            this.StatusMessage = "更新邮件地址时出现错误。";
-            return this.Page();
+            StatusMessage = "更新邮件地址时出现错误。";
+            return Page();
         }
 
         // In our UI email and user name are one and the same, so when we update the email
@@ -48,7 +48,7 @@ public class ConfirmEmailChangeModel(NaturalPersonManager userManager, SignInMan
         //}
 
         await signInManager.RefreshSignInAsync(user);
-        this.StatusMessage = "感谢您确认电子邮件变更。";
-        return this.Page();
+        StatusMessage = "感谢您确认电子邮件变更。";
+        return Page();
     }
 }

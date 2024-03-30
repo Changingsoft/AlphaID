@@ -43,26 +43,26 @@ public class LoginWith2FaModel(
     {
         // Ensure the user has gone through the username & password screen first
         _ = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
-        this.ReturnUrl = returnUrl;
-        this.RememberMe = rememberMe;
+        ReturnUrl = returnUrl;
+        RememberMe = rememberMe;
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(bool rememberMe, string returnUrl = null)
     {
-        if (!this.ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return this.Page();
+            return Page();
         }
 
-        returnUrl ??= this.Url.Content("~/");
+        returnUrl ??= Url.Content("~/");
         var context = await interactionService.GetAuthorizationContextAsync(returnUrl);
 
         var user = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
-        var authenticatorCode = this.Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+        var authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-        var result = await signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, this.Input.RememberMachine);
+        var result = await signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, Input.RememberMachine);
         _ = await userManager.GetUserIdAsync(user);
 
         if (result.Succeeded)
@@ -80,17 +80,17 @@ public class LoginWith2FaModel(
                 }
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                return this.Redirect(returnUrl);
+                return Redirect(returnUrl);
             }
 
             // request for a local page
-            if (this.Url.IsLocalUrl(returnUrl))
+            if (Url.IsLocalUrl(returnUrl))
             {
-                return this.Redirect(returnUrl);
+                return Redirect(returnUrl);
             }
             else if (string.IsNullOrEmpty(returnUrl))
             {
-                return this.Redirect("~/");
+                return Redirect("~/");
             }
             else
             {
@@ -101,13 +101,13 @@ public class LoginWith2FaModel(
         else if (result.IsLockedOut)
         {
             logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
-            return this.RedirectToPage("./Lockout");
+            return RedirectToPage("./Lockout");
         }
         else
         {
             logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
-            this.ModelState.AddModelError(string.Empty, "身份验证器代码无效。");
-            return this.Page();
+            ModelState.AddModelError(string.Empty, "身份验证器代码无效。");
+            return Page();
         }
     }
 }

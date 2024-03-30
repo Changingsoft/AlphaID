@@ -23,27 +23,27 @@ public class FindPasswordByMobileModel(NaturalPersonManager userManager, IVerifi
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError(nameof(this.Mobile), "无效的移动电话号码");
+            ModelState.AddModelError(nameof(Mobile), "无效的移动电话号码");
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         var code = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         var normalPhoneNumber = phoneNumber.ToString();
 
-        var person = await userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
+        var person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
         {
             //不执行操作
-            return this.RedirectToPage("ResetPasswordMobile", new { code, phone = this.Mobile });
+            return RedirectToPage("ResetPasswordMobile", new { code, phone = Mobile });
         }
 
         code = await userManager.GeneratePasswordResetTokenAsync(person);
 
         await verificationCodeService.SendAsync(normalPhoneNumber);
-        return this.RedirectToPage("ResetPasswordMobile", new { code, phone = this.Mobile });
+        return RedirectToPage("ResetPasswordMobile", new { code, phone = Mobile });
     }
 }

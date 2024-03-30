@@ -15,13 +15,13 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         public IActionResult OnGet(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
             if (organization.Fapiao != null)
             {
-                this.Input = new InputModel()
+                Input = new InputModel()
                 {
                     Name = organization.Fapiao.Name,
                     TaxpayerId = organization.Fapiao.TaxPayerId,
@@ -32,55 +32,55 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
                 };
             }
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostSaveAsync(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
             if (organization.Fapiao == null)
             {
                 organization.Fapiao = new FapiaoInfo()
                 {
-                    Name = this.Input.Name,
-                    TaxPayerId = this.Input.TaxpayerId,
-                    Address = this.Input.Address,
-                    Contact = this.Input.Contact,
-                    Bank = this.Input.Bank,
-                    Account = this.Input.Account,
+                    Name = Input.Name,
+                    TaxPayerId = Input.TaxpayerId,
+                    Address = Input.Address,
+                    Contact = Input.Contact,
+                    Bank = Input.Bank,
+                    Account = Input.Account,
                 };
             }
             else
             {
-                organization.Fapiao.Name = this.Input.Name;
-                organization.Fapiao.TaxPayerId = this.Input.TaxpayerId;
-                organization.Fapiao.Address = this.Input.Address;
-                organization.Fapiao.Bank = this.Input.Bank;
-                organization.Fapiao.Account = this.Input.Account;
+                organization.Fapiao.Name = Input.Name;
+                organization.Fapiao.TaxPayerId = Input.TaxpayerId;
+                organization.Fapiao.Address = Input.Address;
+                organization.Fapiao.Bank = Input.Bank;
+                organization.Fapiao.Account = Input.Account;
             }
 
-            this.Result = await organizationManager.UpdateAsync(organization);
-            return this.Page();
+            Result = await organizationManager.UpdateAsync(organization);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostClearAsync(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
             organization.Fapiao = null;
-            this.Result = await organizationManager.UpdateAsync(organization);
-            this.Input = default!;
-            return this.Page();
+            Result = await organizationManager.UpdateAsync(organization);
+            Input = default!;
+            return Page();
         }
 
         public class InputModel

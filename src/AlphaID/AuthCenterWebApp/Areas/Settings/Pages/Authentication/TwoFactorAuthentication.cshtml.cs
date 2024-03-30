@@ -24,30 +24,30 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        this.HasAuthenticator = await userManager.GetAuthenticatorKeyAsync(user) != null;
-        this.Is2FaEnabled = await userManager.GetTwoFactorEnabledAsync(user);
-        this.IsMachineRemembered = await signInManager.IsTwoFactorClientRememberedAsync(user);
-        this.RecoveryCodesLeft = await userManager.CountRecoveryCodesAsync(user);
+        HasAuthenticator = await userManager.GetAuthenticatorKeyAsync(user) != null;
+        Is2FaEnabled = await userManager.GetTwoFactorEnabledAsync(user);
+        IsMachineRemembered = await signInManager.IsTwoFactorClientRememberedAsync(user);
+        RecoveryCodesLeft = await userManager.CountRecoveryCodesAsync(user);
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
         await signInManager.ForgetTwoFactorClientAsync();
-        this.StatusMessage = "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
-        return this.RedirectToPage();
+        StatusMessage = "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
+        return RedirectToPage();
     }
 }

@@ -22,7 +22,7 @@ public class JoinOrganizationInvitationManager(IJoinOrganizationInvitationStore 
     /// <exception cref="NotImplementedException"></exception>
     public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(NaturalPerson person)
     {
-        return store.Invitations.Where(i => i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > this.TimeProvider.GetLocalNow());
+        return store.Invitations.Where(i => i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
     }
 
     /// <summary>
@@ -51,9 +51,9 @@ public class JoinOrganizationInvitationManager(IJoinOrganizationInvitationStore 
         if (existsMember != null)
             errors.Add("Person is a member of this organization.");
 
-        if (store.Invitations.Any(i => i.InviteeId == invitee.Id && i.OrganizationId == organization.Id && i.WhenExpired > this.TimeProvider.GetUtcNow()))
+        if (store.Invitations.Any(i => i.InviteeId == invitee.Id && i.OrganizationId == organization.Id && i.WhenExpired > TimeProvider.GetUtcNow()))
             errors.Add("You've been sent invitation to this person.");
-        if (errors.Any())
+        if (errors.Count != 0)
             return IdOperationResult.Failed([.. errors]);
 
         return await store.CreateAsync(new JoinOrganizationInvitation()

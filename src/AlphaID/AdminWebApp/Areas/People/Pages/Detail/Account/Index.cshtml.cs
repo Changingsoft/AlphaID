@@ -19,41 +19,41 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Account
         {
             var person = await userManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Data = person;
-            this.HasPassword = await userManager.HasPasswordAsync(this.Data);
-            this.Input = new()
+            Data = person;
+            HasPassword = await userManager.HasPasswordAsync(Data);
+            Input = new()
             {
-                UserName = this.Data.UserName
+                UserName = Data.UserName
             };
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             var person = await userManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Data = person;
-            this.HasPassword = await userManager.HasPasswordAsync(this.Data);
+            Data = person;
+            HasPassword = await userManager.HasPasswordAsync(Data);
 
-            if (!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return this.Page();
+                return Page();
             }
 
-            if (userManager.Users.Any(p => p.Id != this.Data.Id && p.UserName == this.Input.UserName))
+            if (userManager.Users.Any(p => p.Id != Data.Id && p.UserName == Input.UserName))
             {
-                this.ModelState.AddModelError("", "不能与其他账户名相同");
-                return this.Page();
+                ModelState.AddModelError("", "不能与其他账户名相同");
+                return Page();
             }
 
-            await userManager.SetUserNameAsync(this.Data, this.Input.UserName);
-            this.OperationResultMessage = "操作已成功。";
-            return this.Page();
+            await userManager.SetUserNameAsync(Data, Input.UserName);
+            OperationResultMessage = "操作已成功。";
+            return Page();
         }
 
         public class InputModel

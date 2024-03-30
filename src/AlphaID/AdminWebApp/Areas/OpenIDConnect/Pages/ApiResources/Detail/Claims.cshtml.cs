@@ -19,10 +19,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.UserClaims)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            return this.Page();
+            Data = resource;
+            return Page();
 
         }
 
@@ -32,22 +32,22 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.UserClaims)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            if (this.Data.UserClaims.Any(p => p.Type == this.NewClaim))
-                this.ModelState.AddModelError(nameof(this.NewClaim), "指定的声明类型已存在");
+            Data = resource;
+            if (Data.UserClaims.Any(p => p.Type == NewClaim))
+                ModelState.AddModelError(nameof(NewClaim), "指定的声明类型已存在");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Data.UserClaims.Add(new ApiResourceClaim
+            Data.UserClaims.Add(new ApiResourceClaim
             {
-                Type = this.NewClaim,
+                Type = NewClaim,
             });
-            dbContext.ApiResources.Update(this.Data);
+            dbContext.ApiResources.Update(Data);
             await dbContext.SaveChangesAsync();
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync(int id, int claimId)
@@ -56,17 +56,17 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.UserClaims)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            var item = this.Data.UserClaims.FirstOrDefault(p => p.Id == claimId);
+            Data = resource;
+            var item = Data.UserClaims.FirstOrDefault(p => p.Id == claimId);
             if (item != null)
             {
-                this.Data.UserClaims.Remove(item);
-                dbContext.ApiResources.Update(this.Data);
+                Data.UserClaims.Remove(item);
+                dbContext.ApiResources.Update(Data);
                 await dbContext.SaveChangesAsync();
             }
-            return this.Page();
+            return Page();
         }
     }
 }

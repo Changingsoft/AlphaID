@@ -37,34 +37,34 @@ public class IndexModel(OrganizationManager manager, NaturalPersonManager person
     {
         var org = await manager.FindByIdAsync(anchor);
         if (org == null)
-            return this.NotFound();
-        this.Organization = org;
-        this.Members = await memberManager.GetMembersAsync(org);
+            return NotFound();
+        Organization = org;
+        Members = await memberManager.GetMembersAsync(org);
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAddMemberAsync(string anchor)
     {
         var org = await manager.FindByIdAsync(anchor);
         if (org == null)
-            return this.NotFound();
-        this.Organization = org;
-        this.Members = await memberManager.GetMembersAsync(org);
+            return NotFound();
+        Organization = org;
+        Members = await memberManager.GetMembersAsync(org);
 
-        var person = await personManager.FindByNameAsync(this.UserName);
+        var person = await personManager.FindByNameAsync(UserName);
         if (person == null)
         {
-            this.ModelState.AddModelError(nameof(this.UserName), "找不到人员");
-            return this.Page();
+            ModelState.AddModelError(nameof(UserName), "找不到人员");
+            return Page();
         }
 
-        var member = new OrganizationMember(this.Organization, person)
+        var member = new OrganizationMember(Organization, person)
         {
-            Title = this.Title,
-            Department = this.Department,
-            Remark = this.Remark,
-            Visibility = this.Visibility,
+            Title = Title,
+            Department = Department,
+            Remark = Remark,
+            Visibility = Visibility,
         };
 
         var result = await memberManager.CreateAsync(member);
@@ -72,31 +72,31 @@ public class IndexModel(OrganizationManager manager, NaturalPersonManager person
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error);
             }
-            return this.Page();
+            return Page();
         }
-        return this.RedirectToPage();
+        return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
     {
         var org = await manager.FindByIdAsync(anchor);
         if (org == null)
-            return this.NotFound();
-        this.Organization = org;
-        this.Members = await memberManager.GetMembersAsync(org);
+            return NotFound();
+        Organization = org;
+        Members = await memberManager.GetMembersAsync(org);
 
-        var member = this.Members.FirstOrDefault(m => m.PersonId == personId);
+        var member = Members.FirstOrDefault(m => m.PersonId == personId);
         if (member == null)
-            return this.Page();
+            return Page();
 
-        this.Result = await memberManager.LeaveOrganizationAsync(member);
-        if (this.Result.Succeeded)
+        Result = await memberManager.LeaveOrganizationAsync(member);
+        if (Result.Succeeded)
         {
-            this.Members = await memberManager.GetMembersAsync(org);
+            Members = await memberManager.GetMembersAsync(org);
         }
-        return this.Page();
+        return Page();
     }
 
 }

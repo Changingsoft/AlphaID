@@ -13,7 +13,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders
 
         public void OnGet()
         {
-            this.Input = new InputModel()
+            Input = new InputModel()
             {
 
             };
@@ -22,24 +22,24 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders
         public async Task<IActionResult> OnPostAsync()
         {
             Dictionary<string, string> properties = [];
-            if (this.Input.Authority != null)
-                properties.Add("Authority", this.Input.Authority);
-            properties.Add("ResponseType", this.Input.ResponseType);
-            if(this.Input.ClientId != null)
-                properties.Add("ClientId", this.Input.ClientId);
-            if (this.Input.ClientSecret != null)
-                properties.Add("ClientSecret", this.Input.ClientSecret);
-            properties.Add("Scope", this.Input.Scope);
-            properties.Add("GetClaimsFromUserInfoEndpoint", this.Input.GetClaimsFromUserInfoEndpoint.ToString());
-            properties.Add("UsePkce", this.Input.UsePkce.ToString());
+            if (Input.Authority != null)
+                properties.Add("Authority", Input.Authority);
+            properties.Add("ResponseType", Input.ResponseType);
+            if(Input.ClientId != null)
+                properties.Add("ClientId", Input.ClientId);
+            if (Input.ClientSecret != null)
+                properties.Add("ClientSecret", Input.ClientSecret);
+            properties.Add("Scope", Input.Scope);
+            properties.Add("GetClaimsFromUserInfoEndpoint", Input.GetClaimsFromUserInfoEndpoint.ToString());
+            properties.Add("UsePkce", Input.UsePkce.ToString());
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
             var idp = new IdentityProvider
             {
-                Scheme = this.Input.Scheme,
-                DisplayName = this.Input.DisplayName,
+                Scheme = Input.Scheme,
+                DisplayName = Input.DisplayName,
                 Enabled = true,
                 Type = "oidc", //����oidc��ָʾ��ΪOidcProvider.
                 Properties = JsonSerializer.Serialize(properties),
@@ -52,7 +52,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders
             dbContext.IdentityProviders.Add(idp);
             await dbContext.SaveChangesAsync();
 
-            return this.RedirectToPage("Index");
+            return RedirectToPage("Index");
         }
 
         public class InputModel

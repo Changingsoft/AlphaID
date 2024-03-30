@@ -20,7 +20,7 @@ namespace AlphaIdWebAPI.Controllers;
 [Authorize]
 public class PersonController(NaturalPersonManager personManager, IOptions<SystemUrlInfo> urlInfo, OrganizationMemberManager memberManager) : ControllerBase
 {
-    private readonly SystemUrlInfo urlInfo = urlInfo.Value;
+    private readonly SystemUrlInfo _urlInfo = urlInfo.Value;
 
     /// <summary>
     /// 通过 UserName 获取指定用户的信息。
@@ -34,10 +34,10 @@ public class PersonController(NaturalPersonManager personManager, IOptions<Syste
     {
         var person = await personManager.FindByNameAsync(userName);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
         return new PersonInfoModel(person.Id, person.PersonName.FullName, person.PersonName.SearchHint,
-            new Uri(this.urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString());
+            new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString());
     }
 
 
@@ -70,7 +70,7 @@ public class PersonController(NaturalPersonManager personManager, IOptions<Syste
                 .ThenBy(p => p.PersonName.SearchHint)
                 .Take(10).Select(p => new SuggestedPersonModel(p)
                 {
-                    AvatarUrl = new Uri(this.urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
+                    AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
                 });
             set.UnionWith(pinyinSearchSet);
         }
@@ -83,7 +83,7 @@ public class PersonController(NaturalPersonManager personManager, IOptions<Syste
                 .ThenBy(p => p.UserName)
                 .Take(10).Select(p => new SuggestedPersonModel(p)
                 {
-                    AvatarUrl = new Uri(this.urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
+                    AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
                 });
             set.UnionWith(userNameSearchSet);
         }
@@ -94,7 +94,7 @@ public class PersonController(NaturalPersonManager personManager, IOptions<Syste
             .ThenBy(p => p.PersonName.FullName)
             .Take(10).Select(p => new SuggestedPersonModel(p)
             {
-                AvatarUrl = new Uri(this.urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
+                AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString(),
             });
         set.UnionWith(nameSearchSet);
 
@@ -111,9 +111,9 @@ public class PersonController(NaturalPersonManager personManager, IOptions<Syste
     public async Task<ActionResult<IEnumerable<MembershipModel>>> GetMemberships(string userName)
     {
         NaturalPerson? visitor = default;
-        var visitorSubjectId = this.User.SubjectId();
+        var visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
-            visitor = await personManager.FindByIdAsync(this.User.SubjectId()!);
+            visitor = await personManager.FindByIdAsync(User.SubjectId()!);
 
         var person = await personManager.FindByNameAsync(userName);
         if (person == null)

@@ -18,31 +18,31 @@ namespace AdminWebApp.Areas.People.Pages.Detail
         {
             var person = await personManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
-            this.Person = person;
-            this.Input = new InputModel()
+                return NotFound();
+            Person = person;
+            Input = new InputModel()
             {
-                DateOfBirth = this.Person.DateOfBirth?.ToDateTime(TimeOnly.MinValue),
-                Gender = this.Person.Gender,
+                DateOfBirth = Person.DateOfBirth?.ToDateTime(TimeOnly.MinValue),
+                Gender = Person.Gender,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             var person = await personManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
-            this.Person = person;
+                return NotFound();
+            Person = person;
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Person.DateOfBirth = this.Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value) : null;
-            this.Person.Gender = this.Input.Gender;
+            Person.DateOfBirth = Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(Input.DateOfBirth.Value) : null;
+            Person.Gender = Input.Gender;
 
-            this.Result = await personManager.UpdateAsync(this.Person);
-            return this.Page();
+            Result = await personManager.UpdateAsync(Person);
+            return Page();
         }
 
         public record InputModel

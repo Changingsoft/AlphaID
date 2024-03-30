@@ -11,9 +11,9 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryService
         {
             var ds = await directoryServiceManager.FindByIdAsync(anchor);
             if (ds == null)
-                return this.NotFound();
-            this.Data = ds;
-            return this.Page();
+                return NotFound();
+            Data = ds;
+            return Page();
         }
     }
 }

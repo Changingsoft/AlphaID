@@ -11,31 +11,31 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         public IActionResult OnGet(string anchor)
         {
             if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            this.Result = await manager.DeleteAsync(organization);
-            if (!this.Result.Succeeded)
+            Result = await manager.DeleteAsync(organization);
+            if (!Result.Succeeded)
             {
-                return this.Page();
+                return Page();
             }
 
-            return this.RedirectToPage("/Index", new { area = "" });
+            return RedirectToPage("/Index", new { area = "" });
         }
     }
 }

@@ -25,11 +25,11 @@ public class OrganizationBankAccount
     /// <param name="bankName"></param>
     internal OrganizationBankAccount(GenericOrganization organization, string accountNumber, string accountName, string? bankName)
     {
-        this.AccountNumber = accountNumber;
-        this.AccountName = accountName;
-        this.BankName = bankName;
-        this.Organization = organization;
-        this.OrganizationId = organization.Id;
+        AccountNumber = accountNumber;
+        AccountName = accountName;
+        BankName = bankName;
+        Organization = organization;
+        OrganizationId = organization.Id;
     }
 
     /// <summary>

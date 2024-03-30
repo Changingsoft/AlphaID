@@ -14,30 +14,30 @@ public class EditPersonNameModel(NaturalPersonManager naturalPersonManager) : Pa
         var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
-        this.Input = new()
+        Input = new()
         {
             Surname = person.PersonName.Surname,
             GivenName = person.PersonName.GivenName ?? default!,
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName ?? default!,
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
         var person = await naturalPersonManager.FindByIdAsync(anchor);
-        if (person == null) { return this.NotFound(); }
+        if (person == null) { return NotFound(); }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, this.Input.PinyinSurname, this.Input.PinyinGivenName);
+        var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, Input.PinyinSurname, Input.PinyinGivenName);
         var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName);
         await naturalPersonManager.AdminChangePersonNameAsync(person, personName);
-        return this.RedirectToPage("Index");
+        return RedirectToPage("Index");
     }
 
     public class InputModel

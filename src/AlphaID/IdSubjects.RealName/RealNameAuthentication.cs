@@ -23,9 +23,9 @@ public abstract class RealNameAuthentication
     /// <param name="validatedBy"></param>
     protected RealNameAuthentication(PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
     {
-        this.ValidatedAt = validatedAt;
-        this.ValidatedBy = validatedBy;
-        this.PersonName = personName;
+        ValidatedAt = validatedAt;
+        ValidatedBy = validatedBy;
+        PersonName = personName;
     }
 
     /// <summary>
@@ -79,6 +79,6 @@ public abstract class RealNameAuthentication
     /// <param name="person"></param>
     public virtual void ApplyToPerson(NaturalPerson person)
     {
-        person.PersonName = this.PersonName;
+        person.PersonName = PersonName;
     }
 }

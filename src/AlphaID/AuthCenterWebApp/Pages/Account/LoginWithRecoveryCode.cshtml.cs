@@ -36,20 +36,20 @@ public class LoginWithRecoveryCodeModel(
     {
         // Ensure the user has gone through the username & password screen first
         _ = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
-        this.ReturnUrl = returnUrl;
+        ReturnUrl = returnUrl;
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
     {
-        if (!this.ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return this.Page();
+            return Page();
         }
 
         var user = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
-        var recoveryCode = this.Input.RecoveryCode.Replace(" ", string.Empty);
+        var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
 
         var result = await signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
         _ = await userManager.GetUserIdAsync(user);
@@ -72,17 +72,17 @@ public class LoginWithRecoveryCodeModel(
                 }
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                return this.Redirect(returnUrl);
+                return Redirect(returnUrl);
             }
 
             // request for a local page
-            if (this.Url.IsLocalUrl(returnUrl))
+            if (Url.IsLocalUrl(returnUrl))
             {
-                return this.Redirect(returnUrl);
+                return Redirect(returnUrl);
             }
             else if (string.IsNullOrEmpty(returnUrl))
             {
-                return this.Redirect("~/");
+                return Redirect("~/");
             }
             else
             {
@@ -93,13 +93,13 @@ public class LoginWithRecoveryCodeModel(
         if (result.IsLockedOut)
         {
             logger.LogWarning("User account locked out.");
-            return this.RedirectToPage("./Lockout");
+            return RedirectToPage("./Lockout");
         }
         else
         {
             logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
-            this.ModelState.AddModelError(string.Empty, "恢复代码无效。");
-            return this.Page();
+            ModelState.AddModelError(string.Empty, "恢复代码无效。");
+            return Page();
         }
     }
 }

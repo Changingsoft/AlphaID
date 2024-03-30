@@ -12,10 +12,10 @@ namespace AdminWebApp.Areas.RealName.Pages.Authentication
             var authentication = await realNameManager.FindByIdAsync(anchor);
             if (authentication == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
-            this.Data = authentication;
-            return this.Page();
+            Data = authentication;
+            return Page();
         }
     }
 }

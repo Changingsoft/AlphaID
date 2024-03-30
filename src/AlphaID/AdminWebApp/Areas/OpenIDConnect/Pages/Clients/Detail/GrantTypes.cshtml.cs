@@ -20,22 +20,22 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
     {
         var data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        this.AllowedGrantTypes = GrantTypes.Select(g => new SelectListItem(g.DisplayName, g.Name, this.Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
+        AllowedGrantTypes = s_grantTypes.Select(g => new SelectListItem(g.DisplayName, g.Name, Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
         var data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        var selectedGrantTypes = this.AllowedGrantTypes.Where(p => p.Selected).Select(p => p.Value);
+        var selectedGrantTypes = AllowedGrantTypes.Where(p => p.Selected).Select(p => p.Value);
         try
         {
             //Check any grant type combination is available.
@@ -43,39 +43,39 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
-            return this.Page();
+            ModelState.AddModelError("", ex.Message);
+            return Page();
         }
 
-        foreach (var grantType in this.AllowedGrantTypes)
+        foreach (var grantType in AllowedGrantTypes)
         {
             if (grantType.Selected)
             {
-                if (!this.Data.AllowedGrantTypes.Any(p => p.GrantType == grantType.Value))
+                if (!Data.AllowedGrantTypes.Any(p => p.GrantType == grantType.Value))
                 {
-                    this.Data.AllowedGrantTypes.Add(new ClientGrantType()
+                    Data.AllowedGrantTypes.Add(new ClientGrantType()
                     {
-                        ClientId = this.Data.Id,
+                        ClientId = Data.Id,
                         GrantType = grantType.Value,
                     });
                 }
             }
             else
             {
-                var existsGrantType = this.Data.AllowedGrantTypes.FirstOrDefault(p => p.GrantType == grantType.Value);
+                var existsGrantType = Data.AllowedGrantTypes.FirstOrDefault(p => p.GrantType == grantType.Value);
                 if (existsGrantType != null)
                 {
-                    this.Data.AllowedGrantTypes.Remove(existsGrantType);
+                    Data.AllowedGrantTypes.Remove(existsGrantType);
                 }
             }
         }
-        dbContext.Clients.Update(this.Data);
+        dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        this.OperationMessage = "操作已成功！";
-        return this.Page();
+        OperationMessage = "操作已成功！";
+        return Page();
     }
 
-    private static readonly List<GrantTypeItem> GrantTypes =
+    private static readonly List<GrantTypeItem> s_grantTypes =
     [
         new GrantTypeItem(GrantType.Implicit, "隐式"),
         new GrantTypeItem(GrantType.AuthorizationCode, "授权码"),

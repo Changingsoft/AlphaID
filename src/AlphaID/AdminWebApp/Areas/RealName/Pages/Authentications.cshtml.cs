@@ -14,12 +14,12 @@ namespace AdminWebApp.Areas.RealName.Pages
             //应用过滤
 
             //计算结果数
-            this.Count = set.Count();
+            Count = set.Count();
 
             //应用分页
 
 
-            this.Authentications = set.Take(1000).AsEnumerable();
+            Authentications = set.Take(1000).AsEnumerable();
         }
     }
 }

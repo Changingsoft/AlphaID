@@ -15,50 +15,50 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
     {
         var data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
-        this.BankAccounts = bankAccountManager.GetBankAccounts(data);
-        return this.Page();
+            return NotFound();
+        Data = data;
+        BankAccounts = bankAccountManager.GetBankAccounts(data);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
         var data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
-        this.BankAccounts = bankAccountManager.GetBankAccounts(data);
+            return NotFound();
+        Data = data;
+        BankAccounts = bankAccountManager.GetBankAccounts(data);
 
-        var bankAccount = this.BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
+        var bankAccount = BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null)
         {
-            return this.Page();
+            return Page();
         }
 
-        this.Result = await bankAccountManager.RemoveAsync(bankAccount);
-        if(this.Result.Succeeded)
-            this.BankAccounts = bankAccountManager.GetBankAccounts(data);
-        return this.Page();
+        Result = await bankAccountManager.RemoveAsync(bankAccount);
+        if(Result.Succeeded)
+            BankAccounts = bankAccountManager.GetBankAccounts(data);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
         var data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
-        this.BankAccounts = bankAccountManager.GetBankAccounts(data);
+            return NotFound();
+        Data = data;
+        BankAccounts = bankAccountManager.GetBankAccounts(data);
 
-        var bankAccount = this.BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
+        var bankAccount = BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null)
         {
-            return this.Page();
+            return Page();
         }
 
-        this.Result = await bankAccountManager.SetDefault(bankAccount);
-        if (this.Result.Succeeded)
-            this.BankAccounts = bankAccountManager.GetBankAccounts(data);
-        return this.Page();
+        Result = await bankAccountManager.SetDefault(bankAccount);
+        if (Result.Succeeded)
+            BankAccounts = bankAccountManager.GetBankAccounts(data);
+        return Page();
     }
 
 }

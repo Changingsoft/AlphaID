@@ -14,34 +14,34 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await manager.FindByIdAsync(this.Anchor);
+        var org = await manager.FindByIdAsync(Anchor);
         if (org == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Input = new()
+        Input = new()
         {
             CurrentName = org.Name,
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await manager.FindByIdAsync(this.Anchor);
+        var org = await manager.FindByIdAsync(Anchor);
         if (org == null)
-            return this.NotFound();
+            return NotFound();
 
-        var result = await manager.ChangeNameAsync(org, this.Input.NewName, DateOnly.FromDateTime(this.Input.ChangeDate), this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
+        var result = await manager.ChangeNameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error);
             }
-            return this.Page();
+            return Page();
         }
 
-        return this.RedirectToPage("Index", new { id = this.Anchor });
+        return RedirectToPage("Index", new { id = Anchor });
     }
 
     public class InputModel

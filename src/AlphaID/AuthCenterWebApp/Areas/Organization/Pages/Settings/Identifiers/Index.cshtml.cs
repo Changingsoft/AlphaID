@@ -13,34 +13,34 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers
         public IActionResult OnGet(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
-            this.Identifiers = identifierManager.GetIdentifiers(organization);
-            return this.Page();
+                return NotFound();
+            Identifiers = identifierManager.GetIdentifiers(organization);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostRemove(string anchor, string idKey)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
-            this.Identifiers = identifierManager.GetIdentifiers(organization);
+                return NotFound();
+            Identifiers = identifierManager.GetIdentifiers(organization);
 
             var keyPart = idKey.Split('|');
             var type = Enum.Parse<OrganizationIdentifierType>(keyPart[0]);
-            var identifier = this.Identifiers.FirstOrDefault(i => i.Type == type && i.Value == keyPart[1]);
+            var identifier = Identifiers.FirstOrDefault(i => i.Type == type && i.Value == keyPart[1]);
             if (identifier == null)
-                return this.Page();
+                return Page();
 
-            this.Result = await identifierManager.RemoveIdentifierAsync(identifier);
-            if (this.Result.Succeeded)
+            Result = await identifierManager.RemoveIdentifierAsync(identifier);
+            if (Result.Succeeded)
             {
-                this.Identifiers = identifierManager.GetIdentifiers(organization);
+                Identifiers = identifierManager.GetIdentifiers(organization);
             }
 
-            return this.Page();
+            return Page();
         }
     }
 }

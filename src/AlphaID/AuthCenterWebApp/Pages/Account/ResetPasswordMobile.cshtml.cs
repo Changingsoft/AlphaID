@@ -41,47 +41,47 @@ public class ResetPasswordMobileModel(NaturalPersonManager userManager, IVerific
     public IActionResult OnGet(string code, string phone)
     {
         if (code == null)
-            return this.BadRequest("A code must be supplied for password reset.");
+            return BadRequest("A code must be supplied for password reset.");
 
-        this.Code = code;
-        this.PhoneNumber = phone;
+        Code = code;
+        PhoneNumber = phone;
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!MobilePhoneNumber.TryParse(this.PhoneNumber, out var phone))
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out var phone))
         {
-            this.ModelState.AddModelError(nameof(this.PhoneNumber), "移动电话号码无效");
+            ModelState.AddModelError(nameof(PhoneNumber), "移动电话号码无效");
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = await userManager.FindByMobileAsync(normalPhoneNumber, this.HttpContext.RequestAborted);
+        var person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
         {
-            return this.RedirectToPage("ResetPasswordConfirmation");
+            return RedirectToPage("ResetPasswordConfirmation");
         }
 
-        if (!await verificationCodeService.VerifyAsync(this.PhoneNumber, this.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(PhoneNumber, VerificationCode))
         {
-            return this.RedirectToPage("ResetPasswordConfirmation");
+            return RedirectToPage("ResetPasswordConfirmation");
         }
 
-        var result = await userManager.ResetPasswordAsync(person, this.Code, this.NewPassword);
+        var result = await userManager.ResetPasswordAsync(person, Code, NewPassword);
         if (result.Succeeded)
         {
-            return this.RedirectToPage("ResetPasswordConfirmation");
+            return RedirectToPage("ResetPasswordConfirmation");
         }
 
         foreach (var error in result.Errors)
         {
-            this.ModelState.AddModelError("", error.Description);
+            ModelState.AddModelError("", error.Description);
         }
-        return this.Page();
+        return Page();
     }
 }

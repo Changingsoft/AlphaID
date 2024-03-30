@@ -46,7 +46,7 @@ public class Index(IIdentityServerInteractionService interaction,
             }
         }
 
-        this.View = new ViewModel
+        View = new ViewModel
         {
             Grants = list
         };
@@ -58,10 +58,10 @@ public class Index(IIdentityServerInteractionService interaction,
 
     public async Task<IActionResult> OnPostAsync()
     {
-        await interaction.RevokeUserConsentAsync(this.ClientId);
-        await events.RaiseAsync(new GrantsRevokedEvent(this.User.GetSubjectId(), this.ClientId));
+        await interaction.RevokeUserConsentAsync(ClientId);
+        await events.RaiseAsync(new GrantsRevokedEvent(User.GetSubjectId(), ClientId));
 
-        return this.RedirectToPage("/Grants/Index");
+        return RedirectToPage("/Grants/Index");
     }
 
     public class ViewModel

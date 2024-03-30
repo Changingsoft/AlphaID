@@ -19,13 +19,13 @@ public class ErrorModel : PageModel
     /// <summary>
     /// 
     /// </summary>
-    public bool ShowRequestId => !string.IsNullOrEmpty(this.RequestId);
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
     /// <summary>
     /// 
     /// </summary>
     public void OnGet()
     {
-        this.RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier;
+        RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
     }
 }

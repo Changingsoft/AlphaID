@@ -39,47 +39,47 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
     public async Task<IActionResult> OnPostAsync()
     {
         var builder = new PersonBuilder();
-        if (this.Mobile != null)
+        if (Mobile != null)
         {
-            if (MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+            if (MobilePhoneNumber.TryParse(Mobile, out var phoneNumber))
                 builder.SetMobile(phoneNumber);
             else
-                this.ModelState.AddModelError("", "移动电话号码无效。");
+                ModelState.AddModelError("", "移动电话号码无效。");
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
 
-        (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(this.Input.Surname, this.Input.GivenName);
-        var chinesePersonName = new ChinesePersonName(this.Input.Surname, this.Input.GivenName, phoneticSurname, phoneticGivenName);
+        (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(Input.Surname, Input.GivenName);
+        var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, phoneticSurname, phoneticGivenName);
 
-        var personName = new PersonNameInfo(chinesePersonName.FullName, this.Input.Surname, this.Input.GivenName);
+        var personName = new PersonNameInfo(chinesePersonName.FullName, Input.Surname, Input.GivenName);
 
         builder
-            .SetUserName(this.UserName)
+            .SetUserName(UserName)
             .SetPersonName(personName);
-        if (this.Email != null)
-            builder.SetEmail(this.Email);
+        if (Email != null)
+            builder.SetEmail(Email);
 
 
         var person = builder.Build();
 
-        person.DateOfBirth = this.Input.DateOfBirth.HasValue
-            ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value)
+        person.DateOfBirth = Input.DateOfBirth.HasValue
+            ? DateOnly.FromDateTime(Input.DateOfBirth.Value)
             : null;
-        person.Gender = this.Input.Gender;
+        person.Gender = Input.Gender;
         person.PhoneticSurname = chinesePersonName.PhoneticSurname;
         person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
         person.PersonName.SearchHint = $"{chinesePersonName.PhoneticSurname}{chinesePersonName.GivenName}";
 
 
-        this.Result = await manager.CreateAsync(person);
+        Result = await manager.CreateAsync(person);
 
-        if (this.Result.Succeeded)
-            return this.RedirectToPage("../Detail/Index", new { anchor = person.Id });
+        if (Result.Succeeded)
+            return RedirectToPage("../Detail/Index", new { anchor = person.Id });
 
-        return this.Page();
+        return Page();
     }
 
     /// <summary>
@@ -122,10 +122,10 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
     public IActionResult OnGetPinyin(string surname, string givenName)
     {
         if (string.IsNullOrWhiteSpace(givenName))
-            return this.Content(string.Empty);
+            return Content(string.Empty);
         (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
         var chinesePersonName = new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
-        return this.Content($"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim());
+        return Content($"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim());
     }
 
     public class InputModel

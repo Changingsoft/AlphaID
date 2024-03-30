@@ -24,8 +24,8 @@ public class DocumentedRealNameAuthentication : RealNameAuthentication
     public DocumentedRealNameAuthentication(IdentityDocument document, PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
         : base(personName, validatedAt, validatedBy)
     {
-        this.Document = document;
-        this.DocumentId = document.Id;
+        Document = document;
+        DocumentId = document.Id;
     }
 
     /// <summary>

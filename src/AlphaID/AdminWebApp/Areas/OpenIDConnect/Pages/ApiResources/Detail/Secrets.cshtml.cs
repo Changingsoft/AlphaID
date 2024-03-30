@@ -14,10 +14,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.Secrets)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            return this.Page();
+            Data = resource;
+            return Page();
 
         }
 
@@ -27,17 +27,17 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.Secrets)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            var item = this.Data.Secrets.FirstOrDefault(p => p.Id == secretId);
+            Data = resource;
+            var item = Data.Secrets.FirstOrDefault(p => p.Id == secretId);
             if (item != null)
             {
-                this.Data.Secrets.Remove(item);
-                dbContext.ApiResources.Update(this.Data);
+                Data.Secrets.Remove(item);
+                dbContext.ApiResources.Update(Data);
                 await dbContext.SaveChangesAsync();
             }
-            return this.Page();
+            return Page();
         }
     }
 }

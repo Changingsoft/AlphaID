@@ -3,7 +3,7 @@
 namespace IdSubjects.Diagnostics;
 internal class AggregatedUserPasswordInterceptor(IEnumerable<IUserPasswordInterceptor> interceptors) : IUserPasswordInterceptor
 {
-    private readonly Stack<IUserPasswordInterceptor> stack = new();
+    private readonly Stack<IUserPasswordInterceptor> _stack = new();
 
     public async Task<IdentityResult> PasswordChangingAsync(NaturalPerson person, string? plainPassword, CancellationToken cancellation)
     {
@@ -11,7 +11,7 @@ internal class AggregatedUserPasswordInterceptor(IEnumerable<IUserPasswordInterc
         bool success = true;
         foreach (var interceptor in interceptors)
         {
-            this.stack.Push(interceptor);
+            _stack.Push(interceptor);
             var result = await interceptor.PasswordChangingAsync(person, plainPassword, cancellation);
             if (!result.Succeeded)
                 success = false;
@@ -23,7 +23,7 @@ internal class AggregatedUserPasswordInterceptor(IEnumerable<IUserPasswordInterc
 
     public async Task PasswordChangedAsync(NaturalPerson person, CancellationToken cancellation)
     {
-        while (this.stack.TryPop(out var interceptor))
+        while (_stack.TryPop(out var interceptor))
         {
             await interceptor.PasswordChangedAsync(person, cancellation);
         }

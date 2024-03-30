@@ -24,10 +24,10 @@ public class ChinesePersonName
     /// <param name="phoneticGivenName"></param>
     public ChinesePersonName(string? surname, string givenName, string? phoneticSurname, string phoneticGivenName)
     {
-        this.Surname = surname;
-        this.GivenName = givenName;
-        this.PhoneticSurname = phoneticSurname;
-        this.PhoneticGivenName = phoneticGivenName;
+        Surname = surname;
+        GivenName = givenName;
+        PhoneticSurname = phoneticSurname;
+        PhoneticGivenName = phoneticGivenName;
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class ChinesePersonName
     /// 姓名。
     /// </summary>
     [NotMapped]
-    public string FullName => $"{this.Surname}{this.GivenName}";
+    public string FullName => $"{Surname}{GivenName}";
 
     /// <summary>
     /// 
@@ -64,7 +64,7 @@ public class ChinesePersonName
     /// 
     /// </summary>
     [NotMapped]
-    public string PhoneticName => $"{this.PhoneticSurname} {this.PhoneticGivenName}".Trim();
+    public string PhoneticName => $"{PhoneticSurname} {PhoneticGivenName}".Trim();
 
     /// <summary>
     /// Override. Return full name of Person.
@@ -72,6 +72,6 @@ public class ChinesePersonName
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{this.FullName}|{this.PhoneticName}";
+        return $"{FullName}|{PhoneticName}";
     }
 }

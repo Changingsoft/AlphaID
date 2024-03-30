@@ -6,7 +6,7 @@ internal class DefaultChinesePersonNamePinyinInterceptor : IChinesePersonNamePin
 {
     public void AfterConvert(ChineseNamePinyinConvertContext context)
     {
-        this.ShiSelect(context);
+        ShiSelect(context);
     }
 
     private void ShiSelect(ChineseNamePinyinConvertContext context)

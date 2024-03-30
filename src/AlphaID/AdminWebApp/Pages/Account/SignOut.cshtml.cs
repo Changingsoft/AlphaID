@@ -10,8 +10,8 @@ public class SignOutModel : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
-        var signedOutUri = this.Url.Page("/Account/SignedOut");
-        await this.HttpContext.SignOutAsync();
-        return this.SignOut(new AuthenticationProperties { RedirectUri = signedOutUri }, OpenIdConnectDefaults.AuthenticationScheme);
+        var signedOutUri = Url.Page("/Account/SignedOut");
+        await HttpContext.SignOutAsync();
+        return SignOut(new AuthenticationProperties { RedirectUri = signedOutUri }, OpenIdConnectDefaults.AuthenticationScheme);
     }
 }

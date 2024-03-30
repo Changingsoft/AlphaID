@@ -15,7 +15,7 @@ namespace IdSubjects;
 /// <param name="options"></param>
 public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher<NaturalPerson> passwordHasher, IOptions<IdSubjectsOptions> options)
 {
-    private readonly IdSubjectsPasswordOptions options = options.Value.Password;
+    private readonly IdSubjectsPasswordOptions _options = options.Value.Password;
 
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
@@ -28,7 +28,7 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
     public bool Hit(NaturalPerson person, string password)
     {
         //取出密码历史
-        var passwords = store.GetPasswords(person, this.options.RememberPasswordHistory);
+        var passwords = store.GetPasswords(person, _options.RememberPasswordHistory);
         return passwords
             .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis.Data, password))
             .Any(result => result.HasFlag(PasswordVerificationResult.Success));
@@ -45,9 +45,9 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
         {
             Data = passwordHasher.HashPassword(person, password),
             UserId = person.Id,
-            WhenCreated = this.TimeProvider.GetUtcNow(),
+            WhenCreated = TimeProvider.GetUtcNow(),
         });
-        await store.TrimHistory(person, this.options.RememberPasswordHistory);
+        await store.TrimHistory(person, _options.RememberPasswordHistory);
     }
 
     /// <summary>

@@ -32,24 +32,24 @@ public class BindLoginModel(
 
     public async Task<IActionResult> OnGetAsync(string returnUrl)
     {
-        var externalLoginResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        var externalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         if (!externalLoginResult.Succeeded)
         {
             throw new Exception("无效的外部登录。");
         }
 
-        await this.BuildModelAsync(returnUrl);
+        await BuildModelAsync(returnUrl);
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
         //检查我们是否在授权请求的上下文中
-        var context = await interaction.GetAuthorizationContextAsync(this.Input.ReturnUrl);
+        var context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
         //用户点击了“取消”按钮
-        if (this.Input.Button != "login")
+        if (Input.Button != "login")
         {
             if (context != null)
             {
@@ -63,36 +63,36 @@ public class BindLoginModel(
                 {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
-                    return this.LoadingPage(this.Input.ReturnUrl);
+                    return this.LoadingPage(Input.ReturnUrl);
                 }
 
-                return this.Redirect(this.Input.ReturnUrl);
+                return Redirect(Input.ReturnUrl);
             }
             else
             {
                 //由于我们没有有效的上下文，那么我们只需返回主页
-                return this.Redirect("~/");
+                return Redirect("~/");
             }
         }
 
-        if (this.ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            var externalLoginResult = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            var externalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
             if (!externalLoginResult.Succeeded)
                 throw new Exception("无效的外部登录");
 
             //登录过程。
-            var user = await userManager.FindByEmailAsync(this.Input.Username)
-                ?? await userManager.FindByMobileAsync(this.Input.Username, this.HttpContext.RequestAborted)
-                ?? await userManager.FindByNameAsync(this.Input.Username);
+            var user = await userManager.FindByEmailAsync(Input.Username)
+                ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
+                ?? await userManager.FindByNameAsync(Input.Username);
             if (user != null)
             {
-                var passwordOk = await userManager.CheckPasswordAsync(user, this.Input.Password);
+                var passwordOk = await userManager.CheckPasswordAsync(user, Input.Password);
                 if (!passwordOk)
                 {
-                    await events.RaiseAsync(new UserLoginFailureEvent(this.Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
-                    this.ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
-                    return this.Page();
+                    await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
+                    ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+                    return Page();
                 }
 
                 //为用户绑定外部登录
@@ -104,7 +104,6 @@ public class BindLoginModel(
                 var provider = externalLoginResult.Properties.Items[".AuthScheme"];
                 var providerDisplayName = externalLoginResult.Properties.Items["schemeDisplayName"];
                 var providerUserId = userIdClaim.Value;
-                var returnUrl = externalLoginResult.Properties.Items["returnUrl"];
                 await userManager.AddLoginAsync(user, new UserLoginInfo(provider!, providerUserId, providerDisplayName));
 
                 // this allows us to collect any additional claims or properties
@@ -112,13 +111,13 @@ public class BindLoginModel(
                 // this is typically used to store data needed for sign out from those protocols.
                 var additionalLocalClaims = new List<Claim>();
                 var localSignInProps = new AuthenticationProperties();
-                this.CaptureExternalLoginContext(externalLoginResult, additionalLocalClaims, localSignInProps);
+                CaptureExternalLoginContext(externalLoginResult, additionalLocalClaims, localSignInProps);
 
 
                 await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
                 // delete temporary cookie used during external authentication
-                await this.HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+                await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
                 await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
@@ -133,8 +132,8 @@ public class BindLoginModel(
 */
                     var principal = GenerateMustChangePasswordPrincipal(user);
                     await signInManager.SignOutAsync();
-                    await this.HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
-                    return this.RedirectToPage("ChangePassword", new { this.Input.ReturnUrl, RememberMe = this.Input.RememberLogin });
+                    await HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
+                    return RedirectToPage("ChangePassword", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
                 }
 
                 if (context != null)
@@ -143,21 +142,21 @@ public class BindLoginModel(
                     {
                         // The client is native, so this change in how to
                         // return the response is for better UX for the end user.
-                        return this.LoadingPage(this.Input.ReturnUrl);
+                        return this.LoadingPage(Input.ReturnUrl);
                     }
 
                     // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                    return this.Redirect(this.Input.ReturnUrl);
+                    return Redirect(Input.ReturnUrl);
                 }
 
                 // request for a local page
-                if (this.Url.IsLocalUrl(this.Input.ReturnUrl))
+                if (Url.IsLocalUrl(Input.ReturnUrl))
                 {
-                    return this.Redirect(this.Input.ReturnUrl);
+                    return Redirect(Input.ReturnUrl);
                 }
-                else if (string.IsNullOrEmpty(this.Input.ReturnUrl))
+                else if (string.IsNullOrEmpty(Input.ReturnUrl))
                 {
-                    return this.Redirect("~/");
+                    return Redirect("~/");
                 }
                 else
                 {
@@ -166,18 +165,18 @@ public class BindLoginModel(
                 }
             }
 
-            await events.RaiseAsync(new UserLoginFailureEvent(this.Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
-            this.ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+            await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
+            ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
 
         // something went wrong, show form with error
-        await this.BuildModelAsync(this.Input.ReturnUrl);
-        return this.Page();
+        await BuildModelAsync(Input.ReturnUrl);
+        return Page();
     }
 
     private async Task BuildModelAsync(string returnUrl)
     {
-        this.Input = new InputModel
+        Input = new InputModel
         {
             ReturnUrl = returnUrl
         };
@@ -190,16 +189,16 @@ public class BindLoginModel(
             var local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
             var scheme = await schemeProvider.GetSchemeAsync(context.IdP);
             // this is meant to short circuit the UI and only trigger the one external IdP
-            this.View = new ViewModel
+            View = new ViewModel
             {
                 EnableLocalLogin = local,
             };
 
-            this.Input.Username = context.LoginHint ?? "";
+            Input.Username = context.LoginHint ?? "";
 
             if (!local)
             {
-                this.View.ExternalProviders =
+                View.ExternalProviders =
                 [
                     new()
                     {
@@ -243,7 +242,7 @@ public class BindLoginModel(
             }
         }
 
-        this.View = new ViewModel
+        View = new ViewModel
         {
             AllowRememberLogin = LoginOptions.AllowRememberLogin,
             EnableLocalLogin = allowLocal && LoginOptions.AllowLocalLogin,
@@ -304,12 +303,12 @@ public class BindLoginModel(
         public bool EnableLocalLogin { get; set; } = true;
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
-        public IEnumerable<ExternalProvider> VisibleExternalProviders => this.ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
+        public IEnumerable<ExternalProvider> VisibleExternalProviders => ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
-        public bool IsExternalLoginOnly => this.EnableLocalLogin == false && this.ExternalProviders.Count() == 1;
-        public string? ExternalLoginScheme => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
+        public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
+        public string? ExternalLoginScheme => IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string? ExternalLoginDisplayName => this.IsExternalLoginOnly ? this.ExternalProviders.SingleOrDefault()?.DisplayName : null;
+        public string? ExternalLoginDisplayName => IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {

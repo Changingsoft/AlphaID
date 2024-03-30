@@ -15,7 +15,7 @@ namespace AlphaIdPlatform.Platform;
 /// <param name="logger">Logger for logging of this mail sender.</param>
 public class SmtpMailSender(IOptions<SmtpMailSenderOptions> options, ILogger<SmtpMailSender>? logger) : IEmailSender
 {
-    private readonly SmtpMailSenderOptions options = options.Value;
+    private readonly SmtpMailSenderOptions _options = options.Value;
 
     /// <summary>
     /// Send email to specified recipient with subject and html message body.
@@ -26,19 +26,19 @@ public class SmtpMailSender(IOptions<SmtpMailSenderOptions> options, ILogger<Smt
     /// <returns>Task self.</returns>
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
-        using var smtpClient = new SmtpClient(this.options.Server, this.options.Port);
-        if (this.options.UseDefaultCredentials)
+        using var smtpClient = new SmtpClient(_options.Server, _options.Port);
+        if (_options.UseDefaultCredentials)
         {
             smtpClient.UseDefaultCredentials = true;
         }
         else
         {
-            var cred = new NetworkCredential(this.options.UserName, this.options.Password);
+            var cred = new NetworkCredential(_options.UserName, _options.Password);
             smtpClient.Credentials = cred;
         }
 
         var to = new MailAddress(email);
-        var from = new MailAddress(this.options.FromMailAddress, this.options.FromDisplayName, Encoding.UTF8);
+        var from = new MailAddress(_options.FromMailAddress, _options.FromDisplayName, Encoding.UTF8);
         var message = new MailMessage(from, to)
         {
             Subject = subject,

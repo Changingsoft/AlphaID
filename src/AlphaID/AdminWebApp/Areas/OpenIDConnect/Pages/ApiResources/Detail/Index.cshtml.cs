@@ -17,10 +17,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.Properties)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            return this.Page();
+            Data = resource;
+            return Page();
 
         }
     }

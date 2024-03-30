@@ -13,7 +13,7 @@ internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> opti
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (this.Request.Headers.Authorization.Contains("TestScheme"))
+        if (Request.Headers.Authorization.Contains("TestScheme"))
         {
             var claims = new List<Claim>()
             {

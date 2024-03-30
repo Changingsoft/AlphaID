@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.RealName.Pages
 
         public void OnGet()
         {
-            this.RealNameRequests = requestManager.Requests.OrderByDescending(p => p.WhenCommitted).Take(1000);
+            RealNameRequests = requestManager.Requests.OrderByDescending(p => p.WhenCommitted).Take(1000);
         }
     }
 }

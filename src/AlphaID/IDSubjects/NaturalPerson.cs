@@ -30,8 +30,8 @@ public class NaturalPerson
     public NaturalPerson(string userName, PersonNameInfo personName) : this()
     {
         // ReSharper disable VirtualMemberCallInConstructor
-        this.UserName = userName;
-        this.PersonName = personName;
+        UserName = userName;
+        PersonName = personName;
         // ReSharper restore VirtualMemberCallInConstructor
     }
 
@@ -236,6 +236,6 @@ public class NaturalPerson
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{this.UserName}|{this.PersonName.FullName}";
+        return $"{UserName}|{PersonName.FullName}";
     }
 }

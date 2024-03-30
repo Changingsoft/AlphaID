@@ -15,7 +15,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByEmailModel(IEmailSender emailSender, NaturalPersonManager userManager, IOptions<ProductInfo> production) : PageModel
 {
-    private readonly ProductInfo production = production.Value;
+    private readonly ProductInfo _production = production.Value;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -26,38 +26,38 @@ public class FindPasswordByEmailModel(IEmailSender emailSender, NaturalPersonMan
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (this.ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            var user = await userManager.FindByEmailAsync(this.Input.Email);
+            var user = await userManager.FindByEmailAsync(Input.Email);
             if (user == null || !await userManager.IsEmailConfirmedAsync(user))
             {
                 // Don't reveal that the user does not exist or is not confirmed
-                return this.RedirectToPage("FindPasswordByEmailConfirmation");
+                return RedirectToPage("FindPasswordByEmailConfirmation");
             }
 
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
             var code = await userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = this.Url.Page(
+            var callbackUrl = Url.Page(
                 "/Account/ResetPassword",
                 pageHandler: null,
                 values: new { code },
-                protocol: this.Request.Scheme);
+                protocol: Request.Scheme);
 
             await emailSender.SendEmailAsync(
-                this.Input.Email,
-                $"重置{this.production.Name}账户密码",
-                $"<p>您已请求通过邮件重设{this.production.Name}密码。请点击<a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>这里</a>，开始重设密码。</p>" +
+                Input.Email,
+                $"重置{_production.Name}账户密码",
+                $"<p>您已请求通过邮件重设{_production.Name}密码。请点击<a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>这里</a>，开始重设密码。</p>" +
                 $"<p>若无法点击链接，请将下列链接复制，并在浏览器中粘贴并打开：</p>" +
                 $"<p><span>{HtmlEncoder.Default.Encode(callbackUrl!)}<span></p>" +
                 $"<p></p>" +
-                $"<p>{this.production.Name}团队</p>");
+                $"<p>{_production.Name}团队</p>");
 
-            return this.RedirectToPage("FindPasswordByEmailConfirmation");
+            return RedirectToPage("FindPasswordByEmailConfirmation");
         }
 
-        return this.Page();
+        return Page();
     }
 
     public class InputModel

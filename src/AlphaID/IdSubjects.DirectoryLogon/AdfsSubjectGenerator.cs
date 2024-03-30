@@ -12,8 +12,8 @@ internal class AdfsSubjectGenerator : ISubjectGenerator
 
     public string Generate(ClaimsPrincipal principal)
     {
-        var anchorValue = principal.FindFirstValue(this.AnchorType) ?? throw new ArgumentException("Anchor value not found.");
-        var clientId = principal.FindFirstValue(this.ClientIdType) ?? throw new ArgumentException("ClientId not found.");
+        var anchorValue = principal.FindFirstValue(AnchorType) ?? throw new ArgumentException("Anchor value not found.");
+        var clientId = principal.FindFirstValue(ClientIdType) ?? throw new ArgumentException("ClientId not found.");
         byte[] originBytes = [];
         originBytes =
         [

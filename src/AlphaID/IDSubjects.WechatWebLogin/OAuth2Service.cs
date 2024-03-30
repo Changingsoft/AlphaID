@@ -8,14 +8,14 @@ namespace IdSubjects.WechatWebLogin;
 /// </summary>
 public class OAuth2Service
 {
-    private readonly JsonSerializer jsonSerializer;
+    private readonly JsonSerializer _jsonSerializer;
 
     /// <summary>
     /// Initialize OAuth2Service.
     /// </summary>
     public OAuth2Service()
     {
-        this.jsonSerializer = new JsonSerializer();
+        _jsonSerializer = new JsonSerializer();
     }
 
     /// <summary>
@@ -52,6 +52,6 @@ public class OAuth2Service
 
         var stream = await response.Content.ReadAsStreamAsync();
 
-        return this.jsonSerializer.Deserialize<OAuth2Result>(new JsonTextReader(new StreamReader(stream, Encoding.UTF8)));
+        return _jsonSerializer.Deserialize<OAuth2Result>(new JsonTextReader(new StreamReader(stream, Encoding.UTF8)));
     }
 }

@@ -13,7 +13,7 @@ namespace IdSubjects;
 /// <exception cref="ArgumentException"></exception>
 public class PersonBuilder(string userName, PersonNameInfo personName)
 {
-    private readonly NaturalPerson person = new(userName, personName);
+    private readonly NaturalPerson _person = new(userName, personName);
 
     /// <summary>
     /// Initialize a person builder.
@@ -42,7 +42,7 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     {
         if (string.IsNullOrWhiteSpace(userName))
             throw new ArgumentException("User name is blank or empty");
-        this.person.UserName = userName;
+        _person.UserName = userName;
         return this;
     }
 
@@ -53,7 +53,7 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     /// <returns></returns>
     public PersonBuilder SetPersonName(PersonNameInfo personName)
     {
-        this.person.PersonName = personName;
+        _person.PersonName = personName;
         return this;
     }
 
@@ -65,8 +65,8 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     /// <returns></returns>
     public PersonBuilder SetMobile(MobilePhoneNumber? mobilePhoneNumber, bool confirmed = false)
     {
-        this.person.PhoneNumber = mobilePhoneNumber?.ToString();
-        this.person.PhoneNumberConfirmed = mobilePhoneNumber.HasValue && confirmed;
+        _person.PhoneNumber = mobilePhoneNumber?.ToString();
+        _person.PhoneNumberConfirmed = mobilePhoneNumber.HasValue && confirmed;
         return this;
     }
 
@@ -77,8 +77,8 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     /// <param name="confirmed"></param>
     public PersonBuilder SetEmail(string? email, bool confirmed = false)
     {
-        this.person.Email = email;
-        this.person.EmailConfirmed = email != null && confirmed;
+        _person.Email = email;
+        _person.EmailConfirmed = email != null && confirmed;
         return this;
     }
 
@@ -90,11 +90,11 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     public NaturalPerson Build()
     {
         //Ensure person
-        if (string.IsNullOrWhiteSpace(this.person.UserName))
+        if (string.IsNullOrWhiteSpace(_person.UserName))
             throw new InvalidOperationException("Can not build person because user name is null or blank.");
-        if (string.IsNullOrWhiteSpace(this.person.PersonName.FullName))
+        if (string.IsNullOrWhiteSpace(_person.PersonName.FullName))
             throw new InvalidOperationException("Can not build person because full name of person name is null or blank.");
 
-        return this.person;
+        return _person;
     }
 }

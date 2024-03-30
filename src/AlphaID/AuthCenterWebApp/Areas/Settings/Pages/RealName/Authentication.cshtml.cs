@@ -11,15 +11,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            var person = await naturalPersonManager.GetUserAsync(this.User);
-            if (person == null) { return this.NotFound(); }
+            var person = await naturalPersonManager.GetUserAsync(User);
+            if (person == null) { return NotFound(); }
 
             var authentications = realNameManager.GetAuthentications(person);
             var authentication = authentications.FirstOrDefault(a => a.Id == id);
-            if (authentication == null) { return this.NotFound(); }
+            if (authentication == null) { return NotFound(); }
 
-            this.Data = authentication;
-            return this.Page();
+            Data = authentication;
+            return Page();
         }
     }
 }

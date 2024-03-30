@@ -10,7 +10,7 @@ public class IndexModel(ConfigurationDbContext context) : PageModel
 
     public void OnGet()
     {
-        this.Clients = context.Clients
+        Clients = context.Clients
             .Include(p => p.AllowedGrantTypes)
             .Include(p => p.RedirectUris)
             .Include(p => p.AllowedScopes);

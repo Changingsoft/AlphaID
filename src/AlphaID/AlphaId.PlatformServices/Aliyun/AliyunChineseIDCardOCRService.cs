@@ -14,7 +14,7 @@ namespace AlphaId.PlatformServices.Aliyun;
 /// </remarks>
 public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options) : IChineseIdCardOcrService
 {
-    private readonly AliyunChineseIdCardOcrServiceOptions options = options.Value;
+    private readonly AliyunChineseIdCardOcrServiceOptions _options = options.Value;
 
     /// <summary>
     /// 识别身份证背面（国徽面）。
@@ -40,11 +40,11 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
 
         var httpClient = new HttpClient()
         {
-            BaseAddress = new Uri(this.options.ServiceBaseUrl),
+            BaseAddress = new Uri(_options.ServiceBaseUrl),
         };
 
         var requestMsg = new HttpRequestMessage(HttpMethod.Post, "/rest/160601/ocr/ocr_idcard.json");
-        requestMsg.Headers.Authorization = new AuthenticationHeaderValue("APPCODE", this.options.AppCode);
+        requestMsg.Headers.Authorization = new AuthenticationHeaderValue("APPCODE", _options.AppCode);
         requestMsg.Content = JsonContent.Create(requestData);
         //requestMsg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json; charset=UTF-8");
 
@@ -87,11 +87,11 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
         };
         var httpClient = new HttpClient()
         {
-            BaseAddress = new Uri(this.options.ServiceBaseUrl),
+            BaseAddress = new Uri(_options.ServiceBaseUrl),
         };
 
         var requestMsg = new HttpRequestMessage(HttpMethod.Post, "/rest/160601/ocr/ocr_idcard.json");
-        requestMsg.Headers.Authorization = new AuthenticationHeaderValue("APPCODE", this.options.AppCode);
+        requestMsg.Headers.Authorization = new AuthenticationHeaderValue("APPCODE", _options.AppCode);
         requestMsg.Content = JsonContent.Create(requestData);
         //requestMsg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json; charset=UTF-8");
 

@@ -68,7 +68,7 @@ public class SubjectAnchorRouteModelConvention(string folderPath, string? areaNa
 
         // passed if route template is override pattern
 
-        var pathPrefix = Path.Join(this.AreaName ?? "", this.FolderPath).Trim('/');
+        var pathPrefix = Path.Join(AreaName ?? "", FolderPath).Trim('/');
 
         foreach (var selector in model.Selectors)
         {
@@ -80,7 +80,7 @@ public class SubjectAnchorRouteModelConvention(string folderPath, string? areaNa
             Debug.Assert(absTemplate.StartsWith(pathPrefix, StringComparison.OrdinalIgnoreCase));
             var left = absTemplate[..pathPrefix.Length];
             var right = absTemplate[pathPrefix.Length..].Trim('/');
-            var newPathPrefix = AttributeRouteModel.CombineTemplates(left, this.AnchorTemplate);
+            var newPathPrefix = AttributeRouteModel.CombineTemplates(left, AnchorTemplate);
             selector.AttributeRouteModel.Template = AttributeRouteModel.CombineTemplates(newPathPrefix, right);
             selector.EndpointMetadata.Clear();
         }

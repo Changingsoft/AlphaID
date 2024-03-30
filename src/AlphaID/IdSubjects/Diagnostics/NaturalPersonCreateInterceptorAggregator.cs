@@ -3,7 +3,7 @@
 namespace IdSubjects.Diagnostics;
 internal class NaturalPersonCreateInterceptorAggregator(IEnumerable<INaturalPersonCreateInterceptor> interceptors)
 {
-    private readonly Stack<INaturalPersonCreateInterceptor> stack = new();
+    private readonly Stack<INaturalPersonCreateInterceptor> _stack = new();
 
     public async Task<IdentityResult> PreCreate(NaturalPersonManager manager, NaturalPerson person, string? password = null)
     {
@@ -11,7 +11,7 @@ internal class NaturalPersonCreateInterceptorAggregator(IEnumerable<INaturalPers
         bool success = true;
         foreach (var interceptor in interceptors)
         {
-            this.stack.Push(interceptor);
+            _stack.Push(interceptor);
             var result = await interceptor.PreCreateAsync(manager, person, password);
             if (!result.Succeeded)
                 success = false;
@@ -23,7 +23,7 @@ internal class NaturalPersonCreateInterceptorAggregator(IEnumerable<INaturalPers
 
     public async Task PostCreate(NaturalPersonManager manager, NaturalPerson person)
     {
-        while (this.stack.TryPop(out var interceptor))
+        while (_stack.TryPop(out var interceptor))
         {
             await interceptor.PostCreateAsync(manager, person);
         }

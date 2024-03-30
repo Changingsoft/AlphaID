@@ -14,11 +14,11 @@ namespace AuthCenterWebApp.Pages
 
         public IActionResult OnPost(string culture, string returnUrl)
         {
-            this.Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
                                     CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                                     new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
-            return this.Redirect(returnUrl);
+            return Redirect(returnUrl);
         }
     }
 }

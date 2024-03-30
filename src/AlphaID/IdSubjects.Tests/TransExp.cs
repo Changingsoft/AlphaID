@@ -3,7 +3,7 @@
 namespace IdSubjects.Tests;
 public static class TransExp<TIn, TOut>
 {
-    private static readonly Func<TIn, TOut> cache = GetFunc();
+    private static readonly Func<TIn, TOut> s_cache = GetFunc();
     private static Func<TIn, TOut> GetFunc()
     {
         ParameterExpression parameterExpression = Expression.Parameter(typeof(TIn), "p");
@@ -17,14 +17,14 @@ public static class TransExp<TIn, TOut>
             memberBindingList.Add(memberBinding);
         }
 
-        MemberInitExpression memberInitExpression = Expression.MemberInit(Expression.New(typeof(TOut)), [.. memberBindingList]);
-        Expression<Func<TIn, TOut>> lambda = Expression.Lambda<Func<TIn, TOut>>(memberInitExpression, [parameterExpression]);
+        var memberInitExpression = Expression.MemberInit(Expression.New(typeof(TOut)), [.. memberBindingList]);
+        var lambda = Expression.Lambda<Func<TIn, TOut>>(memberInitExpression, [parameterExpression]);
 
         return lambda.Compile();
     }
 
     public static TOut Trans(TIn tIn)
     {
-        return cache(tIn);
+        return s_cache(tIn);
     }
 }

@@ -7,8 +7,8 @@ namespace IdSubjects.Subjects;
 /// </summary>
 public readonly struct ChineseIdCardNumber
 {
-    private readonly DateOnly dateOfBirth;
-    private readonly char checkCode;
+    private readonly DateOnly _dateOfBirth;
+    private readonly char _checkCode;
 
     /// <summary>
     /// 使用指定的版本、区划代码、生日和序列号创建一个身份证号码。
@@ -22,16 +22,16 @@ public readonly struct ChineseIdCardNumber
         if (version != V1 && version != V2)
             throw new OverflowException("Version Overflow.");
         ArgumentNullException.ThrowIfNull(areaNumber);
-        if (!AreaNumberRegex.IsMatch(areaNumber))
+        if (!s_areaNumberRegex.IsMatch(areaNumber))
             throw new ArgumentException(Resources.Invalid_region_code_, nameof(areaNumber));
         if (sequence is < 0 or > 999)
             throw new OverflowException("Sequence out of range.");
 
-        this.Version = version;
-        this.AreaNumber = areaNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.Sequence = sequence;
-        this.checkCode = CalculateCheckCode(string.Format(QualifiedFormat, this.AreaNumber, this.dateOfBirth, this.Sequence));
+        Version = version;
+        AreaNumber = areaNumber;
+        this._dateOfBirth = dateOfBirth;
+        Sequence = sequence;
+        _checkCode = CalculateCheckCode(string.Format(QualifiedFormat, AreaNumber, this._dateOfBirth, Sequence));
     }
 
     /// <summary>
@@ -58,10 +58,7 @@ public readonly struct ChineseIdCardNumber
     /// <summary>
     /// 获取出生日期。
     /// </summary>
-    public DateOnly DateOfBirth
-    {
-        get { return this.dateOfBirth; }
-    }
+    public DateOnly DateOfBirth => _dateOfBirth;
 
     /// <summary>
     /// 获取序列号。
@@ -71,24 +68,12 @@ public readonly struct ChineseIdCardNumber
     /// <summary>
     /// 获取一个值，指示性别。
     /// </summary>
-    public Gender Gender
-    {
-        get
-        {
-            return this.Sequence % 2 == 1 ? Gender.Male : Gender.Female;
-        }
-    }
+    public Gender Gender => Sequence % 2 == 1 ? Gender.Male : Gender.Female;
 
     /// <summary>
     /// 获取一个值，表示身份证号码。
     /// </summary>
-    public string NumberString
-    {
-        get
-        {
-            return this.ToString();
-        }
-    }
+    public string NumberString => ToString();
 
     /// <summary>
     /// 输出规范化身份证号码。
@@ -97,13 +82,13 @@ public readonly struct ChineseIdCardNumber
     public override string ToString()
     {
 
-        return this.ToString(this.Version);
+        return ToString(Version);
     }
 
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        return this.ToString().GetHashCode();
+        return ToString().GetHashCode();
     }
 
     /// <summary>
@@ -114,9 +99,9 @@ public readonly struct ChineseIdCardNumber
     public string ToString(int version)
     {
         return version == V1
-            ? this.AreaNumber + this.dateOfBirth.ToString("yyMMdd") + this.Sequence.ToString("000")
+            ? AreaNumber + _dateOfBirth.ToString("yyMMdd") + Sequence.ToString("000")
             : version == V2
-            ? this.AreaNumber + this.dateOfBirth.ToString("yyyyMMdd") + this.Sequence.ToString("000") + this.checkCode
+            ? AreaNumber + _dateOfBirth.ToString("yyyyMMdd") + Sequence.ToString("000") + _checkCode
             : throw new NotSupportedException("Version Not supported.");
     }
 
@@ -128,7 +113,7 @@ public readonly struct ChineseIdCardNumber
     /// <returns></returns>
     public static bool operator ==(ChineseIdCardNumber a, ChineseIdCardNumber b)
     {
-        return a.Version == b.Version && a.AreaNumber == b.AreaNumber && a.dateOfBirth == b.dateOfBirth && a.Sequence == b.Sequence;
+        return a.Version == b.Version && a.AreaNumber == b.AreaNumber && a._dateOfBirth == b._dateOfBirth && a.Sequence == b.Sequence;
     }
 
     /// <summary>
@@ -167,12 +152,12 @@ public readonly struct ChineseIdCardNumber
         int ver;
         if (dataStr.Length == 18)
         {
-            match = P18.Match(dataStr);
+            match = s_p18.Match(dataStr);
             ver = V2;
         }
         else if (dataStr.Length == 15)
         {
-            match = P15.Match(dataStr);
+            match = s_p15.Match(dataStr);
             ver = V1;
         }
         else
@@ -182,7 +167,7 @@ public readonly struct ChineseIdCardNumber
             ? new DateOnly(int.Parse("19" + match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))
             : new DateOnly(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value));
         ChineseIdCardNumber number = new(ver, match.Groups[1].Value, dateOfBirth, int.Parse(match.Groups[5].Value));
-        return ver == V2 && number.checkCode != dataStr[17] ? throw new ArgumentException("校验错误") : number;
+        return ver == V2 && number._checkCode != dataStr[17] ? throw new ArgumentException("校验错误") : number;
     }
 
     /// <summary>
@@ -202,23 +187,23 @@ public readonly struct ChineseIdCardNumber
         int ver;
         if (dataStr.Length == 18)
         {
-            match = P18.Match(dataStr);
+            match = s_p18.Match(dataStr);
             ver = V2;
         }
         else if (dataStr.Length == 15)
         {
-            match = P15.Match(dataStr);
+            match = s_p15.Match(dataStr);
             ver = V1;
         }
         else
             return false;
 
 
-        if (!int.TryParse(ver == V1 ? "19" + match.Groups[2].Value : match.Groups[2].Value, out int year))
+        if (!int.TryParse(ver == V1 ? "19" + match.Groups[2].Value : match.Groups[2].Value, out var year))
             return false;
-        if (!int.TryParse(match.Groups[3].Value, out int month))
+        if (!int.TryParse(match.Groups[3].Value, out var month))
             return false;
-        if (!int.TryParse(match.Groups[4].Value, out int day))
+        if (!int.TryParse(match.Groups[4].Value, out var day))
             return false;
 
         DateOnly dateOfBirth;
@@ -232,7 +217,7 @@ public readonly struct ChineseIdCardNumber
         if (dateOfBirth > DateOnly.FromDateTime(DateTime.Now)) return false;
 
         number = new ChineseIdCardNumber(ver, match.Groups[1].Value, dateOfBirth, int.Parse(match.Groups[5].Value));
-        return ver != V2 || number.checkCode == dataStr[17];
+        return ver != V2 || number._checkCode == dataStr[17];
     }
 
     /// <summary>
@@ -245,16 +230,16 @@ public readonly struct ChineseIdCardNumber
         return TryParse(s, out _);
     }
 
-    private static readonly int[] Weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
+    private static readonly int[] s_weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
     private const string CheckCodeSet = "10X98765432";
     private const string QualifiedFormat = "{0}{1:yyyyMMdd}{2:000}";
 
     private static char CalculateCheckCode(string data)
     {
-        int sum = 0;
-        for (int i = 0; i < 17; i++)
+        var sum = 0;
+        for (var i = 0; i < 17; i++)
         {
-            sum += int.Parse(data[i].ToString()) * Weight[i];
+            sum += int.Parse(data[i].ToString()) * s_weight[i];
         }
         return CheckCodeSet[sum % 11];
     }
@@ -262,9 +247,9 @@ public readonly struct ChineseIdCardNumber
     private const string Pattern18 = @"^([1-9]\d{5})(\d{4})(\d{2})(\d{2})(\d{3})(\d|X)$";
     private const string Pattern15 = @"^([1-9]\d{5})(\\d{2})(\\d{2})(\\d{2})(\\d{3})$";
     private const string AreaNumberPattern = @"^([1-9]\d{5})$";
-    private static readonly Regex P18 = new(Pattern18);
-    private static readonly Regex P15 = new(Pattern15);
-    private static readonly Regex AreaNumberRegex = new(AreaNumberPattern);
+    private static readonly Regex s_p18 = new(Pattern18);
+    private static readonly Regex s_p15 = new(Pattern15);
+    private static readonly Regex s_areaNumberRegex = new(AreaNumberPattern);
 
     /// <summary>
     /// 表示第一代身份证号码。

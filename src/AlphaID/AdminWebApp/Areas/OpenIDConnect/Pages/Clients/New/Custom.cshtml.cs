@@ -19,7 +19,7 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
 
     public void OnGet()
     {
-        this.Input = new InputModel();
+        Input = new InputModel();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -28,47 +28,47 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
         var client = new Duende.IdentityServer.EntityFramework.Entities.Client()
         {
             Enabled = true,
-            ClientId = this.ClientId,
+            ClientId = ClientId,
             ProtocolType = "oidc", //Default to "oidc"
-            RequireClientSecret = this.Input.RequireClientSecret,
-            ClientName = this.Input.ClientName,
-            Description = this.Input.Description,
-            AbsoluteRefreshTokenLifetime = this.Input.AbsoluteRefreshTokenLifetime,
-            AccessTokenLifetime = this.Input.AccessTokenLifetime,
-            AccessTokenType = this.Input.AccessTokenType,
-            AllowAccessTokensViaBrowser = this.Input.AllowAccessTokensViaBrowser,
-            AllowedIdentityTokenSigningAlgorithms = this.Input.AllowedIdentityTokenSigningAlgorithms,
-            AllowOfflineAccess = this.Input.AllowOfflineAccess,
-            AllowPlainTextPkce = this.Input.AllowPlainTextPkce,
-            AllowRememberConsent = this.Input.AllowRememberConsent,
-            AlwaysIncludeUserClaimsInIdToken = this.Input.AlwaysIncludeUserClaimsInIdToken,
-            AlwaysSendClientClaims = this.Input.AlwaysSendClientClaims,
-            AuthorizationCodeLifetime = this.Input.AuthorizationCodeLifetime,
-            BackChannelLogoutSessionRequired = this.Input.BackChannelLogoutSessionRequired,
-            BackChannelLogoutUri = this.Input.BackChannelLogoutUri,
-            CibaLifetime = this.Input.CibaLifetime,
-            ClientClaimsPrefix = this.Input.ClientClaimsPrefix,
-            ClientUri = this.Input.ClientUri,
-            ConsentLifetime = this.Input.ConsentLifetime,
-            CoordinateLifetimeWithUserSession = this.Input.CoordinateLifetimeWithUserSession,
-            DeviceCodeLifetime = this.Input.DeviceCodeLifetime,
-            EnableLocalLogin = this.Input.EnableLocalLogin,
-            FrontChannelLogoutSessionRequired = this.Input.FrontChannelLogoutSessionRequired,
-            FrontChannelLogoutUri = this.Input.FrontChannelLogoutUri,
-            IdentityTokenLifetime = this.Input.IdentityTokenLifetime,
-            IncludeJwtId = this.Input.IncludeJwtId,
-            LogoUri = this.Input.LogoUri,
-            PairWiseSubjectSalt = this.Input.PairWiseSubjectSalt,
-            PollingInterval = this.Input.PollingInterval,
-            RefreshTokenExpiration = this.Input.RefreshTokenExpiration,
-            RefreshTokenUsage = this.Input.RefreshTokenUsage,
-            RequireConsent = this.Input.RequireConsent,
-            RequirePkce = this.Input.RequirePkce,
-            RequireRequestObject = this.Input.RequireRequestObject,
-            SlidingRefreshTokenLifetime = this.Input.SlidingRefreshTokenLifetime,
-            UpdateAccessTokenClaimsOnRefresh = this.Input.UpdateAccessTokenClaimsOnRefresh,
-            UserCodeType = this.Input.UserCodeType,
-            UserSsoLifetime = this.Input.UserSsoLifetime,
+            RequireClientSecret = Input.RequireClientSecret,
+            ClientName = Input.ClientName,
+            Description = Input.Description,
+            AbsoluteRefreshTokenLifetime = Input.AbsoluteRefreshTokenLifetime,
+            AccessTokenLifetime = Input.AccessTokenLifetime,
+            AccessTokenType = Input.AccessTokenType,
+            AllowAccessTokensViaBrowser = Input.AllowAccessTokensViaBrowser,
+            AllowedIdentityTokenSigningAlgorithms = Input.AllowedIdentityTokenSigningAlgorithms,
+            AllowOfflineAccess = Input.AllowOfflineAccess,
+            AllowPlainTextPkce = Input.AllowPlainTextPkce,
+            AllowRememberConsent = Input.AllowRememberConsent,
+            AlwaysIncludeUserClaimsInIdToken = Input.AlwaysIncludeUserClaimsInIdToken,
+            AlwaysSendClientClaims = Input.AlwaysSendClientClaims,
+            AuthorizationCodeLifetime = Input.AuthorizationCodeLifetime,
+            BackChannelLogoutSessionRequired = Input.BackChannelLogoutSessionRequired,
+            BackChannelLogoutUri = Input.BackChannelLogoutUri,
+            CibaLifetime = Input.CibaLifetime,
+            ClientClaimsPrefix = Input.ClientClaimsPrefix,
+            ClientUri = Input.ClientUri,
+            ConsentLifetime = Input.ConsentLifetime,
+            CoordinateLifetimeWithUserSession = Input.CoordinateLifetimeWithUserSession,
+            DeviceCodeLifetime = Input.DeviceCodeLifetime,
+            EnableLocalLogin = Input.EnableLocalLogin,
+            FrontChannelLogoutSessionRequired = Input.FrontChannelLogoutSessionRequired,
+            FrontChannelLogoutUri = Input.FrontChannelLogoutUri,
+            IdentityTokenLifetime = Input.IdentityTokenLifetime,
+            IncludeJwtId = Input.IncludeJwtId,
+            LogoUri = Input.LogoUri,
+            PairWiseSubjectSalt = Input.PairWiseSubjectSalt,
+            PollingInterval = Input.PollingInterval,
+            RefreshTokenExpiration = Input.RefreshTokenExpiration,
+            RefreshTokenUsage = Input.RefreshTokenUsage,
+            RequireConsent = Input.RequireConsent,
+            RequirePkce = Input.RequirePkce,
+            RequireRequestObject = Input.RequireRequestObject,
+            SlidingRefreshTokenLifetime = Input.SlidingRefreshTokenLifetime,
+            UpdateAccessTokenClaimsOnRefresh = Input.UpdateAccessTokenClaimsOnRefresh,
+            UserCodeType = Input.UserCodeType,
+            UserSsoLifetime = Input.UserSsoLifetime,
 
             Created = now,
             Updated = now,
@@ -84,35 +84,35 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
             RedirectUris = [],
         };
 
-        if (this.Input.RequireClientSecret)
+        if (Input.RequireClientSecret)
         {
-            if (string.IsNullOrWhiteSpace(this.Input.ClientSecret))
-                this.ModelState.AddModelError("Input.ClientSecret", "当选择需要客户端密钥时，请提供客户端密钥。");
+            if (string.IsNullOrWhiteSpace(Input.ClientSecret))
+                ModelState.AddModelError("Input.ClientSecret", "当选择需要客户端密钥时，请提供客户端密钥。");
             else
             {
                 client.ClientSecrets.Add(new ClientSecret()
                 {
                     Created = now,
                     Type = "SharedSecret",
-                    Value = this.Input.ClientSecret.ToSha256(),
+                    Value = Input.ClientSecret.ToSha256(),
                 });
             }
         }
 
-        if (!string.IsNullOrWhiteSpace(this.Input.RedirectUri))
+        if (!string.IsNullOrWhiteSpace(Input.RedirectUri))
         {
             client.RedirectUris.Add(new ClientRedirectUri()
             {
-                RedirectUri = this.Input.RedirectUri,
+                RedirectUri = Input.RedirectUri,
             });
         }
         client.AllowedGrantTypes.Add(new ClientGrantType()
         {
-            GrantType = this.Input.DefaultGrantType,
+            GrantType = Input.DefaultGrantType,
         });
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         //添加默认的Scopes
         client.AllowedScopes.Add(new ClientScope() { Scope = "openid" });
@@ -123,14 +123,14 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
         {
             context.Clients.Add(client);
             await context.SaveChangesAsync();
-            return this.RedirectToPage("../Detail/Index", new { anchor = client.Id });
+            return RedirectToPage("../Detail/Index", new { anchor = client.Id });
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError("", ex.Message);
         }
 
-        return this.Page();
+        return Page();
     }
 
     public IActionResult OnPostCheckClientIdConflict(string clientId)

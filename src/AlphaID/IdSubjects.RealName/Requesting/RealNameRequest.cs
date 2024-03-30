@@ -50,9 +50,9 @@ public abstract class RealNameRequest
     /// <param name="time"></param>
     public void SetAudit(bool accept, string? auditor, DateTimeOffset time)
     {
-        this.Accepted = accept;
-        this.Auditor = auditor;
-        this.AuditTime = time;
+        Accepted = accept;
+        Auditor = auditor;
+        AuditTime = time;
     }
 
     /// <summary>

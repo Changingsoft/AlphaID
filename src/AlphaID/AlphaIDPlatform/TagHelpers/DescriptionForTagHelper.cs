@@ -31,7 +31,7 @@ public sealed class DescriptionForTagHelper : TagHelper
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(output);
 
-        var description = this.For.Metadata.Description;
+        var description = For.Metadata.Description;
         if (description != null)
         {
             // Do not update the content if another tag helper

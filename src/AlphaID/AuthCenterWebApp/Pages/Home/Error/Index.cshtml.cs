@@ -13,13 +13,13 @@ public class Index(IIdentityServerInteractionService interaction, IWebHostEnviro
 
     public async Task OnGet(string errorId)
     {
-        this.View = new ViewModel();
+        View = new ViewModel();
 
         // retrieve error details from identity server
         var message = await interaction.GetErrorContextAsync(errorId);
         if (message != null)
         {
-            this.View.Error = message;
+            View.Error = message;
 
             if (!environment.IsDevelopment())
             {
@@ -37,7 +37,7 @@ public class Index(IIdentityServerInteractionService interaction, IWebHostEnviro
 
         public ViewModel(string error)
         {
-            this.Error = new ErrorMessage { Error = error };
+            Error = new ErrorMessage { Error = error };
         }
 
         public ErrorMessage? Error { get; set; }

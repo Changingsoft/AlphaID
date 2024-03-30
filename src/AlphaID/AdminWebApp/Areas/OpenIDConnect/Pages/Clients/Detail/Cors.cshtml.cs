@@ -18,49 +18,49 @@ public class CorsModel(ConfigurationDbContext dbContext) : PageModel
     {
         var data = dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
-        return this.Page();
+            return NotFound();
+        Data = data;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostRemoveAsync(int anchor, int originId)
     {
         var data = dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        var item = this.Data.AllowedCorsOrigins.FirstOrDefault(p => p.Id == originId);
+        var item = Data.AllowedCorsOrigins.FirstOrDefault(p => p.Id == originId);
         if (item != null)
         {
-            this.Data.AllowedCorsOrigins.Remove(item);
-            dbContext.Clients.Update(this.Data);
+            Data.AllowedCorsOrigins.Remove(item);
+            dbContext.Clients.Update(Data);
             await dbContext.SaveChangesAsync();
         }
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAddAsync(int anchor)
     {
         var data = dbContext.Clients.Include(p => p.AllowedCorsOrigins).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        if (this.Data.AllowedCorsOrigins.Any(p => p.Origin == this.NewOrigin))
-            this.ModelState.AddModelError(nameof(this.NewOrigin), "The Origin has been existed.");
+        if (Data.AllowedCorsOrigins.Any(p => p.Origin == NewOrigin))
+            ModelState.AddModelError(nameof(NewOrigin), "The Origin has been existed.");
 
-        if (!this.ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return this.Page();
+            return Page();
         }
 
-        this.Data.AllowedCorsOrigins.Add(new ClientCorsOrigin()
+        Data.AllowedCorsOrigins.Add(new ClientCorsOrigin()
         {
-            Origin = this.NewOrigin,
+            Origin = NewOrigin,
         });
-        dbContext.Clients.Update(this.Data);
+        dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        return this.Page();
+        return Page();
     }
 }

@@ -32,8 +32,8 @@ public struct MobilePhoneNumber
         if (!Regex.IsMatch(phoneNumber, @"^\d+$"))
             throw new FormatException("电话号码必须是数字。");
 
-        this.CountryCode = countryCode;
-        this.PhoneNumber = phoneNumber;
+        CountryCode = countryCode;
+        PhoneNumber = phoneNumber;
     }
 
     /// <summary>
@@ -56,9 +56,9 @@ public struct MobilePhoneNumber
     /// 已重写。按 E.164 格式输出移动电话号码。
     /// </summary>
     /// <returns></returns>
-    public override readonly string ToString()
+    public readonly override string ToString()
     {
-        return $"+{this.CountryCode}{this.PhoneNumber}";
+        return $"+{CountryCode}{PhoneNumber}";
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public struct MobilePhoneNumber
             return false;
         s = s.Trim();
 
-        var match = Regex.Match(s);
+        var match = s_regex.Match(s);
         if (!match.Success)
             return false;
 
@@ -96,10 +96,10 @@ public struct MobilePhoneNumber
     {
         return string.IsNullOrWhiteSpace(s)
             ? throw new ArgumentException(string.Format(Resources.StringIsNullOrWhiteSpace, nameof(s)), nameof(s))
-            : !TryParse(s, out MobilePhoneNumber number) ? throw new FormatException("不正确的移动电话号码。") : number;
+            : !TryParse(s, out var number) ? throw new FormatException("不正确的移动电话号码。") : number;
     }
 
-    private static readonly Regex Regex = new(@"^(\+86)?(\d{11})$");
+    private static readonly Regex s_regex = new(@"^(\+86)?(\d{11})$");
     private const string DefaultCountryCode = "86";
 
 

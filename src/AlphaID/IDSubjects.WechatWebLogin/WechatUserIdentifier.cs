@@ -36,9 +36,9 @@ public class WechatUserIdentifier
             throw new ArgumentException($"“{nameof(openId)}”不能是 Null 或为空", nameof(openId));
         }
 
-        this.AppId = appId;
-        this.OpenId = openId;
-        this.PersonId = personId;
+        AppId = appId;
+        OpenId = openId;
+        PersonId = personId;
     }
 
     /// <summary>

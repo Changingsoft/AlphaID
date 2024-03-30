@@ -16,19 +16,19 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             if (person == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
             var hasRealName = realNameManager.GetAuthentications(person).Any();
             if (hasRealName)
             {
-                this.Result = IdentityResult.Failed(new IdentityError() { Code = "Cannot change name after real-name authentication", Description = "You cannot change name because your has been passed real-name authentication." });
+                Result = IdentityResult.Failed(new IdentityError() { Code = "Cannot change name after real-name authentication", Description = "You cannot change name because your has been passed real-name authentication." });
             }
 
-            this.Input = new InputMode()
+            Input = new InputMode()
             {
                 Surname = person.PersonName.Surname,
                 MiddleName = person.PersonName.MiddleName,
@@ -36,23 +36,23 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 PhoneticSurname = person.PhoneticSurname,
                 PhoneticGivenName = person.PhoneticGivenName,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             if (person == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            person.PersonName = new PersonNameInfo($"{this.Input.Surname}{this.Input.GivenName}", this.Input.Surname, this.Input.GivenName, this.Input.MiddleName);
-            person.PhoneticSurname = this.Input.PhoneticSurname;
-            person.PhoneticGivenName = this.Input.PhoneticGivenName;
+            person.PersonName = new PersonNameInfo($"{Input.Surname}{Input.GivenName}", Input.Surname, Input.GivenName, Input.MiddleName);
+            person.PhoneticSurname = Input.PhoneticSurname;
+            person.PhoneticGivenName = Input.PhoneticGivenName;
 
-            this.Result = await personManager.UpdateAsync(person);
-            return this.Page();
+            Result = await personManager.UpdateAsync(person);
+            return Page();
         }
 
         public class InputMode

@@ -15,9 +15,9 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
         {
             var org = await manager.FindByIdAsync(anchor);
             if (org == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Input = new InputModel
+            Input = new InputModel
             {
                 Contact = org.Contact,
                 Domicile = org.Domicile,
@@ -28,29 +28,29 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail
                 TermBegin = org.TermBegin?.ToDateTime(TimeOnly.MinValue),
                 TermEnd = org.TermEnd?.ToDateTime(TimeOnly.MinValue),
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             var org = await manager.FindByIdAsync(anchor);
             if (org == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            org.Contact = this.Input.Contact;
-            org.Domicile = this.Input.Domicile;
-            org.Representative = this.Input.Representative;
-            org.Website = this.Input.Website;
-            org.EstablishedAt = this.Input.EstablishedAt.HasValue ? DateOnly.FromDateTime(this.Input.EstablishedAt.Value) : null;
-            org.TermBegin = this.Input.TermBegin.HasValue ? DateOnly.FromDateTime(this.Input.TermBegin.Value) : null;
-            org.TermEnd = this.Input.TermEnd.HasValue ? DateOnly.FromDateTime(this.Input.TermEnd.Value) : null;
+            org.Contact = Input.Contact;
+            org.Domicile = Input.Domicile;
+            org.Representative = Input.Representative;
+            org.Website = Input.Website;
+            org.EstablishedAt = Input.EstablishedAt.HasValue ? DateOnly.FromDateTime(Input.EstablishedAt.Value) : null;
+            org.TermBegin = Input.TermBegin.HasValue ? DateOnly.FromDateTime(Input.TermBegin.Value) : null;
+            org.TermEnd = Input.TermEnd.HasValue ? DateOnly.FromDateTime(Input.TermEnd.Value) : null;
 
             await manager.UpdateAsync(org);
-            this.OperationResult = IdOperationResult.Success;
-            return this.Page();
+            OperationResult = IdOperationResult.Success;
+            return Page();
         }
 
         public class InputModel

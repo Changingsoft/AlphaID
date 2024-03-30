@@ -22,9 +22,9 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
-        this.Input = new InputModel
+            return NotFound();
+        Data = data;
+        Input = new InputModel
         {
             AbsoluteRefreshTokenLifetime = data.AbsoluteRefreshTokenLifetime,
             AccessTokenLifetime = data.AccessTokenLifetime,
@@ -59,7 +59,7 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
             UserCodeType = data.UserCodeType,
             UserSsoLifetime = data.UserSsoLifetime,
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
@@ -68,50 +68,50 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         //modify
-        this.Data.AbsoluteRefreshTokenLifetime = this.Input.AbsoluteRefreshTokenLifetime;
-        this.Data.AccessTokenLifetime = this.Input.AccessTokenLifetime;
+        Data.AbsoluteRefreshTokenLifetime = Input.AbsoluteRefreshTokenLifetime;
+        Data.AccessTokenLifetime = Input.AccessTokenLifetime;
         //
-        this.Data.AllowAccessTokensViaBrowser = this.Input.AllowAccessTokensViaBrowser;
-        this.Data.AllowedIdentityTokenSigningAlgorithms = this.Input.AllowedIdentityTokenSigningAlgorithms;
-        this.Data.AllowOfflineAccess = this.Input.AllowOfflineAccess;
-        this.Data.AlwaysIncludeUserClaimsInIdToken = this.Input.AlwaysIncludeUserClaimsInIdToken;
-        this.Data.AuthorizationCodeLifetime = this.Input.AuthorizationCodeLifetime;
-        this.Data.BackChannelLogoutSessionRequired = this.Input.BackChannelLogoutSessionRequired;
-        this.Data.BackChannelLogoutUri = this.Input.BackChannelLogoutUri;
-        this.Data.CibaLifetime = this.Input.CibaLifetime;
-        this.Data.ClientClaimsPrefix = this.Input.ClientClaimsPrefix;
-        this.Data.ConsentLifetime = this.Input.ConsentLifetime;
-        this.Data.CoordinateLifetimeWithUserSession = this.Input.CoordinateLifetimeWithUserSession;
-        this.Data.DeviceCodeLifetime = this.Input.DeviceCodeLifetime;
-        this.Data.DPoPClockSkew = this.Input.DPoPClockSkew;
-        this.Data.DPoPValidationMode = this.Input.DPoPValidationMode;
-        this.Data.EnableLocalLogin = this.Input.EnableLocalLogin;
-        this.Data.FrontChannelLogoutSessionRequired = this.Input.FrontChannelLogoutSessionRequired;
-        this.Data.FrontChannelLogoutUri = this.Input.FrontChannelLogoutUri;
-        this.Data.IdentityTokenLifetime = this.Input.IdentityTokenLifetime;
-        this.Data.IncludeJwtId = this.Input.IncludeJwtId;
-        this.Data.InitiateLoginUri = this.Input.InitiateLoginUri;
-        this.Data.PairWiseSubjectSalt = this.Input.PairWiseSubjectSalt;
-        this.Data.PollingInterval = this.Input.PollingInterval;
-        this.Data.RefreshTokenExpiration = this.Input.RefreshTokenExpiration;
-        this.Data.RefreshTokenUsage = this.Input.RefreshTokenUsage;
-        this.Data.RequireDPoP = this.Input.RequireDPoP;
-        this.Data.RequireRequestObject = this.Input.RequireRequestObject;
-        this.Data.SlidingRefreshTokenLifetime = this.Input.SlidingRefreshTokenLifetime;
-        this.Data.UpdateAccessTokenClaimsOnRefresh = this.Input.UpdateAccessTokenClaimsOnRefresh;
-        this.Data.UserCodeType = this.Input.UserCodeType;
-        this.Data.UserSsoLifetime = this.Input.UserSsoLifetime;
+        Data.AllowAccessTokensViaBrowser = Input.AllowAccessTokensViaBrowser;
+        Data.AllowedIdentityTokenSigningAlgorithms = Input.AllowedIdentityTokenSigningAlgorithms;
+        Data.AllowOfflineAccess = Input.AllowOfflineAccess;
+        Data.AlwaysIncludeUserClaimsInIdToken = Input.AlwaysIncludeUserClaimsInIdToken;
+        Data.AuthorizationCodeLifetime = Input.AuthorizationCodeLifetime;
+        Data.BackChannelLogoutSessionRequired = Input.BackChannelLogoutSessionRequired;
+        Data.BackChannelLogoutUri = Input.BackChannelLogoutUri;
+        Data.CibaLifetime = Input.CibaLifetime;
+        Data.ClientClaimsPrefix = Input.ClientClaimsPrefix;
+        Data.ConsentLifetime = Input.ConsentLifetime;
+        Data.CoordinateLifetimeWithUserSession = Input.CoordinateLifetimeWithUserSession;
+        Data.DeviceCodeLifetime = Input.DeviceCodeLifetime;
+        Data.DPoPClockSkew = Input.DPoPClockSkew;
+        Data.DPoPValidationMode = Input.DPoPValidationMode;
+        Data.EnableLocalLogin = Input.EnableLocalLogin;
+        Data.FrontChannelLogoutSessionRequired = Input.FrontChannelLogoutSessionRequired;
+        Data.FrontChannelLogoutUri = Input.FrontChannelLogoutUri;
+        Data.IdentityTokenLifetime = Input.IdentityTokenLifetime;
+        Data.IncludeJwtId = Input.IncludeJwtId;
+        Data.InitiateLoginUri = Input.InitiateLoginUri;
+        Data.PairWiseSubjectSalt = Input.PairWiseSubjectSalt;
+        Data.PollingInterval = Input.PollingInterval;
+        Data.RefreshTokenExpiration = Input.RefreshTokenExpiration;
+        Data.RefreshTokenUsage = Input.RefreshTokenUsage;
+        Data.RequireDPoP = Input.RequireDPoP;
+        Data.RequireRequestObject = Input.RequireRequestObject;
+        Data.SlidingRefreshTokenLifetime = Input.SlidingRefreshTokenLifetime;
+        Data.UpdateAccessTokenClaimsOnRefresh = Input.UpdateAccessTokenClaimsOnRefresh;
+        Data.UserCodeType = Input.UserCodeType;
+        Data.UserSsoLifetime = Input.UserSsoLifetime;
 
-        dbContext.Clients.Update(this.Data);
+        dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostRemoveAsync(int anchor, int propId)
@@ -120,17 +120,17 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        var item = this.Data.Properties.FirstOrDefault(p => p.Id == propId);
+        var item = Data.Properties.FirstOrDefault(p => p.Id == propId);
         if (item != null)
         {
-            this.Data.Properties.Remove(item);
-            dbContext.Clients.Update(this.Data);
+            Data.Properties.Remove(item);
+            dbContext.Clients.Update(Data);
             await dbContext.SaveChangesAsync();
         }
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAddAsync(int anchor)
@@ -139,21 +139,21 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
             .Include(p => p.Properties)
             .FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        if (this.Data.Properties.Any(p => p.Key == this.AddProperty.Key))
+        if (Data.Properties.Any(p => p.Key == AddProperty.Key))
         {
-            this.ModelState.AddModelError("", "指定的Key和Value已存在。");
+            ModelState.AddModelError("", "指定的Key和Value已存在。");
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        this.Data.Properties.Add(new ClientProperty { Key = this.AddProperty.Key, Value = this.AddProperty.Value });
-        dbContext.Clients.Update(this.Data);
+        Data.Properties.Add(new ClientProperty { Key = AddProperty.Key, Value = AddProperty.Value });
+        dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        return this.Page();
+        return Page();
     }
 
     public class InputModel

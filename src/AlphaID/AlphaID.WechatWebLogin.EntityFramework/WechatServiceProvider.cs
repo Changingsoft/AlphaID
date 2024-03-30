@@ -5,27 +5,27 @@ namespace AlphaId.WechatWebLogin.EntityFramework;
 
 public class WechatServiceProvider : IWechatServiceProvider
 {
-    private readonly WechatWebLoginDbContext dbContext;
-    private readonly DbSet<WechatService> set;
+    private readonly WechatWebLoginDbContext _dbContext;
+    private readonly DbSet<WechatService> _set;
 
     public WechatServiceProvider(WechatWebLoginDbContext dbContext)
     {
-        this.dbContext = dbContext;
-        this.set = this.dbContext.WechatServices;
+        this._dbContext = dbContext;
+        _set = this._dbContext.WechatServices;
     }
 
     public async Task<string?> GetSecretAsync(string appId)
     {
-        var svc = await this.set.FindAsync(appId);
+        var svc = await _set.FindAsync(appId);
         return svc?.Secret;
     }
 
     public async Task UpdateSecretAsync(string appId, string secret)
     {
-        var svc = await this.set.FindAsync(appId) ?? throw new ArgumentException("Cannot found wechat service.");
+        var svc = await _set.FindAsync(appId) ?? throw new ArgumentException("Cannot found wechat service.");
         svc.Secret = secret;
-        this.dbContext.Entry(svc).State = EntityState.Modified;
-        await this.dbContext.SaveChangesAsync();
+        _dbContext.Entry(svc).State = EntityState.Modified;
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task RegisterAsync(string appId, string secret)
@@ -36,7 +36,7 @@ public class WechatServiceProvider : IWechatServiceProvider
             AppId = appId,
             Secret = secret
         };
-        this.set.Add(svc);
-        _ = await this.dbContext.SaveChangesAsync();
+        _set.Add(svc);
+        _ = await _dbContext.SaveChangesAsync();
     }
 }

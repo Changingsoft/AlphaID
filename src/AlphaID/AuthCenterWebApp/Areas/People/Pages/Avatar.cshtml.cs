@@ -10,10 +10,10 @@ namespace AuthCenterWebApp.Areas.People.Pages
         {
             var person = await personManager.FindByNameAsync(anchor) ?? await personManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
+                return NotFound();
             if (person.ProfilePicture != null)
-                return this.File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
-            return this.File("~/img/no-picture-avatar.png", "image/png");
+                return File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
+            return File("~/img/no-picture-avatar.png", "image/png");
         }
     }
 }

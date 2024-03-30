@@ -16,47 +16,47 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.FindByIdAsync(this.Anchor);
+        var person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
-        return this.Page();
+            return NotFound();
+        Person = person;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.FindByIdAsync(this.Anchor);
+        var person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
+            return NotFound();
+        Person = person;
 
 
-        if (this.Input.DisplayName != this.Person.PersonName.FullName)
+        if (Input.DisplayName != Person.PersonName.FullName)
         {
-            this.ModelState.AddModelError(nameof(this.Input.DisplayName), "名称不一致");
+            ModelState.AddModelError(nameof(Input.DisplayName), "名称不一致");
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         try
         {
-            var result = await userManager.DeleteAsync(this.Person);
+            var result = await userManager.DeleteAsync(Person);
             if (result.Succeeded)
-                return this.RedirectToPage("DeleteSuccess");
+                return RedirectToPage("DeleteSuccess");
             else
             {
                 foreach (var error in result.Errors)
                 {
-                    this.ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("", error.Description);
                 }
-                return this.Page();
+                return Page();
             }
         }
         catch (Exception ex)
         {
-            this.ModelState.TryAddModelException("", ex);
-            return this.Page();
+            ModelState.TryAddModelException("", ex);
+            return Page();
         }
     }
 

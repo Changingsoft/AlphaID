@@ -21,8 +21,8 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
     {
         var person = await userManager.FindByIdAsync(anchor);
         return person == null
-            ? this.NotFound()
-            : await userManager.HasPasswordAsync(person) ? throw new InvalidOperationException("用户已具有密码，无法手动添加密码") : (IActionResult)this.Page();
+            ? NotFound()
+            : await userManager.HasPasswordAsync(person) ? throw new InvalidOperationException("用户已具有密码，无法手动添加密码") : (IActionResult)Page();
     }
 
     public async Task<IActionResult> OnPostAsync(string anchor)
@@ -30,7 +30,7 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
         var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
 
         if (await userManager.HasPasswordAsync(person))
@@ -38,16 +38,16 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
             throw new InvalidOperationException("用户已具有密码，无法手动添加密码");
         }
 
-        var result = await userManager.AddPasswordAsync(person, this.NewPassword);
+        var result = await userManager.AddPasswordAsync(person, NewPassword);
         if (result.Succeeded)
         {
-            return this.RedirectToPage("SetPasswordSuccess", new { anchor });
+            return RedirectToPage("SetPasswordSuccess", new { anchor });
         }
 
         foreach (var error in result.Errors)
         {
-            this.ModelState.AddModelError("", error.Description);
+            ModelState.AddModelError("", error.Description);
         }
-        return this.Page();
+        return Page();
     }
 }

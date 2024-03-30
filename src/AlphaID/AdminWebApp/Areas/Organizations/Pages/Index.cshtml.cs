@@ -10,8 +10,8 @@ namespace AdminWebApp.Areas.Organizations.Pages
 
         public void OnGet()
         {
-            this.Last10Orgs = organizationStore.Organizations.OrderByDescending(p => p.WhenChanged).Take(10);
-            this.OrgCount = organizationStore.Organizations.Count();
+            Last10Orgs = organizationStore.Organizations.OrderByDescending(p => p.WhenChanged).Take(10);
+            OrgCount = organizationStore.Organizations.Count();
         }
     }
 }

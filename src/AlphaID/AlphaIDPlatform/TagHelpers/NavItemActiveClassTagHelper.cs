@@ -40,8 +40,8 @@ public class NavItemActiveClassTagHelper : TagHelper
     /// <param name="output"></param>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        var currentPath = this.ViewContext.HttpContext.Request.Path.Value;
-        bool result = this.MatchPrefix ? currentPath!.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase) : string.Equals(this.Path, currentPath, StringComparison.OrdinalIgnoreCase);
+        var currentPath = ViewContext.HttpContext.Request.Path.Value;
+        bool result = MatchPrefix ? currentPath!.StartsWith(Path, StringComparison.OrdinalIgnoreCase) : string.Equals(Path, currentPath, StringComparison.OrdinalIgnoreCase);
 
         if (!result)
         {

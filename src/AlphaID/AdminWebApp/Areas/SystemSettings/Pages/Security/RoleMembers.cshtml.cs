@@ -18,24 +18,24 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPerson
     public IActionResult OnGet(string? role)
     {
         if (role == null)
-            return this.Page();
+            return Page();
 
-        this.RoleMembers = userInRoleManager.GetUserInRoles(role);
-        return this.Page();
+        RoleMembers = userInRoleManager.GetUserInRoles(role);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAddMemberAsync(string role)
     {
-        var person = await personManager.FindByNameAsync(this.Input.UserName) ?? throw new InvalidOperationException("User cannot found.");
+        var person = await personManager.FindByNameAsync(Input.UserName) ?? throw new InvalidOperationException("User cannot found.");
         await userInRoleManager.AddRole(person.Id, role);
-        this.Input = default!;
-        return this.RedirectToPage();
+        Input = default!;
+        return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string role, string personId)
     {
         await userInRoleManager.RemoveRole(personId, role);
-        return this.RedirectToPage();
+        return RedirectToPage();
     }
 
     public class InputModel

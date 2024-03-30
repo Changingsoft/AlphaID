@@ -17,8 +17,8 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
             .AsSingleQuery()
             .SingleOrDefaultAsync(p => p.Id == id);
         if (idr == null)
-            return this.NotFound();
-        this.Data = idr;
-        return this.Page();
+            return NotFound();
+        Data = idr;
+        return Page();
     }
 }

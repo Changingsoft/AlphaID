@@ -12,7 +12,7 @@ public class OrganizationBuilder
     /// <param name="name"></param>
     public OrganizationBuilder(string name)
     {
-        this.Organization = new GenericOrganization()
+        Organization = new GenericOrganization()
         {
             Name = name.Trim(),
         };

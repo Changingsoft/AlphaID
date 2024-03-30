@@ -18,19 +18,19 @@ namespace AuthCenterWebApp.Areas.People.Pages
             var person = await personManager.FindByNameAsync(anchor);
             if (person == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
-            this.Person = person;
+            Person = person;
             var invitations = invitationsManager.GetPendingInvitations(person);
             var invitation = invitations.FirstOrDefault(i => i.Id == invitationId);
             if (invitation == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            this.Invitation = invitation;
+            Invitation = invitation;
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor, int invitationId, string button, MembershipVisibility visibility)
@@ -38,27 +38,27 @@ namespace AuthCenterWebApp.Areas.People.Pages
             var person = await personManager.FindByNameAsync(anchor);
             if (person == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
-            this.Person = person;
+            Person = person;
             var invitations = invitationsManager.GetPendingInvitations(person);
             var invitation = invitations.FirstOrDefault(i => i.Id == invitationId);
             if (invitation == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
-            this.Invitation = invitation;
+            Invitation = invitation;
 
             if (button == "Accept")
             {
                 invitation.ExpectVisibility = visibility;
-                this.Result = await invitationsManager.AcceptAsync(invitation);
+                Result = await invitationsManager.AcceptAsync(invitation);
             }
             else
             {
-                this.Result = await invitationsManager.RefuseAsync(invitation);
+                Result = await invitationsManager.RefuseAsync(invitation);
             }
-            return this.Page();
+            return Page();
         }
     }
 }

@@ -20,14 +20,14 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
-            this.Client = client;
-            this.Input = new InputModel
+            Client = client;
+            Input = new InputModel
             {
-                Secret = this.GeneratePassword(),
+                Secret = GeneratePassword(),
             };
-            return this.Page();
+            return Page();
         }
 
         private string GeneratePassword()
@@ -43,29 +43,29 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
             var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
-            this.Client = client;
+            Client = client;
 
-            if (!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return this.Page();
+                return Page();
             }
 
             ClientSecret secret = new()
             {
-                ClientId = this.Client.Id,
+                ClientId = Client.Id,
                 Type = "SharedSecret",
-                Value = this.Input.Secret.ToSha256(),
+                Value = Input.Secret.ToSha256(),
                 Created = DateTime.UtcNow,
-                Description = this.Input.Description,
+                Description = Input.Description,
             };
-            if (this.Input.Expires.HasValue)
-                secret.Expiration = this.Input.Expires.Value;
+            if (Input.Expires.HasValue)
+                secret.Expiration = Input.Expires.Value;
 
-            this.Client.ClientSecrets.Add(secret);
+            Client.ClientSecrets.Add(secret);
             await configurationDbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { anchor });
+            return RedirectToPage("Secrets", new { anchor });
         }
 
         public class InputModel

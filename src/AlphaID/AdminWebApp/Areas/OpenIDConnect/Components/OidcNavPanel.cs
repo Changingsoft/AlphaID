@@ -7,7 +7,7 @@ public class OidcNavPanel(ConfigurationDbContext dbContext) : ViewComponent
 {
     public IViewComponentResult Invoke()
     {
-        return this.View(model: new OidcStatistics(dbContext.Clients.Count(), dbContext.ApiScopes.Count()));
+        return View(model: new OidcStatistics(dbContext.Clients.Count(), dbContext.ApiScopes.Count()));
     }
 
     public record OidcStatistics(int ClientCount, int ScopeCount);

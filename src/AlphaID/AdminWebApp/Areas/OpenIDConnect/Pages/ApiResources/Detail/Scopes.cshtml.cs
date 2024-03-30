@@ -7,12 +7,12 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 {
     public class ScopesModel : PageModel
     {
-        private readonly ConfigurationDbContext dbContext;
+        private readonly ConfigurationDbContext _dbContext;
 
         public ScopesModel(ConfigurationDbContext dbContext)
         {
-            this.dbContext = dbContext;
-            this.AllScopes = this.dbContext.ApiScopes.Select(p => p.Name);
+            this._dbContext = dbContext;
+            AllScopes = this._dbContext.ApiScopes.Select(p => p.Name);
         }
 
         public ApiResource Data { get; set; } = default!;
@@ -26,59 +26,59 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await _dbContext.ApiResources
                 .Include(p => p.Scopes)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            this.RemainingScopes = this.AllScopes.Except(this.Data.Scopes.Select(p => p.Scope));
+            Data = resource;
+            RemainingScopes = AllScopes.Except(Data.Scopes.Select(p => p.Scope));
 
-            return this.Page();
+            return Page();
 
         }
 
         public async Task<IActionResult> OnPostRemoveAsync(int id, int scopeId)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await _dbContext.ApiResources
                 .Include(p => p.Scopes)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            var item = this.Data.Scopes.FirstOrDefault(p => p.Id == scopeId);
+            Data = resource;
+            var item = Data.Scopes.FirstOrDefault(p => p.Id == scopeId);
             if (item != null)
             {
-                this.Data.Scopes.Remove(item);
-                this.dbContext.ApiResources.Update(this.Data);
-                await this.dbContext.SaveChangesAsync();
+                Data.Scopes.Remove(item);
+                _dbContext.ApiResources.Update(Data);
+                await _dbContext.SaveChangesAsync();
             }
-            this.RemainingScopes = this.AllScopes.Except(this.Data.Scopes.Select(p => p.Scope));
-            return this.Page();
+            RemainingScopes = AllScopes.Except(Data.Scopes.Select(p => p.Scope));
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAddAsync(int id)
         {
-            var resource = await this.dbContext.ApiResources
+            var resource = await _dbContext.ApiResources
                 .Include(p => p.Scopes)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            Data = resource;
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Data.Scopes.Add(new ApiResourceScope
+            Data.Scopes.Add(new ApiResourceScope
             {
-                Scope = this.SelectedScope,
+                Scope = SelectedScope,
             });
-            this.dbContext.ApiResources.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
-            this.RemainingScopes = this.AllScopes.Except(this.Data.Scopes.Select(p => p.Scope));
-            return this.Page();
+            _dbContext.ApiResources.Update(Data);
+            await _dbContext.SaveChangesAsync();
+            RemainingScopes = AllScopes.Except(Data.Scopes.Select(p => p.Scope));
+            return Page();
         }
     }
 }

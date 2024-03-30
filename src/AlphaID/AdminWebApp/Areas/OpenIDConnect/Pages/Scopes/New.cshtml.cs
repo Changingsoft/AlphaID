@@ -11,7 +11,7 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
     public void OnGet()
     {
-        this.Input = new InputModel()
+        Input = new InputModel()
         {
             ShowInDiscoveryDocument = true,
         };
@@ -23,30 +23,30 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
         var scope = new Duende.IdentityServer.EntityFramework.Entities.ApiScope()
         {
             Enabled = true,
-            Name = this.Input.Name,
-            DisplayName = this.Input.DisplayName,
-            Description = this.Input.Description,
-            Required = this.Input.Required,
-            Emphasize = this.Input.Emphasize,
-            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument,
+            Name = Input.Name,
+            DisplayName = Input.DisplayName,
+            Description = Input.Description,
+            Required = Input.Required,
+            Emphasize = Input.Emphasize,
+            ShowInDiscoveryDocument = Input.ShowInDiscoveryDocument,
             Created = now,
             Updated = now,
         };
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         try
         {
             dbContext.ApiScopes.Add(scope);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Detail/Index", new { id = scope.Id });
+            return RedirectToPage("Detail/Index", new { id = scope.Id });
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError("", ex.Message);
         }
-        return this.Page();
+        return Page();
     }
 
     public class InputModel

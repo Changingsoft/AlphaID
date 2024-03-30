@@ -19,48 +19,48 @@ namespace AdminWebApp.Areas.People.Pages.Detail
         {
             var data = await manager.FindByIdAsync(anchor);
             if (data == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Data = data;
-            this.Input = new InputModel
+            Data = data;
+            Input = new InputModel
             {
-                PhoneNumber = this.Data.PhoneNumber,
-                Email = this.Data.Email,
+                PhoneNumber = Data.PhoneNumber,
+                Email = Data.Email,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             var data = await manager.FindByIdAsync(anchor);
             if (data == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Data = data;
+            Data = data;
 
             //验证移动电话号码或电子邮件地址是否已被注册？
-            if (!MobilePhoneNumber.TryParse(this.Input.PhoneNumber, out var phoneNumber))
+            if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out var phoneNumber))
             {
-                this.ModelState.AddModelError("", "移动电话号码格式不正确。");
-                return this.Page();
+                ModelState.AddModelError("", "移动电话号码格式不正确。");
+                return Page();
             }
 
             if (manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == phoneNumber.ToString()))
             {
-                this.ModelState.AddModelError("", "移动电话号码已被注册。");
+                ModelState.AddModelError("", "移动电话号码已被注册。");
             }
-            if (manager.Users.Any(p => p.Id != anchor && p.Email == this.Input.Email))
+            if (manager.Users.Any(p => p.Id != anchor && p.Email == Input.Email))
             {
-                this.ModelState.AddModelError("", "电子邮件地址已被注册。");
+                ModelState.AddModelError("", "电子邮件地址已被注册。");
             }
 
-            if (!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return this.Page();
+                return Page();
             }
 
-            this.Result = await manager.UpdateAsync(this.Data);
-            return this.Page();
+            Result = await manager.UpdateAsync(Data);
+            return Page();
         }
 
         public class InputModel

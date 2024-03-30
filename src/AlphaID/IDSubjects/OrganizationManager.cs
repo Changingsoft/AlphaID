@@ -13,7 +13,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <summary>
     /// 
     /// </summary>
-    public IQueryable<GenericOrganization> Organizations => this.Store.Organizations;
+    public IQueryable<GenericOrganization> Organizations => Store.Organizations;
 
     /// <summary>
     /// 获取组织存取器。
@@ -29,10 +29,10 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public Task<IdOperationResult> CreateAsync(GenericOrganization org)
     {
-        var utcNow = this.TimeProvider.GetUtcNow();
+        var utcNow = TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
-        return this.Store.CreateAsync(org);
+        return Store.CreateAsync(org);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class OrganizationManager(IOrganizationStore store)
     [Obsolete("该方法查询的组织不具有跟踪能力，无法用于更改。应使用FindByName")]
     public IEnumerable<GenericOrganization> SearchByName(string name)
     {
-        var results = this.Store.Organizations.Where(o => o.Name == name);
+        var results = Store.Organizations.Where(o => o.Name == name);
         return results;
     }
 
@@ -54,7 +54,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public virtual IEnumerable<GenericOrganization> FindByName(string name)
     {
-        return this.Store.FindByName(name);
+        return Store.FindByName(name);
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns>如果未找到组织或找到了单个组织，则返回true，否则返回false。</returns>
     public bool TryFindSingleOrDefaultByName(string name, out GenericOrganization? organization)
     {
-        var result = this.Store.FindByName(name).ToArray();
+        var result = Store.FindByName(name).ToArray();
         switch (result.Length)
         {
             case 0: organization = null;
@@ -86,7 +86,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
     {
-        return this.Store.DeleteAsync(organization);
+        return Store.DeleteAsync(organization);
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public Task<GenericOrganization?> FindByIdAsync(string id)
     {
-        return this.Store.FindByIdAsync(id);
+        return Store.FindByIdAsync(id);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public GenericOrganization? FindById(string id)
     {
-        return this.Store.FindById(id);
+        return Store.FindById(id);
     }
 
     /// <summary>
@@ -116,8 +116,8 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public Task<IdOperationResult> UpdateAsync(GenericOrganization org)
     {
-        org.WhenChanged = this.TimeProvider.GetUtcNow();
-        return this.Store.UpdateAsync(org);
+        org.WhenChanged = TimeProvider.GetUtcNow();
+        return Store.UpdateAsync(org);
     }
 
     /// <summary>
@@ -132,12 +132,11 @@ public class OrganizationManager(IOrganizationStore store)
     /// <exception cref="NotImplementedException"></exception>
     public async Task<IdOperationResult> ChangeNameAsync(GenericOrganization org, string newName, DateOnly changeDate, bool recordUsedName, bool applyChangeWhenDuplicated = false)
     {
-        var orgId = org.Id;
         newName = newName.Trim().Trim('\r', '\n');
         if (newName == org.Name)
             return IdOperationResult.Failed("名称相同");
 
-        var nameExists = this.Store.Organizations.Any(p => p.Name == newName);
+        var nameExists = Store.Organizations.Any(p => p.Name == newName);
         if (!applyChangeWhenDuplicated && nameExists)
             return IdOperationResult.Failed("存在重复名称");
 
@@ -150,7 +149,7 @@ public class OrganizationManager(IOrganizationStore store)
             });
         }
         org.Name = newName;
-        await this.UpdateAsync(org);
+        await UpdateAsync(org);
         return IdOperationResult.Success;
     }
 }

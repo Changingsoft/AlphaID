@@ -28,7 +28,7 @@ public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
     public ActionResult<ClientModel> GetClientName(string clientId)
     {
         var client = dbContext.Clients.FirstOrDefault(p => p.ClientId == clientId);
-        return client == null ? this.NotFound() : new ClientModel(client.ClientName);
+        return client == null ? NotFound() : new ClientModel(client.ClientName);
     }
 
     /// <summary>

@@ -26,7 +26,7 @@ public class Callback(
     public async Task<IActionResult> OnGetAsync()
     {
         //从外部登录认证
-        var result = await this.HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        var result = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         if (result.Succeeded != true)
         {
             throw new Exception("外部登录错误。");
@@ -55,7 +55,7 @@ public class Callback(
         var user = await userManager.FindByLoginAsync(provider, providerUserId);
         if (user == null)
         {
-            return this.RedirectToPage("/Account/BindLogin", new { returnUrl });
+            return RedirectToPage("/Account/BindLogin", new { returnUrl });
         }
 
         // this allows us to collect any additional claims or properties
@@ -63,13 +63,13 @@ public class Callback(
         // this is typically used to store data needed for sign out from those protocols.
         var additionalLocalClaims = new List<Claim>();
         var localSignInProps = new AuthenticationProperties();
-        this.CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
+        CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
 
         // issue authentication cookie for user
         await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
         //注销外部登录
-        await this.HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
         // retrieve return URL
         // check if external login is in the context of an OIDC request
@@ -86,7 +86,7 @@ public class Callback(
             }
         }
 
-        return this.Redirect(returnUrl);
+        return Redirect(returnUrl);
     }
 
     // if the external login is OIDC-based, there are certain things we need to preserve to make logout work

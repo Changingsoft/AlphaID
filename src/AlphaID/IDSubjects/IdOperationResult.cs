@@ -5,12 +5,12 @@
 /// </summary>
 public class IdOperationResult
 {
-    private readonly List<string> errors = [];
+    private readonly List<string> _errors = [];
 
     /// <summary>
     /// 错误列表。
     /// </summary>
-    public IEnumerable<string> Errors => this.errors;
+    public IEnumerable<string> Errors => _errors;
 
     /// <summary>
     /// 指示操作是否成功。
@@ -31,7 +31,7 @@ public class IdOperationResult
     public static IdOperationResult Failed(params string[] errors)
     {
         var result = new IdOperationResult() { Succeeded = false };
-        result.errors.AddRange(errors);
+        result._errors.AddRange(errors);
         return result;
     }
 }

@@ -20,41 +20,41 @@ public class RemovePasswordModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.GetUserAsync(this.User);
-        return person == null ? this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.") : this.Page();
+        var person = await userManager.GetUserAsync(User);
+        return person == null ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.GetUserAsync(this.User);
+        var person = await userManager.GetUserAsync(User);
         if (person == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
-        this.Logins = await userManager.GetLoginsAsync(person);
-        if (!this.Logins.Any())
+        Logins = await userManager.GetLoginsAsync(person);
+        if (!Logins.Any())
         {
-            this.ModelState.AddModelError("", "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。");
-            this.Result = IdentityResult.Failed(new IdentityError()
+            ModelState.AddModelError("", "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。");
+            Result = IdentityResult.Failed(new IdentityError()
             {
                 Code = "Cannot remove password",
                 Description = "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。",
             });
-            return this.Page();
+            return Page();
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         //check password
-        if (!await userManager.CheckPasswordAsync(person, this.Password))
+        if (!await userManager.CheckPasswordAsync(person, Password))
         {
-            this.ModelState.AddModelError(nameof(this.Password), "密码错误！");
-            return this.Page();
+            ModelState.AddModelError(nameof(Password), "密码错误！");
+            return Page();
         }
 
-        this.Result = await userManager.RemovePasswordAsync(person);
-        this.Password = string.Empty;
-        return this.Page();
+        Result = await userManager.RemovePasswordAsync(person);
+        Password = string.Empty;
+        return Page();
     }
 }

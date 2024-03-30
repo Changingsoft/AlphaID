@@ -88,14 +88,14 @@ public class DirectoryServiceDescriptor
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     internal DirectoryEntry GetRootEntry()
     {
-        var host = new Uri($"LDAP://{this.ServerAddress}");
-        var fqdn = new Uri(host, this.RootDn);
+        var host = new Uri($"LDAP://{ServerAddress}");
+        var fqdn = new Uri(host, RootDn);
         var authenticationFlag = AuthenticationTypes.Signing | AuthenticationTypes.Sealing | AuthenticationTypes.Secure;
         DirectoryEntry entry = new($"LDAP://{fqdn.Authority}{fqdn.PathAndQuery}", null, null, authenticationFlag);
-        if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
+        if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password))
         {
-            entry.Username = this.UserName;
-            entry.Password = this.Password;
+            entry.Username = UserName;
+            entry.Password = Password;
         }
         return entry;
     }
@@ -104,29 +104,29 @@ public class DirectoryServiceDescriptor
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal PrincipalContext GetRootContext()
     {
-        var contextType = this.Type switch
+        var contextType = Type switch
         {
             LdapType.ADDS => ContextType.Domain,
             LdapType.ADLDS => ContextType.ApplicationDirectory,
             _ => throw new NotSupportedException("不支持的LDAP类型。"),
         };
         var contextOption = ContextOptions.Negotiate | ContextOptions.Signing | ContextOptions.Sealing; //执行修改密码必须的标记。
-        PrincipalContext ctx = new(contextType, this.ServerAddress, this.RootDn,
-            contextOption, this.UserName, this.Password);
+        PrincipalContext ctx = new(contextType, ServerAddress, RootDn,
+            contextOption, UserName, Password);
         return ctx;
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal PrincipalContext GetUserContainerContext()
     {
-        var contextType = this.Type switch
+        var contextType = Type switch
         {
             LdapType.ADDS => ContextType.Domain,
             LdapType.ADLDS => ContextType.ApplicationDirectory,
             _ => throw new NotSupportedException("不支持的LDAP类型。"),
         };
         var contextOption = ContextOptions.Negotiate | ContextOptions.Signing | ContextOptions.Sealing; //执行修改密码必须的标记。
-        PrincipalContext ctx = new(contextType, this.ServerAddress, this.DefaultUserAccountContainer,contextOption | ContextOptions.Sealing, this.UserName, this.Password);
+        PrincipalContext ctx = new(contextType, ServerAddress, DefaultUserAccountContainer,contextOption | ContextOptions.Sealing, UserName, Password);
         return ctx;
     }
 }

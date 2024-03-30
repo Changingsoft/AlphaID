@@ -36,11 +36,11 @@ public readonly struct UnifiedSocialCreditCode
         if (!Regex.IsMatch(regionCode, @"^\d{6}$"))
             throw new ArgumentException("登记管理机关行政区划代码无效。");
 
-        this.AdminCode = adminCode;
-        this.OrganizationTypeCode = orgTypeCode;
-        this.RegionCode = regionCode;
-        this.OrganizationCode = OrganizationCode.Parse(organizationCode);
-        this.CheckCode = Check(this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true));
+        AdminCode = adminCode;
+        OrganizationTypeCode = orgTypeCode;
+        RegionCode = regionCode;
+        OrganizationCode = OrganizationCode.Parse(organizationCode);
+        CheckCode = Check(AdminCode + OrganizationTypeCode + RegionCode + OrganizationCode.ToString(true));
     }
 
     /// <summary>
@@ -74,23 +74,17 @@ public readonly struct UnifiedSocialCreditCode
         if (!Regex.IsMatch(regionCode, @"^\d{6}$"))
             throw new ArgumentException(Resources.Invalid_region_code_, nameof(regionCode));
 
-        this.AdminCode = adminCode;
-        this.OrganizationTypeCode = orgTypeCode;
-        this.RegionCode = regionCode;
-        this.OrganizationCode = organizationCode;
-        this.CheckCode = Check(this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true));
+        AdminCode = adminCode;
+        OrganizationTypeCode = orgTypeCode;
+        RegionCode = regionCode;
+        OrganizationCode = organizationCode;
+        CheckCode = Check(AdminCode + OrganizationTypeCode + RegionCode + OrganizationCode.ToString(true));
     }
 
     /// <summary>
     /// 获取该统一社会信用代码的编码部分（不包括校验码）。
     /// </summary>
-    public string Code
-    {
-        get
-        {
-            return this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true);
-        }
-    }
+    public string Code => AdminCode + OrganizationTypeCode + RegionCode + OrganizationCode.ToString(true);
 
     /// <summary>
     /// 获取登记管理部门代码。
@@ -123,7 +117,7 @@ public readonly struct UnifiedSocialCreditCode
     /// <returns></returns>
     public override string ToString()
     {
-        return this.AdminCode + this.OrganizationTypeCode + this.RegionCode + this.OrganizationCode.ToString(true) + this.CheckCode;
+        return AdminCode + OrganizationTypeCode + RegionCode + OrganizationCode.ToString(true) + CheckCode;
     }
 
     /// <summary>
@@ -132,7 +126,7 @@ public readonly struct UnifiedSocialCreditCode
     /// <returns></returns>
     public override int GetHashCode()
     {
-        return this.ToString().GetHashCode();
+        return ToString().GetHashCode();
     }
 
     /// <summary>
@@ -179,7 +173,7 @@ public readonly struct UnifiedSocialCreditCode
             var charIndex = Charset.IndexOf(value[i]);
             if (charIndex < 0)
                 throw new ArgumentException("无效字符");
-            sum += charIndex * Weight[i];
+            sum += charIndex * s_weight[i];
         }
         return Charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在 0-30 范围内。
     }
@@ -192,7 +186,7 @@ public readonly struct UnifiedSocialCreditCode
     /// <summary>
     /// Readonly weight for corresponding position.
     /// </summary>
-    private static readonly int[] Weight = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
+    private static readonly int[] s_weight = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
 
     #region Public static methods
 

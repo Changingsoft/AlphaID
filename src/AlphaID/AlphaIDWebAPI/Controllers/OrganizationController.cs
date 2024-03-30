@@ -29,7 +29,7 @@ public class OrganizationController(IOrganizationStore organizationStore, Organi
     public async Task<ActionResult<OrganizationModel>> GetAsync(string id)
     {
         var org = await organizationStore.FindByIdAsync(id);
-        return org == null ? this.NotFound() : new OrganizationModel(org);
+        return org == null ? NotFound() : new OrganizationModel(org);
     }
 
     /// <summary>
@@ -41,9 +41,9 @@ public class OrganizationController(IOrganizationStore organizationStore, Organi
     public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
     {
         NaturalPerson? visitor = default;
-        var visitorSubjectId = this.User.SubjectId();
+        var visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
-            visitor = await personManager.FindByIdAsync(this.User.SubjectId()!);
+            visitor = await personManager.FindByIdAsync(User.SubjectId()!);
 
         //todo 从令牌确定访问者。
         var org = await organizationStore.FindByIdAsync(id);

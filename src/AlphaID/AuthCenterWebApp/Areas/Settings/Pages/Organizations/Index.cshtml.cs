@@ -13,24 +13,24 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             Debug.Assert(person != null);
 
-            this.Members = await memberManager.GetMembersOfAsync(person);
-            return this.Page();
+            Members = await memberManager.GetMembersOfAsync(person);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostLeaveAsync(string organizationId)
         {
-            var person = await personManager.GetUserAsync(this.User);
+            var person = await personManager.GetUserAsync(User);
             Debug.Assert(person != null);
-            this.Members = await memberManager.GetMembersOfAsync(person);
-            var member = this.Members.FirstOrDefault(m => m.OrganizationId == organizationId);
+            Members = await memberManager.GetMembersOfAsync(person);
+            var member = Members.FirstOrDefault(m => m.OrganizationId == organizationId);
             if (member == null)
-                return this.Page();
+                return Page();
 
-            this.Result = await memberManager.LeaveOrganizationAsync(member);
-            return this.Page();
+            Result = await memberManager.LeaveOrganizationAsync(member);
+            return Page();
         }
     }
 }

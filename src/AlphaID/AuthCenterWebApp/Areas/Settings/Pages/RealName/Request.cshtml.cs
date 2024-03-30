@@ -13,11 +13,11 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
             var request = await requestManager.FindByIdAsync(id);
             if (request == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            this.Data = request;
-            return this.Page();
+            Data = request;
+            return Page();
         }
 
         public async Task<IActionResult> OnGetChineseIdCardImage(int id, string side)
@@ -25,19 +25,19 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
             var request = await requestManager.FindByIdAsync(id);
             if (request == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
             if (request is not ChineseIdCardRealNameRequest chineseIdCardRealNameRequest)
-                return this.NotFound();
+                return NotFound();
 
             return side switch
             {
-                "personal" => this.File(chineseIdCardRealNameRequest.PersonalSide.Data,
+                "personal" => File(chineseIdCardRealNameRequest.PersonalSide.Data,
                                         chineseIdCardRealNameRequest.PersonalSide.MimeType),
-                "issuer" => this.File(chineseIdCardRealNameRequest.IssuerSide.Data,
+                "issuer" => File(chineseIdCardRealNameRequest.IssuerSide.Data,
                                         chineseIdCardRealNameRequest.IssuerSide.MimeType),
-                _ => this.NotFound(),
+                _ => NotFound(),
             };
         }
     }

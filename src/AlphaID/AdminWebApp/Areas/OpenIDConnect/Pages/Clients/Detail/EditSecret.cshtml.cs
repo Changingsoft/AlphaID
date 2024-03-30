@@ -19,56 +19,56 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         {
             var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Client = client;
+                return NotFound();
+            Client = client;
             var secret = client.ClientSecrets.FirstOrDefault(p => p.Id == secretId);
             if (secret == null)
-                return this.NotFound(anchor);
-            this.Secret = secret;
-            this.Input = new InputModel
+                return NotFound(anchor);
+            Secret = secret;
+            Input = new InputModel
             {
-                Expires = this.Secret.Expiration,
-                Description = this.Secret.Description,
+                Expires = Secret.Expiration,
+                Description = Secret.Description,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int anchor, int secretId)
         {
             var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Client = client;
+                return NotFound();
+            Client = client;
             var secret = client.ClientSecrets.FirstOrDefault(p => p.Id == secretId);
             if (secret == null)
-                return this.NotFound(anchor);
-            this.Secret = secret;
+                return NotFound(anchor);
+            Secret = secret;
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Secret.Expiration = this.Input.Expires;
-            this.Secret.Description = this.Input.Description;
-            configurationDbContext.Clients.Update(this.Client);
+            Secret.Expiration = Input.Expires;
+            Secret.Description = Input.Description;
+            configurationDbContext.Clients.Update(Client);
             await configurationDbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { anchor });
+            return RedirectToPage("Secrets", new { anchor });
         }
 
         public async Task<IActionResult> OnPostRemoveSecretAsync(int anchor, int secretId)
         {
             var client = configurationDbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Client = client;
+                return NotFound();
+            Client = client;
             var secret = client.ClientSecrets.FirstOrDefault(p => p.Id == secretId);
             if (secret == null)
-                return this.NotFound(anchor);
-            this.Secret = secret;
+                return NotFound(anchor);
+            Secret = secret;
 
-            this.Client.ClientSecrets.Remove(this.Secret);
-            configurationDbContext.Clients.Update(this.Client);
+            Client.ClientSecrets.Remove(Secret);
+            configurationDbContext.Clients.Update(Client);
             await configurationDbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { anchor });
+            return RedirectToPage("Secrets", new { anchor });
         }
         public class InputModel
         {

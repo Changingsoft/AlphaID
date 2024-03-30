@@ -19,32 +19,32 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await manager.GetUserAsync(this.User);
+            var person = await manager.GetUserAsync(User);
             if (person == null)
             {
                 logger?.LogWarning("从用户的登录信息无法查询到用户");
-                return this.NotFound();
+                return NotFound();
             }
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var person = await manager.GetUserAsync(this.User);
+            var person = await manager.GetUserAsync(User);
             if (person == null)
             {
                 logger?.LogWarning("从用户的登录信息无法查询到用户");
-                return this.NotFound();
+                return NotFound();
             }
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Result = await manager.SetUserNameAsync(person, this.UserName);
-            if(this.Result.Succeeded)
+            Result = await manager.SetUserNameAsync(person, UserName);
+            if(Result.Succeeded)
             {
                 await signInManager.RefreshSignInAsync(person);
             }
-            return this.Page();
+            return Page();
         }
 
         public IActionResult OnPostCheckName(string userName)

@@ -19,18 +19,18 @@ public class ConfirmEmailModel(NaturalPersonManager userManager) : PageModel
     {
         if (userId == null || code == null)
         {
-            return this.RedirectToPage("/Index");
+            return RedirectToPage("/Index");
         }
 
         var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userId}'.");
+            return NotFound($"Unable to load user with ID '{userId}'.");
         }
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
         var result = await userManager.ConfirmEmailAsync(user, code);
-        this.StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
-        return this.Page();
+        StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+        return Page();
     }
 }

@@ -41,42 +41,42 @@ public class ChangePasswordModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
-        this.Person = user;
-        this.ExternalLogins = await userManager.GetLoginsAsync(user);
+        Person = user;
+        ExternalLogins = await userManager.GetLoginsAsync(user);
         var hasPassword = await userManager.HasPasswordAsync(user);
-        return !hasPassword ? this.RedirectToPage("./SetPassword") : this.Page();
+        return !hasPassword ? RedirectToPage("./SetPassword") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!this.ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return this.Page();
+            return Page();
         }
 
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
-        this.Person = user;
-        this.ExternalLogins = await userManager.GetLoginsAsync(user);
+        Person = user;
+        ExternalLogins = await userManager.GetLoginsAsync(user);
 
-        var changePasswordResult = await userManager.ChangePasswordAsync(user, this.Input.CurrentPassword, this.Input.NewPassword);
+        var changePasswordResult = await userManager.ChangePasswordAsync(user, Input.CurrentPassword, Input.NewPassword);
         if (!changePasswordResult.Succeeded)
         {
-            this.Result = changePasswordResult;
-            return this.Page();
+            Result = changePasswordResult;
+            return Page();
         }
 
         await signInManager.RefreshSignInAsync(user);
-        this.Result = IdentityResult.Success;
+        Result = IdentityResult.Success;
         logger.LogInformation("用户已成功更改其密码。");
-        return this.Page();
+        return Page();
     }
 }

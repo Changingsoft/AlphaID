@@ -8,7 +8,7 @@ namespace NgAdminWebApp.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController(ILogger<WeatherForecastController> logger) : ControllerBase
 {
-    private static readonly string[] Summaries =
+    private static readonly string[] s_summaries =
     [
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 ];
@@ -20,7 +20,7 @@ public class WeatherForecastController(ILogger<WeatherForecastController> logger
         {
             Date = DateTime.UtcNow.AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            Summary = s_summaries[Random.Shared.Next(s_summaries.Length)]
         })
         .ToArray();
     }

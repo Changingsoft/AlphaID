@@ -13,13 +13,13 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
         {
             var org = await organizationManager.FindByIdAsync(anchor);
             if (org == null)
-                return this.NotFound();
+                return NotFound();
             var members = await memberManager.GetMembersAsync(org);
             var member = members.FirstOrDefault(p => p.PersonId == personId);
             if (member == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Input = new InputModel
+            Input = new InputModel
             {
                 Title = member.Title,
                 Department = member.Department,
@@ -27,36 +27,36 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
                 IsOwner = member.IsOwner,
                 Visibility = member.Visibility,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor, string personId)
         {
             var org = await organizationManager.FindByIdAsync(anchor);
             if (org == null)
-                return this.NotFound();
+                return NotFound();
             var members = await memberManager.GetMembersAsync(org);
             var member = members.FirstOrDefault(p => p.PersonId == personId);
             if (member == null)
-                return this.NotFound();
+                return NotFound();
 
-            member.Title = this.Input.Title;
-            member.Department = this.Input.Department;
-            member.Remark = this.Input.Remark;
-            member.IsOwner = this.Input.IsOwner;
-            member.Visibility = this.Input.Visibility;
+            member.Title = Input.Title;
+            member.Department = Input.Department;
+            member.Remark = Input.Remark;
+            member.IsOwner = Input.IsOwner;
+            member.Visibility = Input.Visibility;
 
             var result = await memberManager.UpdateAsync(member);
             if (result.Succeeded)
             {
-                return this.RedirectToPage("Index", new { anchor });
+                return RedirectToPage("Index", new { anchor });
             }
 
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error);
             }
-            return this.Page();
+            return Page();
         }
 
         public class InputModel

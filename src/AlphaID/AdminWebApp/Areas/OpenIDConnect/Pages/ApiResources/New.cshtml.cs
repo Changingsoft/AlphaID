@@ -12,7 +12,7 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
     public void OnGet()
     {
-        this.Input = new InputModel();
+        Input = new InputModel();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -20,11 +20,11 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
         var now = DateTime.UtcNow;
         var resource = new ApiResource
         {
-            Name = this.Input.Name,
-            DisplayName = this.Input.DisplayName,
-            Description = this.Input.Description,
-            AllowedAccessTokenSigningAlgorithms = this.Input.AllowedAccessTokenSigningAlgorithms,
-            RequireResourceIndicator = this.Input.RequireResourceIndicator,
+            Name = Input.Name,
+            DisplayName = Input.DisplayName,
+            Description = Input.Description,
+            AllowedAccessTokenSigningAlgorithms = Input.AllowedAccessTokenSigningAlgorithms,
+            RequireResourceIndicator = Input.RequireResourceIndicator,
             Enabled = true,
             Created = now,
             Updated = now,
@@ -34,13 +34,13 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
         {
             dbContext.ApiResources.Add(resource);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Detail/Index", new { id = resource.Id });
+            return RedirectToPage("Detail/Index", new { id = resource.Id });
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError("", ex.Message);
         }
-        return this.Page();
+        return Page();
     }
 
     public class InputModel

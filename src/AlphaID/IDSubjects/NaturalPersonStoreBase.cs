@@ -39,7 +39,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual async Task<int> CountCodesAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        var mergedCodes = await this.GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken).ConfigureAwait(false) ?? "";
+        var mergedCodes = await GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken).ConfigureAwait(false) ?? "";
         return mergedCodes.Length > 0 ? mergedCodes.Split(';').Length : 0;
     }
 
@@ -135,7 +135,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual Task<string?> GetAuthenticatorKeyAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        return this.GetTokenAsync(user, InternalLoginProvider, AuthenticatorKeyTokenName, cancellationToken);
+        return GetTokenAsync(user, InternalLoginProvider, AuthenticatorKeyTokenName, cancellationToken);
     }
 
     /// <summary>
@@ -347,12 +347,12 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual async Task<bool> RedeemCodeAsync(NaturalPerson user, string code, CancellationToken cancellationToken)
     {
-        var mergedCodes = await this.GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken).ConfigureAwait(false) ?? "";
+        var mergedCodes = await GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken).ConfigureAwait(false) ?? "";
         var splitCodes = mergedCodes.Split(';');
         if (splitCodes.Contains(code))
         {
             var updatedCodes = new List<string>(splitCodes.Where(s => s != code));
-            await this.ReplaceCodesAsync(user, updatedCodes, cancellationToken).ConfigureAwait(false);
+            await ReplaceCodesAsync(user, updatedCodes, cancellationToken).ConfigureAwait(false);
             return true;
         }
         return false;
@@ -407,7 +407,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     public virtual Task ReplaceCodesAsync(NaturalPerson user, IEnumerable<string> recoveryCodes, CancellationToken cancellationToken)
     {
         var mergedCodes = string.Join(";", recoveryCodes);
-        return this.SetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, mergedCodes, cancellationToken);
+        return SetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, mergedCodes, cancellationToken);
     }
 
     /// <summary>
@@ -431,7 +431,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     /// <returns></returns>
     public virtual Task SetAuthenticatorKeyAsync(NaturalPerson user, string key, CancellationToken cancellationToken)
     {
-        return this.SetTokenAsync(user, InternalLoginProvider, AuthenticatorKeyTokenName, key, cancellationToken);
+        return SetTokenAsync(user, InternalLoginProvider, AuthenticatorKeyTokenName, key, cancellationToken);
     }
 
     /// <summary>

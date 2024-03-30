@@ -9,12 +9,12 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 {
     public class IdPRestrictionModel : PageModel
     {
-        private readonly ConfigurationDbContext dbContext;
+        private readonly ConfigurationDbContext _dbContext;
 
         public IdPRestrictionModel(ConfigurationDbContext dbContext)
         {
-            this.dbContext = dbContext;
-            this.IdProviders = this.dbContext.IdentityProviders.Where(p => p.Enabled).Select(p => new SelectListItem(p.DisplayName, p.Scheme));
+            this._dbContext = dbContext;
+            IdProviders = this._dbContext.IdentityProviders.Where(p => p.Enabled).Select(p => new SelectListItem(p.DisplayName, p.Scheme));
         }
 
         public Client Data { get; set; } = default!;
@@ -26,49 +26,49 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
 
         public IActionResult OnGet(int anchor)
         {
-            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
+            var client = _dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Data = client;
-            return this.Page();
+                return NotFound();
+            Data = client;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveAsync(int anchor, int itemId)
         {
-            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
+            var client = _dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Data = client;
-            var item = this.Data.IdentityProviderRestrictions.FirstOrDefault(p => p.Id == itemId);
+                return NotFound();
+            Data = client;
+            var item = Data.IdentityProviderRestrictions.FirstOrDefault(p => p.Id == itemId);
             if (item != null)
             {
-                this.Data.IdentityProviderRestrictions.Remove(item);
-                this.dbContext.Clients.Update(this.Data);
-                await this.dbContext.SaveChangesAsync();
+                Data.IdentityProviderRestrictions.Remove(item);
+                _dbContext.Clients.Update(Data);
+                await _dbContext.SaveChangesAsync();
             }
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAddAsync(int anchor)
         {
-            var client = this.dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
+            var client = _dbContext.Clients.Include(p => p.IdentityProviderRestrictions).FirstOrDefault(c => c.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Data = client;
+                return NotFound();
+            Data = client;
 
-            if (this.Data.IdentityProviderRestrictions.Any(p => p.Provider == this.SelectedProvider))
-                this.ModelState.AddModelError(nameof(this.SelectedProvider), "选择的Id Provider已经在列表中。");
+            if (Data.IdentityProviderRestrictions.Any(p => p.Provider == SelectedProvider))
+                ModelState.AddModelError(nameof(SelectedProvider), "选择的Id Provider已经在列表中。");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Data.IdentityProviderRestrictions.Add(new ClientIdPRestriction
+            Data.IdentityProviderRestrictions.Add(new ClientIdPRestriction
             {
-                Provider = this.SelectedProvider,
+                Provider = SelectedProvider,
             });
-            this.dbContext.Clients.Update(this.Data);
-            await this.dbContext.SaveChangesAsync();
-            return this.Page();
+            _dbContext.Clients.Update(Data);
+            await _dbContext.SaveChangesAsync();
+            return Page();
 
         }
     }

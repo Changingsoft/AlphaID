@@ -15,11 +15,11 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
         public IActionResult OnGet(string anchor)
         {
             if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Input = new InputModel()
+            Input = new InputModel()
             {
                 Description = organization.Description,
                 Domicile = organization.Domicile,
@@ -27,27 +27,27 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
                 Representative = organization.Representative,
             };
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
+                return RedirectToPage("/Who", new { anchor });
             if (organization == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            organization.Description = this.Input.Description;
-            organization.Domicile = this.Input.Domicile;
-            organization.Contact = this.Input.Contact;
-            organization.Representative = this.Input.Representative;
+            organization.Description = Input.Description;
+            organization.Domicile = Input.Domicile;
+            organization.Contact = Input.Contact;
+            organization.Representative = Input.Representative;
 
             await manager.UpdateAsync(organization);
-            this.OperationResult = IdOperationResult.Success;
-            return this.Page();
+            OperationResult = IdOperationResult.Success;
+            return Page();
         }
 
         public class InputModel

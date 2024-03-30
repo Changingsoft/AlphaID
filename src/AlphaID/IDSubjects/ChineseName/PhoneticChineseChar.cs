@@ -10,8 +10,8 @@
 /// <param name="pinyins"></param>
 public class PhoneticChineseChar(char origin, string[] pinyins)
 {
-    private string? customPinyin;
-    private int selectedIndex;
+    private string? _customPinyin;
+    private int _selectedIndex;
 
     /// <summary>
     /// 获取标识此汉字的原始字符。
@@ -26,13 +26,7 @@ public class PhoneticChineseChar(char origin, string[] pinyins)
     /// <summary>
     /// 获取选择的读音。
     /// </summary>
-    public string Selected
-    {
-        get
-        {
-            return !string.IsNullOrEmpty(this.customPinyin) ? this.customPinyin : this.Pinyins[this.selectedIndex];
-        }
-    }
+    public string Selected => !string.IsNullOrEmpty(_customPinyin) ? _customPinyin : Pinyins[_selectedIndex];
 
     /// <summary>
     /// 按索引选择一个读音，
@@ -40,8 +34,8 @@ public class PhoneticChineseChar(char origin, string[] pinyins)
     /// <param name="index"></param>
     public void Select(int index)
     {
-        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, this.Pinyins.Length);
-        this.selectedIndex = index;
+        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Pinyins.Length);
+        _selectedIndex = index;
     }
 
     /// <summary>
@@ -55,15 +49,15 @@ public class PhoneticChineseChar(char origin, string[] pinyins)
             throw new ArgumentException(Resources.StringIsNullOrWhiteSpace, nameof(custom));
         }
 
-        for (int i = 0; i < this.Pinyins.Length; i++)
+        for (int i = 0; i < Pinyins.Length; i++)
         {
-            if (this.Pinyins[i].StartsWith(custom))
+            if (Pinyins[i].StartsWith(custom))
             {
-                this.selectedIndex = i;
+                _selectedIndex = i;
                 return;
             }
         }
 
-        this.customPinyin = custom.Trim().ToUpper();
+        _customPinyin = custom.Trim().ToUpper();
     }
 }

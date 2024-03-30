@@ -18,32 +18,32 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
         {
             var client = configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Client = client;
-            this.Input = new InputModel
+                return NotFound();
+            Client = client;
+            Input = new InputModel
             {
-                RequireConsent = this.Client.RequireConsent,
-                AllowRememberConsent = this.Client.AllowRememberConsent,
+                RequireConsent = Client.RequireConsent,
+                AllowRememberConsent = Client.AllowRememberConsent,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int anchor)
         {
             var client = configurationDbContext.Clients.FirstOrDefault(p => p.Id == anchor);
             if (client == null)
-                return this.NotFound();
-            this.Client = client;
+                return NotFound();
+            Client = client;
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Client.RequireConsent = this.Input.RequireConsent;
-            this.Client.AllowRememberConsent = this.Input.AllowRememberConsent;
-            configurationDbContext.Clients.Update(this.Client);
+            Client.RequireConsent = Input.RequireConsent;
+            Client.AllowRememberConsent = Input.AllowRememberConsent;
+            configurationDbContext.Clients.Update(Client);
             await configurationDbContext.SaveChangesAsync();
-            this.OperationMessage = "Applied";
-            return this.Page();
+            OperationMessage = "Applied";
+            return Page();
         }
 
         public class InputModel

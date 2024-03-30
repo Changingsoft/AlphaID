@@ -3,7 +3,7 @@
 namespace IdSubjects.Diagnostics;
 internal class NaturalPersonUpdateInterceptorAggregator(IEnumerable<INaturalPersonUpdateInterceptor> interceptors)
 {
-    private readonly Stack<INaturalPersonUpdateInterceptor> stack = new();
+    private readonly Stack<INaturalPersonUpdateInterceptor> _stack = new();
 
     public async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager manager, NaturalPerson person)
     {
@@ -11,7 +11,7 @@ internal class NaturalPersonUpdateInterceptorAggregator(IEnumerable<INaturalPers
         List<IdentityError> errors = [];
         foreach (var interceptor in interceptors)
         {
-            this.stack.Push(interceptor);
+            _stack.Push(interceptor);
             var interceptorResult = await interceptor.PreUpdateAsync(manager, person);
             if (!interceptorResult.Succeeded)
                 success = false;
@@ -23,7 +23,7 @@ internal class NaturalPersonUpdateInterceptorAggregator(IEnumerable<INaturalPers
 
     public async Task PostUpdateAsync(NaturalPersonManager manager, NaturalPerson person)
     {
-        while (this.stack.TryPop(out var interceptor))
+        while (_stack.TryPop(out var interceptor))
         {
             await interceptor.PostUpdateAsync(manager, person);
         }

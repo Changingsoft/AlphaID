@@ -27,8 +27,8 @@ public class WechatAppClient
             throw new ArgumentException($"“{nameof(secret)}”不能为 Null 或空白", nameof(secret));
         }
 
-        this.ClientId = clientId;
-        this.Secret = secret;
+        ClientId = clientId;
+        Secret = secret;
     }
 
     /// <summary>

@@ -9,14 +9,14 @@ namespace AlphaId.PlatformServices.Tianyancha;
 /// </summary>
 public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
 {
-    private readonly JsonSerializer serializer;
+    private readonly JsonSerializer _serializer;
 
     /// <summary>
     /// 
     /// </summary>
     public TianYanChaOrganizationInfoProvider()
     {
-        this.serializer = new JsonSerializer();
+        _serializer = new JsonSerializer();
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
 
         var jsonReader = new JsonTextReader(new StreamReader(await response.Content.ReadAsStreamAsync()));
 
-        var result = this.serializer.Deserialize(jsonReader) as dynamic;
+        var result = _serializer.Deserialize(jsonReader) as dynamic;
 
         if ((int)result!.error_code != 0)
         {

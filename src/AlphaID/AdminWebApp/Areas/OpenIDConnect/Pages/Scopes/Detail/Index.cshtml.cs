@@ -13,9 +13,9 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
         var result = dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
         if (result == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
-        this.Data = result;
-        return this.Page();
+        Data = result;
+        return Page();
     }
 }

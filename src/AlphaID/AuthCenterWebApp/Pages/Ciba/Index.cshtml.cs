@@ -18,9 +18,9 @@ public class IndexModel(IBackchannelAuthenticationInteractionService backchannel
         if (loginRequest == null)
         {
             logger.LogWarning("Invalid backchannel login id {id}", id);
-            return this.RedirectToPage("/Home/Error/LoginModel");
+            return RedirectToPage("/Home/Error/LoginModel");
         }
-        this.LoginRequest = loginRequest;
-        return this.Page();
+        LoginRequest = loginRequest;
+        return Page();
     }
 }

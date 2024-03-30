@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.RealName.Pages
 
         public void OnGet()
         {
-            this.PendingRequests = requestManager.PendingRequests.Take(10);
+            PendingRequests = requestManager.PendingRequests.Take(10);
         }
     }
 }

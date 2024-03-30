@@ -17,36 +17,36 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
     {
         var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Data = person;
-        this.ExternalLogins = await userManager.GetLoginsAsync(person);
-        return this.Page();
+        Data = person;
+        ExternalLogins = await userManager.GetLoginsAsync(person);
+        return Page();
     }
 
     public async Task<IActionResult> OnGetPhotoAsync(string anchor)
     {
         var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
         if (person.ProfilePicture != null)
-            return this.File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
-        return this.File("~/img/no-picture-avatar.png", "image/png");
+            return File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
+        return File("~/img/no-picture-avatar.png", "image/png");
     }
 
     public async Task<IActionResult> OnPostUpdateProfilePictureAsync(string anchor)
     {
-        if (!this.Request.Form.Files.Any())
-            return this.BadRequest();
+        if (!Request.Form.Files.Any())
+            return BadRequest();
 
-        var file = this.Request.Form.Files[0];
+        var file = Request.Form.Files[0];
         var person = await userManager.FindByIdAsync(anchor);
         Debug.Assert(person != null);
 
         await using var stream = file.OpenReadStream();
-        byte[] data = new byte[stream.Length];
-        await stream.ReadAsync(data, 0, data.Length);
+        var data = new byte[stream.Length];
+        await stream.ReadAsync(data);
         var result = await userManager.SetProfilePictureAsync(person, file.ContentType, data);
         if (result.Succeeded)
             return new JsonResult(true);
@@ -58,13 +58,13 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
     {
         var person = await userManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Data = person;
-        this.ExternalLogins = await userManager.GetLoginsAsync(person);
+        Data = person;
+        ExternalLogins = await userManager.GetLoginsAsync(person);
 
         person.ProfilePicture = null;
-        this.Result = await userManager.ClearProfilePictureAsync(person);
-        return this.Page();
+        Result = await userManager.ClearProfilePictureAsync(person);
+        return Page();
     }
 }

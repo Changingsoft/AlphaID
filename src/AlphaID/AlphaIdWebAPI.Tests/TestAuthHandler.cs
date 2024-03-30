@@ -10,7 +10,7 @@ internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> opti
 {
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (this.Request.Headers.Authorization.Contains("Bearer"))
+        if (Request.Headers.Authorization.Contains("Bearer"))
         {
             var claims = new List<Claim>()
             {

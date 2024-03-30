@@ -3,23 +3,23 @@
 namespace IdSubjects.Tests;
 public class StubPasswordHistoryStore : IPasswordHistoryStore
 {
-    private readonly HashSet<PasswordHistory> set = [];
+    private readonly HashSet<PasswordHistory> _set = [];
 
     public Task<IdentityResult> CreateAsync(PasswordHistory history)
     {
-        this.set.Add(history);
+        _set.Add(history);
         return Task.FromResult(IdentityResult.Success);
     }
 
     public Task<IdentityResult> DeleteAsync(PasswordHistory history)
     {
-        this.set.Remove(history);
+        _set.Remove(history);
         return Task.FromResult(IdentityResult.Success);
     }
 
     public IEnumerable<PasswordHistory> GetPasswords(NaturalPerson person, int historyLength)
     {
-        return this.set.Where(h => h.UserId == person.Id).OrderByDescending(h => h.WhenCreated).Take(historyLength);
+        return _set.Where(h => h.UserId == person.Id).OrderByDescending(h => h.WhenCreated).Take(historyLength);
     }
 
     public Task TrimHistory(NaturalPerson person, int optionsRememberPasswordHistory)
@@ -30,7 +30,7 @@ public class StubPasswordHistoryStore : IPasswordHistoryStore
 
     public Task ClearAsync(NaturalPerson person)
     {
-        this.set.Clear();
+        _set.Clear();
         return Task.CompletedTask;
     }
 }

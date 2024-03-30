@@ -14,10 +14,10 @@ public class DirectoryAccountsModel(NaturalPersonManager personManager, Director
     {
         var person = await personManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Person = person;
-        this.LogonAccounts = directoryAccountManager.GetLogonAccounts(this.Person);
-        return this.Page();
+        Person = person;
+        LogonAccounts = directoryAccountManager.GetLogonAccounts(Person);
+        return Page();
     }
 }

@@ -103,10 +103,10 @@ public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEv
     /// <inheritdoc/>
     public override string ToString()
     {
-        return JsonSerializer.Serialize(this, Options);
+        return JsonSerializer.Serialize(this, s_options);
     }
 
-    private static readonly JsonSerializerOptions Options = new()
+    private static readonly JsonSerializerOptions s_options = new()
     {
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = true
@@ -114,6 +114,6 @@ public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEv
 
     static AuditLogEvent()
     {
-        Options.Converters.Add(new JsonStringEnumConverter());
+        s_options.Converters.Add(new JsonStringEnumConverter());
     }
 }

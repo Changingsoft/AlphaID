@@ -21,12 +21,12 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New
         public IActionResult OnPost()
         {
             //todo create client and stored to database.
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
 
 
-            return this.RedirectToPage("../Detail/Index", new { anchor = ClientId });
+            return RedirectToPage("../Detail/Index", new { anchor = ClientId });
         }
     }
 }

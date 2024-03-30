@@ -15,36 +15,36 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
         {
             var data = dbContext.ApiResources.FirstOrDefault(p => p.Id == id);
             if (data == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.Input = new InputModel()
+            Input = new InputModel()
             {
-                Value = this.GeneratePassword(),
+                Value = GeneratePassword(),
                 Type = "SharedSecret",
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var data = dbContext.ApiResources.Include(p => p.Secrets).FirstOrDefault(p => p.Id == id);
             if (data == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
             data.Secrets.Add(new Duende.IdentityServer.EntityFramework.Entities.ApiResourceSecret
             {
-                Description = this.Input.Description,
-                Expiration = this.Input.Expires,
-                Value = this.Input.Value.ToSha256(),
+                Description = Input.Description,
+                Expiration = Input.Expires,
+                Value = Input.Value.ToSha256(),
                 Type = "SharedSecret",
                 Created = DateTime.UtcNow,
             });
             dbContext.ApiResources.Update(data);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Secrets", new { id });
+            return RedirectToPage("Secrets", new { id });
         }
         private string GeneratePassword()
         {

@@ -21,13 +21,13 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
         {
             var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
+                return NotFound();
             var members = await memberManager.GetMembersOfAsync(person);
             var member = members.FirstOrDefault(p => p.OrganizationId == orgId);
             if (member == null)
-                return this.NotFound();
-            this.Member = member;
-            this.Input = new InputModel
+                return NotFound();
+            Member = member;
+            Input = new InputModel
             {
                 Title = member.Title,
                 Department = member.Department,
@@ -35,29 +35,29 @@ namespace AdminWebApp.Areas.People.Pages.Detail.Membership
                 IsOwner = member.IsOwner,
                 Visibility = member.Visibility,
             };
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor, string orgId)
         {
             var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
+                return NotFound();
             var members = await memberManager.GetMembersOfAsync(person);
             var member = members.FirstOrDefault(p => p.OrganizationId == orgId);
             if (member == null)
-                return this.NotFound();
-            this.Member = member;
+                return NotFound();
+            Member = member;
 
-            member.Title = this.Input.Title;
-            member.Department = this.Input.Department;
-            member.Remark = this.Input.Remark;
-            member.IsOwner = this.Input.IsOwner;
-            member.Visibility = this.Input.Visibility;
+            member.Title = Input.Title;
+            member.Department = Input.Department;
+            member.Remark = Input.Remark;
+            member.IsOwner = Input.IsOwner;
+            member.Visibility = Input.Visibility;
 
-            this.OperationResult = await memberManager.UpdateAsync(member);
+            OperationResult = await memberManager.UpdateAsync(member);
 
-            return this.Page();
+            return Page();
         }
 
         public class InputModel

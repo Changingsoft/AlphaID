@@ -25,13 +25,13 @@ public class WechatLoginSession
     /// <param name="redirectUri"></param>
     internal WechatLoginSession(string wechatAppId, string clientId, string clientSecret, string resource, string redirectUri)
     {
-        this.WechatAppId = wechatAppId;
-        this.ClientId = clientId;
-        this.ClientSecret = clientSecret;
-        this.Resource = resource;
-        this.RedirectUri = redirectUri;
-        this.Id = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-        this.WhenExpires = DateTime.UtcNow.AddMinutes(10.0D);
+        WechatAppId = wechatAppId;
+        ClientId = clientId;
+        ClientSecret = clientSecret;
+        Resource = resource;
+        RedirectUri = redirectUri;
+        Id = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        WhenExpires = DateTime.UtcNow.AddMinutes(10.0D);
     }
 
     /// <summary>

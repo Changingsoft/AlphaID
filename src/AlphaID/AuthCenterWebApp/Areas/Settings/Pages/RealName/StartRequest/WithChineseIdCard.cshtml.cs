@@ -22,35 +22,35 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(User);
             if (person == null)
             {
-                return this.BadRequest("Can not find person.");
+                return BadRequest("Can not find person.");
             }
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            var person = await naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(User);
             if (person == null)
             {
-                return this.BadRequest("Can not find person.");
+                return BadRequest("Can not find person.");
             }
 
             var personalSideStream = new MemoryStream();
-            await this.PersonalSide.OpenReadStream().CopyToAsync(personalSideStream);
+            await PersonalSide.OpenReadStream().CopyToAsync(personalSideStream);
             var personalSideOcr = await chineseIdCardOcrService.RecognizeIdCardFront(personalSideStream);
-            var personalSideInfo = new BinaryDataInfo(this.PersonalSide.ContentType, personalSideStream.ToArray());
+            var personalSideInfo = new BinaryDataInfo(PersonalSide.ContentType, personalSideStream.ToArray());
 
             var issuerSideStream = new MemoryStream();
-            await this.IssuerSide.OpenReadStream().CopyToAsync(issuerSideStream);
+            await IssuerSide.OpenReadStream().CopyToAsync(issuerSideStream);
             var issuerSideOcr = await chineseIdCardOcrService.RecognizeIdCardBack(issuerSideStream);
-            var issuerSideInfo = new BinaryDataInfo(this.IssuerSide.ContentType, issuerSideStream.ToArray());
+            var issuerSideInfo = new BinaryDataInfo(IssuerSide.ContentType, issuerSideStream.ToArray());
             var sex = personalSideOcr.SexString switch
             {
                 "ÄÐ" => Sex.Male,
@@ -70,11 +70,11 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest
                 personalSideInfo,
                 issuerSideInfo);
 
-            this.Result = await realNameRequestManager.CreateAsync(person, request);
-            if (this.Result.Succeeded)
-                return this.RedirectToPage("../Index");
+            Result = await realNameRequestManager.CreateAsync(person, request);
+            if (Result.Succeeded)
+                return RedirectToPage("../Index");
 
-            return this.Page();
+            return Page();
         }
 
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace AuthCenterWebApp.Services;
 
-class AdvancedOidcConfigureOptions(IHttpContextAccessor httpContextAccessor, ILogger<AdvancedOidcConfigureOptions> logger) : ConfigureAuthenticationOptions<OpenIdConnectOptions, OidcProvider>(httpContextAccessor, logger)
+internal class AdvancedOidcConfigureOptions(IHttpContextAccessor httpContextAccessor, ILogger<AdvancedOidcConfigureOptions> logger) : ConfigureAuthenticationOptions<OpenIdConnectOptions, OidcProvider>(httpContextAccessor, logger)
 {
     protected override void Configure(ConfigureAuthenticationContext<OpenIdConnectOptions, OidcProvider> context)
     {
@@ -13,8 +13,9 @@ class AdvancedOidcConfigureOptions(IHttpContextAccessor httpContextAccessor, ILo
         context.AuthenticationOptions.SignOutScheme = context.DynamicProviderOptions.SignOutScheme;
 
         context.AuthenticationOptions.Authority = context.IdentityProvider.Authority;
-        context.AuthenticationOptions.RequireHttpsMetadata = context.IdentityProvider.Authority.StartsWith("https");
-        if (context.IdentityProvider.Properties.TryGetValue("MetadataAddress", out string metadataAddress))
+        if (context.IdentityProvider.Authority != null)
+            context.AuthenticationOptions.RequireHttpsMetadata = context.IdentityProvider.Authority.StartsWith("https");
+        if (context.IdentityProvider.Properties.TryGetValue("MetadataAddress", out string? metadataAddress))
         {
             context.AuthenticationOptions.MetadataAddress = metadataAddress;
         }

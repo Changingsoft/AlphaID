@@ -24,10 +24,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.Properties)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
-            return this.Page();
+            Data = resource;
+            return Page();
 
         }
 
@@ -37,19 +37,19 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.Properties)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
+            Data = resource;
 
-            var item = this.Data.Properties.FirstOrDefault(p => p.Id == propId);
+            var item = Data.Properties.FirstOrDefault(p => p.Id == propId);
             if (item != null)
             {
-                this.Data.Properties.Remove(item);
-                dbContext.ApiResources.Update(this.Data);
+                Data.Properties.Remove(item);
+                dbContext.ApiResources.Update(Data);
                 await dbContext.SaveChangesAsync();
             }
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAddAsync(int id)
@@ -58,25 +58,25 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
                 .Include(p => p.Properties)
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+            if (resource == null) { return NotFound(); }
 
-            this.Data = resource;
+            Data = resource;
 
-            if (this.Data.Properties.Any(p => p.Key == this.NewKey))
-                this.ModelState.AddModelError("", "The key is exists.");
+            if (Data.Properties.Any(p => p.Key == NewKey))
+                ModelState.AddModelError("", "The key is exists.");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Data.Properties.Add(new ApiResourceProperty()
+            Data.Properties.Add(new ApiResourceProperty()
             {
-                Key = this.NewKey,
-                Value = this.NewValue,
+                Key = NewKey,
+                Value = NewValue,
             });
-            dbContext.ApiResources.Update(this.Data);
+            dbContext.ApiResources.Update(Data);
             await dbContext.SaveChangesAsync();
 
-            return this.Page();
+            return Page();
         }
     }
 }

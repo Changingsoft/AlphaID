@@ -19,51 +19,51 @@ public class ScopesModel(ConfigurationDbContext dbContext) : PageModel
     {
         var data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        this.ScopeItems = dbContext.IdentityResources.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
-            .Union(dbContext.ApiScopes.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, this.Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
+        ScopeItems = dbContext.IdentityResources.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
+            .Union(dbContext.ApiScopes.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
             .ToList();
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
         var data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        foreach (var scope in this.ScopeItems)
+        foreach (var scope in ScopeItems)
         {
             switch (scope.Selected)
             {
                 case true:
-                    if (!this.Data.AllowedScopes.Any(p => p.Scope == scope.Value))
+                    if (!Data.AllowedScopes.Any(p => p.Scope == scope.Value))
                     {
-                        this.Data.AllowedScopes.Add(new ClientScope()
+                        Data.AllowedScopes.Add(new ClientScope()
                         {
-                            ClientId = this.Data.Id,
+                            ClientId = Data.Id,
                             Scope = scope.Value,
                         });
                     }
                     break;
                 case false:
-                    var item = this.Data.AllowedScopes.FirstOrDefault(p => p.Scope == scope.Value);
+                    var item = Data.AllowedScopes.FirstOrDefault(p => p.Scope == scope.Value);
                     if (item != null)
                     {
-                        this.Data.AllowedScopes.Remove(item);
+                        Data.AllowedScopes.Remove(item);
                     }
                     break;
             }
         }
-        dbContext.Clients.Update(this.Data);
+        dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        this.OperationMessage = "操作已成功！";
+        OperationMessage = "操作已成功！";
 
 
-        return this.Page();
+        return Page();
     }
 }

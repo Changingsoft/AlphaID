@@ -18,31 +18,31 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources.Detail
         {
             var idResource = dbContext.IdentityResources.FirstOrDefault(p => p.Id == id);
             if (idResource == null)
-                return this.NotFound();
-            this.Data = idResource;
-            if (this.Data.NonEditable)
-                return this.NotFound();
-            return this.Page();
+                return NotFound();
+            Data = idResource;
+            if (Data.NonEditable)
+                return NotFound();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var idResource = dbContext.IdentityResources.FirstOrDefault(p => p.Id == id);
             if (idResource == null)
-                return this.NotFound();
-            this.Data = idResource;
-            if (this.Data.NonEditable)
-                return this.NotFound();
+                return NotFound();
+            Data = idResource;
+            if (Data.NonEditable)
+                return NotFound();
 
-            if (this.Name != this.Data.Name)
-                this.ModelState.AddModelError(nameof(this.Name), "Invalid name.");
+            if (Name != Data.Name)
+                ModelState.AddModelError(nameof(Name), "Invalid name.");
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            dbContext.IdentityResources.Remove(this.Data);
+            dbContext.IdentityResources.Remove(Data);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("../Index");
+            return RedirectToPage("../Index");
         }
     }
 }

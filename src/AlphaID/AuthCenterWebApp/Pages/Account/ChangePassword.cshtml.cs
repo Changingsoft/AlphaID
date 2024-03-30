@@ -26,34 +26,34 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var result = await this.HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+        var result = await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (result.Principal == null)
         {
             throw new InvalidOperationException("Unable to load must change password authentication user.");
         }
         string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
         _ = await userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        this.RememberMe = rememberMe;
-        this.ReturnUrl = returnUrl;
+        RememberMe = rememberMe;
+        ReturnUrl = returnUrl;
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var authMustChangePasswordResult = await this.HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+        var authMustChangePasswordResult = await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (authMustChangePasswordResult.Principal == null)
         {
             throw new InvalidOperationException("Unable to load must change password authentication user.");
         }
         string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
         var person = await userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        var identityResult = await userManager.ChangePasswordAsync(person, this.Input.OldPassword, this.Input.NewPassword);
+        var identityResult = await userManager.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
         if (identityResult.Succeeded)
         {
             //Sign out MustChangePasswordScheme
-            await this.HttpContext.SignOutAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+            await HttpContext.SignOutAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
 
             //Signin user without password.
             await signInManager.SignInAsync(person, rememberMe);
@@ -70,17 +70,17 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
                 }
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                return this.Redirect(returnUrl!);
+                return Redirect(returnUrl!);
             }
 
             // request for a local page
-            if (this.Url.IsLocalUrl(returnUrl))
+            if (Url.IsLocalUrl(returnUrl))
             {
-                return this.Redirect(returnUrl);
+                return Redirect(returnUrl);
             }
             else if (string.IsNullOrEmpty(returnUrl))
             {
-                return this.Redirect("~/");
+                return Redirect("~/");
             }
             else
             {
@@ -89,12 +89,12 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
             }
         }
 
-        this.ModelState.AddModelError("", "更改密码操作无效！");
+        ModelState.AddModelError("", "更改密码操作无效！");
         foreach (var error in identityResult.Errors)
         {
-            this.ModelState.AddModelError("", error.Description);
+            ModelState.AddModelError("", error.Description);
         }
-        return this.Page();
+        return Page();
     }
 
     public class InputModel

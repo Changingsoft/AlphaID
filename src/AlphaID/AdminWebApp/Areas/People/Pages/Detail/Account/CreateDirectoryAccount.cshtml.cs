@@ -16,13 +16,13 @@ public class CreateDirectoryAccountModel(DirectoryServiceManager directoryServic
     {
         var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
         //准备姓名全拼+身份证后4位
         var accountName = $"{person.PhoneticSurname}{person.PhoneticGivenName}".ToLower();
 
         //准备有关资料
-        this.Input = new()
+        Input = new()
         {
             SamAccountName = accountName,
             UpnPart = accountName,
@@ -36,32 +36,32 @@ public class CreateDirectoryAccountModel(DirectoryServiceManager directoryServic
             Mobile = person.PhoneNumber!,
             Email = person.Email,
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
         var person = await naturalPersonManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
-        var directoryService = await directoryServiceManager.FindByIdAsync(this.Input.ServiceId);
+        var directoryService = await directoryServiceManager.FindByIdAsync(Input.ServiceId);
         if (directoryService == null)
-            this.ModelState.AddModelError("", "请选择一个目录服务");
+            ModelState.AddModelError("", "请选择一个目录服务");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         try
         {
             var logonAccount = new DirectoryAccount(directoryService!, person.Id);
             await directoryAccountManager.CreateAsync(naturalPersonManager, logonAccount);
-            return this.RedirectToPage("DirectoryAccounts", new { anchor });
+            return RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
-            return this.Page();
+            ModelState.AddModelError("", ex.Message);
+            return Page();
         }
     }
 

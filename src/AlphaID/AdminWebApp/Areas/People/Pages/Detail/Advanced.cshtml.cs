@@ -18,31 +18,31 @@ namespace AdminWebApp.Areas.People.Pages.Detail
         {
             var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
-            this.Data = person;
+                return NotFound();
+            Data = person;
 
-            this.Input = new InputModel
+            Input = new InputModel
             {
-                Enabled = this.Data.Enabled,
+                Enabled = Data.Enabled,
             };
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             var person = await naturalPersonManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
-            this.Data = person;
+                return NotFound();
+            Data = person;
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Data.Enabled = this.Input.Enabled;
+            Data.Enabled = Input.Enabled;
 
-            this.Result = await naturalPersonManager.UpdateAsync(person);
-            return this.Page();
+            Result = await naturalPersonManager.UpdateAsync(person);
+            return Page();
         }
 
         public class InputModel

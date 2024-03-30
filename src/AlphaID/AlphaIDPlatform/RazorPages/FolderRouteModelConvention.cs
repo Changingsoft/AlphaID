@@ -29,10 +29,10 @@ public abstract class FolderRouteModelConvention(string folderPath, string? area
     /// <param name="model"></param>
     public void Apply(PageRouteModel model)
     {
-        if (string.Equals(this.AreaName, model.AreaName, StringComparison.OrdinalIgnoreCase) &&
-            PathBelongsToFolder(this.FolderPath, model.ViewEnginePath))
+        if (string.Equals(AreaName, model.AreaName, StringComparison.OrdinalIgnoreCase) &&
+            PathBelongsToFolder(FolderPath, model.ViewEnginePath))
         {
-            this.ApplyRoute(model);
+            ApplyRoute(model);
         }
     }
 

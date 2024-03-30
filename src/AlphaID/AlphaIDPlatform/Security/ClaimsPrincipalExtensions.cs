@@ -74,7 +74,7 @@ public static class ClaimsPrincipalExtensions
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
-    public static string? DisplayName(this ClaimsPrincipal principal)
+    public static string DisplayName(this ClaimsPrincipal principal)
     {
         var surname = principal.FindFirstValue(JwtClaimTypes.FamilyName);
         var givenName = principal.FindFirstValue(JwtClaimTypes.GivenName);

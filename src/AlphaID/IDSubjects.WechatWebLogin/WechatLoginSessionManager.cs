@@ -18,7 +18,7 @@ public class WechatLoginSessionManager(IWechatLoginSessionStore store,
     /// <returns></returns>
     public async Task<string> BuildCallBackUriAsync(string sessionId)
     {
-        var session = await this.FindAsync(sessionId) ?? throw new ArgumentException("会话无效。");
+        var session = await FindAsync(sessionId) ?? throw new ArgumentException("会话无效。");
 
         //向federal.changingsoft.com发起资源所有者密码凭据授予流（ROPC），拿取访问WebAPI的令牌
         var oAuth2Result = await oAuth2Service.GetResourceOwnerPasswordCredentialTokenAsync(session.ClientId, session.ClientSecret, session.WechatUser!.UserPrincipalName, session.WechatUser.UserSecret, session.Resource);

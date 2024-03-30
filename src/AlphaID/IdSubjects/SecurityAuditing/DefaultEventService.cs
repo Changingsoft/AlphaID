@@ -41,10 +41,10 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     {
         ArgumentNullException.ThrowIfNull(evt);
 
-        if (this.CanRaiseEvent(evt))
+        if (CanRaiseEvent(evt))
         {
-            await this.PrepareEventAsync(evt);
-            await this.Sink.PersistAsync(evt);
+            await PrepareEventAsync(evt);
+            await Sink.PersistAsync(evt);
         }
     }
 
@@ -58,10 +58,10 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     {
         return evtType switch
         {
-            AuditLogEventTypes.Failure => this.Options.Events.RaiseFailureEvents,
-            AuditLogEventTypes.Information => this.Options.Events.RaiseInformationEvents,
-            AuditLogEventTypes.Success => this.Options.Events.RaiseSuccessEvents,
-            AuditLogEventTypes.Error => this.Options.Events.RaiseErrorEvents,
+            AuditLogEventTypes.Failure => Options.Events.RaiseFailureEvents,
+            AuditLogEventTypes.Information => Options.Events.RaiseInformationEvents,
+            AuditLogEventTypes.Success => Options.Events.RaiseSuccessEvents,
+            AuditLogEventTypes.Error => Options.Events.RaiseErrorEvents,
             _ => throw new ArgumentOutOfRangeException(nameof(evtType)),
         };
     }
@@ -75,7 +75,7 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     /// </returns>
     protected virtual bool CanRaiseEvent(AuditLogEvent evt)
     {
-        return this.CanRaiseEventType(evt.EventType);
+        return CanRaiseEventType(evt.EventType);
     }
 
     /// <summary>
@@ -85,20 +85,20 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     /// <returns></returns>
     protected virtual Task PrepareEventAsync(AuditLogEvent evt)
     {
-        evt.ActivityId = this.Context.HttpContext?.TraceIdentifier;
+        evt.ActivityId = Context.HttpContext?.TraceIdentifier;
         evt.TimeStamp = DateTime.UtcNow;
         evt.ProcessId = Environment.ProcessId;
 
-        if (this.Context.HttpContext?.Connection.LocalIpAddress != null)
+        if (Context.HttpContext?.Connection.LocalIpAddress != null)
         {
-            evt.LocalIpAddress = this.Context.HttpContext.Connection.LocalIpAddress + ":" + this.Context.HttpContext.Connection.LocalPort;
+            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress + ":" + Context.HttpContext.Connection.LocalPort;
         }
         else
         {
             evt.LocalIpAddress = "unknown";
         }
 
-        evt.RemoteIpAddress = this.Context.HttpContext?.Connection.RemoteIpAddress != null ? this.Context.HttpContext.Connection.RemoteIpAddress.ToString() : "unknown";
+        evt.RemoteIpAddress = Context.HttpContext?.Connection.RemoteIpAddress != null ? Context.HttpContext.Connection.RemoteIpAddress.ToString() : "unknown";
 
         return evt.PrepareAsync();
     }

@@ -21,8 +21,8 @@ public record BinaryDataInfo
     /// <param name="data"></param>
     public BinaryDataInfo(string mimeType, byte[] data)
     {
-        this.MimeType = mimeType;
-        this.Data = data;
+        MimeType = mimeType;
+        Data = data;
     }
 
     /// <summary>

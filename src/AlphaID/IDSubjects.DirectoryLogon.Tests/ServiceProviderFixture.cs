@@ -14,8 +14,8 @@ public class ServiceProviderFixture
             .AddDirectoryServiceStore<StubDirectoryServiceDescriptorStore>()
             .AddLogonAccountStore<StubDirectoryAccountStore>();
 
-        this.Root = services.BuildServiceProvider();
-        this.ScopeFactory = this.Root.GetRequiredService<IServiceScopeFactory>();
+        Root = services.BuildServiceProvider();
+        ScopeFactory = Root.GetRequiredService<IServiceScopeFactory>();
     }
 
     public IServiceProvider Root { get; }

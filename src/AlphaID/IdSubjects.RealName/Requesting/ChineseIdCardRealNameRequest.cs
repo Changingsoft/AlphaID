@@ -29,17 +29,17 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <param name="issuerSide">签发者信息面。</param>
     public ChineseIdCardRealNameRequest(string name, Sex sex, string ethnicity, DateOnly dateOfBirth, string address, string cardNumber, string issuer, DateOnly issueDate, DateOnly? expires, BinaryDataInfo personalSide, BinaryDataInfo issuerSide)
     {
-        this.Name = name;
-        this.Sex = sex;
-        this.Ethnicity = ethnicity;
-        this.DateOfBirth = dateOfBirth;
-        this.Address = address;
-        this.CardNumber = cardNumber;
-        this.Issuer = issuer;
-        this.IssueDate = issueDate;
-        this.Expires = expires;
-        this.PersonalSide = personalSide;
-        this.IssuerSide = issuerSide;
+        Name = name;
+        Sex = sex;
+        Ethnicity = ethnicity;
+        DateOfBirth = dateOfBirth;
+        Address = address;
+        CardNumber = cardNumber;
+        Issuer = issuer;
+        IssueDate = issueDate;
+        Expires = expires;
+        PersonalSide = personalSide;
+        IssuerSide = issuerSide;
     }
 
 
@@ -110,27 +110,27 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <exception cref="InvalidOperationException"></exception>
     public override RealNameAuthentication CreateAuthentication()
     {
-        if (!this.AuditTime.HasValue)
+        if (!AuditTime.HasValue)
             throw new InvalidOperationException("未审核通过的请求不能创建认证信息。");
         var document = new ChineseIdCardDocument()
         {
-            Address = this.Address,
-            Name = this.Name,
-            Sex = this.Sex,
-            DateOfBirth = this.DateOfBirth,
-            Ethnicity = this.Ethnicity,
-            CardNumber = this.CardNumber,
-            Issuer = this.Issuer,
-            IssueDate = this.IssueDate,
-            Expires = this.Expires
+            Address = Address,
+            Name = Name,
+            Sex = Sex,
+            DateOfBirth = DateOfBirth,
+            Ethnicity = Ethnicity,
+            CardNumber = CardNumber,
+            Issuer = Issuer,
+            IssueDate = IssueDate,
+            Expires = Expires
         };
-        document.Attachments.Add(new IdentityDocumentAttachment(ChineseIdCardDocument.PersonalSideAttachmentName, this.PersonalSide.Data, this.PersonalSide.MimeType));
-        document.Attachments.Add(new IdentityDocumentAttachment(ChineseIdCardDocument.IssuerSideAttachmentName, this.IssuerSide.Data, this.IssuerSide.MimeType));
+        document.Attachments.Add(new IdentityDocumentAttachment(ChineseIdCardDocument.PersonalSideAttachmentName, PersonalSide.Data, PersonalSide.MimeType));
+        document.Attachments.Add(new IdentityDocumentAttachment(ChineseIdCardDocument.IssuerSideAttachmentName, IssuerSide.Data, IssuerSide.MimeType));
 
         var authentication = new DocumentedRealNameAuthentication(document,
-            new PersonNameInfo(this.Name),
-            this.AuditTime.Value,
-            this.Auditor!);
+            new PersonNameInfo(Name),
+            AuditTime.Value,
+            Auditor!);
         return authentication;
     }
 }

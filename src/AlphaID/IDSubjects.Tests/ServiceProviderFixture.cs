@@ -11,8 +11,8 @@ public class ServiceProviderFixture : IDisposable
             .AddPersonStore<StubNaturalPersonStore>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
 
-        this.RootServiceProvider = services.BuildServiceProvider();
-        this.ServiceScopeFactory = this.RootServiceProvider.GetRequiredService<IServiceScopeFactory>();
+        RootServiceProvider = services.BuildServiceProvider();
+        ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();
     }
 
     public void Dispose()

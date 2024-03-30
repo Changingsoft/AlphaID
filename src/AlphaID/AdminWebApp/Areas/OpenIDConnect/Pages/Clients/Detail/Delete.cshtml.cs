@@ -18,11 +18,11 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
         if (client == null)
         {
-            return this.NotFound();
+            return NotFound();
         }
-        this.Data = client;
+        Data = client;
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
@@ -30,19 +30,19 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
         if (client == null)
         {
-            return this.RedirectToPage("../Index");
+            return RedirectToPage("../Index");
         }
-        this.Data = client;
+        Data = client;
 
-        if (this.ClientName != client.ClientName)
-            this.ModelState.AddModelError(nameof(this.ClientName), "输入的客户端名不匹配。");
+        if (ClientName != client.ClientName)
+            ModelState.AddModelError(nameof(ClientName), "输入的客户端名不匹配。");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         dbContext.Clients.Remove(client);
         await dbContext.SaveChangesAsync();
-        return this.RedirectToPage("../Index");
+        return RedirectToPage("../Index");
 
     }
 }

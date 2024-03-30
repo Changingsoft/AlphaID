@@ -63,7 +63,7 @@ public static class HttpClientExtensions
         }
 
         var submit = form.GetSubmission(submitButton);
-        var target = (Uri)submit.Target;
+        var target = (Uri)submit?.Target;
         if (submitButton.HasAttribute("formaction"))
         {
             var formAction = submitButton.GetAttribute("formaction")!;

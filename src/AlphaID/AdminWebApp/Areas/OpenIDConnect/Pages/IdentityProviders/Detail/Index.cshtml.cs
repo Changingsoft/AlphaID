@@ -12,9 +12,9 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
     {
         var idp = await dbContext.IdentityProviders.FindAsync(id);
         if (idp == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Data = idp;
-        return this.Page();
+        Data = idp;
+        return Page();
     }
 }

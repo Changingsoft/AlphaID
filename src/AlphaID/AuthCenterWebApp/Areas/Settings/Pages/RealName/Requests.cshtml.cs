@@ -11,11 +11,11 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var person = await naturalPersonManager.GetUserAsync(this.User);
+            var person = await naturalPersonManager.GetUserAsync(User);
             if (person == null)
-                return this.NotFound();
-            this.RealNameRequests = realNameRequestManager.GetRequests(person);
-            return this.Page();
+                return NotFound();
+            RealNameRequests = realNameRequestManager.GetRequests(person);
+            return Page();
         }
     }
 }

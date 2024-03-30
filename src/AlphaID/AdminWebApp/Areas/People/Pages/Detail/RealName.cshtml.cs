@@ -14,12 +14,12 @@ namespace AdminWebApp.Areas.People.Pages.Detail
         {
             var person = await userManager.FindByIdAsync(anchor);
             if (person == null)
-                return this.NotFound();
+                return NotFound();
 
-            this.RealNameAuthentications = realNameManager.GetAuthentications(person);
+            RealNameAuthentications = realNameManager.GetAuthentications(person);
 
-            this.Data = person;
-            return this.Page();
+            Data = person;
+            return Page();
         }
     }
 }

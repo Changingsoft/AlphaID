@@ -15,35 +15,35 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
         public async Task<IActionResult> OnGetAsync(string anchor)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who");
+                return RedirectToPage("/Who");
             if (organization == null)
-                return this.NotFound();
-            this.Organization = organization;
+                return NotFound();
+            Organization = organization;
 
-            var visitor = await personManager.GetUserAsync(this.User);
+            var visitor = await personManager.GetUserAsync(User);
 
-            this.Members = await organizationMemberManager.GetVisibleMembersAsync(this.Organization, visitor);
-            return this.Page();
+            Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
         {
             if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who");
+                return RedirectToPage("/Who");
             if (organization == null)
-                return this.NotFound();
-            this.Organization = organization;
+                return NotFound();
+            Organization = organization;
 
-            var visitor = await personManager.GetUserAsync(this.User);
+            var visitor = await personManager.GetUserAsync(User);
 
-            this.Members = await organizationMemberManager.GetVisibleMembersAsync(this.Organization, visitor);
+            Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
 
-            var member = this.Members.FirstOrDefault(m => m.PersonId == personId);
+            var member = Members.FirstOrDefault(m => m.PersonId == personId);
             if (member == null)
-                return this.Page();
+                return Page();
 
-            this.Result = await organizationMemberManager.LeaveOrganizationAsync(member);
-            return this.Page();
+            Result = await organizationMemberManager.LeaveOrganizationAsync(member);
+            return Page();
         }
     }
 }

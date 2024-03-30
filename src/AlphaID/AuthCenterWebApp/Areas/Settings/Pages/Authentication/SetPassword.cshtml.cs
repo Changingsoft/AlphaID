@@ -34,43 +34,43 @@ public class SetPasswordModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
         var hasPassword = await userManager.HasPasswordAsync(user);
 
-        return hasPassword ? this.RedirectToPage("./ChangePassword") : this.Page();
+        return hasPassword ? RedirectToPage("./ChangePassword") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!this.ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return this.Page();
+            return Page();
         }
 
-        var user = await userManager.GetUserAsync(this.User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null)
         {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        var addPasswordResult = await userManager.AddPasswordAsync(user, this.Input.NewPassword);
+        var addPasswordResult = await userManager.AddPasswordAsync(user, Input.NewPassword);
         if (!addPasswordResult.Succeeded)
         {
             foreach (var error in addPasswordResult.Errors)
             {
-                this.ModelState.AddModelError(string.Empty, error.Description);
+                ModelState.AddModelError(string.Empty, error.Description);
             }
-            return this.Page();
+            return Page();
         }
 
         await signInManager.RefreshSignInAsync(user);
-        this.StatusMessage = "您的密码已设置。";
+        StatusMessage = "您的密码已设置。";
 
-        return this.RedirectToPage();
+        return RedirectToPage();
     }
 }

@@ -15,27 +15,27 @@ namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
         {
             var org = await organizationManager.FindByIdAsync(anchor);
             if (org == null)
-                return this.NotFound();
+                return NotFound();
 
-            return this.Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string anchor)
         {
             var org = await organizationManager.FindByIdAsync(anchor);
             if (org == null)
-                return this.NotFound();
+                return NotFound();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+            if (!ModelState.IsValid)
+                return Page();
 
-            this.Result = await bankAccountManager.AddAsync(org, this.Input.AccountNumber, this.Input.AccountName,
-                this.Input.BankName, this.Input.Usage, this.Input.SetDefault);
+            Result = await bankAccountManager.AddAsync(org, Input.AccountNumber, Input.AccountName,
+                Input.BankName, Input.Usage, Input.SetDefault);
 
-            if (!this.Result.Succeeded)
-                return this.Page();
+            if (!Result.Succeeded)
+                return Page();
 
-            return this.RedirectToPage("Index", new { anchor });
+            return RedirectToPage("Index", new { anchor });
         }
 
         public class InputModel

@@ -69,6 +69,6 @@ public record AddressInfo
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{this.Receiver} ,{this.Street3},{this.Street2},{this.Street1},{this.Locality},{this.Country},{this.PostalCode}";
+        return $"{Receiver} ,{Street3},{Street2},{Street1},{Locality},{Country},{PostalCode}";
     }
 }

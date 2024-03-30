@@ -5,10 +5,10 @@ namespace IdSubjects.Tests;
 
 public class StubNaturalPersonStore : NaturalPersonStoreBase
 {
-    private readonly HashSet<NaturalPerson> set = [];
-    private readonly HashSet<NaturalPerson> trackedSet = [];
+    private readonly HashSet<NaturalPerson> _set = [];
+    private readonly HashSet<NaturalPerson> _trackedSet = [];
 
-    public override IQueryable<NaturalPerson> Users => this.set.AsQueryable();
+    public override IQueryable<NaturalPerson> Users => _set.AsQueryable();
 
     public override Task AddClaimsAsync(NaturalPerson user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
     {
@@ -22,52 +22,52 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
 
     public override Task<IdentityResult> CreateAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        this.trackedSet.Add(user);
-        this.set.Add(Clone(user)!);
+        _trackedSet.Add(user);
+        _set.Add(Clone(user)!);
         return Task.FromResult(IdentityResult.Success);
     }
 
     public override Task<IdentityResult> DeleteAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        this.trackedSet.Remove(user);
-        var origin = this.set.Single(p => p.Id == user.Id);
-        this.set.Remove(origin);
+        _trackedSet.Remove(user);
+        var origin = _set.Single(p => p.Id == user.Id);
+        _set.Remove(origin);
         return Task.FromResult(IdentityResult.Success);
     }
 
     public override Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
     {
-        NaturalPerson? result = this.trackedSet.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail);
-        result ??= Clone(this.set.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail));
+        var result = _trackedSet.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail);
+        result ??= Clone(_set.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail));
 
         if (result != null)
-            this.trackedSet.Add(result);
+            _trackedSet.Add(result);
         return Task.FromResult(result);
     }
 
     public override Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
     {
-        NaturalPerson? result = this.trackedSet.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
-        result ??= Clone(this.set.FirstOrDefault(p => p.PhoneNumber == phoneNumber));
+        var result = _trackedSet.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
+        result ??= Clone(_set.FirstOrDefault(p => p.PhoneNumber == phoneNumber));
 
         if (result != null)
-            this.trackedSet.Add(result);
+            _trackedSet.Add(result);
         return Task.FromResult(result);
     }
 
     public override Task<NaturalPerson?> GetOriginalAsync(NaturalPerson person, CancellationToken cancellationToken)
     {
-        return Task.FromResult(this.set.FirstOrDefault(p => p.Id == person.Id));
+        return Task.FromResult(_set.FirstOrDefault(p => p.Id == person.Id));
     }
 
     public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
-        NaturalPerson? result = this.trackedSet.FirstOrDefault(p => p.Id == userId);
+        var result = _trackedSet.FirstOrDefault(p => p.Id == userId);
         if (result == null)
         {
-            result = Clone(this.set.FirstOrDefault(p => p.Id == userId));
+            result = Clone(_set.FirstOrDefault(p => p.Id == userId));
             if(result != null)
-                this.trackedSet.Add(result);
+                _trackedSet.Add(result);
         }
         return Task.FromResult(result);
     }
@@ -79,11 +79,11 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
 
     public override Task<NaturalPerson?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
     {
-        NaturalPerson? result = this.trackedSet.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName);
-        result ??= Clone(this.set.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName));
+        var result = _trackedSet.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName);
+        result ??= Clone(_set.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName));
 
         if (result != null)
-            this.trackedSet.Add(result);
+            _trackedSet.Add(result);
         return Task.FromResult(result);
     }
 
@@ -134,13 +134,13 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
 
     public override Task<IdentityResult> UpdateAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        this.trackedSet.Add(user);
+        _trackedSet.Add(user);
 
-        var found = this.set.FirstOrDefault(p => p.Id == user.Id);
+        var found = _set.FirstOrDefault(p => p.Id == user.Id);
         if (found != null)
         {
-            this.set.Remove(found);
-            this.set.Add(Clone(user)!);
+            _set.Remove(found);
+            _set.Add(Clone(user)!);
         }
 
         return Task.FromResult(IdentityResult.Success);

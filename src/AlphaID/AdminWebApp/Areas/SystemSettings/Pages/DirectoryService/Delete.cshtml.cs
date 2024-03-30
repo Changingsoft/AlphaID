@@ -17,37 +17,37 @@ public class DeleteModel(DirectoryServiceManager directoryServiceManager) : Page
     {
         var svc = await directoryServiceManager.FindByIdAsync(anchor);
         if (svc == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Data = svc;
-        return this.Page();
+        Data = svc;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
         var svc = await directoryServiceManager.FindByIdAsync(id);
         if (svc == null)
-            return this.NotFound();
-        this.Data = svc;
+            return NotFound();
+        Data = svc;
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        if (this.ServiceName != this.Data.Name)
+        if (ServiceName != Data.Name)
         {
-            this.ModelState.AddModelError(nameof(this.ServiceName), "服务名称不正确");
-            return this.Page();
+            ModelState.AddModelError(nameof(ServiceName), "服务名称不正确");
+            return Page();
         }
 
-        var result = await directoryServiceManager.DeleteAsync(this.Data);
+        var result = await directoryServiceManager.DeleteAsync(Data);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error);
             }
-            return this.Page();
+            return Page();
         }
-        return this.RedirectToPage("Index");
+        return RedirectToPage("Index");
     }
 }

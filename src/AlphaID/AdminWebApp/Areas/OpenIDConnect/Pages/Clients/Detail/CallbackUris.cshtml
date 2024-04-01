@@ -12,7 +12,7 @@
         {
             <li class="list-group-item">
                 @uri.RedirectUri
-                <button type="submit" asp-page-handler="RemoveCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-rid="@uri.Id">@L["Delete"]</button>
+                <button type="submit" asp-page-handler="RemoveCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-rid="@uri.Id">@SL["Delete"]</button>
             </li>
         }
     </ul>
@@ -32,7 +32,7 @@
         {
             <li class="list-group-item">
                 @uri.PostLogoutRedirectUri
-                <button type="submit" asp-page-handler="RemoveSignOutCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-srid="@uri.Id">@L["Delete"]</button>
+                <button type="submit" asp-page-handler="RemoveSignOutCallbackUrl" class="btn btn-sm btn-pill btn-red" asp-route-srid="@uri.Id">@SL["Delete"]</button>
             </li>
         }
     </ul>

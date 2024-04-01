@@ -141,9 +141,6 @@
   <data name="Bio" xml:space="preserve">
     <value>Bio</value>
   </data>
-  <data name="Birth date" xml:space="preserve">
-	  <value>Birth date</value>
-  </data>
   <data name="Captcha code" xml:space="preserve">
     <value>Captcha code</value>
   </data>
@@ -161,6 +158,13 @@
   </data>
   <data name="Current user name" xml:space="preserve">
     <value>Current user name</value>
+  </data>
+  <data name="Date of birth" xml:space="preserve">
+	  <value>Date of birth</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+	  <value>Delete</value>
+	  <comment>Delete</comment>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Department</value>

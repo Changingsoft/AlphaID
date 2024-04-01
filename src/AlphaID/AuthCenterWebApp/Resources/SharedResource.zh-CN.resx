@@ -141,9 +141,6 @@
   <data name="Bio" xml:space="preserve">
 	  <value>个性签名</value>
   </data>
-  <data name="Birth date" xml:space="preserve">
-    <value>生日</value>
-  </data>
   <data name="Captcha code" xml:space="preserve">
     <value>验证码</value>
   </data>
@@ -161,6 +158,12 @@
   </data>
   <data name="Current user name" xml:space="preserve">
     <value>当前用户名</value>
+  </data>
+  <data name="Date of birth" xml:space="preserve">
+	  <value>出生日期</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+	  <value>删除</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>部门</value>
@@ -218,6 +221,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+	  <value>移动电话号码</value>
   </data>
   <data name="Privacy" xml:space="preserve">
 	  <value>隐私</value>
@@ -284,8 +290,5 @@
   </data>
   <data name="Your personal website." xml:space="preserve">
 	  <value>您的个人主页。</value>
-  </data>
-  <data name="Phone number" xml:space="preserve">
-	  <value>移动电话号码</value>
   </data>
 </root>

@@ -35,6 +35,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
         {
             var person = await personManager.GetUserAsync(User);
             Debug.Assert(person != null);
+            Person = person;
 
             if (!ModelState.IsValid)
                 return Page();
@@ -66,8 +67,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
                 await signInManager.RefreshSignInAsync(person);
                 return new JsonResult(true);
             }
-            else
-                return new JsonResult("Can not update profile picture.");
+
+            return new JsonResult("Can not update profile picture.");
         }
 
         public async Task<IActionResult> OnPostClearProfilePictureAsync()
@@ -89,14 +90,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
             [StringLength(200, ErrorMessage = "Validate_StringLength")]
             public string? Bio { get; set; }
 
-            [Display(Name = "Website", Description = "Your personal website.")]
+            [Display(Name = "Website")]
             [DataType(DataType.Url)]
+            [StringLength(256, ErrorMessage = "Validate_StringLength")]
             public string? Website { get; set; }
 
             [Display(Name = "Gender")]
             public Gender? Gender { get; set; }
 
-            [Display(Name = "Birth date")]
+            [Display(Name = "Date of birth")]
             [DataType(DataType.Date)]
             public DateTime? DateOfBirth { get; set; }
         }

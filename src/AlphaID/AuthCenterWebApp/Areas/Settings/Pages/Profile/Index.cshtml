@@ -71,6 +71,7 @@
         
     </div>
 </div>
+<hr/>
 <div class="row">
     <div class="col-9">
         <form method="post">
@@ -111,7 +112,7 @@
             </label>
             @if (User.HasProfilePicture())
             {
-                <button type="submit" class="btn btn-sm" asp-page-handler="ClearProfilePicture" onclick="return confirm('@(L["Are you sure you want to remove profile picture?"])');">@L["Remove"]</button>
+                <button type="submit" class="btn btn-sm" asp-page-handler="ClearProfilePicture" onclick="return confirm('@(L["Remove profile picture?"])');">@L["Remove"]</button>
             }
         </form>
     </div>

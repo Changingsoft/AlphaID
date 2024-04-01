@@ -61,6 +61,7 @@ SET IDENTITY_INSERT [dbo].[ClientRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientScopes] ON 
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (1, N'openid', 4)
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (3, N'profile', 4)
+INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (4, N'user_impersonation', 4)
 SET IDENTITY_INSERT [dbo].[ClientScopes] OFF
 SET IDENTITY_INSERT [dbo].[ClientSecrets] ON 
 INSERT [dbo].[ClientSecrets] ([Id], [ClientId], [Description], [Value], [Expiration], [Type], [Created]) VALUES (1, 4, NULL, N'bpHsoigKdYWDrsxWC2qSXbUViZMkA0xg72mcf9ktD1M=', NULL, N'SharedSecret', CAST(N'2022-12-23T20:39:00.0000000' AS DateTime2))

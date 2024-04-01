@@ -6,4 +6,5 @@ using NgAdminWebApp.Models;
 
 namespace NgAdminWebApp.Data;
 
-public class ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions) : ApiAuthorizationDbContext<ApplicationUser>(options, operationalStoreOptions);
+public class ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
+    : ApiAuthorizationDbContext<ApplicationUser>(options, operationalStoreOptions);

@@ -24,27 +24,6 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
         });
     }
 
-    protected override TestServer CreateServer(IWebHostBuilder builder)
-    {
-        var server = base.CreateServer(builder);
-        //if(!DatabaseReady)
-        //{
-        //    lock(_lock)
-        //    {
-        //        if(!DatabaseReady)
-        //        {
-        //            using var scope = server.Services.CreateAsyncScope();
-        //            var idDb = scope.ServiceProvider.GetRequiredService<IDSubjectsDbContext>();
-        //            idDb.Database.EnsureDeleted();
-        //            idDb.Database.Migrate();
-        //            scope.Dispose();
-        //            DatabaseReady = true;
-        //        }
-        //    }
-        //}
-        return server;
-    }
-
     public virtual HttpClient CreateAuthenticatedClient(WebApplicationFactoryClientOptions? options = null)
     {
         HttpClient client = options != null ? CreateClient(options) : CreateClient();

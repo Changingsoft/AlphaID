@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class TwoFactorAuthenticationModel(
-    NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, ILogger<TwoFactorAuthenticationModel> logger) : PageModel
+    NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager) : PageModel
 {
     public bool HasAuthenticator { get; set; }
 

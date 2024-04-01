@@ -159,7 +159,7 @@
   <data name="Show in discovery document" xml:space="preserve">
     <value>在发现文档中显示</value>
   </data>
-  <data name="This is a system resource, can not be delete." xml:space="preserve">
+  <data name="This is a system resource, can not be deleted." xml:space="preserve">
     <value>这是系统资源，不能删除。</value>
   </data>
   <data name="Type" xml:space="preserve">

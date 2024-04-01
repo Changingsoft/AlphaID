@@ -7,16 +7,16 @@
         identityResource = DbContext.IdentityResources.FirstOrDefault(p => p.Id == resourceId);
 
     }
-    ViewBag.Title = identityResource?.DisplayName;
+    ViewBag.Title = identityResource?.DisplayName ?? "";
 }
-@section head{
+@section head {
     @await RenderSectionAsync("head", false)
 }
 
-@section Breadcrumb{
+@section Breadcrumb {
     <li class="breadcrumb-item"><a asp-page="/Clients/Index">@L["Identity Resources"]</a></li>
 }
-@section PageHeader{
+@section PageHeader {
     <h1>@identityResource?.DisplayName</h1>
 }
 <div class="card">
@@ -38,6 +38,6 @@
     </div>
 </div>
 @section Scripts
-    {
+{
     @await RenderSectionAsync("Scripts", false)
 }

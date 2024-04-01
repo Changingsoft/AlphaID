@@ -1,8 +1,7 @@
 ﻿using IdSubjects.Diagnostics;
-using Microsoft.Extensions.Logging;
 
 namespace IdSubjects.DirectoryLogon;
-internal class DirectoryAccountUpdateInterceptor(ILogger<DirectoryAccountUpdateInterceptor>? logger, IDirectoryAccountStore store) : NaturalPersonUpdateInterceptor
+internal class DirectoryAccountUpdateInterceptor(IDirectoryAccountStore store) : NaturalPersonUpdateInterceptor
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public override Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)

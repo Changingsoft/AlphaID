@@ -2,11 +2,11 @@
 @{
     Layout = "Shared/_Layout";
     Duende.IdentityServer.EntityFramework.Entities.IdentityProvider? provider = default!;
-    if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out int providerId))
+    if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out var providerId))
     {
         provider = DbContext.IdentityProviders.FirstOrDefault(p => p.Id == providerId);
     }
-    ViewBag.Title = provider?.DisplayName;
+    ViewBag.Title = provider?.DisplayName ?? "";
 }
 @section head {
     @await RenderSectionAsync("head", false)

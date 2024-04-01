@@ -6,7 +6,7 @@ namespace NgAdminWebApp.Controllers;
 [Authorize]
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController(ILogger<WeatherForecastController> logger) : ControllerBase
+public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] s_summaries =
     [

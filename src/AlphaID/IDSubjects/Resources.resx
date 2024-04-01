@@ -142,13 +142,13 @@
     <value>Invalid organization type.</value>
   </data>
   <data name="LastOwnerCannotLeave" xml:space="preserve">
-    <value>You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization.</value>
+    <value>You are the last owner of this organization, for leaving organization, you must transfer your ownership to another member in this organization.</value>
   </data>
   <data name="Legal entity identifier" xml:space="preserve">
 	  <value>Legal entity identifier</value>
   </data>
   <data name="LessThenMinimumPasswordAge" xml:space="preserve">
-    <value>Current password age is less then minimum passowrd age requirement.</value>
+    <value>Current password age is less then minimum password age requirement.</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>

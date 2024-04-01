@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Html.Dom;
 using System.Diagnostics.CodeAnalysis;
+using AngleSharp.Io;
+using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace IntegrationTestUtilities.Helpers;
 
@@ -56,13 +58,13 @@ public static class HttpClientExtensions
         IHtmlElement submitButton,
         IEnumerable<KeyValuePair<string, string>> formValues)
     {
-        foreach (var kvp in formValues)
+        foreach (KeyValuePair<string, string> kvp in formValues)
         {
             var element = Assert.IsAssignableFrom<IHtmlInputElement>(form[kvp.Key]);
             element.Value = kvp.Value;
         }
 
-        var submit = form.GetSubmission(submitButton);
+        DocumentRequest? submit = form.GetSubmission(submitButton);
         var target = (Uri)submit?.Target;
         if (submitButton.HasAttribute("formaction"))
         {

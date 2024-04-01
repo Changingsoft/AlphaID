@@ -120,6 +120,7 @@ public static class Telemetry
         /// Helper method to increase <see cref="Counters.UserLogin"/> counter.
         /// </summary>
         /// <param name="clientId">Client Id, if available</param>
+        /// <param name="idp"></param>
         public static void UserLogin(string? clientId, string idp)
             => s_userLoginCounter.Add(1, new(Tags.Client, clientId), new(Tags.Idp, idp));
 
@@ -139,6 +140,6 @@ public static class Telemetry
         /// </summary>
         /// <param name="idp">Idp/authentication scheme for external authentication, or "local" for built in.</param>
         public static void UserLogout(string? idp)
-            => s_userLogoutCounter.Add(1, tag: new(Tags.Idp, idp));
+            => s_userLogoutCounter.Add(1, tag: new KeyValuePair<string, object?>(Tags.Idp, idp));
     }
 }

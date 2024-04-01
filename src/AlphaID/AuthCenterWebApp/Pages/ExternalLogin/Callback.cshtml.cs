@@ -3,7 +3,6 @@ using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using IdentityModel;
 using IdSubjects;
-using IdSubjects.ChineseName;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,8 +19,7 @@ public class Callback(
     IEventService events,
     ILogger<Callback> logger,
     NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
-    ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter) : PageModel
+    SignInManager<NaturalPerson> signInManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {

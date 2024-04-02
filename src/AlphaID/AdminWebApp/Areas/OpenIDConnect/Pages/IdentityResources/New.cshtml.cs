@@ -1,4 +1,3 @@
-using Castle.Components.DictionaryAdapter;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +11,8 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
-        public List<SelectListItem> AvaileableClaims { get; set; } = new EditableList<SelectListItem>()
-        {
+        public List<SelectListItem> AvailableClaims { get; set; } =
+        [
             new("sub", "sub"),
             new("name", "name"),
             new("given_name", "given_name"),
@@ -34,7 +33,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources
             new("phone_number_verified", "phone_number_verified"),
             new("address", "address"),
             new("updated_at", "updated_at"),
-        };
+        ];
 
         public void OnGet()
         {

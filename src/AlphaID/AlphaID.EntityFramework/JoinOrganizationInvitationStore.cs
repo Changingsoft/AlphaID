@@ -1,6 +1,5 @@
 ﻿using IdSubjects;
 using IdSubjects.Invitations;
-using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework;
 public class JoinOrganizationInvitationStore(IdSubjectsDbContext dbContext) : IJoinOrganizationInvitationStore

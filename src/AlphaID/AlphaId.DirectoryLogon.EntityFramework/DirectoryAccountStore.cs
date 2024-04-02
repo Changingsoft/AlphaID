@@ -9,18 +9,18 @@ public class DirectoryAccountStore(DirectoryLogonDbContext dbContext) : IDirecto
     public async Task CreateAsync(DirectoryAccount account)
     {
         dbContext.LogonAccounts.Add(account);
-        _ = await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(DirectoryAccount account)
     {
         dbContext.LogonAccounts.Remove(account);
-        _ = await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(DirectoryAccount account)
     {
-        dbContext.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        _ = await dbContext.SaveChangesAsync();
+        dbContext.LogonAccounts.Update(account);
+        await dbContext.SaveChangesAsync();
     }
 }

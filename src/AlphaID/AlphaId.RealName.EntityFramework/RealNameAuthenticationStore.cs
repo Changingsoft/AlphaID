@@ -22,6 +22,7 @@ internal class RealNameAuthenticationStore(RealNameDbContext dbContext) : IRealN
     public async Task<IdOperationResult> UpdateAsync(RealNameAuthentication realNameState)
     {
 
+        dbContext.RealNameAuthentications.Update(realNameState);
         await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }

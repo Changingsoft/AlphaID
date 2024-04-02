@@ -1,20 +1,11 @@
 ﻿using IdSubjects.RealName;
 using IdSubjects.RealName.Requesting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlphaId.RealName.EntityFramework;
 
 public class RealNameDbContext(DbContextOptions<RealNameDbContext> options) : DbContext(options)
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseLazyLoadingProxies();
-    }
-
-
     public DbSet<RealNameAuthentication> RealNameAuthentications { get; protected set; } = default!;
 
     public DbSet<DocumentedRealNameAuthentication> DocumentedRealNameAuthentications { get; protected set; } = default!;

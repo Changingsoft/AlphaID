@@ -33,7 +33,7 @@
         <label asp-for="Input.ShowInDiscoveryDocument" class="form-check-label"></label>
     </div>
     <div class="form-label">@L["User Claims"]</div>
-    @foreach (var claim in Model.AvaileableClaims)
+    @foreach (var claim in Model.AvailableClaims)
     {
         <label class="form-check">
             <input type="checkbox" name="Input.SelectedClaims" class="form-check-input" value="@claim.Value" checked="@(Model.Input.SelectedClaims.Contains(claim.Value))"/>

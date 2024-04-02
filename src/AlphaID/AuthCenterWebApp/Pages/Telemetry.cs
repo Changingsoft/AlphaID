@@ -138,7 +138,7 @@ public static class Telemetry
         /// <summary>
         /// Helper method to increase the <see cref="Counters.UserLogout"/> counter.
         /// </summary>
-        /// <param name="idp">Idp/authentication scheme for external authentication, or "local" for built in.</param>
+        /// <param name="idp">Idp/authentication scheme for external authentication, or "local" for built-in.</param>
         public static void UserLogout(string? idp)
             => s_userLogoutCounter.Add(1, tag: new KeyValuePair<string, object?>(Tags.Idp, idp));
     }

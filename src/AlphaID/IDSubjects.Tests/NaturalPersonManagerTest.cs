@@ -120,7 +120,7 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
         var passwords = passwordHistoryStore.GetPasswords(_person, 10);
         Assert.Single(passwords);
 
-        //change password again with same old password will failed.
+        //change password again with same old password will fail.
         result = await manager.ChangePasswordAsync(_person, "Pass1234$", "Pass1234$");
         Assert.False(result.Succeeded);
     }

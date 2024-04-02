@@ -37,7 +37,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
             if (!ModelState.IsValid)
                 return Page();
 
-            Result = await joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, User.DisplayName() ?? "");
+            Result = await joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, User.DisplayName());
             return Page();
         }
 

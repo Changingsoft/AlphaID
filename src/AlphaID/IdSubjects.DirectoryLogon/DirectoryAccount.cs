@@ -51,7 +51,7 @@ public class DirectoryAccount
     /// 目录服务。
     /// </summary>
     [ForeignKey(nameof(ServiceId))]
-    public virtual DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = default!;
+    public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = default!;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal UserPrincipal? GetUserPrincipal()

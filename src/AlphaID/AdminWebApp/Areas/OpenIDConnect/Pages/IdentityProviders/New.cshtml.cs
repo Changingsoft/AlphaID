@@ -13,10 +13,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders
 
         public void OnGet()
         {
-            Input = new InputModel()
-            {
-
-            };
+            Input = new InputModel();
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -71,5 +71,5 @@ public class OrganizationBankAccount
     /// 
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; protected set; } = default!;
+    public GenericOrganization Organization { get; protected set; } = default!;
 }

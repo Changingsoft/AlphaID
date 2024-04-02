@@ -45,13 +45,13 @@ public class OrganizationMember
     /// GenericOrganization.
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; protected set; } = default!;
+    public GenericOrganization Organization { get; protected set; } = default!;
 
     /// <summary>
     /// Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public virtual NaturalPerson Person { get; protected set; } = default!;
+    public NaturalPerson Person { get; protected set; } = default!;
 
     /// <summary>
     /// 部门。

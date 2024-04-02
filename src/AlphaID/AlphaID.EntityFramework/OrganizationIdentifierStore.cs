@@ -14,6 +14,7 @@ internal class OrganizationIdentifierStore(IdSubjectsDbContext dbContext) : IOrg
 
     public async Task<IdOperationResult> UpdateAsync(OrganizationIdentifier identifier)
     {
+        dbContext.OrganizationIdentifiers.Update(identifier);
         await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }

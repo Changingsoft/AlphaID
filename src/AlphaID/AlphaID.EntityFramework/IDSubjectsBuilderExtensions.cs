@@ -24,6 +24,12 @@ public static class IdSubjectsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// 添加适用于IdSubjects的DbContext。
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
     public static IdSubjectsBuilder AddDbContext(this IdSubjectsBuilder builder,
         Action<DbContextOptionsBuilder> options)
     {

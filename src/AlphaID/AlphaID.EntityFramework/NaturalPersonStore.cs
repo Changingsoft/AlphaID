@@ -5,15 +5,15 @@ using System.Security.Claims;
 
 namespace AlphaId.EntityFramework;
 
-internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonStoreBase
+internal class NaturalPersonStore(IdSubjectsDbContext dbContext) : NaturalPersonStoreBase
 {
-    public override IQueryable<NaturalPerson> Users => context.People.AsNoTracking();
+    public override IQueryable<NaturalPerson> Users => dbContext.People.AsNoTracking();
 
     public override Task AddClaimsAsync(NaturalPerson user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
     {
         foreach (var claim in claims)
         {
-            context.PersonClaims.Add(new NaturalPersonClaim()
+            dbContext.PersonClaims.Add(new NaturalPersonClaim()
             {
                 UserId = user.Id,
                 ClaimType = claim.Type,
@@ -25,7 +25,7 @@ internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonSt
 
     public override Task AddLoginAsync(NaturalPerson user, UserLoginInfo login, CancellationToken cancellationToken)
     {
-        context.PersonLogins.Add(new NaturalPersonLogin()
+        dbContext.PersonLogins.Add(new NaturalPersonLogin()
         {
             LoginProvider = login.LoginProvider,
             ProviderDisplayName = login.ProviderDisplayName,
@@ -37,57 +37,57 @@ internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonSt
 
     public override async Task<IdentityResult> CreateAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        context.People.Add(user);
-        await context.SaveChangesAsync(cancellationToken);
+        dbContext.People.Add(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
         return IdentityResult.Success;
     }
 
     public override async Task<IdentityResult> DeleteAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        context.People.Remove(user);
-        await context.SaveChangesAsync(cancellationToken);
+        dbContext.People.Remove(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
         return IdentityResult.Success;
     }
 
     public override Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
     {
-        return context.People.SingleOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail, cancellationToken);
+        return dbContext.People.SingleOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail, cancellationToken);
     }
 
     public override Task<NaturalPerson?> GetOriginalAsync(NaturalPerson person, CancellationToken cancellationToken)
     {
-        return context.People.AsNoTrackingWithIdentityResolution().SingleOrDefaultAsync(p => p.Id == person.Id, cancellationToken: cancellationToken);
+        return dbContext.People.AsNoTrackingWithIdentityResolution().SingleOrDefaultAsync(p => p.Id == person.Id, cancellationToken: cancellationToken);
     }
 
     public override async Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
-        return await context.People.FindAsync([userId], cancellationToken: cancellationToken);
+        return await dbContext.People.FindAsync([userId], cancellationToken: cancellationToken);
     }
 
     public override Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
     {
-        return context.People.SingleOrDefaultAsync(p => p.PhoneNumber == phoneNumber, cancellationToken);
+        return dbContext.People.SingleOrDefaultAsync(p => p.PhoneNumber == phoneNumber, cancellationToken);
     }
 
     public override async Task<NaturalPerson?> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
-        var login = await context.PersonLogins.Include(naturalPersonLogin => naturalPersonLogin.User).FirstOrDefaultAsync(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey, cancellationToken);
+        var login = await dbContext.PersonLogins.Include(naturalPersonLogin => naturalPersonLogin.User).FirstOrDefaultAsync(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey, cancellationToken);
         return login?.User;
     }
 
     public override Task<NaturalPerson?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
     {
-        return context.People.SingleOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken: cancellationToken);
+        return dbContext.People.SingleOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken: cancellationToken);
     }
 
     public override async Task<IList<Claim>> GetClaimsAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        return await context.PersonClaims.Where(c => c.UserId == user.Id).Select(c => new Claim(c.ClaimType, c.ClaimValue)).ToListAsync(cancellationToken: cancellationToken);
+        return await dbContext.PersonClaims.Where(c => c.UserId == user.Id).Select(c => new Claim(c.ClaimType, c.ClaimValue)).ToListAsync(cancellationToken: cancellationToken);
     }
 
     public override async Task<IList<UserLoginInfo>> GetLoginsAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
-        return await context.PersonLogins
+        return await dbContext.PersonLogins
             .Where(l => l.UserId == user.Id)
             .Select(l => new UserLoginInfo(l.LoginProvider, l.ProviderKey, l.ProviderDisplayName))
             .ToListAsync(cancellationToken: cancellationToken);
@@ -95,14 +95,14 @@ internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonSt
 
     public override async Task<string?> GetTokenAsync(NaturalPerson user, string loginProvider, string name, CancellationToken cancellationToken)
     {
-        var token = await context.PersonTokens.FirstOrDefaultAsync(t => t.UserId == user.Id && t.LoginProvider == loginProvider && t.Name == name, cancellationToken: cancellationToken);
+        var token = await dbContext.PersonTokens.FirstOrDefaultAsync(t => t.UserId == user.Id && t.LoginProvider == loginProvider && t.Name == name, cancellationToken: cancellationToken);
         return token?.Value;
     }
 
     public override async Task<IList<NaturalPerson>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken)
     {
-        var query = from userClaim in context.PersonClaims
-                    join user in context.People on userClaim.UserId equals user.Id
+        var query = from userClaim in dbContext.PersonClaims
+                    join user in dbContext.People on userClaim.UserId equals user.Id
                     where userClaim.ClaimValue == claim.Value && userClaim.ClaimType == claim.Type
                     select user;
         return await query.ToListAsync(cancellationToken: cancellationToken);
@@ -112,33 +112,33 @@ internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonSt
     {
         foreach (var claim in claims)
         {
-            var matchedClaims = await context.PersonClaims.Where(uc => uc.UserId.Equals(user.Id) && uc.ClaimValue == claim.Value && uc.ClaimType == claim.Type).ToListAsync(cancellationToken);
+            var matchedClaims = await dbContext.PersonClaims.Where(uc => uc.UserId.Equals(user.Id) && uc.ClaimValue == claim.Value && uc.ClaimType == claim.Type).ToListAsync(cancellationToken);
             foreach (var c in matchedClaims)
             {
-                context.PersonClaims.Remove(c);
+                dbContext.PersonClaims.Remove(c);
             }
         }
     }
 
     public override async Task RemoveLoginAsync(NaturalPerson user, string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
-        var login = await context.PersonLogins.FirstOrDefaultAsync(l => l.UserId == user.Id && l.LoginProvider == loginProvider && l.ProviderKey == providerKey, cancellationToken: cancellationToken);
+        var login = await dbContext.PersonLogins.FirstOrDefaultAsync(l => l.UserId == user.Id && l.LoginProvider == loginProvider && l.ProviderKey == providerKey, cancellationToken: cancellationToken);
         if (login != null)
         {
-            context.PersonLogins.Remove(login);
+            dbContext.PersonLogins.Remove(login);
         }
     }
 
     public override async Task RemoveTokenAsync(NaturalPerson user, string loginProvider, string name, CancellationToken cancellationToken)
     {
-        var token = await context.PersonTokens.FirstOrDefaultAsync(t => t.UserId == user.Id && t.LoginProvider == loginProvider && t.Name == name, cancellationToken: cancellationToken);
+        var token = await dbContext.PersonTokens.FirstOrDefaultAsync(t => t.UserId == user.Id && t.LoginProvider == loginProvider && t.Name == name, cancellationToken: cancellationToken);
         if (token != null)
-            context.PersonTokens.Remove(token);
+            dbContext.PersonTokens.Remove(token);
     }
 
     public override async Task ReplaceClaimAsync(NaturalPerson user, Claim claim, Claim newClaim, CancellationToken cancellationToken)
     {
-        var matchedClaims = await context.PersonClaims.Where(uc => uc.UserId.Equals(user.Id) && uc.ClaimValue == claim.Value && uc.ClaimType == claim.Type).ToListAsync(cancellationToken);
+        var matchedClaims = await dbContext.PersonClaims.Where(uc => uc.UserId.Equals(user.Id) && uc.ClaimValue == claim.Value && uc.ClaimType == claim.Type).ToListAsync(cancellationToken);
         foreach (var matchedClaim in matchedClaims)
         {
             matchedClaim.ClaimValue = newClaim.Value;
@@ -148,10 +148,10 @@ internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonSt
 
     public override async Task SetTokenAsync(NaturalPerson user, string loginProvider, string name, string? value, CancellationToken cancellationToken)
     {
-        var token = await context.PersonTokens.FirstOrDefaultAsync(t => t.UserId == user.Id && t.LoginProvider == loginProvider && t.Name == name, cancellationToken: cancellationToken);
+        var token = await dbContext.PersonTokens.FirstOrDefaultAsync(t => t.UserId == user.Id && t.LoginProvider == loginProvider && t.Name == name, cancellationToken: cancellationToken);
         if (token == null)
         {
-            context.PersonTokens.Add(new NaturalPersonToken()
+            dbContext.PersonTokens.Add(new NaturalPersonToken()
             {
                 UserId = user.Id,
                 LoginProvider = loginProvider,
@@ -169,8 +169,8 @@ internal class NaturalPersonStore(IdSubjectsDbContext context) : NaturalPersonSt
     public override async Task<IdentityResult> UpdateAsync(NaturalPerson user, CancellationToken cancellationToken)
     {
         user.ConcurrencyStamp = Guid.NewGuid().ToString();
-        //this.context.People.Update(user);
-        await context.SaveChangesAsync(cancellationToken);
+        dbContext.People.Update(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
         return IdentityResult.Success;
     }
 

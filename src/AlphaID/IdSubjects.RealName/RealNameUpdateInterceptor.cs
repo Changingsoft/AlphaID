@@ -11,6 +11,8 @@ internal class RealNameUpdateInterceptor(ILogger<RealNameUpdateInterceptor>? log
     public override async Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
     {
         List<IdentityError> errors = [];
+
+
         var personAuthentications = store.FindByPerson(person);
         if (!personAuthentications.Any())
         {
@@ -18,7 +20,7 @@ internal class RealNameUpdateInterceptor(ILogger<RealNameUpdateInterceptor>? log
             return IdentityResult.Success;
         }
 
-        _pendingAuthentications = [.. personAuthentications.Where(a => !a.Applied)];
+        _pendingAuthentications = personAuthentications.Where(a => !a.Applied).ToArray();
         if (_pendingAuthentications.Any())
         {
             foreach (var authentication in _pendingAuthentications)

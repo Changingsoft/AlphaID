@@ -2,19 +2,11 @@
 using IdSubjects.Invitations;
 using IdSubjects.Payments;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlphaId.EntityFramework;
 
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : DbContext(options)
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseLazyLoadingProxies();
-    }
-
     /// <summary>
     /// 自然人。
     /// </summary>
@@ -42,9 +34,4 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = default!;
 
     public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = default!;
-
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-    }
 }

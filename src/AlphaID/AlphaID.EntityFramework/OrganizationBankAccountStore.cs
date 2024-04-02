@@ -15,6 +15,7 @@ internal class OrganizationBankAccountStore(IdSubjectsDbContext dbContext) : IOr
 
     public async Task<IdOperationResult> UpdateAsync(OrganizationBankAccount bankAccount)
     {
+        dbContext.OrganizationBankAccounts.Update(bankAccount);
         await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }

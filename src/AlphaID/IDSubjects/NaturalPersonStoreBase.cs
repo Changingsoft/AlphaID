@@ -565,7 +565,7 @@ public abstract class NaturalPersonStoreBase : INaturalPersonStore
     }
 
     /// <summary>
-    /// 
+    /// 为用户设置Token。
     /// </summary>
     /// <param name="user"></param>
     /// <param name="loginProvider"></param>

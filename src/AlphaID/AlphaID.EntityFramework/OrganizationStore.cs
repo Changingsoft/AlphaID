@@ -15,14 +15,14 @@ internal class OrganizationStore(IdSubjectsDbContext dbContext) : IOrganizationS
     public async Task<IdOperationResult> CreateAsync(GenericOrganization organization)
     {
         dbContext.Organizations.Add(organization);
-        _ = await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 
     public async Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
     {
         dbContext.Organizations.Remove(organization);
-        _ = await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 
@@ -38,8 +38,8 @@ internal class OrganizationStore(IdSubjectsDbContext dbContext) : IOrganizationS
 
     public async Task<IdOperationResult> UpdateAsync(GenericOrganization organization)
     {
-        dbContext.Entry(organization).State = EntityState.Modified;
-        _ = await dbContext.SaveChangesAsync();
+        dbContext.Organizations.Update(organization);
+        await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }
 }

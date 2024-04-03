@@ -1,10 +1,9 @@
-﻿#nullable disable
-
+﻿using System.Reflection;
+using System.Text.Json;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text.Json;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
@@ -19,29 +18,24 @@ public class DownloadPersonalDataModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(User));
 
         // Only include personal data for download
-        var personalData = new Dictionary<string, string>();
-        var personalDataProps = typeof(NaturalPerson).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
-        foreach (var p in personalDataProps)
-        {
-            personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
-        }
+        IEnumerable<PropertyInfo> personalDataProps = typeof(NaturalPerson).GetProperties()
+            .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
-        var logins = await userManager.GetLoginsAsync(user);
-        foreach (var l in logins)
-        {
+        Dictionary<string, string> personalData = personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");
+
+        IList<UserLoginInfo> logins = await userManager.GetLoginsAsync(user);
+        foreach (UserLoginInfo l in logins)
             personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
-        }
 
-        personalData.Add("Authenticator Key", await userManager.GetAuthenticatorKeyAsync(user));
+        string? authenticatorKey = await userManager.GetAuthenticatorKeyAsync(user);
+        if (authenticatorKey != null)
+            personalData.Add("Authenticator Key", authenticatorKey);
 
         Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
         return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");

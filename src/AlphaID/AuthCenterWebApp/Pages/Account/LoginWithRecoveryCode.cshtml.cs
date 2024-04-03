@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Duende.IdentityServer.Events;
+﻿using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +19,7 @@ public class LoginWithRecoveryCodeModel(
     [BindProperty]
     public InputModel Input { get; set; }
 
-    public string ReturnUrl { get; set; }
+    public string? ReturnUrl { get; set; }
 
     public class InputModel
     {
@@ -29,10 +27,10 @@ public class LoginWithRecoveryCodeModel(
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Text)]
         [Display(Name = "Recovery code")]
-        public string RecoveryCode { get; set; }
+        public string RecoveryCode { get; set; } = default!;
     }
 
-    public async Task<IActionResult> OnGetAsync(string returnUrl = null)
+    public async Task<IActionResult> OnGetAsync(string? returnUrl = null)
     {
         // Ensure the user has gone through the username & password screen first
         _ = await signInManager.GetTwoFactorAuthenticationUserAsync() ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
@@ -41,7 +39,7 @@ public class LoginWithRecoveryCodeModel(
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+    public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
         if (!ModelState.IsValid)
         {

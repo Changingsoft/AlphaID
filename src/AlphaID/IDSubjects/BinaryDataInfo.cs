@@ -1,21 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects;
 
 /// <summary>
-/// 表示存储的二进制数据信息。
+///     表示存储的二进制数据信息。
 /// </summary>
 [Owned]
 public record BinaryDataInfo
 {
     /// <summary>
-    /// 
     /// </summary>
-    protected BinaryDataInfo() { }
+    protected BinaryDataInfo()
+    {
+    }
 
     /// <summary>
-    /// 使用MIME类型和数据初始化二进制数据信息。
+    ///     使用MIME类型和数据初始化二进制数据信息。
     /// </summary>
     /// <param name="mimeType"></param>
     /// <param name="data"></param>
@@ -26,18 +27,19 @@ public record BinaryDataInfo
     }
 
     /// <summary>
-    /// MIME类型
+    ///     MIME类型
     /// </summary>
-    [MaxLength(100), Unicode(false)]
+    [MaxLength(100)]
+    [Unicode(false)]
     public string MimeType { get; set; } = default!;
 
     /// <summary>
-    /// 数据。
+    ///     数据。
     /// </summary>
     public byte[] Data { get; set; } = default!;
 
     /// <summary>
-    /// 此数据的更新时间。
+    ///     此数据的更新时间。
     /// </summary>
     public DateTimeOffset UpdateTime { get; set; } = DateTimeOffset.UtcNow;
 }

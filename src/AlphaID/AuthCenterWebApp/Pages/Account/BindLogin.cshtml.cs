@@ -255,7 +255,8 @@ public class BindLoginModel(
         // capture the idp used to log in, so the session knows where the user came from
         localClaims.Add(new Claim(JwtClaimTypes.IdentityProvider, externalResult.Properties!.Items[".AuthScheme"]!));
 
-        // if the external system sent a session id claim, copy it over so we can use it for single sign-out
+        // if the external system sent a session id claim, copy it over.
+        // so we can use it for single sign-out
         var sid = externalResult.Principal!.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
         if (sid != null)
         {

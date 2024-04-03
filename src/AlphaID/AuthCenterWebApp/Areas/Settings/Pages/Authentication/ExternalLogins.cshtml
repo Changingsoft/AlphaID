@@ -5,7 +5,7 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-@if (Model.CurrentLogins?.Count > 0)
+@if (Model.CurrentLogins.Count > 0)
 {
     <h3>@L["External logins"]</h3>
     <table class="table">
@@ -35,7 +35,7 @@
         </tbody>
     </table>
 }
-@if (Model.OtherLogins?.Count > 0)
+@if (Model.OtherLogins.Count > 0)
 {
     <h4>@L["Add another service to log in."]</h4>
     <hr />

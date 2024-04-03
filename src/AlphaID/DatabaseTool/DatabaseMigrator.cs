@@ -1,14 +1,28 @@
-﻿namespace DatabaseTool;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DatabaseTool;
 /// <summary>
 /// 表示一个数据库迁移器。
 /// </summary>
-internal abstract class DatabaseMigrator
+internal abstract class DatabaseMigrator(DbContext dbContext)
 {
-    public abstract Task DropDatabaseAsync();
+    public virtual Task DropDatabaseAsync()
+    {
+        return dbContext.Database.EnsureDeletedAsync();
+    }
 
-    public abstract Task MigrateAsync();
+    public virtual Task MigrateAsync()
+    {
+        return dbContext.Database.MigrateAsync();
+    }
 
-    public abstract Task PostMigrationAsync();
+    public virtual Task PostMigrationAsync()
+    {
+        return Task.CompletedTask;
+    }
 
-    public abstract Task AddTestingDataAsync();
+    public virtual Task AddTestingDataAsync()
+    {
+        return Task.CompletedTask;
+    }
 }

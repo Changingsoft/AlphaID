@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
@@ -8,10 +6,10 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 public class ShowRecoveryCodesModel : PageModel
 {
     [TempData]
-    public string[] RecoveryCodes { get; set; }
+    public string[]? RecoveryCodes { get; set; }
 
     [TempData]
-    public string StatusMessage { get; set; }
+    public string? StatusMessage { get; set; }
 
     public IActionResult OnGet()
     {

@@ -1,14 +1,12 @@
-﻿#nullable disable
-
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
@@ -20,32 +18,25 @@ public class EmailModel(
     private readonly ProductInfo _production = production.Value;
 
     [Display(Name = "Email")]
-    public string Email { get; set; }
+    [Required(ErrorMessage = "Validate_Required")]
+    public string Email { get; set; } = default!;
 
     public bool IsEmailConfirmed { get; set; }
 
     [TempData]
-    public string StatusMessage { get; set; }
+    public string? StatusMessage { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; }
-
-    public class InputModel
-    {
-        [Required(ErrorMessage = "Validate_Required")]
-        [EmailAddress]
-        [Display(Name = "New email")]
-        public string NewEmail { get; set; }
-    }
+    public InputModel Input { get; set; } = default!;
 
     private async Task LoadAsync(NaturalPerson user)
     {
-        var email = await userManager.GetEmailAsync(user);
+        string? email = await userManager.GetEmailAsync(user);
         Email = email;
 
         Input = new InputModel
         {
-            NewEmail = email,
+            NewEmail = email
         };
 
         IsEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
@@ -53,11 +44,8 @@ public class EmailModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await LoadAsync(user);
         return Page();
@@ -65,11 +53,8 @@ public class EmailModel(
 
     public async Task<IActionResult> OnPostChangeEmailAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)
         {
@@ -77,17 +62,17 @@ public class EmailModel(
             return Page();
         }
 
-        var email = await userManager.GetEmailAsync(user);
+        string? email = await userManager.GetEmailAsync(user);
         if (Input.NewEmail != email)
         {
-            var userId = await userManager.GetUserIdAsync(user);
-            var code = await userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
+            string userId = await userManager.GetUserIdAsync(user);
+            string code = await userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
+            string? callbackUrl = Url.Page(
                 "/Account/ConfirmEmailChange",
-                pageHandler: null,
-                values: new { area = "", userId, email = Input.NewEmail, code },
-                protocol: Request.Scheme);
+                null,
+                new { area = "", userId, email = Input.NewEmail, code },
+                Request.Scheme);
             await emailSender.SendEmailAsync(
                 Input.NewEmail,
                 "确认您的邮件地址",
@@ -104,11 +89,8 @@ public class EmailModel(
 
     public async Task<IActionResult> OnPostSendVerificationEmailAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)
         {
@@ -116,15 +98,15 @@ public class EmailModel(
             return Page();
         }
 
-        var userId = await userManager.GetUserIdAsync(user);
-        var email = await userManager.GetEmailAsync(user);
-        var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        string userId = await userManager.GetUserIdAsync(user);
+        string? email = await userManager.GetEmailAsync(user);
+        string code = await userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        var callbackUrl = Url.Page(
+        string? callbackUrl = Url.Page(
             "/Account/ConfirmEmail",
-            pageHandler: null,
-            values: new { area = "Identity", userId, code },
-            protocol: Request.Scheme);
+            null,
+            new { area = "Identity", userId, code },
+            Request.Scheme);
         await emailSender.SendEmailAsync(
             email,
             "确认您的邮件地址",
@@ -133,5 +115,13 @@ public class EmailModel(
 
         StatusMessage = "验证邮件已发送，请到您的邮箱检查邮件。";
         return RedirectToPage();
+    }
+
+    public class InputModel
+    {
+        [Required(ErrorMessage = "Validate_Required")]
+        [EmailAddress]
+        [Display(Name = "New email")]
+        public string NewEmail { get; set; } = default!;
     }
 }

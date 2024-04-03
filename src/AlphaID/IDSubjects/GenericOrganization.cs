@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 
 namespace IdSubjects;
 
 /// <summary>
-/// 组织。
+///     组织。
 /// </summary>
 [Table("Organization")]
 [Index(nameof(Name))]
@@ -15,14 +15,13 @@ namespace IdSubjects;
 public class GenericOrganization
 {
     /// <summary>
-    /// for persistence.
+    ///     for persistence.
     /// </summary>
     protected internal GenericOrganization()
     {
     }
 
     /// <summary>
-    /// 
     /// </summary>
     public GenericOrganization(string name) : this()
     {
@@ -30,102 +29,104 @@ public class GenericOrganization
     }
 
     /// <summary>
-    /// 序列号。
+    ///     序列号。
     /// </summary>
     [Key]
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string Id { get; protected internal set; } = Guid.NewGuid().ToString().ToLower();
 
     /// <summary>
-    /// Name.
+    ///     Name.
     /// </summary>
     [MaxLength(100)]
     public string Name { get; protected internal set; } = default!;
 
     /// <summary>
-    /// 住所。
+    ///     住所。
     /// </summary>
     [MaxLength(100)]
     public virtual string? Domicile { get; set; }
 
     /// <summary>
-    /// 联系方式。
+    ///     联系方式。
     /// </summary>
     [MaxLength(50)]
     public virtual string? Contact { get; set; }
 
     /// <summary>
-    /// 公开电子邮件。
+    ///     公开电子邮件。
     /// </summary>
-    [MaxLength(100),Unicode(false)]
+    [MaxLength(100)]
+    [Unicode(false)]
     public string? Email { get; set; }
 
     /// <summary>
-    /// 组织的代表人。
+    ///     组织的代表人。
     /// </summary>
     [MaxLength(20)]
     public virtual string? Representative { get; set; }
 
     /// <summary>
-    /// 组织的头像。
+    ///     组织的头像。
     /// </summary>
     public virtual BinaryDataInfo? ProfilePicture { get; set; }
 
     /// <summary>
-    /// 创建记录的时间。
+    ///     创建记录的时间。
     /// </summary>
     public virtual DateTimeOffset WhenCreated { get; protected internal set; }
 
     /// <summary>
-    /// 记录修改的时间。
+    ///     记录修改的时间。
     /// </summary>
     public virtual DateTimeOffset WhenChanged { get; protected internal set; }
 
     /// <summary>
-    /// 是否有效。
+    ///     是否有效。
     /// </summary>
     public virtual bool Enabled { get; protected internal set; } = true;
 
     /// <summary>
-    /// 注册时间。
+    ///     注册时间。
     /// </summary>
     public virtual DateOnly? EstablishedAt { get; set; }
 
     /// <summary>
-    /// 营业期起
+    ///     营业期起
     /// </summary>
     public virtual DateOnly? TermBegin { get; set; }
 
     /// <summary>
-    /// 营业期止。
+    ///     营业期止。
     /// </summary>
     public virtual DateOnly? TermEnd { get; set; }
 
     /// <summary>
-    /// 标示该组织的地理位置。
+    ///     标示该组织的地理位置。
     /// </summary>
     [Column(TypeName = "geography")]
     public virtual Geometry? Location { get; set; }
 
     /// <summary>
-    /// 组织的网站。
+    ///     组织的网站。
     /// </summary>
     [MaxLength(256)]
     public virtual string? Website { get; set; }
 
     /// <summary>
-    /// Description of organization.
+    ///     Description of organization.
     /// </summary>
     [MaxLength(200)]
     public virtual string? Description { get; set; }
 
     /// <summary>
-    /// 发票信息。
+    ///     发票信息。
     /// </summary>
     public virtual FapiaoInfo? Fapiao { get; set; }
 
     /// <summary>
-    /// 曾用名。
+    ///     曾用名。
     /// </summary>
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = [];
 }

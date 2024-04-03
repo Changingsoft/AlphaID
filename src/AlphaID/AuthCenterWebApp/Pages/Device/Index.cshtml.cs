@@ -196,6 +196,6 @@ public class Index(
         public bool RememberConsent { get; set; } = true;
         public string ReturnUrl { get; set; } = default!;
         public string Description { get; set; } = default!;
-        public string UserCode { get; set; } = default!;
+        public string? UserCode { get; set; }
     }
 }

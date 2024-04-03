@@ -95,7 +95,7 @@ public static class Telemetry
         /// are expanded and called one by one to not cause a combinatory explosion of scopes.
         /// </summary>
         /// <param name="clientId">Client id</param>
-        /// <param name="scopes">Scope names. Each element is added on it's own to the counter</param>
+        /// <param name="scopes">Scope names. Each element is added on its own to the counter</param>
         public static void ConsentDenied(string clientId, IEnumerable<string> scopes)
         {
             ArgumentNullException.ThrowIfNull(scopes);

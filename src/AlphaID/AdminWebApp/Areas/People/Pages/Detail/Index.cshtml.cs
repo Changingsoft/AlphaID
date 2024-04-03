@@ -1,7 +1,7 @@
+using System.Diagnostics;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
@@ -15,7 +15,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -26,7 +26,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetPhotoAsync(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -40,23 +40,22 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
         if (!Request.Form.Files.Any())
             return BadRequest();
 
-        var file = Request.Form.Files[0];
-        var person = await userManager.FindByIdAsync(anchor);
+        IFormFile file = Request.Form.Files[0];
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         Debug.Assert(person != null);
 
-        await using var stream = file.OpenReadStream();
+        await using Stream stream = file.OpenReadStream();
         var data = new byte[stream.Length];
         await stream.ReadAsync(data);
-        var result = await userManager.SetProfilePictureAsync(person, file.ContentType, data);
+        IdentityResult result = await userManager.SetProfilePictureAsync(person, file.ContentType, data);
         if (result.Succeeded)
             return new JsonResult(true);
-        else
-            return new JsonResult("Can not update profile picture.");
+        return new JsonResult("Can not update profile picture.");
     }
 
     public async Task<IActionResult> OnPostClearProfilePictureAsync(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

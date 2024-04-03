@@ -8,7 +8,7 @@ public class PersonalDataModel(NaturalPersonManager userManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         return user == null ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.") : Page();
     }
 }

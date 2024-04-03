@@ -1,8 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
@@ -20,25 +20,22 @@ public class RemovePasswordModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.GetUserAsync(User);
+        NaturalPerson? person = await userManager.GetUserAsync(User);
         return person == null ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.GetUserAsync(User);
-        if (person == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson? person = await userManager.GetUserAsync(User);
+        if (person == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         Logins = await userManager.GetLoginsAsync(person);
         if (!Logins.Any())
         {
             ModelState.AddModelError("", "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。");
-            Result = IdentityResult.Failed(new IdentityError()
+            Result = IdentityResult.Failed(new IdentityError
             {
                 Code = "Cannot remove password",
-                Description = "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。",
+                Description = "您不能移除密码，因为没有任何外部登录可用，移除密码后，您将完全无法使用该账户。要移除密码，请添加至少一个外部登录。"
             });
             return Page();
         }

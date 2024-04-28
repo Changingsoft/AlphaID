@@ -3,7 +3,7 @@
 namespace IdSubjects;
 
 /// <summary>
-/// 一个关于NaturalPerson的锚点组合接口以便于实现NaturalPersonStore.
+/// 一个关于NaturalPerson的组合接口以便于实现NaturalPersonStore.
 /// </summary>
 public interface INaturalPersonStore :
     IUserLoginStore<NaturalPerson>,

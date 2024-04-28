@@ -17,19 +17,17 @@ public class GenericOrganization
     /// <summary>
     ///     for persistence.
     /// </summary>
-    protected internal GenericOrganization()
-    {
-    }
+    protected internal GenericOrganization() { }
 
     /// <summary>
     /// </summary>
-    public GenericOrganization(string name) : this()
+    public GenericOrganization(string name)
     {
         Name = name;
     }
 
     /// <summary>
-    ///     序列号。
+    ///     Id。
     /// </summary>
     [Key]
     [MaxLength(50)]

@@ -37,9 +37,4 @@ public record BinaryDataInfo
     ///     数据。
     /// </summary>
     public byte[] Data { get; set; } = default!;
-
-    /// <summary>
-    ///     此数据的更新时间。
-    /// </summary>
-    public DateTimeOffset UpdateTime { get; set; } = DateTimeOffset.UtcNow;
 }

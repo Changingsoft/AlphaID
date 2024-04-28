@@ -6,12 +6,12 @@
 public interface IOrganizationMemberStore
 {
     /// <summary>
-    /// Gets queryable of GenericOrganization member.
+    /// 获取可查询的组织成员集合。
     /// </summary>
     IQueryable<OrganizationMember> OrganizationMembers { get; }
 
     /// <summary>
-    /// Find organization member by person id and organization id.
+    /// 根据个人Id和组织Id查找组织成员身份。
     /// </summary>
     /// <param name="personId"></param>
     /// <param name="organizationId"></param>

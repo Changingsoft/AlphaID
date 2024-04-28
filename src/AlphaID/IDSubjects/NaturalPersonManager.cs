@@ -499,7 +499,8 @@ public class NaturalPersonManager(INaturalPersonStore store,
             result = await UnlockUserAsync(person);
         if (!result.Succeeded)
         {
-            await EventService.RaiseAsync(new ChangePasswordFailureEvent(result.Errors.ToString()));
+            string errMessage = result.Errors.Select(p => p.Description).Aggregate((a, b) => $"{a}, {b}");
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(errMessage));
         }
         else
         {

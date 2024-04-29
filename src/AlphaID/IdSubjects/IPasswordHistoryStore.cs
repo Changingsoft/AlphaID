@@ -19,7 +19,7 @@ public interface IPasswordHistoryStore
     /// <param name="person"></param>
     /// <param name="historyLength"></param>
     /// <returns></returns>
-    IEnumerable<PasswordHistory> GetPasswords(string person, int historyLength);
+    IEnumerable<string> GetPasswords(string person, int historyLength);
 
     /// <summary>
     ///     裁剪指定自然人的密码历史。

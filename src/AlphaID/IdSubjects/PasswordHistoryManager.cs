@@ -27,7 +27,7 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
         //取出密码历史
         var passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
         return passwords
-            .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis.Data, password))
+            .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis, password))
             .Any(result => result.HasFlag(PasswordVerificationResult.Success));
     }
 

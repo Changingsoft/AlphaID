@@ -8,14 +8,15 @@ public class StubPasswordHistoryStore : IPasswordHistoryStore
 
     public Task<IdentityResult> AddAsync(string data, string userId, DateTimeOffset timeOffset)
     {
-        PasswordHistory history = new PasswordHistory() { Data = data, UserId = userId, WhenCreated = timeOffset };
+        var history = new PasswordHistory { Data = data, UserId = userId, WhenCreated = timeOffset };
         _set.Add(history);
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public IEnumerable<PasswordHistory> GetPasswords(string person, int historyLength)
+    public IEnumerable<string> GetPasswords(string person, int historyLength)
     {
-        return _set.Where(h => h.UserId == person).OrderByDescending(h => h.WhenCreated).Take(historyLength);
+        return _set.Where(h => h.UserId == person).OrderByDescending(h => h.WhenCreated).Take(historyLength)
+            .Select(his => his.Data);
     }
 
     public Task TrimHistory(string person, int optionsRememberPasswordHistory)
@@ -28,5 +29,14 @@ public class StubPasswordHistoryStore : IPasswordHistoryStore
     {
         _set.Clear();
         return Task.CompletedTask;
+    }
+
+    private record PasswordHistory
+    {
+        public string UserId { get; set; } = default!;
+
+        public string Data { get; set; } = default!;
+
+        public DateTimeOffset WhenCreated { get; set; }
     }
 }

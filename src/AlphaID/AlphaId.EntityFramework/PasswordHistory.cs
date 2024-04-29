@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects;
+namespace AlphaId.EntityFramework;
 
 /// <summary>
 /// </summary>

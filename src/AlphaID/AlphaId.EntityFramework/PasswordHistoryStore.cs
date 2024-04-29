@@ -14,13 +14,13 @@ internal class PasswordHistoryStore(IdSubjectsDbContext dbContext) : IPasswordHi
         return IdentityResult.Success;
     }
 
-    public IEnumerable<PasswordHistory> GetPasswords(string person, int historyLength)
+    public IEnumerable<string> GetPasswords(string person, int historyLength)
     {
         IOrderedQueryable<PasswordHistory> resultSet = from history in dbContext.PasswordHistorySet
             where history.UserId == person
             orderby history.WhenCreated descending
             select history;
-        return resultSet.Take(historyLength);
+        return resultSet.Take(historyLength).Select(his => his.Data);
     }
 
     public async Task TrimHistory(string person, int optionsRememberPasswordHistory)

@@ -1,6 +1,7 @@
-using Duende.IdentityServer.EntityFramework.DbContexts;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes;
 
@@ -11,16 +12,16 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
     public void OnGet()
     {
-        Input = new InputModel()
+        Input = new InputModel
         {
-            ShowInDiscoveryDocument = true,
+            ShowInDiscoveryDocument = true
         };
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var now = DateTime.UtcNow;
-        var scope = new Duende.IdentityServer.EntityFramework.Entities.ApiScope()
+        DateTime now = DateTime.UtcNow;
+        var scope = new ApiScope
         {
             Enabled = true,
             Name = Input.Name,
@@ -30,7 +31,7 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
             Emphasize = Input.Emphasize,
             ShowInDiscoveryDocument = Input.ShowInDiscoveryDocument,
             Created = now,
-            Updated = now,
+            Updated = now
         };
 
         if (!ModelState.IsValid)
@@ -46,6 +47,7 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
         {
             ModelState.AddModelError("", ex.Message);
         }
+
         return Page();
     }
 
@@ -68,6 +70,5 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Show in discovery document")]
         public bool ShowInDiscoveryDocument { get; set; }
-
     }
 }

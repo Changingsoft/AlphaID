@@ -8,7 +8,7 @@ internal class PasswordHistoryStore(IdSubjectsDbContext dbContext) : IPasswordHi
 {
     public async Task<IdentityResult> AddAsync(string data, string userId, DateTimeOffset timeOffset)
     {
-        PasswordHistory history = new PasswordHistory() { Data = data, UserId = userId, WhenCreated = timeOffset };
+        var history = new PasswordHistory { Data = data, UserId = userId, WhenCreated = timeOffset };
         dbContext.PasswordHistorySet.Add(history);
         await dbContext.SaveChangesAsync();
         return IdentityResult.Success;

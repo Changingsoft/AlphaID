@@ -13,6 +13,8 @@ public class ShowRecoveryCodesModel : PageModel
 
     public IActionResult OnGet()
     {
-        return RecoveryCodes == null || RecoveryCodes.Length == 0 ? RedirectToPage("./TwoFactorAuthentication") : Page();
+        return RecoveryCodes == null || RecoveryCodes.Length == 0
+            ? RedirectToPage("./TwoFactorAuthentication")
+            : Page();
     }
 }

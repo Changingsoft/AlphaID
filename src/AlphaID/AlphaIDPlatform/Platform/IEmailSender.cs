@@ -1,12 +1,12 @@
 ﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
-/// 提供邮件发送能力。
+///     提供邮件发送能力。
 /// </summary>
 public interface IEmailSender
 {
     /// <summary>
-    /// 向指定收件人发送邮件。
+    ///     向指定收件人发送邮件。
     /// </summary>
     /// <param name="email">收件人。</param>
     /// <param name="subject">主题。</param>

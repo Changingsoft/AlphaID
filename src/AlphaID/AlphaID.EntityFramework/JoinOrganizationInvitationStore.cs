@@ -2,9 +2,11 @@
 using IdSubjects.Invitations;
 
 namespace AlphaId.EntityFramework;
+
 public class JoinOrganizationInvitationStore(IdSubjectsDbContext dbContext) : IJoinOrganizationInvitationStore
 {
     public IQueryable<JoinOrganizationInvitation> Invitations => dbContext.JoinOrganizationInvitations;
+
     public async Task<IdOperationResult> CreateAsync(JoinOrganizationInvitation invitation)
     {
         dbContext.JoinOrganizationInvitations.Add(invitation);

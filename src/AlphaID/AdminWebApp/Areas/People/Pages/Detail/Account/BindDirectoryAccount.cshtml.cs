@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
-public class BindDirectoryAccountModel(NaturalPersonManager personManager, DirectoryAccountManager directoryAccountManager, DirectoryServiceManager directoryServiceManager) : PageModel
+public class BindDirectoryAccountModel(
+    NaturalPersonManager personManager,
+    DirectoryAccountManager directoryAccountManager,
+    DirectoryServiceManager directoryServiceManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
@@ -14,7 +17,7 @@ public class BindDirectoryAccountModel(NaturalPersonManager personManager, Direc
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -23,12 +26,12 @@ public class BindDirectoryAccountModel(NaturalPersonManager personManager, Direc
 
     public async Task<IActionResult> OnPostSearchAsync(string anchor, int serviceId, string keywords)
     {
-        var person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        var directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
+        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
             return Page();
 
@@ -38,12 +41,12 @@ public class BindDirectoryAccountModel(NaturalPersonManager personManager, Direc
 
     public async Task<IActionResult> OnPostBindAsync(string anchor, int serviceId, Guid entryGuid)
     {
-        var person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        var directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
+        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
             return Page();
         var logonAccount = new DirectoryAccount(directoryService, person.Id);

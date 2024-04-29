@@ -1,9 +1,8 @@
-namespace AdminWebApp.Areas.Organizations.Pages.Shared.DisplayTemplates
+namespace AdminWebApp.Areas.Organizations.Pages.Shared.DisplayTemplates;
+
+public class OwnershipModel : PageModel
 {
-    public class OwnershipModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

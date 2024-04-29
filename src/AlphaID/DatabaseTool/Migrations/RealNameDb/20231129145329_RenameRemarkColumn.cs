@@ -1,28 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DatabaseTool.Migrations.RealNameDb
+namespace DatabaseTool.Migrations.RealNameDb;
+
+/// <inheritdoc />
+public partial class RenameRemarkColumn : Migration
 {
     /// <inheritdoc />
-    public partial class RenameRemarkColumn : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "Remark",
-                table: "RealNameAuthentication",
-                newName: "Remarks");
-        }
+        migrationBuilder.RenameColumn(
+            "Remark",
+            "RealNameAuthentication",
+            "Remarks");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "Remarks",
-                table: "RealNameAuthentication",
-                newName: "Remark");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.RenameColumn(
+            "Remarks",
+            "RealNameAuthentication",
+            "Remark");
     }
 }

@@ -4,13 +4,14 @@
     var authenticationType = Model switch
     {
         DocumentedRealNameAuthentication => L["Documented Authentication"],
-        _ => L["Unknown"],
+        _ => L["Unknown"]
     };
-
 }
 <div class="list-group-item">
     <div class="row align-items-center">
-        <div class="col-auto"><span class="badge badge-success"></span></div>
+        <div class="col-auto">
+            <span class="badge badge-success"></span>
+        </div>
         <div class="col text-truncate">
             <a asp-page="Authentication" asp-route-id="@Model.Id" class="text-reset d-block">@authenticationType</a>
             <div class="d-block text-secondary text-truncate mt-n1">@Model.ValidatedAt</div>

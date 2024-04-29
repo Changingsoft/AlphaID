@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Directory Services Management";
 }
+
 @section PageHeader
 {
     <h1>@L["Directory services"]</h1>
@@ -10,27 +11,29 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <td>@L["Name"]</td>
-            <td>@L["Server"]</td>
-            <td>@L["Root DN"]</td>
-            <td>@L["UPN suffix"]</td>
-            <td>@L["SAM Domain Part"]</td>
-            <td>@L["External login provider"]</td>
-        </tr>
+    <tr>
+        <td>@L["Name"]</td>
+        <td>@L["Server"]</td>
+        <td>@L["Root DN"]</td>
+        <td>@L["UPN suffix"]</td>
+        <td>@L["SAM Domain Part"]</td>
+        <td>@L["External login provider"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var service in Model.DirectoryServices)
-        {
-            <tr>
-                <td><a asp-page="../DirectoryService/Index" asp-route-anchor="@service.Id">@service.Name</a></td>
-                <td>@service.ServerAddress</td>
-                <td>@service.RootDn</td>
-                <td>@service.UpnSuffix</td>
-                <td>@service.SamDomainPart</td>
-                <td>@service.ExternalLoginProvider?.DisplayName (@(service.ExternalLoginProvider?.Name))</td>
-            </tr>
-        }
+    @foreach (var service in Model.DirectoryServices)
+    {
+        <tr>
+            <td>
+                <a asp-page="../DirectoryService/Index" asp-route-anchor="@service.Id">@service.Name</a>
+            </td>
+            <td>@service.ServerAddress</td>
+            <td>@service.RootDn</td>
+            <td>@service.UpnSuffix</td>
+            <td>@service.SamDomainPart</td>
+            <td>@service.ExternalLoginProvider?.DisplayName (@(service.ExternalLoginProvider?.Name))</td>
+        </tr>
+    }
     </tbody>
 </table>
 

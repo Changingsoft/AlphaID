@@ -3,12 +3,10 @@
 namespace IdSubjects.Diagnostics;
 
 /// <summary>
-/// 
 /// </summary>
 public abstract class NaturalPersonDeleteInterceptor : INaturalPersonDeleteInterceptor
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="person"></param>
@@ -19,7 +17,6 @@ public abstract class NaturalPersonDeleteInterceptor : INaturalPersonDeleteInter
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="person"></param>

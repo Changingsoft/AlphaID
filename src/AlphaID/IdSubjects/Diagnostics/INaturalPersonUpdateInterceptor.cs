@@ -3,13 +3,12 @@
 namespace IdSubjects.Diagnostics;
 
 /// <summary>
-/// 自然人拦截器接口。
+///     自然人拦截器接口。
 /// </summary>
 public interface INaturalPersonUpdateInterceptor : IInterceptor
 {
-
     /// <summary>
-    /// 在更新自然人之前调用。
+    ///     在更新自然人之前调用。
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="person"></param>
@@ -17,12 +16,10 @@ public interface INaturalPersonUpdateInterceptor : IInterceptor
     Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person);
 
     /// <summary>
-    /// 在更新自然人之后调用。
+    ///     在更新自然人之后调用。
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
     Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person);
-
-    
 }

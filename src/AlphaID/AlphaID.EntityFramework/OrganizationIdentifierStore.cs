@@ -5,6 +5,7 @@ namespace AlphaId.EntityFramework;
 internal class OrganizationIdentifierStore(IdSubjectsDbContext dbContext) : IOrganizationIdentifierStore
 {
     public IQueryable<OrganizationIdentifier> Identifiers => dbContext.OrganizationIdentifiers;
+
     public async Task<IdOperationResult> CreateAsync(OrganizationIdentifier identifier)
     {
         dbContext.OrganizationIdentifiers.Add(identifier);

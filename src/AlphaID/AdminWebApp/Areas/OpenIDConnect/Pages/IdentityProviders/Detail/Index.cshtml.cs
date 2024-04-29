@@ -10,7 +10,7 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var idp = await dbContext.IdentityProviders.FindAsync(id);
+        IdentityProvider? idp = await dbContext.IdentityProviders.FindAsync(id);
         if (idp == null)
             return NotFound();
 

@@ -5,7 +5,7 @@ namespace AlphaId.DirectoryLogon.EntityFramework;
 
 public class DirectoryAccountStore(DirectoryLogonDbContext dbContext) : IDirectoryAccountStore
 {
-    public IQueryable<DirectoryAccount> Accounts => dbContext.LogonAccounts.Include(p=> p.DirectoryServiceDescriptor);
+    public IQueryable<DirectoryAccount> Accounts => dbContext.LogonAccounts.Include(p => p.DirectoryServiceDescriptor);
 
     public async Task CreateAsync(DirectoryAccount account)
     {

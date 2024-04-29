@@ -1,5 +1,5 @@
 ﻿@page
-@model AdminWebApp.Areas.People.Pages.Detail.PersonalInfoModel
+@model PersonalInfoModel
 @{
     ViewBag.Title = L["Personal info of {0}", Model.Person.PersonName.FullName];
 }
@@ -8,7 +8,7 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.DateOfBirth" class="form-label"></label>
-        <input asp-for="Input.DateOfBirth" class="form-control" />
+        <input asp-for="Input.DateOfBirth" class="form-control"/>
         <span asp-description-for="Input.DateOfBirth"></span>
         <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
     </div>

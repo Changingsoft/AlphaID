@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace AdminWebApp.Tests;
 
@@ -8,20 +9,20 @@ public class HomePageTest(AdminWebAppFactory factory)
     [Fact]
     public async Task UnauthenticatedUserRedirect()
     {
-        var client = factory.CreateClient(new()
+        HttpClient client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
-            AllowAutoRedirect = false,
+            AllowAutoRedirect = false
         });
-        var response = await client.GetAsync("/");
+        HttpResponseMessage response = await client.GetAsync("/");
         Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
     }
 
     [Fact]
     public async Task AuthenticatedUserOk()
     {
-        var client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/");
+        HttpResponseMessage response = await client.GetAsync("/");
         Assert.True(response.IsSuccessStatusCode);
     }
 }

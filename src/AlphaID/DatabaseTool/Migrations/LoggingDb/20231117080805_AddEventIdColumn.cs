@@ -1,28 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DatabaseTool.Migrations.LoggingDb
+namespace DatabaseTool.Migrations.LoggingDb;
+
+/// <inheritdoc />
+public partial class AddEventIdColumn : Migration
 {
     /// <inheritdoc />
-    public partial class AddEventIdColumn : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<int>(
-                name: "EventId",
-                table: "AuditLog",
-                type: "int",
-                nullable: true);
-        }
+        migrationBuilder.AddColumn<int>(
+            "EventId",
+            "AuditLog",
+            "int",
+            nullable: true);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "EventId",
-                table: "AuditLog");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            "EventId",
+            "AuditLog");
     }
 }

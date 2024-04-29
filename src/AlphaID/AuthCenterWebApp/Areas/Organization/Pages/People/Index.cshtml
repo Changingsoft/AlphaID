@@ -1,6 +1,6 @@
 ﻿@page
 @using AlphaIdPlatform.Security
-@model AuthCenterWebApp.Areas.Organization.Pages.People.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = L["People"];
 }
@@ -12,7 +12,9 @@
         <div class="input-icon">
             <span class="input-icon-addon">
                 <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                </svg>
             </span>
             <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
         </div>
@@ -24,7 +26,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <input type="checkbox" class="form-check-input" />
+            <input type="checkbox" class="form-check-input"/>
         </div>
         <div class="list-group list-group-flush list-group-hoverable">
             <form method="post" asp-page-handler="Leave">
@@ -32,7 +34,9 @@
                 {
                     <div class="list-group-item">
                         <div class="row align-items-center">
-                            <div class="col-auto"><input type="checkbox" class="form-check-input" value="@member.PersonId"></div>
+                            <div class="col-auto">
+                                <input type="checkbox" class="form-check-input" value="@member.PersonId">
+                            </div>
                             <div class="col-auto">
                                 <a href="#">
                                     <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>

@@ -1,12 +1,12 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.People.Pages.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = $"{Model.Person.PersonName.FullName} ({Model.Person.UserName})";
 }
 
 <div class="row">
     <div class="col-4">
-        <img class="img-fluid mx-auto d-block rounded" src="@(Url.Page("/Avatar", new { anchor = Model.Person.UserName, area = "People"}))" title="Avatar" />
+        <img class="img-fluid mx-auto d-block rounded" src="@(Url.Page("/Avatar", new { anchor = Model.Person.UserName, area = "People" }))" title="Avatar"/>
         <h2>@Model.Person.PersonName.FullName (@(Model.Person.UserName))</h2>
         <p>@Model.Person.Bio</p>
         @* <ul class="text-secondary">
@@ -47,12 +47,14 @@
         {
             <a asp-area="Settings" asp-page="/Profile/Index" class="btn">@L["Edit profile"]</a>
         }
-        <hr />
+        <hr/>
         <h2>@L["Organizations"]</h2>
         <ul>
             @foreach (var member in Model.Members)
             {
-                <li><a asp-area="Organization" asp-page="/Index" asp-route-anchor="@member.Organization.Name">@member.Title @member.Department @member.Organization.Name</a></li>
+                <li>
+                    <a asp-area="Organization" asp-page="/Index" asp-route-anchor="@member.Organization.Name">@member.Title @member.Department @member.Organization.Name</a>
+                </li>
             }
         </ul>
     </div>

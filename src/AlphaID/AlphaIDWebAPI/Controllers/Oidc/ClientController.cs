@@ -1,14 +1,15 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlphaIdWebAPI.Controllers.Oidc;
 
 /// <summary>
-/// OIDC Client.
+///     OIDC Client.
 /// </summary>
 /// <remarks>
-/// Ctor.
+///     Ctor.
 /// </remarks>
 /// <param name="dbContext"></param>
 [ApiController]
@@ -16,9 +17,8 @@ namespace AlphaIdWebAPI.Controllers.Oidc;
 [Authorize]
 public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
 {
-
     /// <summary>
-    /// 通过 Client ID 获取客户端名称。
+    ///     通过 Client ID 获取客户端名称。
     /// </summary>
     /// <param name="clientId">Client ID</param>
     /// <returns>Client name when exists, otherwise 404 not found.</returns>
@@ -27,12 +27,11 @@ public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
     [HttpGet("{clientId}")]
     public ActionResult<ClientModel> GetClientName(string clientId)
     {
-        var client = dbContext.Clients.FirstOrDefault(p => p.ClientId == clientId);
+        Client? client = dbContext.Clients.FirstOrDefault(p => p.ClientId == clientId);
         return client == null ? NotFound() : new ClientModel(client.ClientName);
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="Name"></param>
     public record ClientModel(string Name);

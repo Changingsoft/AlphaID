@@ -1,6 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail;
 
@@ -14,30 +14,28 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await manager.FindByIdAsync(Anchor);
+        GenericOrganization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
 
-        Input = new()
+        Input = new InputModel
         {
-            CurrentName = org.Name,
+            CurrentName = org.Name
         };
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await manager.FindByIdAsync(Anchor);
+        GenericOrganization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
 
-        var result = await manager.ChangeNameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
+        IdOperationResult result = await manager.ChangeNameAsync(org, Input.NewName,
+            DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
+            foreach (string error in result.Errors) ModelState.AddModelError("", error);
             return Page();
         }
 

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = L["Identity resources"];
 }
+
 @section PageHeader{
     <div class="row">
         <div class="col">
@@ -22,31 +23,41 @@
 <div class="card">
     <table class="table card-table">
         <thead>
-            <tr>
-                <td>@L["Enabled"]</td>
-                <td>@L["Name"]</td>
-                <td>@L["Display name"]</td>
-                <td>@L["Description"]</td>
-                <td>@L["Required"]</td>
-                <td>@L["Emphasize"]</td>
-                <td>@L["Show in discovery doc"]</td>
-                <td>@L["Created at"]</td>
-            </tr>
+        <tr>
+            <td>@L["Enabled"]</td>
+            <td>@L["Name"]</td>
+            <td>@L["Display name"]</td>
+            <td>@L["Description"]</td>
+            <td>@L["Required"]</td>
+            <td>@L["Emphasize"]</td>
+            <td>@L["Show in discovery doc"]</td>
+            <td>@L["Created at"]</td>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var idr in Model.Results)
-            {
-                <tr>
-                    <td><input asp-for="@idr.Enabled" class="form-check-input" disabled /></td>
-                    <td><a asp-page="Detail/Index" asp-route-id="@idr.Id">@idr.Name</a></td>
-                    <td>@idr.DisplayName</td>
-                    <td>@idr.Description</td>
-                    <td><input asp-for="@idr.Required" class="form-check-input" disabled /></td>
-                    <td><input asp-for="@idr.Emphasize" class="form-check-input" disabled /></td>
-                    <td><input asp-for="@idr.ShowInDiscoveryDocument" class="form-check-input" disabled /></td>
-                    <td>@idr.Created</td>
-                </tr>
-            }
+        @foreach (var idr in Model.Results)
+        {
+            <tr>
+                <td>
+                    <input asp-for="@idr.Enabled" class="form-check-input" disabled/>
+                </td>
+                <td>
+                    <a asp-page="Detail/Index" asp-route-id="@idr.Id">@idr.Name</a>
+                </td>
+                <td>@idr.DisplayName</td>
+                <td>@idr.Description</td>
+                <td>
+                    <input asp-for="@idr.Required" class="form-check-input" disabled/>
+                </td>
+                <td>
+                    <input asp-for="@idr.Emphasize" class="form-check-input" disabled/>
+                </td>
+                <td>
+                    <input asp-for="@idr.ShowInDiscoveryDocument" class="form-check-input" disabled/>
+                </td>
+                <td>@idr.Created</td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

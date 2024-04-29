@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = L["Identity providers"];
 }
+
 @section PageHeader{
     <div class="row">
         <div class="col">
@@ -18,28 +19,31 @@
         </div>
     </div>
 }
+
 <div class="card">
     <table class="table card-table">
         <thead>
-            <tr>
-                <td>@L["Scheme"]</td>
-                <td>@L["Enabled"]</td>
-                <td>@L["Display name"]</td>
-                <td>@L["Type"]</td>
-                <td>@L["Created at"]</td>
-            </tr>
+        <tr>
+            <td>@L["Scheme"]</td>
+            <td>@L["Enabled"]</td>
+            <td>@L["Display name"]</td>
+            <td>@L["Type"]</td>
+            <td>@L["Created at"]</td>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var idp in Model.Results)
-            {
-                <tr>
-                    <td><a asp-page="Detail/Index" asp-route-id="@idp.Id">@idp.Scheme</a></td>
-                    <td>@idp.Enabled</td>
-                    <td>@idp.DisplayName</td>
-                    <td>@idp.Type</td>
-                    <td>@idp.Created</td>
-                </tr>
-            }
+        @foreach (var idp in Model.Results)
+        {
+            <tr>
+                <td>
+                    <a asp-page="Detail/Index" asp-route-id="@idp.Id">@idp.Scheme</a>
+                </td>
+                <td>@idp.Enabled</td>
+                <td>@idp.DisplayName</td>
+                <td>@idp.Type</td>
+                <td>@idp.Created</td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

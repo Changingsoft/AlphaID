@@ -3,13 +3,12 @@
 namespace IdSubjects.Subjects;
 
 /// <summary>
-/// 表示一个统一社会信用代码。
+///     表示一个统一社会信用代码。
 /// </summary>
 public readonly struct UnifiedSocialCreditCode
 {
-
     /// <summary>
-    /// 使用指定的代码值初始化统一社会信用代码。
+    ///     使用指定的代码值初始化统一社会信用代码。
     /// </summary>
     /// <param name="code"></param>
     public UnifiedSocialCreditCode(string code)
@@ -20,10 +19,10 @@ public readonly struct UnifiedSocialCreditCode
         if (code.Length != 17)
             throw new ArgumentException("编码长度不符。");
 
-        var adminCode = code[..1];
-        var orgTypeCode = code.Substring(1, 1);
-        var regionCode = code.Substring(2, 6);
-        var organizationCode = code.Substring(8, 9);
+        string adminCode = code[..1];
+        string orgTypeCode = code.Substring(1, 1);
+        string regionCode = code.Substring(2, 6);
+        string organizationCode = code.Substring(8, 9);
 
         adminCode = adminCode.Trim().ToUpper();
         orgTypeCode = orgTypeCode.Trim().ToUpper();
@@ -44,7 +43,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 使用给定的组合代码初始化统一社会信用代码。
+    ///     使用给定的组合代码初始化统一社会信用代码。
     /// </summary>
     /// <param name="adminCode"></param>
     /// <param name="orgTypeCode"></param>
@@ -52,16 +51,20 @@ public readonly struct UnifiedSocialCreditCode
     /// <param name="organizationCode"></param>
     public UnifiedSocialCreditCode(string adminCode, string orgTypeCode, string regionCode, string organizationCode)
         : this(adminCode, orgTypeCode, regionCode, OrganizationCode.Parse(organizationCode))
-    { }
+    {
+    }
 
     /// <summary>
-    /// 使用给定的组合代码和组织机构代码初始化统一社会信用代码。
+    ///     使用给定的组合代码和组织机构代码初始化统一社会信用代码。
     /// </summary>
     /// <param name="adminCode"></param>
     /// <param name="orgTypeCode"></param>
     /// <param name="regionCode"></param>
     /// <param name="organizationCode"></param>
-    public UnifiedSocialCreditCode(string adminCode, string orgTypeCode, string regionCode, OrganizationCode organizationCode)
+    public UnifiedSocialCreditCode(string adminCode,
+        string orgTypeCode,
+        string regionCode,
+        OrganizationCode organizationCode)
     {
         adminCode = adminCode.Trim().ToUpper();
         orgTypeCode = orgTypeCode.Trim().ToUpper();
@@ -82,37 +85,37 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 获取该统一社会信用代码的编码部分（不包括校验码）。
+    ///     获取该统一社会信用代码的编码部分（不包括校验码）。
     /// </summary>
     public string Code => AdminCode + OrganizationTypeCode + RegionCode + OrganizationCode.ToString(true);
 
     /// <summary>
-    /// 获取登记管理部门代码。
+    ///     获取登记管理部门代码。
     /// </summary>
     public string AdminCode { get; }
 
     /// <summary>
-    /// 获取组织类别代码。
+    ///     获取组织类别代码。
     /// </summary>
     public string OrganizationTypeCode { get; }
 
     /// <summary>
-    /// 获取登记机关行政区划代码。
+    ///     获取登记机关行政区划代码。
     /// </summary>
     public string RegionCode { get; }
 
     /// <summary>
-    /// 获取主体标识码（组织机构代码）
+    ///     获取主体标识码（组织机构代码）
     /// </summary>
     public OrganizationCode OrganizationCode { get; }
 
     /// <summary>
-    /// 获取校验码。
+    ///     获取校验码。
     /// </summary>
     public char CheckCode { get; }
 
     /// <summary>
-    /// 已重写，输出统一社会信用代码的字符串形式。
+    ///     已重写，输出统一社会信用代码的字符串形式。
     /// </summary>
     /// <returns></returns>
     public override string ToString()
@@ -121,7 +124,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 已重写，输出统一社会信用代码的哈希。
+    ///     已重写，输出统一社会信用代码的哈希。
     /// </summary>
     /// <returns></returns>
     public override int GetHashCode()
@@ -130,7 +133,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 已重写。比较两个统一社会信用代码是否值相等。
+    ///     已重写。比较两个统一社会信用代码是否值相等。
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
@@ -140,7 +143,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 已重载。变更相等比较为值相等比较。
+    ///     已重载。变更相等比较为值相等比较。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -148,14 +151,14 @@ public readonly struct UnifiedSocialCreditCode
     public static bool operator ==(UnifiedSocialCreditCode a, UnifiedSocialCreditCode b)
     {
         return a.AdminCode == b.AdminCode
-            && a.OrganizationTypeCode == b.OrganizationTypeCode
-            && a.RegionCode == b.RegionCode
-            && a.OrganizationCode == b.OrganizationCode
-            && a.CheckCode == b.CheckCode;
+               && a.OrganizationTypeCode == b.OrganizationTypeCode
+               && a.RegionCode == b.RegionCode
+               && a.OrganizationCode == b.OrganizationCode
+               && a.CheckCode == b.CheckCode;
     }
 
     /// <summary>
-    /// 已重载。
+    ///     已重载。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -167,31 +170,31 @@ public readonly struct UnifiedSocialCreditCode
 
     private static char Check(string value)
     {
-        int sum = 0;
-        for (int i = 0; i < 17; i++)
+        var sum = 0;
+        for (var i = 0; i < 17; i++)
         {
-            var charIndex = Charset.IndexOf(value[i]);
+            int charIndex = Charset.IndexOf(value[i]);
             if (charIndex < 0)
                 throw new ArgumentException("无效字符");
             sum += charIndex * s_weight[i];
         }
-        return Charset[(31 - (sum % 31)) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在 0-30 范围内。
+
+        return Charset[(31 - sum % 31) % 31]; //处理当余数为0时，31-0 = 31，超出字符集范围，再次取模得0，约束在 0-30 范围内。
     }
 
     /// <summary>
-    /// Charset with order from index 0 to 30,
+    ///     Charset with order from index 0 to 30,
     /// </summary>
     private const string Charset = "0123456789ABCDEFGHJKLMNPQRTUWXY";
 
     /// <summary>
-    /// Readonly weight for corresponding position.
+    ///     Readonly weight for corresponding position.
     /// </summary>
     private static readonly int[] s_weight = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
 
     #region Public static methods
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
@@ -212,7 +215,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 通过给定的输入尝试匹配为一个统一社会信用代码。
+    ///     通过给定的输入尝试匹配为一个统一社会信用代码。
     /// </summary>
     /// <param name="s"></param>
     /// <param name="usci"></param>
@@ -228,17 +231,15 @@ public readonly struct UnifiedSocialCreditCode
             return false;
 
         //Check if contained any invalid char.
-        foreach (var c in s)
-        {
+        foreach (char c in s)
             if (Charset.IndexOf(c) < 0)
                 return false;
-        }
 
         string codePart = s[..17];
-        var adminCode = codePart[..1];
-        var orgTypeCode = codePart.Substring(1, 1);
-        var regionCode = codePart.Substring(2, 6);
-        var organizationCode = codePart.Substring(8, 9);
+        string adminCode = codePart[..1];
+        string orgTypeCode = codePart.Substring(1, 1);
+        string regionCode = codePart.Substring(2, 6);
+        string organizationCode = codePart.Substring(8, 9);
         char checkCode = s[17];
 
         if (!OrganizationCode.TryParse(organizationCode, out OrganizationCode orgCode))
@@ -253,7 +254,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    /// 判定给定的输入是否是一个格式上合法的统一社会性用代码。
+    ///     判定给定的输入是否是一个格式上合法的统一社会性用代码。
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>

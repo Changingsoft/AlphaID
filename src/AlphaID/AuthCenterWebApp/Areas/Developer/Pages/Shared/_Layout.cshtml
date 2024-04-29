@@ -8,13 +8,14 @@
 }
 
 @RenderBody()
+
 @section PageFooter
 {
     @* 页脚 *@
-    <partial name="_DefaultFooterPartial" />
+    <partial name="_DefaultFooterPartial"/>
 }
 
 @section Scripts
-    {
+{
     @await RenderSectionAsync("Scripts", false)
 }

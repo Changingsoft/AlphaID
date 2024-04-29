@@ -1,25 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-/// Logon Account
+///     Logon Account
 /// </summary>
 [Table("LogonAccount")]
 [PrimaryKey(nameof(PersonId), nameof(ServiceId))]
 public class DirectoryAccount
 {
     /// <summary>
-    /// 
     /// </summary>
-    protected DirectoryAccount() { }
+    protected DirectoryAccount()
+    {
+    }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="serviceDescriptor"></param>
     /// <param name="personId"></param>
@@ -31,40 +32,41 @@ public class DirectoryAccount
     }
 
     /// <summary>
-    /// PersonId.
+    ///     PersonId.
     /// </summary>
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string PersonId { get; protected internal set; } = default!;
 
     /// <summary>
-    /// 目录对象的objectGUID。
+    ///     目录对象的objectGUID。
     /// </summary>
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string ObjectId { get; protected internal set; } = default!;
 
     /// <summary>
-    /// 目录服务Id.
+    ///     目录服务Id.
     /// </summary>
     public int ServiceId { get; set; }
 
     /// <summary>
-    /// 目录服务。
+    ///     目录服务。
     /// </summary>
     [ForeignKey(nameof(ServiceId))]
     public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = default!;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+    [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal UserPrincipal? GetUserPrincipal()
     {
-        var context = DirectoryServiceDescriptor.GetRootContext();
+        PrincipalContext context = DirectoryServiceDescriptor.GetRootContext();
         return UserPrincipal.FindByIdentity(context, ObjectId);
-
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+    [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal void SetPassword(string? password, bool mustChangePassword = false)
     {
-        using var user = GetUserPrincipal();
+        using UserPrincipal? user = GetUserPrincipal();
         ArgumentNullException.ThrowIfNull(user);
 
         user.SetPassword(password);

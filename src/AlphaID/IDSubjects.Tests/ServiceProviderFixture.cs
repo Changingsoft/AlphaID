@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.Tests;
+
 public class ServiceProviderFixture : IDisposable
 {
     public ServiceProviderFixture()
@@ -15,12 +16,11 @@ public class ServiceProviderFixture : IDisposable
         ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();
     }
 
-    public void Dispose()
-    {
-
-    }
-
     public IServiceProvider RootServiceProvider { get; }
 
     public IServiceScopeFactory ServiceScopeFactory { get; }
+
+    public void Dispose()
+    {
+    }
 }

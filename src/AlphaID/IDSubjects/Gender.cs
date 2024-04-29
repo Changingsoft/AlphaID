@@ -14,7 +14,7 @@ public enum Gender
     Male = 1,
 
     /// <summary>
-    ///      女
+    ///     女
     /// </summary>
     [Display(Name = "Female", ResourceType = typeof(Resources))]
     Female = 0,

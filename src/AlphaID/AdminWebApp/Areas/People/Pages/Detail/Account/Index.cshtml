@@ -1,5 +1,5 @@
 ﻿@page
-@model AdminWebApp.Areas.People.Pages.Detail.Account.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = SL["Overview"];
 }
@@ -14,7 +14,7 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.UserName" class="form-label"></label>
-        <input asp-for="Input.UserName" class="form-control" />
+        <input asp-for="Input.UserName" class="form-control"/>
         <span asp-validation-for="Input.UserName" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
@@ -27,7 +27,10 @@
 <p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
 @if (!Model.HasPassword)
 {
-    <p><a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a></p>
+    <p>
+        <a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a>
+    </p>
 }
-<p><a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Reset local password</a></p>
-
+<p>
+    <a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Reset local password</a>
+</p>

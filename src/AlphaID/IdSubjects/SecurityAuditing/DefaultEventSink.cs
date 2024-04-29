@@ -4,17 +4,13 @@ using Microsoft.Extensions.Logging;
 namespace IdSubjects.SecurityAuditing;
 
 /// <summary>
-/// 
 /// </summary>
 /// <remarks>
-/// 
 /// </remarks>
 /// <param name="logger"></param>
 public class DefaultEventSink(ILogger<DefaultEventService> logger) : IEventSink
 {
-
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="evt"></param>
     /// <returns></returns>

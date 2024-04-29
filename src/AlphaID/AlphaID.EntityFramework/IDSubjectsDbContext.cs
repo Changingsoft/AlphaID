@@ -8,7 +8,7 @@ namespace AlphaId.EntityFramework;
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : DbContext(options)
 {
     /// <summary>
-    /// 自然人。
+    ///     自然人。
     /// </summary>
     public DbSet<NaturalPerson> People { get; protected set; } = default!;
 
@@ -23,7 +23,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = default!;
 
     /// <summary>
-    /// Organizations.
+    ///     Organizations.
     /// </summary>
     public DbSet<GenericOrganization> Organizations { get; protected set; } = default!;
 

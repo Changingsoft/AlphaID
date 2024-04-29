@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,7 +17,7 @@ public class LoggedOut(IIdentityServerInteractionService interactionService) : P
     {
         ReturnUrl = returnUrl ?? "/";
         // get context information (client name, post logout redirect URI and iframe for federated sign out)
-        var logout = await interactionService.GetLogoutContextAsync(logoutId);
+        LogoutRequest logout = await interactionService.GetLogoutContextAsync(logoutId);
 
         View = new LoggedOutViewModel
         {

@@ -1,24 +1,24 @@
 ﻿namespace AdminWebApp.Domain.Security;
 
 /// <summary>
-/// UserInRole Store.
+///     UserInRole Store.
 /// </summary>
 public interface IUserInRoleStore
 {
     /// <summary>
-    /// Gets queryable user in role collection.
+    ///     Gets queryable user in role collection.
     /// </summary>
     IQueryable<UserInRole> UserInRoles { get; }
 
     /// <summary>
-    /// Create
+    ///     Create
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
     Task CreateAsync(UserInRole item);
 
     /// <summary>
-    /// Delete
+    ///     Delete
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>

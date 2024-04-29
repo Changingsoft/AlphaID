@@ -1,5 +1,7 @@
+using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdentityModel;
 using IdSubjects;
@@ -13,7 +15,10 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class Index(SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction, IEventService events) : PageModel
+public class Index(
+    SignInManager<NaturalPerson> signInManager,
+    IIdentityServerInteractionService interaction,
+    IEventService events) : PageModel
 {
     [BindProperty]
     public string? LogoutId { get; set; }
@@ -26,7 +31,7 @@ public class Index(SignInManager<NaturalPerson> signInManager, IIdentityServerIn
         LogoutId = logoutId;
         ReturnUrl = returnUrl;
 
-        var showLogoutPrompt = LogoutOptions.ShowLogoutPrompt;
+        bool showLogoutPrompt = LogoutOptions.ShowLogoutPrompt;
 
         if (User.Identity!.IsAuthenticated != true)
         {
@@ -35,20 +40,16 @@ public class Index(SignInManager<NaturalPerson> signInManager, IIdentityServerIn
         }
         else
         {
-            var context = await interaction.GetLogoutContextAsync(LogoutId);
+            LogoutRequest context = await interaction.GetLogoutContextAsync(LogoutId);
             if (context.ShowSignoutPrompt == false)
-            {
                 // it's safe to automatically sign-out
                 showLogoutPrompt = false;
-            }
         }
 
         if (showLogoutPrompt == false)
-        {
             // if the request for logout was properly authenticated from IdentityServer, then
             // we don't need to show the prompt and can just log the user out directly.
             return await OnPostAsync();
-        }
 
         return Page();
     }
@@ -69,11 +70,10 @@ public class Index(SignInManager<NaturalPerson> signInManager, IIdentityServerIn
             await events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
 
             // see if we need to trigger federated logout
-            var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
+            string? idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
 
             // if it's a local login we can ignore this workflow
-            if (idp is not null and not Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider)
-            {
+            if (idp is not null and not IdentityServerConstants.LocalIdentityProvider)
                 // we need to see if the provider supports external logout
                 if (await HttpContext.GetSchemeSupportsSignOutAsync(idp))
                 {
@@ -85,7 +85,6 @@ public class Index(SignInManager<NaturalPerson> signInManager, IIdentityServerIn
                     // this triggers a redirect to the external provider for sign-out
                     return SignOut(new AuthenticationProperties { RedirectUri = url }, idp);
                 }
-            }
         }
 
         return RedirectToPage("/Account/Logout/LoggedOut", new { logoutId = LogoutId, returnUrl = ReturnUrl });

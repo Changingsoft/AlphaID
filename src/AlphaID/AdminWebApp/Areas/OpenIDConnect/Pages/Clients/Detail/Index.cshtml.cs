@@ -1,8 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
@@ -17,7 +17,7 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int anchor)
     {
-        var data = await GetClient(anchor);
+        Client? data = await GetClient(anchor);
         if (data == null)
             return NotFound();
         Client = data;
@@ -29,14 +29,14 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
             Enabled = Client.Enabled,
             ClientUri = Client.ClientUri,
             LogoUri = Client.LogoUri,
-            RequireClientSecret = Client.RequireClientSecret,
+            RequireClientSecret = Client.RequireClientSecret
         };
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = await GetClient(anchor);
+        Client? data = await GetClient(anchor);
         if (data == null)
             return NotFound();
         Client = data;

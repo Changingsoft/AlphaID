@@ -10,9 +10,9 @@ public class ClientControllerTests(AlphaIdApiFactory factory)
     [Fact]
     public async Task GetClientName()
     {
-        var client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("api/Oidc/Client/d70700eb-c4d8-4742-a79a-6ecf2064b27c");
+        HttpResponseMessage response = await client.GetAsync("api/Oidc/Client/d70700eb-c4d8-4742-a79a-6ecf2064b27c");
         response.EnsureSuccessStatusCode();
 
         var result = await response.Content.ReadFromJsonAsync<ClientModel>();
@@ -22,9 +22,9 @@ public class ClientControllerTests(AlphaIdApiFactory factory)
     [Fact]
     public async Task GetNonExistsClientName()
     {
-        var client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("api/Oidc/Client/non-exists-client-id");
+        HttpResponseMessage response = await client.GetAsync("api/Oidc/Client/non-exists-client-id");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 

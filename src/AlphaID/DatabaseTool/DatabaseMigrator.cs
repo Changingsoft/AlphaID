@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTool;
+
 /// <summary>
-/// 表示一个数据库迁移器。
+///     表示一个数据库迁移器。
 /// </summary>
 internal abstract class DatabaseMigrator(DbContext dbContext)
 {

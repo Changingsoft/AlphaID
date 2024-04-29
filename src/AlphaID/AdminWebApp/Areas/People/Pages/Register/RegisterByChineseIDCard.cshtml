@@ -10,38 +10,42 @@
             <div class="weui-cells weui-cells_form">
 
                 <div class="weui-cell weui-cell_active">
-                    <div class="weui-cell__hd"><label class="weui-label">上传身份证人像面</label></div>
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">上传身份证人像面</label>
+                    </div>
                     <div class="weui-cell__bd">
-                        <img id='imgPreview1' src='~/img/IDCard_front_sample.jpg' width=70% height='100%' />
-                        <div class="upload" id="pic_front" style=""></div><input type="file" name="front" id="file1" onchange="PreviewImage('Preview',this,300,170);uploadHandler(event,'front');" />
+                        <img id="imgPreview1" src="~/img/IDCard_front_sample.jpg" width="70%" height="100%"/>
+                        <div class="upload" id="pic_front" style=""></div><input type="file" name="front" id="file1" onchange="PreviewImage('Preview',this,300,170);uploadHandler(event,'front');"/>
                     </div>
                 </div>
                 <div class="weui-cell weui-cell_active">
-                    <div class="weui-cell__hd"><label class="weui-label">上传身份证国徽面</label></div>
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">上传身份证国徽面</label>
+                    </div>
                     <div class="weui-cell__bd" style="width: 100%;">
-                        <img id='imgPreview2' src='~/img/IDCard_back_sample.jpg' width=70% height='100%' />
-                        <div class="upload" id="pic_back" style=""></div><input type="file" name="back" id="file2" onchange="PreviewImage('Preview',this,300,170);uploadHandler(event,'back');" />
+                        <img id="imgPreview2" src="~/img/IDCard_back_sample.jpg" width="70%" height="100%"/>
+                        <div class="upload" id="pic_back" style=""></div><input type="file" name="back" id="file2" onchange="PreviewImage('Preview',this,300,170);uploadHandler(event,'back');"/>
                     </div>
                 </div>
             </div>
         </div>
-        <input id="idcard_front" type="hidden" asp-for="@Model.IdCardFrontBase64" />
-        <input id="idcard_back" type="hidden" asp-for="@Model.IdCardBackBase64" />
+        <input id="idcard_front" type="hidden" asp-for="@Model.IdCardFrontBase64"/>
+        <input id="idcard_back" type="hidden" asp-for="@Model.IdCardBackBase64"/>
         <div class="mb-3">
             <label asp-for="Mobile"></label>
-            <input asp-for="Mobile" class="form-control" />
+            <input asp-for="Mobile" class="form-control"/>
             <span asp-validation-for="Mobile" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" />
+            <input asp-for="Email" class="form-control"/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div asp-validation-summary="All" class="text-danger"></div>
     </div>
     <div class="weui-form__tips-area">
         <label id="weuiAgree" for="weuiAgreeCheckbox" class="weui-agree">
-            <input id="weuiAgreeCheckbox" type="checkbox" disabled="disabled" checked="checked" class="weui-agree__checkbox" />
+            <input id="weuiAgreeCheckbox" type="checkbox" disabled="disabled" checked="checked" class="weui-agree__checkbox"/>
             <span class="weui-agree__text">
                 已阅读并同意 <a href="javascript:" id="showIOSDialog2">《相关条款》</a>
             </span>

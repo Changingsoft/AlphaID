@@ -1,13 +1,14 @@
 ﻿@page
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.Helpers
-@model AuthCenterWebApp.Areas.Settings.Pages.Profile.IndexModel
+@model IndexModel
 @inject IOptions<ProductInfo> Product
 @{
     ViewBag.Title = L["Profile"];
 }
+
 @section head {
-    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
+    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css"/>
     <style>
         .label {
             cursor: pointer;
@@ -23,6 +24,7 @@
         }
     </style>
 }
+
 @Html.DisplayFor(m => m.Result)
 <div class="alert" style="display: none;" role="alert"></div>
 <div class="progress">
@@ -33,7 +35,7 @@
     <a href="@User.ProfileUrl()" class="btn btn-sm">@L["Go to your profile"]</a>
 </div>
 
-<hr />
+<hr/>
 <div class="row g-3">
     <div class="col-md">
         <div class="form-label">@L["Surname"]</div>
@@ -65,10 +67,10 @@
         <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PhoneticGivenName">
     </div>
     <div class="col-md">
-        
+
     </div>
     <div class="col-md">
-        
+
     </div>
 </div>
 <hr/>
@@ -77,13 +79,13 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="Input.Bio" class="form-label"></label>
-                <input asp-for="Input.Bio" class="form-control" />
+                <input asp-for="Input.Bio" class="form-control"/>
                 <span asp-description-for="Input.Bio"></span>
                 <span asp-validation-for="Input.Bio" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.DateOfBirth" class="form-label"></label>
-                <input asp-for="Input.DateOfBirth" class="form-control" />
+                <input asp-for="Input.DateOfBirth" class="form-control"/>
                 <span asp-description-for="Input.DateOfBirth"></span>
                 <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
@@ -94,7 +96,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Website" class="form-label"></label>
-                <input asp-for="Input.Website" class="form-control" />
+                <input asp-for="Input.Website" class="form-control"/>
                 <span asp-description-for="Input.Website"></span>
                 <span asp-validation-for="Input.Website" class="text-danger"></span>
             </div>
@@ -138,8 +140,9 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
     <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
@@ -211,7 +214,7 @@
 
                         formData.append('avatar', blob, 'avatar.jpg');
                         formData.append('__RequestVerificationToken', $("[name='__RequestVerificationToken']").val())
-                        $.ajax('@(Url.Page(null, pageHandler: "UpdateProfilePicture"))', {
+                        $.ajax('@(Url.Page(null, "UpdateProfilePicture"))', {
                             method: 'POST',
                             data: formData,
                             processData: false,

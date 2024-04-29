@@ -8,28 +8,27 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace IdSubjects.DependencyInjection;
 
 /// <summary>
-/// IdSubjects builder for DI.
+///     IdSubjects builder for DI.
 /// </summary>
 /// <remarks>
-/// Create new builder using incoming service collection.
+///     Create new builder using incoming service collection.
 /// </remarks>
 /// <param name="services"></param>
 /// <param name="identityBuilder"></param>
 public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder identityBuilder)
 {
-
     /// <summary>
-    /// Gets the service collection.
+    ///     Gets the service collection.
     /// </summary>
     public IServiceCollection Services { get; } = services;
 
     /// <summary>
-    /// 获取 AspNetCore Identity 基础设施提供的 IdentityBuilder.
+    ///     获取 AspNetCore Identity 基础设施提供的 IdentityBuilder.
     /// </summary>
     public IdentityBuilder IdentityBuilder { get; } = identityBuilder;
 
     /// <summary>
-    /// 添加自然人管理拦截器。
+    ///     添加自然人管理拦截器。
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -40,7 +39,7 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// Add natural person store implementation into the system.
+    ///     Add natural person store implementation into the system.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -52,7 +51,6 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -63,7 +61,7 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// Add generic organization store implementation into the system.
+    ///     Add generic organization store implementation into the system.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -74,7 +72,7 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// Add organization member store implementation into the system.
+    ///     Add organization member store implementation into the system.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -85,7 +83,6 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -96,7 +93,6 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -107,7 +103,6 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -118,7 +113,6 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

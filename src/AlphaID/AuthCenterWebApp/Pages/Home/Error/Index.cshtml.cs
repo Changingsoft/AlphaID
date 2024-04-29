@@ -16,16 +16,14 @@ public class Index(IIdentityServerInteractionService interaction, IWebHostEnviro
         View = new ViewModel();
 
         // retrieve error details from identity server
-        var message = await interaction.GetErrorContextAsync(errorId);
+        ErrorMessage? message = await interaction.GetErrorContextAsync(errorId);
         if (message != null)
         {
             View.Error = message;
 
             if (!environment.IsDevelopment())
-            {
                 // only show in development
                 message.ErrorDescription = null;
-            }
         }
     }
 

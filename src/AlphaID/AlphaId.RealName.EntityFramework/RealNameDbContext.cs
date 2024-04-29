@@ -24,5 +24,4 @@ public class RealNameDbContext(DbContextOptions<RealNameDbContext> options) : Db
         modelBuilder.Entity<RealNameAuthentication>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
         modelBuilder.Entity<RealNameRequest>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
     }
-
 }

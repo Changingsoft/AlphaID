@@ -7,21 +7,25 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <td>@L["Logon Id"]</td>
-            <td>@L["Person Id"]</td>
-        </tr>
+    <tr>
+        <td>@L["Logon Id"]</td>
+        <td>@L["Person Id"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var acc in Model.LogonAccounts)
-        {
-            <tr>
-                <td>@acc.ObjectId</td>
-                <td>@acc.PersonId</td>
-            </tr>
-        }
+    @foreach (var acc in Model.LogonAccounts)
+    {
+        <tr>
+            <td>@acc.ObjectId</td>
+            <td>@acc.PersonId</td>
+        </tr>
+    }
     </tbody>
 </table>
 
-<p><a asp-page="CreateDirectoryAccount" asp-route-anchor="@Model.Person.Id">@L["Create new account"]</a></p>
-<p><a asp-page="BindDirectoryAccount" asp-route-anchor="@Model.Person.Id">@L["Bind exists account"]</a></p>
+<p>
+    <a asp-page="CreateDirectoryAccount" asp-route-anchor="@Model.Person.Id">@L["Create new account"]</a>
+</p>
+<p>
+    <a asp-page="BindDirectoryAccount" asp-route-anchor="@Model.Person.Id">@L["Bind exists account"]</a>
+</p>

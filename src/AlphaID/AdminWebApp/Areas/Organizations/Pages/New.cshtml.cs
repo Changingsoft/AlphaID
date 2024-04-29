@@ -1,6 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages;
 
@@ -37,44 +37,38 @@ public class NewModel(OrganizationManager manager) : PageModel
     public DateOnly? TermEnd { get; set; }
 
     public IdOperationResult? OperationResult { get; set; }
+
     public void OnGet()
     {
-
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-
         if (!ModelState.IsValid)
             return Page();
 
-        var nameExists = manager.FindByName(Name);
+        IEnumerable<GenericOrganization> nameExists = manager.FindByName(Name);
         if (nameExists.Any())
-        {
             if (!RegisterWithSameNameAnyway)
             {
                 ModelState.AddModelError(nameof(Name), "库中存在同名的组织，如果确实要注册，请勾选“即使名称相同，也要注册”复选框");
                 return Page();
             }
-        }
 
         var factory = new OrganizationBuilder(Name);
 
-        var org = factory.Organization;
+        GenericOrganization org = factory.Organization;
         org.Domicile = Domicile;
         org.Representative = LegalPersonName;
         org.EstablishedAt = EstablishedAt;
         org.TermBegin = TermBegin;
         org.TermEnd = TermEnd;
 
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
         try
         {
-            var result = await manager.CreateAsync(org);
+            IdOperationResult result = await manager.CreateAsync(org);
             if (result.Succeeded)
                 return RedirectToPage("Detail/Index", new { anchor = org.Id });
 

@@ -17,7 +17,9 @@ public class GenericOrganization
     /// <summary>
     ///     for persistence.
     /// </summary>
-    protected internal GenericOrganization() { }
+    protected internal GenericOrganization()
+    {
+    }
 
     /// <summary>
     /// </summary>

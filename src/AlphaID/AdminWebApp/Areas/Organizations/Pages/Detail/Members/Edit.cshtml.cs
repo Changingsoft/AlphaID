@@ -1,81 +1,74 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members
+namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members;
+
+public class EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager) : PageModel
 {
-    public class EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager) : PageModel
+    [BindProperty]
+    public InputModel Input { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(string anchor, string personId)
     {
-        [BindProperty]
-        public InputModel Input { get; set; } = default!;
+        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        if (org == null)
+            return NotFound();
+        IEnumerable<OrganizationMember> members = await memberManager.GetMembersAsync(org);
+        OrganizationMember? member = members.FirstOrDefault(p => p.PersonId == personId);
+        if (member == null)
+            return NotFound();
 
-        public async Task<IActionResult> OnGetAsync(string anchor, string personId)
+        Input = new InputModel
         {
-            var org = await organizationManager.FindByIdAsync(anchor);
-            if (org == null)
-                return NotFound();
-            var members = await memberManager.GetMembersAsync(org);
-            var member = members.FirstOrDefault(p => p.PersonId == personId);
-            if (member == null)
-                return NotFound();
+            Title = member.Title,
+            Department = member.Department,
+            Remark = member.Remark,
+            IsOwner = member.IsOwner,
+            Visibility = member.Visibility
+        };
+        return Page();
+    }
 
-            Input = new InputModel
-            {
-                Title = member.Title,
-                Department = member.Department,
-                Remark = member.Remark,
-                IsOwner = member.IsOwner,
-                Visibility = member.Visibility,
-            };
-            return Page();
-        }
+    public async Task<IActionResult> OnPostAsync(string anchor, string personId)
+    {
+        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        if (org == null)
+            return NotFound();
+        IEnumerable<OrganizationMember> members = await memberManager.GetMembersAsync(org);
+        OrganizationMember? member = members.FirstOrDefault(p => p.PersonId == personId);
+        if (member == null)
+            return NotFound();
 
-        public async Task<IActionResult> OnPostAsync(string anchor, string personId)
-        {
-            var org = await organizationManager.FindByIdAsync(anchor);
-            if (org == null)
-                return NotFound();
-            var members = await memberManager.GetMembersAsync(org);
-            var member = members.FirstOrDefault(p => p.PersonId == personId);
-            if (member == null)
-                return NotFound();
+        member.Title = Input.Title;
+        member.Department = Input.Department;
+        member.Remark = Input.Remark;
+        member.IsOwner = Input.IsOwner;
+        member.Visibility = Input.Visibility;
 
-            member.Title = Input.Title;
-            member.Department = Input.Department;
-            member.Remark = Input.Remark;
-            member.IsOwner = Input.IsOwner;
-            member.Visibility = Input.Visibility;
+        IdOperationResult result = await memberManager.UpdateAsync(member);
+        if (result.Succeeded) return RedirectToPage("Index", new { anchor });
 
-            var result = await memberManager.UpdateAsync(member);
-            if (result.Succeeded)
-            {
-                return RedirectToPage("Index", new { anchor });
-            }
+        foreach (string error in result.Errors) ModelState.AddModelError("", error);
+        return Page();
+    }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return Page();
-        }
+    public class InputModel
+    {
+        [Display(Name = "Title")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
+        public string? Title { get; set; }
 
-        public class InputModel
-        {
-            [Display(Name = "Title")]
-            [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Title { get; set; }
+        [Display(Name = "Department")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
+        public string? Department { get; set; }
 
-            [Display(Name = "Department")]
-            [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Department { get; set; }
+        [Display(Name = "Remark")]
+        [StringLength(50, ErrorMessage = "Validate_StringLength")]
+        public string? Remark { get; set; }
 
-            [Display(Name = "Remark")]
-            [StringLength(50, ErrorMessage = "Validate_StringLength")]
-            public string? Remark { get; set; }
+        public bool IsOwner { get; set; }
 
-            public bool IsOwner { get; set; }
-
-            public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
-        }
+        public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
     }
 }

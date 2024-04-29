@@ -27,7 +27,8 @@ public class DownloadPersonalDataModel(
         IEnumerable<PropertyInfo> personalDataProps = typeof(NaturalPerson).GetProperties()
             .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
-        Dictionary<string, string> personalData = personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");
+        Dictionary<string, string> personalData =
+            personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");
 
         IList<UserLoginInfo> logins = await userManager.GetLoginsAsync(user);
         foreach (UserLoginInfo l in logins)

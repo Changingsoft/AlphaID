@@ -1,23 +1,24 @@
+using System.Net.Http.Headers;
 using AngleSharp;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
-using System.Net.Http.Headers;
 
 namespace IntegrationTestUtilities.Helpers;
 
 /// <summary>
-/// Helpers for HTML document.
+///     Helpers for HTML document.
 /// </summary>
 public class HtmlHelpers
 {
     /// <summary>
-    /// Get document from Http Response Message.
+    ///     Get document from Http Response Message.
     /// </summary>
     /// <param name="response"></param>
     /// <returns></returns>
     public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)
     {
-        var document = await BrowsingContext.New()
+        IDocument document = await BrowsingContext.New()
             .OpenAsync(ResponseFactory, CancellationToken.None);
         return (IHtmlDocument)document;
 
@@ -34,13 +35,9 @@ public class HtmlHelpers
 
             void MapHeaders(HttpHeaders headers)
             {
-                foreach (var header in headers)
-                {
-                    foreach (var value in header.Value)
-                    {
-                        htmlResponse.Header(header.Key, value);
-                    }
-                }
+                foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
+                foreach (string value in header.Value)
+                    htmlResponse.Header(header.Key, value);
             }
         }
     }

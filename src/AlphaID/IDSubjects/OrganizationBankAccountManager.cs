@@ -3,17 +3,13 @@
 namespace IdSubjects;
 
 /// <summary>
-/// 
 /// </summary>
 /// <remarks>
-/// 
 /// </remarks>
 /// <param name="store"></param>
 public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
 {
-
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
@@ -23,7 +19,6 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
@@ -33,7 +28,6 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="accountNumber"></param>
@@ -42,30 +36,30 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     /// <param name="usage"></param>
     /// <param name="isDefault"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AddAsync(GenericOrganization organization, string accountNumber, string accountName,
-        string bank, string? usage, bool isDefault = false)
+    public async Task<IdOperationResult> AddAsync(GenericOrganization organization,
+        string accountNumber,
+        string accountName,
+        string bank,
+        string? usage,
+        bool isDefault = false)
     {
-        if(store.BankAccounts.Any(b => b.OrganizationId == organization.Id && b.AccountNumber == accountNumber))
+        if (store.BankAccounts.Any(b => b.OrganizationId == organization.Id && b.AccountNumber == accountNumber))
             return IdOperationResult.Failed("Bank account exists.");
 
         var bankAccount = new OrganizationBankAccount(organization, accountNumber, accountName, bank)
         {
-            Usage = usage,
+            Usage = usage
         };
-        var result = await store.CreateAsync((bankAccount));
+        IdOperationResult result = await store.CreateAsync(bankAccount);
         if (!result.Succeeded)
             return result;
 
-        if (isDefault)
-        {
-            return await SetDefault(bankAccount);
-        }
+        if (isDefault) return await SetDefault(bankAccount);
 
         return result;
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="bankAccount"></param>
     /// <returns></returns>
@@ -75,7 +69,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
             return IdOperationResult.Success;
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var currentDefault = GetDefault(bankAccount.Organization);
+        OrganizationBankAccount? currentDefault = GetDefault(bankAccount.Organization);
         if (currentDefault != null)
         {
             if (currentDefault == bankAccount)
@@ -83,6 +77,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
             currentDefault.Default = false;
             await store.UpdateAsync(currentDefault);
         }
+
         bankAccount.Default = true;
         await store.UpdateAsync(bankAccount);
         trans.Complete();
@@ -90,7 +85,6 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="bankAccount"></param>
     /// <returns></returns>
@@ -100,7 +94,6 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="bankAccount"></param>
     /// <returns></returns>

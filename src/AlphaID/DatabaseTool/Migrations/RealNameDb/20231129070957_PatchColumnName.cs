@@ -1,28 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DatabaseTool.Migrations.RealNameDb
+namespace DatabaseTool.Migrations.RealNameDb;
+
+/// <inheritdoc />
+public partial class PatchColumnName : Migration
 {
     /// <inheritdoc />
-    public partial class PatchColumnName : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "AcceptedAt",
-                table: "RealNameRequest",
-                newName: "AuditTime");
-        }
+        migrationBuilder.RenameColumn(
+            "AcceptedAt",
+            "RealNameRequest",
+            "AuditTime");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "AuditTime",
-                table: "RealNameRequest",
-                newName: "AcceptedAt");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.RenameColumn(
+            "AuditTime",
+            "RealNameRequest",
+            "AcceptedAt");
     }
 }

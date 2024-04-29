@@ -1,31 +1,33 @@
 ﻿@page
 @using IdSubjects.RealName.Requesting
-@model AuthCenterWebApp.Areas.Settings.Pages.RealName.RequestsModel
+@model RequestsModel
 @{
 }
 <table class="table">
     <thead>
-        <tr>
-            <td>@L["Type"]</td>
-            <td>@L["Status"]</td>
-            <td>@L["Audit at"]</td>
-            <td>@L["Auditor"]</td>
-        </tr>
+    <tr>
+        <td>@L["Type"]</td>
+        <td>@L["Status"]</td>
+        <td>@L["Audit at"]</td>
+        <td>@L["Auditor"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var request in Model.RealNameRequests)
+    @foreach (var request in Model.RealNameRequests)
+    {
+        var requestType = request switch
         {
-            var requestType = request switch
-            {
-                ChineseIdCardRealNameRequest => L["Chinese ID Card Request"],
-                _ => L["Unknown"],
-            };
-            <tr>
-                <td><a asp-page="Request" asp-route-id="@request.Id">@requestType</a></td>
-                <td>@request.Accepted</td>
-                <td>@request.AuditTime</td>
-                <td>@request.Auditor</td>
-            </tr>
-        }
+            ChineseIdCardRealNameRequest => L["Chinese ID Card Request"],
+            _ => L["Unknown"]
+        };
+        <tr>
+            <td>
+                <a asp-page="Request" asp-route-id="@request.Id">@requestType</a>
+            </td>
+            <td>@request.Accepted</td>
+            <td>@request.AuditTime</td>
+            <td>@request.Auditor</td>
+        </tr>
+    }
     </tbody>
 </table>

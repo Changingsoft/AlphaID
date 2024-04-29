@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = L["Identifiers"];
 }
@@ -8,30 +8,30 @@
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Type"]</td>
-                <td>@L["Value"]</td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>@L["Type"]</td>
+            <td>@L["Value"]</td>
+            <td></td>
+        </tr>
         </thead>
         <tbody>
-            @if (Model.Identifiers.Any())
+        @if (Model.Identifiers.Any())
+        {
+            foreach (var identifier in Model.Identifiers)
             {
-                foreach (var identifier in Model.Identifiers)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(m => identifier.Type)</td>
-                        <td>@identifier.Value</td>
-                        <td>
-                            <button type="submit" class="btn btn-sm btn-danger" name="idKey" value="@($"{identifier.Type}|{identifier.Value}")" onclick="return confirm('@(L["Are you sure you want to remove this identifier?"])');">@L["Remove"]</button>
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td>@Html.DisplayFor(m => identifier.Type)</td>
+                    <td>@identifier.Value</td>
+                    <td>
+                        <button type="submit" class="btn btn-sm btn-danger" name="idKey" value="@($"{identifier.Type}|{identifier.Value}")" onclick="return confirm('@(L["Are you sure you want to remove this identifier?"])');">@L["Remove"]</button>
+                    </td>
+                </tr>
             }
-            else
-            {
+        }
+        else
+        {
             <td colspan="3">@L["No results."]</td>
-            }
+        }
         </tbody>
     </table>
 </form>

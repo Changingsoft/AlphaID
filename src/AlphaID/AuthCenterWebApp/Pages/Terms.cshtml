@@ -1,9 +1,10 @@
 ﻿@page
-@model AuthCenterWebApp.Pages.TermsModel
+@model TermsModel
 @{
     Layout = "Shared/_Layout_Narrow";
     ViewBag.Title = L["Terms of service"];
 }
+
 @section PageHeader
 {
     <div class="row g-2 align-items-center">
@@ -14,9 +15,9 @@
         </div>
     </div>
 }
+
 <div class="card">
     <div class="card-body">
         <markdown filename="~/_docs/Terms.md"></markdown>
     </div>
 </div>
-

@@ -10,11 +10,8 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
     public IActionResult OnGet(int id)
     {
-        var result = dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
-        if (result == null)
-        {
-            return NotFound();
-        }
+        ApiScope? result = dbContext.ApiScopes.SingleOrDefault(p => p.Id == id);
+        if (result == null) return NotFound();
         Data = result;
         return Page();
     }

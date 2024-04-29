@@ -1,16 +1,19 @@
+using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordMobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService) : PageModel
+public class ResetPasswordMobileModel(
+    NaturalPersonManager userManager,
+    IVerificationCodeService verificationCodeService) : PageModel
 {
     [BindProperty]
     public string Code { get; set; } = default!;
@@ -51,37 +54,24 @@ public class ResetPasswordMobileModel(NaturalPersonManager userManager, IVerific
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!MobilePhoneNumber.TryParse(PhoneNumber, out var phone))
-        {
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phone))
             ModelState.AddModelError(nameof(PhoneNumber), "移动电话号码无效");
-        }
 
         if (!ModelState.IsValid)
             return Page();
 
         var normalPhoneNumber = phone.ToString();
 
-        var person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
-        if (person is not { PhoneNumberConfirmed: true })
-        {
-            return RedirectToPage("ResetPasswordConfirmation");
-        }
+        NaturalPerson? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
+        if (person is not { PhoneNumberConfirmed: true }) return RedirectToPage("ResetPasswordConfirmation");
 
         if (!await verificationCodeService.VerifyAsync(PhoneNumber, VerificationCode))
-        {
             return RedirectToPage("ResetPasswordConfirmation");
-        }
 
-        var result = await userManager.ResetPasswordAsync(person, Code, NewPassword);
-        if (result.Succeeded)
-        {
-            return RedirectToPage("ResetPasswordConfirmation");
-        }
+        IdentityResult result = await userManager.ResetPasswordAsync(person, Code, NewPassword);
+        if (result.Succeeded) return RedirectToPage("ResetPasswordConfirmation");
 
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError("", error.Description);
-        }
+        foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
         return Page();
     }
 }

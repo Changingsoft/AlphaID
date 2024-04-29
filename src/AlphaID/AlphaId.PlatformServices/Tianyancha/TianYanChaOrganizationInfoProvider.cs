@@ -1,18 +1,19 @@
-﻿using AlphaIdPlatform.Platform;
+﻿using System.Diagnostics;
+using AlphaIdPlatform.Platform;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace AlphaId.PlatformServices.Tianyancha;
 
 /// <summary>
-/// 天眼查工商信息服务。
+///     天眼查工商信息服务。
 /// </summary>
 public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
 {
+    private const string Url = "http://open.api.tianyancha.com/services/open/ic/baseinfo/2.0";
+    private const string Token = "1e439145-9eec-48d9-b22c-99d7fda0cb92";
     private readonly JsonSerializer _serializer;
 
     /// <summary>
-    /// 
     /// </summary>
     public TianYanChaOrganizationInfoProvider()
     {
@@ -20,7 +21,6 @@ public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -28,13 +28,13 @@ public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
     {
         var client = new HttpClient
         {
-            BaseAddress = new Uri(Url),
+            BaseAddress = new Uri(Url)
         };
 
         client.DefaultRequestHeaders.Add("Authorization", Token);
 
 
-        var response = await client.GetAsync("");
+        HttpResponseMessage response = await client.GetAsync("");
 
         var jsonReader = new JsonTextReader(new StreamReader(await response.Content.ReadAsStreamAsync()));
 
@@ -46,11 +46,7 @@ public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
             return null;
         }
 
-        return new OrganizationInfo(result.creditCode, result.name, result.regLocation, string.Empty, string.Empty, result.orgNumber, result.taxNumber);
+        return new OrganizationInfo(result.creditCode, result.name, result.regLocation, string.Empty, string.Empty,
+            result.orgNumber, result.taxNumber);
     }
-
-    private const string Url = "http://open.api.tianyancha.com/services/open/ic/baseinfo/2.0";
-    private const string Token = "1e439145-9eec-48d9-b22c-99d7fda0cb92";
-
-
 }

@@ -8,5 +8,4 @@ public class DirectoryLogonDbContext(DbContextOptions<DirectoryLogonDbContext> o
     public DbSet<DirectoryServiceDescriptor> DirectoryServices { get; protected set; } = default!;
 
     public DbSet<DirectoryAccount> LogonAccounts { get; protected set; } = default!;
-
 }

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
@@ -12,19 +14,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
 //[SecurityHeaders]
 [AllowAnonymous]
-public class SignUpModel(NaturalPersonManager naturalPersonManager,
-                   IVerificationCodeService verificationCodeService,
-                   ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
-                   IOptions<ProductInfo> production,
-                   SignInManager<NaturalPerson> signInManager,
-                   IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
+public class SignUpModel(
+    NaturalPersonManager naturalPersonManager,
+    IVerificationCodeService verificationCodeService,
+    ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
+    IOptions<ProductInfo> production,
+    SignInManager<NaturalPerson> signInManager,
+    IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
 
@@ -40,110 +41,103 @@ public class SignUpModel(NaturalPersonManager naturalPersonManager,
 
     public async Task<IActionResult> OnGetAsync(string? external)
     {
-        var externalAuthResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-        if (!externalAuthResult.Succeeded)
-        {
-            return Page();
-        }
+        AuthenticateResult externalAuthResult =
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        if (!externalAuthResult.Succeeded) return Page();
 
-        var externalPrincipal = externalAuthResult.Principal;
+        ClaimsPrincipal? externalPrincipal = externalAuthResult.Principal;
 
         UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
         Input = new InputModel
         {
-            Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Email) ?? externalPrincipal.FindFirstValue(ClaimTypes.Upn),
-            GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ?? externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
-            Surname = externalPrincipal.FindFirstValue(JwtClaimTypes.FamilyName) ?? externalPrincipal.FindFirstValue(ClaimTypes.Surname) ?? ""
+            Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ??
+                    externalPrincipal.FindFirstValue(ClaimTypes.Email) ??
+                    externalPrincipal.FindFirstValue(ClaimTypes.Upn),
+            GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ??
+                        externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
+            Surname = externalPrincipal.FindFirstValue(JwtClaimTypes.FamilyName) ??
+                      externalPrincipal.FindFirstValue(ClaimTypes.Surname) ?? ""
         };
-        var mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
-                     ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
-        if (MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
-        {
+        string? mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
+                         ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
+        if (MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
             Input.Mobile = phoneNumber.PhoneNumber;
-        }
-        if (Enum.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ?? externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result))
-        {
-            Input.Sex = result;
-        }
-        if (DateOnly.TryParse(externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ?? externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out var dateOfBirth))
-        {
+        if (Enum.TryParse(
+                externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ??
+                externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result)) Input.Sex = result;
+        if (DateOnly.TryParse(
+                externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ??
+                externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out DateOnly dateOfBirth))
             Input.DateOfBirth = dateOfBirth;
-        }
         ExternalLoginMessage = $"您正在从外部登录并创建{_production.Name}，请补全相关内容以创建{_production.Name}。";
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-
         if (!Input.Agree)
         {
             ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
             return Page();
         }
 
-        if (!MobilePhoneNumber.TryParse(Input.Mobile, out var phoneNumber))
-        {
+        if (!MobilePhoneNumber.TryParse(Input.Mobile, out MobilePhoneNumber phoneNumber))
             ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
-        }
         if (!ModelState.IsValid)
             return Page();
 
         if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
-        {
             ModelState.AddModelError("Input.VerificationCode", "验证码无效");
-        }
         if (!ModelState.IsValid)
             return Page();
 
         //如果来自外埠登录？
-        var externalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        AuthenticateResult externalLoginResult =
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
 
-
-        var (pinyinSurname, pinyinGivenName) = chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
+        (string pinyinSurname, string pinyinGivenName) =
+            chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
         var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
-        var userName = Input.Email ?? phoneNumber.PhoneNumber;
-        var personBuilder = new PersonBuilder(userName, new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
+        string userName = Input.Email ?? phoneNumber.PhoneNumber;
+        var personBuilder = new PersonBuilder(userName,
+            new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
         if (Input.Email != null)
             personBuilder.SetEmail(Input.Email);
 
-        var person = personBuilder.Build();
+        NaturalPerson person = personBuilder.Build();
 
         person.DateOfBirth = Input.DateOfBirth;
         person.Gender = Input.Sex;
 
-        var result = await naturalPersonManager.CreateAsync(person, Input.NewPassword);
+        IdentityResult result = await naturalPersonManager.CreateAsync(person, Input.NewPassword);
         if (result.Succeeded)
         {
             if (externalLoginResult.Succeeded)
             {
                 //Create external login for user.
-                var userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
-                      externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
-                      throw new Exception("Unknown userid");
-                await naturalPersonManager.AddLoginAsync(person, new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value, externalLoginResult.Properties.Items["schemeDisplayName"]));
+                Claim userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
+                                    externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
+                                    throw new Exception("Unknown userid");
+                await naturalPersonManager.AddLoginAsync(person,
+                    new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value,
+                        externalLoginResult.Properties.Items["schemeDisplayName"]));
             }
 
             //login user. redirect to user profile center.
             await signInManager.SignInAsync(person, false);
             return RedirectToPage("SignUpSuccess");
         }
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError("", error.Description);
-        }
+
+        foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
         return Page();
     }
 
     public async Task<IActionResult> OnPostSendVerificationCodeAsync(string mobile)
     {
-        if (!MobilePhoneNumber.TryParse(mobile, out var phoneNumber))
-        {
-            return new JsonResult("移动电话号码无效。");
-        }
+        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
         await verificationCodeService.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }

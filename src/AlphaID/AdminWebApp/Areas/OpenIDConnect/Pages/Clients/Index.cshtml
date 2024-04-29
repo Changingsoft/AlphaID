@@ -21,46 +21,46 @@
 <div class="card">
     <table class="table table-vcenter card-table">
         <thead>
-            <tr>
-                <td>@L["Name"]</td>
-                <td>@L["Grant types"]</td>
-                <td>@L["Scopes"]</td>
-            </tr>
+        <tr>
+            <td>@L["Name"]</td>
+            <td>@L["Grant types"]</td>
+            <td>@L["Scopes"]</td>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var client in Model.Clients)
-            {
-                <tr>
-                    <td>
-                        <div class="d-flex py-1 align-items-center">
-                            <span class="avatar me-2"></span>
-                            <div class="flex-fill">
-                                <div class="font-weight-medium">
-                                    <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
-                                    @if (client.RequireClientSecret)
-                                    {
-                                        <span class="badge bg-pink text-pink-fg">Credentials</span>
-                                    }
+        @foreach (var client in Model.Clients)
+        {
+            <tr>
+                <td>
+                    <div class="d-flex py-1 align-items-center">
+                        <span class="avatar me-2"></span>
+                        <div class="flex-fill">
+                            <div class="font-weight-medium">
+                                <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
+                                @if (client.RequireClientSecret)
+                                {
+                                    <span class="badge bg-pink text-pink-fg">Credentials</span>
+                                }
 
-                                    @if (client.RequirePkce)
-                                    {
-                                        <span class="badge bg-azure text-azure-fg">PKCE</span>
-                                    }
-                                </div>
-                                <div class="text-secondary">
-                                    @client.Description
-                                </div>
+                                @if (client.RequirePkce)
+                                {
+                                    <span class="badge bg-azure text-azure-fg">PKCE</span>
+                                }
+                            </div>
+                            <div class="text-secondary">
+                                @client.Description
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        @Html.Raw(client.AllowedGrantTypes.Select(p => p.GrantType).Aggregate((x,y) => $"{x}, {y}"))
-                    </td>
-                    <td>
-                        @Html.Raw(client.AllowedScopes.Select(p => p.Scope).Aggregate((x,y) => $"{x}, {y}"))
-                    </td>
-                </tr>
-            }
+                    </div>
+                </td>
+                <td>
+                    @Html.Raw(client.AllowedGrantTypes.Select(p => p.GrantType).Aggregate((x, y) => $"{x}, {y}"))
+                </td>
+                <td>
+                    @Html.Raw(client.AllowedScopes.Select(p => p.Scope).Aggregate((x, y) => $"{x}, {y}"))
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

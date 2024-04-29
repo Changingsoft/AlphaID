@@ -3,18 +3,16 @@
 namespace IdSubjects;
 
 /// <summary>
-/// 
 /// </summary>
 /// <remarks>
-/// 
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="validators"></param>
-public class OrganizationIdentifierManager(IOrganizationIdentifierStore store, IEnumerable<OrganizationIdentifierValidator> validators)
+public class OrganizationIdentifierManager(
+    IOrganizationIdentifierStore store,
+    IEnumerable<OrganizationIdentifierValidator> validators)
 {
-
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="store"></param>
     public OrganizationIdentifierManager(IOrganizationIdentifierStore store)
@@ -23,17 +21,14 @@ public class OrganizationIdentifierManager(IOrganizationIdentifierStore store, I
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="identifier"></param>
     /// <returns></returns>
     public async Task<IdOperationResult> AddIdentifierAsync(OrganizationIdentifier identifier)
     {
         List<string> errors = [];
-        foreach (var validator in validators)
-        {
+        foreach (OrganizationIdentifierValidator validator in validators)
             errors.AddRange(validator.Validate(identifier).Errors);
-        }
         if (errors.Count != 0)
             return IdOperationResult.Failed([.. errors]);
         if (store.Identifiers.Any(i => i.Type == identifier.Type && i.Value == identifier.Value))
@@ -42,7 +37,6 @@ public class OrganizationIdentifierManager(IOrganizationIdentifierStore store, I
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="identifier"></param>
     /// <returns></returns>
@@ -52,7 +46,6 @@ public class OrganizationIdentifierManager(IOrganizationIdentifierStore store, I
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>

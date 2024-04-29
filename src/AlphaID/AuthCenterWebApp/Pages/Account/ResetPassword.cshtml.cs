@@ -18,10 +18,7 @@ public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
 
     public IActionResult OnGet(string? code)
     {
-        if (code == null)
-        {
-            return BadRequest("A code must be supplied for password reset.");
-        }
+        if (code == null) return BadRequest("A code must be supplied for password reset.");
 
         Input = new InputModel
         {

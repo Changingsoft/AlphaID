@@ -20,19 +20,19 @@
     <h3>@L["Managed directory accounts"]</h3>
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Directory service"]</td>
-                <td>@L["Object Id"]</td>
-            </tr>
+        <tr>
+            <td>@L["Directory service"]</td>
+            <td>@L["Object Id"]</td>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var account in Model.DirectoryAccounts)
-            {
-                <tr>
-                    <td>@account.DirectoryServiceDescriptor.Name</td>
-                    <td>@account.ObjectId</td>
-                </tr>
-            }
+        @foreach (var account in Model.DirectoryAccounts)
+        {
+            <tr>
+                <td>@account.DirectoryServiceDescriptor.Name</td>
+                <td>@account.ObjectId</td>
+            </tr>
+        }
         </tbody>
     </table>
 }

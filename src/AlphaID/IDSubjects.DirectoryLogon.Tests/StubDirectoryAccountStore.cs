@@ -1,4 +1,5 @@
 ﻿namespace IdSubjects.DirectoryLogon.Tests;
+
 internal class StubDirectoryAccountStore : IDirectoryAccountStore
 {
     public IQueryable<DirectoryAccount> Accounts => throw new NotImplementedException();

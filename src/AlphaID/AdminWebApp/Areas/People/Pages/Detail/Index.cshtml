@@ -4,8 +4,9 @@
 @{
     ViewBag.Title = $"{Model.Data.PersonName.FullName}";
 }
+
 @section head{
-    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
+    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css"/>
     <style>
         .label {
             cursor: pointer;
@@ -19,6 +20,7 @@
         }
     </style>
 }
+
 @Html.DisplayFor(m => m.Result)
 <div class="alert" style="display: none;" role="alert"></div>
 <h2>@L["Overview"]</h2>
@@ -69,7 +71,7 @@
         @* Profile picture *@
         <form method="post">
             <label class="label mb-2" data-toggle="tooltip" title="@L["Change profile picture"]">
-                <img class="rounded" id="avatar" src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" alt="avatar">
+                <img class="rounded" id="avatar" src="@Url.Page("Index", "Photo", new { id = Model.Data.Id })" alt="avatar">
                 <input type="file" class="visually-hidden" id="input" name="image" accept="image/*">
                 <span class="btn btn-sm">@L["Change profile picture"]</span>
             </label>
@@ -186,7 +188,7 @@
             </div>
             <div class="modal-body">
                 <div class="img-container">
-                    <img id="image" src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})">
+                    <img id="image" src="@Url.Page("Index", "Photo", new { id = Model.Data.Id })">
                 </div>
             </div>
             <div class="modal-footer">
@@ -198,7 +200,7 @@
 </div>
 
 @section Scripts{
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
     <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
@@ -270,7 +272,7 @@
 
                         formData.append('avatar', blob, 'avatar.jpg');
                         formData.append('__RequestVerificationToken', $("[name='__RequestVerificationToken']").val())
-                        $.ajax('@(Url.Page(null, pageHandler: "UpdateProfilePicture"))', {
+                        $.ajax('@(Url.Page(null, "UpdateProfilePicture"))', {
                             method: 'POST',
                             data: formData,
                             processData: false,

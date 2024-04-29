@@ -3,10 +3,10 @@
 namespace IdSubjects;
 
 /// <summary>
-/// Person builder.
+///     Person builder.
 /// </summary>
 /// <remarks>
-/// Create a builder use user name and person name info.
+///     Create a builder use user name and person name info.
 /// </remarks>
 /// <param name="userName"></param>
 /// <param name="personName"></param>
@@ -16,14 +16,15 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     private readonly NaturalPerson _person = new(userName, personName);
 
     /// <summary>
-    /// Initialize a person builder.
+    ///     Initialize a person builder.
     /// </summary>
     public PersonBuilder()
         : this(string.Empty, string.Empty)
-    { }
+    {
+    }
 
     /// <summary>
-    /// Create a builder use user name and full name
+    ///     Create a builder use user name and full name
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="fullName"></param>
@@ -33,7 +34,6 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
@@ -47,7 +47,6 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="personName"></param>
     /// <returns></returns>
@@ -58,7 +57,7 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     }
 
     /// <summary>
-    /// Set mobile phone number.
+    ///     Set mobile phone number.
     /// </summary>
     /// <param name="mobilePhoneNumber"></param>
     /// <param name="confirmed"></param>
@@ -71,7 +70,6 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="email"></param>
     /// <param name="confirmed"></param>
@@ -83,7 +81,6 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
@@ -93,7 +90,8 @@ public class PersonBuilder(string userName, PersonNameInfo personName)
         if (string.IsNullOrWhiteSpace(_person.UserName))
             throw new InvalidOperationException("Can not build person because user name is null or blank.");
         if (string.IsNullOrWhiteSpace(_person.PersonName.FullName))
-            throw new InvalidOperationException("Can not build person because full name of person name is null or blank.");
+            throw new InvalidOperationException(
+                "Can not build person because full name of person name is null or blank.");
 
         return _person;
     }

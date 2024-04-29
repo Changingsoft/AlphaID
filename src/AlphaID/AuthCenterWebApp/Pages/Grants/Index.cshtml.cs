@@ -1,35 +1,42 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Grants;
 
 [Authorize]
-public class Index(IIdentityServerInteractionService interaction,
+public class Index(
+    IIdentityServerInteractionService interaction,
     IClientStore clients,
     IResourceStore resourceStore,
     IEventService events) : PageModel
 {
     public ViewModel View { get; set; } = default!;
 
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    public string ClientId { get; set; } = default!;
+
     public async Task OnGet()
     {
-        var grants = await interaction.GetAllUserGrantsAsync();
+        IEnumerable<Grant> grants = await interaction.GetAllUserGrantsAsync();
 
         var list = new List<GrantViewModel>();
-        foreach (var grant in grants)
+        foreach (Grant grant in grants)
         {
-            var client = await clients.FindClientByIdAsync(grant.ClientId);
+            Client? client = await clients.FindClientByIdAsync(grant.ClientId);
             if (client != null)
             {
-                var resources = await resourceStore.FindResourcesByScopeAsync(grant.Scopes);
+                Duende.IdentityServer.Models.Resources? resources =
+                    await resourceStore.FindResourcesByScopeAsync(grant.Scopes);
 
-                var item = new GrantViewModel()
+                var item = new GrantViewModel
                 {
                     ClientId = client.ClientId,
                     ClientName = client.ClientName ?? client.ClientId,
@@ -51,10 +58,6 @@ public class Index(IIdentityServerInteractionService interaction,
             Grants = list
         };
     }
-
-    [BindProperty]
-    [Required(ErrorMessage = "Validate_Required")]
-    public string ClientId { get; set; } = default!;
 
     public async Task<IActionResult> OnPostAsync()
     {

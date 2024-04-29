@@ -1,6 +1,7 @@
 ﻿using AdminWebApp.Domain.Security;
 
 namespace AdminWebApp.Infrastructure.DataStores;
+
 public class UserInRoleStore(OperationalDbContext dbContext) : IUserInRoleStore
 {
     public IQueryable<UserInRole> UserInRoles => dbContext.UserInRoles;

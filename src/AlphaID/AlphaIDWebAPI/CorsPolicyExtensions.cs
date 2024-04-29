@@ -9,12 +9,12 @@ internal static class CorsPolicyExtensions
     public static bool IsOriginAllowedSubdomainAndLocalhost(this CorsPolicy policy, string origin)
     {
         return policy.Origins.Contains(origin)
-            || Uri.TryCreate(origin, UriKind.Absolute, out var originUri)
-            && (originUri.IsLoopback
-            || policy.Origins
-                .Where(o => o.Contains($"://{WildcardSubdomain}"))
-                .Select(CreateDomainUri)
-                .Any(domain => UriHelpers.IsSubdomainOf(originUri, domain)));
+               || (Uri.TryCreate(origin, UriKind.Absolute, out Uri? originUri)
+                   && (originUri.IsLoopback
+                       || policy.Origins
+                           .Where(o => o.Contains($"://{WildcardSubdomain}"))
+                           .Select(CreateDomainUri)
+                           .Any(domain => UriHelpers.IsSubdomainOf(originUri, domain))));
     }
 
     private static Uri CreateDomainUri(string origin)

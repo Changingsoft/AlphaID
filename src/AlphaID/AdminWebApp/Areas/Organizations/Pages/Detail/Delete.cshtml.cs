@@ -1,6 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail;
 
@@ -18,7 +18,7 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await organizationManager.FindByIdAsync(Anchor);
+        GenericOrganization? org = await organizationManager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
         Organization = org;
@@ -27,15 +27,12 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await organizationManager.FindByIdAsync(Anchor);
+        GenericOrganization? org = await organizationManager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
         Organization = org;
 
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
         if (Input.Name != Organization.Name)
         {
@@ -45,7 +42,7 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
         try
         {
-            var result = await organizationManager.DeleteAsync(Organization);
+            IdOperationResult result = await organizationManager.DeleteAsync(Organization);
             if (result.Succeeded)
                 return RedirectToPage("DeleteSuccess");
             Result = result;
@@ -63,6 +60,5 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Validate_Required")]
         public string Name { get; set; } = default!;
-
     }
 }

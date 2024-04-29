@@ -6,33 +6,34 @@ using Microsoft.Extensions.Options;
 namespace IdSubjects.SecurityAuditing;
 
 /// <summary>
-/// 默认事件服务。
+///     默认事件服务。
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="DefaultEventService"/> class.
+///     Initializes a new instance of the <see cref="DefaultEventService" /> class.
 /// </remarks>
 /// <param name="options">The options.</param>
 /// <param name="context">The context.</param>
 /// <param name="sink">The sink.</param>
-public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink) : IEventService
+public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink)
+    : IEventService
 {
     /// <summary>
-    /// The options
+    ///     The options
     /// </summary>
     protected IdSubjectsOptions Options { get; } = options.Value;
 
     /// <summary>
-    /// The context
+    ///     The context
     /// </summary>
     protected IHttpContextAccessor Context { get; } = context;
 
     /// <summary>
-    /// The sink
+    ///     The sink
     /// </summary>
     protected IEventSink Sink { get; } = sink;
 
     /// <summary>
-    /// Raises the specified event.
+    ///     Raises the specified event.
     /// </summary>
     /// <param name="evt">The event.</param>
     /// <returns></returns>
@@ -49,7 +50,7 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     }
 
     /// <summary>
-    /// Indicates if the type of event will be persisted.
+    ///     Indicates if the type of event will be persisted.
     /// </summary>
     /// <param name="evtType"></param>
     /// <returns></returns>
@@ -62,16 +63,16 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
             AuditLogEventTypes.Information => Options.Events.RaiseInformationEvents,
             AuditLogEventTypes.Success => Options.Events.RaiseSuccessEvents,
             AuditLogEventTypes.Error => Options.Events.RaiseErrorEvents,
-            _ => throw new ArgumentOutOfRangeException(nameof(evtType)),
+            _ => throw new ArgumentOutOfRangeException(nameof(evtType))
         };
     }
 
     /// <summary>
-    /// Determines whether this event would be persisted.
+    ///     Determines whether this event would be persisted.
     /// </summary>
     /// <param name="evt">The evt.</param>
     /// <returns>
-    ///   <c>true</c> if this event would be persisted; otherwise, <c>false</c>.
+    ///     <c>true</c> if this event would be persisted; otherwise, <c>false</c>.
     /// </returns>
     protected virtual bool CanRaiseEvent(AuditLogEvent evt)
     {
@@ -79,7 +80,7 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     }
 
     /// <summary>
-    /// Prepares the event.
+    ///     Prepares the event.
     /// </summary>
     /// <param name="evt">The evt.</param>
     /// <returns></returns>
@@ -90,15 +91,14 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
         evt.ProcessId = Environment.ProcessId;
 
         if (Context.HttpContext?.Connection.LocalIpAddress != null)
-        {
-            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress + ":" + Context.HttpContext.Connection.LocalPort;
-        }
+            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress + ":" +
+                                 Context.HttpContext.Connection.LocalPort;
         else
-        {
             evt.LocalIpAddress = "unknown";
-        }
 
-        evt.RemoteIpAddress = Context.HttpContext?.Connection.RemoteIpAddress != null ? Context.HttpContext.Connection.RemoteIpAddress.ToString() : "unknown";
+        evt.RemoteIpAddress = Context.HttpContext?.Connection.RemoteIpAddress != null
+            ? Context.HttpContext.Connection.RemoteIpAddress.ToString()
+            : "unknown";
 
         return evt.PrepareAsync();
     }

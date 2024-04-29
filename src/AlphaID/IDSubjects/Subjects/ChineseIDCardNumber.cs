@@ -3,7 +3,7 @@
 namespace IdSubjects.Subjects;
 
 /// <summary>
-/// 表示一个中华人民共和国居民身份证号。
+///     表示一个中华人民共和国居民身份证号。
 /// </summary>
 public readonly struct ChineseIdCardNumber
 {
@@ -11,7 +11,7 @@ public readonly struct ChineseIdCardNumber
     private readonly char _checkCode;
 
     /// <summary>
-    /// 使用指定的版本、区划代码、生日和序列号创建一个身份证号码。
+    ///     使用指定的版本、区划代码、生日和序列号创建一个身份证号码。
     /// </summary>
     /// <param name="version"></param>
     /// <param name="areaNumber"></param>
@@ -29,13 +29,13 @@ public readonly struct ChineseIdCardNumber
 
         Version = version;
         AreaNumber = areaNumber;
-        this._dateOfBirth = dateOfBirth;
+        _dateOfBirth = dateOfBirth;
         Sequence = sequence;
-        _checkCode = CalculateCheckCode(string.Format(QualifiedFormat, AreaNumber, this._dateOfBirth, Sequence));
+        _checkCode = CalculateCheckCode(string.Format(QualifiedFormat, AreaNumber, _dateOfBirth, Sequence));
     }
 
     /// <summary>
-    /// 使用行政区划代码、出生日期和序列号创建一个第二代身份证号码。
+    ///     使用行政区划代码、出生日期和序列号创建一个第二代身份证号码。
     /// </summary>
     /// <param name="areaNumber"></param>
     /// <param name="dateOfBirth"></param>
@@ -46,42 +46,41 @@ public readonly struct ChineseIdCardNumber
     }
 
     /// <summary>
-    /// 获取该身份证号码的版本。
+    ///     获取该身份证号码的版本。
     /// </summary>
     public int Version { get; }
 
     /// <summary>
-    /// 获取行政区划编码。
+    ///     获取行政区划编码。
     /// </summary>
     public string AreaNumber { get; }
 
     /// <summary>
-    /// 获取出生日期。
+    ///     获取出生日期。
     /// </summary>
     public DateOnly DateOfBirth => _dateOfBirth;
 
     /// <summary>
-    /// 获取序列号。
+    ///     获取序列号。
     /// </summary>
     public int Sequence { get; }
 
     /// <summary>
-    /// 获取一个值，指示性别。
+    ///     获取一个值，指示性别。
     /// </summary>
     public Gender Gender => Sequence % 2 == 1 ? Gender.Male : Gender.Female;
 
     /// <summary>
-    /// 获取一个值，表示身份证号码。
+    ///     获取一个值，表示身份证号码。
     /// </summary>
     public string NumberString => ToString();
 
     /// <summary>
-    /// 输出规范化身份证号码。
+    ///     输出规范化身份证号码。
     /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
-
         return ToString(Version);
     }
 
@@ -92,7 +91,7 @@ public readonly struct ChineseIdCardNumber
     }
 
     /// <summary>
-    /// 使用指定的版本号获取对应格式的身份证号码。
+    ///     使用指定的版本号获取对应格式的身份证号码。
     /// </summary>
     /// <param name="version"></param>
     /// <returns></returns>
@@ -101,23 +100,24 @@ public readonly struct ChineseIdCardNumber
         return version == V1
             ? AreaNumber + _dateOfBirth.ToString("yyMMdd") + Sequence.ToString("000")
             : version == V2
-            ? AreaNumber + _dateOfBirth.ToString("yyyyMMdd") + Sequence.ToString("000") + _checkCode
-            : throw new NotSupportedException("Version Not supported.");
+                ? AreaNumber + _dateOfBirth.ToString("yyyyMMdd") + Sequence.ToString("000") + _checkCode
+                : throw new NotSupportedException("Version Not supported.");
     }
 
     /// <summary>
-    /// 已重载。比较两个身份证号码是相等性。
+    ///     已重载。比较两个身份证号码是相等性。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
     public static bool operator ==(ChineseIdCardNumber a, ChineseIdCardNumber b)
     {
-        return a.Version == b.Version && a.AreaNumber == b.AreaNumber && a._dateOfBirth == b._dateOfBirth && a.Sequence == b.Sequence;
+        return a.Version == b.Version && a.AreaNumber == b.AreaNumber && a._dateOfBirth == b._dateOfBirth &&
+               a.Sequence == b.Sequence;
     }
 
     /// <summary>
-    /// 已重载。比较两个身份证号码的不等性。
+    ///     已重载。比较两个身份证号码的不等性。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -128,7 +128,7 @@ public readonly struct ChineseIdCardNumber
     }
 
     /// <summary>
-    /// 已重载，比较两个身份证号码的相等性。该方法的行为与相等运算符重载的行为一致。
+    ///     已重载，比较两个身份证号码的相等性。该方法的行为与相等运算符重载的行为一致。
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
@@ -138,7 +138,7 @@ public readonly struct ChineseIdCardNumber
     }
 
     /// <summary>
-    /// 将输入的字符串匹配为身份证号码。
+    ///     将输入的字符串匹配为身份证号码。
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
@@ -146,7 +146,7 @@ public readonly struct ChineseIdCardNumber
     {
         if (string.IsNullOrWhiteSpace(s))
             throw new ArgumentException("Input is whole whitespace or null.");
-        var dataStr = s.Trim().ToUpper();
+        string dataStr = s.Trim().ToUpper();
 
         Match match;
         int ver;
@@ -161,17 +161,21 @@ public readonly struct ChineseIdCardNumber
             ver = V1;
         }
         else
+        {
             throw new FormatException("身份证格式错误。");
+        }
 
         DateOnly dateOfBirth = ver == V1
-            ? new DateOnly(int.Parse("19" + match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))
-            : new DateOnly(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value));
+            ? new DateOnly(int.Parse("19" + match.Groups[2].Value), int.Parse(match.Groups[3].Value),
+                int.Parse(match.Groups[4].Value))
+            : new DateOnly(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value),
+                int.Parse(match.Groups[4].Value));
         ChineseIdCardNumber number = new(ver, match.Groups[1].Value, dateOfBirth, int.Parse(match.Groups[5].Value));
         return ver == V2 && number._checkCode != dataStr[17] ? throw new ArgumentException("校验错误") : number;
     }
 
     /// <summary>
-    /// 尝试将输入的字符串匹配为一个身份证号码。
+    ///     尝试将输入的字符串匹配为一个身份证号码。
     /// </summary>
     /// <param name="s">输入的字符串。</param>
     /// <param name="number">若匹配正确，则输出改身份证号码结构。否则为默认值。</param>
@@ -182,7 +186,7 @@ public readonly struct ChineseIdCardNumber
         if (string.IsNullOrWhiteSpace(s))
             return false;
 
-        var dataStr = s.Trim().ToUpper();
+        string dataStr = s.Trim().ToUpper();
         Match match;
         int ver;
         if (dataStr.Length == 18)
@@ -196,14 +200,16 @@ public readonly struct ChineseIdCardNumber
             ver = V1;
         }
         else
+        {
             return false;
+        }
 
 
-        if (!int.TryParse(ver == V1 ? "19" + match.Groups[2].Value : match.Groups[2].Value, out var year))
+        if (!int.TryParse(ver == V1 ? "19" + match.Groups[2].Value : match.Groups[2].Value, out int year))
             return false;
-        if (!int.TryParse(match.Groups[3].Value, out var month))
+        if (!int.TryParse(match.Groups[3].Value, out int month))
             return false;
-        if (!int.TryParse(match.Groups[4].Value, out var day))
+        if (!int.TryParse(match.Groups[4].Value, out int day))
             return false;
 
         DateOnly dateOfBirth;
@@ -212,7 +218,9 @@ public readonly struct ChineseIdCardNumber
             dateOfBirth = new DateOnly(year, month, day);
         }
         catch
-        { return false; }
+        {
+            return false;
+        }
 
         if (dateOfBirth > DateOnly.FromDateTime(DateTime.Now)) return false;
 
@@ -221,7 +229,7 @@ public readonly struct ChineseIdCardNumber
     }
 
     /// <summary>
-    /// 确定一个字符串是否为身份证号码。
+    ///     确定一个字符串是否为身份证号码。
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
@@ -237,10 +245,7 @@ public readonly struct ChineseIdCardNumber
     private static char CalculateCheckCode(string data)
     {
         var sum = 0;
-        for (var i = 0; i < 17; i++)
-        {
-            sum += int.Parse(data[i].ToString()) * s_weight[i];
-        }
+        for (var i = 0; i < 17; i++) sum += int.Parse(data[i].ToString()) * s_weight[i];
         return CheckCodeSet[sum % 11];
     }
 
@@ -252,11 +257,12 @@ public readonly struct ChineseIdCardNumber
     private static readonly Regex s_areaNumberRegex = new(AreaNumberPattern);
 
     /// <summary>
-    /// 表示第一代身份证号码。
+    ///     表示第一代身份证号码。
     /// </summary>
     public static readonly int V1 = 1;
+
     /// <summary>
-    /// 表示第二代身份证号码。
+    ///     表示第二代身份证号码。
     /// </summary>
     public static readonly int V2 = 2;
 }

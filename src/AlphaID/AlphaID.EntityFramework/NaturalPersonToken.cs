@@ -1,8 +1,8 @@
-﻿using IdSubjects;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlphaId.EntityFramework;
 
@@ -11,25 +11,27 @@ namespace AlphaId.EntityFramework;
 public class NaturalPersonToken
 {
     /// <summary>
-    /// Gets or sets the primary key of the user that the token belongs to.
+    ///     Gets or sets the primary key of the user that the token belongs to.
     /// </summary>
-    [MaxLength(50),Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public virtual string UserId { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets the LoginProvider this token is from.
+    ///     Gets or sets the LoginProvider this token is from.
     /// </summary>
-    [MaxLength(50),Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public virtual string LoginProvider { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets the name of the token.
+    ///     Gets or sets the name of the token.
     /// </summary>
     [MaxLength(50)]
     public virtual string Name { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets the token value.
+    ///     Gets or sets the token value.
     /// </summary>
     [ProtectedPersonalData]
     [MaxLength(256)]

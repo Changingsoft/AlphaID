@@ -1,19 +1,16 @@
 ﻿namespace IdSubjects.WechatWebLogin;
 
 /// <summary>
-/// 
 /// </summary>
 public interface IWechatServiceProvider
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
     Task<string?> GetSecretAsync(string appId);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="appId"></param>
     /// <param name="secret"></param>
@@ -21,7 +18,6 @@ public interface IWechatServiceProvider
     Task RegisterAsync(string appId, string secret);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="appId"></param>
     /// <param name="secret"></param>

@@ -3,11 +3,11 @@
 }
 
 @section head {
-    <link rel="stylesheet" href="~/lib/tabler/dist/css/tabler.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@@latest/tabler-icons.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/tabler/dist/css/tabler.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@@latest/tabler-icons.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     @* ReSharper disable once Html.PathError *@
-    <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true"/>
     @await RenderSectionAsync("head", false)
 }
 
@@ -17,7 +17,7 @@
 @await RenderSectionAsync("PageComponents", false)
 
 @*For debug, this partial will show only in development environment.*@
-<partial name="_DebugPartial" />
+<partial name="_DebugPartial"/>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/tabler/dist/js/tabler.min.js"></script>

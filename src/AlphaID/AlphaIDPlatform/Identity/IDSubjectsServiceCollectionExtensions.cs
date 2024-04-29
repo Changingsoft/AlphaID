@@ -8,29 +8,29 @@ using Microsoft.AspNetCore.Identity;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 
 /// </summary>
 public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>
-    /// 向基础设施添加自然人标识管理功能，并设置通过自然人标识来处理用户身份验证。
+    ///     向基础设施添加自然人标识管理功能，并设置通过自然人标识来处理用户身份验证。
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdSubjectsBuilder AddIdSubjectsIdentity(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
+    public static IdSubjectsBuilder AddIdSubjectsIdentity(this IServiceCollection services,
+        Action<IdSubjectsOptions>? setupAction = null)
     {
         services.AddHttpContextAccessor();
 
-        var builder = services.AddIdSubjects(setupAction);
+        IdSubjectsBuilder builder = services.AddIdSubjects(setupAction);
 
         //Add required cookies.
         services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-            options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-            options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        })
+            {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
             .AddCookie(IdentityConstants.ApplicationScheme, o =>
             {
                 o.LoginPath = new PathString("/Account/Login");
@@ -65,5 +65,4 @@ public static class IdSubjectsServiceCollectionExtensions
             });
         return builder;
     }
-
 }

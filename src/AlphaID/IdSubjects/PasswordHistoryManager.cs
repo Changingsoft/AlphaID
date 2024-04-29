@@ -5,14 +5,11 @@ using Microsoft.Extensions.Options;
 namespace IdSubjects;
 
 /// <summary>
-/// 
+/// 密码历史管理器。
 /// </summary>
-/// <remarks>
-/// 
-/// </remarks>
-/// <param name="store"></param>
-/// <param name="passwordHasher"></param>
-/// <param name="options"></param>
+/// <param name="store">密码历史存取器。</param>
+/// <param name="passwordHasher">密码哈希器。</param>
+/// <param name="options">选项。</param>
 public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher<NaturalPerson> passwordHasher, IOptions<IdSubjectsOptions> options)
 {
     private readonly IdSubjectsPasswordOptions _options = options.Value.Password;
@@ -41,12 +38,7 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
     /// <param name="password"></param>
     public async Task Pass(NaturalPerson person, string password)
     {
-        await store.CreateAsync(new PasswordHistory()
-        {
-            Data = passwordHasher.HashPassword(person, password),
-            UserId = person.Id,
-            WhenCreated = TimeProvider.GetUtcNow(),
-        });
+        await store.AddAsync(passwordHasher.HashPassword(person, password), person.Id, TimeProvider.GetUtcNow());
         await store.TrimHistory(person.Id, _options.RememberPasswordHistory);
     }
 

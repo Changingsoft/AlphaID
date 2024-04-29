@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Tests;
+
 public class StubPasswordHistoryStore : IPasswordHistoryStore
 {
     private readonly HashSet<PasswordHistory> _set = [];
 
-    public Task<IdentityResult> CreateAsync(PasswordHistory history)
+    public Task<IdentityResult> AddAsync(string data, string userId, DateTimeOffset timeOffset)
     {
+        PasswordHistory history = new PasswordHistory() { Data = data, UserId = userId, WhenCreated = timeOffset };
         _set.Add(history);
-        return Task.FromResult(IdentityResult.Success);
-    }
-
-    public Task<IdentityResult> DeleteAsync(PasswordHistory history)
-    {
-        _set.Remove(history);
         return Task.FromResult(IdentityResult.Success);
     }
 

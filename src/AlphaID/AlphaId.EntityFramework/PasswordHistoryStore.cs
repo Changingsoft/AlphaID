@@ -3,28 +3,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework;
+
 internal class PasswordHistoryStore(IdSubjectsDbContext dbContext) : IPasswordHistoryStore
 {
-    public async Task<IdentityResult> CreateAsync(PasswordHistory history)
+    public async Task<IdentityResult> AddAsync(string data, string userId, DateTimeOffset timeOffset)
     {
+        PasswordHistory history = new PasswordHistory() { Data = data, UserId = userId, WhenCreated = timeOffset };
         dbContext.PasswordHistorySet.Add(history);
-        await dbContext.SaveChangesAsync();
-        return IdentityResult.Success;
-    }
-
-    public async Task<IdentityResult> DeleteAsync(PasswordHistory history)
-    {
-        dbContext.PasswordHistorySet.Remove(history);
         await dbContext.SaveChangesAsync();
         return IdentityResult.Success;
     }
 
     public IEnumerable<PasswordHistory> GetPasswords(string person, int historyLength)
     {
-        var resultSet = from history in dbContext.PasswordHistorySet
-                        where history.UserId == person
-                        orderby history.WhenCreated descending
-                        select history;
+        IOrderedQueryable<PasswordHistory> resultSet = from history in dbContext.PasswordHistorySet
+            where history.UserId == person
+            orderby history.WhenCreated descending
+            select history;
         return resultSet.Take(historyLength);
     }
 

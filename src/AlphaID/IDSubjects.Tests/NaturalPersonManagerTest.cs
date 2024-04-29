@@ -117,7 +117,7 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
         Assert.True(result.Succeeded);
 
         var passwordHistoryStore = scope.ServiceProvider.GetRequiredService<IPasswordHistoryStore>();
-        var passwords = passwordHistoryStore.GetPasswords(_person, 10);
+        var passwords = passwordHistoryStore.GetPasswords(_person.Id, 10);
         Assert.Single(passwords);
 
         //change password again with same old password will fail.

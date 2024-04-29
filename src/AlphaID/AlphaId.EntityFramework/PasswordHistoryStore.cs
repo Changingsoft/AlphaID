@@ -19,28 +19,28 @@ internal class PasswordHistoryStore(IdSubjectsDbContext dbContext) : IPasswordHi
         return IdentityResult.Success;
     }
 
-    public IEnumerable<PasswordHistory> GetPasswords(NaturalPerson person, int historyLength)
+    public IEnumerable<PasswordHistory> GetPasswords(string person, int historyLength)
     {
         var resultSet = from history in dbContext.PasswordHistorySet
-                        where history.UserId == person.Id
+                        where history.UserId == person
                         orderby history.WhenCreated descending
                         select history;
         return resultSet.Take(historyLength);
     }
 
-    public async Task TrimHistory(NaturalPerson person, int optionsRememberPasswordHistory)
+    public async Task TrimHistory(string person, int optionsRememberPasswordHistory)
     {
-        var anchor = await dbContext.PasswordHistorySet
-            .Where(p => p.UserId == person.Id)
+        int anchor = await dbContext.PasswordHistorySet
+            .Where(p => p.UserId == person)
             .OrderByDescending(p => p.WhenCreated)
             .Skip(optionsRememberPasswordHistory)
             .Select(p => p.Id)
             .FirstOrDefaultAsync();
-        await dbContext.PasswordHistorySet.Where(p => p.UserId == person.Id && p.Id < anchor).ExecuteDeleteAsync();
+        await dbContext.PasswordHistorySet.Where(p => p.UserId == person && p.Id < anchor).ExecuteDeleteAsync();
     }
 
-    public async Task ClearAsync(NaturalPerson person)
+    public async Task ClearAsync(string person)
     {
-        await dbContext.PasswordHistorySet.Where(p => p.UserId == person.Id).ExecuteDeleteAsync();
+        await dbContext.PasswordHistorySet.Where(p => p.UserId == person).ExecuteDeleteAsync();
     }
 }

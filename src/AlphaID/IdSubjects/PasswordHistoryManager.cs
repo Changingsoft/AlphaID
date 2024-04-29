@@ -28,7 +28,7 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
     public bool Hit(NaturalPerson person, string password)
     {
         //取出密码历史
-        var passwords = store.GetPasswords(person, _options.RememberPasswordHistory);
+        var passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
         return passwords
             .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis.Data, password))
             .Any(result => result.HasFlag(PasswordVerificationResult.Success));
@@ -47,7 +47,7 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
             UserId = person.Id,
             WhenCreated = TimeProvider.GetUtcNow(),
         });
-        await store.TrimHistory(person, _options.RememberPasswordHistory);
+        await store.TrimHistory(person.Id, _options.RememberPasswordHistory);
     }
 
     /// <summary>
@@ -57,6 +57,6 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
     /// <returns></returns>
     public Task Clear(NaturalPerson person)
     {
-        return store.ClearAsync(person);
+        return store.ClearAsync(person.Id);
     }
 }

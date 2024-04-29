@@ -25,12 +25,6 @@ public class PasswordHistory
     /// <summary>
     /// 
     /// </summary>
-    [ForeignKey(nameof(UserId))]
-    public virtual NaturalPerson Person { get; set; } = default!;
-
-    /// <summary>
-    /// 
-    /// </summary>
     [MaxLength(100), Unicode(false)] public string Data { get; set; } = default!;
 
     /// <summary>

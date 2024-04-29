@@ -17,18 +17,18 @@ public class StubPasswordHistoryStore : IPasswordHistoryStore
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public IEnumerable<PasswordHistory> GetPasswords(NaturalPerson person, int historyLength)
+    public IEnumerable<PasswordHistory> GetPasswords(string person, int historyLength)
     {
-        return _set.Where(h => h.UserId == person.Id).OrderByDescending(h => h.WhenCreated).Take(historyLength);
+        return _set.Where(h => h.UserId == person).OrderByDescending(h => h.WhenCreated).Take(historyLength);
     }
 
-    public Task TrimHistory(NaturalPerson person, int optionsRememberPasswordHistory)
+    public Task TrimHistory(string person, int optionsRememberPasswordHistory)
     {
-        //it is not important for test. just complete the task.
+        // It is not important for test. just complete the task.
         return Task.CompletedTask;
     }
 
-    public Task ClearAsync(NaturalPerson person)
+    public Task ClearAsync(string person)
     {
         _set.Clear();
         return Task.CompletedTask;

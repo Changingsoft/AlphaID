@@ -118,10 +118,8 @@ builder.Services.AddRazorPages(options =>
 builder.Services.AddControllers();
 
 //配置授权策略。
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireAdminRole", policy => { policy.RequireRole(RoleConstants.AdministratorsRole.Name); });
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("RequireAdminRole", policy => { policy.RequireRole(RoleConstants.AdministratorsRole.Name); });
 
 //启用服务器Session
 builder.Services.AddSession();

@@ -99,16 +99,21 @@ public class EmailModel(
 
         string userId = await userManager.GetUserIdAsync(user);
         string? email = await userManager.GetEmailAsync(user);
+        if (email == null)
+        {
+            StatusMessage = "没有设置邮件地址";
+            return RedirectToPage();
+        }
         string code = await userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         string? callbackUrl = Url.Page(
             "/Account/ConfirmEmail",
             null,
-            new { area = "Identity", userId, code },
+            new { area = "", userId, code },
             Request.Scheme);
         await emailSender.SendEmailAsync(
             email,
-            "确认您的邮件地址",
+            "确认邮件地址",
             $"<p>您已请求更改电子邮件地址，请单击<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>这里</a>以确认您的邮件地址。</p>" +
             $"<p>{_production.Name}团队</p>");
 

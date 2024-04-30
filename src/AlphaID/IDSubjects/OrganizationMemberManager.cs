@@ -26,8 +26,11 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     Get members of the organization.
+    ///     获取可见的组织成员。
     /// </summary>
+    /// <remarks>
+    ///     该方法会考虑组织成员的Visibility设置，根据visitor来决定是否在结果集合中包括这些成员。
+    /// </remarks>
     /// <param name="organization">AN organization that members to get.</param>
     /// <param name="visitor">The person who access this system. null if anonymous access.</param>
     /// <returns></returns>
@@ -110,8 +113,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
         if (store.OrganizationMembers.Any(p =>
                 p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
             return IdOperationResult.Failed(Resources.Membership_exists);
-        await store.CreateAsync(member);
-        return IdOperationResult.Success;
+        return await store.CreateAsync(member);
     }
 
     /// <summary>

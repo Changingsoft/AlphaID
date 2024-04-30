@@ -47,9 +47,8 @@ public static class IdSubjectsServiceCollectionExtensions
 
         //添加基础标识
         IdentityBuilder identityBuilder = services.AddIdentityCore<NaturalPerson>()
-                .AddUserManager<NaturalPersonManager>() //as UserManager<NaturalPerson>
-                .AddUserValidator<PhoneNumberValidator>()
-            ;
+                .AddUserManager<NaturalPersonManager>()
+                .AddUserValidator<PhoneNumberValidator>();
 
         if (setupAction != null) services.Configure(setupAction);
 

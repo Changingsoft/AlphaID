@@ -99,11 +99,9 @@ builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("Produc
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
 //授权策略
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireOrganizationOwner",
-        policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); });
-});
+builder.Services.AddAuthorizationBuilder()
+          .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); });
+
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
 
 builder.Services.AddRazorPages(options =>
@@ -134,7 +132,7 @@ var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity()
 idSubjectsBuilder.IdentityBuilder
     .AddSignInManager<PersonSignInManager>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders();//
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
@@ -211,7 +209,7 @@ builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = tru
 builder.Services.AddMarkdown(config => { config.AddMarkdownProcessingFolder("/_docs/"); });
 builder.Services.AddMvc();
 
-//当Debug模式时，覆盖注册先前配置以解除外部依赖
+// 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddScoped<IEmailSender, NopEmailSender>();

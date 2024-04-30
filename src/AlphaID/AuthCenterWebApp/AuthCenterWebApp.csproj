@@ -56,6 +56,9 @@
 	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Identifiers\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\Email.zh-cn.resx">
+	    <DependentUpon>Email.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ExternalLogins.zh-cn.resx">
 	    <DependentUpon>ExternalLogins.resx</DependentUpon>
 	  </EmbeddedResource>

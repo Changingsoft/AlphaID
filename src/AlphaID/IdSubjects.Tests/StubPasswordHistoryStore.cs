@@ -33,10 +33,10 @@ public class StubPasswordHistoryStore : IPasswordHistoryStore
 
     private record PasswordHistory
     {
-        public string UserId { get; set; } = default!;
+        public string UserId { get; init; } = default!;
 
-        public string Data { get; set; } = default!;
+        public string Data { get; init; } = default!;
 
-        public DateTimeOffset WhenCreated { get; set; }
+        public DateTimeOffset WhenCreated { get; init; }
     }
 }

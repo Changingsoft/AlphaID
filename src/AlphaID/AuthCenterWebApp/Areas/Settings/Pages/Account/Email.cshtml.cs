@@ -18,8 +18,7 @@ public class EmailModel(
     private readonly ProductInfo _production = production.Value;
 
     [Display(Name = "Email")]
-    [Required(ErrorMessage = "Validate_Required")]
-    public string Email { get; set; } = default!;
+    public string? Email { get; set; }
 
     public bool IsEmailConfirmed { get; set; }
 
@@ -36,7 +35,7 @@ public class EmailModel(
 
         Input = new InputModel
         {
-            NewEmail = email
+            NewEmail = email ?? "",
         };
 
         IsEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);

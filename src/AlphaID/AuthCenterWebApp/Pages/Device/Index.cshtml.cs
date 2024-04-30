@@ -52,8 +52,8 @@ public class Index(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        DeviceFlowAuthorizationRequest? request = await interaction.GetAuthorizationContextAsync(Input.UserCode);
-        if (request == null) return RedirectToPage("/Home/Error/LoginModel");
+        DeviceFlowAuthorizationRequest? request = await interaction.GetAuthorizationContextAsync(Input.UserCode ?? throw new ArgumentNullException(nameof(Input.UserCode)));
+        if (request == null) return RedirectToPage("/Home/Error/Index");
 
         ConsentResponse grantedConsent = default!;
 
@@ -73,9 +73,9 @@ public class Index(
         else if (Input.Button == "yes")
         {
             // if the user consented to some scope, build the response model
-            if (Input.ScopesConsented != null && Input.ScopesConsented.Any())
+            if (Input.ScopesConsented.Any())
             {
-                IEnumerable<string>? scopes = Input.ScopesConsented;
+                IEnumerable<string> scopes = Input.ScopesConsented;
                 if (ConsentOptions.EnableOfflineAccess == false)
                     scopes = scopes.Where(x => x != IdentityServerConstants.StandardScopes.OfflineAccess);
 
@@ -131,7 +131,7 @@ public class Index(
             ClientLogoUrl = request.Client.LogoUri,
             AllowRememberConsent = request.Client.AllowRememberConsent,
             IdentityScopes = request.ValidatedResources.Resources.IdentityResources.Select(x =>
-                CreateScopeViewModel(x, model == null || model.ScopesConsented?.Contains(x.Name) == true)).ToArray()
+                CreateScopeViewModel(x, model == null || model.ScopesConsented.Contains(x.Name))).ToArray()
         };
 
         var apiScopes = new List<ScopeViewModel>();
@@ -196,11 +196,11 @@ public class Index(
 
     public class InputModel
     {
-        public string Button { get; set; } = default!;
-        public IEnumerable<string>? ScopesConsented { get; set; }
+        public string? Button { get; set; }
+        public IEnumerable<string> ScopesConsented { get; set; } = new List<string>();
         public bool RememberConsent { get; set; } = true;
-        public string ReturnUrl { get; set; } = default!;
-        public string Description { get; set; } = default!;
+        public string? ReturnUrl { get; set; }
+        public string? Description { get; set; }
         public string? UserCode { get; set; }
     }
 }

@@ -120,19 +120,19 @@
   <data name="Account" xml:space="preserve">
     <value>账户</value>
   </data>
+  <data name="Organizations" xml:space="preserve">
+	  <value>组织</value>
+  </data>
   <data name="Password and authentication" xml:space="preserve">
     <value>密码和验证</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>个人配置</value>
-  </data>
-  <data name="Your personal account" xml:space="preserve">
-    <value>您的个人账户</value>
-  </data>
-  <data name="Organizations" xml:space="preserve">
-	  <value>组织</value>
+	  <value>资料</value>
   </data>
   <data name="Real-name authentication" xml:space="preserve">
 	  <value>实名认证</value>
+  </data>
+  <data name="Your personal account" xml:space="preserve">
+    <value>您的个人账户</value>
   </data>
 </root>

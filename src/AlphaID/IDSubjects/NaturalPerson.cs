@@ -244,6 +244,6 @@ public class NaturalPerson
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{UserName}|{PersonName.FullName}";
+        return PersonName.FullName;
     }
 }

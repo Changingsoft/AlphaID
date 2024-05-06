@@ -116,8 +116,8 @@
     <value>转到我的个人主页</value>
   </data>
   <data name="Profile" xml:space="preserve">
-		<value>个人配置</value>
-	</data>
+	  <value>资料</value>
+  </data>
   <data name="Real-name authentication" xml:space="preserve">
 	  <value>实名认证</value>
   </data>
@@ -128,6 +128,6 @@
 	  <value>删除头像？</value>
   </data>
   <data name="Update profile" xml:space="preserve">
-		<value>更新个人信息</value>
-	</data>
+	  <value>更新个人资料</value>
+  </data>
 </root>

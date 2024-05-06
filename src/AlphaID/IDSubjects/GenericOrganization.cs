@@ -129,4 +129,13 @@ public class GenericOrganization
     ///     曾用名。
     /// </summary>
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = [];
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return this.Name;
+    }
 }

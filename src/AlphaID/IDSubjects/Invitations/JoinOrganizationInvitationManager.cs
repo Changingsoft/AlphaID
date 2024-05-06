@@ -11,6 +11,8 @@ namespace IdSubjects.Invitations;
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
+    NaturalPersonManager personManager,
+    OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
@@ -50,7 +52,7 @@ public class JoinOrganizationInvitationManager(
         string inviter)
     {
         var errors = new List<string>();
-        OrganizationMember? existsMember = await memberManager.GetMemberAsync(invitee, organization);
+        OrganizationMember? existsMember = await memberManager.GetMemberAsync(invitee.Id, organization.Id);
         if (existsMember != null)
             errors.Add("Person is a member of this organization.");
 
@@ -65,9 +67,7 @@ public class JoinOrganizationInvitationManager(
         {
             Inviter = inviter,
             OrganizationId = organization.Id,
-            Organization = organization,
             InviteeId = invitee.Id,
-            Invitee = invitee,
             WhenCreated = DateTimeOffset.UtcNow,
             WhenExpired = DateTimeOffset.UtcNow.AddDays(1.0f), //todo 应可以在设置中更改。
             ExpectVisibility = MembershipVisibility.Public //todo 邀请时应可填写期望的可见性。
@@ -85,23 +85,23 @@ public class JoinOrganizationInvitationManager(
             return IdOperationResult.Failed("Invitation has been processed.");
 
         OrganizationMember? existedMember =
-            await memberManager.GetMemberAsync(invitation.Invitee, invitation.Organization);
+            await memberManager.GetMemberAsync(invitation.InviteeId, invitation.OrganizationId);
         if (existedMember != null) return IdOperationResult.Failed("Person is already a member.");
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        IdOperationResult result = await memberManager.CreateAsync(
-            new OrganizationMember(invitation.Organization, invitation.Invitee)
-                { Visibility = invitation.ExpectVisibility });
-        if (!result.Succeeded)
-            return result;
-        invitation.Accepted = true;
-        result = await store.UpdateAsync(invitation);
-        if (!result.Succeeded)
-            return result;
 
-        //所有事务性操作都成功，提交事务。
+        NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
+        GenericOrganization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
+        IdOperationResult? result = default;
+        if (organization != null && person != null)
+            result = await memberManager.CreateAsync(
+                new OrganizationMember(organization, person)
+                    { Visibility = invitation.ExpectVisibility });
+        invitation.Accepted = true;
+        await store.UpdateAsync(invitation);
         trans.Complete();
-        return result;
+
+        return result ?? IdOperationResult.Success;
     }
 
     /// <summary>

@@ -17,11 +17,11 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="person"></param>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public Task<OrganizationMember?> GetMemberAsync(NaturalPerson person, GenericOrganization organization)
+    public Task<OrganizationMember?> GetMemberAsync(string person, string organization)
     {
         OrganizationMember? result =
             store.OrganizationMembers.FirstOrDefault(
-                p => p.PersonId == person.Id && p.OrganizationId == organization.Id);
+                p => p.PersonId == person && p.OrganizationId == organization);
         return Task.FromResult(result);
     }
 

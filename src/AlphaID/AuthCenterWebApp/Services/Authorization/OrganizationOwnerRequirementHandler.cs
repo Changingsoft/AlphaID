@@ -32,7 +32,7 @@ public class OrganizationOwnerRequirementHandler(
         if (organization == null)
             return;
 
-        OrganizationMember? member = await memberManager.GetMemberAsync(person, organization);
+        OrganizationMember? member = await memberManager.GetMemberAsync(person.Id, organization.Id);
         if (member == null)
             return;
 

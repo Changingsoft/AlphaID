@@ -21,23 +21,11 @@ public class JoinOrganizationInvitation
     public string InviteeId { get; set; } = default!;
 
     /// <summary>
-    ///     被邀请人。
-    /// </summary>
-    [ForeignKey(nameof(InviteeId))]
-    public virtual NaturalPerson Invitee { get; set; } = default!;
-
-    /// <summary>
     ///     组织Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string OrganizationId { get; set; } = default!;
-
-    /// <summary>
-    ///     组织。
-    /// </summary>
-    [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; set; } = default!;
 
     /// <summary>
     ///     邀请发出时间。

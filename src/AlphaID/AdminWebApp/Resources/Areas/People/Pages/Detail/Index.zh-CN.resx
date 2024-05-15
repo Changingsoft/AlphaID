@@ -144,6 +144,9 @@
   <data name="Changed at" xml:space="preserve">
     <value>更新于</value>
   </data>
+  <data name="Confirmed" xml:space="preserve">
+	  <value>已确认</value>
+  </data>
   <data name="Contacts" xml:space="preserve">
     <value>联系方式</value>
   </data>
@@ -174,12 +177,6 @@
   <data name="External logins" xml:space="preserve">
     <value>外部登录</value>
   </data>
-  <data name="Gender" xml:space="preserve">
-    <value>性别</value>
-  </data>
-  <data name="Given name" xml:space="preserve">
-    <value>名字</value>
-  </data>
   <data name="Misc" xml:space="preserve">
     <value>杂项</value>
   </data>
@@ -204,16 +201,10 @@
   <data name="Status" xml:space="preserve">
     <value>状态</value>
   </data>
-  <data name="Surname" xml:space="preserve">
-    <value>姓氏</value>
-  </data>
   <data name="Username" xml:space="preserve">
     <value>用户名</value>
   </data>
   <data name="Website" xml:space="preserve">
     <value>网页</value>
-  </data>
-  <data name="Confirmed" xml:space="preserve">
-	  <value>已确认</value>
   </data>
 </root>

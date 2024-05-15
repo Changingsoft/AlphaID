@@ -34,13 +34,13 @@
             <div class="card-body">
                 <div class="datagrid">
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Surname"]</div>
+                        <div class="datagrid-title">@SL["Surname"]</div>
                         <div class="datagrid-content">
                             @Model.Data.PersonName.Surname @Model.Data.PhoneticSurname
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Given name"]</div>
+                        <div class="datagrid-title">@SL["Given name"]</div>
                         <div class="datagrid-content">
                             @Model.Data.PersonName.GivenName @Model.Data.PhoneticGivenName
                         </div>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Gender"]</div>
+                        <div class="datagrid-title">@SL["Gender"]</div>
                         <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Gender)</div>
                     </div>
                     <div class="datagrid-item">

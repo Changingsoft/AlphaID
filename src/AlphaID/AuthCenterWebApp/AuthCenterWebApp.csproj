@@ -101,6 +101,9 @@
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\_RealNameRequestListGroupItem.zh-cn.resx">
 	    <DependentUpon>_RealNameRequestListGroupItem.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Terms.zh-cn.resx">
+	    <DependentUpon>Terms.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\DisplayTemplates\MembershipVisibility.zh-cn.resx">
 	    <DependentUpon>MembershipVisibility.resx</DependentUpon>
 	  </EmbeddedResource>

@@ -1,18 +1,17 @@
-using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 
 [BindProperties]
-public class PublicModel(ConfigurationDbContext dbContext) : PageModel
+public class ConfidentialModel : PageModel
 {
     public string ClientId { get; set; } = default!;
 
     public string ClientName { get; set; } = default!;
 
-    public string SigninCallbackUri { get; set; } = default!;
+    public string ClientSecret { get; set; } = default!;
 
-    //todo Identity resources and scope selected.
+    public string SigninCallbackUri { get; set; } = default!;
 
     public void OnGet()
     {

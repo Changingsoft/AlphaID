@@ -8,7 +8,7 @@ using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 
-public class CustomeModel(ConfigurationDbContext context) : PageModel
+public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secretGenerator) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -21,7 +21,10 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
 
     public void OnGet()
     {
-        Input = new InputModel();
+        Input = new InputModel
+        {
+            ClientSecret = secretGenerator.Generate()
+        };
     }
 
     public async Task<IActionResult> OnPostAsync()

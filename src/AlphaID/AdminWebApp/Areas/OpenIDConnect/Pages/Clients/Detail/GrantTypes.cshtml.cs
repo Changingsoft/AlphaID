@@ -10,16 +10,6 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
 {
-    private static readonly List<GrantTypeItem> s_grantTypes =
-    [
-        new GrantTypeItem(GrantType.Implicit, "隐式"),
-        new GrantTypeItem(GrantType.AuthorizationCode, "授权码"),
-        new GrantTypeItem(GrantType.ClientCredentials, "客户端凭证"),
-        new GrantTypeItem(GrantType.ResourceOwnerPassword, "资源所有者密码"),
-        new GrantTypeItem(GrantType.DeviceFlow, "设备码"),
-        new GrantTypeItem(GrantType.Hybrid, "混合")
-    ];
-
     public Client Data { get; set; } = default!;
 
     [BindProperty]
@@ -34,7 +24,7 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
             return NotFound();
         Data = data;
 
-        AllowedGrantTypes = s_grantTypes.Select(g =>
+        AllowedGrantTypes = ClientConstants.GrantTypes.Select(g =>
             new SelectListItem(g.DisplayName, g.Name, Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
 
         return Page();
@@ -82,10 +72,5 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
         return Page();
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="Name"></param>
-    /// <param name="DisplayName"></param>
-    /// <param name="Description"></param>
-    public record GrantTypeItem(string Name, string DisplayName, string? Description = null);
+    
 }

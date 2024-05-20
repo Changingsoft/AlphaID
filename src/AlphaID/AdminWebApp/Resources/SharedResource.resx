@@ -346,6 +346,9 @@
   <data name="User name" xml:space="preserve">
     <value>User name</value>
   </data>
+  <data name="Validate_DataType_Url" xml:space="preserve">
+	  <value>Require valid URL</value>
+  </data>
   <data name="Validate_EmailAddress" xml:space="preserve">
     <value>It isn't look like an email address.</value>
   </data>

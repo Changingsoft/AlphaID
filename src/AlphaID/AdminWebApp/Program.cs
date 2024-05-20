@@ -2,6 +2,7 @@ using System.Data;
 using System.Globalization;
 using System.Security.Claims;
 using AdminWebApp;
+using AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 using AdminWebApp.Domain.Security;
 using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
@@ -237,6 +238,9 @@ builder.Services.AddScoped<DirectoryAccountManager>()
 //安全角色管理
 builder.Services.AddScoped<UserInRoleManager>()
     .AddScoped<IUserInRoleStore, UserInRoleStore>();
+
+builder.Services.AddScoped<ISecretGenerator, DefaultSecretGenerator>();
+
 
 builder.Services.AddMarkdown();
 

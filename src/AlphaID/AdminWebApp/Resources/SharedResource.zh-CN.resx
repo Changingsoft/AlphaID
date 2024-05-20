@@ -282,6 +282,9 @@
   <data name="Scheme" xml:space="preserve">
 	  <value>方案</value>
   </data>
+  <data name="Search" xml:space="preserve">
+	  <value>搜索</value>
+  </data>
   <data name="Secret" xml:space="preserve">
     <value>秘密</value>
   </data>
@@ -357,7 +360,7 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
-  <data name="Search" xml:space="preserve">
-	  <value>搜索</value>
+  <data name="Validate_DataType_Url" xml:space="preserve">
+	  <value>需要合法的URL</value>
   </data>
 </root>

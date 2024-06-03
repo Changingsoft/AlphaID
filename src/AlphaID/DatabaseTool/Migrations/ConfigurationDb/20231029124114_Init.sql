@@ -1,5 +1,4 @@
-﻿SELECT 1;
-SET IDENTITY_INSERT [dbo].[ApiScopes] ON 
+﻿SET IDENTITY_INSERT [dbo].[ApiScopes] ON 
 INSERT [dbo].[ApiScopes] ([Id], [Enabled], [Name], [DisplayName], [Description], [Required], [Emphasize], [ShowInDiscoveryDocument], [Created], [Updated], [LastAccessed], [NonEditable]) VALUES (1, 1, N'user_impersonation', N'模拟个人身份', N'为应用程序请求使用已登录用户的身份访问资源的权限。', 0, 0, 1, CAST(N'2023-02-10T13:22:00.0000000' AS DateTime2), CAST(N'2023-02-10T13:22:00.0000000' AS DateTime2), NULL, 1)
 INSERT [dbo].[ApiScopes] ([Id], [Enabled], [Name], [DisplayName], [Description], [Required], [Emphasize], [ShowInDiscoveryDocument], [Created], [Updated], [LastAccessed], [NonEditable]) VALUES (2, 1, N'realname', N'实名信息', N'获取自然人的实名制信息，如身份证号码', 0, 1, 1, CAST(N'2023-02-08T14:32:00.0000000' AS DateTime2), CAST(N'2023-02-08T14:32:00.0000000' AS DateTime2), NULL, 0)
 SET IDENTITY_INSERT [dbo].[ApiScopes] OFF

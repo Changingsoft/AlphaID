@@ -1,10 +1,14 @@
 # Database Tool
 
-用来处理数据库迁移的工具。
+Alpha ID 数据库迁移工具。用于初始化数据库，升级迁移数据库，添加测试数据。
 
 ## 用法
 
-在命令行或Powershell中执行迁移工具
+**在生产环境执行数据库操作前，请务必确认数据库已备份。**
+
+执行工具前，请先在appsettings.json中正确配置数据库连接字符串。
+
+然后在命令行或Powershell中执行迁移工具：
 
 ``` powershell
 .\DatabaseTool.exe [DropDatabase=<false:true>] [AddTestingData=<false:true>]
@@ -12,11 +16,11 @@
 
 ### 参数开关
 
-DropDatabase = <false:true> 指示是否删除数据库。默认为false。
+`DropDatabase = <false:true>` 指示是否删除数据库。默认为false。
 
 **此开关将删除数据库，请务必小心使用此开关。在执行操作前，请务必备份数据库和数据。**
 
-AddTestingData = <false:true> 指示是否添加测试数据。默认为false。此开关主要用于在开发环境调试或在预览环境评估时使用。
+`AddTestingData = <false:true>` 指示是否添加测试数据。默认为false。此开关主要用于在开发环境调试或在预览环境评估时使用。
 
 集成测试需要使用该测试数据，在执行集成测试前，应使用此开关填充测试数据。
 
@@ -80,4 +84,22 @@ dotnet ef migrations add <Migration Title> -c IDSubjectsDbContext -o Migrations/
 dotnet ef migrations add <Migration Title> -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
 dotnet ef migrations add <Migration Title> -c ConfigurationDbContext -o Migrations/ConfigurationDb
 dotnet ef migrations add <Migration Title> -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
+```
+
+### 迁移期间初始化数据
+
+基础数据可以使用`migrationBuilder.Sql(string)`方法，以SQL语句方式执行数据初始化。数据量较大或需要大量批处理动作时，可以使用SQL脚本文件来初始化数据，将其设置为输出到生成目录中。
+
+在已创建的迁移类的Up阶段，读取SQL脚本并应用。
+
+如果迁移前后需要进行数据状态转换，必须在Up阶段和Down阶段分别进行正向和反向转换。
+
+此处介绍如何在迁移阶段读取SQL脚本并执行。
+
+``` c#
+protected override void Up(MigrationBuilder migrationBuilder)
+{
+    // 文件路径必须基于程序根的绝对路径
+    migrationBuilder.Sql(File.ReadAllText("Migrations/ConfigurationDb/<FileName>.sql"));
+}
 ```

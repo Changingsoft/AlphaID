@@ -80,10 +80,13 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 创建迁移的详细命令如下：
 
 ``` powershell
-dotnet ef migrations add <Migration Title> -c IDSubjectsDbContext -o Migrations/IDSubjectsDb
-dotnet ef migrations add <Migration Title> -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
+dotnet ef migrations add <Migration Title> -c OperationalDbContext -o Migrations/AdminWebAppDb
 dotnet ef migrations add <Migration Title> -c ConfigurationDbContext -o Migrations/ConfigurationDb
+dotnet ef migrations add <Migration Title> -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
+dotnet ef migrations add <Migration Title> -c IDSubjectsDbContext -o Migrations/IDSubjectsDb
+dotnet ef migrations add <Migration Title> -c LoggingDbContext -o Migrations/LoggingDb
 dotnet ef migrations add <Migration Title> -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
+dotnet ef migrations add <Migration Title> -c RealNameDbContext -o Migrations/RealNameDb
 ```
 
 ### 迁移期间初始化数据

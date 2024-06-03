@@ -1,27 +1,27 @@
 ﻿namespace IdSubjects.SecurityAuditing.Events;
 
 /// <summary>
-/// 事件类型。
+///     事件类型。
 /// </summary>
 public enum AuditLogEventTypes
 {
     /// <summary>
-    /// Success event
+    ///     Success event
     /// </summary>
     Success = 1,
 
     /// <summary>
-    /// Failure event
+    ///     Failure event
     /// </summary>
     Failure = 2,
 
     /// <summary>
-    /// Information event
+    ///     Information event
     /// </summary>
     Information = 3,
 
     /// <summary>
-    /// Error event
+    ///     Error event
     /// </summary>
     Error = 4
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.WechatWebLogin.EntityFramework;
+
 public class WechatWebLoginDbContext(DbContextOptions<WechatWebLoginDbContext> options) : DbContext(options)
 {
     public DbSet<WechatLoginSession> WechatLoginSessions { get; protected set; } = default!;

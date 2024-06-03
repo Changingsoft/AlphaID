@@ -10,19 +10,19 @@ public class WechatServiceProvider : IWechatServiceProvider
 
     public WechatServiceProvider(WechatWebLoginDbContext dbContext)
     {
-        this._dbContext = dbContext;
-        _set = this._dbContext.WechatServices;
+        _dbContext = dbContext;
+        _set = _dbContext.WechatServices;
     }
 
     public async Task<string?> GetSecretAsync(string appId)
     {
-        var svc = await _set.FindAsync(appId);
+        WechatService? svc = await _set.FindAsync(appId);
         return svc?.Secret;
     }
 
     public async Task UpdateSecretAsync(string appId, string secret)
     {
-        var svc = await _set.FindAsync(appId) ?? throw new ArgumentException("Cannot found wechat service.");
+        WechatService svc = await _set.FindAsync(appId) ?? throw new ArgumentException("Cannot found wechat service.");
         svc.Secret = secret;
         _dbContext.Entry(svc).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
@@ -30,7 +30,6 @@ public class WechatServiceProvider : IWechatServiceProvider
 
     public async Task RegisterAsync(string appId, string secret)
     {
-
         var svc = new WechatService
         {
             AppId = appId,

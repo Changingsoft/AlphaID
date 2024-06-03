@@ -1,10 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Platform;
 using Duende.IdentityServer.Extensions;
 using IdSubjects;
 using IdSubjects.Subjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
@@ -31,7 +32,7 @@ public class MobileModel(NaturalPersonManager userManager, IVerificationCodeServ
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.FindByIdAsync(User.GetSubjectId());
+        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
             return BadRequest("无法处理用户Id.");
 
@@ -44,22 +45,23 @@ public class MobileModel(NaturalPersonManager userManager, IVerificationCodeServ
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.FindByIdAsync(User.GetSubjectId());
+        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
             return BadRequest("无法处理用户Id.");
 
-        if (!MobilePhoneNumber.TryParse(NewMobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
             ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
             return Page();
         }
+
         if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode))
         {
             ModelState.AddModelError(nameof(VerificationCode), "验证码无效。");
             return Page();
         }
 
-        var result = await userManager.SetPhoneNumberAsync(person, NewMobile);
+        IdentityResult result = await userManager.SetPhoneNumberAsync(person, NewMobile);
         if (result.Succeeded)
         {
             OperationMessage = "移动电话号码已变更。";
@@ -72,7 +74,7 @@ public class MobileModel(NaturalPersonManager userManager, IVerificationCodeServ
 
     public async Task<IActionResult> OnPostSendVerificationCode()
     {
-        if (!MobilePhoneNumber.TryParse(NewMobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
             ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
             return Page();

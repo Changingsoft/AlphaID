@@ -1,9 +1,11 @@
 ﻿@{
     Layout = "Shared/_Layout";
 }
+
 @section head{
     @await RenderSectionAsync("head", false)
 }
+
 <h2>@L["Password and authentication"]</h2>
 <div class="card">
     <div class="row g-0">
@@ -23,6 +25,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)
 }

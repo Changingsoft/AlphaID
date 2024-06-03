@@ -1,4 +1,6 @@
-﻿using AlphaId.DirectoryLogon.EntityFramework;
+﻿using System.Data;
+using System.Globalization;
+using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaId.RealName.EntityFramework;
@@ -11,6 +13,7 @@ using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
+using Duende.IdentityServer.Services;
 using IdentityModel;
 using IdSubjects;
 using IdSubjects.ChineseName;
@@ -27,9 +30,8 @@ using Newtonsoft.Json;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
-using System.Data;
-using System.Globalization;
 using Westwind.AspNetCore.Markdown;
+
 // ReSharper disable All
 
 
@@ -38,38 +40,42 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((ctx, configuration) =>
 {
     configuration
-            .ReadFrom.Configuration(ctx.Configuration)
-            .Enrich.FromLogContext()
-            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level} {EventId}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-            .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information)
-            .WriteTo.Logger(lc =>
-            {
-                lc.ReadFrom.Configuration(ctx.Configuration);
-                lc.Filter.ByIncludingOnly(log =>
+        .ReadFrom.Configuration(ctx.Configuration)
+        .Enrich.FromLogContext()
+        .WriteTo.Console(
+            outputTemplate:
+            "[{Timestamp:HH:mm:ss} {Level} {EventId}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+        .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information)
+        .WriteTo.Logger(lc =>
+        {
+            lc.ReadFrom.Configuration(ctx.Configuration);
+            lc.Filter.ByIncludingOnly(log =>
+                {
+                    if (log.Properties.TryGetValue("SourceContext", out var pv))
                     {
-                        if (log.Properties.TryGetValue("SourceContext", out var pv))
+                        var source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                        if (source == "Duende.IdentityServer.Events.DefaultEventService" ||
+                            source == "IdSubjects.SecurityAuditing.DefaultEventService")
                         {
-                            var source = JsonConvert.DeserializeObject<string>(pv.ToString());
-                            if (source == "Duende.IdentityServer.Events.DefaultEventService" || source == "IdSubjects.SecurityAuditing.DefaultEventService")
-                            {
-                                return true;
-                            }
+                            return true;
                         }
-                        return false;
-                    })
-                    .WriteTo.MSSqlServer(
-                        builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
-                        sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
-                        columnOptions: new ColumnOptions()
-                        {
-                            AdditionalColumns =
-                            [
-                                new SqlColumn("EventId", SqlDbType.Int){PropertyName = "EventId.Id"},
-                                new SqlColumn("Source", SqlDbType.NVarChar){PropertyName = "SourceContext"},
-                            ],
-                        }
-                        );
-            });
+                    }
+
+                    return false;
+                })
+                .WriteTo.MSSqlServer(
+                    builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
+                    sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
+                    columnOptions: new ColumnOptions()
+                    {
+                        AdditionalColumns =
+                        [
+                            new SqlColumn("EventId", SqlDbType.Int) { PropertyName = "EventId.Id" },
+                            new SqlColumn("Source", SqlDbType.NVarChar) { PropertyName = "SourceContext" }
+                        ]
+                    }
+                );
+        });
 });
 
 //程序资源
@@ -80,10 +86,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
     {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("zh-CN"),
+        new CultureInfo("en-US"),
+        new CultureInfo("zh-CN")
     };
-    options.DefaultRequestCulture = new RequestCulture(culture: builder.Configuration["DefaultCulture"]!, uiCulture: builder.Configuration["DefaultCulture"]!);
+    options.DefaultRequestCulture = new RequestCulture(culture: builder.Configuration["DefaultCulture"]!,
+        uiCulture: builder.Configuration["DefaultCulture"]!);
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
@@ -92,59 +99,55 @@ builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("Produc
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
 //授权策略
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireOrganizationOwner", policy =>
-    {
-        policy.Requirements.Add(new OrganizationOwnerRequirement());
-    });
-});
+builder.Services.AddAuthorizationBuilder()
+          .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); });
+
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
 
 builder.Services.AddRazorPages(options =>
-{
-    options.Conventions.AuthorizeFolder("/");
-    options.Conventions.AuthorizeAreaFolder("Profile", "/");
-    options.Conventions.AuthorizeAreaFolder("Settings", "/");
-    options.Conventions.AuthorizeAreaFolder("Organization", "/Settings", "RequireOrganizationOwner");
+    {
+        options.Conventions.AuthorizeFolder("/");
+        options.Conventions.AuthorizeAreaFolder("Profile", "/");
+        options.Conventions.AuthorizeAreaFolder("Settings", "/");
+        options.Conventions.AuthorizeAreaFolder("Organization", "/Settings", "RequireOrganizationOwner");
 
-    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People"));
-    options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));
-})
-.AddViewLocalization()
-.AddDataAnnotationsLocalization(options =>
-{
-    options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
-});
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People"));
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));
+    })
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+    });
 
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
 var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity()
     .AddDefaultStores()
     .AddDbContext(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)), sqlOptions =>
-        {
-            sqlOptions.UseNetTopologySuite();
-        });
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
+            sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
 idSubjectsBuilder.IdentityBuilder
     .AddSignInManager<PersonSignInManager>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders();//
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
     idSubjectsBuilder.AddRealName()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
+        .AddDbContext(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 }
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
 {
     idSubjectsBuilder.AddDirectoryLogin()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
+        .AddDbContext(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 }
 
 //添加邮件发送器。
@@ -185,7 +188,7 @@ builder.Services.AddIdentityServer(options =>
     .AddAspNetIdentity<NaturalPerson>()
     .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
     .AddServerSideSessions<ServerSideSessionStore>()
-    .Services.AddTransient<Duende.IdentityServer.Services.IEventSink, AuditLogEventSink>();
+    .Services.AddTransient<IEventSink, AuditLogEventSink>();
 
 //todo 替换 Duende.IdentityServer.Hosting.DynamicProviders.OidcConfigureOptions
 builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, AdvancedOidcConfigureOptions>();
@@ -194,10 +197,7 @@ builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
 
 // Add Session builder.Services. 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
-});
+builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(20); });
 
 //身份证OCR
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
@@ -206,13 +206,10 @@ builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrServi
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
     .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
 
-builder.Services.AddMarkdown(config =>
-{
-    config.AddMarkdownProcessingFolder("/_docs/");
-});
+builder.Services.AddMarkdown(config => { config.AddMarkdownProcessingFolder("/_docs/"); });
 builder.Services.AddMvc();
 
-//当Debug模式时，覆盖注册先前配置以解除外部依赖
+// 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddScoped<IEmailSender, NopEmailSender>();
@@ -234,6 +231,7 @@ else
 {
     app.UseHsts();
 }
+
 app.UseExceptionHandler("/Home/Error");
 app.UseRequestLocalization();
 app.UseMarkdown();
@@ -251,7 +249,9 @@ await app.RunAsync();
 namespace AuthCenterWebApp
 {
     /// <summary>
-    /// for Testing.
+    ///     for Testing.
     /// </summary>
-    public class Program { }
+    public class Program
+    {
+    }
 }

@@ -1,5 +1,5 @@
 ﻿@page
-@model AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail.IdPRestrictionModel
+@model IdPRestrictionModel
 @{
 }
 <h2>@L["Id provider restrictions"]</h2>
@@ -7,7 +7,7 @@
 
 <form method="post" asp-page-handler="Remove">
     <ul class="list-group">
-        @foreach(var restriction in Model.Data.IdentityProviderRestrictions)
+        @foreach (var restriction in Model.Data.IdentityProviderRestrictions)
         {
             <li class="list-group-item">
                 @restriction.Provider
@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <label asp-for="SelectedProvider" class="form-label"></label>
                 <select asp-for="SelectedProvider">
-                    @foreach(var item in Model.IdProviders)
+                    @foreach (var item in Model.IdProviders)
                     {
                         <option value="@item.Value">@item.Text</option>
                     }

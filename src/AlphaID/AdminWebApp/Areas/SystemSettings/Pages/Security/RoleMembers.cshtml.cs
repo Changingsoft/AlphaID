@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using AdminWebApp.Domain.Security;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security;
 
@@ -26,7 +26,8 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPerson
 
     public async Task<IActionResult> OnPostAddMemberAsync(string role)
     {
-        var person = await personManager.FindByNameAsync(Input.UserName) ?? throw new InvalidOperationException("User cannot found.");
+        NaturalPerson person = await personManager.FindByNameAsync(Input.UserName) ??
+                               throw new InvalidOperationException("User cannot found.");
         await userInRoleManager.AddRole(person.Id, role);
         Input = default!;
         return RedirectToPage();

@@ -7,6 +7,6 @@ public class PeopleNavPanel(NaturalPersonManager personManager) : ViewComponent
 {
     public IViewComponentResult Invoke()
     {
-        return View(model: personManager.Users.Count());
+        return View(personManager.Users.Count());
     }
 }

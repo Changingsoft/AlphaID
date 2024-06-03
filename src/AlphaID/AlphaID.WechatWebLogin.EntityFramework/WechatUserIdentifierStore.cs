@@ -1,4 +1,5 @@
 ﻿using IdSubjects.WechatWebLogin;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.WechatWebLogin.EntityFramework;
 
@@ -25,7 +26,7 @@ public class WechatUserIdentifierStore(WechatWebLoginDbContext dbContext) : IWec
 
     public async Task UpdateAsync(WechatUserIdentifier item)
     {
-        dbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        dbContext.Entry(item).State = EntityState.Modified;
         _ = await dbContext.SaveChangesAsync();
     }
 }

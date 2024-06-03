@@ -1,12 +1,14 @@
-using IdSubjects;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
+using IdSubjects;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
 public class SecurityModel(NaturalPersonManager manager) : PageModel
 {
+    public string OperationMessage = default!;
+
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -15,26 +17,24 @@ public class SecurityModel(NaturalPersonManager manager) : PageModel
 
     public NaturalPerson Data { get; set; } = default!;
 
-    public string OperationMessage = default!;
-
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await manager.FindByIdAsync(Anchor);
-        if (person == null) { return NotFound(); }
+        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
+        if (person == null) return NotFound();
 
         Data = person;
         Input = new InputModel
         {
             TwoFactorEnabled = Data.TwoFactorEnabled,
-            LockoutEnabled = Data.LockoutEnabled,
+            LockoutEnabled = Data.LockoutEnabled
         };
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await manager.FindByIdAsync(Anchor);
-        if (person == null) { return NotFound(); }
+        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
+        if (person == null) return NotFound();
 
         Data = person;
 
@@ -53,7 +53,5 @@ public class SecurityModel(NaturalPersonManager manager) : PageModel
 
         [Display(Name = "Lockout enabled")]
         public bool LockoutEnabled { get; set; }
-
-
     }
 }

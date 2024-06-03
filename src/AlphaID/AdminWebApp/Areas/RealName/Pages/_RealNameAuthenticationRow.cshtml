@@ -1,6 +1,8 @@
 ﻿@model IdSubjects.RealName.RealNameAuthentication
 <tr>
-    <td><a asp-page="Authentication/Index" asp-route-anchor="@Model.Id">@Model.PersonName.FullName</a></td>
+    <td>
+        <a asp-page="Authentication/Index" asp-route-anchor="@Model.Id">@Model.PersonName.FullName</a>
+    </td>
     <td>@Model.ValidatedBy</td>
     <td>@Model.ValidatedAt</td>
     <td>@Model.ExpiresAt</td>

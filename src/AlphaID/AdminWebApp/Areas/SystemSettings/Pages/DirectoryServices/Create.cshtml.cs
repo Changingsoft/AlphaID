@@ -1,6 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryServices;
 
@@ -15,43 +16,41 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (Input is { ExternalProviderName: not null, RegisteredClientId: null }) ModelState.AddModelError("Input.RegisteredClientId", "Registered Client-Id is required when External provider specified.");
+        if (Input is { ExternalProviderName: not null, RegisteredClientId: null })
+            ModelState.AddModelError("Input.RegisteredClientId",
+                "Registered Client-Id is required when External provider specified.");
 
         if (!ModelState.IsValid)
             return Page();
 
-        var directoryService = new DirectoryServiceDescriptor()
+        var directoryService = new DirectoryServiceDescriptor
         {
             Name = Input.Name,
             ServerAddress = Input.ServerAddress,
-            Type= Input.LdapType,
+            Type = Input.LdapType,
             RootDn = Input.RootDn,
             DefaultUserAccountContainer = Input.DefaultUserOu,
             UpnSuffix = Input.UpnSuffix,
             SamDomainPart = Input.NtDomainName,
             AutoCreateAccount = Input.AutoCreateAccount,
             UserName = Input.UserName,
-            Password = Input.Password,
+            Password = Input.Password
         };
         if (Input.ExternalProviderName != null)
-        {
             directoryService.ExternalLoginProvider =
                 new ExternalLoginProviderInfo(Input.ExternalProviderName, Input.RegisteredClientId!)
                 {
                     DisplayName = Input.ExternalProviderDisplayName,
-                    SubjectGenerator = Input.SubjectGenerator,
+                    SubjectGenerator = Input.SubjectGenerator
                 };
-        }
 
-        var result = await directoryServiceManager.CreateAsync(directoryService);
+        IdOperationResult result = await directoryServiceManager.CreateAsync(directoryService);
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
+            foreach (string error in result.Errors) ModelState.AddModelError("", error);
             return Page();
         }
+
         return RedirectToPage("Index");
     }
 

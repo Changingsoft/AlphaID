@@ -1,13 +1,14 @@
 ﻿using IdSubjects.RealName.Requesting;
 
 namespace IdSubjects.RealName.Tests;
+
 internal class StubRealNameRequestStore : IRealNameRequestStore
 {
     private readonly HashSet<RealNameRequest> _set = [];
 
     public Task<IdOperationResult> CreateAsync(RealNameRequest request)
     {
-        var lastId = _set.OrderByDescending(r => r.Id).Select(r => r.Id).FirstOrDefault();
+        int lastId = _set.OrderByDescending(r => r.Id).Select(r => r.Id).FirstOrDefault();
         request.Id = lastId + 1;
         _set.Add(request);
         return Task.FromResult(IdOperationResult.Success);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace AlphaIdPlatform.Tests;
+
 public class CombineTemplatesTest
 {
     [Theory]
@@ -13,9 +14,10 @@ public class CombineTemplatesTest
     [InlineData("{anchor}", "{id?}", "{anchor}/{id?}")]
     public void CombineTemplates(string? prefix, string? template, string? expected)
     {
-        var result = AttributeRouteModel.CombineTemplates(prefix, template);
+        string? result = AttributeRouteModel.CombineTemplates(prefix, template);
         Assert.Equal(expected, result);
     }
+
     [Theory]
     [InlineData("", "/Home", "/Home")]
     [InlineData("Area", "", "Area")]
@@ -24,7 +26,7 @@ public class CombineTemplatesTest
     [InlineData("Area", "/Home/", "Area/Home/")]
     public void JoinPath(string a, string b, string expected)
     {
-        var result = Path.Join(a, b);
+        string result = Path.Join(a, b);
         Assert.Equal(expected, result);
     }
 }

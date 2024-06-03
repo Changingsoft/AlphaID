@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Settings.Pages.Organizations.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = L["Your organizations"];
 }
@@ -24,7 +24,7 @@
                         </h3>
                     </div>
                     <div class="col-auto">
-                            <button type="submit" name="organizationId" value="@member.OrganizationId" onclick="return confirm('@(L["Are you sure you want to leave from this organization?"])');" class="btn text-danger list-group-item-actions">@L["Leave"]</button>
+                        <button type="submit" name="organizationId" value="@member.OrganizationId" onclick="return confirm('@(L["Are you sure you want to leave from this organization?"])');" class="btn text-danger list-group-item-actions">@L["Leave"]</button>
                     </div>
                 </div>
             </div>
@@ -32,5 +32,5 @@
     </div>
 
 </form>
-<hr />
+<hr/>
 <a asp-page="New" class="btn">@L["New organization"]</a>

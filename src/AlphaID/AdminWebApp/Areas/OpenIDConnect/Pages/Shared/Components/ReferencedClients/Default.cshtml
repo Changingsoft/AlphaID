@@ -1,5 +1,4 @@
-﻿@using Duende.IdentityServer.EntityFramework.Entities;
-@model IQueryable<Client>
+﻿@model IQueryable<Duende.IdentityServer.EntityFramework.Entities.Client>
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">@L["Referenced clients"]</h3>
@@ -7,19 +6,21 @@
     <div class="table-responsive">
         <table class="table table-sm card-table">
             <thead>
-                <tr>
-                    <td>@L["Name"]</td>
-                    <td>@L["Client Anchor"]</td>
-                </tr>
+            <tr>
+                <td>@L["Name"]</td>
+                <td>@L["Client Anchor"]</td>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var client in Model)
-                {
-                    <tr>
-                        <td><a asp-page="/Clients/Detail/Index" asp-route-id="@client.Id">@client.ClientName</a></td>
-                        <td>@client.ClientId</td>
-                    </tr>
-                }
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="/Clients/Detail/Index" asp-route-id="@client.Id">@client.ClientName</a>
+                    </td>
+                    <td>@client.ClientId</td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

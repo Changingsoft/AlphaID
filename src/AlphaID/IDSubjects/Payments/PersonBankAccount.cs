@@ -1,23 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.Payments;
 
 /// <summary>
-/// 银行账户。
+///     银行账户。
 /// </summary>
 [Table("PersonBankAccount")]
 [PrimaryKey(nameof(AccountNumber), nameof(PersonId))]
 public class PersonBankAccount
 {
     /// <summary>
-    /// 
     /// </summary>
-    protected internal PersonBankAccount() { }
+    protected internal PersonBankAccount()
+    {
+    }
 
     /// <summary>
-    /// 通过银行信息初始化银行账号。
+    ///     通过银行信息初始化银行账号。
     /// </summary>
     /// <param name="accountNumber"></param>
     /// <param name="accountName"></param>
@@ -30,31 +31,32 @@ public class PersonBankAccount
     }
 
     /// <summary>
-    /// 账号
+    ///     账号
     /// </summary>
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string AccountNumber { get; set; } = default!;
 
     /// <summary>
-    /// 户名
+    ///     户名
     /// </summary>
     [MaxLength(100)]
     public string? AccountName { get; set; }
 
     /// <summary>
-    /// 开户行
+    ///     开户行
     /// </summary>
     [MaxLength(100)]
     public string? BankName { get; set; }
 
     /// <summary>
-    /// 主体Id.
+    ///     主体Id.
     /// </summary>
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string PersonId { get; protected internal set; } = default!;
 
     /// <summary>
-    /// 
     /// </summary>
     [ForeignKey(nameof(PersonId))]
     public virtual NaturalPerson Person { get; protected internal set; } = default!;

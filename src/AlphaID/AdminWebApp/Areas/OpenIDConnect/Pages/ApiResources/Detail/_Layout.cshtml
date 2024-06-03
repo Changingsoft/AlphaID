@@ -1,14 +1,17 @@
 ﻿@{
     Layout = "Shared/_Layout";
 }
+
 @section head{
     @await RenderSectionAsync("head", false)
 }
+
 @section Scripts
-    {
+{
     @await RenderSectionAsync("Scripts", false)
 }
-<hr />
+
+<hr/>
 <div class="row">
     <div class="col-2">
         <nav class="nav flex-column">

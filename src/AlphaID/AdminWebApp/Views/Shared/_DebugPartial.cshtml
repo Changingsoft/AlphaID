@@ -1,5 +1,5 @@
-﻿@using System.Net
-@using Microsoft.AspNetCore.Authentication
+﻿@using Microsoft.AspNetCore.Authentication
+@using System.Net
 @inject IHostEnvironment Env
 @inject IOptions<SystemUrlInfo> SystemUrl
 @if (Env.IsDevelopment())
@@ -13,57 +13,79 @@
         <div class="card-body">
             <h2>Useful Links</h2>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">刘备</a></li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei@sanguo.net")}"))">刘备</a>
+                </li>
             </ul>
             <h2>Route Data</h2>
             <ul class="list-inline">
-                @foreach(var routeValue in ViewContext.RouteData.Values)
+                @foreach (var routeValue in ViewContext.RouteData.Values)
                 {
                     <li class="list-inline-item">["@(routeValue.Key)"] = "@(routeValue.Value)"</li>
                 }
             </ul>
             <h2>Access user</h2>
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var claim in User.Claims)
-                    {
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <table class="table table-sm">
+                    <thead>
                         <tr>
-                            <td>@claim.Type</td>
-                            <td>@claim.Value</td>
+                            <td>Type</td>
+                            <td>Value</td>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var claim in User.Claims)
+                        {
+                            <tr>
+                                <td>@claim.Type</td>
+                                <td>@claim.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Current user is not authenticated.</p>
+            }
 
             <h2>Tokens</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>access_token</td>
-                        <td style="word-break:break-all;"><code>@(await Context.GetTokenAsync("access_token"))</code></td>
-                    </tr>
-                    <tr>
-                        <td>id_token</td>
-                        <td style="word-break:break-all;"><code>@(await Context.GetTokenAsync("id_token"))</code></td>
-                    </tr>
-                    <tr>
-                        <td>refresh_token</td>
-                        <td style="word-break:break-all;"><code>@(await Context.GetTokenAsync("refresh_token"))</code></td>
-                    </tr>
-                </tbody>
-            </table>
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>Value</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>access_token</td>
+                            <td style="word-break:break-all;">
+                                <code>@(await Context.GetTokenAsync("access_token"))</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>id_token</td>
+                            <td style="word-break:break-all;">
+                                <code>@(await Context.GetTokenAsync("id_token"))</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>refresh_token</td>
+                            <td style="word-break:break-all;">
+                                <code>@(await Context.GetTokenAsync("refresh_token"))</code>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Tokens not found.</p>
+            }
         </div>
     </div>
 }

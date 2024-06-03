@@ -13,11 +13,8 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var idp = await dbContext.IdentityProviders.FindAsync(id);
-        if (idp == null)
-        {
-            return NotFound();
-        }
+        IdentityProvider? idp = await dbContext.IdentityProviders.FindAsync(id);
+        if (idp == null) return NotFound();
 
         Data = idp;
         return Page();
@@ -25,11 +22,8 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
-        var idp = await dbContext.IdentityProviders.FindAsync(id);
-        if (idp == null)
-        {
-            return NotFound();
-        }
+        IdentityProvider? idp = await dbContext.IdentityProviders.FindAsync(id);
+        if (idp == null) return NotFound();
 
         Data = idp;
 

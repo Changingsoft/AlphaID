@@ -97,23 +97,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you sure you want remove this claim?" xml:space="preserve">
-		<value>Are you sure you want remove this claim?</value>
-	</data>
-  <data name="Scopes" xml:space="preserve">
-	  <value>Scopes</value>
-	  <comment>Scopes</comment>
-  </data>
-  <data name="Remove" xml:space="preserve">
-	  <value>Remove</value>
-	  <comment>Remove</comment>
+  <data name="Add" xml:space="preserve">
+	  <value>Add</value>
+	  <comment>Add</comment>
   </data>
   <data name="Add scope" xml:space="preserve">
 	  <value>Add scope</value>
 	  <comment>Add Scope</comment>
   </data>
-  <data name="Add" xml:space="preserve">
-	  <value>Add</value>
-	  <comment>Add</comment>
+  <data name="Are you sure you want remove this claim?" xml:space="preserve">
+		<value>Are you sure you want remove this claim?</value>
+	</data>
+  <data name="Remove" xml:space="preserve">
+	  <value>Remove</value>
+	  <comment>Remove</comment>
+  </data>
+  <data name="Scopes" xml:space="preserve">
+	  <value>Scopes</value>
+	  <comment>Scopes</comment>
   </data>
 </root>

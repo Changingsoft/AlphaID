@@ -103,9 +103,6 @@
   <data name="Age" xml:space="preserve">
 		<value>Age</value>
 	</data>
-  <data name="Gender" xml:space="preserve">
-		<value>Gender</value>
-	</data>
   <data name="Mobile phone number" xml:space="preserve">
 		<value>Mobile phone number</value>
 	</data>

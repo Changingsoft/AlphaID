@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<JoinOrganizationInvitation>
+@inject OrganizationManager OrganizationManager
 @if (Model.Any())
 {
     <div class="card">
@@ -10,14 +11,19 @@
             {
                 <div class="list-group-item">
                     <div class="row align-items-center">
-                        <div class="col-auto"><span class="badge bg-red"></span></div>
+                        <div class="col-auto">
+                            <span class="badge bg-red"></span>
+                        </div>
                         <div class="col-auto">
                             <a href="#">
                                 <span class="avatar"></span>
                             </a>
                         </div>
                         <div class="col text-truncate">
-                            <a asp-page="/JoinOrganizationInvitation" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-invitationId="@invitation.Id">@L["{0} invite you join {1}", invitation.Inviter, invitation.Organization.Name]</a>
+                            @{
+                                GenericOrganization? organization = await OrganizationManager.FindByIdAsync(invitation.OrganizationId);
+                            }
+                            <a asp-page="/JoinOrganizationInvitation" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-invitationId="@invitation.Id">@L["{0} invite you join {1}", invitation.Inviter, organization]</a>
                         </div>
                         <div class="col-auto">
                             <a href="#" class="list-group-item-actions">
@@ -34,5 +40,3 @@
         </div>
     </div>
 }
-
-

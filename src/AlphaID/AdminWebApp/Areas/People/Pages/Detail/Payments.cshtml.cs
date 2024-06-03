@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.Payments;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
@@ -36,7 +36,7 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var result = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? result = await personManager.FindByIdAsync(Anchor);
         if (result == null)
             return NotFound();
         Person = result;
@@ -46,7 +46,7 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
 
     public async Task<IActionResult> OnPostAddBankAccountAsync()
     {
-        var person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -57,25 +57,23 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
         if (!ModelState.IsValid)
             return Page();
 
-        Result = await bankAccountManager.AddBankAccountAsync(person, new BankAccountInfo(AccountNumber, AccountName, BankName));
-        if(Result.Succeeded)
+        Result = await bankAccountManager.AddBankAccountAsync(person,
+            new BankAccountInfo(AccountNumber, AccountName, BankName));
+        if (Result.Succeeded)
             BankAccounts = bankAccountManager.GetBankAccounts(person);
         return Page();
     }
 
     public async Task<IActionResult> OnPostRemoveBankAccountAsync(string accountNumber)
     {
-        var person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
         BankAccounts = bankAccountManager.GetBankAccounts(person);
 
         Result = await bankAccountManager.RemoveBankAccountAsync(person, accountNumber);
-        if (Result.Succeeded)
-        {
-            BankAccounts = bankAccountManager.GetBankAccounts(person);
-        }
+        if (Result.Succeeded) BankAccounts = bankAccountManager.GetBankAccounts(person);
         return Page();
     }
 }

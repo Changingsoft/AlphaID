@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
@@ -5,15 +8,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
 
 namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class FindPasswordByEmailModel(IEmailSender emailSender, NaturalPersonManager userManager, IOptions<ProductInfo> production) : PageModel
+public class FindPasswordByEmailModel(
+    IEmailSender emailSender,
+    NaturalPersonManager userManager,
+    IOptions<ProductInfo> production) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
 
@@ -28,22 +31,20 @@ public class FindPasswordByEmailModel(IEmailSender emailSender, NaturalPersonMan
     {
         if (ModelState.IsValid)
         {
-            var user = await userManager.FindByEmailAsync(Input.Email);
+            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
             if (user == null || !await userManager.IsEmailConfirmedAsync(user))
-            {
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("FindPasswordByEmailConfirmation");
-            }
 
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
-            var code = await userManager.GeneratePasswordResetTokenAsync(user);
+            string code = await userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
+            string? callbackUrl = Url.Page(
                 "/Account/ResetPassword",
-                pageHandler: null,
-                values: new { code },
-                protocol: Request.Scheme);
+                null,
+                new { code },
+                Request.Scheme);
 
             await emailSender.SendEmailAsync(
                 Input.Email,

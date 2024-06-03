@@ -10,42 +10,42 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="@Model.Name" class="form-label"></label>
-                <input asp-for="@Model.Name" class="form-control" autofocus />
+                <input asp-for="@Model.Name" class="form-control" autofocus/>
                 <span asp-validation-for="@Model.Name"></span>
 
             </div>
             <div class="form-check">
-                <input asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-input" />
+                <input asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-input"/>
                 <label asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-label"></label>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.Domicile" class="form-label"></label>
-                <input asp-for="@Model.Domicile" class="form-control" />
+                <input asp-for="@Model.Domicile" class="form-control"/>
                 <span asp-validation-for="@Model.Domicile"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.Contact" class="form-label"></label>
-                <input asp-for="@Model.Contact" class="form-control" />
+                <input asp-for="@Model.Contact" class="form-control"/>
                 <span asp-validation-for="@Model.Contact"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.LegalPersonName" class="form-label"></label>
-                <input asp-for="@Model.LegalPersonName" class="form-control" />
+                <input asp-for="@Model.LegalPersonName" class="form-control"/>
                 <span asp-validation-for="@Model.LegalPersonName"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.EstablishedAt" class="form-label"></label>
-                <input asp-for="@Model.EstablishedAt" class="form-control" />
+                <input asp-for="@Model.EstablishedAt" class="form-control"/>
                 <span asp-validation-for="@Model.EstablishedAt"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.TermBegin" class="form-label"></label>
-                <input asp-for="@Model.TermBegin" class="form-control" />
+                <input asp-for="@Model.TermBegin" class="form-control"/>
                 <span asp-validation-for="@Model.TermBegin"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.TermEnd" class="form-label"></label>
-                <input asp-for="@Model.TermEnd" class="form-control" />
+                <input asp-for="@Model.TermEnd" class="form-control"/>
                 <span asp-validation-for="@Model.TermEnd"></span>
             </div>
             <div asp-validation-summary="All"></div>
@@ -83,4 +83,4 @@
             });
         });
     </script>
-    }
+}

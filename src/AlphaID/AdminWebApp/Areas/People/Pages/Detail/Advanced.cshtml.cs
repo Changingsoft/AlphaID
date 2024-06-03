@@ -1,54 +1,53 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.People.Pages.Detail
+namespace AdminWebApp.Areas.People.Pages.Detail;
+
+public class AdvancedModel(NaturalPersonManager naturalPersonManager) : PageModel
 {
-    public class AdvancedModel(NaturalPersonManager naturalPersonManager) : PageModel
+    public NaturalPerson Data { get; set; } = default!;
+
+    [BindProperty]
+    public InputModel Input { get; set; } = default!;
+
+    public IdentityResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        public NaturalPerson Data { get; set; } = default!;
+        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        if (person == null)
+            return NotFound();
+        Data = person;
 
-        [BindProperty]
-        public InputModel Input { get; set; } = default!;
-
-        public IdentityResult? Result { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string anchor)
+        Input = new InputModel
         {
-            var person = await naturalPersonManager.FindByIdAsync(anchor);
-            if (person == null)
-                return NotFound();
-            Data = person;
+            Enabled = Data.Enabled
+        };
 
-            Input = new InputModel
-            {
-                Enabled = Data.Enabled,
-            };
+        return Page();
+    }
 
+    public async Task<IActionResult> OnPostAsync(string anchor)
+    {
+        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        if (person == null)
+            return NotFound();
+        Data = person;
+
+        if (!ModelState.IsValid)
             return Page();
-        }
 
-        public async Task<IActionResult> OnPostAsync(string anchor)
-        {
-            var person = await naturalPersonManager.FindByIdAsync(anchor);
-            if (person == null)
-                return NotFound();
-            Data = person;
+        Data.Enabled = Input.Enabled;
 
-            if (!ModelState.IsValid)
-                return Page();
+        Result = await naturalPersonManager.UpdateAsync(person);
+        return Page();
+    }
 
-            Data.Enabled = Input.Enabled;
-
-            Result = await naturalPersonManager.UpdateAsync(person);
-            return Page();
-        }
-
-        public class InputModel
-        {
-            [Display(Name = "Enabled")]
-            public bool Enabled { get; set; }
-        }
+    public class InputModel
+    {
+        [Display(Name = "Enabled")]
+        public bool Enabled { get; set; }
     }
 }

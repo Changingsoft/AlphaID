@@ -1,10 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Membership;
 
-public class IndexModel(NaturalPersonManager personManager, OrganizationManager organizationManager, OrganizationMemberManager memberManager) : PageModel
+public class IndexModel(
+    NaturalPersonManager personManager,
+    OrganizationManager organizationManager,
+    OrganizationMemberManager memberManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
@@ -20,7 +23,7 @@ public class IndexModel(NaturalPersonManager personManager, OrganizationManager 
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -30,13 +33,13 @@ public class IndexModel(NaturalPersonManager personManager, OrganizationManager 
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        var person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
         OrganizationMembers = await memberManager.GetMembersOfAsync(person);
 
-        var org = await organizationManager.FindByIdAsync(Input.OrganizationId);
+        GenericOrganization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
         if (org == null)
         {
             ModelState.AddModelError(nameof(Input.OrganizationId), "Organization Not Found.");
@@ -49,30 +52,28 @@ public class IndexModel(NaturalPersonManager personManager, OrganizationManager 
             Department = Input.Department,
             Remark = Input.Remark,
             IsOwner = Input.IsOwner,
-            Visibility = Input.Visibility,
+            Visibility = Input.Visibility
         };
 
-        var result = await memberManager.CreateAsync(member);
+        IdOperationResult result = await memberManager.CreateAsync(member);
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
+            foreach (string error in result.Errors) ModelState.AddModelError("", error);
             return Page();
         }
+
         return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        var person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        var members = await memberManager.GetMembersOfAsync(Person);
-        var member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
+        IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(Person);
+        OrganizationMember? member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
         if (member == null)
         {
             ModelState.AddModelError("", "Membership not found.");

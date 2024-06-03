@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AuthCenterWebApp.Pages
+namespace AuthCenterWebApp.Pages;
+
+[AllowAnonymous]
+public class TermsModel : PageModel
 {
-    [AllowAnonymous]
-    public class TermsModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

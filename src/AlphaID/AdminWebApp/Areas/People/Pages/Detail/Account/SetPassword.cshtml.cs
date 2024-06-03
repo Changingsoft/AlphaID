@@ -1,6 +1,7 @@
-using IdSubjects;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using IdSubjects;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
@@ -19,35 +20,25 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         return person == null
             ? NotFound()
-            : await userManager.HasPasswordAsync(person) ? throw new InvalidOperationException("用户已具有密码，无法手动添加密码") : (IActionResult)Page();
+            : await userManager.HasPasswordAsync(person)
+                ? throw new InvalidOperationException("用户已具有密码，无法手动添加密码")
+                : (IActionResult)Page();
     }
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
-        if (person == null)
-        {
-            return NotFound();
-        }
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        if (person == null) return NotFound();
 
-        if (await userManager.HasPasswordAsync(person))
-        {
-            throw new InvalidOperationException("用户已具有密码，无法手动添加密码");
-        }
+        if (await userManager.HasPasswordAsync(person)) throw new InvalidOperationException("用户已具有密码，无法手动添加密码");
 
-        var result = await userManager.AddPasswordAsync(person, NewPassword);
-        if (result.Succeeded)
-        {
-            return RedirectToPage("SetPasswordSuccess", new { anchor });
-        }
+        IdentityResult result = await userManager.AddPasswordAsync(person, NewPassword);
+        if (result.Succeeded) return RedirectToPage("SetPasswordSuccess", new { anchor });
 
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError("", error.Description);
-        }
+        foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
         return Page();
     }
 }

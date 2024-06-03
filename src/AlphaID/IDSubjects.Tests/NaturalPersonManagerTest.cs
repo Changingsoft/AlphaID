@@ -1,4 +1,5 @@
 ﻿using IntegrationTestUtilities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -12,12 +13,12 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task SetTimeZone()
     {
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
         await manager.CreateAsync(_person);
 
         //using IANA time zone name
-        var result = await manager.SetTimeZone(_person, "Asia/Shanghai");
+        IdentityResult result = await manager.SetTimeZone(_person, "Asia/Shanghai");
         Assert.True(result.Succeeded);
         Assert.Equal("Asia/Shanghai", _person.TimeZone);
 
@@ -30,12 +31,12 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task CreateWithPassword()
     {
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
 
-        var now = DateTimeOffset.UtcNow;
+        DateTimeOffset now = DateTimeOffset.UtcNow;
         manager.TimeProvider = new FrozenTimeProvider(now);
-        var result = await manager.CreateAsync(_person, "Pass123$");
+        IdentityResult result = await manager.CreateAsync(_person, "Pass123$");
 
         Assert.True(result.Succeeded);
         Assert.NotNull(_person.PasswordHash);
@@ -48,13 +49,13 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task CreateWithoutPassword()
     {
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-        
-        var now = DateTimeOffset.UtcNow;
+
+        DateTimeOffset now = DateTimeOffset.UtcNow;
         manager.TimeProvider = new FrozenTimeProvider(now);
 
-        var result = await manager.CreateAsync(_person);
+        IdentityResult result = await manager.CreateAsync(_person);
 
         Assert.True(result.Succeeded);
         Assert.False(_person.PasswordLastSet.HasValue);
@@ -66,8 +67,7 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task SetUpdateTimeWhenUpdate()
     {
-
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
         await manager.CreateAsync(_person);
 
@@ -82,11 +82,11 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task AddPasswordWillSetPasswordLastSetTime()
     {
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
         await manager.CreateAsync(_person);
 
-        var result = await manager.AddPasswordAsync(_person, "Password$1");
+        IdentityResult result = await manager.AddPasswordAsync(_person, "Password$1");
         Assert.True(result.Succeeded);
         Assert.NotNull(_person.PasswordLastSet);
     }
@@ -94,12 +94,12 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task RemovePassword()
     {
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
 
         await manager.CreateAsync(_person, "Pass123$");
 
-        var result = await manager.RemovePasswordAsync(_person);
+        IdentityResult result = await manager.RemovePasswordAsync(_person);
         Assert.True(result.Succeeded);
         Assert.Null(_person.PasswordLastSet);
     }
@@ -107,20 +107,20 @@ public class NaturalPersonManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task ChangePassword()
     {
-        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
         manager.Options.Password.RememberPasswordHistory = 1;
 
         await manager.CreateAsync(_person, "Pass123$");
 
-        var result = await manager.ChangePasswordAsync(_person, "Pass123$", "Pass1234$");
+        IdentityResult result = await manager.ChangePasswordAsync(_person, "Pass123$", "Pass1234$");
         Assert.True(result.Succeeded);
 
         var passwordHistoryStore = scope.ServiceProvider.GetRequiredService<IPasswordHistoryStore>();
-        var passwords = passwordHistoryStore.GetPasswords(_person, 10);
+        IEnumerable<string> passwords = passwordHistoryStore.GetPasswords(_person.Id, 10);
         Assert.Single(passwords);
 
-        //change password again with same old password will failed.
+        //change password again with same old password will fail.
         result = await manager.ChangePasswordAsync(_person, "Pass1234$", "Pass1234$");
         Assert.False(result.Succeeded);
     }

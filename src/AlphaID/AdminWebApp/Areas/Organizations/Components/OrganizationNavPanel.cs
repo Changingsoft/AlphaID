@@ -7,6 +7,6 @@ public class OrganizationNavPanel(IOrganizationStore organizationStore) : ViewCo
 {
     public IViewComponentResult Invoke()
     {
-        return View(model: organizationStore.Organizations.Count());
+        return View(organizationStore.Organizations.Count());
     }
 }

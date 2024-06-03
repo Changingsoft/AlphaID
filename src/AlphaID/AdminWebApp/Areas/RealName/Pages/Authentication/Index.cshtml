@@ -1,6 +1,6 @@
 ﻿@page "{anchor}"
 @using IdSubjects.RealName
-@model AdminWebApp.Areas.RealName.Pages.Authentication.IndexModel
+@model IndexModel
 @{
 }
 
@@ -32,5 +32,5 @@
 
 @if (Model.Data is DocumentedRealNameAuthentication documentedRealNameAuthentication)
 {
-    <partial name="_IdentityDocumentPartial" model="documentedRealNameAuthentication.Document" />
+    <partial name="_IdentityDocumentPartial" model="documentedRealNameAuthentication.Document"/>
 }

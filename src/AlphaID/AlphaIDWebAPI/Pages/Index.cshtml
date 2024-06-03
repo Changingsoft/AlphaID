@@ -1,8 +1,10 @@
 ﻿@page
-@model AlphaIdWebAPI.Pages.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = $"{Product.Value.Name} API";
 }
 <h1>@ViewBag.Title</h1>
 @* ReSharper disable once Html.PathError *@
-<p><a href="/docs" target="_blank">API Documentation</a></p>
+<p>
+    <a href="/docs" target="_blank">API Documentation</a>
+</p>

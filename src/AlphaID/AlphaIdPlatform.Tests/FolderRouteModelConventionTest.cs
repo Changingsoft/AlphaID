@@ -1,6 +1,7 @@
 ﻿using AlphaIdPlatform.RazorPages;
 
 namespace AlphaIdPlatform.Tests;
+
 public class FolderRouteModelConventionTest
 {
     [Theory]
@@ -16,7 +17,7 @@ public class FolderRouteModelConventionTest
     public void PathBelongs(string folder, string viewEnginePath, bool expect)
     {
         folder = folder.TrimEnd('/');
-        var result = FolderRouteModelConvention.PathBelongsToFolder(folder, viewEnginePath);
+        bool result = FolderRouteModelConvention.PathBelongsToFolder(folder, viewEnginePath);
         Assert.Equal(expect, result);
     }
 }

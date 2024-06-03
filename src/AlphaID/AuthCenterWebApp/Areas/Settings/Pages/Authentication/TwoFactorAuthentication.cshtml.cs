@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class TwoFactorAuthenticationModel(
-    NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager) : PageModel
+    NaturalPersonManager userManager,
+    SignInManager<NaturalPerson> signInManager) : PageModel
 {
     public bool HasAuthenticator { get; set; }
 
@@ -24,11 +25,8 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         HasAuthenticator = await userManager.GetAuthenticatorKeyAsync(user) != null;
         Is2FaEnabled = await userManager.GetTwoFactorEnabledAsync(user);
@@ -40,14 +38,12 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await signInManager.ForgetTwoFactorClientAsync();
-        StatusMessage = "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
+        StatusMessage =
+            "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
         return RedirectToPage();
     }
 }

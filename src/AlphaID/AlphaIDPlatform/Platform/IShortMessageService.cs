@@ -1,12 +1,12 @@
 ﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
-/// Provide short message service.
+///     Provide short message service.
 /// </summary>
 public interface IShortMessageService
 {
     /// <summary>
-    /// Send message.
+    ///     Send message.
     /// </summary>
     /// <param name="mobile"></param>
     /// <param name="content"></param>

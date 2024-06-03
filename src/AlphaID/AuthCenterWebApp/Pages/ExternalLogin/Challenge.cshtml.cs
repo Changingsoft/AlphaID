@@ -16,9 +16,7 @@ public class Challenge(IIdentityServerInteractionService interactionService) : P
 
         // validate returnUrl - either it is a valid OIDC URL or back to a local page
         if (Url.IsLocalUrl(returnUrl) == false && interactionService.IsValidReturnUrl(returnUrl) == false)
-        {
             throw new Exception("invalid return URL");
-        }
 
         // start challenge and roundtrip the return URL and scheme 
         var props = new AuthenticationProperties
@@ -29,7 +27,7 @@ public class Challenge(IIdentityServerInteractionService interactionService) : P
             {
                 { "returnUrl", returnUrl },
                 { "schemeDisplayName", schemeDisplayName },
-                { "scheme", scheme },
+                { "scheme", scheme }
             }
         };
         return Challenge(props, scheme);

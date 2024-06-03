@@ -1,36 +1,35 @@
+using System.Diagnostics;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Diagnostics;
 
-namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations
+namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
+
+public class IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager personManager) : PageModel
 {
-    public class IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager personManager) : PageModel
+    public IEnumerable<OrganizationMember> Members { get; set; } = default!;
+
+    public IdOperationResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync()
     {
-        public IEnumerable<OrganizationMember> Members { get; set; } = default!;
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        Debug.Assert(person != null);
 
-        public IdOperationResult? Result { get; set; }
+        Members = await memberManager.GetMembersOfAsync(person);
+        return Page();
+    }
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            var person = await personManager.GetUserAsync(User);
-            Debug.Assert(person != null);
-
-            Members = await memberManager.GetMembersOfAsync(person);
+    public async Task<IActionResult> OnPostLeaveAsync(string organizationId)
+    {
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        Debug.Assert(person != null);
+        Members = await memberManager.GetMembersOfAsync(person);
+        OrganizationMember? member = Members.FirstOrDefault(m => m.OrganizationId == organizationId);
+        if (member == null)
             return Page();
-        }
 
-        public async Task<IActionResult> OnPostLeaveAsync(string organizationId)
-        {
-            var person = await personManager.GetUserAsync(User);
-            Debug.Assert(person != null);
-            Members = await memberManager.GetMembersOfAsync(person);
-            var member = Members.FirstOrDefault(m => m.OrganizationId == organizationId);
-            if (member == null)
-                return Page();
-
-            Result = await memberManager.LeaveOrganizationAsync(member);
-            return Page();
-        }
+        Result = await memberManager.LeaveOrganizationAsync(member);
+        return Page();
     }
 }

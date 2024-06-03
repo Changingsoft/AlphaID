@@ -11,10 +11,7 @@ public class IndexModel : PageModel
 
     public IActionResult OnGet(string redirectUri)
     {
-        if (!Url.IsLocalUrl(redirectUri))
-        {
-            return RedirectToPage("/Home/Error/LoginModel");
-        }
+        if (!Url.IsLocalUrl(redirectUri)) return RedirectToPage("/Home/Error/LoginModel");
 
         RedirectUri = redirectUri;
         return Page();

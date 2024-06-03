@@ -1,9 +1,8 @@
-namespace AdminWebApp.Areas.Organizations.Pages.Detail
+namespace AdminWebApp.Areas.Organizations.Pages.Detail;
+
+public class MapModel : PageModel
 {
-    public class MapModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

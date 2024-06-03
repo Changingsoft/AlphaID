@@ -1,109 +1,105 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail
+namespace AdminWebApp.Areas.Organizations.Pages.Detail;
+
+public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 {
-    public class FapiaoModel(OrganizationManager organizationManager) : PageModel
+    [BindProperty]
+    public InputModel Input { get; set; } = default!;
+
+    public IdOperationResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        [BindProperty]
-        public InputModel Input { get; set; } = default!;
+        GenericOrganization? organization = await organizationManager.FindByIdAsync(anchor);
+        if (organization == null)
+            return NotFound();
 
-        public IdOperationResult? Result { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string anchor)
-        {
-            var organization = await organizationManager.FindByIdAsync(anchor);
-            if (organization == null)
-                return NotFound();
-
-            if (organization.Fapiao != null)
+        if (organization.Fapiao != null)
+            Input = new InputModel
             {
-                Input = new InputModel()
-                {
-                    Name = organization.Fapiao.Name,
-                    TaxpayerId = organization.Fapiao.TaxPayerId,
-                    Address = organization.Fapiao.Address,
-                    Contact = organization.Fapiao.Contact,
-                    Bank = organization.Fapiao.Bank,
-                    Account = organization.Fapiao.Account,
-                };
-            }
+                Name = organization.Fapiao.Name,
+                TaxpayerId = organization.Fapiao.TaxPayerId,
+                Address = organization.Fapiao.Address,
+                Contact = organization.Fapiao.Contact,
+                Bank = organization.Fapiao.Bank,
+                Account = organization.Fapiao.Account
+            };
 
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostSaveAsync(string anchor)
+    {
+        GenericOrganization? organization = await organizationManager.FindByIdAsync(anchor);
+        if (organization == null)
+            return NotFound();
+
+        if (!ModelState.IsValid)
             return Page();
-        }
 
-        public async Task<IActionResult> OnPostSaveAsync(string anchor)
+        if (organization.Fapiao == null)
         {
-            var organization = await organizationManager.FindByIdAsync(anchor);
-            if (organization == null)
-                return NotFound();
-
-            if (!ModelState.IsValid)
-                return Page();
-
-            if (organization.Fapiao == null)
+            organization.Fapiao = new FapiaoInfo
             {
-                organization.Fapiao = new FapiaoInfo()
-                {
-                    Name = Input.Name,
-                    TaxPayerId = Input.TaxpayerId,
-                    Address = Input.Address,
-                    Contact = Input.Contact,
-                    Bank = Input.Bank,
-                    Account = Input.Account,
-                };
-            }
-            else
-            {
-                organization.Fapiao.Name = Input.Name;
-                organization.Fapiao.TaxPayerId = Input.TaxpayerId;
-                organization.Fapiao.Address = Input.Address;
-                organization.Fapiao.Bank = Input.Bank;
-                organization.Fapiao.Account = Input.Account;
-            }
-
-            Result = await organizationManager.UpdateAsync(organization);
-            return Page();
+                Name = Input.Name,
+                TaxPayerId = Input.TaxpayerId,
+                Address = Input.Address,
+                Contact = Input.Contact,
+                Bank = Input.Bank,
+                Account = Input.Account
+            };
         }
-
-        public async Task<IActionResult> OnPostClearAsync(string anchor)
+        else
         {
-            var organization = await organizationManager.FindByIdAsync(anchor);
-            if (organization == null)
-                return NotFound();
-
-            organization.Fapiao = null;
-            Result = await organizationManager.UpdateAsync(organization);
-            return Page();
+            organization.Fapiao.Name = Input.Name;
+            organization.Fapiao.TaxPayerId = Input.TaxpayerId;
+            organization.Fapiao.Address = Input.Address;
+            organization.Fapiao.Bank = Input.Bank;
+            organization.Fapiao.Account = Input.Account;
         }
 
-        public class InputModel
-        {
-            [Display(Name = "Name")]
-            [Required(ErrorMessage = "Validate_Required")]
-            public string Name { get; set; } = default!;
+        Result = await organizationManager.UpdateAsync(organization);
+        return Page();
+    }
 
-            [Display(Name = "Taxpayer ID")]
-            [Required(ErrorMessage = "Validate_Required")]
-            public string TaxpayerId { get; set; } = default!;
+    public async Task<IActionResult> OnPostClearAsync(string anchor)
+    {
+        GenericOrganization? organization = await organizationManager.FindByIdAsync(anchor);
+        if (organization == null)
+            return NotFound();
 
-            [Display(Name = "Address")]
-            [Required(ErrorMessage = "Validate_Required")]
-            public string Address { get; set; } = default!;
+        organization.Fapiao = null;
+        Result = await organizationManager.UpdateAsync(organization);
+        return Page();
+    }
 
-            [Display(Name = "Contact")]
-            [Required(ErrorMessage = "Validate_Required")]
-            public string Contact { get; set; } = default!;
+    public class InputModel
+    {
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string Name { get; set; } = default!;
 
-            [Display(Name = "Bank")]
-            [Required(ErrorMessage = "Validate_Required")]
-            public string Bank { get; set; } = default!;
+        [Display(Name = "Taxpayer ID")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string TaxpayerId { get; set; } = default!;
 
-            [Display(Name = "Account")]
-            [Required(ErrorMessage = "Validate_Required")]
-            public string Account { get; set; } = default!;
-        }
+        [Display(Name = "Address")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string Address { get; set; } = default!;
 
+        [Display(Name = "Contact")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string Contact { get; set; } = default!;
+
+        [Display(Name = "Bank")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string Bank { get; set; } = default!;
+
+        [Display(Name = "Account")]
+        [Required(ErrorMessage = "Validate_Required")]
+        public string Account { get; set; } = default!;
     }
 }

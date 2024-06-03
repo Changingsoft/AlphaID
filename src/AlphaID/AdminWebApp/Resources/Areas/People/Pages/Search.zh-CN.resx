@@ -123,9 +123,6 @@
   <data name="Age" xml:space="preserve">
     <value>年龄</value>
   </data>
-  <data name="Gender" xml:space="preserve">
-    <value>性别</value>
-  </data>
   <data name="Mobile phone number" xml:space="preserve">
     <value>移动电话号码</value>
   </data>

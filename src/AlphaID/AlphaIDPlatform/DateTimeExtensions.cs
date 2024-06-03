@@ -1,12 +1,12 @@
 ﻿namespace AlphaIdPlatform;
 
 /// <summary>
-/// 针对日期时间的扩展方法。
+///     针对日期时间的扩展方法。
 /// </summary>
 public static class DateTimeExtensions
 {
     /// <summary>
-    /// 以年龄的方式显示。
+    ///     以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -18,18 +18,18 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    /// 以年龄的方式显示。
+    ///     以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
     public static int AsAge(this DateTime dateOfBirth)
     {
-        var now = DateTime.UtcNow;
+        DateTime now = DateTime.UtcNow;
         return AsAge(dateOfBirth, now);
     }
 
     /// <summary>
-    /// 以年龄的方式显示。
+    ///     以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -41,7 +41,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    /// 以年龄的方式显示。
+    ///     以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    /// For test only.
+    ///     For test only.
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <param name="now"></param>
@@ -64,11 +64,10 @@ public static class DateTimeExtensions
     internal static int AsAge(this DateOnly dateOfBirth, DateOnly now)
     {
         //2017年10月1日施行的《民法总则》第二百零一条第一款规定：“按照年、月、日计算期间的，开始的当日不计入，自下一日开始计算
-        var year = now.Year - dateOfBirth.Year;
+        int year = now.Year - dateOfBirth.Year;
         var anniversary = new DateOnly(now.Year, dateOfBirth.Month, dateOfBirth.Day); //取得当年的纪念日。
         if (now > anniversary)
             return year;
-        else
-            return year - 1;
+        return year - 1;
     }
 }

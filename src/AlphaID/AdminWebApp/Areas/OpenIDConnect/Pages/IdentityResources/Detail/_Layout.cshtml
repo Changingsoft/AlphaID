@@ -1,24 +1,30 @@
-﻿@inject ConfigurationDbContext DbContext
+﻿@using Duende.IdentityServer.EntityFramework.Entities
+@inject ConfigurationDbContext DbContext
 @{
     Layout = "Shared/_Layout";
-    Duende.IdentityServer.EntityFramework.Entities.IdentityResource? identityResource = default!;
-    if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out int resourceId))
+    IdentityResource? identityResource = default!;
+    if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out var resourceId))
     {
         identityResource = DbContext.IdentityResources.FirstOrDefault(p => p.Id == resourceId);
-
     }
+
     ViewBag.Title = identityResource?.DisplayName ?? "";
 }
+
 @section head {
     @await RenderSectionAsync("head", false)
 }
 
 @section Breadcrumb {
-    <li class="breadcrumb-item"><a asp-page="/Clients/Index">@L["Identity Resources"]</a></li>
+    <li class="breadcrumb-item">
+        <a asp-page="/Clients/Index">@L["Identity Resources"]</a>
+    </li>
 }
+
 @section PageHeader {
     <h1>@identityResource?.DisplayName</h1>
 }
+
 <div class="card">
     <div class="row">
         <div class="col-12 col-md-2 border-end">
@@ -37,6 +43,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts
 {
     @await RenderSectionAsync("Scripts", false)

@@ -5,12 +5,15 @@
 @section head{
     @await RenderSectionAsync("head", false)
 }
+
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)
 }
+
 @section PageHeader{
     <h1>@L["Security"]</h1>
 }
+
 <div class="card">
     <div class="row">
         <div class="col-12 col-md-2 border-end">
@@ -24,12 +27,13 @@
         </div>
         <div class="col-12 col-md-10 d-flex flex-column">
             <div class="card-body">
-            @RenderBody()
+                @RenderBody()
             </div>
         </div>
     </div>
 
 </div>
+
 @section PageComponents
 {
     @await RenderSectionAsync("PageComponents", false)

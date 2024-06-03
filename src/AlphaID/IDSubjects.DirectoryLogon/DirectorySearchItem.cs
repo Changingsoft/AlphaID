@@ -1,7 +1,7 @@
 ﻿namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-/// Directory Search Item.
+///     Directory Search Item.
 /// </summary>
 /// <param name="Name"> Directory entry name. </param>
 /// <param name="SamAccountName"> SAM Account Name </param>
@@ -13,13 +13,14 @@
 /// <param name="Company"> Company name. </param>
 /// <param name="Department"> Department name. </param>
 /// <param name="Title"> Title name. </param>
-public record DirectorySearchItem(string Name,
-                                  string? SamAccountName,
-                                  string? UserPrincipalName,
-                                  Guid ObjectGuid,
-                                  string Dn,
-                                  string? DisplayName,
-                                  string? Mobile,
-                                  string? Company,
-                                  string? Department,
-                                  string? Title);
+public record DirectorySearchItem(
+    string Name,
+    string? SamAccountName,
+    string? UserPrincipalName,
+    Guid ObjectGuid,
+    string Dn,
+    string? DisplayName,
+    string? Mobile,
+    string? Company,
+    string? Department,
+    string? Title);

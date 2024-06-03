@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Settings.Pages.Organizations.NewModel
+@model NewModel
 @{
     ViewBag.Title = L["New organization"];
 }
@@ -8,37 +8,37 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control"/>
         <span asp-description-for="Name"></span>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Domicile" class="form-label"></label>
-        <input asp-for="Input.Domicile" class="form-control" />
+        <input asp-for="Input.Domicile" class="form-control"/>
         <span asp-description-for="Input.Domicile"></span>
         <span asp-validation-for="Input.Domicile" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Representative" class="form-label"></label>
-        <input asp-for="Input.Representative" class="form-control" />
+        <input asp-for="Input.Representative" class="form-control"/>
         <span asp-description-for="Input.Representative"></span>
         <span asp-validation-for="Input.Representative" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Title" class="form-label"></label>
-        <input asp-for="Input.Title" class="form-control" />
+        <input asp-for="Input.Title" class="form-control"/>
         <span asp-description-for="Input.Title"></span>
         <span asp-validation-for="Input.Title" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Department" class="form-label"></label>
-        <input asp-for="Input.Department" class="form-control" />
+        <input asp-for="Input.Department" class="form-control"/>
         <span asp-description-for="Input.Department"></span>
         <span asp-validation-for="Input.Department" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Remark" class="form-label"></label>
-        <input asp-for="Input.Remark" class="form-control" />
+        <input asp-for="Input.Remark" class="form-control"/>
         <span asp-description-for="Input.Remark"></span>
         <span asp-validation-for="Input.Remark" class="text-danger"></span>
     </div>
@@ -47,5 +47,5 @@
 </form>
 
 @section Scripts{
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

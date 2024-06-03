@@ -1,9 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.ChineseName;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Register;
 
@@ -41,7 +41,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
         var builder = new PersonBuilder();
         if (Mobile != null)
         {
-            if (MobilePhoneNumber.TryParse(Mobile, out var phoneNumber))
+            if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
                 builder.SetMobile(phoneNumber);
             else
                 ModelState.AddModelError("", "移动电话号码无效。");
@@ -52,7 +52,8 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
 
 
         (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(Input.Surname, Input.GivenName);
-        var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, phoneticSurname, phoneticGivenName);
+        var chinesePersonName =
+            new ChinesePersonName(Input.Surname, Input.GivenName, phoneticSurname, phoneticGivenName);
 
         var personName = new PersonNameInfo(chinesePersonName.FullName, Input.Surname, Input.GivenName);
 
@@ -63,7 +64,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
             builder.SetEmail(Email);
 
 
-        var person = builder.Build();
+        NaturalPerson person = builder.Build();
 
         person.DateOfBirth = Input.DateOfBirth.HasValue
             ? DateOnly.FromDateTime(Input.DateOfBirth.Value)
@@ -83,7 +84,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
     }
 
     /// <summary>
-    /// 检查移动电话的有效性和唯一性。
+    ///     检查移动电话的有效性和唯一性。
     /// </summary>
     /// <param name="mobile"></param>
     /// <returns></returns>
@@ -95,10 +96,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
             return new JsonResult("移动电话号码无效");
 
-        if (!manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString()))
-        {
-            return new JsonResult(true);
-        }
+        if (!manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString())) return new JsonResult(true);
         return new JsonResult("此移动电话已注册");
     }
 
@@ -115,8 +113,9 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
             return new JsonResult("User name is exists.");
         return new JsonResult(true);
     }
+
     /// <summary>
-    /// 获取拼音。
+    ///     获取拼音。
     /// </summary>
     /// <returns></returns>
     public IActionResult OnGetPinyin(string surname, string givenName)

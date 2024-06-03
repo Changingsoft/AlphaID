@@ -1,4 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using AlphaIdPlatform.Identity;
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
@@ -6,14 +9,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager, IIdentityServerInteractionService interaction) : PageModel
+public class ChangePasswordModel(
+    NaturalPersonManager userManager,
+    SignInManager<NaturalPerson> signInManager,
+    IIdentityServerInteractionService interaction) : PageModel
 {
     public bool RememberMe { get; set; }
 
@@ -26,13 +30,15 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var result = await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+        AuthenticateResult result =
+            await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (result.Principal == null)
-        {
             throw new InvalidOperationException("Unable to load must change password authentication user.");
-        }
-        string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        _ = await userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
+        string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ??
+                          throw new InvalidOperationException(
+                              "Unable to load must change password authentication user.");
+        _ = await userManager.FindByIdAsync(personId) ??
+            throw new InvalidOperationException("Unable to load must change password authentication user.");
         RememberMe = rememberMe;
         ReturnUrl = returnUrl;
 
@@ -42,14 +48,18 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
     public async Task<IActionResult> OnPostAsync(bool rememberMe, string? returnUrl = null)
     {
         //Ensure user must change password
-        var authMustChangePasswordResult = await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+        AuthenticateResult authMustChangePasswordResult =
+            await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (authMustChangePasswordResult.Principal == null)
-        {
             throw new InvalidOperationException("Unable to load must change password authentication user.");
-        }
-        string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        var person = await userManager.FindByIdAsync(personId) ?? throw new InvalidOperationException("Unable to load must change password authentication user.");
-        var identityResult = await userManager.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
+        string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ??
+                          throw new InvalidOperationException(
+                              "Unable to load must change password authentication user.");
+        NaturalPerson person = await userManager.FindByIdAsync(personId) ??
+                               throw new InvalidOperationException(
+                                   "Unable to load must change password authentication user.");
+        IdentityResult identityResult =
+            await userManager.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
         if (identityResult.Succeeded)
         {
             //Sign out MustChangePasswordScheme
@@ -58,16 +68,14 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
             //Signin user without password.
             await signInManager.SignInAsync(person, rememberMe);
 
-            var context = await interaction.GetAuthorizationContextAsync(returnUrl);
+            AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
             if (context != null)
             {
                 if (context.IsNativeClient())
-                {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
                     return this.LoadingPage(returnUrl!);
-                }
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                 return Redirect(returnUrl!);
@@ -75,25 +83,15 @@ public class ChangePasswordModel(NaturalPersonManager userManager, SignInManager
 
             // request for a local page
             if (Url.IsLocalUrl(returnUrl))
-            {
                 return Redirect(returnUrl);
-            }
-            else if (string.IsNullOrEmpty(returnUrl))
-            {
+            if (string.IsNullOrEmpty(returnUrl))
                 return Redirect("~/");
-            }
-            else
-            {
-                // user might have clicked on a malicious link - should be logged
-                throw new Exception("invalid return URL");
-            }
+            // user might have clicked on a malicious link - should be logged
+            throw new Exception("invalid return URL");
         }
 
         ModelState.AddModelError("", "更改密码操作无效！");
-        foreach (var error in identityResult.Errors)
-        {
-            ModelState.AddModelError("", error.Description);
-        }
+        foreach (IdentityError error in identityResult.Errors) ModelState.AddModelError("", error.Description);
         return Page();
     }
 

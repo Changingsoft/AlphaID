@@ -1,12 +1,12 @@
 ﻿namespace AlphaIdPlatform.Identity;
 
 /// <summary>
-/// IdSubjects Identity defaults.
+///     IdSubjects Identity defaults.
 /// </summary>
 public static class IdSubjectsIdentityDefaults
 {
     /// <summary>
-    /// scheme name for Must change password.
+    ///     scheme name for Must change password.
     /// </summary>
     public const string MustChangePasswordScheme = "mustchangepassword";
 }

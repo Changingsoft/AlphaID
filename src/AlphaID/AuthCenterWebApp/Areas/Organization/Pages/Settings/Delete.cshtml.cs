@@ -2,40 +2,30 @@ using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
+namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
+
+public class DeleteModel(OrganizationManager manager) : PageModel
 {
-    public class DeleteModel(OrganizationManager manager) : PageModel
+    public IdOperationResult? Result { get; set; }
+
+    public IActionResult OnGet(string anchor)
     {
-        public IdOperationResult? Result { get; set; }
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who", new { anchor });
+        if (organization == null) return NotFound();
 
-        public IActionResult OnGet(string anchor)
-        {
-            if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return RedirectToPage("/Who", new { anchor });
-            if (organization == null)
-            {
-                return NotFound();
-            }
+        return Page();
+    }
 
-            return Page();
-        }
+    public async Task<IActionResult> OnPostAsync(string anchor)
+    {
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who", new { anchor });
+        if (organization == null) return NotFound();
 
-        public async Task<IActionResult> OnPostAsync(string anchor)
-        {
-            if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return RedirectToPage("/Who", new { anchor });
-            if (organization == null)
-            {
-                return NotFound();
-            }
+        Result = await manager.DeleteAsync(organization);
+        if (!Result.Succeeded) return Page();
 
-            Result = await manager.DeleteAsync(organization);
-            if (!Result.Succeeded)
-            {
-                return Page();
-            }
-
-            return RedirectToPage("/Index", new { area = "" });
-        }
+        return RedirectToPage("/Index", new { area = "" });
     }
 }

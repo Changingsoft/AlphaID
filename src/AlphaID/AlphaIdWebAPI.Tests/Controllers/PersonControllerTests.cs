@@ -12,29 +12,29 @@ public class PersonControllerTests(AlphaIdApiFactory factory)
     [InlineData("liubei")]
     public async Task SearchPerson(string keywords)
     {
-        var client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync($"/api/Person/Suggestions?q={WebUtility.UrlEncode(keywords)}");
+        HttpResponseMessage response =
+            await client.GetAsync($"/api/Person/Suggestions?q={WebUtility.UrlEncode(keywords)}");
         response.EnsureSuccessStatusCode();
         var data = await response.Content.ReadFromJsonAsync<IEnumerable<SearchPersonModel>>();
         Assert.True(data!.Any());
-        var one = data!.First();
+        SearchPersonModel one = data!.First();
         Assert.NotNull(one.AvatarUrl);
     }
 
     [Fact]
     public async Task GetUserInfo()
     {
-        var client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("/api/Person/liubei");
+        HttpResponseMessage response = await client.GetAsync("/api/Person/liubei");
         response.EnsureSuccessStatusCode();
         var data = await response.Content.ReadFromJsonAsync<UserInfoModel>();
         Assert.Equal("d2480421-8a15-4292-8e8f-06985a1f645b", data!.SubjectId);
         Assert.Equal("刘备", data.Name);
         Assert.Equal("LIUBEI", data.SearchHint);
         Assert.NotNull(data.AvatarUrl);
-
     }
 
     internal record SearchPersonModel(string UserName, string Name, string? AvatarUrl);

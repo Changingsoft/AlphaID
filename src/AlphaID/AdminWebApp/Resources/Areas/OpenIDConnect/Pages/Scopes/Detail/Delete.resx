@@ -104,6 +104,6 @@
 		<value>Entering scope name ({0}) for confirm.</value>
 	</data>
   <data name="Please check the resources related to this scope. The scope could be delete without any resources related to it." xml:space="preserve">
-		<value>Please check the resources related to this scope. The scope could be delete without any resources related to it.</value>
+		<value>Please check the resources related to this scope. The scope could be deleted without any resources related to it.</value>
 	</data>
 </root>

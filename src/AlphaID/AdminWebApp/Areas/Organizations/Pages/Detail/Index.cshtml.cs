@@ -12,11 +12,10 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await organizationManager.FindByIdAsync(Anchor);
+        GenericOrganization? org = await organizationManager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
         Organization = org;
         return Page();
     }
-
 }

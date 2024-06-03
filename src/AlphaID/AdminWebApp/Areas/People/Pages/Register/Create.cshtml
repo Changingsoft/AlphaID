@@ -10,7 +10,7 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="UserName" class="form-label required"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input asp-for="UserName" class="form-control"/>
                 <span asp-description-for="UserName"></span>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
@@ -82,7 +82,7 @@
                     <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                 </div>
             </div>
-            
+
             <div asp-validation-summary="All"></div>
             <button type="submit" class="btn btn-primary">@SL["Next"]</button>
         </form>
@@ -90,8 +90,8 @@
 </div>
 
 @section Scripts
-    {
-    <partial name="_ValidationScriptsPartial" />
+{
+    <partial name="_ValidationScriptsPartial"/>
     <script>
         $("#Input_Surname").on("blur", function () {
             updateForms();

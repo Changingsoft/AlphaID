@@ -3,38 +3,35 @@ using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AuthCenterWebApp.Areas.People.Pages
+namespace AuthCenterWebApp.Areas.People.Pages;
+
+public class IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
+    : PageModel
 {
-    public class IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager) : PageModel
+    public NaturalPerson Person { get; set; } = default!;
+
+    public bool UserIsOwner { get; set; }
+
+    public IEnumerable<OrganizationMember> Members { get; set; } = [];
+
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        public NaturalPerson Person { get; set; } = default!;
+        //Support both userAnchor and user ID.
+        NaturalPerson? person = await personManager.FindByNameAsync(anchor)
+                                ?? await personManager.FindByIdAsync(anchor);
+        if (person == null)
+            return NotFound();
+        Person = person;
 
-        public bool UserIsOwner { get; set; }
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        public IEnumerable<OrganizationMember> Members { get; set; } = [];
+        Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
 
-        public async Task<IActionResult> OnGetAsync(string anchor)
-        {
-            //Support both userAnchor and user ID.
-            var person = await personManager.FindByNameAsync(anchor)
-                ?? await personManager.FindByIdAsync(anchor);
-            if (person == null)
-                return NotFound();
-            Person = person;
+        if (!User.Identity!.IsAuthenticated) return Page();
 
-            NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        if (User.SubjectId() == Person.Id)
+            UserIsOwner = true;
 
-            Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
-
-            if (!User.Identity!.IsAuthenticated)
-            {
-                return Page();
-            }
-
-            if (User.SubjectId() == Person.Id)
-                UserIsOwner = true;
-
-            return Page();
-        }
+        return Page();
     }
 }

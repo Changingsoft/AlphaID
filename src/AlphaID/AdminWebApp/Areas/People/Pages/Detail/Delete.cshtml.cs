@@ -1,6 +1,7 @@
-using IdSubjects;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using IdSubjects;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
@@ -16,7 +17,7 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -25,33 +26,28 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
 
         if (Input.DisplayName != Person.PersonName.FullName)
-        {
             ModelState.AddModelError(nameof(Input.DisplayName), "Ãû³Æ²»Ò»ÖÂ");
-        }
 
         if (!ModelState.IsValid)
             return Page();
 
         try
         {
-            var result = await userManager.DeleteAsync(Person);
+            IdentityResult result = await userManager.DeleteAsync(Person);
             if (result.Succeeded)
-                return RedirectToPage("DeleteSuccess");
-            else
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return Page();
+                return RedirectToPage("DeleteSuccess");
             }
+
+            foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
+            return Page();
         }
         catch (Exception ex)
         {
@@ -62,7 +58,6 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
 
     public class DeletePersonForm
     {
-
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         [Required(ErrorMessage = "Validate_Required")]
         public string DisplayName { get; set; } = default!;

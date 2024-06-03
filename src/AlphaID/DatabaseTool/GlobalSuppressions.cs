@@ -5,4 +5,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification = "<挂起>", Scope = "namespace", Target = "~N:DatabaseTool.Migrations")]
+[assembly:
+    SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification = "<挂起>", Scope = "namespace",
+        Target = "~N:DatabaseTool.Migrations")]

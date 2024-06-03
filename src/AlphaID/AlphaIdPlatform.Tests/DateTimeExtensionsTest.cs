@@ -1,4 +1,5 @@
 ﻿namespace AlphaIdPlatform.Tests;
+
 public class DateTimeExtensionsTest
 {
     [Fact]

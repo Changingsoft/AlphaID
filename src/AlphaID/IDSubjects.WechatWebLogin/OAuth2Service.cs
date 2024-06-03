@@ -1,17 +1,17 @@
-﻿using Newtonsoft.Json;
-using System.Text;
+﻿using System.Text;
+using Newtonsoft.Json;
 
 namespace IdSubjects.WechatWebLogin;
 
 /// <summary>
-/// OAuth2Service
+///     OAuth2Service
 /// </summary>
 public class OAuth2Service
 {
     private readonly JsonSerializer _jsonSerializer;
 
     /// <summary>
-    /// Initialize OAuth2Service.
+    ///     Initialize OAuth2Service.
     /// </summary>
     public OAuth2Service()
     {
@@ -19,7 +19,7 @@ public class OAuth2Service
     }
 
     /// <summary>
-    /// Get Token via Resource Owner Password Credential Flow.
+    ///     Get Token via Resource Owner Password Credential Flow.
     /// </summary>
     /// <param name="clientId"></param>
     /// <param name="clientSecret"></param>
@@ -27,7 +27,11 @@ public class OAuth2Service
     /// <param name="userPassword"></param>
     /// <param name="resource"></param>
     /// <returns></returns>
-    public async Task<OAuth2Result?> GetResourceOwnerPasswordCredentialTokenAsync(string clientId, string clientSecret, string userSpn, string userPassword, string resource)
+    public async Task<OAuth2Result?> GetResourceOwnerPasswordCredentialTokenAsync(string clientId,
+        string clientSecret,
+        string userSpn,
+        string userPassword,
+        string resource)
     {
         var httpClient = new HttpClient
         {
@@ -36,21 +40,22 @@ public class OAuth2Service
 
         var formData = new Dictionary<string, string>
         {
-            {"client_id", clientId },
-            {"client_secret", clientSecret },
-            {"username", userSpn },
-            {"password", userPassword },
-            {"grant_type", "password" },
-            {"resource", resource }
+            { "client_id", clientId },
+            { "client_secret", clientSecret },
+            { "username", userSpn },
+            { "password", userPassword },
+            { "grant_type", "password" },
+            { "resource", resource }
         };
 
-        var response = await httpClient.PostAsync("adfs/oauth2/token", new FormUrlEncodedContent(formData));
+        HttpResponseMessage response =
+            await httpClient.PostAsync("adfs/oauth2/token", new FormUrlEncodedContent(formData));
 
         if (!response.IsSuccessStatusCode)
             throw new InvalidOperationException($"远程返回错误{response.StatusCode}");
 
 
-        var stream = await response.Content.ReadAsStreamAsync();
+        Stream stream = await response.Content.ReadAsStreamAsync();
 
         return _jsonSerializer.Deserialize<OAuth2Result>(new JsonTextReader(new StreamReader(stream, Encoding.UTF8)));
     }

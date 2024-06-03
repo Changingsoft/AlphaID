@@ -6,7 +6,6 @@ namespace AuthCenterWebApp.Pages;
 [AllowAnonymous]
 public class Index : PageModel
 {
-
     public void OnGet()
     {
     }

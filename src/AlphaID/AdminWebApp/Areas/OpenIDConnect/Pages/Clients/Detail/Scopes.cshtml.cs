@@ -17,13 +17,15 @@ public class ScopesModel(ConfigurationDbContext dbContext) : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
+        Client? data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return NotFound();
         Data = data;
 
-        ScopeItems = dbContext.IdentityResources.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
-            .Union(dbContext.ApiScopes.ToList().Select(s => new SelectListItem(s.DisplayName, s.Name, Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
+        ScopeItems = dbContext.IdentityResources.ToList().Select(s =>
+                new SelectListItem(s.DisplayName, s.Name, Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled))
+            .Union(dbContext.ApiScopes.ToList().Select(s =>
+                new SelectListItem(s.DisplayName, s.Name, Data.AllowedScopes.Any(p => p.Scope == s.Name), !s.Enabled)))
             .ToList();
 
         return Page();
@@ -31,34 +33,28 @@ public class ScopesModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
+        Client? data = dbContext.Clients.Include(p => p.AllowedScopes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
             return NotFound();
         Data = data;
 
-        foreach (var scope in ScopeItems)
-        {
+        foreach (SelectListItem scope in ScopeItems)
             switch (scope.Selected)
             {
                 case true:
                     if (!Data.AllowedScopes.Any(p => p.Scope == scope.Value))
-                    {
-                        Data.AllowedScopes.Add(new ClientScope()
+                        Data.AllowedScopes.Add(new ClientScope
                         {
                             ClientId = Data.Id,
-                            Scope = scope.Value,
+                            Scope = scope.Value
                         });
-                    }
                     break;
                 case false:
-                    var item = Data.AllowedScopes.FirstOrDefault(p => p.Scope == scope.Value);
-                    if (item != null)
-                    {
-                        Data.AllowedScopes.Remove(item);
-                    }
+                    ClientScope? item = Data.AllowedScopes.FirstOrDefault(p => p.Scope == scope.Value);
+                    if (item != null) Data.AllowedScopes.Remove(item);
                     break;
             }
-        }
+
         dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
         OperationMessage = "操作已成功！";

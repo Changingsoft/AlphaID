@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Pages.Account;
 
-[AllowAnonymous()]
+[AllowAnonymous]
 public class SignOutModel : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
-        var signedOutUri = Url.Page("/Account/SignedOut");
+        string? signedOutUri = Url.Page("/Account/SignedOut");
         await HttpContext.SignOutAsync();
-        return SignOut(new AuthenticationProperties { RedirectUri = signedOutUri }, OpenIdConnectDefaults.AuthenticationScheme);
+        return SignOut(new AuthenticationProperties { RedirectUri = signedOutUri },
+            OpenIdConnectDefaults.AuthenticationScheme);
     }
 }

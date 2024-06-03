@@ -1,9 +1,11 @@
 ﻿namespace IdSubjects.RealName.Tests;
+
 internal class StubRealNameAuthenticationStore : IRealNameAuthenticationStore
 {
     private readonly HashSet<RealNameAuthentication> _set = [];
 
     public IQueryable<RealNameAuthentication> Authentications => _set.AsQueryable();
+
     public Task<IdOperationResult> CreateAsync(RealNameAuthentication authentication)
     {
         _set.Add(authentication);

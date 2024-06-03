@@ -1,81 +1,77 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
-namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
+namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
+
+public class PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager) : PageModel
 {
-    public class PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager) : PageModel
+    [BindProperty]
+    public InputMode Input { get; set; } = default!;
+
+    public IdentityResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync()
     {
-        [BindProperty]
-        public InputMode Input { get; set; } = default!;
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        if (person == null) return NotFound();
 
-        public IdentityResult? Result { get; set; }
+        bool hasRealName = realNameManager.GetAuthentications(person).Any();
+        if (hasRealName)
+            Result = IdentityResult.Failed(new IdentityError
+            {
+                Code = "Cannot change name after real-name authentication",
+                Description = "You cannot change name because your has been passed real-name authentication."
+            });
 
-        public async Task<IActionResult> OnGetAsync()
+        Input = new InputMode
         {
-            var person = await personManager.GetUserAsync(User);
-            if (person == null)
-            {
-                return NotFound();
-            }
+            Surname = person.PersonName.Surname,
+            MiddleName = person.PersonName.MiddleName,
+            GivenName = person.PersonName.GivenName,
+            PhoneticSurname = person.PhoneticSurname,
+            PhoneticGivenName = person.PhoneticGivenName
+        };
+        return Page();
+    }
 
-            var hasRealName = realNameManager.GetAuthentications(person).Any();
-            if (hasRealName)
-            {
-                Result = IdentityResult.Failed(new IdentityError() { Code = "Cannot change name after real-name authentication", Description = "You cannot change name because your has been passed real-name authentication." });
-            }
+    public async Task<IActionResult> OnPostAsync()
+    {
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        if (person == null) return NotFound();
 
-            Input = new InputMode()
-            {
-                Surname = person.PersonName.Surname,
-                MiddleName = person.PersonName.MiddleName,
-                GivenName = person.PersonName.GivenName,
-                PhoneticSurname = person.PhoneticSurname,
-                PhoneticGivenName = person.PhoneticGivenName,
-            };
-            return Page();
-        }
+        person.PersonName = new PersonNameInfo($"{Input.Surname}{Input.GivenName}", Input.Surname, Input.GivenName,
+            Input.MiddleName);
+        person.PhoneticSurname = Input.PhoneticSurname;
+        person.PhoneticGivenName = Input.PhoneticGivenName;
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            var person = await personManager.GetUserAsync(User);
-            if (person == null)
-            {
-                return NotFound();
-            }
+        Result = await personManager.UpdateAsync(person);
+        return Page();
+    }
 
-            person.PersonName = new PersonNameInfo($"{Input.Surname}{Input.GivenName}", Input.Surname, Input.GivenName, Input.MiddleName);
-            person.PhoneticSurname = Input.PhoneticSurname;
-            person.PhoneticGivenName = Input.PhoneticGivenName;
+    public class InputMode
+    {
+        [Display(Name = "Surname")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
+        public string? Surname { get; set; }
 
-            Result = await personManager.UpdateAsync(person);
-            return Page();
-        }
+        [Display(Name = "Middle name")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
+        public string? MiddleName { get; set; }
 
-        public class InputMode
-        {
-            [Display(Name = "Surname")]
-            [StringLength(10, ErrorMessage = "Validate_StringLength")]
-            public string? Surname { get; set; }
+        [Display(Name = "Given name")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
+        public string? GivenName { get; set; }
 
-            [Display(Name = "Middle name")]
-            [StringLength(10, ErrorMessage = "Validate_StringLength")]
-            public string? MiddleName { get; set; }
+        [Display(Name = "Phonetic surname")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
+        public string? PhoneticSurname { get; set; }
 
-            [Display(Name = "Given name")]
-            [StringLength(10, ErrorMessage = "Validate_StringLength")]
-            public string? GivenName { get; set; }
-
-            [Display(Name = "Phonetic surname")]
-            [StringLength(10, ErrorMessage = "Validate_StringLength")]
-            public string? PhoneticSurname { get; set; }
-
-            [Display(Name = "Phonetic given name")]
-            [StringLength(10, ErrorMessage = "Validate_StringLength")]
-            public string? PhoneticGivenName { get; set; }
-        }
+        [Display(Name = "Phonetic given name")]
+        [StringLength(10, ErrorMessage = "Validate_StringLength")]
+        public string? PhoneticGivenName { get; set; }
     }
 }

@@ -1,10 +1,10 @@
+using System.Text;
+using System.Text.Json;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text;
-using System.Text.Json;
 
 namespace AuthCenterWebApp.Pages.Diagnostics;
 
@@ -28,24 +28,15 @@ public class Index(IWebHostEnvironment env) : PageModel
         public ViewModel(AuthenticateResult result)
         {
             AuthenticateResult = result;
-            if (result.Properties == null)
-            {
-                return;
-            }
+            if (result.Properties == null) return;
 
-            if (!result.Properties.Items.ContainsKey("client_list"))
-            {
-                return;
-            }
+            if (!result.Properties.Items.ContainsKey("client_list")) return;
 
-            var encoded = result.Properties.Items["client_list"];
-            if (encoded == null)
-            {
-                return;
-            }
+            string? encoded = result.Properties.Items["client_list"];
+            if (encoded == null) return;
 
-            var bytes = Base64Url.Decode(encoded);
-            var value = Encoding.UTF8.GetString(bytes);
+            byte[] bytes = Base64Url.Decode(encoded);
+            string value = Encoding.UTF8.GetString(bytes);
 
             Clients = JsonSerializer.Deserialize<string[]>(value)!;
         }

@@ -1,8 +1,9 @@
 ﻿@page
-@model AdminWebApp.Areas.Organizations.Pages.MapModel
+@model MapModel
 @{
     ViewBag.Title = L["Map"];
 }
+
 @section head
 {
     <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css">
@@ -17,8 +18,10 @@
         }
     </style>
 }
+
 <h2>@L["Map"]</h2>
 <div id="viewDiv"></div>
+
 @section Scripts
 {
     <script src="https://js.arcgis.com/4.29/"></script>

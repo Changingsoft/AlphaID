@@ -1,23 +1,23 @@
-﻿using AlphaIdPlatform.Platform;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using AlphaIdPlatform.Platform;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 
 namespace AlphaId.PlatformServices.Aliyun;
 
 /// <summary>
-/// 阿里云身份证识别服务。
+///     阿里云身份证识别服务。
 /// </summary>
 /// <remarks>
-/// 
 /// </remarks>
-public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options) : IChineseIdCardOcrService
+public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServiceOptions> options)
+    : IChineseIdCardOcrService
 {
     private readonly AliyunChineseIdCardOcrServiceOptions _options = options.Value;
 
     /// <summary>
-    /// 识别身份证背面（国徽面）。
+    ///     识别身份证背面（国徽面）。
     /// </summary>
     /// <param name="idCardBackImageData"></param>
     /// <returns></returns>
@@ -29,28 +29,31 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
             await idCardBackImageData.CopyToAsync(ms);
             imgBase64 = Convert.ToBase64String(ms.ToArray());
         }
+
         var requestData = new
         {
             image = imgBase64,
             configure = new
             {
-                side = "back",
-            },
+                side = "back"
+            }
         };
 
-        var httpClient = new HttpClient()
+        var httpClient = new HttpClient
         {
-            BaseAddress = new Uri(_options.ServiceBaseUrl),
+            BaseAddress = new Uri(_options.ServiceBaseUrl)
         };
 
+        // ReSharper disable once StringLiteralTypo
         var requestMsg = new HttpRequestMessage(HttpMethod.Post, "/rest/160601/ocr/ocr_idcard.json");
         requestMsg.Headers.Authorization = new AuthenticationHeaderValue("APPCODE", _options.AppCode);
         requestMsg.Content = JsonContent.Create(requestData);
         //requestMsg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json; charset=UTF-8");
 
-        var responseMsg = await httpClient.SendAsync(requestMsg);
+        HttpResponseMessage responseMsg = await httpClient.SendAsync(requestMsg);
         responseMsg.EnsureSuccessStatusCode();
-        var result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应取得数据");
+        dynamic result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ??
+                         throw new InvalidOperationException("无法从响应取得数据");
 
         if (!(bool)result.success)
             throw new ChineseIdCardOcrException("Can not recognize");
@@ -58,14 +61,14 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
         {
             Issuer = (string)result.issue,
             IssueDate = ParseDate((string)result.start_date),
-            ExpiresDate = ParseDate((string)result.end_date),
+            ExpiresDate = ParseDate((string)result.end_date)
         };
         return returnResult;
     }
 
 
     /// <summary>
-    /// 识别身份证正面（个人信息面）。
+    ///     识别身份证正面（个人信息面）。
     /// </summary>
     /// <param name="idCardFrontImageData"></param>
     /// <returns></returns>
@@ -77,17 +80,18 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
             await idCardFrontImageData.CopyToAsync(ms);
             imgBase64 = Convert.ToBase64String(ms.ToArray());
         }
+
         var requestData = new
         {
             image = imgBase64,
             configure = new
             {
-                side = "face",
-            },
+                side = "face"
+            }
         };
-        var httpClient = new HttpClient()
+        var httpClient = new HttpClient
         {
-            BaseAddress = new Uri(_options.ServiceBaseUrl),
+            BaseAddress = new Uri(_options.ServiceBaseUrl)
         };
 
         var requestMsg = new HttpRequestMessage(HttpMethod.Post, "/rest/160601/ocr/ocr_idcard.json");
@@ -95,9 +99,10 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
         requestMsg.Content = JsonContent.Create(requestData);
         //requestMsg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json; charset=UTF-8");
 
-        var responseMsg = await httpClient.SendAsync(requestMsg);
+        HttpResponseMessage responseMsg = await httpClient.SendAsync(requestMsg);
         responseMsg.EnsureSuccessStatusCode();
-        var result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ?? throw new InvalidOperationException("无法从响应中取得数据。");
+        dynamic result = JsonConvert.DeserializeObject<dynamic>(await responseMsg.Content.ReadAsStringAsync()) ??
+                         throw new InvalidOperationException("无法从响应中取得数据。");
 
         if (!(bool)result.success)
             throw new ChineseIdCardOcrException("Can not recognize");
@@ -108,18 +113,17 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
             Nationality = (string)result.nationality,
             DateOfBirth = ParseDate((string)result.birth),
             Address = (string)result.address,
-            IdCardNumber = (string)result.num,
+            IdCardNumber = (string)result.num
         };
 
         return returnResult;
-
     }
 
     private static DateTime ParseDate(string dateString)
     {
-        var year = int.Parse(dateString[..4]);
-        var month = int.Parse(dateString.Substring(4, 2));
-        var day = int.Parse(dateString.Substring(6, 2));
+        int year = int.Parse(dateString[..4]);
+        int month = int.Parse(dateString.Substring(4, 2));
+        int day = int.Parse(dateString.Substring(6, 2));
         return new DateTime(year, month, day);
     }
 }

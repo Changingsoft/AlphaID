@@ -1,6 +1,7 @@
-﻿@inject IHostEnvironment Env
+﻿@using Microsoft.AspNetCore.Authentication
+@inject IHostEnvironment Env
 @inject IOptions<SystemUrlInfo> SystemUrl
-@if(Env.IsDevelopment())
+@if (Env.IsDevelopment())
 {
     <!-- 以下部分是调试面板，在本地开发调试期间显示。 -->
     <hr />
@@ -12,17 +13,31 @@
             <h2>Useful Links</h2>
             <ul class="list-inline">
                 @* ReSharper disable StringLiteralTypo *@
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei")}"))">刘备</a></li>
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu")}"))">关羽</a></li>
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhangfei")}"))">张飞</a></li>
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhugeliang")}"))">诸葛亮</a></li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei")}"))">刘备</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu")}"))">关羽</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhangfei")}"))">张飞</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhugeliang")}"))">诸葛亮</a>
+                </li>
                 @* ReSharper restateStore StringLiteralTypo *@
             </ul>
 
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("蜀汉集团")}"))">蜀汉集团</a></li>
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏集团")}"))">北魏集团</a></li>
-                <li class="list-inline-item"><a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("东吴集团")}"))">东吴集团</a></li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("蜀汉集团")}"))">蜀汉集团</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏集团")}"))">北魏集团</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("东吴集团")}"))">东吴集团</a>
+                </li>
             </ul>
             <h2>Route Data</h2>
             <ul class="list-inline">
@@ -32,23 +47,67 @@
                 }
             </ul>
             <h2>Access user</h2>
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var claim in User.Claims)
-                    {
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <table class="table table-sm">
+                    <thead>
                         <tr>
-                            <td>@claim.Type</td>
-                            <td>@claim.Value</td>
+                            <td>Type</td>
+                            <td>Value</td>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var claim in User.Claims)
+                        {
+                            <tr>
+                                <td>@claim.Type</td>
+                                <td>@claim.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Current user is not authenticated.</p>
+            }
+
+            <h2>Tokens</h2>
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>Value</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>access_token</td>
+                            <td style="word-break:break-all;">
+                                <code>@(await Context.GetTokenAsync("access_token"))</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>id_token</td>
+                            <td style="word-break:break-all;">
+                                <code>@(await Context.GetTokenAsync("id_token"))</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>refresh_token</td>
+                            <td style="word-break:break-all;">
+                                <code>@(await Context.GetTokenAsync("refresh_token"))</code>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Tokens not found.</p>
+            }
         </div>
     </div>
 }

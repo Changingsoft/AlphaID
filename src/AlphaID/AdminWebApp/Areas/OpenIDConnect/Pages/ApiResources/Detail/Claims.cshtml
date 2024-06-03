@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.ClaimsModel
+@model ClaimsModel
 @{
 }
 <h2>@L["User Claims"]</h2>
@@ -7,19 +7,21 @@
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Type"]</td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>@L["Type"]</td>
+            <td></td>
+        </tr>
         </thead>
         <tbody>
-            @foreach(var claim in Model.Data.UserClaims)
-            {
-                <tr>
-                    <td>@claim.Type</td>
-                    <td><button type="submit" class="btn btn-sm btn-danger" name="claimId" value="@claim.Id" onclick="return confirm('@L["Are you sure you want to remove this claim?"]');">@L["Remove"]</button></td>
-                </tr>
-            }
+        @foreach (var claim in Model.Data.UserClaims)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-danger" name="claimId" value="@claim.Id" onclick="return confirm('@L["Are you sure you want to remove this claim?"]');">@L["Remove"]</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </form>
@@ -32,7 +34,7 @@
         <form method="post" asp-page-handler="Add">
             <div class="mb-3">
                 <label asp-for="NewClaim" class="form-label"></label>
-                <input asp-for="NewClaim" class="form-control" />
+                <input asp-for="NewClaim" class="form-control"/>
                 <span asp-validation-for="NewClaim" class="text-danger"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>

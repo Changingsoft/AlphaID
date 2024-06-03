@@ -1,12 +1,10 @@
 ﻿namespace IdSubjects.ChineseName;
 
 /// <summary>
-/// 
 /// </summary>
 public static class CaseOptionsExtensions
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="caseOptions"></param>
     /// <param name="value"></param>
@@ -25,7 +23,7 @@ public static class CaseOptionsExtensions
             CaseOptions.Upper => value,
             CaseOptions.Lower => value.ToLower(),
             CaseOptions.FirstLetter => value[..1] + value[1..].ToLower(),
-            _ => value,
+            _ => value
         };
     }
 }

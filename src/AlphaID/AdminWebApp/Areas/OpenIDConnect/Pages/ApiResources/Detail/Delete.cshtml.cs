@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
@@ -15,7 +15,7 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var data = await dbContext.ApiResources.FindAsync(id);
+        ApiResource? data = await dbContext.ApiResources.FindAsync(id);
         if (data == null)
             return NotFound();
 
@@ -28,16 +28,13 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
-        var data = await dbContext.ApiResources.FindAsync(id);
+        ApiResource? data = await dbContext.ApiResources.FindAsync(id);
         if (data == null)
             return NotFound();
 
         Data = data;
 
-        if (ResourceName != Data.DisplayName)
-        {
-            ModelState.AddModelError(nameof(ResourceName), "名称不匹配。");
-        }
+        if (ResourceName != Data.DisplayName) ModelState.AddModelError(nameof(ResourceName), "名称不匹配。");
 
         if (!ModelState.IsValid)
             return Page();

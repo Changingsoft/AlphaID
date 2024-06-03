@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
@@ -15,11 +15,8 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
-        if (client == null)
-        {
-            return NotFound();
-        }
+        Client? client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
+        if (client == null) return NotFound();
         Data = client;
 
         return Page();
@@ -27,11 +24,8 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
-        if (client == null)
-        {
-            return RedirectToPage("../Index");
-        }
+        Client? client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
+        if (client == null) return RedirectToPage("../Index");
         Data = client;
 
         if (ClientName != client.ClientName)
@@ -43,6 +37,5 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         dbContext.Clients.Remove(client);
         await dbContext.SaveChangesAsync();
         return RedirectToPage("../Index");
-
     }
 }

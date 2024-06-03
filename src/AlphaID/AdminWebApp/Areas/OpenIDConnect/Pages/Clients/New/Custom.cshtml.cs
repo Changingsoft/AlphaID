@@ -1,31 +1,36 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
 using IdentityModel;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 
-public class CustomeModel(ConfigurationDbContext context) : PageModel
+public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secretGenerator) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
     [BindProperty]
     [Display(Name = "Client Id", Description = "Unique ID of the client.")]
-    [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken", HttpMethod = "post", ErrorMessage = "The client id already exists.")]
+    [PageRemote(PageHandler = "CheckClientIdConflict", AdditionalFields = "__RequestVerificationToken",
+        HttpMethod = "post", ErrorMessage = "The client id already exists.")]
     public string ClientId { get; set; } = Guid.NewGuid().ToString().ToLower();
 
     public void OnGet()
     {
-        Input = new InputModel();
+        Input = new InputModel
+        {
+            ClientSecret = secretGenerator.Generate()
+        };
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var now = DateTime.UtcNow;
-        var client = new Duende.IdentityServer.EntityFramework.Entities.Client()
+        DateTime now = DateTime.UtcNow;
+        var client = new Client
         {
             Enabled = true,
             ClientId = ClientId,
@@ -81,7 +86,7 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
             IdentityProviderRestrictions = [],
             PostLogoutRedirectUris = [],
             Properties = [],
-            RedirectUris = [],
+            RedirectUris = []
         };
 
         if (Input.RequireClientSecret)
@@ -89,35 +94,31 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
             if (string.IsNullOrWhiteSpace(Input.ClientSecret))
                 ModelState.AddModelError("Input.ClientSecret", "当选择需要客户端密钥时，请提供客户端密钥。");
             else
-            {
-                client.ClientSecrets.Add(new ClientSecret()
+                client.ClientSecrets.Add(new ClientSecret
                 {
                     Created = now,
                     Type = "SharedSecret",
-                    Value = Input.ClientSecret.ToSha256(),
+                    Value = Input.ClientSecret.ToSha256()
                 });
-            }
         }
 
         if (!string.IsNullOrWhiteSpace(Input.RedirectUri))
-        {
-            client.RedirectUris.Add(new ClientRedirectUri()
+            client.RedirectUris.Add(new ClientRedirectUri
             {
-                RedirectUri = Input.RedirectUri,
+                RedirectUri = Input.RedirectUri
             });
-        }
-        client.AllowedGrantTypes.Add(new ClientGrantType()
+        client.AllowedGrantTypes.Add(new ClientGrantType
         {
-            GrantType = Input.DefaultGrantType,
+            GrantType = Input.DefaultGrantType
         });
 
         if (!ModelState.IsValid)
             return Page();
 
         //添加默认的Scopes
-        client.AllowedScopes.Add(new ClientScope() { Scope = "openid" });
-        client.AllowedScopes.Add(new ClientScope() { Scope = "profile" });
-        client.AllowedScopes.Add(new ClientScope() { Scope = "user_impersonation" });
+        client.AllowedScopes.Add(new ClientScope { Scope = "openid" });
+        client.AllowedScopes.Add(new ClientScope { Scope = "profile" });
+        client.AllowedScopes.Add(new ClientScope { Scope = "user_impersonation" });
 
         try
         {
@@ -147,7 +148,9 @@ public class CustomeModel(ConfigurationDbContext context) : PageModel
         [Display(Name = "Require client secret", Description = "Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;
 
-        [Display(Name = "Client secret", Description = "The value will be display only once here, please remember it carefully. It can reset after client created.")]
+        [Display(Name = "Client secret",
+            Description =
+                "The value will be display only once here, please remember it carefully. It can reset after client created.")]
         public string? ClientSecret { get; set; }
 
         [Display(Name = "Redirect URI", Prompt = "https://example.com/signin-oidc")]

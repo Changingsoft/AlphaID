@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.IndexModel
+@model IndexModel
 @{
 }
 <h3>@Model.Data.DisplayName</h3>
@@ -24,25 +24,25 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <td>@L["Type"]</td>
-            <td>@L["Hash"]</td>
-            <td>@L["Description"]</td>
-            <td>@L["Created at"]</td>
-            <td>@L["Expires in"]</td>
-        </tr>
+    <tr>
+        <td>@L["Type"]</td>
+        <td>@L["Hash"]</td>
+        <td>@L["Description"]</td>
+        <td>@L["Created at"]</td>
+        <td>@L["Expires in"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var secret in Model.Data.Secrets)
-        {
-            <tr>
-                <td>@secret.Type</td>
-                <td>@secret.Value.Substring(secret.Value.Length - 5)</td>
-                <td>@secret.Description</td>
-                <td>@secret.Created</td>
-                <td>@(secret.Expiration.HasValue ? secret.Expiration.Value : "N/A")</td>
-            </tr>
-        }
+    @foreach (var secret in Model.Data.Secrets)
+    {
+        <tr>
+            <td>@secret.Type</td>
+            <td>@secret.Value.Substring(secret.Value.Length - 5)</td>
+            <td>@secret.Description</td>
+            <td>@secret.Created</td>
+            <td>@(secret.Expiration.HasValue ? secret.Expiration.Value : "N/A")</td>
+        </tr>
+    }
     </tbody>
 </table>
 
@@ -58,17 +58,17 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <td>@L["Type"]</td>
-        </tr>
+    <tr>
+        <td>@L["Type"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var claim in Model.Data.UserClaims)
-        {
-            <tr>
-                <td>@claim.Type</td>
-            </tr>
-        }
+    @foreach (var claim in Model.Data.UserClaims)
+    {
+        <tr>
+            <td>@claim.Type</td>
+        </tr>
+    }
     </tbody>
 </table>
 
@@ -76,19 +76,19 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <td>@SL["Key"]</td>
-            <td>@SL["Value"]</td>
-        </tr>
+    <tr>
+        <td>@SL["Key"]</td>
+        <td>@SL["Value"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var prop in Model.Data.Properties)
-        {
-            <tr>
-                <td>@prop.Key</td>
-                <td>@prop.Value</td>
-            </tr>
-        }
+    @foreach (var prop in Model.Data.Properties)
+    {
+        <tr>
+            <td>@prop.Key</td>
+            <td>@prop.Value</td>
+        </tr>
+    }
     </tbody>
 </table>
 

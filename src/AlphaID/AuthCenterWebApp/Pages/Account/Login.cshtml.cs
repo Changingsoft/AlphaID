@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using AuthCenterWebApp.Services;
+using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -10,8 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AuthCenterWebApp.Pages.Account;
 
@@ -38,7 +40,11 @@ public class LoginModel(
         {
             // we only have one option for logging in and it's an external provider
             logger?.LogInformation("we only have one option for logging in and it's an external provider");
-            return RedirectToPage("/ExternalLogin/Challenge", new { scheme = View.ExternalLoginScheme, schemeDisplayName = View.ExternalLoginDisplayName, returnUrl });
+            return RedirectToPage("/ExternalLogin/Challenge",
+                new
+                {
+                    scheme = View.ExternalLoginScheme, schemeDisplayName = View.ExternalLoginDisplayName, returnUrl
+                });
         }
 
         return Page();
@@ -47,7 +53,7 @@ public class LoginModel(
     public async Task<IActionResult> OnPostAsync()
     {
         //检查我们是否在授权请求的上下文中
-        var context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
+        AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
         //用户点击了“取消”按钮
         if (Input.Button != "login")
@@ -63,11 +69,9 @@ public class LoginModel(
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                 if (context.IsNativeClient())
-                {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
                     return this.LoadingPage(Input.ReturnUrl!);
-                }
 
                 return Redirect(Input.ReturnUrl!);
             }
@@ -79,39 +83,33 @@ public class LoginModel(
         if (ModelState.IsValid)
         {
             //登录过程。
-            var user = await userManager.FindByEmailAsync(Input.Username)
-                ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
-                ?? await userManager.FindByNameAsync(Input.Username);
+            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Username)
+                                  ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
+                                  ?? await userManager.FindByNameAsync(Input.Username);
             if (user != null)
             {
-                var result = await signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberLogin, lockoutOnFailure: true);
+                SignInResult result =
+                    await signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberLogin, true);
                 if (result.Succeeded)
                 {
-                    await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+                    await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName,
+                        clientId: context?.Client.ClientId));
 
                     if (context != null)
                     {
                         if (context.IsNativeClient())
-                        {
                             // The client is native, so this change in how to
                             // return the response is for better UX for the end user.
                             return this.LoadingPage(Input.ReturnUrl!);
-                        }
 
                         // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                         return Redirect(Input.ReturnUrl!);
                     }
 
                     // request for a local page
-                    if (Url.IsLocalUrl(Input.ReturnUrl))
-                    {
-                        return Redirect(Input.ReturnUrl);
-                    }
+                    if (Url.IsLocalUrl(Input.ReturnUrl)) return Redirect(Input.ReturnUrl);
 
-                    if (string.IsNullOrEmpty(Input.ReturnUrl))
-                    {
-                        return Redirect("~/");
-                    }
+                    if (string.IsNullOrEmpty(Input.ReturnUrl)) return Redirect("~/");
 
                     // user might have clicked on a malicious link - should be logged
                     throw new Exception("invalid return URL");
@@ -119,26 +117,23 @@ public class LoginModel(
 
                 if (result.MustChangePassword())
                 {
-                    var principal = GenerateMustChangePasswordPrincipal(user);
+                    ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
                     await signInManager.SignOutAsync();
                     await HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
                     return RedirectToPage("ChangePassword", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
                 }
 
                 if (result.RequiresTwoFactor)
-                {
                     return RedirectToPage("./LoginWith2fa", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
-                }
 
                 if (result.IsLockedOut)
-                {
                     //_logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
-                }
             }
 
 
-            await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials", clientId: context?.Client.ClientId));
+            await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
+                clientId: context?.Client.ClientId));
             ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
 
@@ -155,39 +150,37 @@ public class LoginModel(
         };
 
         //获取授权上下文。
-        var context = await interaction.GetAuthorizationContextAsync(returnUrl);
+        AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
         //在授权上下文中指定了IdP，因此跳过本地登录而直接转到指定的IdP。
         if (context?.IdP != null && await schemeProvider.GetSchemeAsync(context.IdP) != null)
         {
-            var local = context.IdP == Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider;
-            var scheme = await schemeProvider.GetSchemeAsync(context.IdP);
+            bool local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
+            AuthenticationScheme? scheme = await schemeProvider.GetSchemeAsync(context.IdP);
             // this is meant to short circuit the UI and only trigger the one external IdP
             View = new ViewModel
             {
-                EnableLocalLogin = local,
+                EnableLocalLogin = local
             };
 
             Input.Username = context.LoginHint ?? "";
 
             if (!local)
-            {
                 View.ExternalProviders =
                 [
-                    new()
+                    new ViewModel.ExternalProvider
                     {
                         AuthenticationScheme = context.IdP,
-                        DisplayName = scheme!.DisplayName!,
+                        DisplayName = scheme!.DisplayName!
                     }
                 ];
-            }
 
             return;
         }
 
-        var schemes = await schemeProvider.GetAllSchemesAsync();
+        IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
 
-        var providers = schemes
+        List<ViewModel.ExternalProvider> providers = schemes
             .Where(x => x.DisplayName != null)
             .Select(x => new ViewModel.ExternalProvider
             {
@@ -196,26 +189,25 @@ public class LoginModel(
             }).ToList();
 
         //从存储加载验证方案。
-        var dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
+        IEnumerable<ViewModel.ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ViewModel.ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
-                DisplayName = x.DisplayName ?? "",
+                DisplayName = x.DisplayName ?? ""
             });
         providers.AddRange(dynamicSchemes);
 
 
         var allowLocal = true;
-        var client = context?.Client;
+        Client? client = context?.Client;
         if (client != null)
         {
             allowLocal = client.EnableLocalLogin; //客户端是否允许本地登录
             if (client.IdentityProviderRestrictions.Count != 0)
-            {
                 //过滤只有客户端允许的登录提供器。
-                providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
-            }
+                providers = providers.Where(provider =>
+                    client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
         }
 
         View = new ViewModel
@@ -232,6 +224,7 @@ public class LoginModel(
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));
         return new ClaimsPrincipal(identity);
     }
+
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
@@ -257,12 +250,17 @@ public class LoginModel(
         public bool EnableLocalLogin { get; set; } = true;
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
-        public IEnumerable<ExternalProvider> VisibleExternalProviders => ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
+
+        public IEnumerable<ExternalProvider> VisibleExternalProviders =>
+            ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
-        public string? ExternalLoginScheme => IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
 
-        public string? ExternalLoginDisplayName => IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
+        public string? ExternalLoginScheme =>
+            IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.AuthenticationScheme : null;
+
+        public string? ExternalLoginDisplayName =>
+            IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
         public class ExternalProvider
         {
@@ -272,7 +270,7 @@ public class LoginModel(
     }
 
     /// <summary>
-    /// 登录选项。
+    ///     登录选项。
     /// </summary>
     public class LoginOptions
     {

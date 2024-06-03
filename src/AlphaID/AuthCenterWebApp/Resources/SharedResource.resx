@@ -293,4 +293,16 @@
   <data name="Your personal website." xml:space="preserve">
     <value>Your personal website.</value>
   </data>
+  <data name="Full name" xml:space="preserve">
+	  <value>Full name</value>
+	  <comment>Full name</comment>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>Phonetic surname</value>
+	  <comment>Phonetic surname</comment>
+  </data>
+  <data name="Phonetic given name" xml:space="preserve">
+	  <value>Phonetic given name</value>
+	  <comment>Phonetic given name</comment>
+  </data>
 </root>

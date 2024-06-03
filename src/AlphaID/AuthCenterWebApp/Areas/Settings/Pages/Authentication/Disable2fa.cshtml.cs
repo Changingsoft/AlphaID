@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,27 +16,22 @@ public class Disable2FaModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         return user == null
             ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.")
             : !await userManager.GetTwoFactorEnabledAsync(user)
-            ? throw new InvalidOperationException("Cannot disable 2FA for user as it's not currently enabled.")
-            : (IActionResult)Page();
+                ? throw new InvalidOperationException("Cannot disable 2FA for user as it's not currently enabled.")
+                : (IActionResult)Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-        }
+        NaturalPerson user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
-        var disable2FaResult = await userManager.SetTwoFactorEnabledAsync(user, false);
+        IdentityResult disable2FaResult = await userManager.SetTwoFactorEnabledAsync(user, false);
         if (!disable2FaResult.Succeeded)
-        {
             throw new InvalidOperationException("Unexpected error occurred disabling 2FA.");
-        }
 
         logger.LogInformation("User with ID '{UserId}' has disabled 2fa.", userManager.GetUserId(User));
         StatusMessage = "2fa has been disabled. You can reenable 2fa when you setup an authenticator app";

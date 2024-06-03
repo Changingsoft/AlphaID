@@ -10,8 +10,8 @@
 	<ItemGroup>
 		<!-- ReSharper disable once VulnerablePackage -->
 		<PackageReference Include="Captcha" Version="4.4.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.6" />
 		<PackageReference Include="MinVer" Version="5.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,10 +20,10 @@
 		<PackageReference Include="Serilog.Expressions" Version="4.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.0" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.3" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.3" />
-		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.16.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.1" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.4" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.4" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.17.0" />
 	</ItemGroup>
 
 	<ItemGroup>

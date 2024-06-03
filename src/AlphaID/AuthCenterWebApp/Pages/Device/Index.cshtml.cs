@@ -15,8 +15,7 @@ namespace AuthCenterWebApp.Pages.Device;
 [Authorize]
 public class Index(
     IDeviceFlowInteractionService interaction,
-    IEventService eventService,
-    ILogger<Index> logger) : PageModel
+    IEventService eventService) : PageModel
 {
     public ViewModel View { get; set; } = default!;
 
@@ -197,7 +196,7 @@ public class Index(
     public class InputModel
     {
         public string? Button { get; set; }
-        public IEnumerable<string> ScopesConsented { get; set; } = new List<string>();
+        public IEnumerable<string> ScopesConsented { get; set; } = [];
         public bool RememberConsent { get; set; } = true;
         public string? ReturnUrl { get; set; }
         public string? Description { get; set; }

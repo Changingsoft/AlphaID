@@ -8,6 +8,8 @@ namespace IdSubjects.Invitations;
 /// <remarks>
 /// </remarks>
 /// <param name="store"></param>
+/// <param name="personManager"></param>
+/// <param name="organizationManager"></param>
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,

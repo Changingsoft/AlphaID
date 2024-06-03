@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Encodings.Web;
 using AlphaIdPlatform;
@@ -111,6 +112,7 @@ public class EmailModel(
             null,
             new { area = "", userId, code },
             Request.Scheme);
+        Debug.Assert(callbackUrl != null);
         await emailSender.SendEmailAsync(
             email,
             "确认邮件地址",

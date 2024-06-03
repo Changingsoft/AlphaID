@@ -246,6 +246,9 @@
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="People" xml:space="preserve">
+	  <value>自然人</value>
+  </data>
   <data name="Phone number" xml:space="preserve">
     <value>移动电话号码</value>
   </data>
@@ -342,6 +345,9 @@
   <data name="User name" xml:space="preserve">
     <value>用户名</value>
   </data>
+  <data name="Validate_DataType_Url" xml:space="preserve">
+	  <value>需要合法的URL</value>
+  </data>
   <data name="Validate_EmailAddress" xml:space="preserve">
     <value>不是有效的电子邮件格式。</value>
   </data>
@@ -360,7 +366,7 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
-  <data name="Validate_DataType_Url" xml:space="preserve">
-	  <value>需要合法的URL</value>
+  <data name="Age" xml:space="preserve">
+	  <value>年龄</value>
   </data>
 </root>

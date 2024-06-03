@@ -135,6 +135,9 @@
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="Age" xml:space="preserve">
+	  <value>Age</value>
+  </data>
   <data name="Allowed access token signing algorithms" xml:space="preserve">
     <value>Allowed access token signing algorithms</value>
   </data>
@@ -247,6 +250,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="People" xml:space="preserve">
+	  <value>People</value>
   </data>
   <data name="Phone number" xml:space="preserve">
     <value>Phone number</value>

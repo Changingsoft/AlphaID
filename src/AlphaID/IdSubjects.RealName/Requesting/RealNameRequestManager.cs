@@ -37,17 +37,18 @@ public class RealNameRequestManager(
     /// <summary>
     ///     创建实名认证请求。
     /// </summary>
-    /// <param name="person"></param>
     /// <param name="request"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> CreateAsync(NaturalPerson person, RealNameRequest request)
+    public async Task<IdOperationResult> CreateAsync(RealNameRequest request)
     {
-        request.PersonId = person.Id;
+        if (!naturalPersonManager.Users.Any(p => p.Id == request.PersonId))
+            throw new InvalidOperationException("找不到请求对应的自然人。");
         request.WhenCommitted = TimeProvider.GetUtcNow();
         IdOperationResult result = await store.CreateAsync(request);
         if (!result.Succeeded)
             return result;
-
+        
+        // 如果有审核提供器，则使用审核提供器来获取审核器列表，实行自动审核。
         if (provider == null) return result;
 
         IEnumerable<IRealNameRequestAuditor> auditors = provider.GetAuditors();

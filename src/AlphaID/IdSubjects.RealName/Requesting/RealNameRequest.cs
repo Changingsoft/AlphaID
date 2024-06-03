@@ -11,6 +11,22 @@ namespace IdSubjects.RealName.Requesting;
 public abstract class RealNameRequest
 {
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="personId"></param>
+    protected RealNameRequest(string personId)
+    {
+        PersonId = personId;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    protected RealNameRequest()
+    {
+    }
+
+    /// <summary>
     ///     Id。
     /// </summary>
     [Key]

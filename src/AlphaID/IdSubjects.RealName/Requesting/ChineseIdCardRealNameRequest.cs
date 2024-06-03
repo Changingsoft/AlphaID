@@ -18,6 +18,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     ///     初始化。
     /// </summary>
+    /// <param name="personId"></param>
     /// <param name="name">姓名。</param>
     /// <param name="sex">性别。</param>
     /// <param name="ethnicity">民族。</param>
@@ -29,7 +30,8 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <param name="expires">有效期至。</param>
     /// <param name="personalSide">个人信息面。</param>
     /// <param name="issuerSide">签发者信息面。</param>
-    public ChineseIdCardRealNameRequest(string name,
+    public ChineseIdCardRealNameRequest(string personId,
+        string name,
         Sex sex,
         string ethnicity,
         DateOnly dateOfBirth,
@@ -39,7 +41,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
         DateOnly issueDate,
         DateOnly? expires,
         BinaryDataInfo personalSide,
-        BinaryDataInfo issuerSide)
+        BinaryDataInfo issuerSide) : base(personId)
     {
         Name = name;
         Sex = sex;

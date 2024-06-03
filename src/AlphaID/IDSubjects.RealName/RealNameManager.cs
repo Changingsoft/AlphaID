@@ -50,33 +50,23 @@ public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonMa
     }
 
     /// <summary>
-    ///     删除
+    /// 获取一个值，确认某个自然人是否已通过实名认证。
     /// </summary>
-    /// <param name="authentication"></param>
+    /// <param name="personId"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> RemoveAsync(RealNameAuthentication authentication)
+    public bool IsAuthenticated(string personId)
     {
-        return store.DeleteAsync(authentication);
+        return store.Authentications.Any(a => a.PersonId == personId);
     }
 
-    internal Task<IdOperationResult> UpdateAsync(RealNameAuthentication authentication)
+    /// <summary>
+    /// 重置自然人的验证状态。此方法将删除与特定自然人关联的所有验证结果。
+    /// </summary>
+    /// <param name="personId"></param>
+    /// <returns></returns>
+    public async Task ResetAsync(string personId)
     {
-        return store.UpdateAsync(authentication);
-    }
-
-    internal bool HasAuthenticated(NaturalPerson person)
-    {
-        return store.Authentications.Any(a => a.PersonId == person.Id);
-    }
-
-    internal IEnumerable<RealNameAuthentication> GetPendingAuthentications(NaturalPerson person)
-    {
-        return store.FindByPerson(person).Where(a => !a.Applied);
-    }
-
-    internal async Task ClearAsync(NaturalPerson person)
-    {
-        await store.DeleteByPersonIdAsync(person.Id);
+        await store.DeleteByPersonIdAsync(personId);
     }
 
     /// <summary>

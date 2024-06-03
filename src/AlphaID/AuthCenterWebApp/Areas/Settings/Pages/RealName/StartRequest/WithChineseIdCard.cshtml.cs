@@ -56,7 +56,8 @@ public class WithChineseIdCardModel(
             _ => throw new ArgumentOutOfRangeException(nameof(personalSideOcr.SexString))
         };
 
-        var request = new ChineseIdCardRealNameRequest(personalSideOcr.Name,
+        var request = new ChineseIdCardRealNameRequest(person.Id,
+            personalSideOcr.Name,
             sex,
             personalSideOcr.Nationality,
             DateOnly.FromDateTime(personalSideOcr.DateOfBirth),
@@ -68,7 +69,7 @@ public class WithChineseIdCardModel(
             personalSideInfo,
             issuerSideInfo);
 
-        Result = await realNameRequestManager.CreateAsync(person, request);
+        Result = await realNameRequestManager.CreateAsync(request);
         if (Result.Succeeded)
             return RedirectToPage("../Index");
 

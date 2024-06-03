@@ -16,11 +16,11 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <td>@SL["Name"]</td>
+                    <td colspan="2">@SL["Name"]</td>
                     <td>@SL["Gender"]</td>
-                    <td>@L["Account name"]</td>
-                    <td>@L["Mobile phone number"]</td>
-                    <td>@L["Age"]</td>
+                    <td>@SL["Age"]</td>
+                    <td>@SL["User name"]</td>
+                    <td>@SL["Phone number"]</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,10 +31,13 @@
                             <img src="@Url.Page("Detail/Index", "Photo", new { Anchor = person.Id })" class="img-fluid img-thumbnail" width="36"/>
                             <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person.PersonName.FullName</a>
                         </td>
+                        <td>
+                            <partial name="_RealNameState" model="person.Id"/>
+                        </td>
                         <td>@Html.DisplayFor(m => person.Gender)</td>
+                        <td>@Html.DisplayFor(m => person.DateOfBirth, "Age")</td>
                         <td>@person.UserName</td>
                         <td>@person.PhoneNumber</td>
-                        <td>@Html.DisplayFor(m => person.DateOfBirth, "Age")</td>
                     </tr>
                 }
                 </tbody>

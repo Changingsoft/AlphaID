@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace AuthCenterWebApp.Services;
 
-class AdvancedOidcConfigureOptions(IHttpContextAccessor httpContextAccessor, ILogger<AdvancedOidcConfigureOptions> logger) : ConfigureAuthenticationOptions<OpenIdConnectOptions, OidcProvider>(httpContextAccessor, logger)
+internal class AdvancedOidcConfigureOptions(
+    IHttpContextAccessor httpContextAccessor,
+    ILogger<AdvancedOidcConfigureOptions> logger)
+    : ConfigureAuthenticationOptions<OpenIdConnectOptions, OidcProvider>(httpContextAccessor, logger)
 {
     protected override void Configure(ConfigureAuthenticationContext<OpenIdConnectOptions, OidcProvider> context)
     {
@@ -13,11 +16,10 @@ class AdvancedOidcConfigureOptions(IHttpContextAccessor httpContextAccessor, ILo
         context.AuthenticationOptions.SignOutScheme = context.DynamicProviderOptions.SignOutScheme;
 
         context.AuthenticationOptions.Authority = context.IdentityProvider.Authority;
-        context.AuthenticationOptions.RequireHttpsMetadata = context.IdentityProvider.Authority.StartsWith("https");
-        if (context.IdentityProvider.Properties.TryGetValue("MetadataAddress", out string metadataAddress))
-        {
+        if (context.IdentityProvider.Authority != null)
+            context.AuthenticationOptions.RequireHttpsMetadata = context.IdentityProvider.Authority.StartsWith("https");
+        if (context.IdentityProvider.Properties.TryGetValue("MetadataAddress", out string? metadataAddress))
             context.AuthenticationOptions.MetadataAddress = metadataAddress;
-        }
 
         context.AuthenticationOptions.ClientId = context.IdentityProvider.ClientId;
         context.AuthenticationOptions.ClientSecret = context.IdentityProvider.ClientSecret;
@@ -28,13 +30,11 @@ class AdvancedOidcConfigureOptions(IHttpContextAccessor httpContextAccessor, ILo
         context.AuthenticationOptions.UsePkce = context.IdentityProvider.UsePkce;
 
         context.AuthenticationOptions.Scope.Clear();
-        foreach (var scope in context.IdentityProvider.Scopes)
-        {
-            context.AuthenticationOptions.Scope.Add(scope);
-        }
+        foreach (string scope in context.IdentityProvider.Scopes) context.AuthenticationOptions.Scope.Add(scope);
 
         context.AuthenticationOptions.SaveTokens = true;
-        context.AuthenticationOptions.GetClaimsFromUserInfoEndpoint = context.IdentityProvider.GetClaimsFromUserInfoEndpoint;
+        context.AuthenticationOptions.GetClaimsFromUserInfoEndpoint =
+            context.IdentityProvider.GetClaimsFromUserInfoEndpoint;
         context.AuthenticationOptions.DisableTelemetry = true;
 #if NET5_0_OR_GREATER
         context.AuthenticationOptions.MapInboundClaims = false;

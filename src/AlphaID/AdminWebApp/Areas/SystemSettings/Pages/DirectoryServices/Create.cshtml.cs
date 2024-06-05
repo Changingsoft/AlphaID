@@ -1,6 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryServices;
 
@@ -15,44 +16,42 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (this.Input is { ExternalProviderName: not null, RegisteredClientId: null }) this.ModelState.AddModelError("Input.RegisteredClientId", "Registered Client-Id is required when External provider specified.");
+        if (Input is { ExternalProviderName: not null, RegisteredClientId: null })
+            ModelState.AddModelError("Input.RegisteredClientId",
+                "Registered Client-Id is required when External provider specified.");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        var directoryService = new DirectoryServiceDescriptor()
+        var directoryService = new DirectoryServiceDescriptor
         {
-            Name = this.Input.Name,
-            ServerAddress = this.Input.ServerAddress,
-            Type= this.Input.LdapType,
-            RootDn = this.Input.RootDn,
-            DefaultUserAccountContainer = this.Input.DefaultUserOu,
-            UpnSuffix = this.Input.UpnSuffix,
-            SamDomainPart = this.Input.NTDomainName,
-            AutoCreateAccount = this.Input.AutoCreateAccount,
-            UserName = this.Input.UserName,
-            Password = this.Input.Password,
+            Name = Input.Name,
+            ServerAddress = Input.ServerAddress,
+            Type = Input.LdapType,
+            RootDn = Input.RootDn,
+            DefaultUserAccountContainer = Input.DefaultUserOu,
+            UpnSuffix = Input.UpnSuffix,
+            SamDomainPart = Input.NtDomainName,
+            AutoCreateAccount = Input.AutoCreateAccount,
+            UserName = Input.UserName,
+            Password = Input.Password
         };
-        if (this.Input.ExternalProviderName != null)
-        {
+        if (Input.ExternalProviderName != null)
             directoryService.ExternalLoginProvider =
-                new ExternalLoginProviderInfo(this.Input.ExternalProviderName, this.Input.RegisteredClientId!)
+                new ExternalLoginProviderInfo(Input.ExternalProviderName, Input.RegisteredClientId!)
                 {
-                    DisplayName = this.Input.ExternalProviderDisplayName,
-                    SubjectGenerator = this.Input.SubjectGenerator,
+                    DisplayName = Input.ExternalProviderDisplayName,
+                    SubjectGenerator = Input.SubjectGenerator
                 };
-        }
 
-        var result = await directoryServiceManager.CreateAsync(directoryService);
+        IdOperationResult result = await directoryServiceManager.CreateAsync(directoryService);
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error);
-            }
-            return this.Page();
+            foreach (string error in result.Errors) ModelState.AddModelError("", error);
+            return Page();
         }
-        return this.RedirectToPage("Index");
+
+        return RedirectToPage("Index");
     }
 
     public class InputModel
@@ -97,7 +96,7 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
 
         [Display(Name = "NT Domain Name")]
         [StringLength(20, ErrorMessage = "Validate_StringLength")]
-        public string? NTDomainName { get; set; }
+        public string? NtDomainName { get; set; }
 
         [Display(Name = "Auto Create Account")]
         public bool AutoCreateAccount { get; set; } = false;

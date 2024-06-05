@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace AlphaIdPlatform.TagHelpers;
 
 /// <summary>
-/// 根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。
+///     根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。
 /// </summary>
 [HtmlTargetElement("li", Attributes = "asp-path")]
 [HtmlTargetElement("li", Attributes = "asp-match-prefix")]
@@ -13,46 +13,37 @@ namespace AlphaIdPlatform.TagHelpers;
 [HtmlTargetElement("a", Attributes = "asp-match-prefix")]
 public class NavItemActiveClassTagHelper : TagHelper
 {
-
     /// <summary>
-    /// 
     /// </summary>
     [HtmlAttributeName("asp-path")]
     public string Path { get; set; } = "/";
 
     /// <summary>
-    /// 
     /// </summary>
     [HtmlAttributeName("asp-match-prefix")]
     public bool MatchPrefix { get; set; } = true;
 
     /// <summary>
-    /// 
     /// </summary>
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; } = default!;
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="context"></param>
     /// <param name="output"></param>
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        var currentPath = this.ViewContext.HttpContext.Request.Path.Value;
-        bool result = this.MatchPrefix ? currentPath!.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase) : string.Equals(this.Path, currentPath, StringComparison.OrdinalIgnoreCase);
+        string? currentPath = ViewContext.HttpContext.Request.Path.Value;
+        bool result = MatchPrefix
+            ? currentPath!.StartsWith(Path, StringComparison.OrdinalIgnoreCase)
+            : string.Equals(Path, currentPath, StringComparison.OrdinalIgnoreCase);
 
-        if (!result)
-        {
-            return;
-        }
+        if (!result) return;
 
         var existingClasses = output.Attributes["class"].Value.ToString();
-        if (output.Attributes["class"] != null)
-        {
-            output.Attributes.Remove(output.Attributes["class"]);
-        }
+        if (output.Attributes["class"] != null) output.Attributes.Remove(output.Attributes["class"]);
 
         output.Attributes.Add("class", $"{existingClasses} active");
     }

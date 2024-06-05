@@ -1,9 +1,11 @@
 ﻿@page
 @using AlphaIdPlatform.Security
-@model AuthCenterWebApp.Pages.Account.SignUpSuccessModel
+@model SignUpSuccessModel
 @{
     ViewBag.Title = L["Register confirmation"];
 }
 <h1>@ViewBag.Title</h1>
 
-<p><a href="@User.ProfileUrl()" class="btn btn-primary">@L["Continue"]</a></p>
+<p>
+    <a href="@User.ProfileUrl()" class="btn btn-primary">@L["Continue"]</a>
+</p>

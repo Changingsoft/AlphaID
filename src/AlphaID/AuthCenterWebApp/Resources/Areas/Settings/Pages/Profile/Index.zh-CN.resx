@@ -97,9 +97,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you sure you want to remove profile picture?" xml:space="preserve">
-		<value>确认要删除头像吗？</value>
-	</data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -119,15 +116,18 @@
     <value>转到我的个人主页</value>
   </data>
   <data name="Profile" xml:space="preserve">
-		<value>个人配置</value>
-	</data>
+	  <value>资料</value>
+  </data>
   <data name="Real-name authentication" xml:space="preserve">
 	  <value>实名认证</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>移除</value>
   </data>
+  <data name="Remove profile picture?" xml:space="preserve">
+	  <value>删除头像？</value>
+  </data>
   <data name="Update profile" xml:space="preserve">
-		<value>更新个人信息</value>
-	</data>
+	  <value>更新个人资料</value>
+  </data>
 </root>

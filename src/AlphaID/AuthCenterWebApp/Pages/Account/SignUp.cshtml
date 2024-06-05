@@ -1,14 +1,15 @@
 ﻿@page
+@using BotDetect.Web
 @using AlphaIdPlatform.Helpers
-@model AuthCenterWebApp.Pages.Account.SignUpModel
+@model SignUpModel
 @{
     Layout = "Tabler/_Page_Center";
     ViewBag.Title = L["Create your {0}", Product.Value.Name];
 }
 
 @section head
-    {
-    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+{
+    <link href="@CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css"/>
 }
 
 <div class="container container-tight py-4">
@@ -31,12 +32,12 @@
             <div class="row">
                 <div class="col">
                     <label asp-for="Input.Surname" class="form-label required"></label>
-                    <input asp-for="Input.Surname" class="form-control" />
+                    <input asp-for="Input.Surname" class="form-control"/>
                     <span asp-validation-for="Input.Surname" class="text-danger"></span>
                 </div>
                 <div class="col">
                     <label asp-for="Input.GivenName" class="form-label required"></label>
-                    <input asp-for="Input.GivenName" class="form-control" />
+                    <input asp-for="Input.GivenName" class="form-control"/>
                     <span asp-validation-for="Input.GivenName" class="text-danger"></span>
                 </div>
             </div>
@@ -49,56 +50,58 @@
                 </div>
                 <div class="col">
                     <label asp-for="Input.DateOfBirth" class="form-label required"></label>
-                    <input asp-for="Input.DateOfBirth" class="form-control" />
+                    <input asp-for="Input.DateOfBirth" class="form-control"/>
                     <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                 </div>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Mobile" class="form-label required"></label>
                 <div class="input-group mb-2">
-                    <input asp-for="Input.Mobile" class="form-control" />
+                    <input asp-for="Input.Mobile" class="form-control"/>
                     <button type="button" class="btn" onclick="SendVerificationCode(this);">@L["Send code"]</button>
                 </div>
                 <span asp-validation-for="Input.Mobile" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.VerificationCode" class="form-label required"></label>
-                <input asp-for="Input.VerificationCode" class="form-control" autocomplete="off" />
+                <input asp-for="Input.VerificationCode" class="form-control" autocomplete="off"/>
                 <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="Input.NewPassword" class="form-label required"></label>
-                <input asp-for="Input.NewPassword" class="form-control" />
+                <input asp-for="Input.NewPassword" class="form-control"/>
                 <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.ConfirmPassword" class="form-label required"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <input asp-for="Input.ConfirmPassword" class="form-control"/>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <hr />
+            <hr/>
             <div class="mb-3">
                 <label asp-for="Input.Email" class="form-label"></label>
-                <input asp-for="Input.Email" class="form-control" />
+                <input asp-for="Input.Email" class="form-control"/>
                 <span asp-description-for="Input.Email"></span>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="UserName" class="form-label"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input asp-for="UserName" class="form-control"/>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-            <hr />
+            <hr/>
             <div class="mb-3">
                 <label asp-for="Input.CaptchaCode" class="form-label required"></label>
-                <captcha id="LoginCaptcha" user-input-id="CaptchaCode" />
-                <input asp-for="Input.CaptchaCode" id="CaptchaCode" class="form-control captchaVal" />
+                <captcha id="LoginCaptcha" user-input-id="CaptchaCode"/>
+                <input asp-for="Input.CaptchaCode" id="CaptchaCode" class="form-control captchaVal"/>
             </div>
-            <hr />
+            <hr/>
             <div class="form-check">
-                <input asp-for="Input.Agree" class="form-check-input" />
-                <label asp-for="Input.Agree" class="form-check-label">@L["Agree the"] <a asp-page="/Terms" target="_blank">@L["Terms of service"]</a></label>
+                <input asp-for="Input.Agree" class="form-check-input"/>
+                <label asp-for="Input.Agree" class="form-check-label">
+                    @L["Agree the"] <a asp-page="/Terms" target="_blank">@L["Terms of service"]</a>
+                </label>
             </div>
             <button type="submit" class="btn btn-primary">@L["Continue"]</button>
         </div>
@@ -113,7 +116,7 @@
 
 
 @section Scripts
-    {
+{
 
     <script src="~/js/captcha.validate.js"></script>
 
@@ -165,4 +168,4 @@
 
         }
     </script>
-        }
+}

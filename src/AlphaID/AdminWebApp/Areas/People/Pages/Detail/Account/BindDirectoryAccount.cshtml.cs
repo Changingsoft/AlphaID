@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
-public class BindDirectoryAccountModel(NaturalPersonManager personManager, DirectoryAccountManager directoryAccountManager, DirectoryServiceManager directoryServiceManager) : PageModel
+public class BindDirectoryAccountModel(
+    NaturalPersonManager personManager,
+    DirectoryAccountManager directoryAccountManager,
+    DirectoryServiceManager directoryServiceManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
@@ -14,40 +17,40 @@ public class BindDirectoryAccountModel(NaturalPersonManager personManager, Direc
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
-        return this.Page();
+            return NotFound();
+        Person = person;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostSearchAsync(string anchor, int serviceId, string keywords)
     {
-        var person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
+            return NotFound();
+        Person = person;
 
-        var directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
+        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
-            return this.Page();
+            return Page();
 
-        this.SearchItems = directoryAccountManager.Search(directoryService, $"(anr={keywords})");
-        return this.Page();
+        SearchItems = directoryAccountManager.Search(directoryService, $"(anr={keywords})");
+        return Page();
     }
 
     public async Task<IActionResult> OnPostBindAsync(string anchor, int serviceId, Guid entryGuid)
     {
-        var person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
+            return NotFound();
+        Person = person;
 
-        var directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
+        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
-            return this.Page();
+            return Page();
         var logonAccount = new DirectoryAccount(directoryService, person.Id);
         await directoryAccountManager.BindExistsAccount(personManager, logonAccount, entryGuid.ToString());
-        return this.RedirectToPage("DirectoryAccounts", new { anchor });
+        return RedirectToPage("DirectoryAccounts", new { anchor });
     }
 }

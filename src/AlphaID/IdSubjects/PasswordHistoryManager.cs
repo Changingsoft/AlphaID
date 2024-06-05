@@ -5,22 +5,22 @@ using Microsoft.Extensions.Options;
 namespace IdSubjects;
 
 /// <summary>
-/// 
+///     密码历史管理器。
 /// </summary>
-/// <remarks>
-/// 
-/// </remarks>
-/// <param name="store"></param>
-/// <param name="passwordHasher"></param>
-/// <param name="options"></param>
-public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher<NaturalPerson> passwordHasher, IOptions<IdSubjectsOptions> options)
+/// <param name="store">密码历史存取器。</param>
+/// <param name="passwordHasher">密码哈希器。</param>
+/// <param name="options">选项。</param>
+public class PasswordHistoryManager(
+    IPasswordHistoryStore store,
+    IPasswordHasher<NaturalPerson> passwordHasher,
+    IOptions<IdSubjectsOptions> options)
 {
-    private readonly IdSubjectsPasswordOptions options = options.Value.Password;
+    private readonly IdSubjectsPasswordOptions _options = options.Value.Password;
 
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    /// 命中指定用户的密码历史。
+    ///     命中指定用户的密码历史。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
@@ -28,35 +28,30 @@ public class PasswordHistoryManager(IPasswordHistoryStore store, IPasswordHasher
     public bool Hit(NaturalPerson person, string password)
     {
         //取出密码历史
-        var passwords = store.GetPasswords(person, this.options.RememberPasswordHistory);
+        IEnumerable<string> passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
         return passwords
-            .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis.Data, password))
+            .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis, password))
             .Any(result => result.HasFlag(PasswordVerificationResult.Success));
     }
 
     /// <summary>
-    /// 将密码计入历史。
+    ///     将密码计入历史。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
     public async Task Pass(NaturalPerson person, string password)
     {
-        await store.CreateAsync(new PasswordHistory()
-        {
-            Data = passwordHasher.HashPassword(person, password),
-            UserId = person.Id,
-            WhenCreated = this.TimeProvider.GetUtcNow(),
-        });
-        await store.TrimHistory(person, this.options.RememberPasswordHistory);
+        await store.AddAsync(passwordHasher.HashPassword(person, password), person.Id, TimeProvider.GetUtcNow());
+        await store.TrimHistory(person.Id, _options.RememberPasswordHistory);
     }
 
     /// <summary>
-    /// 清除用户的密码历史。
+    ///     清除用户的密码历史。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
     public Task Clear(NaturalPerson person)
     {
-        return store.ClearAsync(person);
+        return store.ClearAsync(person.Id);
     }
 }

@@ -100,12 +100,9 @@
   <data name="Account" xml:space="preserve">
 		<value>Account</value>
 	</data>
-  <data name="Application Access" xml:space="preserve">
-		<value>Application Access</value>
-	</data>
-  <data name="Description" xml:space="preserve">
-		<value>Description</value>
-	</data>
+  <data name="Application access" xml:space="preserve">
+	  <value>Application access</value>
+  </data>
   <data name="Description or name of device" xml:space="preserve">
 		<value>Description or name of device</value>
 	</data>
@@ -115,12 +112,12 @@
   <data name="No, Do Not Allow" xml:space="preserve">
 		<value>No, Do Not Allow</value>
 	</data>
-  <data name="Personal Information" xml:space="preserve">
-		<value>Personal Information</value>
-	</data>
-  <data name="Remember My Decision" xml:space="preserve">
-		<value>Remember My Decision</value>
-	</data>
+  <data name="Personal information" xml:space="preserve">
+	  <value>Personal information</value>
+  </data>
+  <data name="Remember my decision" xml:space="preserve">
+	  <value>Remember my decision</value>
+  </data>
   <data name="Uncheck the permissions you do not wish to grant." xml:space="preserve">
 		<value>Uncheck the permissions you do not wish to grant.</value>
 	</data>

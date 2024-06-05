@@ -97,17 +97,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Active Sessions" xml:space="preserve">
-    <value>Active Sessions</value>
+  <data name="Active sessions" xml:space="preserve">
+	  <value>Active sessions</value>
   </data>
-  <data name="API Resources" xml:space="preserve">
-    <value>API Resources</value>
+  <data name="API resources" xml:space="preserve">
+	  <value>API resources</value>
   </data>
   <data name="Clients" xml:space="preserve">
     <value>Clients</value>
   </data>
-  <data name="ID Providers" xml:space="preserve">
-    <value>ID Providers</value>
+  <data name="Id providers" xml:space="preserve">
+	  <value>Id providers</value>
   </data>
   <data name="Keys" xml:space="preserve">
     <value>Keys</value>

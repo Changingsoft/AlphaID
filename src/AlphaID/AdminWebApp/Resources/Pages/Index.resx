@@ -100,7 +100,7 @@
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
-  <data name="Management Center" xml:space="preserve">
-    <value>Management Center</value>
+  <data name="Management center" xml:space="preserve">
+	  <value>Management center</value>
   </data>
 </root>

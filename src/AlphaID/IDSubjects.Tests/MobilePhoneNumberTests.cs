@@ -32,7 +32,6 @@ public class MobilePhoneNumberTests
     [Fact]
     public void TryParseMobilePhoneNumber()
     {
-
         Assert.True(MobilePhoneNumber.TryParse("+8615912345678", out MobilePhoneNumber number1));
         Assert.Equal("15912345678", number1.PhoneNumber);
 
@@ -51,10 +50,10 @@ public class MobilePhoneNumberTests
     [Fact]
     public void ParseMobilePhoneNumber()
     {
-        var number1 = MobilePhoneNumber.Parse("+8615912345678");
+        MobilePhoneNumber number1 = MobilePhoneNumber.Parse("+8615912345678");
         Assert.Equal("15912345678", number1.PhoneNumber);
 
-        var number2 = MobilePhoneNumber.Parse(" +8613812345678 ");
+        MobilePhoneNumber number2 = MobilePhoneNumber.Parse(" +8613812345678 ");
         Assert.Equal("13812345678", number2.PhoneNumber);
 
         Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse(""));

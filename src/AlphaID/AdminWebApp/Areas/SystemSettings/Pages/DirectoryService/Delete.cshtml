@@ -10,9 +10,9 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="ServiceName" class="form-label"></label>
-        <input asp-for="ServiceName" class="form-control" />
+        <input asp-for="ServiceName" class="form-control"/>
         <span asp-validation-for="ServiceName" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-danger">@L["DELETE"]</button>
-    <a asp-page="Index" class="btn btn-secondary">@L["Cancel"]</a>
+    <button type="submit" class="btn btn-danger">@SL["Delete"]</button>
+    <a asp-page="Index" class="btn btn-secondary">@SL["Cancel"]</a>
 </form>

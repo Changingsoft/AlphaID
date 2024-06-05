@@ -97,10 +97,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="External Logins" xml:space="preserve">
-		<value>External Logins</value>
-		<comment>External Logins</comment>
-	</data>
+  <data name="External logins" xml:space="preserve">
+	  <value>External logins</value>
+	  <comment>External Logins</comment>
+  </data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
 		<comment>Overview</comment>
@@ -108,8 +108,8 @@
   <data name="Password and authentication" xml:space="preserve">
 	  <value>Password and authentication</value>
   </data>
-  <data name="Two-factor Authentication" xml:space="preserve">
-		<value>Two-factor Authentication</value>
-		<comment>Two-factor Authentication</comment>
-	</data>
+  <data name="Two-factor authentication" xml:space="preserve">
+	  <value>Two-factor authentication</value>
+	  <comment>Two-factor Authentication</comment>
+  </data>
 </root>

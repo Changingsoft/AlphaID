@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.RealNameDb
 {
     [DbContext(typeof(RealNameDbContext))]
-    [Migration("20231123050150_Init")]
+    [Migration("20240603090409_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,10 +20,7 @@ namespace DatabaseTool.Migrations.RealNameDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -104,7 +101,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Remark")
+                    b.Property<string>("Remarks")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -113,7 +110,8 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.Property<string>("ValidatedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -135,11 +133,12 @@ namespace DatabaseTool.Migrations.RealNameDb
                     b.Property<bool?>("Accepted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("AcceptedAt")
+                    b.Property<DateTimeOffset?>("AuditTime")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Auditor")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -180,7 +179,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(18)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
 
                     b.Property<string>("Ethnicity")
@@ -188,10 +187,10 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime?>("Expires")
+                    b.Property<DateOnly?>("Expires")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("IssueDate")
+                    b.Property<DateOnly>("IssueDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Issuer")
@@ -236,32 +235,38 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(18)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(18)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
 
                     b.Property<string>("Ethnicity")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime?>("Expires")
+                    b.Property<DateOnly?>("Expires")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("IssueDate")
+                    b.Property<DateOnly>("IssueDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Issuer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Sex")
                         .HasColumnType("int");
@@ -354,9 +359,6 @@ namespace DatabaseTool.Migrations.RealNameDb
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(100)");
 
-                            b1.Property<DateTimeOffset>("UpdateTime")
-                                .HasColumnType("datetimeoffset");
-
                             b1.HasKey("ChineseIdCardRealNameRequestId");
 
                             b1.ToTable("RealNameRequest");
@@ -379,9 +381,6 @@ namespace DatabaseTool.Migrations.RealNameDb
                                 .HasMaxLength(100)
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(100)");
-
-                            b1.Property<DateTimeOffset>("UpdateTime")
-                                .HasColumnType("datetimeoffset");
 
                             b1.HasKey("ChineseIdCardRealNameRequestId");
 

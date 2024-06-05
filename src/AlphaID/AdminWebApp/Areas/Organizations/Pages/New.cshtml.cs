@@ -1,6 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages;
 
@@ -37,54 +37,48 @@ public class NewModel(OrganizationManager manager) : PageModel
     public DateOnly? TermEnd { get; set; }
 
     public IdOperationResult? OperationResult { get; set; }
+
     public void OnGet()
     {
-
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
+        if (!ModelState.IsValid)
+            return Page();
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
-
-        var nameExists = manager.FindByName(this.Name);
+        IEnumerable<GenericOrganization> nameExists = manager.FindByName(Name);
         if (nameExists.Any())
-        {
-            if (!this.RegisterWithSameNameAnyway)
+            if (!RegisterWithSameNameAnyway)
             {
-                this.ModelState.AddModelError(nameof(this.Name), "库中存在同名的组织，如果确实要注册，请勾选“即使名称相同，也要注册”复选框");
-                return this.Page();
+                ModelState.AddModelError(nameof(Name), "库中存在同名的组织，如果确实要注册，请勾选“即使名称相同，也要注册”复选框");
+                return Page();
             }
-        }
 
-        var factory = new OrganizationBuilder(this.Name);
+        var factory = new OrganizationBuilder(Name);
 
-        var org = factory.Organization;
-        org.Domicile = this.Domicile;
-        org.Representative = this.LegalPersonName;
-        org.EstablishedAt = this.EstablishedAt;
-        org.TermBegin = this.TermBegin;
-        org.TermEnd = this.TermEnd;
+        GenericOrganization org = factory.Organization;
+        org.Domicile = Domicile;
+        org.Representative = LegalPersonName;
+        org.EstablishedAt = EstablishedAt;
+        org.TermBegin = TermBegin;
+        org.TermEnd = TermEnd;
 
-        if (!this.ModelState.IsValid)
-        {
-            return this.Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
         try
         {
-            var result = await manager.CreateAsync(org);
+            IdOperationResult result = await manager.CreateAsync(org);
             if (result.Succeeded)
-                return this.RedirectToPage("Detail/Index", new { anchor = org.Id });
+                return RedirectToPage("Detail/Index", new { anchor = org.Id });
 
-            this.OperationResult = result;
-            return this.Page();
+            OperationResult = result;
+            return Page();
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
-            return this.Page();
+            ModelState.AddModelError("", ex.Message);
+            return Page();
         }
     }
 }

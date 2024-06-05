@@ -16,7 +16,7 @@
         <div class="card-body">
             <p>@L["You are now signing in from external, sign in {0} for binding to external login.", Product.Value.Name]</p>
             <form method="post">
-                <input type="hidden" asp-for="Input.ReturnUrl" />
+                <input type="hidden" asp-for="Input.ReturnUrl"/>
 
                 <div class="form-group">
                     <label asp-for="Input.Username" class="form-label"></label>
@@ -26,11 +26,13 @@
                     <label asp-for="Input.Password" class="form-label"></label>
                     <input type="password" class="form-control" placeholder="密码" asp-for="Input.Password" autocomplete="off">
                 </div>
-                <partial name="_ValidationSummary" />
+                <partial name="_ValidationSummary"/>
                 <button class="btn btn-primary" name="Input.Button" value="login">@L["Sign in"]</button>
                 <button class="btn btn-secondary" name="Input.Button" value="cancel">@L["Cancel"]</button>
 
-                <p><a asp-page="ForgetPassword">忘记密码？</a></p>
+                <p>
+                    <a asp-page="ForgetPassword">忘记密码？</a>
+                </p>
             </form>
         </div>
     </div>

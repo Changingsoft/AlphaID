@@ -135,6 +135,9 @@
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="Age" xml:space="preserve">
+	  <value>Age</value>
+  </data>
   <data name="Allowed access token signing algorithms" xml:space="preserve">
     <value>Allowed access token signing algorithms</value>
   </data>
@@ -206,8 +209,8 @@
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>
-  <data name="Front Channel Logout URI" xml:space="preserve">
-    <value>Front Channel Logout URI</value>
+  <data name="Front channel logout URI" xml:space="preserve">
+	  <value>Front channel logout URI</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
@@ -247,6 +250,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="People" xml:space="preserve">
+	  <value>People</value>
   </data>
   <data name="Phone number" xml:space="preserve">
     <value>Phone number</value>
@@ -345,6 +351,9 @@
   </data>
   <data name="User name" xml:space="preserve">
     <value>User name</value>
+  </data>
+  <data name="Validate_DataType_Url" xml:space="preserve">
+	  <value>Require valid URL</value>
   </data>
   <data name="Validate_EmailAddress" xml:space="preserve">
     <value>It isn't look like an email address.</value>

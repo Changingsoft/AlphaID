@@ -97,18 +97,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountName" xml:space="preserve">
-		<value>AccountName</value>
-	</data>
-  <data name="AccountNumber" xml:space="preserve">
-		<value>AccountNumber</value>
-	</data>
+  <data name="Account name" xml:space="preserve">
+	  <value>Account name</value>
+  </data>
+  <data name="Account number" xml:space="preserve">
+	  <value>Account number</value>
+  </data>
   <data name="Add" xml:space="preserve">
 		<value>Add</value>
 	</data>
-  <data name="BankName" xml:space="preserve">
-		<value>BankName</value>
-	</data>
+  <data name="Bank name" xml:space="preserve">
+	  <value>Bank name</value>
+  </data>
   <data name="Operations" xml:space="preserve">
 		<value>Operations</value>
 	</data>

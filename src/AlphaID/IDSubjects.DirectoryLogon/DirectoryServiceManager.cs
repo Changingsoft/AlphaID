@@ -1,29 +1,31 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices.AccountManagement;
+using Microsoft.Extensions.Logging;
 
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-/// Directory service manager.
+///     Directory service manager.
 /// </summary>
 /// <remarks>
-/// Init DirectoryServiceManager.
+///     Init DirectoryServiceManager.
 /// </remarks>
 /// <param name="directoryServiceDescriptorStore"></param>
 /// <param name="logger"></param>
-public class DirectoryServiceManager(IDirectoryServiceDescriptorStore directoryServiceDescriptorStore, ILogger<DirectoryServiceManager>? logger = null)
+public class DirectoryServiceManager(
+    IDirectoryServiceDescriptorStore directoryServiceDescriptorStore,
+    ILogger<DirectoryServiceManager>? logger = null)
 {
-
     /// <summary>
-    /// Gets list of DirectoryService.
+    ///     Gets list of DirectoryService.
     /// </summary>
     public IEnumerable<DirectoryServiceDescriptor> Services => directoryServiceDescriptorStore.Services;
 
     /// <summary>
-    /// Create a directory service.
+    ///     Create a directory service.
     /// </summary>
     /// <param name="directoryServiceDescriptor"></param>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+    [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public async Task<IdOperationResult> CreateAsync(DirectoryServiceDescriptor directoryServiceDescriptor)
     {
         if (!directoryServiceDescriptor.DefaultUserAccountContainer.EndsWith(directoryServiceDescriptor.RootDn))
@@ -45,7 +47,6 @@ public class DirectoryServiceManager(IDirectoryServiceDescriptorStore directoryS
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="directoryServiceDescriptor"></param>
     /// <returns></returns>
@@ -70,7 +71,7 @@ public class DirectoryServiceManager(IDirectoryServiceDescriptorStore directoryS
     }
 
     /// <summary>
-    /// Delete a directory service.
+    ///     Delete a directory service.
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
@@ -81,7 +82,7 @@ public class DirectoryServiceManager(IDirectoryServiceDescriptorStore directoryS
     }
 
     /// <summary>
-    /// Find Directory Service by Id.
+    ///     Find Directory Service by Id.
     /// </summary>
     /// <param name="serviceId"></param>
     /// <returns></returns>

@@ -1,36 +1,37 @@
-﻿using IdentityModel;
-using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Claims;
+using IdentityModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-/// Logon Account Manager.
+///     Logon Account Manager.
 /// </summary>
 /// <remarks>
-/// Init.
+///     Init.
 /// </remarks>
 /// <param name="directoryAccountStore"></param>
 /// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
-public class DirectoryAccountManager(IDirectoryAccountStore directoryAccountStore, IEnumerable<ISubjectGenerator> subjectGenerators, ILogger<DirectoryAccountManager>? logger = null)
+public class DirectoryAccountManager(
+    IDirectoryAccountStore directoryAccountStore,
+    IEnumerable<ISubjectGenerator> subjectGenerators,
+    ILogger<DirectoryAccountManager>? logger = null)
 {
-
     /// <summary>
-    /// Create account.
+    ///     Create account.
     /// </summary>
     /// <returns></returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public async Task<IdOperationResult> CreateAsync(NaturalPersonManager manager, DirectoryAccount account)
     {
-        var person = await manager.FindByIdAsync(account.PersonId);
-        if (person == null)
-        {
-            return IdOperationResult.Failed("找不到指定的Person。");
-        }
-        using var context = account.DirectoryServiceDescriptor.GetUserContainerContext();
+        NaturalPerson? person = await manager.FindByIdAsync(account.PersonId);
+        if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
+        using PrincipalContext context = account.DirectoryServiceDescriptor.GetUserContainerContext();
         UserPrincipal newAccount = new(context)
         {
             SamAccountName = person.UserName
@@ -70,14 +71,23 @@ public class DirectoryAccountManager(IDirectoryAccountStore directoryAccountStor
             {
                 ClaimsPrincipal p = new(new ClaimsIdentity(new Claim[]
                 {
-                    new(JwtClaimTypes.Subject,  $"{account.DirectoryServiceDescriptor.SamDomainPart}\\{newAccount.SamAccountName}" ),
-                    new(JwtClaimTypes.ClientId, account.DirectoryServiceDescriptor.ExternalLoginProvider.RegisteredClientId),
+                    new(JwtClaimTypes.Subject,
+                        $"{account.DirectoryServiceDescriptor.SamDomainPart}\\{newAccount.SamAccountName}"),
+                    new(JwtClaimTypes.ClientId,
+                        account.DirectoryServiceDescriptor.ExternalLoginProvider.RegisteredClientId)
                 }));
 
-                ISubjectGenerator generator = account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator != null ? subjectGenerators.First(s => s.GetType().FullName == account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator) : subjectGenerators.First();
+                ISubjectGenerator generator =
+                    account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator != null
+                        ? subjectGenerators.First(s =>
+                            s.GetType().FullName == account.DirectoryServiceDescriptor.ExternalLoginProvider
+                                .SubjectGenerator)
+                        : subjectGenerators.First();
 
-                var providerKey = generator.Generate(p);
-                var identityResult = await manager.AddLoginAsync(person, new Microsoft.AspNetCore.Identity.UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey, account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
+                string providerKey = generator.Generate(p);
+                IdentityResult identityResult = await manager.AddLoginAsync(person,
+                    new UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey,
+                        account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
                 if (!identityResult.Succeeded)
                 {
                     logger?.LogError("未能创建外部登录，错误消息：{errors}", identityResult.Errors.Select(p => p.Description));
@@ -95,15 +105,15 @@ public class DirectoryAccountManager(IDirectoryAccountStore directoryAccountStor
     }
 
     /// <summary>
-    /// Search from directory service.
+    ///     Search from directory service.
     /// </summary>
     /// <param name="directoryServiceDescriptor"></param>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public IEnumerable<DirectorySearchItem> Search(DirectoryServiceDescriptor directoryServiceDescriptor, string filter)
     {
-        using var searchRoot = directoryServiceDescriptor.GetRootEntry();
+        using DirectoryEntry searchRoot = directoryServiceDescriptor.GetRootEntry();
         using DirectorySearcher searcher = new(searchRoot);
         searcher.Filter = filter;
         SearchResultCollection results = searcher.FindAll();
@@ -112,37 +122,37 @@ public class DirectoryAccountManager(IDirectoryAccountStore directoryAccountStor
         {
             using DirectoryEntry entry = searchResult.GetDirectoryEntry();
             directorySearchItems.Add(new DirectorySearchItem(entry.Properties["name"].Value!.ToString()!,
-                                         entry.Properties["sAMAccountName"].Value?.ToString(),
-                                         entry.Properties["userPrincipalName"].Value?.ToString()!,
-                                         entry.Guid,
-                                         entry.Properties["distinguishedName"].Value!.ToString()!,
-                                         entry.Properties["displayName"].Value?.ToString(),
-                                         entry.Properties["mobile"].Value?.ToString(),
-                                         entry.Properties["company"].Value?.ToString(),
-                                         entry.Properties["department"].Value?.ToString(),
-                                         entry.Properties["title"].Value?.ToString()));
+                entry.Properties["sAMAccountName"].Value?.ToString(),
+                entry.Properties["userPrincipalName"].Value?.ToString()!,
+                entry.Guid,
+                entry.Properties["distinguishedName"].Value!.ToString()!,
+                entry.Properties["displayName"].Value?.ToString(),
+                entry.Properties["mobile"].Value?.ToString(),
+                entry.Properties["company"].Value?.ToString(),
+                entry.Properties["department"].Value?.ToString(),
+                entry.Properties["title"].Value?.ToString()));
         }
+
         return directorySearchItems;
     }
 
     /// <summary>
-    /// 绑定已有账号。
+    ///     绑定已有账号。
     /// </summary>
     /// <param name="account"></param>
     /// <param name="entryObjectGuid"></param>
     /// <param name="manager"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public async Task<IdOperationResult> BindExistsAccount(NaturalPersonManager manager, DirectoryAccount account, string entryObjectGuid)
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
+    public async Task<IdOperationResult> BindExistsAccount(NaturalPersonManager manager,
+        DirectoryAccount account,
+        string entryObjectGuid)
     {
-        var person = await manager.FindByIdAsync(account.PersonId);
-        if (person == null)
-        {
-            return IdOperationResult.Failed("找不到指定的Person。");
-        }
+        NaturalPerson? person = await manager.FindByIdAsync(account.PersonId);
+        if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
 
-        using var context = account.DirectoryServiceDescriptor.GetRootContext();
+        using PrincipalContext context = account.DirectoryServiceDescriptor.GetRootContext();
         UserPrincipal user = UserPrincipal.FindByIdentity(context, entryObjectGuid);
         if (user == null)
         {
@@ -163,13 +173,20 @@ public class DirectoryAccountManager(IDirectoryAccountStore directoryAccountStor
                 anchorValue = $"{account.DirectoryServiceDescriptor.SamDomainPart}\\{user.SamAccountName}";
             ClaimsPrincipal principal = new(new ClaimsIdentity(new Claim[]
             {
-                new(JwtClaimTypes.Subject,  anchorValue),
-                new(JwtClaimTypes.ClientId, account.DirectoryServiceDescriptor.ExternalLoginProvider.RegisteredClientId),
+                new(JwtClaimTypes.Subject, anchorValue),
+                new(JwtClaimTypes.ClientId, account.DirectoryServiceDescriptor.ExternalLoginProvider.RegisteredClientId)
             }));
 
-            ISubjectGenerator generator = account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator != null ? subjectGenerators.First(s => s.GetType().FullName == account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator) : subjectGenerators.First();
-            var providerKey = generator.Generate(principal);
-            var identityResult = await manager.AddLoginAsync(person, new Microsoft.AspNetCore.Identity.UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey, account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
+            ISubjectGenerator generator =
+                account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator != null
+                    ? subjectGenerators.First(s =>
+                        s.GetType().FullName ==
+                        account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator)
+                    : subjectGenerators.First();
+            string providerKey = generator.Generate(principal);
+            IdentityResult identityResult = await manager.AddLoginAsync(person,
+                new UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey,
+                    account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
             if (!identityResult.Succeeded)
             {
                 logger?.LogError("未能创建外部登录，错误消息：{errors}", identityResult.Errors.Select(p => p.Description));
@@ -182,7 +199,7 @@ public class DirectoryAccountManager(IDirectoryAccountStore directoryAccountStor
     }
 
     /// <summary>
-    /// 获取指定用户的账号。
+    ///     获取指定用户的账号。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>

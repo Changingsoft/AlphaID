@@ -1,6 +1,7 @@
-using IdSubjects;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using IdSubjects;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
@@ -16,53 +17,47 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await userManager.FindByIdAsync(this.Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
-        return this.Page();
+            return NotFound();
+        Person = person;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await userManager.FindByIdAsync(this.Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
+            return NotFound();
+        Person = person;
 
 
-        if (this.Input.DisplayName != this.Person.PersonName.FullName)
-        {
-            this.ModelState.AddModelError(nameof(this.Input.DisplayName), "名称不一致");
-        }
+        if (Input.DisplayName != Person.PersonName.FullName)
+            ModelState.AddModelError(nameof(Input.DisplayName), "名称不一致");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         try
         {
-            var result = await userManager.DeleteAsync(this.Person);
+            IdentityResult result = await userManager.DeleteAsync(Person);
             if (result.Succeeded)
-                return this.RedirectToPage("DeleteSuccess");
-            else
             {
-                foreach (var error in result.Errors)
-                {
-                    this.ModelState.AddModelError("", error.Description);
-                }
-                return this.Page();
+                return RedirectToPage("DeleteSuccess");
             }
+
+            foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
+            return Page();
         }
         catch (Exception ex)
         {
-            this.ModelState.TryAddModelException("", ex);
-            return this.Page();
+            ModelState.TryAddModelException("", ex);
+            return Page();
         }
     }
 
     public class DeletePersonForm
     {
-
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         [Required(ErrorMessage = "Validate_Required")]
         public string DisplayName { get; set; } = default!;

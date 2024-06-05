@@ -120,13 +120,13 @@
   <data name="Created at" xml:space="preserve">
     <value>创建于</value>
   </data>
-  <data name="DisplayName" xml:space="preserve">
+  <data name="Display name" xml:space="preserve">
     <value>显示名称</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>启用</value>
   </data>
-  <data name="Identity Providers" xml:space="preserve">
+  <data name="Identity providers" xml:space="preserve">
     <value>标识提供器</value>
   </data>
   <data name="New identity provider" xml:space="preserve">

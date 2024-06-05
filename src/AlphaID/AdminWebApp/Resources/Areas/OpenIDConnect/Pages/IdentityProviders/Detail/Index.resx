@@ -100,9 +100,9 @@
   <data name="Created at" xml:space="preserve">
 		<value>Created at</value>
 	</data>
-  <data name="Display Name" xml:space="preserve">
-		<value>Display Name</value>
-	</data>
+  <data name="Display name" xml:space="preserve">
+	  <value>Display name</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
 		<value>Enabled</value>
 	</data>

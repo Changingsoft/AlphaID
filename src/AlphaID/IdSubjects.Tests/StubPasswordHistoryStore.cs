@@ -1,36 +1,42 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Tests;
+
 public class StubPasswordHistoryStore : IPasswordHistoryStore
 {
-    private readonly HashSet<PasswordHistory> set = [];
+    private readonly HashSet<PasswordHistory> _set = [];
 
-    public Task<IdentityResult> CreateAsync(PasswordHistory history)
+    public Task<IdentityResult> AddAsync(string data, string userId, DateTimeOffset timeOffset)
     {
-        this.set.Add(history);
+        var history = new PasswordHistory { Data = data, UserId = userId, WhenCreated = timeOffset };
+        _set.Add(history);
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public Task<IdentityResult> DeleteAsync(PasswordHistory history)
+    public IEnumerable<string> GetPasswords(string person, int historyLength)
     {
-        this.set.Remove(history);
-        return Task.FromResult(IdentityResult.Success);
+        return _set.Where(h => h.UserId == person).OrderByDescending(h => h.WhenCreated).Take(historyLength)
+            .Select(his => his.Data);
     }
 
-    public IEnumerable<PasswordHistory> GetPasswords(NaturalPerson person, int historyLength)
+    public Task TrimHistory(string person, int optionsRememberPasswordHistory)
     {
-        return this.set.Where(h => h.UserId == person.Id).OrderByDescending(h => h.WhenCreated).Take(historyLength);
-    }
-
-    public Task TrimHistory(NaturalPerson person, int optionsRememberPasswordHistory)
-    {
-        //it is not important for test. just complete the task.
+        // It is not important for test. just complete the task.
         return Task.CompletedTask;
     }
 
-    public Task ClearAsync(NaturalPerson person)
+    public Task ClearAsync(string person)
     {
-        this.set.Clear();
+        _set.Clear();
         return Task.CompletedTask;
+    }
+
+    private record PasswordHistory
+    {
+        public string UserId { get; init; } = default!;
+
+        public string Data { get; init; } = default!;
+
+        public DateTimeOffset WhenCreated { get; init; }
     }
 }

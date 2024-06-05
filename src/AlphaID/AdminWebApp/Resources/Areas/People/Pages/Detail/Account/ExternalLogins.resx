@@ -97,12 +97,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Display Name" xml:space="preserve">
-		<value>Display Name</value>
-	</data>
-  <data name="External Logins" xml:space="preserve">
-		<value>External Logins</value>
-	</data>
+  <data name="Display name" xml:space="preserve">
+	  <value>Display name</value>
+  </data>
+  <data name="External logins" xml:space="preserve">
+	  <value>External logins</value>
+  </data>
   <data name="Key" xml:space="preserve">
 		<value>Key</value>
 	</data>

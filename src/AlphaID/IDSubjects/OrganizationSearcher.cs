@@ -1,17 +1,16 @@
 ﻿namespace IdSubjects;
 
 /// <summary>
-/// 组织搜索器。
+///     组织搜索器。
 /// </summary>
 /// <remarks>
-/// 初始化组织搜索器。
+///     初始化组织搜索器。
 /// </remarks>
 /// <param name="organizationStore"></param>
 public class OrganizationSearcher(IOrganizationStore organizationStore)
 {
-
     /// <summary>
-    /// 搜索。
+    ///     搜索。
     /// </summary>
     /// <param name="keywords"></param>
     /// <returns></returns>
@@ -23,8 +22,9 @@ public class OrganizationSearcher(IOrganizationStore organizationStore)
 
         var result = new HashSet<GenericOrganization>();
 
-        var mainResult = organizationStore.Organizations.Where(p => p.Name.Contains(keywords) || p.UsedNames.Any(n => n.Name.Contains(keywords)));
-        
+        IQueryable<GenericOrganization> mainResult = organizationStore.Organizations.Where(p =>
+            p.Name.Contains(keywords) || p.UsedNames.Any(n => n.Name.Contains(keywords)));
+
         result.UnionWith(mainResult);
         return result;
     }

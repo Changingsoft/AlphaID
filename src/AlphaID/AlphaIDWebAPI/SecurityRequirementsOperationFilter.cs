@@ -6,13 +6,12 @@ namespace AlphaIdWebAPI;
 
 internal class SecurityRequirementsOperationFilter : IOperationFilter
 {
-
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var authAttributes = context.MethodInfo.DeclaringType!.GetCustomAttributes(true)
-                            .Union(context.MethodInfo.GetCustomAttributes(true))
-                            .OfType<AuthorizeAttribute>()
-                            .ToList();
+        List<AuthorizeAttribute> authAttributes = context.MethodInfo.DeclaringType!.GetCustomAttributes(true)
+            .Union(context.MethodInfo.GetCustomAttributes(true))
+            .OfType<AuthorizeAttribute>()
+            .ToList();
 
         if (authAttributes.Count != 0)
         {
@@ -24,9 +23,9 @@ internal class SecurityRequirementsOperationFilter : IOperationFilter
         {
             operation.Security = [];
 
-            var oauth2SecurityScheme = new OpenApiSecurityScheme()
+            var oauth2SecurityScheme = new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "OAuth2" },
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "OAuth2" }
             };
 
             List<string> scopes =
@@ -37,9 +36,9 @@ internal class SecurityRequirementsOperationFilter : IOperationFilter
             if (authAttributes.Any(p => p.Policy == "RealNameScopeRequired"))
                 scopes.Add("realname");
 
-            operation.Security.Add(new OpenApiSecurityRequirement()
+            operation.Security.Add(new OpenApiSecurityRequirement
             {
-                [oauth2SecurityScheme] = scopes,
+                [oauth2SecurityScheme] = scopes
             });
         }
     }

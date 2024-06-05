@@ -70,7 +70,7 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Duns Number 的本地化字符串。
+        ///   查找类似 Duns number 的本地化字符串。
         /// </summary>
         public static string DunsNumber {
             get {
@@ -133,7 +133,7 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 You are the last owner of this organization, for leaving organization, you must transfer you ownership to another member in this organization. 的本地化字符串。
+        ///   查找类似 You are the last owner of this organization, for leaving organization, you must transfer your ownership to another member in this organization. 的本地化字符串。
         /// </summary>
         public static string LastOwnerCannotLeave {
             get {
@@ -142,16 +142,16 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Legal Entity Identifier 的本地化字符串。
+        ///   查找类似 Legal entity identifier 的本地化字符串。
         /// </summary>
-        public static string LegalEntityIdentifier {
+        public static string Legal_entity_identifier {
             get {
-                return ResourceManager.GetString("LegalEntityIdentifier", resourceCulture);
+                return ResourceManager.GetString("Legal entity identifier", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Current password age is less then minimum passowrd age requirement. 的本地化字符串。
+        ///   查找类似 Current password age is less then minimum password age requirement. 的本地化字符串。
         /// </summary>
         public static string LessThenMinimumPasswordAge {
             get {
@@ -171,9 +171,9 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 The membership already exists. 的本地化字符串。
         /// </summary>
-        public static string MembershipExists {
+        public static string Membership_exists {
             get {
-                return ResourceManager.GetString("MembershipExists", resourceCulture);
+                return ResourceManager.GetString("Membership exists", resourceCulture);
             }
         }
         

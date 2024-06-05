@@ -1,8 +1,8 @@
-﻿using IdSubjects;
+﻿using System.ComponentModel.DataAnnotations;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
@@ -19,6 +19,39 @@ public class ChangePasswordModel(
     public IList<UserLoginInfo> ExternalLogins { get; set; } = default!;
 
     public IdentityResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync()
+    {
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+        Person = user;
+        ExternalLogins = await userManager.GetLoginsAsync(user);
+        bool hasPassword = await userManager.HasPasswordAsync(user);
+        return !hasPassword ? RedirectToPage("./SetPassword") : Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid) return Page();
+
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+        Person = user;
+        ExternalLogins = await userManager.GetLoginsAsync(user);
+
+        IdentityResult changePasswordResult =
+            await userManager.ChangePasswordAsync(user, Input.CurrentPassword, Input.NewPassword);
+        if (!changePasswordResult.Succeeded)
+        {
+            Result = changePasswordResult;
+            return Page();
+        }
+
+        await signInManager.RefreshSignInAsync(user);
+        Result = IdentityResult.Success;
+        logger.LogInformation("用户已成功更改其密码。");
+        return Page();
+    }
 
     public class InputModel
     {
@@ -37,46 +70,5 @@ public class ChangePasswordModel(
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; } = default!;
-    }
-
-    public async Task<IActionResult> OnGetAsync()
-    {
-        var user = await userManager.GetUserAsync(this.User);
-        if (user == null)
-        {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
-        }
-        this.Person = user;
-        this.ExternalLogins = await userManager.GetLoginsAsync(user);
-        var hasPassword = await userManager.HasPasswordAsync(user);
-        return !hasPassword ? this.RedirectToPage("./SetPassword") : this.Page();
-    }
-
-    public async Task<IActionResult> OnPostAsync()
-    {
-        if (!this.ModelState.IsValid)
-        {
-            return this.Page();
-        }
-
-        var user = await userManager.GetUserAsync(this.User);
-        if (user == null)
-        {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
-        }
-        this.Person = user;
-        this.ExternalLogins = await userManager.GetLoginsAsync(user);
-
-        var changePasswordResult = await userManager.ChangePasswordAsync(user, this.Input.CurrentPassword, this.Input.NewPassword);
-        if (!changePasswordResult.Succeeded)
-        {
-            this.Result = changePasswordResult;
-            return this.Page();
-        }
-
-        await signInManager.RefreshSignInAsync(user);
-        this.Result = IdentityResult.Success;
-        logger.LogInformation("用户已成功更改其密码。");
-        return this.Page();
     }
 }

@@ -126,7 +126,7 @@
   <data name="Bind exists account" xml:space="preserve">
     <value>绑定已有账号</value>
   </data>
-  <data name="Display Name" xml:space="preserve">
+  <data name="Display name" xml:space="preserve">
     <value>显示名称</value>
   </data>
   <data name="Mobile" xml:space="preserve">

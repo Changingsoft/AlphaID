@@ -1,10 +1,10 @@
 ﻿#nullable disable
 
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
@@ -18,6 +18,37 @@ public class SetPasswordModel(
     [TempData]
     public string StatusMessage { get; set; }
 
+    public async Task<IActionResult> OnGetAsync()
+    {
+        NaturalPerson user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+
+        bool hasPassword = await userManager.HasPasswordAsync(user);
+
+        return hasPassword ? RedirectToPage("./ChangePassword") : Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid) return Page();
+
+        NaturalPerson user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+
+        IdentityResult addPasswordResult = await userManager.AddPasswordAsync(user, Input.NewPassword);
+        if (!addPasswordResult.Succeeded)
+        {
+            foreach (IdentityError error in addPasswordResult.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
+            return Page();
+        }
+
+        await signInManager.RefreshSignInAsync(user);
+        StatusMessage = "您的密码已设置。";
+
+        return RedirectToPage();
+    }
+
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
@@ -30,47 +61,5 @@ public class SetPasswordModel(
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public async Task<IActionResult> OnGetAsync()
-    {
-        var user = await userManager.GetUserAsync(this.User);
-        if (user == null)
-        {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
-        }
-
-        var hasPassword = await userManager.HasPasswordAsync(user);
-
-        return hasPassword ? this.RedirectToPage("./ChangePassword") : this.Page();
-    }
-
-    public async Task<IActionResult> OnPostAsync()
-    {
-        if (!this.ModelState.IsValid)
-        {
-            return this.Page();
-        }
-
-        var user = await userManager.GetUserAsync(this.User);
-        if (user == null)
-        {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
-        }
-
-        var addPasswordResult = await userManager.AddPasswordAsync(user, this.Input.NewPassword);
-        if (!addPasswordResult.Succeeded)
-        {
-            foreach (var error in addPasswordResult.Errors)
-            {
-                this.ModelState.AddModelError(string.Empty, error.Description);
-            }
-            return this.Page();
-        }
-
-        await signInManager.RefreshSignInAsync(user);
-        this.StatusMessage = "您的密码已设置。";
-
-        return this.RedirectToPage();
     }
 }

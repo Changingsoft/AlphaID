@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Display Name" xml:space="preserve">
+  <data name="Display name" xml:space="preserve">
     <value>显示名称</value>
   </data>
-  <data name="External Logins" xml:space="preserve">
+  <data name="External logins" xml:space="preserve">
     <value>外部登录</value>
   </data>
   <data name="Key" xml:space="preserve">

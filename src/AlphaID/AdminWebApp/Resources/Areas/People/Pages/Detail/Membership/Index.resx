@@ -97,7 +97,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you sure you want leave person from organization?" xml:space="preserve">
+  <data name="Let the person leave the organization?" xml:space="preserve">
 		<value>Are you sure you want leave person from organization?</value>
 	</data>
   <data name="Department" xml:space="preserve">

@@ -3,71 +3,71 @@
 namespace IdSubjects;
 
 /// <summary>
-/// Error describer. 便于国际化。
+///     Error describer. 便于国际化。
 /// </summary>
 public class NaturalPersonIdentityErrorDescriber : IdentityErrorDescriber
 {
     /// <summary>
-    /// Invalid phone number format.
+    ///     Invalid phone number format.
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError InvalidPhoneNumberFormat()
     {
-        return new IdentityError()
+        return new IdentityError
         {
             Code = nameof(InvalidPhoneNumberFormat),
-            Description = Resources.InvalidPhoneNumber,
+            Description = Resources.InvalidPhoneNumber
         };
     }
 
     /// <summary>
-    /// Duplicate phone number.
+    ///     Duplicate phone number.
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError DuplicatePhoneNumber()
     {
-        return new IdentityError()
+        return new IdentityError
         {
             Code = nameof(DuplicatePhoneNumber),
-            Description = Resources.DuplicatePhoneNumber,
+            Description = Resources.DuplicatePhoneNumber
         };
     }
 
     /// <summary>
-    /// CannotChangePersonName
+    ///     CannotChangePersonName
     /// </summary>
     /// <returns></returns>
     public IdentityError CannotChangePersonName()
     {
-        return new IdentityError()
+        return new IdentityError
         {
-            Code = nameof(this.CannotChangePersonName), Description = Resources.CannotChangePersonName,
+            Code = nameof(CannotChangePersonName), Description = Resources.CannotChangePersonName
         };
     }
 
     /// <summary>
-    /// LessThenMinimumPasswordAge
+    ///     LessThenMinimumPasswordAge
     /// </summary>
     /// <returns></returns>
     public IdentityError LessThenMinimumPasswordAge()
     {
-        return new IdentityError()
+        return new IdentityError
         {
-            Code = nameof(this.LessThenMinimumPasswordAge),
-            Description = Resources.LessThenMinimumPasswordAge,
+            Code = nameof(LessThenMinimumPasswordAge),
+            Description = Resources.LessThenMinimumPasswordAge
         };
     }
 
     /// <summary>
-    /// ReuseOldPassword
+    ///     ReuseOldPassword
     /// </summary>
     /// <returns></returns>
     public IdentityError ReuseOldPassword()
     {
-        return new IdentityError()
+        return new IdentityError
         {
-            Code = nameof(this.ReuseOldPassword),
-            Description = Resources.ReuseOldPassword,
+            Code = nameof(ReuseOldPassword),
+            Description = Resources.ReuseOldPassword
         };
     }
 }

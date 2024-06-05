@@ -137,10 +137,10 @@
 		<value>Properties</value>
 		<comment>Properties</comment>
 	</data>
-  <data name="Require Resource Indicator" xml:space="preserve">
-		<value>Require Resource Indicator</value>
-		<comment>Require Resource Indicator</comment>
-	</data>
+  <data name="Require resource indicator" xml:space="preserve">
+	  <value>Require resource indicator</value>
+	  <comment>Require Resource Indicator</comment>
+  </data>
   <data name="Resource ID" xml:space="preserve">
 		<value>Resource ID</value>
 		<comment>Resource ID</comment>
@@ -153,9 +153,9 @@
 		<value>Show in discovery document</value>
 		<comment>Show in discovery document</comment>
 	</data>
-  <data name="This is a system resource, can not be delete." xml:space="preserve">
-	  <value>This is a system resource, can not be delete.</value>
-	  <comment>This is a system resource, can not be delete.</comment>
+  <data name="This is a system resource, can not be deleted." xml:space="preserve">
+	  <value>This is a system resource, can not be deleted.</value>
+	  <comment>This is a system resource, can not be deleted.</comment>
   </data>
   <data name="Type" xml:space="preserve">
 		<value>Type</value>

@@ -11,12 +11,9 @@ public class SecretsModel(ConfigurationDbContext dbContext) : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = dbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
-        if (data == null)
-        {
-            return this.NotFound();
-        }
-        this.Data = data;
-        return this.Page();
+        Client? data = dbContext.Clients.Include(p => p.ClientSecrets).FirstOrDefault(p => p.Id == anchor);
+        if (data == null) return NotFound();
+        Data = data;
+        return Page();
     }
 }

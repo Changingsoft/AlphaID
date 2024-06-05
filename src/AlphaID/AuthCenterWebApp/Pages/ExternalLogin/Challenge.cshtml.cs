@@ -15,23 +15,21 @@ public class Challenge(IIdentityServerInteractionService interactionService) : P
         if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
 
         // validate returnUrl - either it is a valid OIDC URL or back to a local page
-        if (this.Url.IsLocalUrl(returnUrl) == false && interactionService.IsValidReturnUrl(returnUrl) == false)
-        {
+        if (Url.IsLocalUrl(returnUrl) == false && interactionService.IsValidReturnUrl(returnUrl) == false)
             throw new Exception("invalid return URL");
-        }
 
         // start challenge and roundtrip the return URL and scheme 
         var props = new AuthenticationProperties
         {
-            RedirectUri = this.Url.Page("/ExternalLogin/Callback"),
+            RedirectUri = Url.Page("/ExternalLogin/Callback"),
 
             Items =
             {
                 { "returnUrl", returnUrl },
                 { "schemeDisplayName", schemeDisplayName },
-                { "scheme", scheme },
+                { "scheme", scheme }
             }
         };
-        return this.Challenge(props, scheme);
+        return Challenge(props, scheme);
     }
 }

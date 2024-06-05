@@ -1,10 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace AuthCenterWebApp.Pages.Account;
 
@@ -15,47 +16,31 @@ public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = default!;
 
-    public IActionResult OnGet(string code)
+    public IActionResult OnGet(string? code)
     {
-        if (code == null)
+        if (code == null) return BadRequest("A code must be supplied for password reset.");
+
+        Input = new InputModel
         {
-            return this.BadRequest("A code must be supplied for password reset.");
-        }
-        else
-        {
-            this.Input = new InputModel
-            {
-                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-            };
-            return this.Page();
-        }
+            Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+        };
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!this.ModelState.IsValid)
-        {
-            return this.Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
-        var user = await userManager.FindByEmailAsync(this.Input.Email);
+        NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
         if (user == null)
-        {
             // Don't reveal that the user does not exist
-            return this.RedirectToPage("./ResetPasswordConfirmation");
-        }
+            return RedirectToPage("./ResetPasswordConfirmation");
 
-        var result = await userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
-        if (result.Succeeded)
-        {
-            return this.RedirectToPage("./ResetPasswordConfirmation");
-        }
+        IdentityResult result = await userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+        if (result.Succeeded) return RedirectToPage("./ResetPasswordConfirmation");
 
-        foreach (var error in result.Errors)
-        {
-            this.ModelState.AddModelError(string.Empty, error.Description);
-        }
-        return this.Page();
+        foreach (IdentityError error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+        return Page();
     }
 
     public class InputModel
@@ -79,6 +64,5 @@ public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
 
         [Required(ErrorMessage = "Validate_Required")]
         public string Code { get; set; } = default!;
-
     }
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = L["Two-factor authentication (2FA)"];
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
+<partial name="_StatusMessage" for="StatusMessage"/>
 <h3>@ViewBag.Title</h3>
 @{
     var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
@@ -16,7 +16,9 @@
             {
                 <div class="alert alert-danger">
                     <strong>@L["You have no recovery codes left."]</strong>
-                    <p>@L["You must generate a new set of recovery codes before you can log in with a recovery code."] <a asp-page="GenerateRecoveryCodes">@L["Generate a new set of recovery codes"]</a></p>
+                    <p>
+                        @L["You must generate a new set of recovery codes before you can log in with a recovery code."] <a asp-page="GenerateRecoveryCodes">@L["Generate a new set of recovery codes"]</a>
+                    </p>
                 </div>
             }
             else if (Model.RecoveryCodesLeft == 1)
@@ -40,6 +42,7 @@
                     <button type="submit" class="btn btn-primary">@L["Forget this browser"]</button>
                 </form>
             }
+
             <a asp-page="./Disable2fa" class="btn btn-primary">@L["Disable 2FA"]</a>
             <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">@L["Reset recovery codes"]</a>
         }
@@ -59,11 +62,11 @@
     {
         <div class="alert alert-danger">
             <strong>@L["Privacy and cookie policy have not been accepted."]</strong>
-            <p>@L["You must accept the policy before you can enable two factor authentication."]</p>
+            <p>@L["You must accept the policy before you can enable two-factor authentication."]</p>
         </div>
     }
 }
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

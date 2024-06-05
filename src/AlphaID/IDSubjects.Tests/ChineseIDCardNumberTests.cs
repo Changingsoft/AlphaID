@@ -20,9 +20,12 @@ public class ChineseIdCardNumberTests
         //out range test
         Assert.ThrowsAny<Exception>(() => new ChineseIdCardNumber(0, "100000", DateOnly.MinValue, 0));
         Assert.ThrowsAny<Exception>(() => new ChineseIdCardNumber(3, "100000", DateOnly.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIdCardNumber(ChineseIdCardNumber.V1, "99999", DateOnly.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIdCardNumber(ChineseIdCardNumber.V1, "1000000", DateOnly.MinValue, 0));
-        Assert.ThrowsAny<Exception>(() => new ChineseIdCardNumber(ChineseIdCardNumber.V1, "100000", DateOnly.MinValue, 1000));
+        Assert.ThrowsAny<Exception>(
+            () => new ChineseIdCardNumber(ChineseIdCardNumber.V1, "99999", DateOnly.MinValue, 0));
+        Assert.ThrowsAny<Exception>(() =>
+            new ChineseIdCardNumber(ChineseIdCardNumber.V1, "1000000", DateOnly.MinValue, 0));
+        Assert.ThrowsAny<Exception>(() =>
+            new ChineseIdCardNumber(ChineseIdCardNumber.V1, "100000", DateOnly.MinValue, 1000));
     }
 
     [Fact]
@@ -31,7 +34,6 @@ public class ChineseIdCardNumberTests
         var s = "530302198501150315";
         Assert.ThrowsAny<Exception>(() => ChineseIdCardNumber.Parse(s));
         Assert.ThrowsAny<Exception>(() => ChineseIdCardNumber.Parse("0123"));
-
     }
 
     [Fact]
@@ -47,9 +49,9 @@ public class ChineseIdCardNumberTests
     [Fact]
     public void ChineseIdCardNumberEqualityTest()
     {
-        var number1 = ChineseIdCardNumber.Parse("530302198501150314");
-        var number2 = ChineseIdCardNumber.Parse("530302198501150314");
-        var number3 = ChineseIdCardNumber.Parse("530302198506020324");
+        ChineseIdCardNumber number1 = ChineseIdCardNumber.Parse("530302198501150314");
+        ChineseIdCardNumber number2 = ChineseIdCardNumber.Parse("530302198501150314");
+        ChineseIdCardNumber number3 = ChineseIdCardNumber.Parse("530302198506020324");
         Assert.True(number1 == number2);
         Assert.False(number1 == number3);
         Assert.True(number1.Equals(number2));

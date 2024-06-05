@@ -6,206 +6,206 @@
 <h3>@L["Advanced"]</h3>
 
 <form method="post">
-    <h4>@L["Basics"]</h4>
-    <div class="form-check">
-        <input asp-for="Input.AllowAccessTokensViaBrowser" class="form-check-input" />
-        <label asp-for="Input.AllowAccessTokensViaBrowser" class="form-check-label"></label>
-        <span asp-description-for="Input.AllowAccessTokensViaBrowser" class="form-check-description"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.RequireRequestObject" class="form-check-input" />
-        <label asp-for="Input.RequireRequestObject" class="form-check-label"></label>
-        <span asp-description-for="Input.RequireRequestObject" class="form-check-description"></span>
-    </div>
+<h4>@L["Basics"]</h4>
+<div class="form-check">
+    <input asp-for="Input.AllowAccessTokensViaBrowser" class="form-check-input"/>
+    <label asp-for="Input.AllowAccessTokensViaBrowser" class="form-check-label"></label>
+    <span asp-description-for="Input.AllowAccessTokensViaBrowser" class="form-check-description"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.RequireRequestObject" class="form-check-input"/>
+    <label asp-for="Input.RequireRequestObject" class="form-check-label"></label>
+    <span asp-description-for="Input.RequireRequestObject" class="form-check-description"></span>
+</div>
 
-    <h4>@L["Authentication / Session management"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.FrontChannelLogoutUri" class="form-label"></label>
-        <input asp-for="Input.FrontChannelLogoutUri" class="form-control" />
-        <span asp-description-for="Input.FrontChannelLogoutUri" class="form-hint"></span>
-        <span asp-validation-for="Input.FrontChannelLogoutUri"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.FrontChannelLogoutSessionRequired" class="form-check-input" />
-        <label asp-for="Input.FrontChannelLogoutSessionRequired" class="form-check-label"></label>
-        <span asp-description-for="Input.FrontChannelLogoutSessionRequired" class="form-check-description"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.BackChannelLogoutUri" class="form-label"></label>
-        <input asp-for="Input.BackChannelLogoutUri" class="form-control" />
-        <span asp-description-for="Input.BackChannelLogoutUri" class="form-hint"></span>
-        <span asp-validation-for="Input.BackChannelLogoutUri"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.BackChannelLogoutSessionRequired" class="form-check-input" />
-        <label asp-for="Input.BackChannelLogoutSessionRequired" class="form-check-label"></label>
-        <span asp-description-for="Input.BackChannelLogoutSessionRequired" class="form-check-description"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.EnableLocalLogin" class="form-check-input" />
-        <label asp-for="Input.EnableLocalLogin" class="form-check-label"></label>
-        <span asp-description-for="Input.EnableLocalLogin" class="form-check-description"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.UserSsoLifetime" class="form-label"></label>
-        <input asp-for="Input.UserSsoLifetime" class="form-control" />
-        <span asp-description-for="Input.UserSsoLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.UserSsoLifetime"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.CoordinateLifetimeWithUserSession" class="form-check-input" />
-        <label asp-for="Input.CoordinateLifetimeWithUserSession" class="form-check-label"></label>
-        <span asp-description-for="Input.CoordinateLifetimeWithUserSession" class="form-check-description"></span>
-    </div>
+<h4>@L["Authentication / Session management"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.FrontChannelLogoutUri" class="form-label"></label>
+    <input asp-for="Input.FrontChannelLogoutUri" class="form-control"/>
+    <span asp-description-for="Input.FrontChannelLogoutUri" class="form-hint"></span>
+    <span asp-validation-for="Input.FrontChannelLogoutUri"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.FrontChannelLogoutSessionRequired" class="form-check-input"/>
+    <label asp-for="Input.FrontChannelLogoutSessionRequired" class="form-check-label"></label>
+    <span asp-description-for="Input.FrontChannelLogoutSessionRequired" class="form-check-description"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.BackChannelLogoutUri" class="form-label"></label>
+    <input asp-for="Input.BackChannelLogoutUri" class="form-control"/>
+    <span asp-description-for="Input.BackChannelLogoutUri" class="form-hint"></span>
+    <span asp-validation-for="Input.BackChannelLogoutUri"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.BackChannelLogoutSessionRequired" class="form-check-input"/>
+    <label asp-for="Input.BackChannelLogoutSessionRequired" class="form-check-label"></label>
+    <span asp-description-for="Input.BackChannelLogoutSessionRequired" class="form-check-description"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.EnableLocalLogin" class="form-check-input"/>
+    <label asp-for="Input.EnableLocalLogin" class="form-check-label"></label>
+    <span asp-description-for="Input.EnableLocalLogin" class="form-check-description"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.UserSsoLifetime" class="form-label"></label>
+    <input asp-for="Input.UserSsoLifetime" class="form-control"/>
+    <span asp-description-for="Input.UserSsoLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.UserSsoLifetime"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.CoordinateLifetimeWithUserSession" class="form-check-input"/>
+    <label asp-for="Input.CoordinateLifetimeWithUserSession" class="form-check-label"></label>
+    <span asp-description-for="Input.CoordinateLifetimeWithUserSession" class="form-check-description"></span>
+</div>
 
-    <h4>@L["Token"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.IdentityTokenLifetime" class="form-label"></label>
-        <input asp-for="Input.IdentityTokenLifetime" class="form-control" />
-        <span asp-description-for="Input.IdentityTokenLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.IdentityTokenLifetime"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.AllowedIdentityTokenSigningAlgorithms" class="form-label"></label>
-        <input asp-for="Input.AllowedIdentityTokenSigningAlgorithms" class="form-control" />
-        <span asp-description-for="Input.AllowedIdentityTokenSigningAlgorithms" class="form-hint"></span>
-        <span asp-validation-for="Input.AllowedIdentityTokenSigningAlgorithms"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.AccessTokenLifetime" class="form-label"></label>
-        <input asp-for="Input.AccessTokenLifetime" class="form-control" />
-        <span asp-description-for="Input.AccessTokenLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.AccessTokenLifetime"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.AuthorizationCodeLifetime" class="form-label"></label>
-        <input asp-for="Input.AuthorizationCodeLifetime" class="form-control" />
-        <span asp-description-for="Input.AuthorizationCodeLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.AuthorizationCodeLifetime"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.IncludeJwtId" class="form-check-input" />
-        <label asp-for="Input.IncludeJwtId" class="form-check-label"></label>
-        <span asp-description-for="Input.IncludeJwtId" class="form-check-description"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-input" />
-        <label asp-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-label"></label>
-        <span asp-description-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-description"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.ClientClaimsPrefix" class="form-label"></label>
-        <input asp-for="Input.ClientClaimsPrefix" class="form-control" />
-        <span asp-description-for="Input.ClientClaimsPrefix" class="form-hint"></span>
-        <span asp-validation-for="Input.ClientClaimsPrefix"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.PairWiseSubjectSalt" class="form-label"></label>
-        <input asp-for="Input.PairWiseSubjectSalt" class="form-control" />
-        <span asp-description-for="Input.PairWiseSubjectSalt" class="form-hint"></span>
-        <span asp-validation-for="Input.PairWiseSubjectSalt"></span>
-    </div>
+<h4>@L["Token"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.IdentityTokenLifetime" class="form-label"></label>
+    <input asp-for="Input.IdentityTokenLifetime" class="form-control"/>
+    <span asp-description-for="Input.IdentityTokenLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.IdentityTokenLifetime"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.AllowedIdentityTokenSigningAlgorithms" class="form-label"></label>
+    <input asp-for="Input.AllowedIdentityTokenSigningAlgorithms" class="form-control"/>
+    <span asp-description-for="Input.AllowedIdentityTokenSigningAlgorithms" class="form-hint"></span>
+    <span asp-validation-for="Input.AllowedIdentityTokenSigningAlgorithms"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.AccessTokenLifetime" class="form-label"></label>
+    <input asp-for="Input.AccessTokenLifetime" class="form-control"/>
+    <span asp-description-for="Input.AccessTokenLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.AccessTokenLifetime"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.AuthorizationCodeLifetime" class="form-label"></label>
+    <input asp-for="Input.AuthorizationCodeLifetime" class="form-control"/>
+    <span asp-description-for="Input.AuthorizationCodeLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.AuthorizationCodeLifetime"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.IncludeJwtId" class="form-check-input"/>
+    <label asp-for="Input.IncludeJwtId" class="form-check-label"></label>
+    <span asp-description-for="Input.IncludeJwtId" class="form-check-description"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-input"/>
+    <label asp-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-label"></label>
+    <span asp-description-for="Input.AlwaysIncludeUserClaimsInIdToken" class="form-check-description"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.ClientClaimsPrefix" class="form-label"></label>
+    <input asp-for="Input.ClientClaimsPrefix" class="form-control"/>
+    <span asp-description-for="Input.ClientClaimsPrefix" class="form-hint"></span>
+    <span asp-validation-for="Input.ClientClaimsPrefix"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.PairWiseSubjectSalt" class="form-label"></label>
+    <input asp-for="Input.PairWiseSubjectSalt" class="form-control"/>
+    <span asp-description-for="Input.PairWiseSubjectSalt" class="form-hint"></span>
+    <span asp-validation-for="Input.PairWiseSubjectSalt"></span>
+</div>
 
-    <h4>@L["Refresh Token"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.AbsoluteRefreshTokenLifetime" class="form-label"></label>
-        <input asp-for="Input.AbsoluteRefreshTokenLifetime" class="form-control" />
-        <span asp-description-for="Input.AbsoluteRefreshTokenLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.AbsoluteRefreshTokenLifetime"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.SlidingRefreshTokenLifetime" class="form-label"></label>
-        <input asp-for="Input.SlidingRefreshTokenLifetime" class="form-control" />
-        <span asp-description-for="Input.SlidingRefreshTokenLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.SlidingRefreshTokenLifetime"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.RefreshTokenUsage" class="form-label"></label>
-        <input asp-for="Input.RefreshTokenUsage" class="form-control" />
-        <span asp-description-for="Input.RefreshTokenUsage" class="form-hint"></span>
-        <span asp-validation-for="Input.RefreshTokenUsage"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.RefreshTokenExpiration" class="form-label"></label>
-        <input asp-for="Input.RefreshTokenExpiration" class="form-control" />
-        <span asp-description-for="Input.RefreshTokenExpiration" class="form-hint"></span>
-        <span asp-validation-for="Input.RefreshTokenExpiration"></span>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-input" />
-        <label asp-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-label"></label>
-        <span asp-description-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-description"></span>
-    </div>
+<h4>@L["Refresh token"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.AbsoluteRefreshTokenLifetime" class="form-label"></label>
+    <input asp-for="Input.AbsoluteRefreshTokenLifetime" class="form-control"/>
+    <span asp-description-for="Input.AbsoluteRefreshTokenLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.AbsoluteRefreshTokenLifetime"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.SlidingRefreshTokenLifetime" class="form-label"></label>
+    <input asp-for="Input.SlidingRefreshTokenLifetime" class="form-control"/>
+    <span asp-description-for="Input.SlidingRefreshTokenLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.SlidingRefreshTokenLifetime"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.RefreshTokenUsage" class="form-label"></label>
+    <input asp-for="Input.RefreshTokenUsage" class="form-control"/>
+    <span asp-description-for="Input.RefreshTokenUsage" class="form-hint"></span>
+    <span asp-validation-for="Input.RefreshTokenUsage"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.RefreshTokenExpiration" class="form-label"></label>
+    <input asp-for="Input.RefreshTokenExpiration" class="form-control"/>
+    <span asp-description-for="Input.RefreshTokenExpiration" class="form-hint"></span>
+    <span asp-validation-for="Input.RefreshTokenExpiration"></span>
+</div>
+<div class="form-check">
+    <input asp-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-input"/>
+    <label asp-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-label"></label>
+    <span asp-description-for="Input.UpdateAccessTokenClaimsOnRefresh" class="form-check-description"></span>
+</div>
 
-    <h4>@L["Consent Screen"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.ConsentLifetime" class="form-label"></label>
-        <input asp-for="Input.ConsentLifetime" class="form-control" />
-        <span asp-description-for="Input.ConsentLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.ConsentLifetime"></span>
-    </div>
+<h4>@L["Consent screen"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.ConsentLifetime" class="form-label"></label>
+    <input asp-for="Input.ConsentLifetime" class="form-control"/>
+    <span asp-description-for="Input.ConsentLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.ConsentLifetime"></span>
+</div>
 
-    <h4>@L["Device flow"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.UserCodeType" class="form-label"></label>
-        <input asp-for="Input.UserCodeType" class="form-control" />
-        <span asp-description-for="Input.UserCodeType" class="form-hint"></span>
-        <span asp-validation-for="Input.UserCodeType"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.DeviceCodeLifetime" class="form-label"></label>
-        <input asp-for="Input.DeviceCodeLifetime" class="form-control" />
-        <span asp-description-for="Input.DeviceCodeLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.DeviceCodeLifetime"></span>
-    </div>
+<h4>@L["Device flow"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.UserCodeType" class="form-label"></label>
+    <input asp-for="Input.UserCodeType" class="form-control"/>
+    <span asp-description-for="Input.UserCodeType" class="form-hint"></span>
+    <span asp-validation-for="Input.UserCodeType"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.DeviceCodeLifetime" class="form-label"></label>
+    <input asp-for="Input.DeviceCodeLifetime" class="form-control"/>
+    <span asp-description-for="Input.DeviceCodeLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.DeviceCodeLifetime"></span>
+</div>
 
-    <h4>@L["CIBA"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.CibaLifetime" class="form-label"></label>
-        <input asp-for="Input.CibaLifetime" class="form-control" />
-        <span asp-description-for="Input.CibaLifetime" class="form-hint"></span>
-        <span asp-validation-for="Input.CibaLifetime"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.PollingInterval" class="form-label"></label>
-        <input asp-for="Input.PollingInterval" class="form-control" />
-        <span asp-description-for="Input.PollingInterval" class="form-hint"></span>
-        <span asp-validation-for="Input.PollingInterval"></span>
-    </div>
+<h4>@L["CIBA"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.CibaLifetime" class="form-label"></label>
+    <input asp-for="Input.CibaLifetime" class="form-control"/>
+    <span asp-description-for="Input.CibaLifetime" class="form-hint"></span>
+    <span asp-validation-for="Input.CibaLifetime"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.PollingInterval" class="form-label"></label>
+    <input asp-for="Input.PollingInterval" class="form-control"/>
+    <span asp-description-for="Input.PollingInterval" class="form-hint"></span>
+    <span asp-validation-for="Input.PollingInterval"></span>
+</div>
 
-    <h4>@L["DPoP"]</h4>
-    <div class="form-check">
-        <input asp-for="Input.RequireDPoP" class="form-check-input" />
-        <label asp-for="Input.RequireDPoP" class="form-check-label"></label>
-        <span asp-description-for="Input.RequireDPoP" class="form-check-description"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.DPoPValidationMode" class="form-label"></label>
-        <select asp-for="Input.DPoPValidationMode" class="form-control">
-            <option value="Custom">Custom</option>
-            <option value="Iat">Iat</option>
-            <option value="Nonce">Nonce</option>
-            <option value="IatAndNonce">IatAndNonce</option>
-        </select>
-        <span asp-description-for="Input.DPoPValidationMode" class="form-hint"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.DPoPClockSkew" class="form-label"></label>
-        <input asp-for="Input.DPoPClockSkew" class="form-control" />
-        <span asp-description-for="Input.DPoPClockSkew" class="form-hint"></span>
-        <span asp-validation-for="Input.DPoPClockSkew"></span>
-    </div>
+<h4>@L["DPoP"]</h4>
+<div class="form-check">
+    <input asp-for="Input.RequireDPoP" class="form-check-input"/>
+    <label asp-for="Input.RequireDPoP" class="form-check-label"></label>
+    <span asp-description-for="Input.RequireDPoP" class="form-check-description"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.DPoPValidationMode" class="form-label"></label>
+    <select asp-for="Input.DPoPValidationMode" class="form-control">
+        <option value="Custom">Custom</option>
+        <option value="Iat">Iat</option>
+        <option value="Nonce">Nonce</option>
+        <option value="IatAndNonce">IatAndNonce</option>
+    </select>
+    <span asp-description-for="Input.DPoPValidationMode" class="form-hint"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Input.DPoPClockSkew" class="form-label"></label>
+    <input asp-for="Input.DPoPClockSkew" class="form-control"/>
+    <span asp-description-for="Input.DPoPClockSkew" class="form-hint"></span>
+    <span asp-validation-for="Input.DPoPClockSkew"></span>
+</div>
 
-    <h4>@L["Third-Party Initiated Login"]</h4>
-    <div class="mb-3">
-        <label asp-for="Input.InitiateLoginUri" class="form-label"></label>
-        <input asp-for="Input.InitiateLoginUri" class="form-control" />
-        <span asp-description-for="Input.InitiateLoginUri" class="form-hint"></span>
-        <span asp-validation-for="Input.InitiateLoginUri"></span>
-    </div>
+<h4>@L["Third-Party Initiated Login"]</h4>
+<div class="mb-3">
+    <label asp-for="Input.InitiateLoginUri" class="form-label"></label>
+    <input asp-for="Input.InitiateLoginUri" class="form-control"/>
+    <span asp-description-for="Input.InitiateLoginUri" class="form-hint"></span>
+    <span asp-validation-for="Input.InitiateLoginUri"></span>
+</div>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
+<div asp-validation-summary="All" class="text-danger"></div>
+<button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
 </form>
 
 
@@ -213,21 +213,23 @@
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Key"]</td>
-                <td>@L["Value"]</td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>@L["Key"]</td>
+            <td>@L["Value"]</td>
+            <td></td>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var prop in Model.Data.Properties)
-            {
-                <tr>
-                    <td>@prop.Key</td>
-                    <td>@prop.Value</td>
-                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId" , value="@prop.Id">@L["Remove"]</button></td>
-                </tr>
-            }
+        @foreach (var prop in Model.Data.Properties)
+        {
+            <tr>
+                <td>@prop.Key</td>
+                <td>@prop.Value</td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-danger" name="propId" , value="@prop.Id">@L["Remove"]</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </form>
@@ -240,12 +242,12 @@
         <form method="post" asp-page-handler="Add">
             <div class="mb-3">
                 <label asp-for="AddProperty.Key"></label>
-                <input asp-for="AddProperty.Key" class="form-control" />
+                <input asp-for="AddProperty.Key" class="form-control"/>
                 <span asp-validation-for="AddProperty.Key" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="AddProperty.Value"></label>
-                <input asp-for="AddProperty.Value" class="form-control" />
+                <input asp-for="AddProperty.Value" class="form-control"/>
                 <span asp-validation-for="AddProperty.Value" class="text-danger"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>

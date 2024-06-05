@@ -33,19 +33,19 @@
 <h4>@L["Properties"]</h4>
 <table class="table">
     <thead>
-        <tr>
-            <td>@L["Key"]</td>
-            <td>@L["Value"]</td>
-        </tr>
+    <tr>
+        <td>@L["Key"]</td>
+        <td>@L["Value"]</td>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var prop in Model.Data.Properties)
-        {
-            <tr>
-                <td>@prop.Key</td>
-                <td>@prop.Value</td>
-            </tr>
-        }
+    @foreach (var prop in Model.Data.Properties)
+    {
+        <tr>
+            <td>@prop.Key</td>
+            <td>@prop.Value</td>
+        </tr>
+    }
     </tbody>
 </table>
 

@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Settings.Pages.RealName.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = L["Real-name State"];
 }
@@ -14,7 +14,7 @@
     }
 </div>
 <hr/>
-<h3>@L["Pending Requests"]</h3>
+<h3>@L["Pending requests"]</h3>
 <div class="list-group list-group-flush">
     @foreach (var request in Model.Requests)
     {

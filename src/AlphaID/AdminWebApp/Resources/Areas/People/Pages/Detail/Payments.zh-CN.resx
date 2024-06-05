@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountName" xml:space="preserve">
+  <data name="Account name" xml:space="preserve">
     <value>账户名称</value>
   </data>
-  <data name="AccountNumber" xml:space="preserve">
+  <data name="Account number" xml:space="preserve">
     <value>账号</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>添加</value>
   </data>
-  <data name="BankName" xml:space="preserve">
+  <data name="Bank name" xml:space="preserve">
     <value>银行名称</value>
   </data>
   <data name="Operations" xml:space="preserve">

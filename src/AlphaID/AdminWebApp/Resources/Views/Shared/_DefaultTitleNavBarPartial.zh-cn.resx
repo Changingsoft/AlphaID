@@ -15,7 +15,7 @@
   <data name="Home" xml:space="preserve">
     <value>首页</value>
   </data>
-  <data name="Management Center" xml:space="preserve">
+  <data name="Management center" xml:space="preserve">
 		<value>管理中心</value>
 	</data>
   <data name="OpenID Connect" xml:space="preserve">
@@ -27,7 +27,7 @@
   <data name="People" xml:space="preserve">
     <value>自然人</value>
   </data>
-  <data name="Real Name" xml:space="preserve">
+  <data name="Real name" xml:space="preserve">
     <value>实名</value>
   </data>
   <data name="System Settings" xml:space="preserve">

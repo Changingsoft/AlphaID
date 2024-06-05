@@ -103,9 +103,9 @@
   <data name="For" xml:space="preserve">
 		<value>For</value>
 	</data>
-  <data name="Real-name Authentications" xml:space="preserve">
-		<value>Real-name Authentications</value>
-	</data>
+  <data name="Real-name authentications" xml:space="preserve">
+	  <value>Real-name authentications</value>
+  </data>
   <data name="Validated at" xml:space="preserve">
 		<value>Validated at</value>
 	</data>

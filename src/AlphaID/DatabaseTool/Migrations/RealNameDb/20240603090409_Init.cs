@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -20,12 +21,12 @@ namespace DatabaseTool.Migrations.RealNameDb
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Sex = table.Column<string>(type: "varchar(7)", nullable: true),
                     Ethnicity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CardNumber = table.Column<string>(type: "varchar(18)", unicode: false, maxLength: 18, nullable: true),
                     Issuer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    IssueDate = table.Column<DateTime>(type: "date", nullable: true),
-                    Expires = table.Column<DateTime>(type: "date", nullable: true)
+                    IssueDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    Expires = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,24 +42,22 @@ namespace DatabaseTool.Migrations.RealNameDb
                     PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     WhenCommitted = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Accepted = table.Column<bool>(type: "bit", nullable: true),
-                    Auditor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AcceptedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Auditor = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    AuditTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Discriminator = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Sex = table.Column<int>(type: "int", nullable: true),
+                    Ethnicity = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    CardNumber = table.Column<string>(type: "varchar(18)", unicode: false, maxLength: 18, nullable: true),
+                    Issuer = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    IssueDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    Expires = table.Column<DateOnly>(type: "date", nullable: true),
                     PersonalSide_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     PersonalSide_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    PersonalSide_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     IssuerSide_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
-                    IssuerSide_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    IssuerSide_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Expires = table.Column<DateTime>(type: "date", nullable: true),
-                    IssueDate = table.Column<DateTime>(type: "date", nullable: true),
-                    Issuer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ethnicity = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    Sex = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    IssuerSide_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,9 +96,9 @@ namespace DatabaseTool.Migrations.RealNameDb
                     PersonName_FullName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     PersonName_SearchHint = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     ValidatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ValidatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ValidatedBy = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ExpiresAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Remark = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Remarks = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Applied = table.Column<bool>(type: "bit", nullable: false),
                     Discriminator = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     DocumentId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)

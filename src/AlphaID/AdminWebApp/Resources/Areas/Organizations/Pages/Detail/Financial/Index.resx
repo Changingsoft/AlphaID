@@ -97,9 +97,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account ID" xml:space="preserve">
-		<value>Account ID</value>
-	</data>
+  <data name="Account Id" xml:space="preserve">
+	  <value>Account Id</value>
+  </data>
   <data name="Add account" xml:space="preserve">
 		<value>Add account</value>
 	</data>

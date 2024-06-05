@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace AuthCenterWebApp.Tests.Endpoints;
 
@@ -9,12 +9,12 @@ public class AuthorizeEndpointTest(AuthCenterWebAppFactory factory)
     [Fact]
     public async Task GotoAuthenticationPage()
     {
-        var client = factory.CreateClient(new WebApplicationFactoryClientOptions()
+        HttpClient client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
-            AllowAutoRedirect = false,
+            AllowAutoRedirect = false
         });
 
-        var response = await client.GetAsync("/connect/authorize");
+        HttpResponseMessage response = await client.GetAsync("/connect/authorize");
         Assert.Equal(HttpStatusCode.Found, response.StatusCode);
     }
 }

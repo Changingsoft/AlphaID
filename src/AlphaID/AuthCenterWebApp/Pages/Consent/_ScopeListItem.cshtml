@@ -1,4 +1,4 @@
-@model AuthCenterWebApp.Pages.Consent.ScopeViewModel
+@model ScopeViewModel
 
 <li class="list-group-item">
     <label>
@@ -8,12 +8,12 @@
                id="scopes_@Model.Value"
                value="@Model.Value"
                checked="@Model.Checked"
-               disabled="@Model.Required" />
+               disabled="@Model.Required"/>
         @if (Model.Required)
         {
             <input type="hidden"
-               name="Input.ScopesConsented"
-               value="@Model.Value" />
+                   name="Input.ScopesConsented"
+                   value="@Model.Value"/>
         }
         <strong>@Model.DisplayName</strong>
         @if (Model.Emphasize)
@@ -23,7 +23,9 @@
     </label>
     @if (Model.Required)
     {
-        <span><em>@L["(Required)"]</em></span>
+        <span>
+            <em>@L["(Required)"]</em>
+        </span>
     }
     @if (Model.Description != null)
     {

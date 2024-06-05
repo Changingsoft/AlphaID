@@ -1,15 +1,18 @@
-﻿using AngleSharp.Html.Dom;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
+using AngleSharp.Io;
+using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace IntegrationTestUtilities.Helpers;
 
 /// <summary>
-/// Extensions for HttpClient.
+///     Extensions for HttpClient.
 /// </summary>
 public static class HttpClientExtensions
 {
     /// <summary>
-    /// Send Post form data.
+    ///     Send Post form data.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="form"></param>
@@ -24,7 +27,7 @@ public static class HttpClientExtensions
     }
 
     /// <summary>
-    /// Send post form data.
+    ///     Send post form data.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="form"></param>
@@ -35,14 +38,14 @@ public static class HttpClientExtensions
         IHtmlFormElement form,
         IEnumerable<KeyValuePair<string, string>> formValues)
     {
-        var submitElement = Assert.Single(form.QuerySelectorAll("[type=submit]"));
+        IElement submitElement = Assert.Single(form.QuerySelectorAll("[type=submit]"));
         var submitButton = Assert.IsAssignableFrom<IHtmlElement>(submitElement);
 
         return client.SendAsync(form, submitButton, formValues);
     }
 
     /// <summary>
-    /// Send post form data.
+    ///     Send post form data.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="form"></param>
@@ -56,25 +59,26 @@ public static class HttpClientExtensions
         IHtmlElement submitButton,
         IEnumerable<KeyValuePair<string, string>> formValues)
     {
-        foreach (var kvp in formValues)
+        foreach (KeyValuePair<string, string> kvp in formValues)
         {
             var element = Assert.IsAssignableFrom<IHtmlInputElement>(form[kvp.Key]);
             element.Value = kvp.Value;
         }
 
-        var submit = form.GetSubmission(submitButton);
-        var target = (Uri)submit.Target;
+        DocumentRequest? submit = form.GetSubmission(submitButton);
+        var target = (Uri)submit?.Target;
         if (submitButton.HasAttribute("formaction"))
         {
-            var formAction = submitButton.GetAttribute("formaction")!;
+            string formAction = submitButton.GetAttribute("formaction")!;
             target = new Uri(formAction, UriKind.Relative);
         }
+
         var submission = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
         {
             Content = new StreamContent(submit.Body)
         };
 
-        foreach (var header in submit.Headers)
+        foreach (KeyValuePair<string, string> header in submit.Headers)
         {
             submission.Headers.TryAddWithoutValidation(header.Key, header.Value);
             submission.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);

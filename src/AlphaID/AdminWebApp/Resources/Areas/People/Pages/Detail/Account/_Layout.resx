@@ -103,12 +103,12 @@
   <data name="Advanced" xml:space="preserve">
 		<value>Advanced</value>
 	</data>
-  <data name="Directory Accounts" xml:space="preserve">
-		<value>Directory Accounts</value>
-	</data>
-  <data name="External Logins" xml:space="preserve">
-		<value>External Logins</value>
-	</data>
+  <data name="Directory accounts" xml:space="preserve">
+	  <value>Directory accounts</value>
+  </data>
+  <data name="External logins" xml:space="preserve">
+	  <value>External logins</value>
+  </data>
   <data name="Overview" xml:space="preserve">
 		<value>Overview</value>
 	</data>

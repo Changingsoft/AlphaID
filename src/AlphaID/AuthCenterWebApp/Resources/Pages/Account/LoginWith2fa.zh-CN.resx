@@ -129,7 +129,7 @@
   <data name="Sign in" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="Two-fact authentication" xml:space="preserve">
+  <data name="Two-factor authentication" xml:space="preserve">
     <value>双因子身份验证</value>
   </data>
   <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve">

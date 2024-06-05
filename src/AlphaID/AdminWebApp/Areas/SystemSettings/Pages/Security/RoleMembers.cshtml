@@ -3,9 +3,11 @@
 @{
     ViewBag.Title = L["Role Members"];
 }
+
 @section head{
-    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css"/>
 }
+
 <h3>@L["Role Members"]</h3>
 
 <div class="row">
@@ -13,7 +15,9 @@
         <ul>
             @foreach (var role in RoleConstants.Roles)
             {
-                <li><a asp-route-role="@role.Name">@role.DisplayName</a></li>
+                <li>
+                    <a asp-route-role="@role.Name">@role.DisplayName</a>
+                </li>
             }
         </ul>
     </div>
@@ -27,7 +31,9 @@
                     <ul>
                         @foreach (var member in Model.RoleMembers)
                         {
-                            <li>@member.UserId <button type="submit" asp-page-handler="RemoveMember" asp-route-personId="@member.UserId" class="btn btn-outline-danger btn-sm" onclick="return confirm('确实要移除吗？');">移除</button></li>
+                            <li>
+                                @member.UserId <button type="submit" asp-page-handler="RemoveMember" asp-route-personId="@member.UserId" class="btn btn-outline-danger btn-sm" onclick="return confirm('确实要移除吗？');">移除</button>
+                            </li>
                         }
                     </ul>
                 </form>
@@ -36,6 +42,7 @@
             {
                 <p>@L["No members"]</p>
             }
+
             <button type="button" data-bs-toggle="modal" data-bs-target="#memberEditor" class="btn btn-primary">Add member</button>
         }
         else
@@ -44,6 +51,7 @@
         }
     </div>
 </div>
+
 @section PageComponents
 {
     <div class="modal fade" id="memberEditor" tabindex="-1">
@@ -54,13 +62,13 @@
                     <form method="post" asp-page-handler="AddMember" asp-route-role="@Model.Role">
                         <div class="mb-3">
                             <label for="personSearch" class="form-label">Search person</label>
-                            <input id="personSearch" name="personSearch" class="form-control" />
+                            <input id="personSearch" name="personSearch" class="form-control"/>
                         </div>
                         <div class="mb-3">
                             <label asp-for="Input.UserName" class="form-label"></label>
-                            <input asp-for="Input.UserName" class="form-control" readonly />
+                            <input asp-for="Input.UserName" class="form-control" readonly/>
                         </div>
-                        <input asp-for="Input.PhoneticSearchHint" type="hidden" />
+                        <input asp-for="Input.PhoneticSearchHint" type="hidden"/>
                         <button type="submit" class="btn btn-primary">@L["Add"]</button>
                         <button type="reset" class="btn btn-secondary">@L["Clear"]</button>
                     </form>
@@ -72,8 +80,8 @@
 }
 
 @section Scripts
-    {
-        <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+{
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
             $("[name='personSearch']").autocomplete({
@@ -99,4 +107,4 @@
 
     </script>
 
-                }
+}

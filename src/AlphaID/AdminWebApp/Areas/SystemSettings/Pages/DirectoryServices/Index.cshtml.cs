@@ -8,6 +8,6 @@ public class IndexModel(DirectoryServiceManager directoryServiceManager) : PageM
 
     public void OnGet()
     {
-        this.DirectoryServices = directoryServiceManager.Services;
+        DirectoryServices = directoryServiceManager.Services;
     }
 }

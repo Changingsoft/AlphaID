@@ -5,7 +5,7 @@
 }
 <h2>@ViewBag.Title</h2>
 
-@if(!string.IsNullOrEmpty(Model.OperationMessage))
+@if (!string.IsNullOrEmpty(Model.OperationMessage))
 {
     <div class="alert alert-info">
         @Model.OperationMessage
@@ -15,24 +15,24 @@
 <p>@L["Current phone number"]</p>
 <div class="form-group">
     <label asp-for="Mobile" class="form-label"></label>
-    <input asp-for="Mobile" class="form-control" disabled />
+    <input asp-for="Mobile" class="form-control" disabled/>
 </div>
 
 
 <form method="post">
     <div class="form-group">
         <label asp-for="NewMobile" class="form-label"></label>
-        <input asp-for="NewMobile" class="form-control" />
+        <input asp-for="NewMobile" class="form-control"/>
         <span asp-validation-for="NewMobile" class="text-danger"></span>
     </div>
     <button class="btn btn-secondary" type="submit" asp-page-handler="SendVerificationCode" formnovalidate>@L["Send code"]</button>
-    @if(Model.VerificationCodeSent)
+    @if (Model.VerificationCodeSent)
     {
         <span>@L["Code has been sent"]</span>
     }
     <div class="form-group">
         <label asp-for="VerificationCode" class="form-label"></label>
-        <input asp-for="VerificationCode" class="form-control" />
+        <input asp-for="VerificationCode" class="form-control"/>
         <span asp-validation-for="VerificationCode" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="">@L["Update phone number"]</button>

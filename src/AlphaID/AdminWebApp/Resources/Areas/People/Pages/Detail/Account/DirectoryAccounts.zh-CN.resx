@@ -123,13 +123,13 @@
   <data name="Create new account" xml:space="preserve">
     <value>创建新账号</value>
   </data>
-  <data name="Directory Accounts" xml:space="preserve">
+  <data name="Directory accounts" xml:space="preserve">
     <value>目录账户</value>
   </data>
-  <data name="Logon ID" xml:space="preserve">
+  <data name="Logon Id" xml:space="preserve">
     <value>登录ID</value>
   </data>
-  <data name="Person ID" xml:space="preserve">
+  <data name="Person Id" xml:space="preserve">
     <value>个人ID</value>
   </data>
 </root>

@@ -7,10 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.6" />
 		<PackageReference Include="MinVer" Version="5.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,8 +18,8 @@
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.0" />
-		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.16.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.1" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.17.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,6 +33,9 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\IdentityProviders\New.zh-cn.resx">
+	    <DependentUpon>New.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\IdentityResources\New.zh-cn.resx">
 	    <DependentUpon>New.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\People\Pages\Detail\Membership\Of.zh-cn.resx">

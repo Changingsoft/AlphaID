@@ -10,7 +10,7 @@
         {
             <li class="list-group-item">
                 @origin.Origin
-                <button type="submit" class="btn btn-sm btn-danger" name="originId" value="@origin.Id" onclick="return confirm('Are you sure remove this item?');">@L["Remove"]</button>
+                <button type="submit" class="btn btn-sm btn-danger" name="originId" value="@origin.Id" onclick="return confirm('Delete origin?');">@SL["Delete"]</button>
             </li>
         }
     </ul>
@@ -22,7 +22,7 @@
             <h4>@L["Add new origin"]</h4>
             <div class="mb-3">
                 <label asp-for="NewOrigin" class="form-label"></label>
-                <input asp-for="NewOrigin" class="form-control" />
+                <input asp-for="NewOrigin" class="form-control"/>
                 <span asp-validation-for="NewOrigin" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">@L["Add"]</button>

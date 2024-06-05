@@ -97,9 +97,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Application Access" xml:space="preserve">
-		<value>Application Access</value>
-	</data>
+  <data name="Application access" xml:space="preserve">
+	  <value>Application access</value>
+  </data>
   <data name="Description" xml:space="preserve">
 		<value>Description</value>
 	</data>
@@ -109,18 +109,18 @@
   <data name="No, Do Not Allow" xml:space="preserve">
 		<value>No, Do Not Allow</value>
 	</data>
-  <data name="Personal Information" xml:space="preserve">
-		<value>Personal Information</value>
-	</data>
+  <data name="Personal information" xml:space="preserve">
+	  <value>Personal information</value>
+  </data>
   <data name="Please confirm that the authorization request matches the code:" xml:space="preserve">
 		<value>Please confirm that the authorization request matches the code:</value>
 	</data>
   <data name="Please enter the code displayed on your device." xml:space="preserve">
 		<value>Please enter the code displayed on your device.</value>
 	</data>
-  <data name="Remember My Decision" xml:space="preserve">
-		<value>Remember My Decision</value>
-	</data>
+  <data name="Remember my decision" xml:space="preserve">
+	  <value>Remember my decision</value>
+  </data>
   <data name="Submit" xml:space="preserve">
 		<value>Submit</value>
 	</data>

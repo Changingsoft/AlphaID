@@ -1,6 +1,66 @@
 ﻿@page
-@model AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New.PublicModel
+@model PublicModel
 @{
-    ViewBag.Title = L["Create public application client"];
+    ViewBag.Title = L["Create public client"];
 }
 <h2>@ViewBag.Title</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="ClientId"></label>
+        <input asp-for="ClientId" class="form-control" />
+        <span asp-description-for="ClientId"></span>
+        <span asp-validation-for="ClientId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ClientName"></label>
+        <input asp-for="ClientName" class="form-control" />
+        <span asp-description-for="ClientName"></span>
+        <span asp-validation-for="ClientName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SigninCallbackUri"></label>
+        <input asp-for="SigninCallbackUri" class="form-control" />
+        <span asp-description-for="SigninCallbackUri"></span>
+        <span asp-validation-for="SigninCallbackUri" class="text-danger"></span>
+    </div>
+    <h3>Grant types</h3>
+    <ul class="list-group">
+        @for (var i = 0; i < Model.AllowedGrantTypes.Count; i++)
+        {
+            <li class="list-group-item">
+                @* ReSharper disable AccessToModifiedClosure *@
+                <label asp-for="AllowedGrantTypes[i].Selected" class="form-check-label">
+                    <input asp-for="AllowedGrantTypes[i].Selected" class="form-check-input">
+                    <span>@Model.AllowedGrantTypes[i].Value (@Model.AllowedGrantTypes[i].Text)</span>
+                    <input asp-for="AllowedGrantTypes[i].Text" type="hidden">
+                    <input asp-for="AllowedGrantTypes[i].Value" type="hidden">
+                </label>
+                @* ReSharper restateStore AccessToModifiedClosure *@
+            </li>
+        }
+    </ul>
+    <h3>Scopes</h3>
+    <ul class="list-group">
+        @for (var i = 0; i < Model.ScopeItems.Count; i++)
+        {
+            <li class="list-group-item">
+                @* ReSharper disable AccessToModifiedClosure *@
+                <label asp-for="ScopeItems[i].Selected" class="form-check-label">
+                    <input asp-for="ScopeItems[i].Selected" class="form-check-input" disabled="@Model.ScopeItems[i].Disabled">
+                    <span>@Model.ScopeItems[i].Value (@Model.ScopeItems[i].Text)</span>
+                    <input asp-for="ScopeItems[i].Text" type="hidden">
+                    <input asp-for="ScopeItems[i].Value" type="hidden">
+                    <input asp-for="ScopeItems[i].Disabled" type="hidden">
+                </label>
+                @* ReSharper restateStore AccessToModifiedClosure *@
+            </li>
+        }
+    </ul>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary">@SL["Create"]</button>
+</form>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

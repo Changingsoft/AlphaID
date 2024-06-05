@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="API Grants" xml:space="preserve">
+  <data name="API grants" xml:space="preserve">
     <value>API授权</value>
   </data>
   <data name="Below is the list of applications you have given permission to and the resources they have access to." xml:space="preserve">
@@ -135,7 +135,7 @@
   <data name="Expires" xml:space="preserve">
     <value>有效期至</value>
   </data>
-  <data name="Identity Grants" xml:space="preserve">
+  <data name="Identity grants" xml:space="preserve">
     <value>标识授权</value>
   </data>
   <data name="Revoke Access" xml:space="preserve">

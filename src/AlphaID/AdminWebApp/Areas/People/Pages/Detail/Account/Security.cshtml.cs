@@ -1,12 +1,14 @@
-using IdSubjects;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
+using IdSubjects;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
 public class SecurityModel(NaturalPersonManager manager) : PageModel
 {
+    public string OperationMessage = default!;
+
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = default!;
 
@@ -15,35 +17,33 @@ public class SecurityModel(NaturalPersonManager manager) : PageModel
 
     public NaturalPerson Data { get; set; } = default!;
 
-    public string OperationMessage = default!;
-
     public async Task<IActionResult> OnGetAsync()
     {
-        var person = await manager.FindByIdAsync(this.Anchor);
-        if (person == null) { return this.NotFound(); }
+        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
+        if (person == null) return NotFound();
 
-        this.Data = person;
-        this.Input = new InputModel
+        Data = person;
+        Input = new InputModel
         {
-            TwoFactorEnabled = this.Data.TwoFactorEnabled,
-            LockoutEnabled = this.Data.LockoutEnabled,
+            TwoFactorEnabled = Data.TwoFactorEnabled,
+            LockoutEnabled = Data.LockoutEnabled
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var person = await manager.FindByIdAsync(this.Anchor);
-        if (person == null) { return this.NotFound(); }
+        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
+        if (person == null) return NotFound();
 
-        this.Data = person;
+        Data = person;
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await manager.SetTwoFactorEnabledAsync(this.Data, this.Input.TwoFactorEnabled);
-        await manager.SetLockoutEnabledAsync(this.Data, this.Input.LockoutEnabled);
+        await manager.SetTwoFactorEnabledAsync(Data, Input.TwoFactorEnabled);
+        await manager.SetLockoutEnabledAsync(Data, Input.LockoutEnabled);
         trans.Complete();
-        this.OperationMessage = "已更新";
-        return this.Page();
+        OperationMessage = "已更新";
+        return Page();
     }
 
     public class InputModel
@@ -53,7 +53,5 @@ public class SecurityModel(NaturalPersonManager manager) : PageModel
 
         [Display(Name = "Lockout enabled")]
         public bool LockoutEnabled { get; set; }
-
-
     }
 }

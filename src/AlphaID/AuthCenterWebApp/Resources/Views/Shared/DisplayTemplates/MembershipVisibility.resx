@@ -102,8 +102,8 @@
 		<value>Private</value>
 		<comment>Private</comment>
 	</data>
-	<data name="AuthenticatedUser" xml:space="preserve">
-		<value>AuthenticatedUser</value>
+	<data name="Authenticated user" xml:space="preserve">
+		<value>Authenticated user</value>
 		<comment>AuthenticatedUser</comment>
 	</data>
 	<data name="Public" xml:space="preserve">

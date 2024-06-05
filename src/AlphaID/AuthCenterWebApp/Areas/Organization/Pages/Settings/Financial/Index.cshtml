@@ -16,33 +16,33 @@
 <form method="post">
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Name"]</td>
-                <td>@L["Account ID"]</td>
-                <td>@L["Bank"]</td>
-                <td>@L["Usage"]</td>
-                <td>@L["Default"]</td>
-                <td>@L["Operations"]</td>
-            </tr>
+        <tr>
+            <td>@L["Name"]</td>
+            <td>@L["Account Id"]</td>
+            <td>@L["Bank"]</td>
+            <td>@L["Usage"]</td>
+            <td>@L["Default"]</td>
+            <td>@L["Operations"]</td>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var bankAccount in Model.BankAccounts)
-            {
-                <tr>
-                    <td>@bankAccount.AccountName</td>
-                    <td>@bankAccount.AccountNumber</td>
-                    <td>@bankAccount.BankName</td>
-                    <td>@bankAccount.Usage</td>
-                    <td>@bankAccount.Default</td>
-                    <td>
-                        @if (!bankAccount.Default)
-                        {
-                            <button type="submit" asp-page-handler="SetDefault" name="accountNumber" value="@bankAccount.AccountNumber" class="btn btn-sm">@L["Set default"]</button>
-                        }
-                        <button type="submit" asp-page-handler="Remove" name="accountNumber" value="@bankAccount.AccountNumber" class="btn btn-sm btn-danger" onclick="return confirm('@(L["Are you sure you want to remove this bank account info from this organization?"])');">@L["Remove"]</button>
-                    </td>
-                </tr>
-            }
+        @foreach (var bankAccount in Model.BankAccounts)
+        {
+            <tr>
+                <td>@bankAccount.AccountName</td>
+                <td>@bankAccount.AccountNumber</td>
+                <td>@bankAccount.BankName</td>
+                <td>@bankAccount.Usage</td>
+                <td>@bankAccount.Default</td>
+                <td>
+                    @if (!bankAccount.Default)
+                    {
+                        <button type="submit" asp-page-handler="SetDefault" name="accountNumber" value="@bankAccount.AccountNumber" class="btn btn-sm">@L["Set default"]</button>
+                    }
+                    <button type="submit" asp-page-handler="Remove" name="accountNumber" value="@bankAccount.AccountNumber" class="btn btn-sm btn-danger" onclick="return confirm('@(L["Are you sure you want to remove this bank account info from this organization?"])');">@L["Remove"]</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </form>

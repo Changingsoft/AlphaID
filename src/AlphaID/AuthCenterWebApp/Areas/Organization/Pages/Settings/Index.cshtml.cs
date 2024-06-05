@@ -1,69 +1,67 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
-namespace AuthCenterWebApp.Areas.Organization.Pages.Settings
+namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
+
+public class IndexModel(OrganizationManager manager) : PageModel
 {
-    public class IndexModel(OrganizationManager manager) : PageModel
+    [BindProperty]
+    public InputModel Input { get; set; } = default!;
+
+    public IdOperationResult OperationResult { get; set; } = default!;
+
+    public IActionResult OnGet(string anchor)
     {
-        [BindProperty]
-        public InputModel Input { get; set; } = default!;
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who", new { anchor });
+        if (organization == null)
+            return NotFound();
 
-        public IdOperationResult OperationResult { get; set; } = default!;
-
-        public IActionResult OnGet(string anchor)
+        Input = new InputModel
         {
-            if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
-            if (organization == null)
-                return this.NotFound();
+            Description = organization.Description,
+            Domicile = organization.Domicile,
+            Contact = organization.Contact,
+            Representative = organization.Representative
+        };
 
-            this.Input = new InputModel()
-            {
-                Description = organization.Description,
-                Domicile = organization.Domicile,
-                Contact = organization.Contact,
-                Representative = organization.Representative,
-            };
+        return Page();
+    }
 
-            return this.Page();
-        }
+    public async Task<IActionResult> OnPostAsync(string anchor)
+    {
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who", new { anchor });
+        if (organization == null)
+            return NotFound();
 
-        public async Task<IActionResult> OnPostAsync(string anchor)
-        {
-            if (!manager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who", new { anchor });
-            if (organization == null)
-                return this.NotFound();
+        if (!ModelState.IsValid)
+            return Page();
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+        organization.Description = Input.Description;
+        organization.Domicile = Input.Domicile;
+        organization.Contact = Input.Contact;
+        organization.Representative = Input.Representative;
 
-            organization.Description = this.Input.Description;
-            organization.Domicile = this.Input.Domicile;
-            organization.Contact = this.Input.Contact;
-            organization.Representative = this.Input.Representative;
+        await manager.UpdateAsync(organization);
+        OperationResult = IdOperationResult.Success;
+        return Page();
+    }
 
-            await manager.UpdateAsync(organization);
-            this.OperationResult = IdOperationResult.Success;
-            return this.Page();
-        }
+    public class InputModel
+    {
+        [Display(Name = "Description")]
+        public string? Description { get; set; }
 
-        public class InputModel
-        {
-            [Display(Name = "Description")]
-            public string? Description { get; set; }
+        [Display(Name = "Domicile")]
+        public string? Domicile { get; set; }
 
-            [Display(Name = "Domicile")]
-            public string? Domicile { get; set; }
+        [Display(Name = "Contact")]
+        public string? Contact { get; set; }
 
-            [Display(Name = "Contact")]
-            public string? Contact { get; set; }
-
-            [Display(Name = "Representative")]
-            public string? Representative { get; set; }
-
-        }
+        [Display(Name = "Representative")]
+        public string? Representative { get; set; }
     }
 }

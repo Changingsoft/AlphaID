@@ -153,9 +153,9 @@
 		<value>You have {0} codes left.</value>
 		<comment>You have {0} codes left.</comment>
 	</data>
-  <data name="You must accept the policy before you can enable two factor authentication." xml:space="preserve">
-		<value>You must accept the policy before you can enable two factor authentication.</value>
-		<comment>You must accept the policy before you can enable two factor authentication.</comment>
+  <data name="You must accept the policy before you can enable two-factor authentication." xml:space="preserve">
+		<value>You must accept the policy before you can enable two-factor authentication.</value>
+		<comment>You must accept the policy before you can enable two-factor authentication.</comment>
 	</data>
   <data name="You must generate a new set of recovery codes before you can log in with a recovery code." xml:space="preserve">
 		<value>You must generate a new set of recovery codes before you can log in with a recovery code.</value>

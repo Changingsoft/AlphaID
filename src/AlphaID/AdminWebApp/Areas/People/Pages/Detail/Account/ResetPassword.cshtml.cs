@@ -1,16 +1,23 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace AdminWebApp.Areas.People.Pages.Detail.Account;
 
-public class ResetPasswordModel(NaturalPersonManager userManager, IShortMessageService shortMessageService, IOptions<IdentityOptions> options) : PageModel
+public class ResetPasswordModel(
+    NaturalPersonManager userManager,
+    IShortMessageService shortMessageService,
+    IOptions<IdentityOptions> options) : PageModel
 {
-    private readonly IdentityOptions identityOptions = options.Value;
+    private const string UpperCharset = @"ABCDEFGHJKLMNPQRSTUVWXYZ";
+    private const string LowerCharset = @"abcdefghijkmnopqrstuvwxyz";
+    private const string NumCharset = @"123456789";
+    private const string SymbolCharset = @"!@#$%^&*()_-+={}|[]\:;<>?,./";
+    private readonly IdentityOptions _identityOptions = options.Value;
 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
@@ -22,123 +29,110 @@ public class ResetPasswordModel(NaturalPersonManager userManager, IShortMessageS
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
-        if (person == null)
-        {
-            return this.NotFound();
-        }
-        this.Person = person;
-        this.Input = new();
-        return this.Page();
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        if (person == null) return NotFound();
+        Person = person;
+        Input = new InputModel();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAutoReset(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Person = person;
+        Person = person;
 
-        if (string.IsNullOrEmpty(this.Person.PhoneNumber))
+        if (string.IsNullOrEmpty(Person.PhoneNumber))
         {
-            this.OperationResult = "无法通过短信重置密码。因为用户没有留下移动电话号码。";
-            return this.Page();
+            OperationResult = "无法通过短信重置密码。因为用户没有留下移动电话号码。";
+            return Page();
         }
 
-        var password = this.GeneratePassword();
-        var result = await userManager.AdminResetPasswordAsync(this.Person, password, true, true);
+        string password = GeneratePassword();
+        IdentityResult result = await userManager.AdminResetPasswordAsync(Person, password, true, true);
         if (result.Succeeded)
         {
-            await shortMessageService.SendAsync(this.Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
-            this.OperationResult = "密码已重置并告知用户。";
-            return this.Page();
+            await shortMessageService.SendAsync(Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
+            OperationResult = "密码已重置并告知用户。";
+            return Page();
         }
-        else
-        {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error.Description);
-            }
-            return this.Page();
-        }
+
+        foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostManualReset(string anchor)
     {
-        var person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
+            return NotFound();
+        Person = person;
 
-        var result = await userManager.AdminResetPasswordAsync(this.Person, this.Input.NewPassword, this.Input.UserMustChangePasswordOnNextLogin, this.Input.UnlockUser);
+        IdentityResult result = await userManager.AdminResetPasswordAsync(Person, Input.NewPassword,
+            Input.UserMustChangePasswordOnNextLogin, Input.UnlockUser);
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error.Description);
-            }
-            return this.Page();
+            foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
+            return Page();
         }
 
 
-        this.OperationResult = "操作已成功。";
-        return this.Page();
+        OperationResult = "操作已成功。";
+        return Page();
     }
 
     private string GeneratePassword()
     {
         var sb = new StringBuilder();
         var charset = new StringBuilder();
-        if (this.identityOptions.Password.RequireLowercase)
+        if (_identityOptions.Password.RequireLowercase)
         {
             sb.Append(LowerCharset[Random.Shared.Next(LowerCharset.Length)]);
             charset.Append(LowerCharset);
         }
-        if (this.identityOptions.Password.RequireUppercase)
+
+        if (_identityOptions.Password.RequireUppercase)
         {
             sb.Append(UpperCharset[Random.Shared.Next(UpperCharset.Length)]);
             charset.Append(UpperCharset);
         }
-        if (this.identityOptions.Password.RequireDigit)
+
+        if (_identityOptions.Password.RequireDigit)
         {
             sb.Append(NumCharset[Random.Shared.Next(NumCharset.Length)]);
             charset.Append(NumCharset);
         }
-        if (this.identityOptions.Password.RequireNonAlphanumeric)
+
+        if (_identityOptions.Password.RequireNonAlphanumeric)
         {
             sb.Append(SymbolCharset[Random.Shared.Next(SymbolCharset.Length)]);
             charset.Append(SymbolCharset);
         }
+
         //补全长度
-        while (sb.Length < this.identityOptions.Password.RequiredLength)
-        {
+        while (sb.Length < _identityOptions.Password.RequiredLength)
             sb.Append(charset[Random.Shared.Next(charset.Length)]);
-        }
         //洗牌
         Shuffle(sb);
         return sb.ToString();
     }
 
     /// <summary>
-    /// 洗牌
+    ///     洗牌
     /// </summary>
     /// <param name="sb"></param>
     /// <returns></returns>
     private static void Shuffle(StringBuilder sb)
     {
-        for (int i = 0; i < sb.Length - 1; i++)
+        for (var i = 0; i < sb.Length - 1; i++)
         {
-            var p = i + 1 + Random.Shared.Next(sb.Length - i - 1);
+            int p = i + 1 + Random.Shared.Next(sb.Length - i - 1);
             //swap
             (sb[p], sb[i]) = (sb[i], sb[p]);
         }
     }
-
-    private const string UpperCharset = @"ABCDEFGHJKLMNPQRSTUVWXYZ";
-    private const string LowerCharset = @"abcdefghijkmnopqrstuvwxyz";
-    private const string NumCharset = @"123456789";
-    private const string SymbolCharset = @"!@#$%^&*()_-+={}|[]\:;<>?,./";
 
     public class InputModel
     {

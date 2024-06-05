@@ -1,5 +1,5 @@
 @page
-@model AuthCenterWebApp.Pages.Account.Logout.Index
+@model Index
 
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -11,8 +11,8 @@
             </div>
 
             <form asp-page="/Account/Logout/Index">
-                <input type="hidden" asp-for="LogoutId" />
-                <input type="hidden" asp-for="ReturnUrl" />
+                <input type="hidden" asp-for="LogoutId"/>
+                <input type="hidden" asp-for="ReturnUrl"/>
 
                 <div class="form-group">
                     <button class="btn btn-primary">@L["Yes"]</button>

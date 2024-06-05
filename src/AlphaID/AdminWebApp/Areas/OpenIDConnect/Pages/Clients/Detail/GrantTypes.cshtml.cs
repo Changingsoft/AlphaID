@@ -4,12 +4,13 @@ using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Duende.IdentityServer.EntityFramework.Entities.Client Data { get; set; } = default!;
+    public Client Data { get; set; } = default!;
 
     [BindProperty]
     public List<SelectListItem> AllowedGrantTypes { get; set; } = default!;
@@ -18,24 +19,25 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
+        Client? data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        this.AllowedGrantTypes = GrantTypes.Select(g => new SelectListItem(g.DisplayName, g.Name, this.Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
+        AllowedGrantTypes = ClientConstants.GrantTypes.Select(g =>
+            new SelectListItem(g.DisplayName, g.Name, Data.AllowedGrantTypes.Any(p => p.GrantType == g.Name))).ToList();
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
+        Client? data = dbContext.Clients.Include(p => p.AllowedGrantTypes).FirstOrDefault(p => p.Id == anchor);
         if (data == null)
-            return this.NotFound();
-        this.Data = data;
+            return NotFound();
+        Data = data;
 
-        var selectedGrantTypes = this.AllowedGrantTypes.Where(p => p.Selected).Select(p => p.Value);
+        IEnumerable<string> selectedGrantTypes = AllowedGrantTypes.Where(p => p.Selected).Select(p => p.Value);
         try
         {
             //Check any grant type combination is available.
@@ -43,53 +45,32 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
-            return this.Page();
+            ModelState.AddModelError("", ex.Message);
+            return Page();
         }
 
-        foreach (var grantType in this.AllowedGrantTypes)
-        {
+        foreach (SelectListItem grantType in AllowedGrantTypes)
             if (grantType.Selected)
             {
-                if (!this.Data.AllowedGrantTypes.Any(p => p.GrantType == grantType.Value))
-                {
-                    this.Data.AllowedGrantTypes.Add(new ClientGrantType()
+                if (!Data.AllowedGrantTypes.Any(p => p.GrantType == grantType.Value))
+                    Data.AllowedGrantTypes.Add(new ClientGrantType
                     {
-                        ClientId = this.Data.Id,
-                        GrantType = grantType.Value,
+                        ClientId = Data.Id,
+                        GrantType = grantType.Value
                     });
-                }
             }
             else
             {
-                var existsGrantType = this.Data.AllowedGrantTypes.FirstOrDefault(p => p.GrantType == grantType.Value);
-                if (existsGrantType != null)
-                {
-                    this.Data.AllowedGrantTypes.Remove(existsGrantType);
-                }
+                ClientGrantType? existsGrantType =
+                    Data.AllowedGrantTypes.FirstOrDefault(p => p.GrantType == grantType.Value);
+                if (existsGrantType != null) Data.AllowedGrantTypes.Remove(existsGrantType);
             }
-        }
-        dbContext.Clients.Update(this.Data);
+
+        dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        this.OperationMessage = "操作已成功！";
-        return this.Page();
+        OperationMessage = "操作已成功！";
+        return Page();
     }
 
-    private static readonly List<GrantTypeItem> GrantTypes =
-    [
-        new GrantTypeItem(GrantType.Implicit, "隐式"),
-        new GrantTypeItem(GrantType.AuthorizationCode, "授权码"),
-        new GrantTypeItem(GrantType.ClientCredentials, "客户端凭证"),
-        new GrantTypeItem(GrantType.ResourceOwnerPassword, "资源所有者密码"),
-        new GrantTypeItem(GrantType.DeviceFlow, "设备码"),
-        new GrantTypeItem(GrantType.Hybrid, "混合"),
-    ];
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="Name"></param>
-    /// <param name="DisplayName"></param>
-    /// <param name="Description"></param>
-    public record GrantTypeItem(string Name, string DisplayName, string? Description = null);
+    
 }

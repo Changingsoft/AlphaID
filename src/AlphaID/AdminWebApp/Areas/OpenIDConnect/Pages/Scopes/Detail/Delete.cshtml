@@ -15,9 +15,9 @@
 
 <form method="post">
     <div class="mb-3">
-        <input asp-for="ScopeName" class="form-control" />
+        <input asp-for="ScopeName" class="form-control"/>
         <span asp-validation-for="ScopeName" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-danger">@L["Delete"]</button>
+    <button type="submit" class="btn btn-danger">@SL["Delete"]</button>
 </form>

@@ -112,15 +112,15 @@
   <data name="Manage personal data" xml:space="preserve">
 	  <value>Manage personal data</value>
   </data>
-  <data name="Personal Data" xml:space="preserve">
-	  <value>Personal Data</value>
+  <data name="Personal data" xml:space="preserve">
+	  <value>Personal data</value>
   </data>
-  <data name="Managed Directory Accounts" xml:space="preserve">
+  <data name="Managed directory accounts" xml:space="preserve">
 	  <value>Managed Directory Accounts</value>
 	  <comment>Managed Directory Accounts</comment>
   </data>
-  <data name="Directory Service" xml:space="preserve">
-	  <value>Directory Service</value>
+  <data name="Directory service" xml:space="preserve">
+	  <value>Directory service</value>
 	  <comment>Directory Service</comment>
   </data>
   <data name="Object Id" xml:space="preserve">

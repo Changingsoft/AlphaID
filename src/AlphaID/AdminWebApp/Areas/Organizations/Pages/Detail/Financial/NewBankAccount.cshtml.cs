@@ -1,57 +1,58 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial
+namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial;
+
+public class NewBankAccountModel(
+    OrganizationManager organizationManager,
+    OrganizationBankAccountManager bankAccountManager) : PageModel
 {
-    public class NewBankAccountModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager) : PageModel
+    [BindProperty]
+    public InputModel Input { get; set; } = default!;
+
+    public IdOperationResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        [BindProperty]
-        public InputModel Input { get; set; } = default!;
+        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        if (org == null)
+            return NotFound();
 
-        public IdOperationResult? Result { get; set; }
+        return Page();
+    }
 
-        public async Task<IActionResult> OnGetAsync(string anchor)
-        {
-            var org = await organizationManager.FindByIdAsync(anchor);
-            if (org == null)
-                return this.NotFound();
+    public async Task<IActionResult> OnPostAsync(string anchor)
+    {
+        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        if (org == null)
+            return NotFound();
 
-            return this.Page();
-        }
+        if (!ModelState.IsValid)
+            return Page();
 
-        public async Task<IActionResult> OnPostAsync(string anchor)
-        {
-            var org = await organizationManager.FindByIdAsync(anchor);
-            if (org == null)
-                return this.NotFound();
+        Result = await bankAccountManager.AddAsync(org, Input.AccountNumber, Input.AccountName,
+            Input.BankName, Input.Usage, Input.SetDefault);
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+        if (!Result.Succeeded)
+            return Page();
 
-            this.Result = await bankAccountManager.AddAsync(org, this.Input.AccountNumber, this.Input.AccountName,
-                this.Input.BankName, this.Input.Usage, this.Input.SetDefault);
+        return RedirectToPage("Index", new { anchor });
+    }
 
-            if (!this.Result.Succeeded)
-                return this.Page();
-
-            return this.RedirectToPage("Index", new { anchor });
-        }
-
-        public class InputModel
-        {
+    public class InputModel
+    {
         [Required(ErrorMessage = "Validate_Required")]
-            public string AccountNumber { get; set; } = default!;
+        public string AccountNumber { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
-            public string AccountName { get; set; } = default!;
+        public string AccountName { get; set; } = default!;
 
         [Required(ErrorMessage = "Validate_Required")]
-            public string BankName { get; set; } = default!;
+        public string BankName { get; set; } = default!;
 
-            public string? Usage { get; set; }
+        public string? Usage { get; set; }
 
-            public bool SetDefault { get; set; } = false;
-        }
+        public bool SetDefault { get; set; } = false;
     }
 }

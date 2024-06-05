@@ -11,18 +11,22 @@ public class SearchModel(NaturalPersonManager personManager) : PageModel
     public async Task<IActionResult> OnGetAsync(string q)
     {
         if (string.IsNullOrWhiteSpace(q))
-            return this.Page();
+            return Page();
 
         if (MobilePhoneNumber.TryParse(q, out MobilePhoneNumber mobile))
         {
-            var person = await personManager.FindByMobileAsync(mobile.ToString(), this.HttpContext.RequestAborted);
-            return person != null ? this.RedirectToPage("Detail/Index", new { id = person.Id }) : this.Page();
+            NaturalPerson? person =
+                await personManager.FindByMobileAsync(mobile.ToString(), HttpContext.RequestAborted);
+            return person != null ? RedirectToPage("Detail/Index", new { id = person.Id }) : Page();
         }
 
-        var pinyinResult = new List<NaturalPerson>(personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(q)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint));
-        var nameResult = new List<NaturalPerson>(personManager.Users.Where(p => p.PersonName.FullName.StartsWith(q)).OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName));
+        var pinyinResult = new List<NaturalPerson>(personManager.Users
+            .Where(p => p.PersonName.SearchHint!.StartsWith(q)).OrderBy(p => p.PersonName.SearchHint!.Length)
+            .ThenBy(p => p.PersonName.SearchHint));
+        var nameResult = new List<NaturalPerson>(personManager.Users.Where(p => p.PersonName.FullName.StartsWith(q))
+            .OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName));
 
-        this.Results = pinyinResult.UnionBy(nameResult, p => p.Id);
-        return this.Page();
+        Results = pinyinResult.UnionBy(nameResult, p => p.Id);
+        return Page();
     }
 }

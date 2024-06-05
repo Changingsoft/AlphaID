@@ -141,9 +141,6 @@
   <data name="Bio" xml:space="preserve">
     <value>Bio</value>
   </data>
-  <data name="Birth date" xml:space="preserve">
-    <value>Birthdate</value>
-  </data>
   <data name="Captcha code" xml:space="preserve">
     <value>Captcha code</value>
   </data>
@@ -161,6 +158,13 @@
   </data>
   <data name="Current user name" xml:space="preserve">
     <value>Current user name</value>
+  </data>
+  <data name="Date of birth" xml:space="preserve">
+	  <value>Date of birth</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+	  <value>Delete</value>
+	  <comment>Delete</comment>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Department</value>
@@ -186,14 +190,14 @@
   <data name="Given name" xml:space="preserve">
     <value>Given name</value>
   </data>
-  <data name="Identifier Type" xml:space="preserve">
-	  <value>Identifier Type</value>
+  <data name="Identifier type" xml:space="preserve">
+	  <value>Identifier type</value>
   </data>
-  <data name="Identifier Value" xml:space="preserve">
-	  <value>Identifier Value</value>
+  <data name="Identifier value" xml:space="preserve">
+	  <value>Identifier value</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
-    <value>Legal Entity Identifier</value>
+  <data name="Legal entity identifier" xml:space="preserve">
+	  <value>Legal entity identifier</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
@@ -288,5 +292,17 @@
   </data>
   <data name="Your personal website." xml:space="preserve">
     <value>Your personal website.</value>
+  </data>
+  <data name="Full name" xml:space="preserve">
+	  <value>Full name</value>
+	  <comment>Full name</comment>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>Phonetic surname</value>
+	  <comment>Phonetic surname</comment>
+  </data>
+  <data name="Phonetic given name" xml:space="preserve">
+	  <value>Phonetic given name</value>
+	  <comment>Phonetic given name</comment>
   </data>
 </root>

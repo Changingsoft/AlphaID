@@ -123,10 +123,10 @@
   <data name="Advanced" xml:space="preserve">
     <value>高级</value>
   </data>
-  <data name="Directory Accounts" xml:space="preserve">
+  <data name="Directory accounts" xml:space="preserve">
     <value>目录账户</value>
   </data>
-  <data name="External Logins" xml:space="preserve">
+  <data name="External logins" xml:space="preserve">
     <value>外部登录</value>
   </data>
   <data name="Overview" xml:space="preserve">

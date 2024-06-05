@@ -10,12 +10,12 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-            return this.RedirectToPage("/Who", new { anchor });
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who", new { anchor });
         if (organization == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Organization = organization;
-        return this.Page();
+        Organization = organization;
+        return Page();
     }
 }

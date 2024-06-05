@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.IdSubjectsDb
+namespace DatabaseTool.Migrations.IDSubjectsDb
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -11,6 +12,25 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "JoinOrganizationInvitation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InviteeId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    WhenExpired = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Inviter = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ExpectVisibility = table.Column<int>(type: "int", nullable: false),
+                    Accepted = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JoinOrganizationInvitation", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "NaturalPerson",
                 columns: table => new
@@ -42,13 +62,12 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     PersonName_SearchHint = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     NickName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Gender = table.Column<string>(type: "varchar(6)", nullable: true, comment: "性别"),
-                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
                     Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     PhoneticSurname = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     PhoneticGivenName = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: true),
                     ProfilePicture_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     ProfilePicture_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    ProfilePicture_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Locale = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
                     TimeZone = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     Address_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -79,13 +98,12 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     Representative = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     ProfilePicture_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     ProfilePicture_Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    ProfilePicture_UpdateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     WhenChanged = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false),
-                    EstablishedAt = table.Column<DateTime>(type: "date", nullable: true),
-                    TermBegin = table.Column<DateTime>(type: "date", nullable: true),
-                    TermEnd = table.Column<DateTime>(type: "date", nullable: true),
+                    EstablishedAt = table.Column<DateOnly>(type: "date", nullable: true),
+                    TermBegin = table.Column<DateOnly>(type: "date", nullable: true),
+                    TermEnd = table.Column<DateOnly>(type: "date", nullable: true),
                     Location = table.Column<Geometry>(type: "geography", nullable: true),
                     Website = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -99,6 +117,21 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organization", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PasswordHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    Data = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordHistory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,27 +196,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "PasswordHistory",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    Data = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PasswordHistory", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PasswordHistory_NaturalPerson_UserId",
-                        column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PersonBankAccount",
                 columns: table => new
                 {
@@ -199,37 +211,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         name: "FK_PersonBankAccount_NaturalPerson_PersonId",
                         column: x => x.PersonId,
                         principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "JoinOrganizationInvitation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InviteeId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    WhenExpired = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Inviter = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ExpectVisibility = table.Column<int>(type: "int", nullable: false),
-                    Accepted = table.Column<bool>(type: "bit", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JoinOrganizationInvitation", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_JoinOrganizationInvitation_NaturalPerson_InviteeId",
-                        column: x => x.InviteeId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JoinOrganizationInvitation_Organization_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organization",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -312,7 +293,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DeprecateTime = table.Column<DateTime>(type: "date", nullable: false)
+                    DeprecateTime = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -324,16 +305,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JoinOrganizationInvitation_InviteeId",
-                table: "JoinOrganizationInvitation",
-                column: "InviteeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JoinOrganizationInvitation_OrganizationId",
-                table: "JoinOrganizationInvitation",
-                column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NaturalPerson_NormalizedUserName",
@@ -411,11 +382,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 name: "IX_OrganizationUsedName_OrganizationId",
                 table: "OrganizationUsedName",
                 column: "OrganizationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PasswordHistory_UserId",
-                table: "PasswordHistory",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PasswordHistory_WhenCreated",

@@ -1,5 +1,5 @@
 ﻿@page
-@model AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = L["Create new client"];
 }
@@ -9,30 +9,20 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h3>Client-side Application</h3>
-                <p>A client that running on client-side. For example, a javascript program, a single page application (SPA).</p>
-                <p>The client cannot have any secret.</p>
-                <a class="btn btn-primary">Go</a>
+                <h3>Public</h3>
+                <p>Clients incapable of maintaining the confidentiality of their credentials (e.g., clients executing on the device used by the resource owner, such as an installed native application or a web browser-based application), and incapable of secure client authentication via any other means.</p>
+                <p>The client cannot have any secrets.</p>
+                <a asp-page="Public" class="btn btn-primary">Go</a>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h3>Server-side Application</h3>
-                <p>A client that running on server. For example, a php website, an asp.net core website.</p>
-                <p>The client have at least one secret, for issue token work-flow.</p>
-                <a class="btn btn-primary">Go</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <h3>Daemon Application</h3>
-                <p>A client that running on server and without any end-user interactions. For example, a task scheduler program.</p>
-                <p>The client have at least one secret, for issue token work-flow.</p>
-                <a class="btn btn-primary">Go</a>
+                <h3>Confidential</h3>
+                <p>Clients capable of maintaining the confidentiality of their credentials (e.g., client implemented on a secure server with restricted access to the client credentials), or capable of secure client authentication using other means.</p>
+                <p></p>
+                <a asp-page="Confidential" class="btn btn-primary">Go</a>
             </div>
         </div>
     </div>
@@ -41,7 +31,7 @@
             <div class="card-body">
                 <h3>Custom</h3>
                 <p>Create client with advanced options.</p>
-                <a class="btn btn-primary" asp-page="Custom">Go</a>
+                <a asp-page="Custom" class="btn btn-primary">Go</a>
             </div>
         </div>
     </div>

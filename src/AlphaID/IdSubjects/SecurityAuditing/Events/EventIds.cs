@@ -3,48 +3,40 @@
 namespace IdSubjects.SecurityAuditing.Events;
 
 /// <summary>
-/// 
 /// </summary>
 public static class EventIds
 {
-    private static readonly int BaseId = 2000;
+    private static readonly int s_baseId = 2000;
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId CreatePersonSuccess => new(BaseId + 0, nameof(CreatePersonSuccess));
-    /// <summary>
-    /// 
-    /// </summary>
-    public static EventId CreatePersonFailure => new(BaseId + 1, nameof(UpdatePersonFailure));
+    public static EventId CreatePersonSuccess => new(s_baseId + 0, nameof(CreatePersonSuccess));
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId UpdatePersonSuccess => new(BaseId + 2, nameof(UpdatePersonSuccess));
+    public static EventId CreatePersonFailure => new(s_baseId + 1, nameof(UpdatePersonFailure));
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId UpdatePersonFailure => new(BaseId + 3, nameof(UpdatePersonFailure));
+    public static EventId UpdatePersonSuccess => new(s_baseId + 2, nameof(UpdatePersonSuccess));
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId DeletePersonSuccess => new(BaseId + 4, nameof(DeletePersonSuccess));
+    public static EventId UpdatePersonFailure => new(s_baseId + 3, nameof(UpdatePersonFailure));
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId DeletePersonFailure => new(BaseId + 5, nameof(DeletePersonFailure));
+    public static EventId DeletePersonSuccess => new(s_baseId + 4, nameof(DeletePersonSuccess));
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId ChangePasswordSuccess => new (BaseId + 6, nameof(ChangePasswordSuccess));
+    public static EventId DeletePersonFailure => new(s_baseId + 5, nameof(DeletePersonFailure));
 
     /// <summary>
-    /// 
     /// </summary>
-    public static EventId ChangePasswordFailure => new (BaseId + 7, nameof(ChangePasswordFailure));
+    public static EventId ChangePasswordSuccess => new(s_baseId + 6, nameof(ChangePasswordSuccess));
+
+    /// <summary>
+    /// </summary>
+    public static EventId ChangePasswordFailure => new(s_baseId + 7, nameof(ChangePasswordFailure));
 }

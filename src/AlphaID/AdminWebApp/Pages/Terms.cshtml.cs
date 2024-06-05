@@ -1,9 +1,8 @@
-namespace AdminWebApp.Pages
+namespace AdminWebApp.Pages;
+
+public class TermsModel : PageModel
 {
-    public class TermsModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

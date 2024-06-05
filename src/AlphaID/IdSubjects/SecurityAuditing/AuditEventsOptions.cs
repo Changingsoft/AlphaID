@@ -1,7 +1,6 @@
 ﻿namespace IdSubjects.SecurityAuditing;
 
 /// <summary>
-/// 
 /// </summary>
 public class AuditEventsOptions
 {

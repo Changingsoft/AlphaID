@@ -1,17 +1,17 @@
 ﻿namespace AdminWebApp.Domain.Security;
 
 /// <summary>
-/// Role.
+///     Role.
 /// </summary>
 public class Role
 {
     /// <summary>
-    /// Role Name.
+    ///     Role Name.
     /// </summary>
     public string Name { get; set; } = default!;
 
     /// <summary>
-    /// Display Name.
+    ///     Display Name.
     /// </summary>
     public string DisplayName { get; set; } = default!;
 }

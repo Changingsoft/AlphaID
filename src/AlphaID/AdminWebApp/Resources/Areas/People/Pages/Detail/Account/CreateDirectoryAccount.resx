@@ -100,7 +100,7 @@
   <data name="Create" xml:space="preserve">
 		<value>Create</value>
 	</data>
-  <data name="Create Directory Service Account" xml:space="preserve">
-		<value>Create Directory Service Account</value>
-	</data>
+  <data name="Create directory service account" xml:space="preserve">
+	  <value>Create directory service account</value>
+  </data>
 </root>

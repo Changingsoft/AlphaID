@@ -1,18 +1,22 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System.Security.Claims;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
 
 namespace AdminWebApp.Tests;
-internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) 
+
+internal class TestAuthHandler(
+    IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder)
     : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (this.Request.Headers.Authorization.Contains("TestScheme"))
+        if (Request.Headers.Authorization.Contains("TestScheme"))
         {
-            var claims = new List<Claim>()
+            var claims = new List<Claim>
             {
                 new("http://schemas.microsoft.com/claims/authnmethodsreferences", "pwd"),
                 new("sid", "9ABAFC649FB347031416CEC996E314F2"),
@@ -26,13 +30,14 @@ internal class TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> opti
                 new(ClaimTypes.Name, "刘备"),
                 new("picture", "https://localhost:49726/Profile/Avatar"),
                 new("locale", "zh-CN"),
-                new("zoneinfo", "Asia/Shanghai"),
+                new("zoneinfo", "Asia/Shanghai")
             };
             var identity = new ClaimsIdentity(claims, "AuthenticationTypes.Federation");
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, "TestScheme");
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
+
         return Task.FromResult(AuthenticateResult.NoResult());
     }
 }

@@ -9,24 +9,24 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.CurrentName" class="form-label"></label>
-        <input asp-for="Input.CurrentName" class="form-control" readonly />
+        <input asp-for="Input.CurrentName" class="form-control" readonly/>
     </div>
     <div class="mb-3">
         <label asp-for="Input.NewName" class="form-label"></label>
-        <input asp-for="Input.NewName" class="form-control" />
+        <input asp-for="Input.NewName" class="form-control"/>
         <span asp-validation-for="Input.NewName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.ChangeDate" class="form-label"></label>
-        <input asp-for="Input.ChangeDate" class="form-control" />
+        <input asp-for="Input.ChangeDate" class="form-control"/>
         <span asp-validation-for="Input.ChangeDate" class="text-danger"></span>
     </div>
     <div class="form-check">
-        <input asp-for="Input.RecordUsedName" class="form-check-input" />
+        <input asp-for="Input.RecordUsedName" class="form-check-input"/>
         <label asp-for="Input.RecordUsedName" class="form-check-label"></label>
     </div>
     <div class="form-check">
-        <input asp-for="Input.ApplyChangeWhenNameDuplicated" class="form-check-input" />
+        <input asp-for="Input.ApplyChangeWhenNameDuplicated" class="form-check-input"/>
         <label asp-for="Input.ApplyChangeWhenNameDuplicated" class="form-check-label"></label>
     </div>
     <div asp-validation-summary="All"></div>

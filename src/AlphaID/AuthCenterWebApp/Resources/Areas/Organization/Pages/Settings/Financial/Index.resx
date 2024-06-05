@@ -110,8 +110,8 @@
 		<value>Name</value>
 		<comment>Name</comment>
 	</data>
-	<data name="Account ID" xml:space="preserve">
-		<value>Account ID</value>
+	<data name="Account Id" xml:space="preserve">
+		<value>Account Id</value>
 		<comment>Account ID</comment>
 	</data>
 	<data name="Bank" xml:space="preserve">

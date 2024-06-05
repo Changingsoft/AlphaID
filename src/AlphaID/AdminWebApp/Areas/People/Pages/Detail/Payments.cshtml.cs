@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.Payments;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.People.Pages.Detail;
 
@@ -36,46 +36,44 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var result = await personManager.FindByIdAsync(this.Anchor);
+        NaturalPerson? result = await personManager.FindByIdAsync(Anchor);
         if (result == null)
-            return this.NotFound();
-        this.Person = result;
-        this.BankAccounts = bankAccountManager.GetBankAccounts(this.Person);
-        return this.Page();
+            return NotFound();
+        Person = result;
+        BankAccounts = bankAccountManager.GetBankAccounts(Person);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAddBankAccountAsync()
     {
-        var person = await personManager.FindByIdAsync(this.Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
-        this.BankAccounts = bankAccountManager.GetBankAccounts(person);
+            return NotFound();
+        Person = person;
+        BankAccounts = bankAccountManager.GetBankAccounts(person);
 
-        if (this.BankAccounts.Any(p => p.AccountNumber == this.AccountNumber))
-            this.ModelState.AddModelError(nameof(this.AccountNumber), "此账号已存在。");
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (BankAccounts.Any(p => p.AccountNumber == AccountNumber))
+            ModelState.AddModelError(nameof(AccountNumber), "此账号已存在。");
+        if (!ModelState.IsValid)
+            return Page();
 
-        this.Result = await bankAccountManager.AddBankAccountAsync(person, new BankAccountInfo(this.AccountNumber, this.AccountName, this.BankName));
-        if(this.Result.Succeeded)
-            this.BankAccounts = bankAccountManager.GetBankAccounts(person);
-        return this.Page();
+        Result = await bankAccountManager.AddBankAccountAsync(person,
+            new BankAccountInfo(AccountNumber, AccountName, BankName));
+        if (Result.Succeeded)
+            BankAccounts = bankAccountManager.GetBankAccounts(person);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostRemoveBankAccountAsync(string accountNumber)
     {
-        var person = await personManager.FindByIdAsync(this.Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
-            return this.NotFound();
-        this.Person = person;
-        this.BankAccounts = bankAccountManager.GetBankAccounts(person);
+            return NotFound();
+        Person = person;
+        BankAccounts = bankAccountManager.GetBankAccounts(person);
 
-        this.Result = await bankAccountManager.RemoveBankAccountAsync(person, accountNumber);
-        if (this.Result.Succeeded)
-        {
-            this.BankAccounts = bankAccountManager.GetBankAccounts(person);
-        }
-        return this.Page();
+        Result = await bankAccountManager.RemoveBankAccountAsync(person, accountNumber);
+        if (Result.Succeeded) BankAccounts = bankAccountManager.GetBankAccounts(person);
+        return Page();
     }
 }

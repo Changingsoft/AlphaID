@@ -123,7 +123,7 @@
   <data name="Name" xml:space="preserve">
     <value>名称</value>
   </data>
-  <data name="Referenced Clients" xml:space="preserve">
+  <data name="Referenced clients" xml:space="preserve">
     <value>引用的客户端</value>
   </data>
 </root>

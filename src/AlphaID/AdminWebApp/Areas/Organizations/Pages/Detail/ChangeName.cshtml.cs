@@ -1,6 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.Organizations.Pages.Detail;
 
@@ -14,34 +14,32 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var org = await manager.FindByIdAsync(this.Anchor);
+        GenericOrganization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Input = new()
+        Input = new InputModel
         {
-            CurrentName = org.Name,
+            CurrentName = org.Name
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var org = await manager.FindByIdAsync(this.Anchor);
+        GenericOrganization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
-            return this.NotFound();
+            return NotFound();
 
-        var result = await manager.ChangeNameAsync(org, this.Input.NewName, DateOnly.FromDateTime(this.Input.ChangeDate), this.Input.RecordUsedName, this.Input.ApplyChangeWhenNameDuplicated);
+        IdOperationResult result = await manager.ChangeNameAsync(org, Input.NewName,
+            DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
         if (!result.Succeeded)
         {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError("", error);
-            }
-            return this.Page();
+            foreach (string error in result.Errors) ModelState.AddModelError("", error);
+            return Page();
         }
 
-        return this.RedirectToPage("Index", new { id = this.Anchor });
+        return RedirectToPage("Index", new { id = Anchor });
     }
 
     public class InputModel

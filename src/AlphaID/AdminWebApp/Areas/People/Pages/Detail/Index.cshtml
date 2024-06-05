@@ -4,8 +4,9 @@
 @{
     ViewBag.Title = $"{Model.Data.PersonName.FullName}";
 }
+
 @section head{
-    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
+    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css"/>
     <style>
         .label {
             cursor: pointer;
@@ -19,6 +20,7 @@
         }
     </style>
 }
+
 @Html.DisplayFor(m => m.Result)
 <div class="alert" style="display: none;" role="alert"></div>
 <h2>@L["Overview"]</h2>
@@ -26,19 +28,19 @@
     <div class="col-10">
         <div class="card card-sm">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@L["Person Name"]</h3>
+                <h3 class="card-title">@L["Person name"]</h3>
                 <a asp-page="EditPersonName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change person name"]</a>
             </div>
             <div class="card-body">
                 <div class="datagrid">
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Surname"]</div>
+                        <div class="datagrid-title">@SL["Surname"]</div>
                         <div class="datagrid-content">
                             @Model.Data.PersonName.Surname @Model.Data.PhoneticSurname
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Given name"]</div>
+                        <div class="datagrid-title">@SL["Given name"]</div>
                         <div class="datagrid-content">
                             @Model.Data.PersonName.GivenName @Model.Data.PhoneticGivenName
                         </div>
@@ -50,7 +52,7 @@
                         </div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Gender"]</div>
+                        <div class="datagrid-title">@SL["Gender"]</div>
                         <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Gender)</div>
                     </div>
                     <div class="datagrid-item">
@@ -69,7 +71,7 @@
         @* Profile picture *@
         <form method="post">
             <label class="label mb-2" data-toggle="tooltip" title="@L["Change profile picture"]">
-                <img class="rounded" id="avatar" src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})" alt="avatar">
+                <img class="rounded" id="avatar" src="@Url.Page("Index", "Photo", new { id = Model.Data.Id })" alt="avatar">
                 <input type="file" class="visually-hidden" id="input" name="image" accept="image/*">
                 <span class="btn btn-sm">@L["Change profile picture"]</span>
             </label>
@@ -150,13 +152,13 @@
                 <div class="datagrid-content">10 failed:2 lock:1</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Person ID"]</div>
+                <div class="datagrid-title">@L["Person Id"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["External Logins"]</div>
+                <div class="datagrid-title">@L["External logins"]</div>
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
@@ -186,7 +188,7 @@
             </div>
             <div class="modal-body">
                 <div class="img-container">
-                    <img id="image" src="@Url.Page("Index", "Photo", new{id = Model.Data.Id})">
+                    <img id="image" src="@Url.Page("Index", "Photo", new { id = Model.Data.Id })">
                 </div>
             </div>
             <div class="modal-footer">
@@ -198,7 +200,7 @@
 </div>
 
 @section Scripts{
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
     <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
@@ -270,7 +272,7 @@
 
                         formData.append('avatar', blob, 'avatar.jpg');
                         formData.append('__RequestVerificationToken', $("[name='__RequestVerificationToken']").val())
-                        $.ajax('@(Url.Page(null, pageHandler: "UpdateProfilePicture"))', {
+                        $.ajax('@(Url.Page(null, "UpdateProfilePicture"))', {
                             method: 'POST',
                             data: formData,
                             processData: false,

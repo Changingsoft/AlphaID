@@ -1,7 +1,8 @@
-﻿using IdentityModel;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using IdentityModel;
 
 namespace IdSubjects;
+
 internal class DefaultSubjectGenerator : ISubjectGenerator
 {
     public string Generate(ClaimsPrincipal principal)

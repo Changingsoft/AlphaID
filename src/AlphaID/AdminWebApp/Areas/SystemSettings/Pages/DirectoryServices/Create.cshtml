@@ -1,6 +1,6 @@
 ﻿@page
-@using AlphaIdPlatform.Helpers
 @using IdSubjects.DirectoryLogon
+@using AlphaIdPlatform.Helpers
 @model CreateModel
 @{
 }
@@ -9,13 +9,13 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Name" class="form-label"></label>
-        <input asp-for="Input.Name" class="form-control" />
+        <input asp-for="Input.Name" class="form-control"/>
         <span asp-description-for="Input.Name" class="form-hint"></span>
         <span asp-validation-for="Input.Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.ServerAddress" class="form-label"></label>
-        <input asp-for="Input.ServerAddress" class="form-control" />
+        <input asp-for="Input.ServerAddress" class="form-control"/>
         <span asp-description-for="Input.ServerAddress" class="form-hint"></span>
         <span asp-validation-for="Input.ServerAddress" class="text-danger"></span>
     </div>
@@ -26,70 +26,70 @@
     </div>
     <div class="mb-3">
         <label asp-for="Input.UserName" class="form-label"></label>
-        <input asp-for="Input.UserName" class="form-control" />
+        <input asp-for="Input.UserName" class="form-control"/>
         <span asp-description-for="Input.UserName" class="form-hint"></span>
         <span asp-validation-for="Input.UserName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Password" class="form-label"></label>
-        <input asp-for="Input.Password" class="form-control" />
+        <input asp-for="Input.Password" class="form-control"/>
         <span asp-description-for="Input.Password" class="form-hint"></span>
         <span asp-validation-for="Input.Password" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.RootDn" class="form-label"></label>
-        <input asp-for="Input.RootDn" class="form-control" />
+        <input asp-for="Input.RootDn" class="form-control"/>
         <span asp-description-for="Input.RootDn" class="form-hint"></span>
         <span asp-validation-for="Input.RootDn" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.DefaultUserOu" class="form-label"></label>
-        <input asp-for="Input.DefaultUserOu" class="form-control" />
+        <input asp-for="Input.DefaultUserOu" class="form-control"/>
         <span asp-description-for="Input.DefaultUserOu" class="form-hint"></span>
         <span asp-validation-for="Input.DefaultUserOu" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.UpnSuffix" class="form-label"></label>
-        <input asp-for="Input.UpnSuffix" class="form-control" />
+        <input asp-for="Input.UpnSuffix" class="form-control"/>
         <span asp-description-for="Input.UpnSuffix" class="form-hint"></span>
         <span asp-validation-for="Input.UpnSuffix" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Input.NTDomainName" class="form-label"></label>
-        <input asp-for="Input.NTDomainName" class="form-control" />
-        <span asp-description-for="Input.NTDomainName" class="form-hint"></span>
-        <span asp-validation-for="Input.NTDomainName" class="text-danger"></span>
+        <label asp-for="Input.NtDomainName" class="form-label"></label>
+        <input asp-for="Input.NtDomainName" class="form-control"/>
+        <span asp-description-for="Input.NtDomainName" class="form-hint"></span>
+        <span asp-validation-for="Input.NtDomainName" class="text-danger"></span>
     </div>
     <div class="form-check">
-        <input asp-for="Input.AutoCreateAccount" class="form-check-input" />
+        <input asp-for="Input.AutoCreateAccount" class="form-check-input"/>
         <label asp-for="Input.AutoCreateAccount" class="form-check-label"></label>
         <span asp-description-for="Input.AutoCreateAccount" class="form-check-description"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.ExternalProviderName" class="form-label"></label>
-        <input asp-for="Input.ExternalProviderName" class="form-control" />
+        <input asp-for="Input.ExternalProviderName" class="form-control"/>
         <span asp-description-for="Input.ExternalProviderName" class="form-hint"></span>
         <span asp-validation-for="Input.ExternalProviderName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.ExternalProviderDisplayName" class="form-label"></label>
-        <input asp-for="Input.ExternalProviderDisplayName" class="form-control" />
+        <input asp-for="Input.ExternalProviderDisplayName" class="form-control"/>
         <span asp-description-for="Input.ExternalProviderDisplayName" class="form-hint"></span>
         <span asp-validation-for="Input.ExternalProviderDisplayName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.RegisteredClientId" class="form-label"></label>
-        <input asp-for="Input.RegisteredClientId" class="form-control" />
+        <input asp-for="Input.RegisteredClientId" class="form-control"/>
         <span asp-description-for="Input.RegisteredClientId" class="form-hint"></span>
         <span asp-validation-for="Input.RegisteredClientId" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.SubjectGenerator" class="form-label"></label>
-        <input asp-for="Input.SubjectGenerator" class="form-control" />
+        <input asp-for="Input.SubjectGenerator" class="form-control"/>
         <span asp-description-for="Input.SubjectGenerator" class="form-hint"></span>
         <span asp-validation-for="Input.SubjectGenerator" class="text-danger"></span>
     </div>
-    
+
     <div asp-validation-summary="All" class="text-danger"></div>
-    <button type="submit" class="btn btn-primary">@L["Create"]</button>
+    <button type="submit" class="btn btn-primary">@SL["Create"]</button>
 </form>

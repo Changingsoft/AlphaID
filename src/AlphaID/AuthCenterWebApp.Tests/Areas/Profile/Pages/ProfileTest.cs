@@ -1,6 +1,7 @@
 ﻿namespace AuthCenterWebApp.Tests.Areas.Profile.Pages;
 
-public class ProfileTest(AuthCenterWebAppFactory factory) : IClassFixture<AuthCenterWebAppFactory>
+[Collection(nameof(TestServerCollection))]
+public class ProfileTest(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task GetDefaultPictureWhenPersonNotSpecified()

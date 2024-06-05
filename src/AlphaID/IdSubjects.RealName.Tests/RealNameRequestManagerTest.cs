@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace IdSubjects.RealName.Tests;
 
 [Collection(nameof(ServiceProviderCollection))]
-public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider) : IClassFixture<ServiceProviderFixture>
+public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
 {
     private readonly NaturalPerson _person = new("zhangsan", new PersonNameInfo("张三"));
 

@@ -6,7 +6,8 @@ using Microsoft.Extensions.Options;
 
 namespace AuthCenterWebApp.Tests.Pages;
 
-public class HomePageTest(AuthCenterWebAppFactory factory) : IClassFixture<AuthCenterWebAppFactory>
+[Collection(nameof(TestServerCollection))]
+public class HomePageTest(AuthCenterWebAppFactory factory)
 {
     [Theory]
     [InlineData("/")]

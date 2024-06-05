@@ -121,7 +121,8 @@ builder.Services.AddRazorPages(options =>
     });
 
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity()
+var idSubjectsIdentityBuilder = builder.Services.AddIdSubjectsIdentity();
+    idSubjectsIdentityBuilder.IdSubjects
     .AddDefaultStores()
     .AddDbContext(options =>
     {
@@ -129,14 +130,14 @@ var idSubjectsBuilder = builder.Services.AddIdSubjectsIdentity()
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
-idSubjectsBuilder.IdentityBuilder
+idSubjectsIdentityBuilder.IdSubjects.IdentityBuilder
     .AddSignInManager<PersonSignInManager>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
     .AddDefaultTokenProviders();//
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
-    idSubjectsBuilder.AddRealName()
+    idSubjectsIdentityBuilder.IdSubjects.AddRealName()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
@@ -144,7 +145,7 @@ if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
 {
-    idSubjectsBuilder.AddDirectoryLogin()
+    idSubjectsIdentityBuilder.IdSubjects.AddDirectoryLogin()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));

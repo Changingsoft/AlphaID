@@ -1,5 +1,6 @@
 ﻿using AlphaIdPlatform.Identity;
 using IdSubjects.DependencyInjection;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,15 +18,15 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdSubjectsBuilder AddIdSubjectsIdentity(this IServiceCollection services,
+    public static IdSubjectsIdentityBuilder AddIdSubjectsIdentity(this IServiceCollection services,
         Action<IdSubjectsOptions>? setupAction = null)
     {
         services.AddHttpContextAccessor();
 
-        IdSubjectsBuilder builder = services.AddIdSubjects(setupAction);
+        IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects(setupAction);
 
         //Add required cookies.
-        services.AddAuthentication(options =>
+        AuthenticationBuilder authenticationBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
@@ -63,6 +64,6 @@ public static class IdSubjectsServiceCollectionExtensions
                 o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
-        return builder;
+        return new IdSubjectsIdentityBuilder(services, idSubjectsBuilder, authenticationBuilder) ;
     }
 }

@@ -161,4 +161,8 @@
 		<value>Type</value>
 		<comment>Type</comment>
 	</data>
+  <data name="Secrets" xml:space="preserve">
+	  <value>Secrets</value>
+	  <comment>Secrets</comment>
+  </data>
 </root>

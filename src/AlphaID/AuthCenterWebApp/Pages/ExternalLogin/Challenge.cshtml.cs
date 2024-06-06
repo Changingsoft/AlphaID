@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Pages.ExternalLogin;
 [SecurityHeaders]
 public class Challenge(IIdentityServerInteractionService interactionService) : PageModel
 {
-    public IActionResult OnGet(string scheme, string schemeDisplayName, string returnUrl)
+    public IActionResult OnGet(string scheme, string schemeDisplayName, string? returnUrl)
     {
         if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
 
@@ -22,7 +22,6 @@ public class Challenge(IIdentityServerInteractionService interactionService) : P
         var props = new AuthenticationProperties
         {
             RedirectUri = Url.Page("/ExternalLogin/Callback"),
-
             Items =
             {
                 { "returnUrl", returnUrl },

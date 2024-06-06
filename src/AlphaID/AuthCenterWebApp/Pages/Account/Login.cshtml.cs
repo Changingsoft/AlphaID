@@ -39,7 +39,6 @@ public class LoginModel(
         if (View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider
-            logger?.LogInformation("we only have one option for logging in and it's an external provider");
             return RedirectToPage("/ExternalLogin/Challenge",
                 new
                 {
@@ -62,9 +61,6 @@ public class LoginModel(
             {
                 // 将用户的取消发送回 IdentityServer，以便它能拒绝 consent（即便客户端不需要consent）。
                 // 这将会把访问被拒绝的响应发送回客户端。
-                // if the user cancels, send a result back into IdentityServer as if they 
-                // denied the consent (even if this client does not require consent).
-                // this will send back access denied OIDC error response to the client.
                 await interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
@@ -112,7 +108,7 @@ public class LoginModel(
                     if (string.IsNullOrEmpty(Input.ReturnUrl)) return Redirect("~/");
 
                     // user might have clicked on a malicious link - should be logged
-                    throw new Exception("invalid return URL");
+                    throw new ArgumentException("invalid return URL");
                 }
 
                 if (result.MustChangePassword())
@@ -178,6 +174,7 @@ public class LoginModel(
             return;
         }
 
+        // 载入所有身份验证方案。
         IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
 
         List<ViewModel.ExternalProvider> providers = schemes
@@ -205,9 +202,11 @@ public class LoginModel(
         {
             allowLocal = client.EnableLocalLogin; //客户端是否允许本地登录
             if (client.IdentityProviderRestrictions.Count != 0)
+            {
                 //过滤只有客户端允许的登录提供器。
                 providers = providers.Where(provider =>
                     client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+            }
         }
 
         View = new ViewModel
@@ -246,14 +245,30 @@ public class LoginModel(
 
     public class ViewModel
     {
+        /// <summary>
+        /// 获取或设置是否允许记住登录。
+        /// </summary>
         public bool AllowRememberLogin { get; set; } = true;
+        
+        /// <summary>
+        /// 获取或设置是否启用本地登录。
+        /// </summary>
         public bool EnableLocalLogin { get; set; } = true;
 
+        /// <summary>
+        /// 获取所有外部登录提供器。
+        /// </summary>
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
 
+        /// <summary>
+        /// 获取可见的外部登录提供器。
+        /// </summary>
         public IEnumerable<ExternalProvider> VisibleExternalProviders =>
             ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
+        /// <summary>
+        /// 只是是否仅外部登录。当且仅当禁用本地登录，且外部登录提供器只有1个时，该属性为true。
+        /// </summary>
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
 
         public string? ExternalLoginScheme =>

@@ -165,4 +165,8 @@
   <data name="Type" xml:space="preserve">
     <value>类型</value>
   </data>
+  <data name="Secrets" xml:space="preserve">
+	  <value>秘密</value>
+	  <comment>Secrets</comment>
+  </data>
 </root>

@@ -110,6 +110,9 @@
 	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultFooterPartial.zh-cn.resx">
 	    <DependentUpon>_DefaultFooterPartial.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_IdentityResultPartial.zh-cn.resx">
+	    <DependentUpon>_IdentityResultPartial.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\_IdOperationResultPartial.zh-cn.resx">
 	    <DependentUpon>_IdOperationResultPartial.resx</DependentUpon>
 	  </EmbeddedResource>

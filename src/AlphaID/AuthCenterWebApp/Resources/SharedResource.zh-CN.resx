@@ -231,6 +231,9 @@
   <data name="Phonetic given name" xml:space="preserve">
 	  <value>注音名</value>
   </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>注音姓</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
 	  <value>隐私</value>
   </data>
@@ -270,6 +273,9 @@
   <data name="Unified social credit code" xml:space="preserve">
     <value>统一社会信用代码</value>
   </data>
+  <data name="Update" xml:space="preserve">
+	  <value>更新</value>
+  </data>
   <data name="Usage" xml:space="preserve">
 	  <value>用途</value>
   </data>
@@ -297,7 +303,7 @@
   <data name="Your personal website." xml:space="preserve">
 	  <value>您的个人主页。</value>
   </data>
-  <data name="Phonetic surname" xml:space="preserve">
-	  <value>注音姓</value>
+  <data name="Nick name" xml:space="preserve">
+	  <value>昵称</value>
   </data>
 </root>

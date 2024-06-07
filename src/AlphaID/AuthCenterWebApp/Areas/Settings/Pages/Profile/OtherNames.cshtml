@@ -1,4 +1,17 @@
 ﻿@page
 @model OtherNamesModel
 @{
+    ViewBag.Title = L["Other names"];
 }
+
+<h2>@ViewBag.Title</h2>
+@Html.DisplayFor(m => m.Result)
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="NickName" class="form-label"></label>
+        <input asp-for="NickName" class="form-control"/>
+        <span asp-description-for="NickName"></span>
+        <span asp-validation-for="NickName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@SL["Update"]</button>
+</form>

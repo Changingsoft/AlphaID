@@ -123,6 +123,9 @@
   <data name="Organizations" xml:space="preserve">
 	  <value>组织</value>
   </data>
+  <data name="Other names" xml:space="preserve">
+	  <value>其他称呼</value>
+  </data>
   <data name="Password and authentication" xml:space="preserve">
     <value>密码和验证</value>
   </data>
@@ -134,5 +137,8 @@
   </data>
   <data name="Your personal account" xml:space="preserve">
     <value>您的个人账户</value>
+  </data>
+  <data name="Person name" xml:space="preserve">
+	  <value>个人名称</value>
   </data>
 </root>

@@ -184,6 +184,10 @@
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>
+  <data name="Full name" xml:space="preserve">
+	  <value>Full name</value>
+	  <comment>Full name</comment>
+  </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
   </data>
@@ -226,6 +230,14 @@
   <data name="Phone number" xml:space="preserve">
 	  <value>Phone number</value>
   </data>
+  <data name="Phonetic given name" xml:space="preserve">
+	  <value>Phonetic given name</value>
+	  <comment>Phonetic given name</comment>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>Phonetic surname</value>
+	  <comment>Phonetic surname</comment>
+  </data>
   <data name="Privacy" xml:space="preserve">
 	  <value>Privacy</value>
 	  <comment>Privacy</comment>
@@ -266,6 +278,10 @@
   <data name="Unified social credit code" xml:space="preserve">
     <value>Unified social credit code</value>
   </data>
+  <data name="Update" xml:space="preserve">
+	  <value>Update</value>
+	  <comment>Update</comment>
+  </data>
   <data name="Usage" xml:space="preserve">
 	  <value>Usage</value>
   </data>
@@ -292,17 +308,5 @@
   </data>
   <data name="Your personal website." xml:space="preserve">
     <value>Your personal website.</value>
-  </data>
-  <data name="Full name" xml:space="preserve">
-	  <value>Full name</value>
-	  <comment>Full name</comment>
-  </data>
-  <data name="Phonetic surname" xml:space="preserve">
-	  <value>Phonetic surname</value>
-	  <comment>Phonetic surname</comment>
-  </data>
-  <data name="Phonetic given name" xml:space="preserve">
-	  <value>Phonetic given name</value>
-	  <comment>Phonetic given name</comment>
   </data>
 </root>

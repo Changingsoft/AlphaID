@@ -56,8 +56,14 @@
 	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Identifiers\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\DeletePersonalData.zh-cn.resx">
+	    <DependentUpon>DeletePersonalData.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\Email.zh-cn.resx">
 	    <DependentUpon>Email.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\PersonalData.zh-cn.resx">
+	    <DependentUpon>PersonalData.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ExternalLogins.zh-cn.resx">
 	    <DependentUpon>ExternalLogins.resx</DependentUpon>
@@ -67,6 +73,12 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\_Layout.zh-cn.resx">
 	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Profile\OtherNames.zh-cn.resx">
+	    <DependentUpon>OtherNames.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Profile\PersonName.zh-cn.resx">
+	    <DependentUpon>PersonName.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Authentication.zh-cn.resx">
 	    <DependentUpon>Authentication.resx</DependentUpon>

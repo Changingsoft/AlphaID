@@ -135,13 +135,13 @@
   <data name="Manage personal data" xml:space="preserve">
     <value>管理个人数据</value>
   </data>
+  <data name="Managed directory accounts" xml:space="preserve">
+	  <value>托管的目录账户</value>
+  </data>
   <data name="Object Id" xml:space="preserve">
 	  <value>对象ID</value>
   </data>
   <data name="Personal data" xml:space="preserve">
     <value>个人数据</value>
-  </data>
-  <data name="Managed directory accounts" xml:space="preserve">
-	  <value>托管的目录账户</value>
   </data>
 </root>

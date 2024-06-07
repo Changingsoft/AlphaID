@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2 to 10 characters. Leave blank to remove it." xml:space="preserve">
+	  <value>2 to 10 characters. Leave blank to remove it.</value>
+  </data>
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
@@ -131,6 +134,10 @@
   </data>
   <data name="Agree the" xml:space="preserve">
     <value>Agree the</value>
+  </data>
+  <data name="Apply changes" xml:space="preserve">
+	  <value>Apply changes</value>
+	  <comment>Apply changes</comment>
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
@@ -188,6 +195,9 @@
 	  <value>Full name</value>
 	  <comment>Full name</comment>
   </data>
+  <data name="Full name of organization." xml:space="preserve">
+	  <value>Full name of organization.</value>
+  </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
   </data>
@@ -205,6 +215,9 @@
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
+  </data>
+  <data name="Middle name" xml:space="preserve">
+	  <value>Middle name</value>
   </data>
   <data name="Mobile phone number" xml:space="preserve">
     <value>Mobile phone number</value>

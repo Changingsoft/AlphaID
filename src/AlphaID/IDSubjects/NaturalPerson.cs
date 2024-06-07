@@ -154,6 +154,7 @@ public class NaturalPerson
     /// <summary>
     ///     获取有关自然人更新的时间。
     /// </summary>
+    [PersonalData]
     public virtual DateTimeOffset PersonWhenChanged { get; protected internal set; }
 
     /// <summary>
@@ -164,6 +165,7 @@ public class NaturalPerson
     /// <summary>
     ///     用户名称
     /// </summary>
+    [PersonalData]
     public virtual PersonNameInfo PersonName { get; set; } = default!;
 
     /// <summary>
@@ -178,17 +180,20 @@ public class NaturalPerson
     /// </summary>
     [Column(TypeName = "varchar(6)")]
     [Comment("性别")]
+    [PersonalData]
     public virtual Gender? Gender { get; set; }
 
     /// <summary>
     ///     出生日期
     /// </summary>
+    [PersonalData]
     public virtual DateOnly? DateOfBirth { get; set; }
 
     /// <summary>
     ///     个人经历。
     /// </summary>
     [MaxLength(200)]
+    [PersonalData]
     public virtual string? Bio { get; set; }
 
 
@@ -218,6 +223,7 @@ public class NaturalPerson
     /// </summary>
     [MaxLength(10)]
     [Unicode(false)]
+    [PersonalData]
     public virtual string? Locale { get; protected internal set; }
 
     /// <summary>
@@ -225,17 +231,20 @@ public class NaturalPerson
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
+    [PersonalData]
     public virtual string? TimeZone { get; protected internal set; }
 
     /// <summary>
     ///     地址。
     /// </summary>
+    [PersonalData]
     public virtual AddressInfo? Address { get; set; }
 
     /// <summary>
     ///     个人主页。
     /// </summary>
     [MaxLength(256)]
+    [PersonalData]
     public virtual string? WebSite { get; set; }
 
     /// <summary>

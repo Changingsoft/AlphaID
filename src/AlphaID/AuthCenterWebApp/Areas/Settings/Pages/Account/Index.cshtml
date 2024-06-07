@@ -7,9 +7,9 @@
 
 <h2>@L["Account"]</h2>
 
-<a asp-page="ChangeUserName" class="btn">@L["Change your user name"]</a>
-<a asp-page="Mobile" class="btn">@L["Change your phone number"]</a>
-<a asp-page="Email" class="btn">@L["Change your email"]</a>
+<p>@(SL["User name"]) : @Model.Person.UserName <a asp-page="ChangeUserName" class="btn">@L["Change your user name"]</a></p>
+<p>@(SL["Phone number"]) : @Model.Person.PhoneNumber <a asp-page="Mobile" class="btn">@L["Change your phone number"]</a></p>
+<p>@(SL["Email"]) : @Model.Person.Email <a asp-page="Email" class="btn">@L["Change your email"]</a></p>
 
 
 <h3>@L["Personal data"]</h3>

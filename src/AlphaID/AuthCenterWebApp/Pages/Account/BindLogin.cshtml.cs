@@ -122,12 +122,6 @@ public class BindLoginModel(
 
                 if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
                 {
-/* 项目“AuthCenterWebApp (net6.0)”的未合并的更改
-在此之前:
-                    var principal = this.GenerateMustChangePasswordPrincipal(user);
-在此之后:
-                    var principal = GenerateMustChangePasswordPrincipal(user);
-*/
                     ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
                     await signInManager.SignOutAsync();
                     await HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);

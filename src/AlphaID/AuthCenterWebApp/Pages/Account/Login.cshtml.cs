@@ -165,7 +165,7 @@ public class LoginModel(
             if (!local)
                 View.ExternalProviders =
                 [
-                    new ViewModel.ExternalProvider
+                    new ExternalProvider
                     {
                         AuthenticationScheme = context.IdP,
                         DisplayName = scheme!.DisplayName!
@@ -178,18 +178,18 @@ public class LoginModel(
         // 载入所有身份验证方案。
         IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
 
-        List<ViewModel.ExternalProvider> providers = schemes
+        List<ExternalProvider> providers = schemes
             .Where(x => x.DisplayName != null)
-            .Select(x => new ViewModel.ExternalProvider
+            .Select(x => new ExternalProvider
             {
                 DisplayName = x.DisplayName ?? x.Name,
                 AuthenticationScheme = x.Name
             }).ToList();
 
         //从存储加载验证方案。
-        IEnumerable<ViewModel.ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
+        IEnumerable<ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
-            .Select(x => new ViewModel.ExternalProvider
+            .Select(x => new ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
                 DisplayName = x.DisplayName ?? ""
@@ -278,12 +278,11 @@ public class LoginModel(
         public string? ExternalLoginDisplayName =>
             IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
-        public class ExternalProvider
-        {
-            public string DisplayName { get; set; } = default!;
-            public string AuthenticationScheme { get; set; } = default!;
-        }
+        
     }
-
-    
+    public class ExternalProvider
+    {
+        public string DisplayName { get; set; } = default!;
+        public string AuthenticationScheme { get; set; } = default!;
+    }
 }

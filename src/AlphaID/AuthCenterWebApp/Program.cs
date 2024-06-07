@@ -9,6 +9,7 @@ using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
+using AuthCenterWebApp.Pages.Account;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
@@ -196,6 +197,9 @@ builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, AdvancedO
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
+
+//配置登录选项
+builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection("LoginOptions"));
 
 // Add Session builder.Services. 
 builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(20); });

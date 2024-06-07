@@ -26,6 +26,7 @@ public class LoginModel(
     IEventService events,
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager,
+    IOptions<LoginOptions> loginOptions,
     ILogger<LoginModel>? logger) : PageModel
 {
     public ViewModel View { get; set; } = default!;
@@ -130,7 +131,7 @@ public class LoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+            ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
         }
 
         // something went wrong, show form with error
@@ -211,8 +212,8 @@ public class LoginModel(
 
         View = new ViewModel
         {
-            AllowRememberLogin = LoginOptions.AllowRememberLogin,
-            EnableLocalLogin = allowLocal && LoginOptions.AllowLocalLogin,
+            AllowRememberLogin = loginOptions.Value.AllowRememberLogin,
+            EnableLocalLogin = allowLocal && loginOptions.Value.AllowLocalLogin,
             ExternalProviders = [.. providers]
         };
     }
@@ -284,14 +285,5 @@ public class LoginModel(
         }
     }
 
-    /// <summary>
-    ///     登录选项。
-    /// </summary>
-    public class LoginOptions
-    {
-        public static readonly bool AllowLocalLogin = true;
-        public static readonly bool AllowRememberLogin = true;
-        public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
-        public static readonly string InvalidCredentialsErrorMessage = "用户名或密码无效";
-    }
+    
 }

@@ -191,9 +191,6 @@ builder.Services.AddIdentityServer(options =>
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<IEventSink, AuditLogEventSink>();
 
-//todo 替换 Duende.IdentityServer.Hosting.DynamicProviders.OidcConfigureOptions
-builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, AdvancedOidcConfigureOptions>();
-
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
 

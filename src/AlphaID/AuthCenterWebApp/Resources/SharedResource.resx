@@ -316,10 +316,16 @@
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+	  <value>Verify</value>
+  </data>
   <data name="Website" xml:space="preserve">
     <value>Website</value>
   </data>
   <data name="Your personal website." xml:space="preserve">
     <value>Your personal website.</value>
+  </data>
+  <data name="Nick name" xml:space="preserve">
+	  <value>Nick name</value>
   </data>
 </root>

@@ -65,8 +65,14 @@
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\PersonalData.zh-cn.resx">
 	    <DependentUpon>PersonalData.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\EnableAuthenticator.zh-cn.resx">
+	    <DependentUpon>EnableAuthenticator.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ExternalLogins.zh-cn.resx">
 	    <DependentUpon>ExternalLogins.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ResetAuthenticator.zh-cn.resx">
+	    <DependentUpon>ResetAuthenticator.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\TwoFactorAuthentication.zh-cn.resx">
 	    <DependentUpon>TwoFactorAuthentication.resx</DependentUpon>

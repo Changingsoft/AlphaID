@@ -318,4 +318,7 @@
   <data name="Your personal website." xml:space="preserve">
 	  <value>您的个人主页。</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+	  <value>验证</value>
+  </data>
 </root>

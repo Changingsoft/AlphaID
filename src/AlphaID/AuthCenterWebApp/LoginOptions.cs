@@ -1,4 +1,4 @@
-namespace AuthCenterWebApp.Pages.Account;
+namespace AuthCenterWebApp;
 
 /// <summary>
 ///     µÇÂ¼Ñ¡Ïî¡£

@@ -9,7 +9,6 @@ using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
-using AuthCenterWebApp.Pages.Account;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;

@@ -68,6 +68,15 @@
 	  <EmbeddedResource Update="Resources\Areas\SystemSettings\Pages\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Account\AccessDenied.zh-cn.resx">
+	    <DependentUpon>AccessDenied.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Account\SignedOut.zh-cn.resx">
+	    <DependentUpon>SignedOut.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Error.zh-cn.resx">
+	    <DependentUpon>Error.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\Components\OrganizationNavPanel\Default.zh-cn.resx">
 	    <DependentUpon>Default.resx</DependentUpon>
 	  </EmbeddedResource>

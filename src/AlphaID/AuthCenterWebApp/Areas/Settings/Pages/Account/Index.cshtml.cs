@@ -7,12 +7,13 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 public class IndexModel(DirectoryAccountManager directoryAccountManager, NaturalPersonManager naturalPersonManager)
     : PageModel
 {
+    public NaturalPerson Person { get; set; } = default!;
+
     public IEnumerable<DirectoryAccount> DirectoryAccounts { get; set; } = [];
 
     public async Task OnGet()
     {
-        NaturalPerson person = await naturalPersonManager.GetUserAsync(User) ??
-                               throw new InvalidOperationException("找不到用户。");
-        DirectoryAccounts = directoryAccountManager.GetLogonAccounts(person);
+        Person = await naturalPersonManager.GetUserAsync(User) ?? throw new InvalidOperationException("找不到用户。");
+        DirectoryAccounts = directoryAccountManager.GetLogonAccounts(Person);
     }
 }

@@ -9,6 +9,9 @@
 
 	<ItemGroup>
 		<!-- ReSharper disable once VulnerablePackage -->
+		<PackageReference Include="AspNet.Security.OAuth.QQ" Version="8.0.0" />
+		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.0.0" />
+		<PackageReference Include="AspNet.Security.OAuth.WorkWeixin" Version="8.0.0" />
 		<PackageReference Include="Captcha" Version="4.4.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.6" />
@@ -56,17 +59,35 @@
 	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Identifiers\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\DeletePersonalData.zh-cn.resx">
+	    <DependentUpon>DeletePersonalData.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\Email.zh-cn.resx">
 	    <DependentUpon>Email.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\PersonalData.zh-cn.resx">
+	    <DependentUpon>PersonalData.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\EnableAuthenticator.zh-cn.resx">
+	    <DependentUpon>EnableAuthenticator.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ExternalLogins.zh-cn.resx">
 	    <DependentUpon>ExternalLogins.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ResetAuthenticator.zh-cn.resx">
+	    <DependentUpon>ResetAuthenticator.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\TwoFactorAuthentication.zh-cn.resx">
 	    <DependentUpon>TwoFactorAuthentication.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\_Layout.zh-cn.resx">
 	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Profile\OtherNames.zh-cn.resx">
+	    <DependentUpon>OtherNames.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Profile\PersonName.zh-cn.resx">
+	    <DependentUpon>PersonName.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Authentication.zh-cn.resx">
 	    <DependentUpon>Authentication.resx</DependentUpon>
@@ -109,6 +130,9 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultFooterPartial.zh-cn.resx">
 	    <DependentUpon>_DefaultFooterPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_IdentityResultPartial.zh-cn.resx">
+	    <DependentUpon>_IdentityResultPartial.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\_IdOperationResultPartial.zh-cn.resx">
 	    <DependentUpon>_IdOperationResultPartial.resx</DependentUpon>

@@ -6,7 +6,7 @@ namespace IdSubjects.DirectoryLogon.Tests;
 public class DirectoryServiceManagerTest(ServiceProviderFixture serviceProvider)
 {
     [Fact(Skip = "不具备可测试性")]
-    public async void CreateDirectoryService()
+    public async Task CreateDirectoryService()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<DirectoryServiceManager>();

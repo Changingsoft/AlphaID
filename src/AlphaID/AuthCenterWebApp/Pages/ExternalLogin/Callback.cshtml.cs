@@ -59,13 +59,13 @@ public class Callback(
         var localSignInProps = new AuthenticationProperties();
         CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
 
-        // issue authentication cookie for user
+        // 签发本地登录凭据。
         await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
-        //注销外部登录
+        //注销当前的外部登录凭据。
         await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
-        // retrieve return URL
+        // 处理返回URL。
         // check if external login is in the context of an OIDC request
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
         await events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true,
@@ -80,21 +80,28 @@ public class Callback(
         return Redirect(returnUrl);
     }
 
-    // if the external login is OIDC-based, there are certain things we need to preserve to make logout work
-    // this will be different for WS-Fed, SAML2p or other protocols
+    /// <summary>
+    /// 捕获外部登录上下文。
+    /// </summary>
+    /// <remarks>
+    /// 如果外部登录是基于OIDC，我们需要处理一些事情以便登出（注销）能正常工作。
+    /// this will be different for WS-Fed, SAML2p or other protocols.
+    /// </remarks>
+    /// <param name="externalResult"></param>
+    /// <param name="localClaims"></param>
+    /// <param name="localSignInProps"></param>
     private void CaptureExternalLoginContext(AuthenticateResult externalResult,
         List<Claim> localClaims,
         AuthenticationProperties localSignInProps)
     {
-        // capture the idp used to log in, so the session knows where the user came from
+        // 捕获用于登录的标识提供方（IdP），以便会话知道用户从哪里来的。
         localClaims.Add(new Claim(JwtClaimTypes.IdentityProvider, externalResult.Properties!.Items[".AuthScheme"]!));
 
-        // if the external system sent a session id claim, copy it over
-        // so we can use it for single sign-out
+        // 如果外部系统发送了会话ID声明，将其复制过来，以便后续可用它做单点登出。
         Claim? sidClaim = externalResult.Principal!.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
         if (sidClaim != null) localClaims.Add(new Claim(JwtClaimTypes.SessionId, sidClaim.Value));
 
-        // if the external provider issued an id_token, we'll keep it for sign out
+        // 如果外部提供器签发了 id_token，我们将其保存以便后续注销。
         string? idToken = externalResult.Properties.GetTokenValue("id_token");
         if (idToken != null)
             localSignInProps.StoreTokens([new AuthenticationToken { Name = "id_token", Value = idToken }]);

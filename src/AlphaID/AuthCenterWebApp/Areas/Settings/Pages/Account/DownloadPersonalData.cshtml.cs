@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,12 @@ public class DownloadPersonalDataModel(
     NaturalPersonManager userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
+    private readonly JsonSerializerOptions serializerOptions = new JsonSerializerOptions()
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        WriteIndented = true,
+    };
+
     public IActionResult OnGet()
     {
         return NotFound();
@@ -27,8 +35,8 @@ public class DownloadPersonalDataModel(
         IEnumerable<PropertyInfo> personalDataProps = typeof(NaturalPerson).GetProperties()
             .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
-        Dictionary<string, string> personalData =
-            personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");
+        Dictionary<string, object?> personalData =
+            personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user));
 
         IList<UserLoginInfo> logins = await userManager.GetLoginsAsync(user);
         foreach (UserLoginInfo l in logins)
@@ -39,6 +47,6 @@ public class DownloadPersonalDataModel(
             personalData.Add("Authenticator Key", authenticatorKey);
 
         Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
-        return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
+        return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData, serializerOptions), "application/json");
     }
 }

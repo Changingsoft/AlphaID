@@ -109,22 +109,25 @@
   <data name="Change your user name" xml:space="preserve">
     <value>Change your user name</value>
   </data>
+  <data name="Directory service" xml:space="preserve">
+	  <value>Directory service</value>
+	  <comment>Directory Service</comment>
+  </data>
   <data name="Manage personal data" xml:space="preserve">
 	  <value>Manage personal data</value>
-  </data>
-  <data name="Personal data" xml:space="preserve">
-	  <value>Personal data</value>
   </data>
   <data name="Managed directory accounts" xml:space="preserve">
 	  <value>Managed Directory Accounts</value>
 	  <comment>Managed Directory Accounts</comment>
   </data>
-  <data name="Directory service" xml:space="preserve">
-	  <value>Directory service</value>
-	  <comment>Directory Service</comment>
-  </data>
   <data name="Object Id" xml:space="preserve">
 	  <value>Object Id</value>
 	  <comment>Object Id</comment>
+  </data>
+  <data name="Personal data" xml:space="preserve">
+	  <value>Personal data</value>
+  </data>
+  <data name="Directory account not found." xml:space="preserve">
+	  <value>Directory account not found.</value>
   </data>
 </root>

@@ -26,6 +26,7 @@ public class LoginModel(
     IEventService events,
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager,
+    IOptions<LoginOptions> loginOptions,
     ILogger<LoginModel>? logger) : PageModel
 {
     public ViewModel View { get; set; } = default!;
@@ -39,7 +40,6 @@ public class LoginModel(
         if (View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider
-            logger?.LogInformation("we only have one option for logging in and it's an external provider");
             return RedirectToPage("/ExternalLogin/Challenge",
                 new
                 {
@@ -62,9 +62,6 @@ public class LoginModel(
             {
                 // 将用户的取消发送回 IdentityServer，以便它能拒绝 consent（即便客户端不需要consent）。
                 // 这将会把访问被拒绝的响应发送回客户端。
-                // if the user cancels, send a result back into IdentityServer as if they 
-                // denied the consent (even if this client does not require consent).
-                // this will send back access denied OIDC error response to the client.
                 await interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
@@ -112,7 +109,7 @@ public class LoginModel(
                     if (string.IsNullOrEmpty(Input.ReturnUrl)) return Redirect("~/");
 
                     // user might have clicked on a malicious link - should be logged
-                    throw new Exception("invalid return URL");
+                    throw new ArgumentException("invalid return URL");
                 }
 
                 if (result.MustChangePassword())
@@ -134,7 +131,7 @@ public class LoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+            ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
         }
 
         // something went wrong, show form with error
@@ -168,7 +165,7 @@ public class LoginModel(
             if (!local)
                 View.ExternalProviders =
                 [
-                    new ViewModel.ExternalProvider
+                    new ExternalProvider
                     {
                         AuthenticationScheme = context.IdP,
                         DisplayName = scheme!.DisplayName!
@@ -178,20 +175,21 @@ public class LoginModel(
             return;
         }
 
+        // 载入所有身份验证方案。
         IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
 
-        List<ViewModel.ExternalProvider> providers = schemes
+        List<ExternalProvider> providers = schemes
             .Where(x => x.DisplayName != null)
-            .Select(x => new ViewModel.ExternalProvider
+            .Select(x => new ExternalProvider
             {
                 DisplayName = x.DisplayName ?? x.Name,
                 AuthenticationScheme = x.Name
             }).ToList();
 
         //从存储加载验证方案。
-        IEnumerable<ViewModel.ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
+        IEnumerable<ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
-            .Select(x => new ViewModel.ExternalProvider
+            .Select(x => new ExternalProvider
             {
                 AuthenticationScheme = x.Scheme,
                 DisplayName = x.DisplayName ?? ""
@@ -205,15 +203,17 @@ public class LoginModel(
         {
             allowLocal = client.EnableLocalLogin; //客户端是否允许本地登录
             if (client.IdentityProviderRestrictions.Count != 0)
+            {
                 //过滤只有客户端允许的登录提供器。
                 providers = providers.Where(provider =>
                     client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+            }
         }
 
         View = new ViewModel
         {
-            AllowRememberLogin = LoginOptions.AllowRememberLogin,
-            EnableLocalLogin = allowLocal && LoginOptions.AllowLocalLogin,
+            AllowRememberLogin = loginOptions.Value.AllowRememberLogin,
+            EnableLocalLogin = allowLocal && loginOptions.Value.AllowLocalLogin,
             ExternalProviders = [.. providers]
         };
     }
@@ -246,14 +246,30 @@ public class LoginModel(
 
     public class ViewModel
     {
+        /// <summary>
+        /// 获取或设置是否允许记住登录。
+        /// </summary>
         public bool AllowRememberLogin { get; set; } = true;
+        
+        /// <summary>
+        /// 获取或设置是否启用本地登录。
+        /// </summary>
         public bool EnableLocalLogin { get; set; } = true;
 
+        /// <summary>
+        /// 获取所有外部登录提供器。
+        /// </summary>
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
 
+        /// <summary>
+        /// 获取可见的外部登录提供器。
+        /// </summary>
         public IEnumerable<ExternalProvider> VisibleExternalProviders =>
             ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
+        /// <summary>
+        /// 只是是否仅外部登录。当且仅当禁用本地登录，且外部登录提供器只有1个时，该属性为true。
+        /// </summary>
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
 
         public string? ExternalLoginScheme =>
@@ -262,21 +278,11 @@ public class LoginModel(
         public string? ExternalLoginDisplayName =>
             IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
 
-        public class ExternalProvider
-        {
-            public string DisplayName { get; set; } = default!;
-            public string AuthenticationScheme { get; set; } = default!;
-        }
+        
     }
-
-    /// <summary>
-    ///     登录选项。
-    /// </summary>
-    public class LoginOptions
+    public class ExternalProvider
     {
-        public static readonly bool AllowLocalLogin = true;
-        public static readonly bool AllowRememberLogin = true;
-        public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
-        public static readonly string InvalidCredentialsErrorMessage = "用户名或密码无效";
+        public string DisplayName { get; set; } = default!;
+        public string AuthenticationScheme { get; set; } = default!;
     }
 }

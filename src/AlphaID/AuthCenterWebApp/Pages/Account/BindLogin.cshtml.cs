@@ -23,7 +23,8 @@ public class BindLoginModel(
     IIdentityProviderStore identityProviderStore,
     IEventService events,
     NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager) : PageModel
+    SignInManager<NaturalPerson> signInManager,
+    IOptions<LoginOptions> loginOptions) : PageModel
 {
     public ViewModel View { get; set; } = default!;
 
@@ -87,7 +88,7 @@ public class BindLoginModel(
                 {
                     await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
                         clientId: context?.Client.ClientId));
-                    ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+                    ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
                     return Page();
                 }
 
@@ -121,12 +122,6 @@ public class BindLoginModel(
 
                 if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
                 {
-/* 项目“AuthCenterWebApp (net6.0)”的未合并的更改
-在此之前:
-                    var principal = this.GenerateMustChangePasswordPrincipal(user);
-在此之后:
-                    var principal = GenerateMustChangePasswordPrincipal(user);
-*/
                     ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
                     await signInManager.SignOutAsync();
                     await HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
@@ -155,7 +150,7 @@ public class BindLoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+            ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
         }
 
         // something went wrong, show form with error
@@ -230,8 +225,8 @@ public class BindLoginModel(
 
         View = new ViewModel
         {
-            AllowRememberLogin = LoginOptions.AllowRememberLogin,
-            EnableLocalLogin = allowLocal && LoginOptions.AllowLocalLogin,
+            AllowRememberLogin = loginOptions.Value.AllowRememberLogin,
+            EnableLocalLogin = allowLocal && loginOptions.Value.AllowLocalLogin,
             ExternalProviders = [.. providers]
         };
     }
@@ -303,13 +298,5 @@ public class BindLoginModel(
             public string? DisplayName { get; set; }
             public string AuthenticationScheme { get; set; } = default!;
         }
-    }
-
-    public class LoginOptions
-    {
-        public static readonly bool AllowLocalLogin = true;
-        public static readonly bool AllowRememberLogin = true;
-        public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
-        public static readonly string InvalidCredentialsErrorMessage = "用户名或密码无效";
     }
 }

@@ -20,7 +20,6 @@ using IdSubjects.ChineseName;
 using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -151,6 +150,40 @@ if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFea
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 }
 
+var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
+var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
+if (weixinLoginSection.GetValue("Enabled", false))
+{
+    idSubjectsIdentityBuilder.Authentication.AddWeixin("signin-weixin", "微信", options =>
+    {
+        options.CallbackPath = "signin-weixin";
+        options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
+        options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
+    });
+}
+
+var workWeixinLoginSection = externalLoginsSection.GetSection("WorkWeixin");
+if (workWeixinLoginSection.GetValue("Enabled", false))
+{
+    idSubjectsIdentityBuilder.Authentication.AddWorkWeixin("signin-workweixin", "企业微信", options =>
+    {
+        options.CallbackPath = "signin-workweixin";
+        options.ClientId = workWeixinLoginSection.GetValue("ClientId", string.Empty)!;
+        options.ClientSecret = workWeixinLoginSection.GetValue("ClientSecret", string.Empty)!;
+    });
+}
+
+var qqLoginSection = externalLoginsSection.GetSection("QQ");
+if (qqLoginSection.GetValue("Enabled", false))
+{
+    idSubjectsIdentityBuilder.Authentication.AddQQ("signin-qq", "QQ", options =>
+    {
+        options.CallbackPath = "signin-qq";
+        options.ClientId = qqLoginSection.GetValue("ClientId", string.Empty)!;
+        options.ClientSecret = qqLoginSection.GetValue("ClientSecret", string.Empty)!;
+    });
+}
+
 //添加邮件发送器。
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
@@ -191,11 +224,11 @@ builder.Services.AddIdentityServer(options =>
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<IEventSink, AuditLogEventSink>();
 
-//todo 替换 Duende.IdentityServer.Hosting.DynamicProviders.OidcConfigureOptions
-builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, AdvancedOidcConfigureOptions>();
-
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
+
+//配置登录选项
+builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection("LoginOptions"));
 
 // Add Session builder.Services. 
 builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(20); });

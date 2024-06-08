@@ -13,7 +13,8 @@ public class NewModel(
     NaturalPersonManager personManager) : PageModel
 {
     [BindProperty]
-    [Display(Name = "Name")]
+    [Display(Name = "Name", Description = "Full name of organization.")]
+    [Required(ErrorMessage = "Validate_Required")]
     [PageRemote(AdditionalFields = "__RequestVerificationToken", PageHandler = "CheckName", HttpMethod = "Post",
         ErrorMessage = "Organization name exists.")]
     public string Name { get; set; } = default!;

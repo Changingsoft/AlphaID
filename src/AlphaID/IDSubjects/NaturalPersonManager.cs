@@ -129,9 +129,9 @@ public class NaturalPersonManager(
         user.PersonWhenChanged = utcNow;
         IdentityResult result = await base.CreateAsync(user);
         if (result.Succeeded)
-            await EventService.RaiseAsync(new CreatePersonSuccessEvent());
+            await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));
         else
-            await EventService.RaiseAsync(new CreatePersonFailureEvent());
+            await EventService.RaiseAsync(new CreatePersonFailureEvent(user.UserName, result.Errors));
 
         await aggregator.PostCreate(this, user);
         return result;
@@ -155,9 +155,9 @@ public class NaturalPersonManager(
         user.PasswordLastSet = utcNow;
         IdentityResult result = await base.CreateAsync(user, password);
         if (result.Succeeded)
-            await EventService.RaiseAsync(new CreatePersonSuccessEvent());
+            await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));
         else
-            await EventService.RaiseAsync(new CreatePersonFailureEvent());
+            await EventService.RaiseAsync(new CreatePersonFailureEvent(user.UserName, result.Errors));
 
         await aggregator.PostCreate(this, user);
         return result;
@@ -207,9 +207,9 @@ public class NaturalPersonManager(
         user.PersonWhenChanged = TimeProvider.GetUtcNow();
         IdentityResult result = await base.UpdateAsync(user);
         if (result.Succeeded)
-            await EventService.RaiseAsync(new UpdatePersonSuccessEvent());
+            await EventService.RaiseAsync(new UpdatePersonSuccessEvent(user.UserName));
         else
-            await EventService.RaiseAsync(new UpdatePersonFailureEvent());
+            await EventService.RaiseAsync(new UpdatePersonFailureEvent(user.UserName));
 
         await aggregator.PostUpdateAsync(this, user);
         return result;
@@ -241,9 +241,9 @@ public class NaturalPersonManager(
         IdentityResult result = await base.DeleteAsync(user);
 
         if (result.Succeeded)
-            await EventService.RaiseAsync(new DeletePersonSuccessEvent());
+            await EventService.RaiseAsync(new DeletePersonSuccessEvent(user.UserName));
         else
-            await EventService.RaiseAsync(new DeletePersonFailureEvent());
+            await EventService.RaiseAsync(new DeletePersonFailureEvent(user.UserName));
 
         while (stack.TryPop(out INaturalPersonDeleteInterceptor? interceptor))
             await interceptor.PostDeleteAsync(this, user);
@@ -268,7 +268,7 @@ public class NaturalPersonManager(
         if (Options.Password.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, password))
             {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent("HitPasswordHistory"));
+                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName,"HitPasswordHistory"));
                 return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
             }
 
@@ -308,7 +308,7 @@ public class NaturalPersonManager(
                     .AddMinutes(Options.Password.MinimumAge);
                 if (user.PasswordLastSet.Value > coldDownEnd)
                 {
-                    await EventService.RaiseAsync(new ChangePasswordFailureEvent("MinimumPasswordAge"));
+                    await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "MinimumPasswordAge"));
                     return IdentityResult.Failed(ErrorDescriber.LessThenMinimumPasswordAge());
                 }
             }
@@ -317,7 +317,7 @@ public class NaturalPersonManager(
         if (Options.Password.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, newPassword))
             {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent("HitPasswordHistory"));
+                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
                 return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
             }
 
@@ -328,7 +328,7 @@ public class NaturalPersonManager(
             await base.ChangePasswordAsync(user, currentPassword, newPassword).ConfigureAwait(false);
         if (!result.Succeeded)
         {
-            await EventService.RaiseAsync(new ChangePasswordFailureEvent("基础设施返回了错误。"));
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "基础设施返回了错误。"));
             return result;
         }
 
@@ -342,11 +342,11 @@ public class NaturalPersonManager(
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            logger.LogError(e, "执行interceptor.PasswordChangedAsync阶段发生异常。");
         }
 
         trans.Complete();
+        await eventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户修改了密码"));
         return result;
     }
 
@@ -370,7 +370,7 @@ public class NaturalPersonManager(
         if (Options.Password.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, newPassword))
             {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent("HitPasswordHistory"));
+                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
                 return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
             }
 
@@ -379,7 +379,7 @@ public class NaturalPersonManager(
         if (!result.Succeeded)
         {
             await EventService.RaiseAsync(
-                new ChangePasswordFailureEvent(result.Errors.Select(e => e.Description)
+                new ChangePasswordFailureEvent(user.UserName, result.Errors.Select(e => e.Description)
                     .Aggregate((x, y) => $"{x},{y}")));
             return result;
         }
@@ -388,7 +388,7 @@ public class NaturalPersonManager(
         if (Options.Password.RememberPasswordHistory > 0)
             await PasswordHistoryManager.Pass(user, newPassword);
 
-        await EventService.RaiseAsync(new ChangePasswordSuccessEvent("用户重置了密码。"));
+        await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户重置了密码。"));
         await interceptor.PasswordChangedAsync(user, CancellationToken.None);
         return result;
     }
@@ -411,12 +411,12 @@ public class NaturalPersonManager(
         if (!result.Succeeded)
         {
             await EventService.RaiseAsync(
-                new ChangePasswordFailureEvent(result.Errors.Select(e => e.Description)
+                new ChangePasswordFailureEvent(user.UserName, result.Errors.Select(e => e.Description)
                     .Aggregate((x, y) => $"{x},{y}")));
             return result;
         }
 
-        await EventService.RaiseAsync(new ChangePasswordSuccessEvent("用户删除了密码。"));
+        await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户删除了密码。"));
         await interceptor.PasswordChangedAsync(user, CancellationToken.None);
         return result;
     }
@@ -480,11 +480,11 @@ public class NaturalPersonManager(
         if (!result.Succeeded)
         {
             string errMessage = result.Errors.Select(p => p.Description).Aggregate((a, b) => $"{a}, {b}");
-            await EventService.RaiseAsync(new ChangePasswordFailureEvent(errMessage));
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(person.UserName, errMessage));
         }
         else
         {
-            await EventService.RaiseAsync(new ChangePasswordSuccessEvent("管理员重置了用户密码。"));
+            await EventService.RaiseAsync(new ChangePasswordSuccessEvent(person.UserName, "管理员重置了用户密码。"));
         }
 
         await interceptor.PasswordChangedAsync(person, CancellationToken.None);

@@ -96,7 +96,10 @@ public class Consent(
         }
 
         // we need to redisplay the consent UI
-        View = await BuildViewModelAsync(Input.Id, Input);
+        var view = await BuildViewModelAsync(Input.Id, Input);
+        if (view == null)
+            return RedirectToPage("/Home/Error/Index");
+        View = view;
         return Page();
     }
 

@@ -100,6 +100,7 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
             ? Context.HttpContext.Connection.RemoteIpAddress.ToString()
             : "unknown";
 
+        // 让事件自己做准备。
         return evt.PrepareAsync();
     }
 }

@@ -7,10 +7,14 @@ internal class UpdatePersonSuccessEvent : AuditLogEvent
 {
     /// <summary>
     /// </summary>
-    public UpdatePersonSuccessEvent()
+    public UpdatePersonSuccessEvent(string userName)
         : base(AuditLogEventCategories.AccountManagement,
             EventIds.UpdatePersonSuccess,
-            AuditLogEventTypes.Success)
+            AuditLogEventTypes.Success,
+            "成功更新了自然人信息。")
     {
+        UserName = userName;
     }
+
+    public string UserName { get; set; }
 }

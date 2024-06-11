@@ -7,10 +7,14 @@ internal class UpdatePersonFailureEvent : AuditLogEvent
 {
     /// <summary>
     /// </summary>
-    public UpdatePersonFailureEvent()
+    public UpdatePersonFailureEvent(string userName)
         : base(AuditLogEventCategories.AccountManagement,
             EventIds.UpdatePersonFailure,
-            AuditLogEventTypes.Failure)
+            AuditLogEventTypes.Failure,
+            "更新自然人信息失败。")
     {
+        UserName = userName;
     }
+
+    public string UserName { get; set; }
 }

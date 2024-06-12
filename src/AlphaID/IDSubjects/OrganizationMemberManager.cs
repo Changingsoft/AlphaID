@@ -40,14 +40,17 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
         IQueryable<OrganizationMember>? members =
             store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
         Debug.Assert(members != null);
+        //假定可见级别为Public。
         var visibilityLevel = MembershipVisibility.Public;
         if (visitor != null)
         {
+            //如果已登录，降为AuthenticatedUser
             visibilityLevel = MembershipVisibility.AuthenticatedUser;
+            //如果访问者是该组织成员，则降为Private
             if (members.Any(m => m.PersonId == visitor.Id))
                 visibilityLevel = MembershipVisibility.Private; //Visitor is a member of the organization.
         }
-
+        // 过滤出成员可见级别大于等于访问者最低可见级别的成员。
         return Task.FromResult(members.Where(m => m.Visibility >= visibilityLevel).AsEnumerable());
     }
 
@@ -66,11 +69,6 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <summary>
     ///     以访问者visitor的视角检索指定用户的组织成员身份。
     /// </summary>
-    /// <remarks>
-    ///     <para>
-    ///         如果
-    ///     </para>
-    /// </remarks>
     /// <param name="person">要检索组织成员身份的目标用户。</param>
     /// <param name="visitor">访问者。如果传入null，代表匿名访问者。</param>
     /// <returns></returns>
@@ -150,5 +148,10 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     public Task<IdOperationResult> UpdateAsync(OrganizationMember member)
     {
         return store.UpdateAsync(member);
+    }
+
+    public async Task<IdOperationResult> TransferOwnershipTo(OrganizationMember member)
+    {
+        throw new NotImplementedException();
     }
 }

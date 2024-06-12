@@ -346,7 +346,7 @@ public class NaturalPersonManager(
         }
 
         trans.Complete();
-        await eventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户修改了密码"));
+        await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户修改了密码"));
         return result;
     }
 

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you sure you want leave this person from organization?" xml:space="preserve">
-    <value>您确认要使此人离开组织吗？</value>
+  <data name="Leave the person from organization?" xml:space="preserve">
+	  <value>令此人离开组织吗？</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>导出</value>
@@ -140,5 +140,14 @@
   </data>
   <data name="You are the owner of this organization" xml:space="preserve">
     <value>您是该组织的所有者</value>
+  </data>
+  <data name="Yourself" xml:space="preserve">
+	  <value>你自己</value>
+  </data>
+  <data name="Transfer ownership" xml:space="preserve">
+	  <value>转移所有权</value>
+  </data>
+  <data name="Transfer ownership to this person?" xml:space="preserve">
+	  <value>将所有权转移给此人？</value>
   </data>
 </root>

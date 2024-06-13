@@ -60,7 +60,7 @@ public class IndexModel(
         return Page();
     }
 
-    public async Task<IActionResult> OnPostTransfer(string anchor, string personId)
+    public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
         if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
             return RedirectToPage("/Who");
@@ -83,7 +83,34 @@ public class IndexModel(
             return Page();
         }
 
-        Result = await organizationMemberManager.TransferOwnershipTo(member);
+        Result = await organizationMemberManager.SetOwner(member);
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
+    {
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who");
+        if (organization == null)
+            return NotFound();
+        Organization = organization;
+
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+
+        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+
+        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+            return Page();
+
+        if (!UserIsOwner)
+        {
+            ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
+            return Page();
+        }
+
+        Result = await organizationMemberManager.UnsetOwner(member);
         return Page();
     }
 }

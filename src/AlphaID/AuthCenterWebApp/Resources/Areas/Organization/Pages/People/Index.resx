@@ -125,12 +125,20 @@
 	  <value>Yourself</value>
 	  <comment>Yourself</comment>
   </data>
-  <data name="Transfer ownership to this person?" xml:space="preserve">
-	  <value>Transfer ownership to this person?</value>
+  <data name="Set this person as organization owner?" xml:space="preserve">
+	  <value>Set this person as organization owner?</value>
 	  <comment>Transfer ownership to this person?</comment>
   </data>
-  <data name="Transfer ownership" xml:space="preserve">
-	  <value>Transfer ownership</value>
+  <data name="Set owner" xml:space="preserve">
+	  <value>Set owner</value>
 	  <comment>Transfer ownership</comment>
+  </data>
+  <data name="Unset ownership of this person?" xml:space="preserve">
+	  <value>Unset ownership of this person?</value>
+	  <comment>Unset ownership of this person?</comment>
+  </data>
+  <data name="Unset owner" xml:space="preserve">
+	  <value>Unset owner</value>
+	  <comment>Unset owner</comment>
   </data>
 </root>

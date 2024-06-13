@@ -82,8 +82,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
             return members.Where(m => m.Visibility == MembershipVisibility.Public);
 
         //获取访问者的所属组织Id列表。
-        List<string> visitorMemberOfOrgIds = store.OrganizationMembers.Where(m => m.PersonId == visitor.Id)
-            .Select(m => m.OrganizationId).ToList();
+        List<string> visitorMemberOfOrgIds = [.. store.OrganizationMembers.Where(m => m.PersonId == visitor.Id).Select(m => m.OrganizationId)];
 
         return members.Where(m =>
             m.Visibility >= MembershipVisibility.AuthenticatedUser || (m.Visibility == MembershipVisibility.Private &&
@@ -150,8 +149,27 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
         return store.UpdateAsync(member);
     }
 
-    public async Task<IdOperationResult> TransferOwnershipTo(OrganizationMember member)
+    public async Task<IdOperationResult> SetOwner(OrganizationMember member)
     {
-        throw new NotImplementedException();
+        var members = await GetMembersAsync(member.Organization);
+        if (members.Count(m => m.IsOwner) <= 5)
+        {
+            member.IsOwner = true;
+            //todo need log to audit log.
+            return await UpdateAsync(member);
+        }
+        return IdOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
+    }
+
+    public async Task<IdOperationResult> UnsetOwner(OrganizationMember member)
+    {
+        var members = await GetMembersAsync(member.Organization);
+        if (members.Count(m => m.IsOwner) > 1)
+        {
+            member.IsOwner = false;
+            //todo need log to audit log.
+            return await UpdateAsync(member);
+        }
+        return IdOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
     }
 }

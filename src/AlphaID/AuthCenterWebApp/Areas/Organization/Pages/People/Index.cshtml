@@ -63,9 +63,18 @@
                                 @if (Model.UserIsOwner && member.PersonId != User.SubjectId())
                                 {
                                     <button type="submit" name="personId" value="@member.PersonId" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
-                                    <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="Transfer" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Transfer ownership to this person?"])');">@L["Transfer ownership"]</button>
                                 }
-
+                                @if (Model.UserIsOwner)
+                                {
+                                    if (!member.IsOwner)
+                                    {
+                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="SetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Set this person as organization owner?"])');">@L["Set owner"]</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="UnsetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Unset ownership of this person?"])');">@L["Unset owner"]</button>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

@@ -169,11 +169,29 @@ namespace IdSubjects {
         }
         
         /// <summary>
+        ///   查找类似 Canbe set almost {0} owners in this organization. 的本地化字符串。
+        /// </summary>
+        public static string Max_owners_in_the_organization {
+            get {
+                return ResourceManager.GetString("Max owners in the organization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The membership already exists. 的本地化字符串。
         /// </summary>
         public static string Membership_exists {
             get {
                 return ResourceManager.GetString("Membership exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 There would be at least {0} owner(s) in this organization. 的本地化字符串。
+        /// </summary>
+        public static string Min_owners_in_the_organization {
+            get {
+                return ResourceManager.GetString("Min owners in the organization", resourceCulture);
             }
         }
         

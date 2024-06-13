@@ -153,6 +153,9 @@
   <data name="Male" xml:space="preserve">
     <value>男</value>
   </data>
+  <data name="Max owners in the organization" xml:space="preserve">
+	  <value>组织内只能设置最多{0}个所有者。</value>
+  </data>
   <data name="Membership exists" xml:space="preserve">
     <value>组织成员身份已存在。</value>
   </data>

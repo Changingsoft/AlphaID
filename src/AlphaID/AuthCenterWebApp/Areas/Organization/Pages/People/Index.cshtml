@@ -23,63 +23,80 @@
         @if (Model.UserIsOwner)
         {
             <a class="btn ms-auto">@L["Export"]</a>
-            <a class="btn btn-green ms-3" asp-page="Invitations" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
+            <a class="btn btn-green ms-3" asp-page="Invite" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
         }
     </div>
-    <div class="card">
-        <div class="card-header">
-            <input type="checkbox" class="form-check-input" />
-        </div>
-        <div class="list-group list-group-flush list-group-hoverable">
-            <form method="post" asp-page-handler="Leave">
-                @foreach (var member in Model.Members)
-                {
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <input type="checkbox" class="form-check-input" value="@member.PersonId">
-                            </div>
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
-                                </a>
-                            </div>
-                            <div class="col-7 text-truncate">
-                                <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@member.Person.PersonName.FullName</a>
-                                <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
-                            </div>
-                            <div class="col-2">
-                                @if (member.IsOwner)
-                                {
-                                    <span class="badge" title="@(L["You are the owner of this organization"])">@L["Owner"]</span>
-                                }
-                                @if (member.PersonId == User.SubjectId())
-                                {
-                                    <span class="badge" title="@(L["Yourself"])">@L["Yourself"]</span>
-                                }
-                                <span class="badge">@Html.DisplayFor(m => member.Visibility)</span>
-                            </div>
-                            <div class="col-auto">
-                                @if (Model.UserIsOwner && member.PersonId != User.SubjectId())
-                                {
-                                    <button type="submit" name="personId" value="@member.PersonId" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
-                                }
-                                @if (Model.UserIsOwner)
-                                {
-                                    if (!member.IsOwner)
+    @if (Model.Members.Any())
+    {
+        <div class="card">
+            <div class="card-header">
+                <input type="checkbox" id="member_select_all" class="form-check-input" />
+            </div>
+            <div class="list-group list-group-flush list-group-hoverable">
+                <form method="post">
+                    @foreach (var member in Model.Members)
+                    {
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <input type="checkbox" class="form-check-input" value="@member.PersonId">
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#">
+                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-truncate">
+                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@member.Person.PersonName.FullName</a>
+                                    <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
+                                </div>
+                                <div class="col-2">
+                                    <span class="badge">@Html.DisplayFor(m => member.Visibility)</span>
+                                    @if (member.IsOwner)
                                     {
-                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="SetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Set this person as organization owner?"])');">@L["Set owner"]</button>
+                                        <span class="badge" title="@(L["You are the owner of this organization"])">@L["Owner"]</span>
                                     }
-                                    else
+                                    @if (member.PersonId == User.SubjectId())
                                     {
-                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="UnsetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Unset ownership of this person?"])');">@L["Unset owner"]</button>
+                                        <span class="badge" title="@(L["Yourself"])">@L["Yourself"]</span>
                                     }
-                                }
+                                </div>
+                                <div class="col-auto">
+                                    @if (Model.UserIsOwner && member.PersonId != User.SubjectId())
+                                    {
+                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="Leave" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
+                                    }
+                                    @if (Model.UserIsOwner)
+                                    {
+                                        if (!member.IsOwner)
+                                        {
+                                            <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="SetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Set this person as organization owner?"])');">@L["Set owner"]</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="UnsetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Unset ownership of this person?"])');">@L["Unset owner"]</button>
+                                        }
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </form>
+                    }
+                </form>
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <p>@L["This organization has no public members."]</p>
+    }
 </div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#member_select_all").change(function(){
+                $("form").find("input[type='checkbox']").attr("checked", true);
+            });
+        });
+    </script>
+}

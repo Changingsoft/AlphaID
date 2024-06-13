@@ -1,0 +1,49 @@
+﻿@using AlphaIdPlatform.Security
+@inject OrganizationManager OrganizationManager
+@inject OrganizationMemberManager MemberManager
+@{
+    Layout = "Shared/_Layout";
+    var isOwner = false;
+    var anchor = ViewContext.RouteData.Values["anchor"]?.ToString();
+    if (User.Identity!.IsAuthenticated)
+    {
+        var subjectId = User.SubjectId();
+        if (anchor != null && subjectId != null)
+        {
+            var orgs = (await OrganizationManager.FindByAnchorAsync(anchor)).ToList();
+            if (orgs.Count == 1)
+            {
+                var org = orgs.First();
+                isOwner = (await MemberManager.GetMembersAsync(org)).Any(m => m.PersonId == subjectId && m.IsOwner);
+            }
+        }
+    }
+}
+@section head {
+    @await RenderSectionAsync("head", false)
+}
+<div class="row">
+    <div class="col-2">
+        <div class="card">
+            <div class="card-header"></div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item">
+                    <a asp-page="Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Members"]</a>
+                </div>
+                @if (isOwner)
+                {
+                    <div class="list-group-item">
+                        <a asp-page="Invitations" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Invitations"]</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-10">
+        @RenderBody()
+    </div>
+</div>
+@section Scripts
+{
+    @await RenderSectionAsync("Scripts", false)
+}

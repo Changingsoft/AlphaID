@@ -34,12 +34,12 @@ public class JoinOrganizationInvitationManager(
     /// <summary>
     ///     获取组织发出的邀请
     /// </summary>
-    /// <param name="organization"></param>
+    /// <param name="organizationId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public IEnumerable<JoinOrganizationInvitation> GetIssuedInvitations(GenericOrganization organization)
+    public IEnumerable<JoinOrganizationInvitation> GetIssuedInvitations(string organizationId)
     {
-        return store.Invitations.Where(i => i.OrganizationId == organization.Id);
+        return store.Invitations.Where(i => i.OrganizationId == organizationId);
     }
 
     /// <summary>
@@ -118,5 +118,25 @@ public class JoinOrganizationInvitationManager(
 
         invitation.Accepted = false;
         return await store.UpdateAsync(invitation);
+    }
+
+    /// <summary>
+    /// Find invitation by id.
+    /// </summary>
+    /// <param name="invitationId"></param>
+    /// <returns></returns>
+    public ValueTask<JoinOrganizationInvitation?> FindById(int invitationId)
+    {
+        return ValueTask.FromResult(store.Invitations.FirstOrDefault(i => i.Id == invitationId));
+    }
+
+    /// <summary>
+    /// Revoke invitation.
+    /// </summary>
+    /// <param name="invitation"></param>
+    /// <returns></returns>
+    public Task<IdOperationResult> Revoke(JoinOrganizationInvitation invitation)
+    {
+        return store.DeleteAsync(invitation);
     }
 }

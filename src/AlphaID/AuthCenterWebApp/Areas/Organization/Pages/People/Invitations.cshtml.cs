@@ -1,61 +1,43 @@
-using System.ComponentModel.DataAnnotations;
-using AlphaIdPlatform.Security;
 using IdSubjects;
 using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AuthCenterWebApp.Areas.Organization.Pages.People;
-
-public class InvitationsModel(
-    NaturalPersonManager naturalPersonManager,
-    JoinOrganizationInvitationManager joinOrganizationInvitationManager,
-    OrganizationManager organizationManager) : PageModel
+namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {
-    [BindProperty]
-    [Display(Name = "Invitee")]
-    public string Invitee { get; set; } = default!;
-
-    public IdOperationResult? Result { get; set; }
-
-    public IActionResult OnGet(string anchor)
+    public class InvitationsModel(JoinOrganizationInvitationManager manager, OrganizationManager organizationManager) : PageModel
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
-            return RedirectToPage("../Who", new { anchor });
-        if (organization == null)
-            return NotFound();
-        return Page();
-    }
+        public IEnumerable<JoinOrganizationInvitation> Invitations { get; set; } = [];
 
-    public async Task<IActionResult> OnPostAsync(string anchor)
-    {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
-            return RedirectToPage("../Who", new { anchor });
-        if (organization == null)
-            return NotFound();
-        NaturalPerson? person = await naturalPersonManager.FindByNameAsync(Invitee);
-        if (person == null)
-            ModelState.AddModelError(nameof(Invitee), "Cannot find person.");
+        public IdOperationResult? Result { get; set; }
 
-        if (!ModelState.IsValid)
+        public IActionResult OnGet(string anchor)
+        {
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+                return RedirectToPage("../Who", new { anchor });
+            if (organization == null)
+                return NotFound();
+            Invitations = manager.GetIssuedInvitations(organization.Id);
             return Page();
+        }
 
-        Result = await joinOrganizationInvitationManager.InviteMemberAsync(organization, person!, User.DisplayName());
-        return Page();
-    }
+        public async Task<IActionResult> OnPostRevoke(string anchor, int invitationId)
+        {
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+                return RedirectToPage("../Who", new { anchor });
+            if (organization == null)
+                return NotFound();
 
-    public IActionResult OnGetFindPerson(string term)
-    {
-        IQueryable<FindPersonModel> searchResults = naturalPersonManager.Users.Where(p =>
-                p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.PersonName.FullName.StartsWith(term))
-            .Select(p => new FindPersonModel { UserName = p.UserName, Name = p.PersonName.FullName });
-        return new JsonResult(searchResults);
-    }
+            if (!ModelState.IsValid)
+                return Page();
 
-    public class FindPersonModel
-    {
-        public string UserName { get; set; } = default!;
+            JoinOrganizationInvitation? invitation = await manager.FindById(invitationId);
+            if(invitation == null)
+                return NotFound();
 
-        public string Name { get; set; } = default!;
+            Result = await manager.Revoke(invitation);
+            Invitations = manager.GetIssuedInvitations(organization.Id);
+            return Page();
+        }
     }
 }

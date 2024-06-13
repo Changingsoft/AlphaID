@@ -47,6 +47,12 @@
 	  <EmbeddedResource Update="Resources\Areas\Developer\Pages\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\People\Invitations.zh-cn.resx">
+	    <DependentUpon>Invitations.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\People\_Layout.zh-cn.resx">
+	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Financial\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>

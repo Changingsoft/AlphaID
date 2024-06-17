@@ -1,4 +1,6 @@
-﻿using IdSubjects;
+﻿using System.Security.Claims;
+using AlphaIdPlatform.Identity;
+using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
@@ -42,9 +44,22 @@ public class PersonSignInManager(
         if (userManager.Options.Password.EnablePassExpires)
             if (user.PasswordLastSet == null || user.PasswordLastSet.Value <
                 TimeProvider.GetUtcNow().AddDays(0 - userManager.Options.Password.PasswordExpiresDay))
+            {
+                ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
+                await base.SignOutAsync();
+                await contextAccessor.HttpContext!.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme,
+                    principal);
                 return new PersonSignInResult { MustChangePassword = true };
+            }
 
         await userManager.AccessSuccededAsync(user, "password");
         return result;
+    }
+
+    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
+    {
+        var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+        identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));
+        return new ClaimsPrincipal(identity);
     }
 }

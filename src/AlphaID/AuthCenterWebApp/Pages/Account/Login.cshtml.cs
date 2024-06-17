@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using AlphaIdPlatform.Identity;
 using AuthCenterWebApp.Services;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -38,14 +36,12 @@ public class LoginModel(
     {
         await BuildModelAsync(returnUrl);
         if (View.IsExternalLoginOnly)
-        {
             // we only have one option for logging in and it's an external provider
             return RedirectToPage("/ExternalLogin/Challenge",
                 new
                 {
                     scheme = View.ExternalLoginScheme, schemeDisplayName = View.ExternalLoginDisplayName, returnUrl
                 });
-        }
 
         return Page();
     }
@@ -113,12 +109,7 @@ public class LoginModel(
                 }
 
                 if (result.MustChangePassword())
-                {
-                    ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
-                    await signInManager.SignOutAsync();
-                    await HttpContext.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme, principal);
                     return RedirectToPage("ChangePassword", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
-                }
 
                 if (result.RequiresTwoFactor)
                     return RedirectToPage("./LoginWith2fa", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
@@ -203,11 +194,9 @@ public class LoginModel(
         {
             allowLocal = client.EnableLocalLogin; //客户端是否允许本地登录
             if (client.IdentityProviderRestrictions.Count != 0)
-            {
                 //过滤只有客户端允许的登录提供器。
                 providers = providers.Where(provider =>
                     client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
-            }
         }
 
         View = new ViewModel
@@ -218,12 +207,6 @@ public class LoginModel(
         };
     }
 
-    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
-    {
-        var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
-        identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));
-        return new ClaimsPrincipal(identity);
-    }
 
     public class InputModel
     {
@@ -247,28 +230,28 @@ public class LoginModel(
     public class ViewModel
     {
         /// <summary>
-        /// 获取或设置是否允许记住登录。
+        ///     获取或设置是否允许记住登录。
         /// </summary>
         public bool AllowRememberLogin { get; set; } = true;
-        
+
         /// <summary>
-        /// 获取或设置是否启用本地登录。
+        ///     获取或设置是否启用本地登录。
         /// </summary>
         public bool EnableLocalLogin { get; set; } = true;
 
         /// <summary>
-        /// 获取所有外部登录提供器。
+        ///     获取所有外部登录提供器。
         /// </summary>
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
 
         /// <summary>
-        /// 获取可见的外部登录提供器。
+        ///     获取可见的外部登录提供器。
         /// </summary>
         public IEnumerable<ExternalProvider> VisibleExternalProviders =>
             ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         /// <summary>
-        /// 只是是否仅外部登录。当且仅当禁用本地登录，且外部登录提供器只有1个时，该属性为true。
+        ///     只是是否仅外部登录。当且仅当禁用本地登录，且外部登录提供器只有1个时，该属性为true。
         /// </summary>
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
 
@@ -277,9 +260,8 @@ public class LoginModel(
 
         public string? ExternalLoginDisplayName =>
             IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
-
-        
     }
+
     public class ExternalProvider
     {
         public string DisplayName { get; set; } = default!;

@@ -30,7 +30,7 @@
         <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/IdentityProviders/Detail/@(providerId)" asp-match-prefix="false" asp-page="Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@SL["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/IdentityProviders/Detail/@(providerId)!" asp-page="Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@SL["Overview"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/IdentityProviders/Detail/@(providerId)/Consent" asp-page="Consent" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Consent"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/IdentityProviders/Detail/@(providerId)/Secrets" asp-page="Secrets" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Secrets"]</a>
                 </div>

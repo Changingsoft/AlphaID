@@ -30,7 +30,7 @@
         <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)" asp-match-prefix="false" asp-page="Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)!" asp-page="Index" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Overview"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Consent" asp-page="Consent" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Consent"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/Secrets" asp-page="Secrets" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Secrets"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/OpenIDConnect/Clients/Detail/@(clientId)/GrantTypes" asp-page="GrantTypes" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Grant types"]</a>

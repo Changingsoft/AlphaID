@@ -8,20 +8,14 @@ namespace AlphaIdPlatform.TagHelpers;
 ///     根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。
 /// </summary>
 [HtmlTargetElement("li", Attributes = "asp-path")]
-[HtmlTargetElement("li", Attributes = "asp-match-prefix")]
 [HtmlTargetElement("a", Attributes = "asp-path")]
-[HtmlTargetElement("a", Attributes = "asp-match-prefix")]
 public class NavItemActiveClassTagHelper : TagHelper
 {
     /// <summary>
+    /// 将激活附加active样式的路径。路径必须以“/”开头，不能以“/”结尾。如果要严格匹配，在末尾添加“!”。
     /// </summary>
     [HtmlAttributeName("asp-path")]
     public string Path { get; set; } = "/";
-
-    /// <summary>
-    /// </summary>
-    [HtmlAttributeName("asp-match-prefix")]
-    public bool MatchPrefix { get; set; } = true;
 
     /// <summary>
     /// </summary>
@@ -36,11 +30,20 @@ public class NavItemActiveClassTagHelper : TagHelper
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         string? currentPath = ViewContext.HttpContext.Request.Path.Value;
-        bool result = MatchPrefix
-            ? currentPath!.StartsWith(Path, StringComparison.OrdinalIgnoreCase)
-            : string.Equals(Path, currentPath, StringComparison.OrdinalIgnoreCase);
+        if (currentPath == null)
+            return;
+        var restrictMatch = false;
+        var targetPath = Path;
+        if (Path.EndsWith("!"))
+        {
+            restrictMatch = true;
+            targetPath = targetPath[..^1];
+        }
+        bool matched = restrictMatch
+            ? string.Equals(targetPath, currentPath, StringComparison.OrdinalIgnoreCase)
+            : currentPath.StartsWith(targetPath, StringComparison.OrdinalIgnoreCase);
 
-        if (!result) return;
+        if (!matched) return;
 
         var existingClasses = output.Attributes["class"].Value.ToString();
         if (output.Attributes["class"] != null) output.Attributes.Remove(output.Attributes["class"]);

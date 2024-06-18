@@ -24,7 +24,7 @@
             <div class="card-body">
                 <div class="list-group list-group-transparent">
                     @* ReSharper disable Mvc.ActionNotResolved *@
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)" asp-match-prefix="false" asp-page="/Detail/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)!" asp-page="/Detail/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/General" asp-page="/Detail/General" asp-route-anchor="@anchor">@L["General"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/Map" asp-page="/Detail/Map" asp-route-anchor="@anchor">@L["Map"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/Organizations/Detail/@(anchor)/Financial" asp-page="/Detail/Financial/Index" asp-route-anchor="@anchor">@L["Financial"]</a>

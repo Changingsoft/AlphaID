@@ -8,6 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Pages\Account\_ViewStart.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<!-- ReSharper disable once VulnerablePackage -->
 		<PackageReference Include="AspNet.Security.OAuth.QQ" Version="8.0.0" />
 		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.0.0" />
@@ -155,4 +159,7 @@
 			<UserProperties />
 		</VisualStudio>
 	</ProjectExtensions>
+	<ItemGroup>
+	  <None Include="Pages\Account\_ViewStart.cshtml" />
+	</ItemGroup>
 </Project>

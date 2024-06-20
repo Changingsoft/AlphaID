@@ -1,32 +1,30 @@
 @page
 @model LoggedOut
 @{
-    Layout = "Tabler/_Page_Center";
+    ViewBag.Title = L["Signed out"];
 }
-<div class="container container-tight py-4">
-    <div class="text-center mb-4">
-        <h1>
-            @L["Signed out"]
-        </h1>
-        <p>@L["You've successfully signed out of the login."]</p>
-        @if (Model.View.PostLogoutRedirectUri != null)
-        {
-            <div>
-                <a class="PostLogoutRedirectUri btn" href="@Model.View.PostLogoutRedirectUri">@L["Return back to"] @Model.View.ClientName</a>
-            </div>
-        }
-        else
-        {
-            <div>
-                <a class="btn" href="@Model.ReturnUrl">@L["OK"]</a>
-            </div>
-        }
+<div class="text-center mb-4">
+    <h1>
+        @L["Signed out"]
+    </h1>
+    <p>@L["You've successfully signed out of the login."]</p>
+    @if (Model.View.PostLogoutRedirectUri != null)
+    {
+        <div>
+            <a class="PostLogoutRedirectUri btn" href="@Model.View.PostLogoutRedirectUri">@L["Return back to"] @Model.View.ClientName</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a class="btn" href="@Model.ReturnUrl">@L["OK"]</a>
+        </div>
+    }
 
-        @if (Model.View.SignOutIframeUrl != null)
-        {
-            <iframe width="0" height="0" class="signout" src="@Model.View.SignOutIframeUrl"></iframe>
-        }
-    </div>
+    @if (Model.View.SignOutIframeUrl != null)
+    {
+        <iframe width="0" height="0" class="signout" src="@Model.View.SignOutIframeUrl"></iframe>
+    }
 </div>
 
 @section Scripts{

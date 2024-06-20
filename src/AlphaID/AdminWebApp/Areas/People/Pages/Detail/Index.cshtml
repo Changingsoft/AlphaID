@@ -155,7 +155,16 @@
                 <div class="datagrid-title">@L["Person Id"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
+                    <button class="btn btn-sm" onclick="copyToClipboard()">Copy</button>
                 </div>
+
+                <script>
+                    function copyToClipboard() {
+                        var input = document.querySelector('.form-control');
+                        input.select();
+                        document.execCommand('copy');
+                    }
+                </script>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["External logins"]</div>

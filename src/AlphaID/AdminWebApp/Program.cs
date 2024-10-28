@@ -47,7 +47,6 @@ builder.Host.UseSerilog((context, configuration) =>
         .WriteTo.Console(
             outputTemplate:
             "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-        .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information)
         .WriteTo.Logger(lc =>
         {
             lc.ReadFrom.Configuration(context.Configuration);
@@ -75,6 +74,10 @@ builder.Host.UseSerilog((context, configuration) =>
                     }
                 );
         });
+#if WINDOWS
+    configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
+#endif
+
 });
 
 //产品和系统URL信息。

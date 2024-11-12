@@ -8,7 +8,7 @@ namespace IdSubjects.DependencyInjection;
 public class IdSubjectsPasswordOptions : PasswordOptions
 {
     /// <summary>
-    ///     是否启用密码过期。默认为true。
+    ///     是否启用密码过期。默认为false。
     /// </summary>
     public bool EnablePassExpires { get; set; } = false;
 

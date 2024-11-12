@@ -2,6 +2,7 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 using IdSubjects;
+using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthCenterWebApp.Services;
@@ -18,23 +19,28 @@ namespace AuthCenterWebApp.Services;
 public class PersonResourceOwnerPasswordValidator(
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager,
-    ILogger<PersonResourceOwnerPasswordValidator> logger)
+    ILogger<PersonResourceOwnerPasswordValidator> logger,
+    IOptions<IdSubjectsOptions> options,
+    TimeProvider timeProvider)
     : ResourceOwnerPasswordValidator<NaturalPerson>(userManager, signInManager, logger)
 {
     public override async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
     {
         NaturalPerson? user = await userManager.FindByNameAsync(context.UserName);
         if (user != null)
-            //todo 密码有效性验证需要引入选项。
-            if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < DateTime.UtcNow.AddDays(-365.0))
+        {
+            if (options.Value.Password.EnablePassExpires)
             {
-                logger.LogInformation(
-                    "Authentication failed for username: {username}, reason: User must change password before first login.",
-                    context.UserName);
-                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant);
-                return;
+                if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < timeProvider.GetUtcNow().AddDays(0 - options.Value.Password.PasswordExpiresDay))
+                {
+                    logger.LogInformation(
+                        "Authentication failed for username: {username}, reason: User must change password before first login.",
+                        context.UserName);
+                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant);
+                    return;
+                }
             }
-
+        }
         await base.ValidateAsync(context);
     }
 }

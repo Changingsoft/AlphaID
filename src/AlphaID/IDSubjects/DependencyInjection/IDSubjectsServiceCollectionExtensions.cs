@@ -7,8 +7,10 @@ using IdSubjects.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+#pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
+#pragma warning restore IDE0130 // 命名空间与文件夹结构不匹配
 
 /// <summary>
 ///     Extensions for IdSubjects service injection.
@@ -42,8 +44,6 @@ public static class IdSubjectsServiceCollectionExtensions
 
         services.TryAddScoped<IEventService, DefaultEventService>();
         services.TryAddScoped<IEventSink, DefaultEventSink>();
-
-        services.AddScoped<ISubjectGenerator, DefaultSubjectGenerator>();
 
         //添加基础标识
         IdentityBuilder identityBuilder = services.AddIdentityCore<NaturalPerson>()

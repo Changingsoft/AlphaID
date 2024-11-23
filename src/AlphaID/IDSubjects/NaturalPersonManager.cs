@@ -96,7 +96,7 @@ public class NaturalPersonManager(
     {
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
             return null;
-        var phoneNumberString = phoneNumber.ToString();
+        string phoneNumberString = phoneNumber.ToString();
         NaturalPerson? person = await Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
         return person;
     }
@@ -222,7 +222,7 @@ public class NaturalPersonManager(
     /// <returns></returns>
     public override async Task<IdentityResult> DeleteAsync(NaturalPerson user)
     {
-        var passPreAction = true;
+        bool passPreAction = true;
         List<IdentityError> errors = [];
         Stack<INaturalPersonDeleteInterceptor> stack = new();
         foreach (INaturalPersonDeleteInterceptor interceptor in Interceptors.OfType<INaturalPersonDeleteInterceptor>())

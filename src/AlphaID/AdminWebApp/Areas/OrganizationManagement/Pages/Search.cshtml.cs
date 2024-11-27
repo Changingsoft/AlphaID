@@ -2,7 +2,7 @@ using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
-namespace AdminWebApp.Areas.Organizations.Pages;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 public class SearchModel(OrganizationSearcher searcher) : PageModel
 {

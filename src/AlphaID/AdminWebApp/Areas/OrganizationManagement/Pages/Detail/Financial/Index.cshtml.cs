@@ -1,7 +1,7 @@
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail.Financial;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Financial;
 
 public class IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
     : PageModel

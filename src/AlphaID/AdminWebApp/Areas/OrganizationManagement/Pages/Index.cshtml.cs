@@ -1,6 +1,6 @@
 using IdSubjects;
 
-namespace AdminWebApp.Areas.Organizations.Pages;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 public class IndexModel(IOrganizationStore organizationStore) : PageModel
 {

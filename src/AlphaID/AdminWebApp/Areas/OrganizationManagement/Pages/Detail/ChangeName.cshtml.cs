@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
 public class ChangeNameModel(OrganizationManager manager) : PageModel
 {

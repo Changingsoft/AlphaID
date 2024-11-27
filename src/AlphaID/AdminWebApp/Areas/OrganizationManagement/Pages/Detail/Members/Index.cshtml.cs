@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.Organizations.Pages.Detail.Members;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,

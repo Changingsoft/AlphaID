@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.Organizations.Pages;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 [BindProperties]
 public class NewModel(OrganizationManager manager) : PageModel

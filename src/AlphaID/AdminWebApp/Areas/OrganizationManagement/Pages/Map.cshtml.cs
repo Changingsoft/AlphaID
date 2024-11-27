@@ -1,4 +1,4 @@
-namespace AdminWebApp.Areas.Organizations.Pages;
+namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 public class MapModel : PageModel
 {

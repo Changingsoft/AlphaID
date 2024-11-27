@@ -38,10 +38,10 @@
 	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\IdentityResources\New.zh-cn.resx">
 	    <DependentUpon>New.resx</DependentUpon>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Areas\People\Pages\Detail\Membership\Of.zh-cn.resx">
+	  <EmbeddedResource Update="Resources\Areas\UserManagement\Pages\Detail\Membership\Of.zh-cn.resx">
 	    <DependentUpon>Of.resx</DependentUpon>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Areas\People\Pages\Detail\PersonalInfo.zh-cn.resx">
+	  <EmbeddedResource Update="Resources\Areas\UserManagement\Pages\Detail\PersonalInfo.zh-cn.resx">
 	    <DependentUpon>PersonalInfo.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\RealName\Pages\Authentications.zh-cn.resx">

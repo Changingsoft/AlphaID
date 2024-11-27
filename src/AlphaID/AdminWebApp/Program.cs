@@ -107,7 +107,7 @@ builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AuthorizeFolder("/", "RequireAdminRole");
         options.Conventions.AuthorizeFolder("/Account");
-        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "People"));
+        options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "UserManagement"));
         options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Detail", "OrganizationManagement"));
         options.Conventions.Add(new SubjectAnchorRouteModelConvention("/Clients/Detail", "OpenIDConnect"));
     })

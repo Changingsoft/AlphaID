@@ -1,0 +1,32 @@
+﻿@page
+@model IndexModel
+@{
+    ViewBag.Title = L["People"];
+}
+
+@section PageHeader{
+    <div class="row align-items-center">
+        <div class="col">
+            <h1>@L["Overview"]</h1>
+        </div>
+        <div class="col">
+            <partial name="_SearchInputPart"/>
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto">
+            <div class="btn-list">
+                <a asp-page="/Register/Index" class="btn btn-primary d-none d-sm-inline-block">
+                    <i class="ti ti-plus"></i>
+                    @L["Create new person"]
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="row row-deck wor-cards">
+    <div class="col-sm-6 col-lg-3">
+        <PeopleNavPanel></PeopleNavPanel>
+    </div>
+</div>

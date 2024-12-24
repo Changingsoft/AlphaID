@@ -20,7 +20,7 @@
 
                 <div class="mb-3">
                     <label asp-for="Input.Username" class="form-label"></label>
-                    <input asp-for="Input.Username" class="form-control" autofocus>
+                    <input asp-for="Input.Username" class="form-control" autofocus tabindex="1">
                     <span asp-validation-for="Input.Username" class="text-danger"></span>
                 </div>
                 <div class="mb-2">
@@ -30,7 +30,7 @@
                             <a asp-page="ForgetPassword">@L["I forgot password"]</a>
                         </span>
                     </label>
-                    <input asp-for="Input.Password" class="form-control">
+                    <input asp-for="Input.Password" class="form-control" tabindex="2">
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="mb-2">

@@ -9,7 +9,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="1.1.2" />
-		<PackageReference Include="Microsoft.Bcl.TimeProvider" Version="8.0.1" />
 		<PackageReference Include="MinVer" Version="5.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

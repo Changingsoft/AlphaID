@@ -1,31 +1,21 @@
 [
   {
-    "Name": "Default",
+    "Name": "启动WebApp和API",
     "Projects": [
       {
-        "Name": "AlphaIdWebAPI\\AlphaIdWebAPI.csproj",
+        "Path": "AlphaIdWebAPI\\AlphaIdWebAPI.csproj",
         "Action": "Start",
-        "DebugTarget": ""
+        "DebugTarget": "https"
       },
       {
-        "Name": "AdminWebApp\\AdminWebApp.csproj",
+        "Path": "AdminWebApp\\AdminWebApp.csproj",
         "Action": "Start",
-        "DebugTarget": ""
+        "DebugTarget": "https"
       },
       {
-        "Name": "AuthCenterWebApp\\AuthCenterWebApp.csproj",
+        "Path": "AuthCenterWebApp\\AuthCenterWebApp.csproj",
         "Action": "Start",
-        "DebugTarget": ""
-      }
-    ]
-  },
-  {
-    "Name": "DatabaseTool",
-    "Projects": [
-      {
-        "Name": "DatabaseTool\\DatabaseTool.csproj",
-        "Action": "Start",
-        "DebugTarget": ""
+        "DebugTarget": "https"
       }
     ]
   }

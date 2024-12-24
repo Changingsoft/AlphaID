@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
@@ -15,35 +15,32 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var data = await dbContext.ApiResources.FindAsync(id);
+        ApiResource? data = await dbContext.ApiResources.FindAsync(id);
         if (data == null)
-            return this.NotFound();
+            return NotFound();
 
         if (data.NonEditable)
-            return this.NotFound();
+            return NotFound();
 
-        this.Data = data;
-        return this.Page();
+        Data = data;
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
-        var data = await dbContext.ApiResources.FindAsync(id);
+        ApiResource? data = await dbContext.ApiResources.FindAsync(id);
         if (data == null)
-            return this.NotFound();
+            return NotFound();
 
-        this.Data = data;
+        Data = data;
 
-        if (this.ResourceName != this.Data.DisplayName)
-        {
-            this.ModelState.AddModelError(nameof(this.ResourceName), "名称不匹配。");
-        }
+        if (ResourceName != Data.DisplayName) ModelState.AddModelError(nameof(ResourceName), "名称不匹配。");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        dbContext.ApiResources.Remove(this.Data);
+        dbContext.ApiResources.Remove(Data);
         await dbContext.SaveChangesAsync();
-        return this.RedirectToPage("../Index");
+        return RedirectToPage("../Index");
     }
 }

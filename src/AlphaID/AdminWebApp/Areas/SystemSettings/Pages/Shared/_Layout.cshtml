@@ -5,8 +5,9 @@
 @section head{
     @await RenderSectionAsync("head", false)
 }
+
 @section Header{
-    <partial name="_DefaultTitleNavBarPartial" />
+    <partial name="_DefaultTitleNavBarPartial"/>
     <header class="navbar-expand-md">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu2" aria-controls="navbar-menu2" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -15,7 +16,7 @@
             <div class="navbar">
                 <div class="container-xl">
                     <ul class="navbar-nav">
-                        <li class="nav-item" asp-path="/SystemSettings" asp-match-prefix="false">
+                        <li class="nav-item" asp-path="/SystemSettings!">
                             <a class="nav-link" asp-page="/Index">@L["Overview"]</a>
                         </li>
                         <li class="nav-item" asp-path="/SystemSettings/Security">
@@ -31,28 +32,35 @@
 
     </header>
 }
+
 @section PageHeader
 {
     <div class="container-xl">
         <ul class="breadcrumb mb-1">
-            <li class="breadcrumb-item"><a asp-page="/Index">@L["System Settings"]</a></li>
+            <li class="breadcrumb-item">
+                <a asp-page="/Index">@L["System Settings"]</a>
+            </li>
             @await RenderSectionAsync("Breadcrumb", false)
         </ul>
         @await RenderSectionAsync("PageHeader", false)
     </div>
 }
+
 <div class="container-xl">
     @RenderBody()
 </div>
+
 @section PageFooter
 {
     @* 页脚 *@
-    <partial name="_DefaultFooterPartial" />
+    <partial name="_DefaultFooterPartial"/>
 }
+
 @section PageComponents
 {
     @await RenderSectionAsync("PageComponents", false)
 }
+
 @section Scripts {
     @await RenderSectionAsync("Scripts", false)
 }

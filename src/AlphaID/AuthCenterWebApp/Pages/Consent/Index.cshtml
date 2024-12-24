@@ -1,5 +1,5 @@
 @page
-@model AuthCenterWebApp.Pages.Consent.Index
+@model Index
 @{
     Layout = "Tabler/_Page_Center";
 }
@@ -16,7 +16,9 @@
                 <div class="lead">
                     @if (Model.View.ClientLogoUrl != null)
                     {
-                        <div class="client-logo"><img src="@Model.View.ClientLogoUrl"></div>
+                        <div class="client-logo">
+                            <img src="@Model.View.ClientLogoUrl">
+                        </div>
                     }
                     <h1>
                         @Model.View.ClientName
@@ -27,24 +29,24 @@
 
                 <div class="row">
                     <div class="col-sm-8">
-                        <partial name="_ValidationSummary" />
+                        <partial name="_ValidationSummary"/>
                     </div>
                 </div>
 
                 <form asp-page="/Consent/Index">
-                    <input type="hidden" asp-for="Input.ReturnUrl" />
+                    <input type="hidden" asp-for="Input.ReturnUrl"/>
                     @if (Model.View.IdentityScopes.Any())
                     {
                         <div class="form-group">
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <span class="glyphicon glyphicon-user"></span>
-                                    @L["Personal Information"]
+                                    @L["Personal information"]
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.IdentityScopes)
                                     {
-                                        <partial name="_ScopeListItem" model="@scope" />
+                                        <partial name="_ScopeListItem" model="@scope"/>
                                     }
                                 </ul>
                             </div>
@@ -57,12 +59,12 @@
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <span class="glyphicon glyphicon-tasks"></span>
-                                    @L["Application Access"]
+                                    @L["Application access"]
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.ApiScopes)
                                     {
-                                        <partial name="_ScopeListItem" model="scope" />
+                                        <partial name="_ScopeListItem" model="scope"/>
                                     }
                                 </ul>
                             </div>
@@ -73,7 +75,7 @@
                         <div class="card mb-3">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                @L["Description"]
+                                @SL["Description"]
                             </div>
                             <div class="card-body">
                                 <input class="form-control" placeholder="@L["Description or name of device"]" asp-for="Input.Description" autofocus>

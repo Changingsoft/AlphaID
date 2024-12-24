@@ -3,77 +3,59 @@ using IdSubjects;
 using IdSubjects.RealName.Requesting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdminWebApp.Areas.RealName.Pages.Request
+namespace AdminWebApp.Areas.RealName.Pages.Request;
+
+public class IndexModel(RealNameRequestManager requestManager) : PageModel
 {
-    public class IndexModel(RealNameRequestManager requestManager) : PageModel
+    public RealNameRequest Data { get; set; } = default!;
+
+    public IdOperationResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int anchor)
     {
-        public RealNameRequest Data { get; set; } = default!;
+        RealNameRequest? request = await requestManager.FindByIdAsync(anchor);
+        if (request == null) return NotFound();
 
-        public IdOperationResult? Result { get; set; }
+        Data = request;
+        return Page();
+    }
 
-        public async Task<IActionResult> OnGetAsync(int anchor)
+    public async Task<IActionResult> OnPostAsync(int anchor, string button)
+    {
+        RealNameRequest? request = await requestManager.FindByIdAsync(anchor);
+        if (request == null) return NotFound();
+
+        Data = request;
+
+        if (!ModelState.IsValid)
+            return Page();
+
+        if (button == "accept")
+            Result = await requestManager.AcceptAsync(request, User.DisplayName());
+        else
+            Result = await requestManager.RefuseAsync(request, User.DisplayName());
+
+        if (!Result.Succeeded) return Page();
+
+        //todo 继续审核下一个？
+        return RedirectToPage("/Requests");
+    }
+
+    public async Task<IActionResult> OnGetChineseIdCardImage(int id, string side)
+    {
+        RealNameRequest? request = await requestManager.FindByIdAsync(id);
+        if (request == null) return NotFound();
+
+        if (request is not ChineseIdCardRealNameRequest chineseIdCardRealNameRequest)
+            return NotFound();
+
+        return side switch
         {
-            var request = await requestManager.FindByIdAsync(anchor);
-            if (request == null)
-            {
-                return this.NotFound();
-            }
-
-            this.Data = request;
-            return this.Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int anchor, string button)
-        {
-            var request = await requestManager.FindByIdAsync(anchor);
-            if (request == null)
-            {
-                return this.NotFound();
-            }
-
-            this.Data = request;
-
-            if (!this.ModelState.IsValid)
-                return this.Page();
-
-            if (button == "accept")
-            {
-                this.Result = await requestManager.AcceptAsync(request, this.User.DisplayName());
-                
-            }
-            else
-            {
-                this.Result = await requestManager.RefuseAsync(request, this.User.DisplayName());
-            }
-
-            if (!this.Result.Succeeded)
-            {
-                return this.Page();
-            }
-
-            //todo 继续审核下一个？
-            return this.RedirectToPage("/Requests");
-        }
-
-        public async Task<IActionResult> OnGetChineseIdCardImage(int id, string side)
-        {
-            var request = await requestManager.FindByIdAsync(id);
-            if (request == null)
-            {
-                return this.NotFound();
-            }
-
-            if (request is not ChineseIdCardRealNameRequest chineseIdCardRealNameRequest)
-                return this.NotFound();
-
-            return side switch
-            {
-                "personal" => this.File(chineseIdCardRealNameRequest.PersonalSide.Data,
-                    chineseIdCardRealNameRequest.PersonalSide.MimeType),
-                "issuer" => this.File(chineseIdCardRealNameRequest.IssuerSide.Data,
-                    chineseIdCardRealNameRequest.IssuerSide.MimeType),
-                _ => this.NotFound(),
-            };
-        }
+            "personal" => File(chineseIdCardRealNameRequest.PersonalSide.Data,
+                chineseIdCardRealNameRequest.PersonalSide.MimeType),
+            "issuer" => File(chineseIdCardRealNameRequest.IssuerSide.Data,
+                chineseIdCardRealNameRequest.IssuerSide.MimeType),
+            _ => NotFound()
+        };
     }
 }

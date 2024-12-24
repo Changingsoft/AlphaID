@@ -11,14 +11,14 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var idr = await dbContext.IdentityResources
+        IdentityResource? idr = await dbContext.IdentityResources
             .Include(p => p.UserClaims)
             .Include(p => p.Properties)
             .AsSingleQuery()
             .SingleOrDefaultAsync(p => p.Id == id);
         if (idr == null)
-            return this.NotFound();
-        this.Data = idr;
-        return this.Page();
+            return NotFound();
+        Data = idr;
+        return Page();
     }
 }

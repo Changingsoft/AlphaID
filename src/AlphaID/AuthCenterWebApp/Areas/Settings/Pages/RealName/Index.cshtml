@@ -1,12 +1,12 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Settings.Pages.RealName.IndexModel
+@model IndexModel
 @{
-    ViewBag.Title = L["Real-name State"];
+    ViewBag.Title = L["Real-name state"];
 }
-<h2>@L["Real-name State"]</h2>
+<h2>@ViewBag.Title</h2>
 
 
-<h3>@L["Real-name Authentications"]</h3>
+<h3>@L["Real-name authentications"]</h3>
 <div class="list-group list-group-flush">
     @foreach (var authentication in Model.Authentications)
     {
@@ -14,7 +14,7 @@
     }
 </div>
 <hr/>
-<h3>@L["Pending Requests"]</h3>
+<h3>@L["Pending requests"]</h3>
 <div class="list-group list-group-flush">
     @foreach (var request in Model.Requests)
     {

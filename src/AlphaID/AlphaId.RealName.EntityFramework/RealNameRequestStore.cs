@@ -22,6 +22,7 @@ internal class RealNameRequestStore(RealNameDbContext dbContext) : IRealNameRequ
 
     public async Task<IdOperationResult> UpdateAsync(RealNameRequest request)
     {
+        dbContext.RealNameRequests.Update(request);
         await dbContext.SaveChangesAsync();
         return IdOperationResult.Success;
     }

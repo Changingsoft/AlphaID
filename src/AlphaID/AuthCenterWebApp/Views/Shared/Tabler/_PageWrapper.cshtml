@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "Tabler/_Page";
 }
+
 @section head
 {
     @await RenderSectionAsync("head", false)
@@ -23,6 +24,7 @@
 {
     @await RenderSectionAsync("PageComponents", false)
 }
+
 @section Scripts
 {
     @await RenderSectionAsync("Scripts", false)

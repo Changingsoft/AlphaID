@@ -5,11 +5,13 @@ namespace AlphaId.EntityFramework;
 
 internal class OrganizationMemberStore(IdSubjectsDbContext dbContext) : IOrganizationMemberStore
 {
-    public IQueryable<OrganizationMember> OrganizationMembers => dbContext.OrganizationMembers.Include(p => p.Organization).Include(p => p.Person);
+    public IQueryable<OrganizationMember> OrganizationMembers =>
+        dbContext.OrganizationMembers.Include(p => p.Organization).Include(p => p.Person);
 
     public Task<OrganizationMember?> FindAsync(string personId, string organizationId)
     {
-        return dbContext.OrganizationMembers.FirstOrDefaultAsync(p => p.PersonId == personId && p.OrganizationId == organizationId);
+        return dbContext.OrganizationMembers.FirstOrDefaultAsync(p =>
+            p.PersonId == personId && p.OrganizationId == organizationId);
     }
 
     public async Task<IdOperationResult> CreateAsync(OrganizationMember item)

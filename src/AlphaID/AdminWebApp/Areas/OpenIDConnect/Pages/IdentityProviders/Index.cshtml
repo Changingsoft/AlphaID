@@ -1,12 +1,13 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewBag.Title = L["Identity Providers"];
+    ViewBag.Title = L["Identity providers"];
 }
+
 @section PageHeader{
     <div class="row">
         <div class="col">
-            <h1>@L["Identity Providers"]</h1>
+            <h1>@L["Identity providers"]</h1>
         </div>
         <div class="col-auto">
             <a asp-page="New" class="btn btn-primary">
@@ -18,28 +19,31 @@
         </div>
     </div>
 }
+
 <div class="card">
     <table class="table card-table">
         <thead>
-            <tr>
-                <td>@L["Scheme"]</td>
-                <td>@L["Enabled"]</td>
-                <td>@L["DisplayName"]</td>
-                <td>@L["Type"]</td>
-                <td>@L["Created at"]</td>
-            </tr>
+        <tr>
+            <th>@L["Scheme"]</th>
+            <th>@L["Enabled"]</th>
+            <th>@L["Display name"]</th>
+            <th>@L["Type"]</th>
+            <th>@L["Created at"]</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var idp in Model.Results)
-            {
-                <tr>
-                    <td><a asp-page="Detail/Index" asp-route-id="@idp.Id">@idp.Scheme</a></td>
-                    <td>@idp.Enabled</td>
-                    <td>@idp.DisplayName</td>
-                    <td>@idp.Type</td>
-                    <td>@idp.Created</td>
-                </tr>
-            }
+        @foreach (var idp in Model.Results)
+        {
+            <tr>
+                <td>
+                    <a asp-page="Detail/Index" asp-route-id="@idp.Id">@idp.Scheme</a>
+                </td>
+                <td>@idp.Enabled</td>
+                <td>@idp.DisplayName</td>
+                <td>@idp.Type</td>
+                <td>@idp.Created</td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

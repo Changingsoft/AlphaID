@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using IdSubjects
+@using Microsoft.AspNetCore.Identity
+@using AlphaIdPlatform.Helpers
+
+@namespace AdminWebApp.Areas.UserManagement.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AlphaIdPlatform
+@addTagHelper *, AdminWebApp
+
+@inject IViewLocalizer L
+@* ReSharper disable once InconsistentNaming *@
+@inject IHtmlLocalizer<SharedResource> SL

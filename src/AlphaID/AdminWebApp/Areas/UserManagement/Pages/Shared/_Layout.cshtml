@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "Tabler/_PageWrapper";
+}
+
+@section head{
+    @await RenderSectionAsync("head", false)
+}
+
+@section Header
+{
+    <partial name="_DefaultTitleNavBarPartial"/>
+}
+
+@section PageHeader
+{
+    <div class="container-xl">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-page="/Index">@SL["People"]</a>
+            </li>
+            @await RenderSectionAsync("Breadcrumb", false)
+        </ul>
+        @await RenderSectionAsync("PageHeader", false)
+    </div>
+}
+
+<div class="container-xl">
+    @RenderBody()
+</div>
+
+@section PageFooter
+{
+    @* 页脚 *@
+    <partial name="_DefaultFooterPartial"/>
+}
+
+@section Scripts{
+    @await RenderSectionAsync("Scripts", false)
+}

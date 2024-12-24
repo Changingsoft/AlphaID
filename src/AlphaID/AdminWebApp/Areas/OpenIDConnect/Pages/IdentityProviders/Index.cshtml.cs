@@ -9,6 +9,6 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
     public void OnGet()
     {
-        this.Results = dbContext.IdentityProviders;
+        Results = dbContext.IdentityProviders;
     }
 }

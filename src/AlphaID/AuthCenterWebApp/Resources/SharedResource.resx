@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2 to 10 characters. Leave blank to remove it." xml:space="preserve">
+	  <value>2 to 10 characters. Leave blank to remove it.</value>
+  </data>
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
@@ -132,6 +135,10 @@
   <data name="Agree the" xml:space="preserve">
     <value>Agree the</value>
   </data>
+  <data name="Apply changes" xml:space="preserve">
+	  <value>Apply changes</value>
+	  <comment>Apply changes</comment>
+  </data>
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
   </data>
@@ -140,9 +147,6 @@
   </data>
   <data name="Bio" xml:space="preserve">
     <value>Bio</value>
-  </data>
-  <data name="Birth date" xml:space="preserve">
-    <value>Birthdate</value>
   </data>
   <data name="Captcha code" xml:space="preserve">
     <value>Captcha code</value>
@@ -162,6 +166,13 @@
   <data name="Current user name" xml:space="preserve">
     <value>Current user name</value>
   </data>
+  <data name="Date of birth" xml:space="preserve">
+	  <value>Date of birth</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+	  <value>Delete</value>
+	  <comment>Delete</comment>
+  </data>
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
@@ -180,23 +191,33 @@
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>
+  <data name="Full name" xml:space="preserve">
+	  <value>Full name</value>
+	  <comment>Full name</comment>
+  </data>
+  <data name="Full name of organization." xml:space="preserve">
+	  <value>Full name of organization.</value>
+  </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
   </data>
   <data name="Given name" xml:space="preserve">
     <value>Given name</value>
   </data>
-  <data name="Identifier Type" xml:space="preserve">
-	  <value>Identifier Type</value>
+  <data name="Identifier type" xml:space="preserve">
+	  <value>Identifier type</value>
   </data>
-  <data name="Identifier Value" xml:space="preserve">
-	  <value>Identifier Value</value>
+  <data name="Identifier value" xml:space="preserve">
+	  <value>Identifier value</value>
   </data>
-  <data name="Legal Entity Identifier" xml:space="preserve">
-    <value>Legal Entity Identifier</value>
+  <data name="Legal entity identifier" xml:space="preserve">
+	  <value>Legal entity identifier</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
+  </data>
+  <data name="Middle name" xml:space="preserve">
+	  <value>Middle name</value>
   </data>
   <data name="Mobile phone number" xml:space="preserve">
     <value>Mobile phone number</value>
@@ -221,6 +242,14 @@
   </data>
   <data name="Phone number" xml:space="preserve">
 	  <value>Phone number</value>
+  </data>
+  <data name="Phonetic given name" xml:space="preserve">
+	  <value>Phonetic given name</value>
+	  <comment>Phonetic given name</comment>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>Phonetic surname</value>
+	  <comment>Phonetic surname</comment>
   </data>
   <data name="Privacy" xml:space="preserve">
 	  <value>Privacy</value>
@@ -262,6 +291,10 @@
   <data name="Unified social credit code" xml:space="preserve">
     <value>Unified social credit code</value>
   </data>
+  <data name="Update" xml:space="preserve">
+	  <value>Update</value>
+	  <comment>Update</comment>
+  </data>
   <data name="Usage" xml:space="preserve">
 	  <value>Usage</value>
   </data>
@@ -283,10 +316,16 @@
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+	  <value>Verify</value>
+  </data>
   <data name="Website" xml:space="preserve">
     <value>Website</value>
   </data>
   <data name="Your personal website." xml:space="preserve">
     <value>Your personal website.</value>
+  </data>
+  <data name="Nick name" xml:space="preserve">
+	  <value>Nick name</value>
   </data>
 </root>

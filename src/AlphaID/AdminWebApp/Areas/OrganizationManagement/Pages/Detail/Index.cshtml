@@ -1,0 +1,114 @@
+﻿@page
+@model IndexModel
+@inject OrganizationMemberManager MemberManager
+@{
+    ViewBag.Title = Model.Organization.Name;
+    var members = await MemberManager.GetMembersAsync(Model.Organization);
+}
+<h2>@L["Overview"]</h2>
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">Base info</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Name"]</div>
+                <div class="datagrid-content">
+                    @Model.Organization.Name
+                    <a asp-page="ChangeName" asp-route-anchor="@Model.Organization.Id" class="btn btn-sm">@L["Change name"]</a>
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Used name"]</div>
+                <div class="datagrid-content">
+                    @foreach (var usedName in Model.Organization.UsedNames.OrderByDescending(p => p.DeprecateTime).Take(2))
+                    {
+                        <p class="text-muted small">@Html.DisplayFor(m => usedName)</p>
+                    }
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Domicile"]</div>
+                <div class="datagrid-content">@Model.Organization.Domicile</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Contact"]</div>
+                <div class="datagrid-content">@Model.Organization.Contact</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Representative"]</div>
+                <div class="datagrid-content">@Model.Organization.Representative</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Established at"]</div>
+                <div class="datagrid-content">@Model.Organization.EstablishedAt?.ToShortDateString()</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Business term"]</div>
+                <div class="datagrid-content">@Model.Organization.TermBegin?.ToShortDateString() - @Model.Organization.TermEnd?.ToShortDateString()</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Status"]</div>
+                <div class="datagrid-content">@Model.Organization.Enabled</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Website"]</div>
+                <div class="datagrid-content">
+                    <a href="@Model.Organization.Website">@Model.Organization.Website</a>
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Members"]</div>
+                <div class="datagrid-content">@members.Count()</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>@L["Fapiao Info"]</h3>
+    </div>
+    <div class="card-body">
+        @if (Model.Organization.Fapiao != null)
+        {
+            <div class="datagrid">
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Name"]</div>
+                    <div class="datagrid-content">@Model.Organization.Fapiao.Name</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Taxpayer ID"]</div>
+                    <div class="datagrid-content">@Model.Organization.Fapiao.TaxPayerId</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Address and contact"]</div>
+                    <div class="datagrid-content">@Model.Organization.Fapiao.Address @Model.Organization.Fapiao.Contact</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">@L["Bank and account"]</div>
+                    <div class="datagrid-content">@Model.Organization.Fapiao.Bank @Model.Organization.Fapiao.Account</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>@L["Not specified."]</p>
+        }
+    </div>
+</div>
+<dl class="row">
+    <dt class="col-4">@L["Created at"]</dt>
+    <dd class="col-8">@Model.Organization.WhenCreated</dd>
+    <dt class="col-4">@L["Changed at"]</dt>
+    <dd class="col-8">@Model.Organization.WhenChanged</dd>
+</dl>
+
+<h3>@L["Danger zone"]</h3>
+<div class="card">
+    <div class="card-status-top bg-danger"></div>
+    <div class="card-body">
+        <a asp-page="Delete" asp-route-anchor="@Model.Organization.Id" class="btn btn-danger">@L["Delete organization"]</a>
+    </div>
+</div>

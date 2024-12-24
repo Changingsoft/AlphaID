@@ -123,9 +123,6 @@
   <data name="Callback URI" xml:space="preserve">
     <value>回调URI</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>删除</value>
-  </data>
   <data name="If your domain has been changed, you may change CORS settings for correct client behavior." xml:space="preserve">
     <value>如果您的域名发生了更改，你需要调整跨越资源共享设置以修正客户端行为。</value>
   </data>

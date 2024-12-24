@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Organization.Pages.WhoModel
+@model WhoModel
 @{
 }
 
@@ -7,20 +7,22 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <td>Name</td>
-            <td>Domicile</td>
-            <td>Representative</td>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Domicile</th>
+        <th>Representative</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach(var org in Model.Organizations)
-        {
-            <tr>
-                <td><a asp-page="Index" asp-route-anchor="@org.Id">@org.Name</a></td>
-                <td>@org.Domicile</td>
-                <td>@org.Representative</td>
-            </tr>
-        }
+    @foreach (var org in Model.Organizations)
+    {
+        <tr>
+            <td>
+                <a asp-page="Index" asp-route-anchor="@org.Id">@org.Name</a>
+            </td>
+            <td>@org.Domicile</td>
+            <td>@org.Representative</td>
+        </tr>
+    }
     </tbody>
 </table>

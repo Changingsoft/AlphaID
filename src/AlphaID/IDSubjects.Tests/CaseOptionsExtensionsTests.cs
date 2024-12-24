@@ -5,7 +5,7 @@ namespace IdSubjects.Tests;
 
 public class CaseOptionsExtensionsTests
 {
-    [Fact()]
+    [Fact]
     public void NormalizeTest()
     {
         Assert.Equal("A", CaseOptions.FirstLetter.Normalize("a"));

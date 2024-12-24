@@ -1,0 +1,10 @@
+﻿@model OrganizationUsedName?
+
+@if (Model != null)
+{
+    <span>@Model.Name (@Model.DeprecateTime.ToShortDateString())</span>
+}
+else
+{
+    <span>@L["None"]</span>
+}

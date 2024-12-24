@@ -3,25 +3,24 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail
+namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
+
+public class IndexModel(ConfigurationDbContext context) : PageModel
 {
-    public class IndexModel(ConfigurationDbContext context) : PageModel
+    public ApiResource Data { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        public ApiResource Data { get; set; } = default!;
-        public async Task<IActionResult> OnGetAsync(int id)
-        {
-            var resource = await context.ApiResources
-                .Include(p => p.Secrets)
-                .Include(p => p.Scopes)
-                .Include(p => p.UserClaims)
-                .Include(p => p.Properties)
-                .AsSingleQuery()
-                .SingleOrDefaultAsync(p => p.Id == id);
-            if (resource == null) { return this.NotFound(); }
+        ApiResource? resource = await context.ApiResources
+            .Include(p => p.Secrets)
+            .Include(p => p.Scopes)
+            .Include(p => p.UserClaims)
+            .Include(p => p.Properties)
+            .AsSingleQuery()
+            .SingleOrDefaultAsync(p => p.Id == id);
+        if (resource == null) return NotFound();
 
-            this.Data = resource;
-            return this.Page();
-
-        }
+        Data = resource;
+        return Page();
     }
 }

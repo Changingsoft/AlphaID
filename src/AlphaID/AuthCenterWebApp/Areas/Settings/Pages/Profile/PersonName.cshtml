@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Settings.Pages.Profile.PersonNameModel
+@model PersonNameModel
 @{
     ViewBag.Title = L["Edit person name"];
 }
@@ -8,31 +8,31 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="Input.Surname" class="form-label"></label>
-        <input asp-for="Input.Surname" class="form-control" />
+        <input asp-for="Input.Surname" class="form-control"/>
         <span asp-description-for="Input.Surname"></span>
         <span asp-validation-for="Input.Surname" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.MiddleName" class="form-label"></label>
-        <input asp-for="Input.MiddleName" class="form-control" />
+        <input asp-for="Input.MiddleName" class="form-control"/>
         <span asp-description-for="Input.MiddleName"></span>
         <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.GivenName" class="form-label"></label>
-        <input asp-for="Input.GivenName" class="form-control" />
+        <input asp-for="Input.GivenName" class="form-control"/>
         <span asp-description-for="Input.GivenName"></span>
         <span asp-validation-for="Input.GivenName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.PhoneticSurname" class="form-label"></label>
-        <input asp-for="Input.PhoneticSurname" class="form-control" />
+        <input asp-for="Input.PhoneticSurname" class="form-control"/>
         <span asp-description-for="Input.PhoneticSurname"></span>
         <span asp-validation-for="Input.PhoneticSurname" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.PhoneticGivenName" class="form-label"></label>
-        <input asp-for="Input.PhoneticGivenName" class="form-control" />
+        <input asp-for="Input.PhoneticGivenName" class="form-control"/>
         <span asp-description-for="Input.PhoneticGivenName"></span>
         <span asp-validation-for="Input.PhoneticGivenName" class="text-danger"></span>
     </div>

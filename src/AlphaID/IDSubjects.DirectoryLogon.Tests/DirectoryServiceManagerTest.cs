@@ -6,17 +6,17 @@ namespace IdSubjects.DirectoryLogon.Tests;
 public class DirectoryServiceManagerTest(ServiceProviderFixture serviceProvider)
 {
     [Fact(Skip = "不具备可测试性")]
-    public async void CreateDirectoryService()
+    public async Task CreateDirectoryService()
     {
-        using var scope = serviceProvider.ScopeFactory.CreateScope();
+        using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<DirectoryServiceManager>();
 
-        var directoryService = new DirectoryServiceDescriptor()
+        var directoryService = new DirectoryServiceDescriptor
         {
             ServerAddress = "localhost",
-            RootDn = "DC=example,DC=com",
+            RootDn = "DC=example,DC=com"
         };
-        var result = await manager.CreateAsync(directoryService);
+        IdOperationResult result = await manager.CreateAsync(directoryService);
         Assert.True(result.Succeeded);
     }
 }

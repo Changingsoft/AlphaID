@@ -1,0 +1,37 @@
+﻿@page
+@model SearchModel
+@{
+    ViewBag.Title = L["Searching organizations"];
+}
+
+<div class="row">
+    <div class="col-5">
+        <partial name="_SearchInputPart"/>
+    </div>
+</div>
+<h2>@L["Searching results"]</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>@L["Name"]</th>
+        <th>@L["Domicile"]</th>
+        <th>@L["Representative"]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var org in Model.Results)
+    {
+        <tr>
+            <td>
+                <a asp-page="Detail/Index" asp-route-anchor="@org.Id">@org.Name</a>
+                @foreach (var usedName in org.UsedNames)
+                {
+                    <span class="text-muted small">曾用名：@usedName.Name</span>
+                }
+            </td>
+            <td>@org.Domicile</td>
+            <td>@org.Representative</td>
+        </tr>
+    }
+    </tbody>
+</table>

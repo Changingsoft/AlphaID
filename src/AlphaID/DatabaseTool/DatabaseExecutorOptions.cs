@@ -3,7 +3,6 @@
 internal class DatabaseExecutorOptions
 {
     /// <summary>
-    /// 
     /// </summary>
     public bool DropDatabase { get; set; } = false;
 

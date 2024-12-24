@@ -1,6 +1,6 @@
 ﻿@page "{anchor}"
 @using IdSubjects.RealName
-@model AdminWebApp.Areas.RealName.Pages.Authentication.IndexModel
+@model IndexModel
 @{
 }
 
@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Person Name"]</div>
+                <div class="datagrid-title">@L["Person name"]</div>
                 <div class="datagrid-content">@Model.Data.PersonName</div>
             </div>
             <div class="datagrid-item">
@@ -32,5 +32,5 @@
 
 @if (Model.Data is DocumentedRealNameAuthentication documentedRealNameAuthentication)
 {
-    <partial name="_IdentityDocumentPartial" model="documentedRealNameAuthentication.Document" />
+    <partial name="_IdentityDocumentPartial" model="documentedRealNameAuthentication.Document"/>
 }

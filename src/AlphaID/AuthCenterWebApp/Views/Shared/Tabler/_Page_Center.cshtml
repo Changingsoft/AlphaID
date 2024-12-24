@@ -3,10 +3,10 @@
 }
 
 @section head {
-    <link rel="stylesheet" href="~/lib/tabler/dist/css/tabler.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/tabler/dist/css/tabler.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     @* ReSharper disable once Html.PathError *@
-    <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AuthCenterWebApp.styles.css" asp-append-version="true"/>
     @await RenderSectionAsync("head", false)
 }
 
@@ -15,7 +15,9 @@
 </div>
 @await RenderSectionAsync("PageComponents", false)
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/tabler/dist/js/tabler.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", false)
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/tabler/dist/js/tabler.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", false)
+}

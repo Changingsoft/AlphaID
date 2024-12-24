@@ -2,11 +2,11 @@
 @model AccessDeniedModel
 @{
     Layout = "Tabler/_Page_center";
-    ViewBag.Title = "Access denied";
+    ViewBag.Title = L["Access denied"];
 }
 
 <h1>@ViewBag.Title</h1>
-<p>You don't have permission to do this.</p>
-<p>Close the browser, or sign out your account.</p>
-
-<a asp-page="SignOut" class="btn btn-secondary">Sign out</a>
+<p>@L["You don't have permission to do this."]</p>
+<p>@L["Go back to home, or sign out your account."]</p>
+<a asp-page="/Index" asp-area="">@L["Go home"]</a>
+<a asp-page="SignOut" class="btn btn-secondary">@L["Sign out"]</a>

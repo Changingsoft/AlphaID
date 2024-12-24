@@ -118,8 +118,8 @@
 		<value>SAM Domain Part</value>
 		<comment>SAM Domain Part</comment>
 	</data>
-	<data name="External Login Provider" xml:space="preserve">
-		<value>External Login Provider</value>
+	<data name="External login provider" xml:space="preserve">
+		<value>External login provider</value>
 		<comment>External Login Provider</comment>
 	</data>
 	<data name="Add directory service" xml:space="preserve">

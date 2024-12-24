@@ -16,10 +16,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -142,9 +139,9 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("SubjectGenerator")
-                                .HasMaxLength(50)
+                                .HasMaxLength(255)
                                 .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
+                                .HasColumnType("varchar(255)");
 
                             b1.HasKey("DirectoryServiceDescriptorId");
 

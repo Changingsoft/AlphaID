@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources;
 
@@ -12,35 +12,36 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
     public void OnGet()
     {
-        this.Input = new InputModel();
+        Input = new InputModel();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var now = DateTime.UtcNow;
+        DateTime now = DateTime.UtcNow;
         var resource = new ApiResource
         {
-            Name = this.Input.Name,
-            DisplayName = this.Input.DisplayName,
-            Description = this.Input.Description,
-            AllowedAccessTokenSigningAlgorithms = this.Input.AllowedAccessTokenSigningAlgorithms,
-            RequireResourceIndicator = this.Input.RequireResourceIndicator,
+            Name = Input.Name,
+            DisplayName = Input.DisplayName,
+            Description = Input.Description,
+            AllowedAccessTokenSigningAlgorithms = Input.AllowedAccessTokenSigningAlgorithms,
+            RequireResourceIndicator = Input.RequireResourceIndicator,
             Enabled = true,
             Created = now,
-            Updated = now,
+            Updated = now
         };
 
         try
         {
             dbContext.ApiResources.Add(resource);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Detail/Index", new { id = resource.Id });
+            return RedirectToPage("Detail/Index", new { id = resource.Id });
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError("", ex.Message);
         }
-        return this.Page();
+
+        return Page();
     }
 
     public class InputModel
@@ -58,8 +59,9 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
         [Display(Name = "Allowed access token signing algorithms")]
         public string? AllowedAccessTokenSigningAlgorithms { get; set; }
 
-        [Display(Name = "Require resource indicator", Description = "Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.")]
+        [Display(Name = "Require resource indicator",
+            Description =
+                "Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.")]
         public bool RequireResourceIndicator { get; set; }
-
     }
 }

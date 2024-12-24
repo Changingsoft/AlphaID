@@ -1,8 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
@@ -17,48 +17,48 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int anchor)
     {
-        var data = await this.GetClient(anchor);
+        Client? data = await GetClient(anchor);
         if (data == null)
-            return this.NotFound();
-        this.Client = data;
-        this.Input = new InputModel
+            return NotFound();
+        Client = data;
+        Input = new InputModel
         {
-            ClientId = this.Client.ClientId,
-            ClientName = this.Client.ClientName,
-            Description = this.Client.Description,
-            Enabled = this.Client.Enabled,
-            ClientUri = this.Client.ClientUri,
-            LogoUri = this.Client.LogoUri,
-            RequireClientSecret = this.Client.RequireClientSecret,
+            ClientId = Client.ClientId,
+            ClientName = Client.ClientName,
+            Description = Client.Description,
+            Enabled = Client.Enabled,
+            ClientUri = Client.ClientUri,
+            LogoUri = Client.LogoUri,
+            RequireClientSecret = Client.RequireClientSecret
         };
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var data = await this.GetClient(anchor);
+        Client? data = await GetClient(anchor);
         if (data == null)
-            return this.NotFound();
-        this.Client = data;
+            return NotFound();
+        Client = data;
 
-        if (this.Input.ClientId != this.Client.ClientId && dbContext.Clients.Any(p => p.ClientId == this.Input.ClientId))
-            this.ModelState.AddModelError("", "Client Anchor 已存在。");
+        if (Input.ClientId != Client.ClientId && dbContext.Clients.Any(p => p.ClientId == Input.ClientId))
+            ModelState.AddModelError("", "Client Anchor 已存在。");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        this.Client.ClientName = this.Input.ClientName;
-        this.Client.ClientId = this.Input.ClientId;
-        this.Client.Description = this.Input.Description;
-        this.Client.Enabled = this.Input.Enabled;
-        this.Client.LogoUri = this.Input.LogoUri;
-        this.Client.ClientUri = this.Input.ClientUri;
-        this.Client.RequireClientSecret = this.Input.RequireClientSecret;
+        Client.ClientName = Input.ClientName;
+        Client.ClientId = Input.ClientId;
+        Client.Description = Input.Description;
+        Client.Enabled = Input.Enabled;
+        Client.LogoUri = Input.LogoUri;
+        Client.ClientUri = Input.ClientUri;
+        Client.RequireClientSecret = Input.RequireClientSecret;
 
-        dbContext.Clients.Update(this.Client);
+        dbContext.Clients.Update(Client);
         await dbContext.SaveChangesAsync();
-        this.OperationMessage = "Applied";
-        return this.Page();
+        OperationMessage = "Applied";
+        return Page();
     }
 
     private Task<Client?> GetClient(int anchor)

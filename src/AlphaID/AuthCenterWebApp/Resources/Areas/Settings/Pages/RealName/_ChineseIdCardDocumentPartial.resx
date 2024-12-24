@@ -100,18 +100,18 @@
   <data name="Address" xml:space="preserve">
 		<value>Address</value>
 	</data>
-  <data name="Date Of Birth" xml:space="preserve">
-		<value>Date Of Birth</value>
-	</data>
+  <data name="Date of birth" xml:space="preserve">
+	  <value>Date of birth</value>
+  </data>
   <data name="Ethnicity" xml:space="preserve">
 		<value>Ethnicity</value>
 	</data>
   <data name="Expires" xml:space="preserve">
 		<value>Expires</value>
 	</data>
-  <data name="Issue Date" xml:space="preserve">
-		<value>Issue Date</value>
-	</data>
+  <data name="Issue date" xml:space="preserve">
+	  <value>Issue date</value>
+  </data>
   <data name="Issuer" xml:space="preserve">
 		<value>Issuer</value>
 	</data>

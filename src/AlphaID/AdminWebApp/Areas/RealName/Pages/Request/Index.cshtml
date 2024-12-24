@@ -1,12 +1,12 @@
 ﻿@page "{anchor}"
 @using IdSubjects.RealName.Requesting
-@model AdminWebApp.Areas.RealName.Pages.Request.IndexModel
+@model IndexModel
 @{
     var requestType = Model.Data switch
     {
         ChineseIdCardRealNameRequest => L["Chinese ID Card Request"],
-        _ => L["Unknown"],
-        };
+        _ => L["Unknown"]
+    };
 }
 
 <h2>@requestType</h2>
@@ -95,10 +95,10 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <img src="@(Url.Page("", pageHandler: "ChineseIdCardImage", new{id=chineseIdCardRealNameRequest.Id, side="personal"}))" alt="Personal side" />
+                    <img src="@(Url.Page("", "ChineseIdCardImage", new { id = chineseIdCardRealNameRequest.Id, side = "personal" }))" alt="Personal side"/>
                 </div>
                 <div class="col">
-                    <img src="@(Url.Page("", pageHandler: "ChineseIdCardImage", new{id=chineseIdCardRealNameRequest.Id, side="issuer"}))" alt="Issuer side" />
+                    <img src="@(Url.Page("", "ChineseIdCardImage", new { id = chineseIdCardRealNameRequest.Id, side = "issuer" }))" alt="Issuer side"/>
                 </div>
             </div>
         </div>

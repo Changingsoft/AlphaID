@@ -23,12 +23,11 @@ public class UnifiedSocialCreditCodeTests
     [Fact]
     public void ParseUscc()
     {
-
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse(""));
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse("91530300"));
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse("91530300217222042a"));
 
-        var code = UnifiedSocialCreditCode.Parse("91530300217222042j"); //支持对小写的转换。
+        UnifiedSocialCreditCode code = UnifiedSocialCreditCode.Parse("91530300217222042j"); //支持对小写的转换。
         Assert.Equal("91530300217222042", code.Code);
         Assert.Equal('J', code.CheckCode);
     }
@@ -47,14 +46,13 @@ public class UnifiedSocialCreditCodeTests
     [Fact]
     public void UsccEquality()
     {
-        var a = UnifiedSocialCreditCode.Parse("91530300217222042j");
-        var b = UnifiedSocialCreditCode.Parse("91530300217222042J");
-        var c = UnifiedSocialCreditCode.Parse("91530300592049026D");
+        UnifiedSocialCreditCode a = UnifiedSocialCreditCode.Parse("91530300217222042j");
+        UnifiedSocialCreditCode b = UnifiedSocialCreditCode.Parse("91530300217222042J");
+        UnifiedSocialCreditCode c = UnifiedSocialCreditCode.Parse("91530300592049026D");
 
         Assert.Equal(a, b);
         Assert.NotEqual(a, c);
         Assert.True(a == b);
         Assert.False(a == c);
-
     }
 }

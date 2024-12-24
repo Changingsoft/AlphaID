@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Id Provider" xml:space="preserve">
+  <data name="Add Id provider" xml:space="preserve">
     <value>添加ID提供商</value>
   </data>
-  <data name="ID Provider Restrictions" xml:space="preserve">
+  <data name="Id provider restrictions" xml:space="preserve">
     <value>ID提供商限制</value>
   </data>
   <data name="Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty." xml:space="preserve">

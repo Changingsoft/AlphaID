@@ -1,59 +1,14 @@
 ﻿namespace IdSubjects.ChineseName;
 
 /// <summary>
-/// Chinese Person Name Factory.
+///     Chinese Person Name Factory.
 /// </summary>
 /// <remarks>
-/// Initialize factory by using default name processor and pinyin converter.
+///     Initialize factory by using default name processor and pinyin converter.
 /// </remarks>
 public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinConverter)
 {
-
-    /// <summary>
-    /// 初始化默认的中国人姓名工厂。
-    /// </summary>
-    public ChinesePersonNameFactory() : this(new ChinesePersonNamePinyinConverter())
-    { }
-
-
-    /// <summary>
-    /// Create chinese person name from a full name.
-    /// </summary>
-    /// <param name="fullName"></param>
-    /// <returns></returns>
-    public ChinesePersonName Create(string fullName)
-    {
-        fullName = fullName.Trim(' ', '\r', '\n').Replace(" ", string.Empty);
-
-        if (fullName.Length <= 1)
-            throw new ArgumentException("名字太短");
-
-        string surname = default!;
-        foreach (var prefix in CompoundSurnamePrefixes)
-        {
-            if (fullName.StartsWith(prefix))
-            {
-                surname = prefix;
-                fullName = fullName.Remove(0, prefix.Length);
-                break;
-            }
-        }
-        if (surname == null)
-        {
-            surname = fullName[..1];
-            fullName = fullName[1..];
-        }
-
-        if (fullName.Length < 1)
-            throw new ArgumentException("名字太短");
-
-        string givenName = fullName;
-        var (phoneticSurname, phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
-        return new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
-
-    }
-
-    private static readonly List<string> CompoundSurnamePrefixes =
+    private static readonly List<string> s_compoundSurnamePrefixes =
     [
         "欧阳",
         "太史",
@@ -139,4 +94,46 @@ public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinCon
         "吴铭"
     ];
 
+    /// <summary>
+    ///     初始化默认的中国人姓名工厂。
+    /// </summary>
+    public ChinesePersonNameFactory() : this(new ChinesePersonNamePinyinConverter())
+    {
+    }
+
+
+    /// <summary>
+    ///     Create chinese person name from a full name.
+    /// </summary>
+    /// <param name="fullName"></param>
+    /// <returns></returns>
+    public ChinesePersonName Create(string fullName)
+    {
+        fullName = fullName.Trim(' ', '\r', '\n').Replace(" ", string.Empty);
+
+        if (fullName.Length <= 1)
+            throw new ArgumentException("名字太短");
+
+        string surname = default!;
+        foreach (string prefix in s_compoundSurnamePrefixes)
+            if (fullName.StartsWith(prefix))
+            {
+                surname = prefix;
+                fullName = fullName.Remove(0, prefix.Length);
+                break;
+            }
+
+        if (surname == null)
+        {
+            surname = fullName[..1];
+            fullName = fullName[1..];
+        }
+
+        if (fullName.Length < 1)
+            throw new ArgumentException("名字太短");
+
+        string givenName = fullName;
+        (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
+        return new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
+    }
 }

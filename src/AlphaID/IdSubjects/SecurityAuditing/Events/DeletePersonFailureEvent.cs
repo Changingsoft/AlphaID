@@ -1,4 +1,8 @@
 ﻿namespace IdSubjects.SecurityAuditing.Events;
-internal class DeletePersonFailureEvent() : AuditLogEvent(AuditLogEventCategories.AccountManagement,
+
+internal class DeletePersonFailureEvent(string userName) : AuditLogEvent(AuditLogEventCategories.AccountManagement,
     EventIds.DeletePersonFailure,
-    AuditLogEventTypes.Failure);
+    AuditLogEventTypes.Failure)
+{
+    public string UserName { get; set; } = userName;
+}

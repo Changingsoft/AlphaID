@@ -8,17 +8,17 @@ namespace AuthCenterWebApp.Pages;
 public static class Extensions
 {
     /// <summary>
-    /// 确定身份验证方案是否支持注销。
+    ///     确定身份验证方案是否支持注销。
     /// </summary>
     public static async Task<bool> GetSchemeSupportsSignOutAsync(this HttpContext context, string scheme)
     {
         var provider = context.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
-        var handler = await provider.GetHandlerAsync(context, scheme);
+        IAuthenticationHandler? handler = await provider.GetHandlerAsync(context, scheme);
         return handler is IAuthenticationSignOutHandler;
     }
 
     /// <summary>
-    /// 检查重定向 URI 是否适用于本机客户端。
+    ///     检查重定向 URI 是否适用于本机客户端。
     /// </summary>
     public static bool IsNativeClient(this AuthorizationRequest context)
     {
@@ -27,12 +27,12 @@ public static class Extensions
     }
 
     /// <summary>
-    /// 呈现用于重定向回重定向 URI 的加载页。
+    ///     呈现用于重定向回重定向 URI 的加载页。
     /// </summary>
     public static IActionResult LoadingPage(this PageModel page, string redirectUri)
     {
         page.HttpContext.Response.StatusCode = 200;
-        page.HttpContext.Response.Headers["Location"] = "";
+        page.HttpContext.Response.Headers.Location = "";
 
         return page.RedirectToPage("/Redirect/LoginModel", new { RedirectUri = redirectUri });
     }

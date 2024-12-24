@@ -132,7 +132,7 @@
   <data name="Enabled" xml:space="preserve">
     <value>启用</value>
   </data>
-  <data name="Identity Resources" xml:space="preserve">
+  <data name="Identity resources" xml:space="preserve">
     <value>标识资源</value>
   </data>
   <data name="Name" xml:space="preserve">

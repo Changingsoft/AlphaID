@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
@@ -15,34 +15,27 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
     public IActionResult OnGet(int anchor)
     {
-        var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
-        if (client == null)
-        {
-            return this.NotFound();
-        }
-        this.Data = client;
+        Client? client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
+        if (client == null) return NotFound();
+        Data = client;
 
-        return this.Page();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(int anchor)
     {
-        var client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
-        if (client == null)
-        {
-            return this.RedirectToPage("../Index");
-        }
-        this.Data = client;
+        Client? client = dbContext.Clients.SingleOrDefault(p => p.Id == anchor);
+        if (client == null) return RedirectToPage("../Index");
+        Data = client;
 
-        if (this.ClientName != client.ClientName)
-            this.ModelState.AddModelError(nameof(this.ClientName), "输入的客户端名不匹配。");
+        if (ClientName != client.ClientName)
+            ModelState.AddModelError(nameof(ClientName), "输入的客户端名不匹配。");
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         dbContext.Clients.Remove(client);
         await dbContext.SaveChangesAsync();
-        return this.RedirectToPage("../Index");
-
+        return RedirectToPage("../Index");
     }
 }

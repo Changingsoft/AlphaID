@@ -1,10 +1,11 @@
-﻿#nullable disable
-
+﻿using System.Reflection;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text.Json;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
@@ -12,38 +13,40 @@ public class DownloadPersonalDataModel(
     NaturalPersonManager userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
+    private readonly JsonSerializerOptions serializerOptions = new JsonSerializerOptions()
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        WriteIndented = true,
+    };
+
     public IActionResult OnGet()
     {
-        return this.NotFound();
+        return NotFound();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await userManager.GetUserAsync(this.User);
-        if (user == null)
-        {
-            return this.NotFound($"Unable to load user with ID '{userManager.GetUserId(this.User)}'.");
-        }
+        NaturalPerson? user = await userManager.GetUserAsync(User);
+        if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
-        logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(this.User));
+        logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(User));
 
         // Only include personal data for download
-        var personalData = new Dictionary<string, string>();
-        var personalDataProps = typeof(NaturalPerson).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
-        foreach (var p in personalDataProps)
-        {
-            personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
-        }
+        IEnumerable<PropertyInfo> personalDataProps = typeof(NaturalPerson).GetProperties()
+            .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
-        var logins = await userManager.GetLoginsAsync(user);
-        foreach (var l in logins)
-        {
+        Dictionary<string, object?> personalData =
+            personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user));
+
+        IList<UserLoginInfo> logins = await userManager.GetLoginsAsync(user);
+        foreach (UserLoginInfo l in logins)
             personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
-        }
 
-        personalData.Add("Authenticator Key", await userManager.GetAuthenticatorKeyAsync(user));
+        string? authenticatorKey = await userManager.GetAuthenticatorKeyAsync(user);
+        if (authenticatorKey != null)
+            personalData.Add("Authenticator Key", authenticatorKey);
 
-        this.Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
-        return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
+        Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
+        return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData, serializerOptions), "application/json");
     }
 }

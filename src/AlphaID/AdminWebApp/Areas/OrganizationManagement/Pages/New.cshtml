@@ -1,0 +1,86 @@
+﻿@page
+@model NewModel
+@{
+    ViewBag.Title = L["New organization"];
+}
+
+@Html.DisplayFor(m => m.OperationResult)
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Name" class="form-label"></label>
+                <input asp-for="@Model.Name" class="form-control" autofocus/>
+                <span asp-validation-for="@Model.Name"></span>
+
+            </div>
+            <div class="form-check">
+                <input asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-input"/>
+                <label asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-label"></label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Domicile" class="form-label"></label>
+                <input asp-for="@Model.Domicile" class="form-control"/>
+                <span asp-validation-for="@Model.Domicile"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Contact" class="form-label"></label>
+                <input asp-for="@Model.Contact" class="form-control"/>
+                <span asp-validation-for="@Model.Contact"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.LegalPersonName" class="form-label"></label>
+                <input asp-for="@Model.LegalPersonName" class="form-control"/>
+                <span asp-validation-for="@Model.LegalPersonName"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.EstablishedAt" class="form-label"></label>
+                <input asp-for="@Model.EstablishedAt" class="form-control"/>
+                <span asp-validation-for="@Model.EstablishedAt"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.TermBegin" class="form-label"></label>
+                <input asp-for="@Model.TermBegin" class="form-control"/>
+                <span asp-validation-for="@Model.TermBegin"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.TermEnd" class="form-label"></label>
+                <input asp-for="@Model.TermEnd" class="form-control"/>
+                <span asp-validation-for="@Model.TermEnd"></span>
+            </div>
+            <div asp-validation-summary="All"></div>
+            <button type="submit" class="btn btn-primary">@L["Create"]</button>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("#personSearch").autocomplete({
+                source: "@Url.Action("SearchPerson", "IdService")",
+                minLength: 2,
+                select: function (event, ui) {
+                    $(this).val(ui.item.name);
+                    $("[name='CreatorId']").val(ui.item.subjectId);
+
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    var div = $("<div>");
+                    div.append("<p>" + item.name + "</p>")
+                    div.append("<ul>").append("<li>ddd</li>");
+                    var li = $("<li>").append(div);
+                    return li.appendTo(ul);
+                };
+
+            $("#personSearch").on("blur", function () {
+                if ($(this).val() == "")
+                    $("[name='CreatorId']").val("");
+            });
+        });
+    </script>
+}

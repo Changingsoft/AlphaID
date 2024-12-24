@@ -7,23 +7,37 @@
 		<NeutralLanguage>en-US</NeutralLanguage>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+	  <NoWarn>1701;1702;NU1902;NU1903;NU1904</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+	  <NoWarn>1701;1702;NU1902;NU1903;NU1904</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="Pages\Account\_ViewStart.cshtml" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<!-- ReSharper disable once VulnerablePackage -->
+		<PackageReference Include="AspNet.Security.OAuth.QQ" Version="8.1.0" />
+		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.1.0" />
+		<PackageReference Include="AspNet.Security.OAuth.WorkWeixin" Version="8.1.0" />
 		<PackageReference Include="Captcha" Version="4.4.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.7" />
 		<PackageReference Include="MinVer" Version="5.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
-		<PackageReference Include="Serilog.Expressions" Version="4.0.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
-		<PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.0" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.1" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.1" />
-		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.16.0" />
+		<PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.1" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.6" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.6" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.20.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,6 +58,12 @@
 	  <EmbeddedResource Update="Resources\Areas\Developer\Pages\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\People\Invitations.zh-cn.resx">
+	    <DependentUpon>Invitations.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\People\_Layout.zh-cn.resx">
+	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Financial\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
@@ -56,14 +76,35 @@
 	  <EmbeddedResource Update="Resources\Areas\Organization\Pages\Settings\Identifiers\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\DeletePersonalData.zh-cn.resx">
+	    <DependentUpon>DeletePersonalData.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\Email.zh-cn.resx">
+	    <DependentUpon>Email.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\PersonalData.zh-cn.resx">
+	    <DependentUpon>PersonalData.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\EnableAuthenticator.zh-cn.resx">
+	    <DependentUpon>EnableAuthenticator.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ExternalLogins.zh-cn.resx">
 	    <DependentUpon>ExternalLogins.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\ResetAuthenticator.zh-cn.resx">
+	    <DependentUpon>ResetAuthenticator.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\TwoFactorAuthentication.zh-cn.resx">
 	    <DependentUpon>TwoFactorAuthentication.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Authentication\_Layout.zh-cn.resx">
 	    <DependentUpon>_Layout.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Profile\OtherNames.zh-cn.resx">
+	    <DependentUpon>OtherNames.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Profile\PersonName.zh-cn.resx">
+	    <DependentUpon>PersonName.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\Authentication.zh-cn.resx">
 	    <DependentUpon>Authentication.resx</DependentUpon>
@@ -98,11 +139,17 @@
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\RealName\_RealNameRequestListGroupItem.zh-cn.resx">
 	    <DependentUpon>_RealNameRequestListGroupItem.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Terms.zh-cn.resx">
+	    <DependentUpon>Terms.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\DisplayTemplates\MembershipVisibility.zh-cn.resx">
 	    <DependentUpon>MembershipVisibility.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultFooterPartial.zh-cn.resx">
 	    <DependentUpon>_DefaultFooterPartial.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_IdentityResultPartial.zh-cn.resx">
+	    <DependentUpon>_IdentityResultPartial.resx</DependentUpon>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Views\Shared\_IdOperationResultPartial.zh-cn.resx">
 	    <DependentUpon>_IdOperationResultPartial.resx</DependentUpon>
@@ -119,4 +166,7 @@
 			<UserProperties />
 		</VisualStudio>
 	</ProjectExtensions>
+	<ItemGroup>
+	  <None Include="Pages\Account\_ViewStart.cshtml" />
+	</ItemGroup>
 </Project>

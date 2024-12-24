@@ -1,0 +1,32 @@
+﻿@page
+@model ExternalLoginsModel
+@{
+}
+<h2>@L["External logins"]</h2>
+
+<form method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@L["Provider"]</th>
+            <th>@L["Display name"]</th>
+            <th>@L["Key"]</th>
+            <th>@L["Operations"]</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var login in Model.Logins)
+        {
+            <tr>
+                <td>@login.LoginProvider</td>
+                <td>@login.ProviderDisplayName</td>
+                <td>@login.ProviderKey</td>
+                <td>
+                    <button type="submit" class="btn btn-danger btn-sm" asp-page-handler="Remove" asp-route-provider="@login.LoginProvider" asp-route-providerKey="@login.ProviderKey" onclick="return confirm('一旦解除绑定，只能由用户本人才能重新绑定。确定要解除吗？');">解除</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>
+<p>@L["Notes that person will only rebind external login by itself that if unbind."]</p>

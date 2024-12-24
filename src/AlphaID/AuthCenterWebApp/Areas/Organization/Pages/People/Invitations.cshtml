@@ -1,47 +1,45 @@
 ﻿@page
-@model AuthCenterWebApp.Areas.Organization.Pages.People.InvitationsModel
+@model InvitationsModel
 @{
+    ViewBag.Title = L["Invitations"];
 }
-@section head{
-    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css"/>
-}
-
-<div class="container-xl">
-    @Html.DisplayFor(m => m.Result)
-    <h1>@L["Invitations"]</h1>
-
-    <form method="post">
-        <div class="mb-3">
-            <input asp-for="Invitee" class="form-control" />
-        </div>
-        <button type="submit" class="btn">@L["Invite"]</button>
-    </form>
-</div>
-
-@section Scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
-    <script>
-        $(function () {
-            $("[name='Invitee']").autocomplete({
-                source: "@Url.Page("", "FindPerson")",
-                minLength: 2,
-                select: function (event, ui) {
-                    $(this).val(ui.item.userName);
-                    //$("[name='PersonId']").val(ui.item.subjectId);
-                    //$("[name='Input.UserName']").val(ui.item.name);
-                    //$("[name='Input.PhoneticSearchHint']").val(ui.item.phoneticSearchHint);
-
-                    return false;
-                }
-            })
-                .autocomplete("instance")._renderItem = function (ul, item) {
-                    var div = $("<div>");
-                    div.append("<p>" + item.userName + "(" + item.name + ")</p>")
-                    var li = $("<li>").append(div);
-                    return li.appendTo(ul);
-                };
-        });
-
-    </script>
-}
+@Html.DisplayFor(m => m.Result)
+<h2>@ViewBag.Title</h2>
+<form method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@L["Invitee"]</th>
+            <th>@L["Expected visibility"]</th>
+            <th>@L["Time"]</th>
+            <th>@L["Inviter"]</th>
+            <th>@L["Operations"]</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model.Invitations.Any())
+        {
+            foreach (var invitation in Model.Invitations)
+            {
+                <tr>
+                    <td>@invitation.InviteeId</td>
+                    <td>@invitation.ExpectVisibility</td>
+                    <td>@invitation.WhenCreated</td>
+                    <td>@invitation.Inviter</td>
+                    <td>
+                        <button type="submit" asp-page-handler="Revoke" asp-route-invitationId="@invitation.Id" class="btn btn-sm btn-outline-danger" onclick="return confirm('@L["Revoke this invitation?"]')">@L["Revoke"]</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">@L["No results."]</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>
+<hr/>
+<a class="btn btn-green ms-3" asp-page="Invite" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>

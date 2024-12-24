@@ -1,0 +1,30 @@
+﻿
+	<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="Access denied" xml:space="preserve">
+		<value>拒绝访问</value>
+	</data>
+		<data name="Go back to home, or sign out your account." xml:space="preserve">
+			<value>回首页，或注销您的登录。</value>
+		</data>
+		<data name="Go home" xml:space="preserve">
+			<value>回首页</value>
+		</data>
+		<data name="Sign out" xml:space="preserve">
+			<value>注销</value>
+		</data>
+		<data name="You don't have permission to do this." xml:space="preserve">
+			<value>您没有权限执行此操作。</value>
+		</data>
+	</root>

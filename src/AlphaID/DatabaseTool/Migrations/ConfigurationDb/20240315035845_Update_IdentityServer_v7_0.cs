@@ -1,39 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DatabaseTool.Migrations.ConfigurationDb
+namespace DatabaseTool.Migrations.ConfigurationDb;
+
+/// <inheritdoc />
+public partial class Update_IdentityServer_v7_0 : Migration
 {
     /// <inheritdoc />
-    public partial class Update_IdentityServer_v7_0 : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<int>(
-                name: "PushedAuthorizationLifetime",
-                table: "Clients",
-                type: "int",
-                nullable: true);
+        migrationBuilder.AddColumn<int>(
+            "PushedAuthorizationLifetime",
+            "Clients",
+            "int",
+            nullable: true);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "RequirePushedAuthorization",
-                table: "Clients",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
-        }
+        migrationBuilder.AddColumn<bool>(
+            "RequirePushedAuthorization",
+            "Clients",
+            "bit",
+            nullable: false,
+            defaultValue: false);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "PushedAuthorizationLifetime",
-                table: "Clients");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            "PushedAuthorizationLifetime",
+            "Clients");
 
-            migrationBuilder.DropColumn(
-                name: "RequirePushedAuthorization",
-                table: "Clients");
-        }
+        migrationBuilder.DropColumn(
+            "RequirePushedAuthorization",
+            "Clients");
     }
 }

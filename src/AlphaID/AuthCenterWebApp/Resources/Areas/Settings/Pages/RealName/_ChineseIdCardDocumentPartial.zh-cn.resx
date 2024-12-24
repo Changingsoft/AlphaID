@@ -14,7 +14,7 @@
 	<data name="Address" xml:space="preserve">
 		<value>住址</value>
 	</data>
-	<data name="Date Of Birth" xml:space="preserve">
+	<data name="Date of birth" xml:space="preserve">
 		<value>出生日期</value>
 	</data>
 	<data name="Ethnicity" xml:space="preserve">
@@ -23,7 +23,7 @@
 	<data name="Expires" xml:space="preserve">
 		<value>有效期限</value>
 	</data>
-	<data name="Issue Date" xml:space="preserve">
+	<data name="Issue date" xml:space="preserve">
 		<value>签发日期</value>
 	</data>
 	<data name="Issuer" xml:space="preserve">

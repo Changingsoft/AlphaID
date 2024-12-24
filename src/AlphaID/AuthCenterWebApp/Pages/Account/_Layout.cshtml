@@ -1,16 +1,15 @@
 ﻿@{
-    Layout = "Shared/_Layout";
+    Layout = "Tabler/_Page_Center";
 }
-
-@section head{
+@section head
+{
     @await RenderSectionAsync("head", false)
 }
-
-<div class="page-body">
-    <div class="container-xl">
-        @RenderBody()
-    </div>
+<div class="container container-tight py-4">
+    @RenderBody()
 </div>
-@section Scripts{
-    @await RenderSectionAsync("Scripts", false)
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+    @await RenderSectionAsync("Scripts", required: false)
 }

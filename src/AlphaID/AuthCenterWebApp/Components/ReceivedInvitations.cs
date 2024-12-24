@@ -8,7 +8,7 @@ public class ReceivedInvitations(JoinOrganizationInvitationManager manager) : Vi
 {
     public IViewComponentResult Invoke(NaturalPerson person)
     {
-        var invitations = manager.GetPendingInvitations(person);
-        return this.View(model: invitations);
+        IEnumerable<JoinOrganizationInvitation> invitations = manager.GetPendingInvitations(person);
+        return View(invitations);
     }
 }

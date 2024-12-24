@@ -1,13 +1,13 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewBag.Title = L["API Resources"];
+    ViewBag.Title = L["API resources"];
 }
 
 @section PageHeader{
     <div class="row">
         <div class="col">
-            <h1>@L["API Resources"]</h1>
+            <h1>@L["API resources"]</h1>
         </div>
         <div class="col-auto">
             <a asp-page="New" class="btn btn-primary">
@@ -23,28 +23,32 @@
 <div class="card">
     <table class="table card-table">
         <thead>
-            <tr>
-                <td>@L["Name"]</td>
-                <td>@L["Resource ID"]</td>
-            </tr>
+        <tr>
+            <th>@L["Name"]</th>
+            <th>@L["Resource ID"]</th>
+        </tr>
         </thead>
         <tbody>
-            @if (Model.Results.Any())
-            {
-                foreach (var data in Model.Results)
-                {
-                    <tr>
-                        <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a></td>
-                        <td><a asp-page="Detail/Index" asp-route-id="@data.Id">@data.Name</a></td>
-                    </tr>
-                }
-            }
-            else
+        @if (Model.Results.Any())
+        {
+            foreach (var data in Model.Results)
             {
                 <tr>
-                    <td colspan="2">@L["No results found."]</td>
+                    <td>
+                        <a asp-page="Detail/Index" asp-route-id="@data.Id">@data.DisplayName</a>
+                    </td>
+                    <td>
+                        <a asp-page="Detail/Index" asp-route-id="@data.Id">@data.Name</a>
+                    </td>
                 </tr>
             }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">@L["No results found."]</td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

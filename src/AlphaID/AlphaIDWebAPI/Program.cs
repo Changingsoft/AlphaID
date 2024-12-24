@@ -1,3 +1,4 @@
+using System.Reflection;
 using AlphaId.EntityFramework;
 using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
@@ -5,6 +6,7 @@ using AlphaIdWebAPI;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
+using IdSubjects.DependencyInjection;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -12,17 +14,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Events;
-using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(args);
+#if WINDOWS
+using Serilog.Events;
+#endif
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration
-    .ReadFrom.Configuration(context.Configuration)
-    .Enrich.FromLogContext()
-    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-    .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
+        .ReadFrom.Configuration(context.Configuration)
+        .Enrich.FromLogContext()
+        .WriteTo.Console(
+            outputTemplate:
+            "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}");
+#if WINDOWS
+    configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
+#endif
 });
 
 //Configuration Services
@@ -40,12 +48,11 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policyBuilder =>
     {
         policyBuilder.SetIsOriginAllowed(_ => true)
-        .AllowAnyMethod()
-        .AllowCredentials()
-        .AllowAnyHeader()
-        .SetPreflightMaxAge(TimeSpan.FromDays(20));
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .AllowAnyHeader()
+            .SetPreflightMaxAge(TimeSpan.FromDays(20));
     });
-
 });
 
 builder.Services.AddSwaggerGen(options =>
@@ -57,18 +64,18 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
     {
         Type = SecuritySchemeType.OAuth2,
-        Flows = new OpenApiOAuthFlows()
+        Flows = new OpenApiOAuthFlows
         {
-            AuthorizationCode = new OpenApiOAuthFlow()
+            AuthorizationCode = new OpenApiOAuthFlow
             {
                 AuthorizationUrl = new Uri(builder.Configuration["SwaggerOauthOptions:AuthorizationEndpoint"]!),
                 TokenUrl = new Uri(builder.Configuration["SwaggerOauthOptions:TokenEndpoint"]!),
-                Scopes = new Dictionary<string, string>()
-                        {
-                            {"openid", "获取用户Id标识" },
-                            {"profile", "获取用户基本信息" },
-                            {"realname", "获取自然人的实名信息" },
-                        },
+                Scopes = new Dictionary<string, string>
+                {
+                    { "openid", "获取用户Id标识" },
+                    { "profile", "获取用户基本信息" },
+                    { "realname", "获取自然人的实名信息" }
+                }
             }
         }
     });
@@ -89,7 +96,7 @@ builder.Services
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false,
+            ValidateAudience = false
         };
     });
 
@@ -97,9 +104,9 @@ builder.Services
 builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-    .RequireClaim("scope", "openid")
-    .RequireClaim(JwtClaimTypes.ClientId)
-    .Build();
+        .RequireClaim("scope", "openid")
+        .RequireClaim(JwtClaimTypes.ClientId)
+        .Build();
 
     options.AddPolicy("EndUser", policy =>
     {
@@ -112,7 +119,6 @@ builder.Services.AddAuthorization(options =>
         policyBuilder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
         policyBuilder.RequireClaim("scope", "realname");
     });
-
 });
 
 //持久化
@@ -122,26 +128,23 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 }).AddScoped<ConfigurationStoreOptions>();
 
 
-var idSubjectsBuilder = builder.Services.AddIdSubjects();
+IdSubjectsBuilder idSubjectsBuilder = builder.Services.AddIdSubjects();
 idSubjectsBuilder
     .AddDefaultStores()
     .AddDbContext(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"), sqlOptions =>
-        {
-            sqlOptions.UseNetTopologySuite();
-        });
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+            sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-{
     idSubjectsBuilder.AddRealName()
         .AddDefaultStores()
-        .AddDbContext(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
-}
+        .AddDbContext(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
 
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 //Configure Pipeline
 app.UseSerilogRequestLogging();
@@ -163,13 +166,11 @@ app.UseRouting();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSwagger(options =>
-{
-    options.RouteTemplate = "docs/{documentName}/docs.json";
-});
+app.UseSwagger(options => { options.RouteTemplate = "docs/{documentName}/docs.json"; });
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint("/docs/v1/docs.json", $"{app.Configuration["OpenApiInfo:Title"]} {app.Configuration["OpenApiInfo:Version"]}");
+    options.SwaggerEndpoint("/docs/v1/docs.json",
+        $"{app.Configuration["OpenApiInfo:Title"]} {app.Configuration["OpenApiInfo:Version"]}");
     options.DocumentTitle = app.Configuration["OpenApiInfo:Title"];
     options.RoutePrefix = "docs";
     options.InjectStylesheet("/swagger-ui/custom.css");
@@ -185,7 +186,7 @@ app.Run();
 namespace AlphaIdWebAPI
 {
     /// <summary>
-    /// Definitions for Testing.
+    ///     Definitions for Testing.
     /// </summary>
     public class Program;
 }

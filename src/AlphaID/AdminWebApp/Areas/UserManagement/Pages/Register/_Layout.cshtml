@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "Shared/_Layout";
+}
+
+<div class="page-body">
+    <div class="container-xl">
+        @RenderBody()
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @await RenderSectionAsync("Scripts", false)
+}

@@ -1,21 +1,23 @@
-﻿using IdSubjects.Tests;
+﻿using IdSubjects.DependencyInjection;
+using IdSubjects.Tests;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.RealName.Tests;
+
 public class ServiceProviderFixture
 {
     public ServiceProviderFixture()
     {
         var services = new ServiceCollection();
-        var idSubjectsBuilder = services.AddIdSubjects()
+        IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects()
             .AddPersonStore<StubNaturalPersonStore>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
         idSubjectsBuilder.AddRealName()
             .AddRealNameAuthenticationStore<StubRealNameAuthenticationStore>()
             .AddRealNameRequestStore<StubRealNameRequestStore>();
 
-        this.Root = services.BuildServiceProvider();
-        this.ScopeFactory = this.Root.GetRequiredService<IServiceScopeFactory>();
+        Root = services.BuildServiceProvider();
+        ScopeFactory = Root.GetRequiredService<IServiceScopeFactory>();
     }
 
     public IServiceProvider Root { get; }

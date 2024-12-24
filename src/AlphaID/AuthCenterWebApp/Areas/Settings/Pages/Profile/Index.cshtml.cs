@@ -1,104 +1,102 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using AuthCenterWebApp.Services;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 
-namespace AuthCenterWebApp.Areas.Settings.Pages.Profile
+namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
+
+public class IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager) : PageModel
 {
-    public class IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager) : PageModel
+    [BindProperty]
+    public InputModel Input { get; set; } = default!;
+
+    public NaturalPerson Person { get; set; } = default!;
+
+    public IdentityResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync()
     {
-        [BindProperty]
-        public InputModel Input { get; set; } = default!;
-
-        public NaturalPerson Person { get; set; } = default!;
-
-        public IdentityResult? Result { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        Person = person ?? throw new InvalidOperationException("无法从登录找到用户信息，请联系系统管理员。");
+        Input = new InputModel
         {
-            var person = await personManager.GetUserAsync(this.User);
-            this.Person = person ?? throw new InvalidOperationException("无法从登录找到用户信息，请联系系统管理员。");
-            this.Input = new InputModel()
-            {
-                Bio = person.Bio,
-                Website = person.WebSite,
-                Gender = person.Gender,
-                DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue),
-            };
-            return this.Page();
+            Bio = person.Bio,
+            Website = person.WebSite,
+            Gender = person.Gender,
+            DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue)
+        };
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        Debug.Assert(person != null);
+        Person = person;
+
+        if (!ModelState.IsValid)
+            return Page();
+
+        person.Bio = Input.Bio;
+        person.WebSite = Input.Website;
+        person.Gender = Input.Gender;
+        person.DateOfBirth = Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(Input.DateOfBirth.Value) : null;
+
+        Result = await personManager.UpdateAsync(person);
+        return Page();
+    }
+
+    public async Task<ActionResult> OnPostUpdateProfilePictureAsync()
+    {
+        if (!Request.Form.Files.Any())
+            return BadRequest();
+
+        IFormFile file = Request.Form.Files[0];
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        if (person == null)
+            return BadRequest();
+        await using Stream stream = file.OpenReadStream();
+        var data = new byte[stream.Length];
+        await stream.ReadAsync(data);
+        IdentityResult result = await personManager.SetProfilePictureAsync(person, file.ContentType, data);
+        if (result.Succeeded)
+        {
+            await signInManager.RefreshSignInAsync(person);
+            return new JsonResult(true);
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            var person = await personManager.GetUserAsync(this.User);
-            Debug.Assert(person != null);
+        return new JsonResult("Can not update profile picture.");
+    }
 
-            if (!this.ModelState.IsValid)
-                return this.Page();
+    public async Task<IActionResult> OnPostClearProfilePictureAsync()
+    {
+        NaturalPerson? person = await personManager.GetUserAsync(User);
+        if (person == null)
+            return BadRequest();
+        Result = await personManager.ClearProfilePictureAsync(person);
+        if (Result.Succeeded) await signInManager.RefreshSignInAsync(person);
+        return Page();
+    }
 
-            person.Bio = this.Input.Bio;
-            person.WebSite = this.Input.Website;
-            person.Gender = this.Input.Gender;
-            person.DateOfBirth = this.Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(this.Input.DateOfBirth.Value) : null;
+    public class InputModel
+    {
+        [Display(Name = "Bio", Description = "Short description about yourself.")]
+        [StringLength(200, ErrorMessage = "Validate_StringLength")]
+        public string? Bio { get; set; }
 
-            this.Result = await personManager.UpdateAsync(person);
-            return this.Page();
-        }
+        [Display(Name = "Website")]
+        [DataType(DataType.Url)]
+        [StringLength(256, ErrorMessage = "Validate_StringLength")]
+        public string? Website { get; set; }
 
-        public async Task<ActionResult> OnPostUpdateProfilePictureAsync()
-        {
-            if (!this.Request.Form.Files.Any())
-                return this.BadRequest();
+        [Display(Name = "Gender")]
+        public Gender? Gender { get; set; }
 
-            var file = this.Request.Form.Files[0];
-            var person = await personManager.GetUserAsync(this.User);
-            if (person == null)
-                return this.BadRequest();
-            await using var stream = file.OpenReadStream();
-            byte[] data = new byte[stream.Length];
-            await stream.ReadAsync(data, 0, data.Length);
-            var result = await personManager.SetProfilePictureAsync(person, file.ContentType, data);
-            if (result.Succeeded)
-            {
-                await signInManager.RefreshSignInAsync(person);
-                return new JsonResult(true);
-            }
-            else
-                return new JsonResult("Can not update profile picture.");
-        }
-
-        public async Task<IActionResult> OnPostClearProfilePictureAsync()
-        {
-            var person = await personManager.GetUserAsync(this.User);
-            if (person == null)
-                return this.BadRequest();
-            this.Result = await personManager.ClearProfilePictureAsync(person);
-            if (this.Result.Succeeded)
-            {
-                await signInManager.RefreshSignInAsync(person);
-            }
-            return this.Page();
-        }
-
-        public class InputModel
-        {
-            [Display(Name = "Bio", Description = "Short description about yourself.")]
-            [StringLength(200, ErrorMessage = "Validate_StringLength")]
-            public string? Bio { get; set; }
-
-            [Display(Name = "Website", Description = "Your personal website.")]
-            [DataType(DataType.Url)]
-            public string? Website { get; set; }
-
-            [Display(Name = "Gender")]
-            public Gender? Gender { get; set; }
-
-            [Display(Name = "Birth date")]
-            [DataType(DataType.Date)]
-            public DateTime? DateOfBirth { get; set; }
-        }
+        [Display(Name = "Date of birth")]
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirth { get; set; }
     }
 }

@@ -100,8 +100,8 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Management Center" xml:space="preserve">
-    <value>Management Center</value>
+  <data name="Management center" xml:space="preserve">
+	  <value>Management center</value>
   </data>
   <data name="OpenID Connect" xml:space="preserve">
     <value>OpenID Connect</value>
@@ -112,8 +112,8 @@
   <data name="People" xml:space="preserve">
     <value>People</value>
   </data>
-  <data name="Real Name" xml:space="preserve">
-    <value>Real Name</value>
+  <data name="Real name" xml:space="preserve">
+	  <value>Real name</value>
   </data>
   <data name="System Settings" xml:space="preserve">
     <value>System Settings</value>

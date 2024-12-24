@@ -121,8 +121,8 @@
 	  <value>CIBA</value>
 	  <comment>CIBA</comment>
   </data>
-  <data name="Consent Screen" xml:space="preserve">
-	  <value>Consent Screen</value>
+  <data name="Consent screen" xml:space="preserve">
+	  <value>Consent screen</value>
 	  <comment>Consent Screen</comment>
   </data>
   <data name="Device flow" xml:space="preserve">
@@ -141,8 +141,8 @@
 	  <value>Properties</value>
 	  <comment>Properties</comment>
   </data>
-  <data name="Refresh Token" xml:space="preserve">
-	  <value>Refresh Token</value>
+  <data name="Refresh token" xml:space="preserve">
+	  <value>Refresh token</value>
 	  <comment>Refresh Token</comment>
   </data>
   <data name="Remove" xml:space="preserve">

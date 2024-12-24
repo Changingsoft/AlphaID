@@ -1,5 +1,5 @@
 @page
-@model AuthCenterWebApp.Pages.Diagnostics.Index
+@model Index
 
 
 <div class="page-body">
@@ -17,7 +17,7 @@
                         </div>
                         <div class="card-body">
                             <dl>
-                                @if(Model.View.AuthenticateResult.Principal != null)
+                                @if (Model.View.AuthenticateResult.Principal != null)
                                 {
                                     foreach (var claim in Model.View.AuthenticateResult.Principal.Claims)
                                     {
@@ -37,7 +37,7 @@
                         </div>
                         <div class="card-body">
                             <dl>
-                                @if(Model.View.AuthenticateResult.Properties != null)
+                                @if (Model.View.AuthenticateResult.Properties != null)
                                 {
                                     foreach (var prop in Model.View.AuthenticateResult.Properties.Items)
                                     {
@@ -45,7 +45,7 @@
                                         <dd>@prop.Value</dd>
                                     }
                                 }
-                                
+
                                 @if (Model.View.Clients.Any())
                                 {
                                     <dt>Clients</dt>

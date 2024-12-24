@@ -120,7 +120,7 @@
   <data name="Add" xml:space="preserve">
     <value>添加</value>
   </data>
-  <data name="Add Claim" xml:space="preserve">
+  <data name="Add claim" xml:space="preserve">
     <value>添加声明</value>
   </data>
   <data name="Are you sure you want to remove this claim?" xml:space="preserve">

@@ -1,0 +1,46 @@
+﻿@model IdentityResult?
+
+@if (Model != null)
+{
+    if (Model.Succeeded)
+    {
+        <div class="alert alert-success" role="alert">
+            <div class="d-flex">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svc:tabler-check"></use>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="alert-title">@L["Operation succeeded"]</h4>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            <div class="d-flex">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="alert-title">@L["Errors:"]</h4>
+                    <div class="text-secondary">
+                        <ul>
+                            @foreach (var error in Model.Errors)
+                            {
+                                <li>@error.Description</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

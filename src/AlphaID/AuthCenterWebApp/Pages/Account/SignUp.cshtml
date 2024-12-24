@@ -1,122 +1,121 @@
 ﻿@page
+@using BotDetect.Web
 @using AlphaIdPlatform.Helpers
-@model AuthCenterWebApp.Pages.Account.SignUpModel
+@model SignUpModel
 @{
-    Layout = "Tabler/_Page_Center";
     ViewBag.Title = L["Create your {0}", Product.Value.Name];
 }
 
 @section head
-    {
-    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+{
+    <link href="@CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css"/>
 }
 
-<div class="container container-tight py-4">
-    <div class="text-center mb-4">
-        <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
-            <img src="/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-            @Product.Value.Name
-        </a>
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+        @Product.Value.Name
+    </a>
+</div>
+@if (Model.ExternalLoginMessage != null)
+{
+    <div class="alert alert-primary">
+        <p>@Model.ExternalLoginMessage</p>
     </div>
-    @if (Model.ExternalLoginMessage != null)
-    {
-        <div class="alert alert-primary">
-            <p>@Model.ExternalLoginMessage</p>
+}
+<form method="post" class="card card-md">
+    <div class="card-body">
+        <h2 class="card-title text-center mb-4">@L["Create new account"]</h2>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="Input.Surname" class="form-label required"></label>
+                <input asp-for="Input.Surname" class="form-control"/>
+                <span asp-validation-for="Input.Surname" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="Input.GivenName" class="form-label required"></label>
+                <input asp-for="Input.GivenName" class="form-control"/>
+                <span asp-validation-for="Input.GivenName" class="text-danger"></span>
+            </div>
         </div>
-    }
-    <form method="post" class="card card-md">
-        <div class="card-body">
-            <h2 class="card-title text-center mb-4">@L["Create new account"]</h2>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="row">
-                <div class="col">
-                    <label asp-for="Input.Surname" class="form-label required"></label>
-                    <input asp-for="Input.Surname" class="form-control" />
-                    <span asp-validation-for="Input.Surname" class="text-danger"></span>
-                </div>
-                <div class="col">
-                    <label asp-for="Input.GivenName" class="form-label required"></label>
-                    <input asp-for="Input.GivenName" class="form-control" />
-                    <span asp-validation-for="Input.GivenName" class="text-danger"></span>
-                </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="Input.Sex" class="form-label required"></label>
+                <select asp-for="Input.Sex" class="form-select" asp-items="EnumHelper.GetSelectListItems<Gender>()">
+                </select>
+                <span asp-validation-for="Input.Sex" class="text-danger"></span>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label asp-for="Input.Sex" class="form-label required"></label>
-                    <select asp-for="Input.Sex" class="form-select" asp-items="EnumHelper.GetSelectListItems<Gender>()">
-                    </select>
-                    <span asp-validation-for="Input.Sex" class="text-danger"></span>
-                </div>
-                <div class="col">
-                    <label asp-for="Input.DateOfBirth" class="form-label required"></label>
-                    <input asp-for="Input.DateOfBirth" class="form-control" />
-                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
-                </div>
+            <div class="col">
+                <label asp-for="Input.DateOfBirth" class="form-label required"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control"/>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Input.Mobile" class="form-label required"></label>
-                <div class="input-group mb-2">
-                    <input asp-for="Input.Mobile" class="form-control" />
-                    <button type="button" class="btn" onclick="SendVerificationCode(this);">@L["Send code"]</button>
-                </div>
-                <span asp-validation-for="Input.Mobile" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.Mobile" class="form-label required"></label>
+            <div class="input-group mb-2">
+                <input asp-for="Input.Mobile" class="form-control"/>
+                <button type="button" class="btn" onclick="SendVerificationCode(this);">@L["Send code"]</button>
             </div>
-            <div class="mb-3">
-                <label asp-for="Input.VerificationCode" class="form-label required"></label>
-                <input asp-for="Input.VerificationCode" class="form-control" autocomplete="off" />
-                <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Input.NewPassword" class="form-label required"></label>
-                <input asp-for="Input.NewPassword" class="form-control" />
-                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Input.ConfirmPassword" class="form-label required"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <hr />
-            <div class="mb-3">
-                <label asp-for="Input.Email" class="form-label"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-description-for="Input.Email"></span>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="UserName" class="form-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <hr />
-            <div class="mb-3">
-                <label asp-for="Input.CaptchaCode" class="form-label required"></label>
-                <captcha id="LoginCaptcha" user-input-id="CaptchaCode" />
-                <input asp-for="Input.CaptchaCode" id="CaptchaCode" class="form-control captchaVal" />
-            </div>
-            <hr />
-            <div class="form-check">
-                <input asp-for="Input.Agree" class="form-check-input" />
-                <label asp-for="Input.Agree" class="form-check-label">@L["Agree the"] <a asp-page="/Terms" target="_blank">@L["Terms of service"]</a></label>
-            </div>
-            <button type="submit" class="btn btn-primary">@L["Continue"]</button>
+            <span asp-validation-for="Input.Mobile" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.VerificationCode" class="form-label required"></label>
+            <input asp-for="Input.VerificationCode" class="form-control" autocomplete="off"/>
+            <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
         </div>
 
-    </form>
-
-
-    <div class="text-center text-secondary mt-3">
-        @L["Already have account?"] <a asp-page="Login" tabindex="-1">@L["Sign in"]</a>
+        <div class="mb-3">
+            <label asp-for="Input.NewPassword" class="form-label required"></label>
+            <input asp-for="Input.NewPassword" class="form-control"/>
+            <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.ConfirmPassword" class="form-label required"></label>
+            <input asp-for="Input.ConfirmPassword" class="form-control"/>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <hr/>
+        <div class="mb-3">
+            <label asp-for="Input.Email" class="form-label"></label>
+            <input asp-for="Input.Email" class="form-control"/>
+            <span asp-description-for="Input.Email"></span>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="form-control"/>
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+        <hr/>
+        <div class="mb-3">
+            <label asp-for="Input.CaptchaCode" class="form-label required"></label>
+            <captcha id="LoginCaptcha" user-input-id="CaptchaCode"/>
+            <input asp-for="Input.CaptchaCode" id="CaptchaCode" class="form-control captchaVal"/>
+        </div>
+        <hr/>
+        <div class="form-check">
+            <input asp-for="Input.Agree" class="form-check-input"/>
+            <label asp-for="Input.Agree" class="form-check-label">
+                @L["Agree the"] <a asp-page="/Terms" target="_blank">@L["Terms of service"]</a>
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">@L["Continue"]</button>
     </div>
+
+</form>
+
+
+<div class="text-center text-secondary mt-3">
+    @L["Already have account?"] <a asp-page="Login" tabindex="-1">@L["Sign in"]</a>
 </div>
 
 
 @section Scripts
-    {
+{
 
     <script src="~/js/captcha.validate.js"></script>
-
     <script>
         var countdown = 60;
         function SendVerificationCode(obj) {
@@ -165,4 +164,4 @@
 
         }
     </script>
-        }
+}

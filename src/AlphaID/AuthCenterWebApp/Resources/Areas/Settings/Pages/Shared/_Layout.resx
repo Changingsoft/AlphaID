@@ -100,21 +100,29 @@
   <data name="Account" xml:space="preserve">
 		<value>Account</value>
 	</data>
+  <data name="Organizations" xml:space="preserve">
+	  <value>Organizations</value>
+	  <comment>Organizations</comment>
+  </data>
   <data name="Password and authentication" xml:space="preserve">
 		<value>Password and authentication</value>
 	</data>
   <data name="Profile" xml:space="preserve">
 		<value>Profile</value>
 	</data>
+  <data name="Real-name authentication" xml:space="preserve">
+	  <value>Real-name authentication</value>
+	  <comment>Real-name Authentication</comment>
+  </data>
   <data name="Your personal account" xml:space="preserve">
 		<value>Your personal account</value>
 	</data>
-  <data name="Organizations" xml:space="preserve">
-	  <value>Organizations</value>
-	  <comment>Organizations</comment>
+  <data name="Person name" xml:space="preserve">
+	  <value>Person name</value>
+	  <comment>Person name</comment>
   </data>
-  <data name="Real-name Authentication" xml:space="preserve">
-	  <value>Real-name Authentication</value>
-	  <comment>Real-name Authentication</comment>
+  <data name="Other names" xml:space="preserve">
+	  <value>Other names</value>
+	  <comment>Other names</comment>
   </data>
 </root>

@@ -1,6 +1,7 @@
-using Duende.IdentityServer.EntityFramework.DbContexts;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes;
 
@@ -11,42 +12,43 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
     public void OnGet()
     {
-        this.Input = new InputModel()
+        Input = new InputModel
         {
-            ShowInDiscoveryDocument = true,
+            ShowInDiscoveryDocument = true
         };
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var now = DateTime.UtcNow;
-        var scope = new Duende.IdentityServer.EntityFramework.Entities.ApiScope()
+        DateTime now = DateTime.UtcNow;
+        var scope = new ApiScope
         {
             Enabled = true,
-            Name = this.Input.Name,
-            DisplayName = this.Input.DisplayName,
-            Description = this.Input.Description,
-            Required = this.Input.Required,
-            Emphasize = this.Input.Emphasize,
-            ShowInDiscoveryDocument = this.Input.ShowInDiscoveryDocument,
+            Name = Input.Name,
+            DisplayName = Input.DisplayName,
+            Description = Input.Description,
+            Required = Input.Required,
+            Emphasize = Input.Emphasize,
+            ShowInDiscoveryDocument = Input.ShowInDiscoveryDocument,
             Created = now,
-            Updated = now,
+            Updated = now
         };
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         try
         {
             dbContext.ApiScopes.Add(scope);
             await dbContext.SaveChangesAsync();
-            return this.RedirectToPage("Detail/Index", new { id = scope.Id });
+            return RedirectToPage("Detail/Index", new { id = scope.Id });
         }
         catch (Exception ex)
         {
-            this.ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError("", ex.Message);
         }
-        return this.Page();
+
+        return Page();
     }
 
     public class InputModel
@@ -68,6 +70,5 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Show in discovery document")]
         public bool ShowInDiscoveryDocument { get; set; }
-
     }
 }

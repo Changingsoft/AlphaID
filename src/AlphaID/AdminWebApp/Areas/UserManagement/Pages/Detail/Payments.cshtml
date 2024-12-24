@@ -1,0 +1,51 @@
+﻿@page
+@model PaymentsModel
+@{
+    ViewBag.Title = L["Payments of {0}", Model.Person.PersonName.FullName];
+}
+<h2>@ViewBag.Title</h2>
+<form method="post" asp-page-handler="RemoveBankAccount">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@L["BankName"]</th>
+            <th>@L["Account number"]</th>
+            <th>@L["Account name"]</th>
+            <th>@L["Operations"]</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var account in Model.BankAccounts)
+        {
+            <tr>
+                <td>@account.BankName</td>
+                <td>@account.AccountNumber</td>
+                <td>@account.AccountName</td>
+                <td>
+                    <button type="submit" name="accountNumber" value="@account.AccountNumber" class="btn btn-primary" onclick="return confirm('Are you sure you want delete this account?');">Remove</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>
+
+<hr/>
+<form method="post" asp-page-handler="AddBankAccount">
+    <div class="mb-3">
+        <label asp-for="@Model.AccountNumber" class="form-label"></label>
+        <input asp-for="@Model.AccountNumber" class="form-control"/>
+        <span asp-validation-for="@Model.AccountNumber"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.AccountName" class="form-label"></label>
+        <input asp-for="@Model.AccountName" class="form-control"/>
+        <span asp-validation-for="@Model.AccountName"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.BankName" class="form-label"></label>
+        <input asp-for="@Model.BankName" class="form-control"/>
+        <span asp-validation-for="@Model.BankName"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@L["Add"]</button>
+</form>

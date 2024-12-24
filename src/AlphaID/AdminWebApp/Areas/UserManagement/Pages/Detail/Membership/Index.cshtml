@@ -1,0 +1,137 @@
+﻿@page
+@model IndexModel
+@{
+    ViewBag.Title = L["Memberships"];
+}
+
+@section head{
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css"/>
+}
+
+@Html.DisplayFor(m => m.Result)
+<h2>@L["Memberships"]</h2>
+<form method="post" asp-page-handler="LeaveOrganization">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@L["Organization"]</th>
+            <th>@L["Department"]</th>
+            <th>@L["Title"]</th>
+            <th>@L["Remark"]</th>
+            <th>@L["Visibility"]</th>
+            <th>@L["Operations"]</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var member in Model.OrganizationMembers)
+        {
+            <tr>
+                <td>
+                    @member.Organization.Name
+                    @if (member.IsOwner)
+                    {
+                        <span class="badge">@L["Owner"]</span>
+                    }
+                </td>
+                <td>@member.Department</td>
+                <td>@member.Title</td>
+                <td>@member.Remark</td>
+                <td>@Html.DisplayFor(m => member.Visibility)</td>
+                <td>
+                    <a asp-page="Of" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-orgId="@member.OrganizationId" class="btn btn-sm">@L["Edit"]</a>
+                    <button type="submit" name="organizationId" value="@member.OrganizationId" class="btn btn-danger btn-sm" onclick="return confirm('@L["Let the person leave the organization?"]');">@L["Leave"]</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberEditor">@L["Join organization"]</button>
+
+<div class="modal fade" id="memberEditor">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">@L["Join organization"]</div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="JoinOrganization">
+                    <div class="mb-3">
+                        <label for="organizationSearch" class="form-label">@L["Search organization"]</label>
+                        <input id="organizationSearch" name="organizationSearch" type="text" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.OrganizationId" class="form-label d-none"></label>
+                        <input asp-for="Input.OrganizationId" class="form-control d-none" readonly/>
+                        <span asp-validation-for="Input.OrganizationId"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Title" class="form-label"></label>
+                        <input asp-for="Input.Title" class="form-control"/>
+                        <span asp-validation-for="Input.Title"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Department" class="form-label"></label>
+                        <input asp-for="Input.Department" class="form-control"/>
+                        <span asp-validation-for="Input.Department"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Remark" class="form-label"></label>
+                        <input asp-for="Input.Remark" class="form-control"/>
+                        <span asp-validation-for="Input.Remark"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Input.IsOwner" class="form-check-input"/>
+                        <label asp-for="Input.IsOwner" class="form-check-label"></label>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.Visibility" class="form-label"></label>
+                        <select asp-for="Input.Visibility" class="form-select" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()"></select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">@L["Join"]</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("[name='organizationSearch']").autocomplete({
+                source: "@Url.Action("SearchOrganization", "IdService")",
+                minLength: 2,
+                appendTo: "#memberEditor",
+                select: function (event, ui) {
+                    $(this).val(ui.item.name);
+                    $("[name='Input.OrganizationId']").val(ui.item.subjectId);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    var div = $("<div>").attr("class", "row")
+                        .append(
+                            $("<div>").attr("class", "col-auto")
+                                .append(
+                                    $("<img>").attr("src", "#").attr("class", "avatar")
+                                )
+                        )
+                        .append(
+                            $("<div>").attr("class", "col text-truncate")
+                                .append(
+                                    $("<p>").append(item.name)
+                                )
+                                .append(
+                                    $("<p>").attr("class", "text-secondary")
+                                        .append(item.sex)
+                                )
+                        );
+                    var li = $("<li>").append(div);
+                    return li.appendTo(ul);
+                };
+        });
+
+    </script>
+
+}

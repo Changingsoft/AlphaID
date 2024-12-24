@@ -11,13 +11,13 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="External Logins" xml:space="preserve">
+	<data name="External logins" xml:space="preserve">
 		<value>外部登录</value>
 	</data>
 	<data name="Overview" xml:space="preserve">
 		<value>概要</value>
 	</data>
-	<data name="Two-factor Authentication" xml:space="preserve">
+	<data name="Two-factor authentication" xml:space="preserve">
 		<value>双因子身份验证</value>
 	</data>
 	<data name="Password and authentication" xml:space="preserve">

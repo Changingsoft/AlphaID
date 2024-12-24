@@ -5,12 +5,20 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-@if (Model.CurrentLogins?.Count > 0)
+@if (Model.CurrentLogins.Count > 0)
 {
-    <h3>@L["External Logins"]</h3>
+    <h3>@L["External logins"]</h3>
     <table class="table">
+        <thead>
+            <tr>
+                <th>@L["Provider"]</th>
+                <th>@L["Operations"]</th>
+            </tr>
+        </thead>
         <tbody>
-            @foreach (var login in Model.CurrentLogins)
+        @if (Model.CurrentLogins.Count != 0)
+        {
+            foreach (var login in Model.CurrentLogins)
             {
                 <tr>
                     <td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>
@@ -19,9 +27,9 @@
                         {
                             <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
                                 <div>
-                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
-                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
-                                    <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">@L["Revoke"]</button>
+                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden"/>
+                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden"/>
+                                    <button type="submit" class="btn btn-sm" title="Remove this @login.ProviderDisplayName login from your account">@L["Revoke"]</button>
                                 </div>
                             </form>
                         }
@@ -32,10 +40,17 @@
                     </td>
                 </tr>
             }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">@L["External logins not found."]</td>
+            </tr>
+        }
         </tbody>
     </table>
 }
-@if (Model.OtherLogins?.Count > 0)
+@if (Model.OtherLogins.Count > 0)
 {
     <h4>@L["Add another service to log in."]</h4>
     <hr />

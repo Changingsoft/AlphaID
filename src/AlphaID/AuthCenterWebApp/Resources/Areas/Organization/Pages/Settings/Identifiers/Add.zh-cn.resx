@@ -14,7 +14,7 @@
 	<data name="Add" xml:space="preserve">
 		<value>添加</value>
 	</data>
-	<data name="Add Identifier" xml:space="preserve">
+	<data name="Add identifier" xml:space="preserve">
 		<value>添加标识</value>
 	</data>
 </root>

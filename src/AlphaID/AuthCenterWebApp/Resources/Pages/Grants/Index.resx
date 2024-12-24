@@ -97,9 +97,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="API Grants" xml:space="preserve">
-		<value>API Grants</value>
-	</data>
+  <data name="API grants" xml:space="preserve">
+	  <value>API grants</value>
+  </data>
   <data name="Below is the list of applications you have given permission to and the resources they have access to." xml:space="preserve">
 		<value>Below is the list of applications you have given permission to and the resources they have access to.</value>
 	</data>
@@ -115,9 +115,9 @@
   <data name="Expires" xml:space="preserve">
 		<value>Expires</value>
 	</data>
-  <data name="Identity Grants" xml:space="preserve">
-		<value>Identity Grants</value>
-	</data>
+  <data name="Identity grants" xml:space="preserve">
+	  <value>Identity grants</value>
+  </data>
   <data name="Revoke Access" xml:space="preserve">
 		<value>Revoke Access</value>
 	</data>

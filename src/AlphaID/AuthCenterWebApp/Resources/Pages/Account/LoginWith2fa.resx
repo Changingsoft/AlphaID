@@ -109,9 +109,9 @@
   <data name="Sign in" xml:space="preserve">
 		<value>Sign in</value>
 	</data>
-  <data name="Two-fact authentication" xml:space="preserve">
-		<value>Two-fact authentication</value>
-	</data>
+  <data name="Two-factor authentication" xml:space="preserve">
+	  <value>Two-factor authentication</value>
+  </data>
   <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve">
 		<value>Your login is protected with an authenticator app. Enter your authenticator code below.</value>
 	</data>

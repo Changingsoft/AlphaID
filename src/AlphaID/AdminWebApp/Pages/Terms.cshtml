@@ -1,9 +1,23 @@
 ﻿@page
-@model AdminWebApp.Pages.TermsModel
+@model TermsModel
 @{
+    Layout = "Shared/_Layout_Narrow";
     ViewBag.Title = SL["Terms of service"];
 }
 
-<h2>@ViewBag.Title</h2>
+@section PageHeader
+{
+    <div class="row g-2 align-items-center">
+        <div class="col">
+            <h2 class="page-title">
+                @ViewBag.Title
+            </h2>
+        </div>
+    </div>
+}
 
-<markdown filename="~/_docs/Terms.md"></markdown>
+<div class="card">
+    <div class="card-body">
+        <markdown filename="~/_docs/Terms.md"></markdown>
+    </div>
+</div>

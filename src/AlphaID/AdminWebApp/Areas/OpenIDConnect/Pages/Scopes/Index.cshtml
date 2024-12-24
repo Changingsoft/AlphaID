@@ -23,29 +23,39 @@
 <div class="card">
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Name"]</td>
-                <td>@L["Enabled"]</td>
-                <td>@L["Display name"]</td>
-                <td>@L["Description"]</td>
-                <td>@L["Required"]</td>
-                <td>@L["Emphasize"]</td>
-                <td>@L["Show in discovery document"]</td>
-            </tr>
+        <tr>
+            <th>@L["Name"]</th>
+            <th>@L["Enabled"]</th>
+            <th>@L["Display name"]</th>
+            <th>@L["Description"]</th>
+            <th>@L["Required"]</th>
+            <th>@L["Emphasize"]</th>
+            <th>@L["Show in discovery document"]</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var scope in Model.Results)
-            {
-                <tr>
-                    <td><a asp-page="Detail/Index" asp-route-id="@scope.Id">@scope.Name</a></td>
-                    <td><input asp-for="@scope.Enabled" class="form-check-input" disabled /></td>
-                    <td>@scope.DisplayName</td>
-                    <td>@scope.Description</td>
-                    <td><input asp-for="@scope.Required" class="form-check-input" disabled /></td>
-                    <td><input asp-for="@scope.Emphasize" class="form-check-input" disabled /></td>
-                    <td><input asp-for="@scope.ShowInDiscoveryDocument" class="form-check-input" disabled /></td>
-                </tr>
-            }
+        @foreach (var scope in Model.Results)
+        {
+            <tr>
+                <td>
+                    <a asp-page="Detail/Index" asp-route-id="@scope.Id">@scope.Name</a>
+                </td>
+                <td>
+                    <input asp-for="@scope.Enabled" class="form-check-input" disabled/>
+                </td>
+                <td>@scope.DisplayName</td>
+                <td>@scope.Description</td>
+                <td>
+                    <input asp-for="@scope.Required" class="form-check-input" disabled/>
+                </td>
+                <td>
+                    <input asp-for="@scope.Emphasize" class="form-check-input" disabled/>
+                </td>
+                <td>
+                    <input asp-for="@scope.ShowInDiscoveryDocument" class="form-check-input" disabled/>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

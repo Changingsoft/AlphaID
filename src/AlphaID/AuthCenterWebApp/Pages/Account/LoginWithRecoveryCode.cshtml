@@ -1,33 +1,26 @@
 ﻿@page
-@model AuthCenterWebApp.Pages.Account.LoginWithRecoveryCodeModel
+@model LoginWithRecoveryCodeModel
 @{
-    Layout = "Tabler/_Page_Center";
     ViewBag.Title = L["Recovery code verification"];
 }
-<div class="container container-tight py-4">
-    <div class="text-center mb-4">
-        <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
-            <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-            @(Product.Value.Name) @L["Account"]
-        </a>
-    </div>
-    <div class="card card-md">
-        <div class="card-body">
-            <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
-            <p>@L["You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again."]</p>
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="mb-3">
-                    <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off" />
-                    <label asp-for="Input.RecoveryCode" class="form-label"></label>
-                    <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
-                </div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary">@L["Sign in"]</button>
-            </form>
-        </div>
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+        @(Product.Value.Name) @L["Account"]
+    </a>
+</div>
+<div class="card card-md">
+    <div class="card-body">
+        <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
+        <p>@L["You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again."]</p>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off"/>
+                <label asp-for="Input.RecoveryCode" class="form-label"></label>
+                <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">@L["Sign in"]</button>
+        </form>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

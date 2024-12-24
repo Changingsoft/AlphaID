@@ -5,18 +5,21 @@
 @section head{
     @await RenderSectionAsync("head", false)
 }
+
 @section Scripts{
     @await RenderSectionAsync("Scripts", false)
 }
+
 @section PageHeader{
     <h1>@L["Security"]</h1>
 }
+
 <div class="card">
     <div class="row">
         <div class="col-12 col-md-2 border-end">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-page="/Security/Index" asp-path="/SystemSettings/Security" asp-match-prefix="false">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-page="/Security/Index" asp-path="/SystemSettings/Security!">@L["Overview"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-page="/Security/RoleMembers" asp-path="/SystemSettings/Security/RoleMembers">@L["Role Members"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-page="/Security/Auditing/Index" asp-path="/SystemSettings/Security/Auditing">@L["Auditing Log"]</a>
                 </div>
@@ -24,12 +27,13 @@
         </div>
         <div class="col-12 col-md-10 d-flex flex-column">
             <div class="card-body">
-            @RenderBody()
+                @RenderBody()
             </div>
         </div>
     </div>
 
 </div>
+
 @section PageComponents
 {
     @await RenderSectionAsync("PageComponents", false)

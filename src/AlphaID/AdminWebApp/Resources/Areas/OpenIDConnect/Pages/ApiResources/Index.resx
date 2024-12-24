@@ -97,9 +97,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="API Resources" xml:space="preserve">
-		<value>API Resources</value>
-	</data>
+  <data name="API resources" xml:space="preserve">
+	  <value>API resources</value>
+  </data>
   <data name="Name" xml:space="preserve">
 		<value>Name</value>
 	</data>

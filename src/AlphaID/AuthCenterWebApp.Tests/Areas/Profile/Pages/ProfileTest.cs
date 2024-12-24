@@ -1,12 +1,14 @@
 ﻿namespace AuthCenterWebApp.Tests.Areas.Profile.Pages;
-public class ProfileTest(AuthCenterWebAppFactory factory) : IClassFixture<AuthCenterWebAppFactory>
+
+[Collection(nameof(TestServerCollection))]
+public class ProfileTest(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task GetDefaultPictureWhenPersonNotSpecified()
     {
-        var client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateAuthenticatedClient();
 
-        var response = await client.GetAsync("People/guanyu/Avatar");
+        HttpResponseMessage response = await client.GetAsync("People/guanyu/Avatar");
         response.EnsureSuccessStatusCode();
         Assert.Equal("image/png", response.Content.Headers.ContentType?.ToString());
     }

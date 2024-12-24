@@ -54,7 +54,7 @@
   <data name="You have {0} codes left." xml:space="preserve">
 		<value>您有{0}个恢复代码。</value>
 	</data>
-  <data name="You must accept the policy before you can enable two factor authentication." xml:space="preserve">
+  <data name="You must accept the policy before you can enable two-factor authentication." xml:space="preserve">
 		<value>您必须统一策略才能启用双因子身份验证。</value>
 	</data>
   <data name="You must generate a new set of recovery codes before you can log in with a recovery code." xml:space="preserve">

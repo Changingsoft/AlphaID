@@ -14,13 +14,23 @@
 	<data name="Add another service to log in." xml:space="preserve">
 		<value>添加其他登录服务。</value>
 	</data>
-	<data name="External Logins" xml:space="preserve">
+	<data name="External logins" xml:space="preserve">
 		<value>外部登录</value>
 	</data>
 	<data name="Manage your external logins" xml:space="preserve">
 		<value>管理您的外部登录</value>
 	</data>
 	<data name="Revoke" xml:space="preserve">
-		<value>解除</value>
+		<value>解绑</value>
+	</data>
+	<data name="External logins not found." xml:space="preserve">
+		<value>没有外部登录绑定。</value>
+		<comment>External logins not found.</comment>
+	</data>
+	<data name="Operations" xml:space="preserve">
+		<value>操作</value>
+	</data>
+	<data name="Provider" xml:space="preserve">
+		<value>提供方</value>
 	</data>
 </root>

@@ -1,92 +1,93 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects;
 
 /// <summary>
-/// 组织的人员。
+///     组织的人员。
 /// </summary>
 [Table("OrganizationMember")]
 [PrimaryKey(nameof(PersonId), nameof(OrganizationId))]
 public class OrganizationMember
 {
     /// <summary>
-    /// 
     /// </summary>
-    protected OrganizationMember() { }
+    protected OrganizationMember()
+    {
+    }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="person"></param>
     public OrganizationMember(GenericOrganization organization, NaturalPerson person)
     {
-        this.OrganizationId = organization.Id;
-        this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-        this.PersonId = person.Id;
-        this.Person = person ?? throw new ArgumentNullException(nameof(person));
+        OrganizationId = organization.Id;
+        Organization = organization ?? throw new ArgumentNullException(nameof(organization));
+        PersonId = person.Id;
+        Person = person ?? throw new ArgumentNullException(nameof(person));
     }
 
     /// <summary>
-    /// GenericOrganization Id.
+    ///     GenericOrganization Id.
     /// </summary>
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string OrganizationId { get; protected set; } = default!;
 
     /// <summary>
-    /// Person Id.
+    ///     Person Id.
     /// </summary>
-    [MaxLength(50), Unicode(false)]
+    [MaxLength(50)]
+    [Unicode(false)]
     public string PersonId { get; protected set; } = default!;
 
     /// <summary>
-    /// GenericOrganization.
+    ///     GenericOrganization.
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; protected set; } = default!;
+    public GenericOrganization Organization { get; protected set; } = default!;
 
     /// <summary>
-    /// Person.
+    ///     Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public virtual NaturalPerson Person { get; protected set; } = default!;
+    public NaturalPerson Person { get; protected set; } = default!;
 
     /// <summary>
-    /// 部门。
+    ///     部门。
     /// </summary>
     [MaxLength(50)]
     public string? Department { get; set; } = default!;
 
     /// <summary>
-    /// 职务。
+    ///     职务。
     /// </summary>
     [MaxLength(50)]
     public string? Title { get; set; } = default!;
 
     /// <summary>
-    /// 备注。
+    ///     备注。
     /// </summary>
     [MaxLength(50)]
     public string? Remark { get; set; } = default!;
 
     /// <summary>
-    /// Is Owner of the organization.
+    ///     Is Owner of the organization.
     /// </summary>
     public bool IsOwner { get; set; }
 
     /// <summary>
-    /// Membership visibility.
+    ///     Membership visibility.
     /// </summary>
     public virtual MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
 
     /// <summary>
-    /// 
     /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{this.Organization.Name}|{this.Person.UserName}|{(this.IsOwner ? "Owner" : "")}|{this.Visibility}";
+        return $"{Organization.Name}|{Person.UserName}|{(IsOwner ? "Owner" : "")}|{Visibility}";
     }
 }

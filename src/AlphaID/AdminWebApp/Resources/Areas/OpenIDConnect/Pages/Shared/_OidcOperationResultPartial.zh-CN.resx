@@ -100,7 +100,7 @@
   <data name="Errors:" xml:space="preserve">
     <value>错误：</value>
   </data>
-  <data name="Operation Succeeded" xml:space="preserve">
-    <value>操作已成功。</value>
+  <data name="Operation succeeded" xml:space="preserve">
+	  <value>操作已成功</value>
   </data>
 </root>

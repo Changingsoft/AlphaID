@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail.AdvancedModel
+@model AdvancedModel
 @{
 }
 <h2>@L["Advanced"]</h2>
@@ -8,21 +8,23 @@
 <form method="post" asp-page-handler="Remove">
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Key"]</td>
-                <td>@L["Value"]</td>
-                <td></td>
-            </tr>
+        <tr>
+            <th>@L["Key"]</th>
+            <th>@L["Value"]</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-            @foreach(var prop in Model.Data.Properties)
-            {
-                <tr>
-                    <td>@prop.Key</td>
-                    <td>@prop.Value</td>
-                    <td><button type="submit" class="btn btn-sm btn-danger" name="propId" value="@prop.Id" onclick="return confirm('@L["Are you sure you want remove it?"]');">@L["Remove"]</button></td>
-                </tr>
-            }
+        @foreach (var prop in Model.Data.Properties)
+        {
+            <tr>
+                <td>@prop.Key</td>
+                <td>@prop.Value</td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-danger" name="propId" value="@prop.Id" onclick="return confirm('@L["Are you sure you want remove it?"]');">@L["Remove"]</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </form>
@@ -35,12 +37,12 @@
         <form method="post" asp-page-handler="Add">
             <div class="mb-3">
                 <label asp-for="NewKey" class="form-label"></label>
-                <input asp-for="NewKey" class="form-control" />
+                <input asp-for="NewKey" class="form-control"/>
                 <span asp-validation-for="NewKey"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="NewValue" class="form-label"></label>
-                <input asp-for="NewValue" class="form-control" />
+                <input asp-for="NewValue" class="form-control"/>
                 <span asp-validation-for="NewValue"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>

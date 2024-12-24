@@ -1,0 +1,16 @@
+﻿@page
+@model IndexModel
+@{
+    ViewBag.Title = "New Person";
+}
+
+<h2>New Person</h2>
+<p>请准备以下资料</p>
+<ol>
+    <li>姓名和拼音</li>
+    <li>性别、出生年月</li>
+    <li>移动电话号码</li>
+    <li>备用电子邮件地址</li>
+</ol>
+<a asp-page="RegisterByChineseIDCard" class="btn btn-primary">Create from ID Card</a>
+<a asp-page="Create" class="btn btn-secondary">Create Manually</a>

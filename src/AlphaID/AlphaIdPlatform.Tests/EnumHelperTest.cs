@@ -1,25 +1,28 @@
-﻿using AlphaIdPlatform.Helpers;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AlphaIdPlatform.Tests;
+
 public class EnumHelperTest
 {
-    [Fact]
-    public void GetListItems()
-    {
-        var items = EnumHelper.GetSelectListItems<TestEnum>();
-        var array = items.ToArray();
-        Assert.Equal("None", array[0].Text);
-        Assert.Equal("None", array[0].Value);
-        Assert.Equal("Base line", array[1].Text);
-        Assert.Equal("Baseline", array[1].Value);
-    }
-
     public enum TestEnum
     {
         [Display(Name = "None", Description = "Specify none.")]
         None = 0,
+
         [Display(Name = "Base line", Description = "Specify base line.")]
-        Baseline = 2,
+        Baseline = 2
+    }
+
+    [Fact]
+    public void GetListItems()
+    {
+        IEnumerable<SelectListItem> items = EnumHelper.GetSelectListItems<TestEnum>();
+        SelectListItem[] array = items.ToArray();
+        Assert.Equal("None", array[0].Text);
+        Assert.Equal("None", array[0].Value);
+        Assert.Equal("Base line", array[1].Text);
+        Assert.Equal("Baseline", array[1].Value);
     }
 }

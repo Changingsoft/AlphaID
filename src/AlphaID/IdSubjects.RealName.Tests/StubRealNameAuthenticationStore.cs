@@ -1,12 +1,14 @@
 ﻿namespace IdSubjects.RealName.Tests;
+
 internal class StubRealNameAuthenticationStore : IRealNameAuthenticationStore
 {
-    private readonly HashSet<RealNameAuthentication> set = [];
+    private readonly HashSet<RealNameAuthentication> _set = [];
 
-    public IQueryable<RealNameAuthentication> Authentications => this.set.AsQueryable();
+    public IQueryable<RealNameAuthentication> Authentications => _set.AsQueryable();
+
     public Task<IdOperationResult> CreateAsync(RealNameAuthentication authentication)
     {
-        this.set.Add(authentication);
+        _set.Add(authentication);
         return Task.FromResult(IdOperationResult.Success);
     }
 
@@ -17,23 +19,23 @@ internal class StubRealNameAuthenticationStore : IRealNameAuthenticationStore
 
     public Task<IdOperationResult> DeleteAsync(RealNameAuthentication authentication)
     {
-        this.set.Remove(authentication);
+        _set.Remove(authentication);
         return Task.FromResult(IdOperationResult.Success);
     }
 
     public Task<IdOperationResult> DeleteByPersonIdAsync(string personId)
     {
-        this.set.RemoveWhere(a => a.PersonId == personId);
+        _set.RemoveWhere(a => a.PersonId == personId);
         return Task.FromResult(IdOperationResult.Success);
     }
 
     public IQueryable<RealNameAuthentication> FindByPerson(NaturalPerson person)
     {
-        return this.set.Where(a => a.PersonId == person.Id).AsQueryable();
+        return _set.Where(a => a.PersonId == person.Id).AsQueryable();
     }
 
     public Task<RealNameAuthentication?> FindByIdAsync(string id)
     {
-        return Task.FromResult(this.set.FirstOrDefault(a => a.Id == id));
+        return Task.FromResult(_set.FirstOrDefault(a => a.Id == id));
     }
 }

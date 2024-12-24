@@ -8,21 +8,23 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <td>@L["Type"]</td>
-                <td>@L["Value"]</td>
-                <td></td>
-            </tr>
+        <tr>
+            <th>@L["Type"]</th>
+            <th>@L["Value"]</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var c in Model.Data.Claims)
-            {
-                <tr>
-                    <td>@c.Type</td>
-                    <td>@c.Value</td>
-                    <td><button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('Are you sure you want to remove this cliam?');">@L["Remove"]</button></td>
-                </tr>
-            }
+        @foreach (var c in Model.Data.Claims)
+        {
+            <tr>
+                <td>@c.Type</td>
+                <td>@c.Value</td>
+                <td>
+                    <button type="submit" class="btn btn-danger btn-sm btn-pills" name="claimId" value="@c.Id" onclick="return confirm('Delete this cliam?');">@SL["Delete"]</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </form>

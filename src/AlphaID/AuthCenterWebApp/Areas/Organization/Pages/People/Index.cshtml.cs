@@ -2,48 +2,115 @@ using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AuthCenterWebApp.Areas.Organization.Pages.People
+namespace AuthCenterWebApp.Areas.Organization.Pages.People;
+
+public class IndexModel(
+    OrganizationMemberManager organizationMemberManager,
+    OrganizationManager organizationManager,
+    NaturalPersonManager personManager) : PageModel
 {
-    public class IndexModel(OrganizationMemberManager organizationMemberManager, OrganizationManager organizationManager, NaturalPersonManager personManager) : PageModel
+    public GenericOrganization Organization { get; set; } = default!;
+
+    public IEnumerable<OrganizationMember> Members { get; set; } = [];
+
+    public bool UserIsOwner { get; set; }
+
+    public IdOperationResult? Result { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        public GenericOrganization Organization { get; set; } = default!;
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who");
+        if (organization == null)
+            return NotFound();
+        Organization = organization;
 
-        public IEnumerable<OrganizationMember> Members { get; set; } = [];
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        public IdOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string anchor)
+        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
+    {
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who");
+        if (organization == null)
+            return NotFound();
+        Organization = organization;
+
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+
+        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+
+        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+            return Page();
+
+        if (!UserIsOwner)
         {
-            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who");
-            if (organization == null)
-                return this.NotFound();
-            this.Organization = organization;
-
-            var visitor = await personManager.GetUserAsync(this.User);
-
-            this.Members = await organizationMemberManager.GetVisibleMembersAsync(this.Organization, visitor);
-            return this.Page();
+            ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
+        Result = await organizationMemberManager.LeaveOrganizationAsync(member);
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
+    {
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who");
+        if (organization == null)
+            return NotFound();
+        Organization = organization;
+
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+
+        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+
+        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+            return Page();
+
+        if (!UserIsOwner)
         {
-            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out var organization))
-                return this.RedirectToPage("/Who");
-            if (organization == null)
-                return this.NotFound();
-            this.Organization = organization;
-
-            var visitor = await personManager.GetUserAsync(this.User);
-
-            this.Members = await organizationMemberManager.GetVisibleMembersAsync(this.Organization, visitor);
-
-            var member = this.Members.FirstOrDefault(m => m.PersonId == personId);
-            if (member == null)
-                return this.Page();
-
-            this.Result = await organizationMemberManager.LeaveOrganizationAsync(member);
-            return this.Page();
+            ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
+            return Page();
         }
+
+        Result = await organizationMemberManager.SetOwner(member);
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
+    {
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            return RedirectToPage("/Who");
+        if (organization == null)
+            return NotFound();
+        Organization = organization;
+
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+
+        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+
+        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+            return Page();
+
+        if (!UserIsOwner)
+        {
+            ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
+            return Page();
+        }
+
+        Result = await organizationMemberManager.UnsetOwner(member);
+        return Page();
     }
 }

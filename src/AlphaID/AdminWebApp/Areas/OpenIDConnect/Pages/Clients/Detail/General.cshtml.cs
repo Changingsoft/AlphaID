@@ -1,9 +1,8 @@
-namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail
+namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
+
+public class GeneralModel : PageModel
 {
-    public class GeneralModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

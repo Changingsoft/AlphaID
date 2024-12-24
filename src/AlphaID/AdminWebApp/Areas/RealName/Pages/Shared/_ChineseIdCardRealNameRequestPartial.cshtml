@@ -1,13 +1,17 @@
 ﻿@model IdSubjects.RealName.Requesting.ChineseIdCardRealNameRequest
 <div class="row align-items-center">
-    <div class="col-auto"><span class="badge"></span></div>
+    <div class="col-auto">
+        <span class="badge"></span>
+    </div>
     <div class="col-auto">
         <a href="#">
             <span class="avatar">JL</span>
         </a>
     </div>
     <div class="col text-truncate">
-        <a href="#" class="text-reset d-block"><a asp-page="/Request/Index" asp-route-anchor="@Model.Id">@Model.Name</a></a>
+        <a href="#" class="text-reset d-block">
+            <a asp-page="/Request/Index" asp-route-anchor="@Model.Id">@Model.Name</a>
+        </a>
         <div class="d-block text-secondary text-truncate mt-n1">justify-content:between ⇒ justify-content:space-between (#29734)</div>
     </div>
     <div class="col-auto">

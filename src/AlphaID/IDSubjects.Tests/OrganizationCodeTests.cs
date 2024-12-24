@@ -20,11 +20,11 @@ public class OrganizationCodeTests
         Assert.ThrowsAny<Exception>(() => OrganizationCode.Parse("12345"));
         Assert.ThrowsAny<Exception>(() => OrganizationCode.Parse("21722204-3"));
 
-        var oc = OrganizationCode.Parse("21722204-2"); //支持对小写的转换。
+        OrganizationCode oc = OrganizationCode.Parse("21722204-2"); //支持对小写的转换。
         Assert.Equal("21722204", oc.Code);
         Assert.Equal('2', oc.CheckCode);
 
-        var oc1 = OrganizationCode.Parse("217222042"); //支持对小写的转换。
+        OrganizationCode oc1 = OrganizationCode.Parse("217222042"); //支持对小写的转换。
         Assert.Equal("21722204", oc1.Code);
         Assert.Equal('2', oc1.CheckCode);
     }
@@ -43,9 +43,9 @@ public class OrganizationCodeTests
     [Fact]
     public void OrganizationCodeEqualityTest()
     {
-        var a = OrganizationCode.Parse("21722204-2");
-        var b = OrganizationCode.Parse("217222042");
-        var c = OrganizationCode.Parse("70978816-5");
+        OrganizationCode a = OrganizationCode.Parse("21722204-2");
+        OrganizationCode b = OrganizationCode.Parse("217222042");
+        OrganizationCode c = OrganizationCode.Parse("70978816-5");
 
         Assert.Equal(a, b);
         Assert.NotEqual(a, c);

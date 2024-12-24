@@ -1,88 +1,84 @@
 @page
-@model AuthCenterWebApp.Pages.Account.LoginModel
+@model LoginModel
 @{
-    Layout = "Tabler/_Page_Center";
     ViewBag.Title = L["Sign in"];
 }
 
-<div class="container container-tight py-4">
-    <div class="text-center mb-4">
-        <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
-            <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-            @Product.Value.Name @L["Account"]
-        </a>
-    </div>
-    <div class="card card-md">
-        <div class="card-body">
-            @if (Model.View.EnableLocalLogin)
-            {
-                <h2 class="h2 text-center mb-4">@L["Login to your account"]</h2>
-                <form method="post">
-                    <input type="hidden" asp-for="Input.ReturnUrl" />
-
-                    <div class="mb-3">
-                        <label asp-for="Input.Username" class="form-label"></label>
-                        <input asp-for="Input.Username" class="form-control" autofocus>
-                        <span asp-validation-for="Input.Username" class="text-danger"></span>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label" asp-for="Input.Password">
-                            @L["Password"]
-                            <span class="form-label-description">
-                                <a asp-page="ForgetPassword">@L["I forgot password"]</a>
-                            </span>
-                        </label>
-                        <input asp-for="Input.Password" class="form-control">
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                    <div class="mb-2">
-                        @if (Model.View.AllowRememberLogin)
-                        {
-                            <label asp-for="Input.RememberLogin" class="form-check">
-                                <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">
-                                <span class="form-check-label">@L["Remember me on this device"]</span>
-                            </label>
-                        }
-                    </div>
-                    <partial name="_ValidationSummary" />
-                    <div class="form-footer">
-                        <div class="row">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@L["Sign in"]</button>
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@L["Cancel"]</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            }
-        </div>
-        @if (Model.View.VisibleExternalProviders.Any())
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+        @Product.Value.Name @L["Account"]
+    </a>
+</div>
+<div class="card card-md">
+    <div class="card-body">
+        @if (Model.View.EnableLocalLogin)
         {
-            <div class="hr-text">@L["or"]</div>
-            <div class="card-body">
-                <div class="row">
-                    @foreach (var provider in Model.View.VisibleExternalProviders)
+            <h2 class="h2 text-center mb-4">@L["Login to your account"]</h2>
+            <form method="post">
+                <input type="hidden" asp-for="Input.ReturnUrl"/>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Username" class="form-label"></label>
+                    <input asp-for="Input.Username" class="form-control" autofocus tabindex="1">
+                    <span asp-validation-for="Input.Username" class="text-danger"></span>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="Input.Password">
+                        @L["Password"]
+                        <span class="form-label-description">
+                            <a asp-page="ForgetPassword">@L["I forgot password"]</a>
+                        </span>
+                    </label>
+                    <input asp-for="Input.Password" class="form-control" tabindex="2">
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="mb-2">
+                    @if (Model.View.AllowRememberLogin)
                     {
-                        <div class="col">
-                            <a class="btn"
-                               asp-page="/ExternalLogin/Challenge"
-                               asp-route-scheme="@provider.AuthenticationScheme"
-                               asp-route-schemeDisplayName="@provider.DisplayName"
-                               asp-route-returnUrl="@Model.Input.ReturnUrl">
-                                @provider.DisplayName
-                            </a>
-                        </div>
+                        <label asp-for="Input.RememberLogin" class="form-check">
+                            <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">
+                            <span class="form-check-label">@L["Remember me on this device"]</span>
+                        </label>
                     }
                 </div>
-            </div>
-
+                <partial name="_ValidationSummary"/>
+                <div class="form-footer">
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@L["Sign in"]</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@L["Cancel"]</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         }
     </div>
-    <div class="text-center text-secondary mt-3">
-        @L["Don't have account yet?"] <a asp-page="SignUp" tabindex="-1">@L["Sign up"]</a>
-    </div>
+    @if (Model.View.VisibleExternalProviders.Any())
+    {
+        <div class="hr-text">@L["or"]</div>
+        <div class="card-body">
+            <div class="row">
+                @foreach (var provider in Model.View.VisibleExternalProviders)
+                {
+                    <div class="col">
+                        <a class="btn"
+                           asp-page="/ExternalLogin/Challenge"
+                           asp-route-scheme="@provider.AuthenticationScheme"
+                           asp-route-schemeDisplayName="@provider.DisplayName"
+                           asp-route-returnUrl="@Model.Input.ReturnUrl">
+                            @provider.DisplayName
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+<div class="text-center text-secondary mt-3">
+    @L["Don't have account yet?"] <a asp-page="SignUp" tabindex="-1">@L["Sign up"]</a>
 </div>
 
 

@@ -11,7 +11,7 @@
 }
 
 @section Header {
-    <partial name="_DefaultTitleNavBarPartial" />
+    <partial name="_DefaultTitleNavBarPartial"/>
     @await RenderSectionAsync("Header", false)
 }
 
@@ -31,13 +31,14 @@
         </div>
     </div>
 }
+
 <div class="container-xl">
     <div class="card">
         <div class="row g-0">
             <div class="col-12 col-md-2 border-end">
                 <div class="card-body">
                     <div class="list-group list-group-transparent">
-                        <a asp-page="/Profile/Index" asp-path="/Settings/Profile" class="list-group-item list-group-item-action d-flex align-items-center">@L["Profile"]</a>
+                        <a asp-page="/Profile/Index" asp-path="/Settings/Profile!" class="list-group-item list-group-item-action d-flex align-items-center">@L["Profile"]</a>
                         <a asp-page="/Profile/PersonName" asp-path="/Settings/Profile/PersonName" class="list-group-item list-group-item-action d-flex align-items-center">@L["Person name"]</a>
                         <a asp-page="/Profile/OtherNames" asp-path="/Settings/Profile/OtherNames" class="list-group-item list-group-item-action d-flex align-items-center">@L["Other names"]</a>
                         <a asp-page="/Account/Index" asp-path="/Settings/Account" class="list-group-item list-group-item-action d-flex align-items-center">@L["Account"]</a>
@@ -45,7 +46,7 @@
                         <a asp-page="/Organizations/Index" asp-path="/Settings/Organizations" class="list-group-item list-group-item-action d-flex align-items-center">@L["Organizations"]</a>
                         @if (Product.Value.Feature.RealName)
                         {
-                            <a asp-page="/RealName/Index" asp-path="/Settings/RealName" class="list-group-item list-group-item-action d-flex align-items-center">@L["Real-name Authentication"]</a>
+                            <a asp-page="/RealName/Index" asp-path="/Settings/RealName" class="list-group-item list-group-item-action d-flex align-items-center">@L["Real-name authentication"]</a>
                         }
                         @* <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Billing &amp; Invoices</a> *@
                     </div>
@@ -59,10 +60,11 @@
         </div>
     </div>
 </div>
+
 @section PageFooter
 {
     @* 页脚 *@
-    <partial name="_DefaultFooterPartial" />
+    <partial name="_DefaultFooterPartial"/>
 }
 
 @section Scripts {

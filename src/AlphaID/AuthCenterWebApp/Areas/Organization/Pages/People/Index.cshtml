@@ -1,6 +1,6 @@
 ﻿@page
 @using AlphaIdPlatform.Security
-@model AuthCenterWebApp.Areas.Organization.Pages.People.IndexModel
+@model IndexModel
 @{
     ViewBag.Title = L["People"];
 }
@@ -12,50 +12,91 @@
         <div class="input-icon">
             <span class="input-icon-addon">
                 <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                </svg>
             </span>
             <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
         </div>
-        @if (Model.Members.Any(m => m.IsOwner && m.PersonId == User.SubjectId()))
+        @if (Model.UserIsOwner)
         {
             <a class="btn ms-auto">@L["Export"]</a>
-            <a class="btn btn-green ms-3" asp-page="Invitations" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
+            <a class="btn btn-green ms-3" asp-page="Invite" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
         }
     </div>
-    <div class="card">
-        <div class="card-header">
-            <input type="checkbox" class="form-check-input" />
-        </div>
-        <div class="list-group list-group-flush list-group-hoverable">
-            <form method="post" asp-page-handler="Leave">
-                @foreach (var member in Model.Members)
-                {
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            <div class="col-auto"><input type="checkbox" class="form-check-input" value="@member.PersonId"></div>
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
-                                </a>
-                            </div>
-                            <div class="col text-truncate">
-                                <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@member.Person.PersonName.FullName</a>
-                                <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
-                            </div>
-                            <div class="col-auto">
-                                @if (member.IsOwner)
-                                {
-                                    <span class="badge" title="@(L["You are the owner of this organization"])">@L["Owner"]</span>
-                                }
-                                <span class="badge">@Html.DisplayFor(m => member.Visibility)</span>
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" name="personId" value="@member.PersonId" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Are you sure you want leave this person from organization?"])');">@L["Leave"]</button>
+    @if (Model.Members.Any())
+    {
+        <div class="card">
+            <div class="card-header">
+                <input type="checkbox" id="member_select_all" class="form-check-input" />
+            </div>
+            <div class="list-group list-group-flush list-group-hoverable">
+                <form method="post">
+                    @foreach (var member in Model.Members)
+                    {
+                        <div class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <input type="checkbox" class="form-check-input" value="@member.PersonId">
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#">
+                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-truncate">
+                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@member.Person.PersonName.FullName</a>
+                                    <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
+                                </div>
+                                <div class="col-2">
+                                    <span class="badge">@Html.DisplayFor(m => member.Visibility)</span>
+                                    @if (member.IsOwner)
+                                    {
+                                        <span class="badge" title="@(L["You are the owner of this organization"])">@L["Owner"]</span>
+                                    }
+                                    @if (member.PersonId == User.SubjectId())
+                                    {
+                                        <span class="badge" title="@(L["Yourself"])">@L["Yourself"]</span>
+                                    }
+                                </div>
+                                <div class="col-auto">
+                                    @if (Model.UserIsOwner && member.PersonId != User.SubjectId())
+                                    {
+                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="Leave" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
+                                    }
+                                    @if (Model.UserIsOwner)
+                                    {
+                                        if (!member.IsOwner)
+                                        {
+                                            <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="SetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Set this person as organization owner?"])');">@L["Set owner"]</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="UnsetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Unset ownership of this person?"])');">@L["Unset owner"]</button>
+                                        }
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </form>
+                    }
+                </form>
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <p>@L["This organization has no public members."]</p>
+    }
 </div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#member_select_all").change(function(){
+                $("form").find("input[type='checkbox']").attr("checked", true);
+            });
+        });
+    </script>
+}

@@ -1,8 +1,8 @@
-﻿namespace IdSubjects.SecurityAuditing.Events;
+namespace IdSubjects.SecurityAuditing.Events;
 
-internal class DeletePersonSuccessEvent(string userName) : AuditLogEvent(AuditLogEventCategories.AccountManagement,
+internal class DeletePersonSuccessEvent(string? userName) : AuditLogEvent(AuditLogEventCategories.AccountManagement,
     EventIds.DeletePersonSuccess,
     AuditLogEventTypes.Success)
 {
-    public string UserName { get; set; } = userName;
+    public string? UserName { get; set; } = userName;
 }

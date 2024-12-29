@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.SecurityAuditing.Events;
+namespace IdSubjects.SecurityAuditing.Events;
 
 /// <summary>
 ///     更新用户信息成功事件。
@@ -7,7 +7,7 @@ internal class UpdatePersonSuccessEvent : AuditLogEvent
 {
     /// <summary>
     /// </summary>
-    public UpdatePersonSuccessEvent(string userName)
+    public UpdatePersonSuccessEvent(string? userName)
         : base(AuditLogEventCategories.AccountManagement,
             EventIds.UpdatePersonSuccess,
             AuditLogEventTypes.Success,
@@ -16,5 +16,5 @@ internal class UpdatePersonSuccessEvent : AuditLogEvent
         UserName = userName;
     }
 
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 }

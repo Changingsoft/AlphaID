@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.AdminWebAppDb
 {
     [DbContext(typeof(OperationalDbContext))]
-    [Migration("20231029181857_Init")]
+    [Migration("20241229153205_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace DatabaseTool.Migrations.AdminWebAppDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,20 +36,9 @@ namespace DatabaseTool.Migrations.AdminWebAppDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserSearchHint")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
                     b.HasKey("UserId", "RoleName");
 
-                    b.ToTable("UserInRole");
+                    b.ToTable("AppUserInRole");
                 });
 #pragma warning restore 612, 618
         }

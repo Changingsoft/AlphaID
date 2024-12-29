@@ -16,10 +16,7 @@ namespace DatabaseTool.Migrations.AdminWebAppDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -38,7 +35,7 @@ namespace DatabaseTool.Migrations.AdminWebAppDb
 
                     b.HasKey("UserId", "RoleName");
 
-                    b.ToTable("UserInRole");
+                    b.ToTable("AppUserInRole");
                 });
 #pragma warning restore 612, 618
         }

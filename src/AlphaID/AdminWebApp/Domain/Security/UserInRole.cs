@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +7,7 @@ namespace AdminWebApp.Domain.Security;
 /// <summary>
 ///     表示在角色中的用户。
 /// </summary>
-[Table("UserInRole")]
+[Table("AppUserInRole")]
 public class UserInRole
 {
     /// <summary>

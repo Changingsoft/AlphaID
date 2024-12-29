@@ -16,7 +16,7 @@ public class NaturalPerson : IdentityUser
     /// <summary>
     ///     for persistence.
     /// </summary>
-    protected NaturalPerson()
+    public NaturalPerson()
     {
     }
 

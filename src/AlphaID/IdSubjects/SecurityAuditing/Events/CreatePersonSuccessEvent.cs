@@ -3,18 +3,12 @@ namespace IdSubjects.SecurityAuditing.Events;
 /// <summary>
 ///     表示一个登录成功事件。
 /// </summary>
-internal class CreatePersonSuccessEvent : AuditLogEvent
+/// <remarks>
+/// </remarks>
+internal class CreatePersonSuccessEvent(string? userName) : AuditLogEvent(AuditLogEventCategories.AccountManagement,
+        EventIds.CreatePersonSuccess,
+        AuditLogEventTypes.Success,
+        "成功创建了自然人。")
 {
-    /// <summary>
-    /// </summary>
-    public CreatePersonSuccessEvent(string? userName)
-        : base(AuditLogEventCategories.AccountManagement,
-            EventIds.CreatePersonSuccess,
-            AuditLogEventTypes.Success,
-            "成功创建了自然人。")
-    {
-        UserName = userName;
-    }
-
-    public string? UserName { get; set; }
+    public string? UserName { get; set; } = userName;
 }

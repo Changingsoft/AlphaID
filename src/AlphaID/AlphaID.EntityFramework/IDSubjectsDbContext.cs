@@ -9,11 +9,6 @@ namespace AlphaId.EntityFramework;
 
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
 {
-    /// <summary>
-    ///     自然人。
-    /// </summary>
-    public DbSet<NaturalPerson> People { get; protected set; } = default!;
-
     public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = default!;
 
     public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = default!;

@@ -1,4 +1,4 @@
-﻿using System.Transactions;
+using System.Transactions;
 using IdSubjects.DependencyInjection;
 using IdSubjects.Diagnostics;
 using IdSubjects.SecurityAuditing;
@@ -107,6 +107,7 @@ public class NaturalPersonManager(
     /// </summary>
     /// <param name="current"></param>
     /// <returns></returns>
+    [Obsolete("此方法已过时，不在支持这种方式。")]
     public virtual Task<NaturalPerson?> GetOriginalAsync(NaturalPerson current)
     {
         return Store.GetOriginalAsync(current, CancellationToken.None);

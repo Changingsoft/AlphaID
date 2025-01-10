@@ -1,4 +1,4 @@
-﻿using IdSubjects.Diagnostics;
+using IdSubjects.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
@@ -21,7 +21,7 @@ internal class RealNameUpdateInterceptor(ILogger<RealNameUpdateInterceptor>? log
             return IdentityResult.Success;
         }
 
-        _pendingAuthentications = personAuthentications.Where(a => !a.Applied).ToArray();
+        _pendingAuthentications = [.. personAuthentications.Where(a => !a.Applied)];
         if (_pendingAuthentications.Any())
         {
             foreach (RealNameAuthentication authentication in _pendingAuthentications)

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,16 +9,14 @@ namespace IdSubjects;
 ///     表示一个自然人个体。
 /// </summary>
 [Table("NaturalPerson")]
-[Index(nameof(UserName), IsUnique = true)]
-[Index(nameof(NormalizedUserName), IsUnique = true)]
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
-public class NaturalPerson
+public class NaturalPerson : IdentityUser
 {
     /// <summary>
     ///     for persistence.
     /// </summary>
-    protected NaturalPerson()
+    public NaturalPerson()
     {
     }
 
@@ -34,112 +32,12 @@ public class NaturalPerson
         // ReSharper restore VirtualMemberCallInConstructor
     }
 
-    /// <summary>
-    ///     Primary Id
-    /// </summary>
-    [Key]
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string Id { get; protected set; } = Guid.NewGuid().ToString();
-
-    /// <summary>
-    ///     User Name
-    /// </summary>
-    [MaxLength(256)]
-    public virtual string UserName { get; protected internal set; } = default!;
-
-    /// <summary>
-    ///     Normalized user name.
-    /// </summary>
-    [MaxLength(256)]
-    public virtual string NormalizedUserName { get; protected internal set; } = default!;
-
-    /// <summary>
-    ///     Gets or sets the email address for this user.
-    /// </summary>
-    [ProtectedPersonalData]
-    [MaxLength(256)]
-    public virtual string? Email { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets the normalized email address for this user.
-    /// </summary>
-    [MaxLength(256)]
-    public virtual string? NormalizedEmail { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets a flag indicating if a user has confirmed their email address.
-    /// </summary>
-    /// <value>True if the email address has been confirmed, otherwise false.</value>
-    [PersonalData]
-    public virtual bool EmailConfirmed { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets a telephone number for the user.
-    /// </summary>
-    [ProtectedPersonalData]
-    [MaxLength(20)]
-    [Unicode(false)]
-    public virtual string? PhoneNumber { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets a flag indicating if a user has confirmed their telephone address.
-    /// </summary>
-    /// <value>True if the telephone number has been confirmed, otherwise false.</value>
-    [PersonalData]
-    public virtual bool PhoneNumberConfirmed { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets a salted and hashed representation of the password for this user.
-    /// </summary>
-    [MaxLength(100)]
-    [Unicode(false)]
-    public virtual string? PasswordHash { get; protected internal set; }
 
     /// <summary>
     ///     获取一个值，指示用户上一次设置密码的时间。如果该值为null，或超过设定的最大更改密码期限，则用户在登录时必须强制更改密码。
     /// </summary>
     public virtual DateTimeOffset? PasswordLastSet { get; protected internal set; }
 
-    /// <summary>
-    ///     A random value that must change whenever a users credentials change (password changed, login removed)
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public virtual string? SecurityStamp { get; protected internal set; }
-
-    /// <summary>
-    ///     A random value that must change whenever a user is persisted to the store
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public virtual string? ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
-
-    /// <summary>
-    ///     Gets or sets a flag indicating if two-factor authentication is enabled for this user.
-    /// </summary>
-    /// <value>True if 2fa is enabled, otherwise false.</value>
-    [PersonalData]
-    public virtual bool TwoFactorEnabled { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets a flag indicating if the user could be locked out.
-    /// </summary>
-    /// <value>True if the user could be locked out, otherwise false.</value>
-    public virtual bool LockoutEnabled { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets the number of failed login attempts for the current user.
-    /// </summary>
-    public virtual int AccessFailedCount { get; protected internal set; }
-
-    /// <summary>
-    ///     Gets or sets the date and time, in UTC, when any user lockout ends.
-    /// </summary>
-    /// <remarks>
-    ///     A value in the past means the user is not locked out.
-    /// </remarks>
-    public virtual DateTimeOffset? LockoutEnd { get; protected internal set; }
 
     /// <summary>
     ///     When Created.

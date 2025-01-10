@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
@@ -47,7 +47,7 @@ public class PersonSignInManager(
             {
                 ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
                 await base.SignOutAsync();
-                await contextAccessor.HttpContext!.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme,
+                await Context.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme,
                     principal);
                 return new PersonSignInResult { MustChangePassword = true };
             }

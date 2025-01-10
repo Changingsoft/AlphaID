@@ -20,10 +20,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AdminWebApp\AdminWebApp.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Update="Migrations\ConfigurationDb\20231029124114_Init.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
@@ -48,10 +44,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Migrations\AdminWebAppDb\" />
 		<Folder Include="Migrations\DirectoryLogonDb\" />
-		<Folder Include="Migrations\IdSubjectsDb\" />
 		<Folder Include="Migrations\RealNameDb\" />
 		<Folder Include="TestingData\AdminWebAppData\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\AdminWebApp\AdminWebApp.csproj" />
+	  <ProjectReference Include="..\AlphaId.DirectoryLogon.EntityFramework\AlphaId.DirectoryLogon.EntityFramework.csproj" />
+	  <ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+	  <ProjectReference Include="..\AlphaId.RealName.EntityFramework\AlphaId.RealName.EntityFramework.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

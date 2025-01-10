@@ -1,11 +1,13 @@
-﻿using System.Data;
+using System.Data;
 using System.Globalization;
 using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaId.RealName.EntityFramework;
+using AlphaID.EntityFramework;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
@@ -44,7 +46,6 @@ builder.Host.UseSerilog((ctx, configuration) =>
         .WriteTo.Console(
             outputTemplate:
             "[{Timestamp:HH:mm:ss} {Level} {EventId}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-        .WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information)
         .WriteTo.Logger(lc =>
         {
             lc.ReadFrom.Configuration(ctx.Configuration);
@@ -52,7 +53,7 @@ builder.Host.UseSerilog((ctx, configuration) =>
                 {
                     if (log.Properties.TryGetValue("SourceContext", out var pv))
                     {
-                        var source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                        string? source = JsonConvert.DeserializeObject<string>(pv.ToString());
                         if (source == "Duende.IdentityServer.Events.DefaultEventService" ||
                             source == "IdSubjects.SecurityAuditing.DefaultEventService")
                         {
@@ -75,6 +76,10 @@ builder.Host.UseSerilog((ctx, configuration) =>
                     }
                 );
         });
+#if WINDOWS
+    configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
+#endif
+
 });
 
 //程序资源
@@ -120,23 +125,17 @@ builder.Services.AddRazorPages(options =>
     });
 
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-var idSubjectsIdentityBuilder = builder.Services.AddIdSubjectsIdentity();
-    idSubjectsIdentityBuilder.IdSubjects
+var idSubjectsBuilder = builder.Services.AddIdSubjects();
+    idSubjectsBuilder
     .AddDefaultStores()
     .AddDbContext(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
-
-idSubjectsIdentityBuilder.IdSubjects.IdentityBuilder
-    .AddSignInManager<PersonSignInManager>()
-    .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
-    .AddDefaultTokenProviders();//
-
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
-    idSubjectsIdentityBuilder.IdSubjects.AddRealName()
+    idSubjectsBuilder.AddRealName()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
@@ -144,17 +143,30 @@ if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
 {
-    idSubjectsIdentityBuilder.IdSubjects.AddDirectoryLogin()
+    idSubjectsBuilder.AddDirectoryLogin()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 }
 
+var identityBuilder = builder.Services.AddIdentity<NaturalPerson, IdentityRole>()
+    .AddDefaultTokenProviders()
+    .AddUserManager<NaturalPersonManager>()
+    .AddSignInManager<PersonSignInManager>()
+    .AddUserStore<NaturalPersonStore2>()
+    .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
+    .AddEntityFrameworkStores<IdSubjectsDbContext>();
+var authBuilder = builder.Services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
+{
+    o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
+    o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+});
+
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))
 {
-    idSubjectsIdentityBuilder.Authentication.AddWeixin("signin-weixin", "微信", options =>
+    authBuilder.AddWeixin("signin-weixin", "微信", options =>
     {
         options.CallbackPath = "signin-weixin";
         options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
@@ -165,7 +177,7 @@ if (weixinLoginSection.GetValue("Enabled", false))
 var workWeixinLoginSection = externalLoginsSection.GetSection("WorkWeixin");
 if (workWeixinLoginSection.GetValue("Enabled", false))
 {
-    idSubjectsIdentityBuilder.Authentication.AddWorkWeixin("signin-workweixin", "企业微信", options =>
+    authBuilder.AddWorkWeixin("signin-workweixin", "企业微信", options =>
     {
         options.CallbackPath = "signin-workweixin";
         options.ClientId = workWeixinLoginSection.GetValue("ClientId", string.Empty)!;
@@ -176,7 +188,7 @@ if (workWeixinLoginSection.GetValue("Enabled", false))
 var qqLoginSection = externalLoginsSection.GetSection("QQ");
 if (qqLoginSection.GetValue("Enabled", false))
 {
-    idSubjectsIdentityBuilder.Authentication.AddQQ("signin-qq", "QQ", options =>
+    authBuilder.AddQQ("signin-qq", "QQ", options =>
     {
         options.CallbackPath = "signin-qq";
         options.ClientId = qqLoginSection.GetValue("ClientId", string.Empty)!;

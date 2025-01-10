@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace IdSubjects;
 
@@ -149,6 +149,11 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
         return store.UpdateAsync(member);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="member"></param>
+    /// <returns></returns>
     public async Task<IdOperationResult> SetOwner(OrganizationMember member)
     {
         var members = await GetMembersAsync(member.Organization);
@@ -161,6 +166,11 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
         return IdOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="member"></param>
+    /// <returns></returns>
     public async Task<IdOperationResult> UnsetOwner(OrganizationMember member)
     {
         var members = await GetMembersAsync(member.Organization);

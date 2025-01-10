@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using AlphaIdPlatform;
 using IdentityModel;
 using IdSubjects;
@@ -58,7 +58,7 @@ public class PersonClaimsPrincipalFactory(
         if (user.Email != null)
             id.AddClaim(new Claim(JwtClaimTypes.Email, user.Email));
         id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName));
+        id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName ?? user.Email ?? string.Empty));
         return id;
     }
 }

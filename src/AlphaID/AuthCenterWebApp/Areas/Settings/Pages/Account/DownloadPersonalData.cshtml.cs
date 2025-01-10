@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -13,7 +13,7 @@ public class DownloadPersonalDataModel(
     NaturalPersonManager userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
-    private readonly JsonSerializerOptions serializerOptions = new JsonSerializerOptions()
+    private readonly JsonSerializerOptions serializerOptions = new()
     {
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
         WriteIndented = true,

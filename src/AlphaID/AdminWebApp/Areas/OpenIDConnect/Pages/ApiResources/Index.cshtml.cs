@@ -5,7 +5,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources;
 
 public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public IQueryable<ApiResource> Results { get; set; } = default!;
+    public IQueryable<ApiResource> Results { get; set; } = null!;
 
     public void OnGet()
     {

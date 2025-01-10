@@ -40,26 +40,26 @@ public class WechatLoginSession
     /// <summary>
     /// </summary>
     [Key]
-    public string Id { get; protected set; } = default!;
+    public string Id { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string WechatAppId { get; protected set; } = default!;
+    public string WechatAppId { get; protected set; } = null!;
 
 
     /// <summary>
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string ClientId { get; protected set; } = default!;
+    public string ClientId { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(150)]
     [Unicode(false)]
-    public string Resource { get; protected set; } = default!;
+    public string Resource { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
@@ -69,30 +69,30 @@ public class WechatLoginSession
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string ClientSecret { get; set; } = default!;
+    public string ClientSecret { get; set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(150)]
     [Unicode(false)]
-    public string RedirectUri { get; set; } = default!;
+    public string RedirectUri { get; set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(512)]
     [Unicode(false)]
-    public string WechatOAuthToken { get; set; } = default!;
+    public string WechatOAuthToken { get; set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(128)]
     [Unicode(false)]
-    public string OpenId { get; set; } = default!;
+    public string OpenId { get; set; } = null!;
 
     /// <summary>
     ///     微信AccessToken的过期秒数。
     /// </summary>
-    public int WechatOAuthTokenExpiresIn { get; set; } = default!;
+    public int WechatOAuthTokenExpiresIn { get; set; } = 0!;
 
     /// <summary>
     /// </summary>
@@ -103,11 +103,11 @@ public class WechatLoginSession
     /// </summary>
     [MaxLength(18)]
     [Unicode(false)]
-    public string Mobile { get; set; } = default!;
+    public string Mobile { get; set; } = null!;
 
     /// <summary>
     ///     与此会话关联的微信用户。
     /// </summary>
     [NotMapped]
-    public WechatUserIdentifier? WechatUser { get; internal set; } = default!;
+    public WechatUserIdentifier? WechatUser { get; internal set; } = null!;
 }

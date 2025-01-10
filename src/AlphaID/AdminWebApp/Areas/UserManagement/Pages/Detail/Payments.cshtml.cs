@@ -7,30 +7,30 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccountManager bankAccountManager) : PageModel
 {
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
+    public string Anchor { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Account number")]
     [Required(ErrorMessage = "Validate_Required")]
     [MaxLength(50)]
-    public string AccountNumber { get; set; } = default!;
+    public string AccountNumber { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Account name")]
     [Required(ErrorMessage = "Validate_Required")]
     [MaxLength(150)]
-    public string AccountName { get; set; } = default!;
+    public string AccountName { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Bank name")]
     [Required(ErrorMessage = "Validate_Required")]
     [MaxLength(150)]
-    public string BankName { get; set; } = default!;
+    public string BankName { get; set; } = null!;
 
-    public IEnumerable<PersonBankAccount> BankAccounts { get; set; } = default!;
+    public IEnumerable<PersonBankAccount> BankAccounts { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

@@ -18,12 +18,12 @@ public class IdPRestrictionModel : PageModel
             .Select(p => new SelectListItem(p.DisplayName, p.Scheme));
     }
 
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
     public IEnumerable<SelectListItem> IdProviders { get; set; }
 
     [BindProperty]
     [Display(Name = "Selected Provider")]
-    public string SelectedProvider { get; set; } = default!;
+    public string SelectedProvider { get; set; } = null!;
 
     public IActionResult OnGet(int anchor)
     {

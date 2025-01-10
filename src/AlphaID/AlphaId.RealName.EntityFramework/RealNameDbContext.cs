@@ -6,17 +6,17 @@ namespace AlphaId.RealName.EntityFramework;
 
 public class RealNameDbContext(DbContextOptions<RealNameDbContext> options) : DbContext(options)
 {
-    public DbSet<RealNameAuthentication> RealNameAuthentications { get; protected set; } = default!;
+    public DbSet<RealNameAuthentication> RealNameAuthentications { get; protected set; } = null!;
 
-    public DbSet<DocumentedRealNameAuthentication> DocumentedRealNameAuthentications { get; protected set; } = default!;
+    public DbSet<DocumentedRealNameAuthentication> DocumentedRealNameAuthentications { get; protected set; } = null!;
 
-    public DbSet<IdentityDocument> IdentityDocuments { get; protected set; } = default!;
+    public DbSet<IdentityDocument> IdentityDocuments { get; protected set; } = null!;
 
-    public DbSet<ChineseIdCardDocument> ChineseIdCardDocuments { get; protected set; } = default!;
+    public DbSet<ChineseIdCardDocument> ChineseIdCardDocuments { get; protected set; } = null!;
 
-    public DbSet<RealNameRequest> RealNameRequests { get; protected set; } = default!;
+    public DbSet<RealNameRequest> RealNameRequests { get; protected set; } = null!;
 
-    public DbSet<ChineseIdCardRealNameRequest> ChineseIdCardRealNameRequests { get; protected set; } = default!;
+    public DbSet<ChineseIdCardRealNameRequest> ChineseIdCardRealNameRequests { get; protected set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

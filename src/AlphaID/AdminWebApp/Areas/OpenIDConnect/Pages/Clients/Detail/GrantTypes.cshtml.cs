@@ -10,10 +10,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
 
     [BindProperty]
-    public List<SelectListItem> AllowedGrantTypes { get; set; } = default!;
+    public List<SelectListItem> AllowedGrantTypes { get; set; } = null!;
 
     public string? OperationMessage { get; set; }
 

@@ -8,10 +8,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Client Client { get; set; } = default!;
+    public Client Client { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public string? OperationMessage { get; set; }
 
@@ -80,12 +80,12 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
         [Display(Name = "Client name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string ClientName { get; set; } = default!;
+        public string ClientName { get; set; } = null!;
 
         [Display(Name = "Client ID")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string ClientId { get; set; } = default!;
+        public string ClientId { get; set; } = null!;
 
         [Display(Name = "Description")]
         [StringLength(1000, ErrorMessage = "Validate_StringLength")]

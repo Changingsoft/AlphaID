@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Pages.Diagnostics;
 [Authorize]
 public class Index(IWebHostEnvironment env) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {

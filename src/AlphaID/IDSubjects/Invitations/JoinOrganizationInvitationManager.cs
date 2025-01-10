@@ -94,7 +94,7 @@ public class JoinOrganizationInvitationManager(
 
         NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
         GenericOrganization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
-        IdOperationResult? result = default;
+        IdOperationResult? result = null;
         if (organization != null && person != null)
             result = await memberManager.CreateAsync(
                 new OrganizationMember(organization, person)

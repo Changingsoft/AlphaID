@@ -114,7 +114,7 @@ public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinCon
         if (fullName.Length <= 1)
             throw new ArgumentException("名字太短");
 
-        string surname = default!;
+        string surname = null!;
         foreach (string prefix in s_compoundSurnamePrefixes)
             if (fullName.StartsWith(prefix))
             {

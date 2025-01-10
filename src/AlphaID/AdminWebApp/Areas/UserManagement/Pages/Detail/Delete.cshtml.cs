@@ -8,12 +8,12 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 public class DeleteModel(NaturalPersonManager userManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
+    public string Anchor { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty]
-    public DeletePersonForm Input { get; set; } = default!;
+    public DeletePersonForm Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -60,6 +60,6 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
     {
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; set; } = null!;
     }
 }

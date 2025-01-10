@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
 public class SecretsModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public ApiResource Data { get; set; } = default!;
+    public ApiResource Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

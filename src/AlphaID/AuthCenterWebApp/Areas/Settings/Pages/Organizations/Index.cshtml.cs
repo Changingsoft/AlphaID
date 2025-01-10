@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
 public class IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager personManager) : PageModel
 {
-    public IEnumerable<OrganizationMember> Members { get; set; } = default!;
+    public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

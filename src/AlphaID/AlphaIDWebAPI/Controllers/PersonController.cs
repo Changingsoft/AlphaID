@@ -168,7 +168,7 @@ public class PersonController(
     [HttpGet("{userName}/Memberships")]
     public async Task<ActionResult<IEnumerable<MembershipModel>>> GetMemberships(string userName)
     {
-        NaturalPerson? visitor = default;
+        NaturalPerson? visitor = null;
         string? visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
             visitor = await personManager.FindByIdAsync(User.SubjectId()!);

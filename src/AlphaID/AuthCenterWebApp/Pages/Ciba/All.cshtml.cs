@@ -11,15 +11,15 @@ namespace AuthCenterWebApp.Pages.Ciba;
 public class AllModel(IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService)
     : PageModel
 {
-    public IEnumerable<BackchannelUserLoginRequest> Logins { get; set; } = default!;
+    public IEnumerable<BackchannelUserLoginRequest> Logins { get; set; } = null!;
 
     [BindProperty]
     [Required]
-    public string Id { get; set; } = default!;
+    public string Id { get; set; } = null!;
 
     [BindProperty]
     [Required]
-    public string Button { get; set; } = default!;
+    public string Button { get; set; } = null!;
 
     public async Task OnGet()
     {

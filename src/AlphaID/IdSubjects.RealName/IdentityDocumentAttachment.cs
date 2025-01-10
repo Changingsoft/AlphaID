@@ -35,29 +35,29 @@ public class IdentityDocumentAttachment
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string DocumentId { get; set; } = default!;
+    public string DocumentId { get; set; } = null!;
 
     /// <summary>
     ///     此附件所属的证明材料。
     /// </summary>
     [ForeignKey(nameof(DocumentId))]
-    public virtual IdentityDocument Document { get; set; } = default!;
+    public virtual IdentityDocument Document { get; set; } = null!;
 
     /// <summary>
     ///     附件的名称。
     /// </summary>
     [MaxLength(50)]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     ///     此附件的二进制数据。
     /// </summary>
-    public byte[] Content { get; set; } = default!;
+    public byte[] Content { get; set; } = null!;
 
     /// <summary>
     ///     此附件数据的MIME类型。
     /// </summary>
     [MaxLength(100)]
     [Unicode(false)]
-    public string ContentType { get; set; } = default!;
+    public string ContentType { get; set; } = null!;
 }

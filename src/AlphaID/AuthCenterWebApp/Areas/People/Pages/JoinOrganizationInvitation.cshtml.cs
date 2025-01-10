@@ -9,9 +9,9 @@ public class JoinOrganizationInvitationModel(
     NaturalPersonManager personManager,
     JoinOrganizationInvitationManager invitationsManager) : PageModel
 {
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
-    public JoinOrganizationInvitation Invitation { get; set; } = default!;
+    public JoinOrganizationInvitation Invitation { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

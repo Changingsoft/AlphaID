@@ -9,9 +9,9 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
     [Display(Name = "Client name")]
-    public string ClientName { get; set; } = default!;
+    public string ClientName { get; set; } = null!;
 
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
 
     public IActionResult OnGet(int anchor)
     {

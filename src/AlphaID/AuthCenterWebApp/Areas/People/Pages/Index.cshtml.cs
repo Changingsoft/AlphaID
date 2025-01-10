@@ -8,7 +8,7 @@ namespace AuthCenterWebApp.Areas.People.Pages;
 public class IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
     : PageModel
 {
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public bool UserIsOwner { get; set; }
 

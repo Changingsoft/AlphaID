@@ -8,9 +8,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 public class IndexModel(OrganizationManager manager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
-    public IdOperationResult OperationResult { get; set; } = default!;
+    public IdOperationResult OperationResult { get; set; } = null!;
 
     public IActionResult OnGet(string anchor)
     {

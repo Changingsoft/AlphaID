@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 public class EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor, string personId)
     {

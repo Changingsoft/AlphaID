@@ -6,7 +6,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
-    public GenericOrganization Organization { get; set; } = default!;
+    public GenericOrganization Organization { get; set; } = null!;
 
     public IActionResult OnGet(string anchor)
     {

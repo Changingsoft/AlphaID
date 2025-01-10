@@ -40,7 +40,7 @@ public class GenericOrganization
     ///     Name.
     /// </summary>
     [MaxLength(100)]
-    public string Name { get; protected internal set; } = default!;
+    public string Name { get; protected internal set; } = null!;
 
     /// <summary>
     ///     住所。

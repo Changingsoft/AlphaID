@@ -19,13 +19,13 @@ public class PasswordHistory
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string UserId { get; set; } = default!;
+    public string UserId { get; set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(100)]
     [Unicode(false)]
-    public string Data { get; set; } = default!;
+    public string Data { get; set; } = null!;
 
     /// <summary>
     /// </summary>

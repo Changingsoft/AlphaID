@@ -11,23 +11,23 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 public class PublicModel(ConfigurationDbContext dbContext) : PageModel
 {
     [Display(Name = "Client Id")]
-    public string ClientId { get; set; } = default!;
+    public string ClientId { get; set; } = null!;
 
     [Display(Name = "Client name")]
-    public string ClientName { get; set; } = default!;
+    public string ClientName { get; set; } = null!;
 
     [Display(Name = "Sign-in callback URI")]
     [DataType(DataType.Url, ErrorMessage = "Validate_DataType_Url")]
-    public string SigninCallbackUri { get; set; } = default!;
+    public string SigninCallbackUri { get; set; } = null!;
 
     //todo Identity resources and scope selected.
 
-    public List<SelectListItem> ScopeItems { get; set; } = default!;
+    public List<SelectListItem> ScopeItems { get; set; } = null!;
 
     public List<SelectListItem> AllowedGrantTypes { get; set; } =
     [
-        new SelectListItem("ÊÚÈ¨Âë", GrantType.AuthorizationCode, true),
-        new SelectListItem("ÒþÊ½", GrantType.Implicit, false)
+        new SelectListItem("ï¿½ï¿½È¨ï¿½ï¿½", GrantType.AuthorizationCode, true),
+        new SelectListItem("ï¿½ï¿½Ê½", GrantType.Implicit, false)
     ];
 
     public void OnGet()

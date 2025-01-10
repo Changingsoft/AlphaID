@@ -9,7 +9,7 @@ public class NewModel(OrganizationManager manager) : PageModel
 {
     [Display(Name = "Name")]
     [Required(ErrorMessage = "Validate_Required")]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     [Required(ErrorMessage = "Validate_Required")]
     [Display(Name = "Register with same name anyway")]

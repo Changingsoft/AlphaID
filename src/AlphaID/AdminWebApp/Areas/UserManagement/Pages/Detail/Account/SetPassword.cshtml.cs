@@ -10,13 +10,13 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
     [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [DataType(DataType.Password)]
     [BindProperty]
-    public string NewPassword { get; set; } = default!;
+    public string NewPassword { get; set; } = null!;
 
     [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
     [DataType(DataType.Password)]
     [BindProperty]
-    public string ConfirmPassword { get; set; } = default!;
+    public string ConfirmPassword { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

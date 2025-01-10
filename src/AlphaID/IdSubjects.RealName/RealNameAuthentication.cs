@@ -42,12 +42,12 @@ public abstract class RealNameAuthentication
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; protected internal set; } = default!;
+    public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
     ///     与此实名认证有关的个人名称信息。
     /// </summary>
-    public PersonNameInfo PersonName { get; protected set; } = default!;
+    public PersonNameInfo PersonName { get; protected set; } = null!;
 
     /// <summary>
     ///     认证通过的时间。
@@ -58,7 +58,7 @@ public abstract class RealNameAuthentication
     ///     认证执行者。
     /// </summary>
     [MaxLength(30)]
-    public string ValidatedBy { get; protected set; } = default!;
+    public string ValidatedBy { get; protected set; } = null!;
 
     /// <summary>
     ///     有效期限。

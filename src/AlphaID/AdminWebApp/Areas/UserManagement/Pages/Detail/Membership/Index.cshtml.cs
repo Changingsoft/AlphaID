@@ -10,14 +10,14 @@ public class IndexModel(
     OrganizationMemberManager memberManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
+    public string Anchor { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
-    public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = default!;
+    public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
@@ -88,7 +88,7 @@ public class IndexModel(
     {
         [Display(Name = "Organization ID")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string OrganizationId { get; set; } = default!;
+        public string OrganizationId { get; set; } = null!;
 
         [Display(Name = "Department")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]

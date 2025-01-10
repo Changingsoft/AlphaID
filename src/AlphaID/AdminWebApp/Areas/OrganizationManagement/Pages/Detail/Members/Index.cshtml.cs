@@ -9,9 +9,9 @@ public class IndexModel(
     NaturalPersonManager personManager,
     OrganizationMemberManager memberManager) : PageModel
 {
-    public GenericOrganization Organization { get; set; } = default!;
+    public GenericOrganization Organization { get; set; } = null!;
 
-    public IEnumerable<OrganizationMember> Members { get; set; } = default!;
+    public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
 
     [BindProperty]
@@ -28,7 +28,7 @@ public class IndexModel(
 
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
-    public string UserName { get; set; } = default!;
+    public string UserName { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "MembershipVisibility")]

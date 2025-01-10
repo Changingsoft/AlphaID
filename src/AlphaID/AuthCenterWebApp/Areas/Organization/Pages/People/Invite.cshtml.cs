@@ -14,7 +14,7 @@ public class InviteModel(
 {
     [BindProperty]
     [Display(Name = "Invitee")]
-    public string Invitee { get; set; } = default!;
+    public string Invitee { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
@@ -54,8 +54,8 @@ public class InviteModel(
 
     public class FindPersonModel
     {
-        public string UserName { get; set; } = default!;
+        public string UserName { get; set; } = null!;
 
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
     }
 }

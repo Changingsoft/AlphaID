@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 public class IndexModel(DirectoryAccountManager directoryAccountManager, NaturalPersonManager naturalPersonManager)
     : PageModel
 {
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<DirectoryAccount> DirectoryAccounts { get; set; } = [];
 

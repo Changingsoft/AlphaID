@@ -9,7 +9,7 @@ public class IndexModel(
     OrganizationManager organizationManager,
     NaturalPersonManager personManager) : PageModel
 {
-    public GenericOrganization Organization { get; set; } = default!;
+    public GenericOrganization Organization { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> Members { get; set; } = [];
 
@@ -43,7 +43,7 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
 
         OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
@@ -52,7 +52,7 @@ public class IndexModel(
 
         if (!UserIsOwner)
         {
-            ModelState.AddModelError("", "²»ÊÇÆóÒµµÄËùÓĞÕß²»ÄÜÖ´ĞĞ´Ë²Ù×÷¡£");
+            ModelState.AddModelError("", "ä¸æ˜¯ä¼ä¸šçš„æ‰€æœ‰è€…ä¸èƒ½æ‰§è¡Œæ­¤æ“ä½œã€‚");
             return Page();
         }
 
@@ -70,7 +70,7 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
 
         OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
@@ -79,7 +79,7 @@ public class IndexModel(
 
         if (!UserIsOwner)
         {
-            ModelState.AddModelError("", "²»ÊÇÆóÒµµÄËùÓĞÕß²»ÄÜÖ´ĞĞ´Ë²Ù×÷¡£");
+            ModelState.AddModelError("", "ä¸æ˜¯ä¼ä¸šçš„æ‰€æœ‰è€…ä¸èƒ½æ‰§è¡Œæ­¤æ“ä½œã€‚");
             return Page();
         }
 
@@ -97,7 +97,7 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
+        Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
 
         OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
@@ -106,7 +106,7 @@ public class IndexModel(
 
         if (!UserIsOwner)
         {
-            ModelState.AddModelError("", "²»ÊÇÆóÒµµÄËùÓĞÕß²»ÄÜÖ´ĞĞ´Ë²Ù×÷¡£");
+            ModelState.AddModelError("", "ä¸æ˜¯ä¼ä¸šçš„æ‰€æœ‰è€…ä¸èƒ½æ‰§è¡Œæ­¤æ“ä½œã€‚");
             return Page();
         }
 

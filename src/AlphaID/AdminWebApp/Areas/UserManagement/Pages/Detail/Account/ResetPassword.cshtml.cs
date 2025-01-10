@@ -20,9 +20,9 @@ public class ResetPasswordModel(
     private readonly IdentityOptions _identityOptions = options.Value;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public string? OperationResult { get; set; }
 
@@ -139,13 +139,13 @@ public class ResetPasswordModel(
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; set; } = null!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; set; } = null!;
 
         [Display(Name = "User must change password on next login")]
         public bool UserMustChangePasswordOnNextLogin { get; set; } = true;

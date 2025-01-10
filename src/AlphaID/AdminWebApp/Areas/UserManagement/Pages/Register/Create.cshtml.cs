@@ -13,22 +13,22 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
     [Display(Name = "User name")]
     [PageRemote(PageHandler = "CheckUserName", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-    public string UserName { get; set; } = default!;
+    public string UserName { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Phone number")]
     [PageRemote(PageHandler = "CheckMobile", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-    public string? Mobile { get; set; } = default!;
+    public string? Mobile { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Email")]
     [PageRemote(PageHandler = "CheckEmail", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-    public string? Email { get; set; } = default!;
+    public string? Email { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 
@@ -131,26 +131,26 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Natur
     {
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; set; } = default!;
+        public string Surname { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Given name")]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; set; } = null!;
 
         [Display(Name = "Phonetic surname")]
-        public string PhoneticSurname { get; set; } = default!;
+        public string PhoneticSurname { get; set; } = null!;
 
         [Display(Name = "Phonetic given name")]
-        public string PhoneticGivenName { get; set; } = default!;
+        public string PhoneticGivenName { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Phonetic display name")]
-        public string PhoneticDisplayName { get; set; } = default!;
+        public string PhoneticDisplayName { get; set; } = null!;
 
         [Display(Name = "Gender")]
         public Gender? Gender { get; set; }

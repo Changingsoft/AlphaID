@@ -8,15 +8,15 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
 public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public ApiResource Data { get; set; } = default!;
+    public ApiResource Data { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "New key")]
-    public string NewKey { get; set; } = default!;
+    public string NewKey { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "New value")]
-    public string NewValue { get; set; } = default!;
+    public string NewValue { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

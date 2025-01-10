@@ -10,7 +10,7 @@ public class NewBankAccountModel(
     OrganizationBankAccountManager bankAccountManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
@@ -47,15 +47,15 @@ public class NewBankAccountModel(
     {
         [Display(Name = "Account number")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string AccountNumber { get; set; } = default!;
+        public string AccountNumber { get; set; } = null!;
 
         [Display(Name = "Account name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string AccountName { get; set; } = default!;
+        public string AccountName { get; set; } = null!;
 
         [Display(Name = "Bank name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string BankName { get; set; } = default!;
+        public string BankName { get; set; } = null!;
 
         [Display(Name = "Usage")]
         public string? Usage { get; set; }

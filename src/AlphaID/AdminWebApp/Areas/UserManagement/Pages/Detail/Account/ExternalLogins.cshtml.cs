@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class ExternalLoginsModel(NaturalPersonManager personManager) : PageModel
 {
-    public IEnumerable<UserLoginInfo> Logins { get; set; } = default!;
+    public IEnumerable<UserLoginInfo> Logins { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

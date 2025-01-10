@@ -24,13 +24,12 @@ public class LoginModel(
     IEventService events,
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager,
-    IOptions<LoginOptions> loginOptions,
-    ILogger<LoginModel>? logger) : PageModel
+    IOptions<LoginOptions> loginOptions) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string? returnUrl)
     {
@@ -48,16 +47,16 @@ public class LoginModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        //¼ì²éÎÒÃÇÊÇ·ñÔÚÊÚÈ¨ÇëÇóµÄÉÏÏÂÎÄÖĞ
+        //æ£€æŸ¥æˆ‘ä»¬æ˜¯å¦åœ¨æˆæƒè¯·æ±‚çš„ä¸Šä¸‹æ–‡ä¸­
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
-        //ÓÃ»§µã»÷ÁË¡°È¡Ïû¡±°´Å¥
+        //ç”¨æˆ·ç‚¹å‡»äº†â€œå–æ¶ˆâ€æŒ‰é’®
         if (Input.Button != "login")
         {
             if (context != null)
             {
-                // ½«ÓÃ»§µÄÈ¡Ïû·¢ËÍ»Ø IdentityServer£¬ÒÔ±ãËüÄÜ¾Ü¾ø consent£¨¼´±ã¿Í»§¶Ë²»ĞèÒªconsent£©¡£
-                // Õâ½«»á°Ñ·ÃÎÊ±»¾Ü¾øµÄÏìÓ¦·¢ËÍ»Ø¿Í»§¶Ë¡£
+                // å°†ç”¨æˆ·çš„å–æ¶ˆå‘é€å› IdentityServerï¼Œä»¥ä¾¿å®ƒèƒ½æ‹’ç» consentï¼ˆå³ä¾¿å®¢æˆ·ç«¯ä¸éœ€è¦consentï¼‰ã€‚
+                // è¿™å°†ä¼šæŠŠè®¿é—®è¢«æ‹’ç»çš„å“åº”å‘é€å›å®¢æˆ·ç«¯ã€‚
                 await interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
@@ -69,13 +68,13 @@ public class LoginModel(
                 return Redirect(Input.ReturnUrl!);
             }
 
-            //ÓÉÓÚÎÒÃÇÃ»ÓĞÓĞĞ§µÄÉÏÏÂÎÄ£¬ÄÇÃ´ÎÒÃÇÖ»Ğè·µ»ØÖ÷Ò³
+            //ç”±äºæˆ‘ä»¬æ²¡æœ‰æœ‰æ•ˆçš„ä¸Šä¸‹æ–‡ï¼Œé‚£ä¹ˆæˆ‘ä»¬åªéœ€è¿”å›ä¸»é¡µ
             return Redirect("~/");
         }
 
         if (ModelState.IsValid)
         {
-            //µÇÂ¼¹ı³Ì¡£
+            //ç™»å½•è¿‡ç¨‹ã€‚
             NaturalPerson? user = await userManager.FindByEmailAsync(Input.Username)
                                   ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
                                   ?? await userManager.FindByNameAsync(Input.Username);
@@ -137,10 +136,10 @@ public class LoginModel(
             ReturnUrl = returnUrl
         };
 
-        //»ñÈ¡ÊÚÈ¨ÉÏÏÂÎÄ¡£
+        //è·å–æˆæƒä¸Šä¸‹æ–‡ã€‚
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
-        //ÔÚÊÚÈ¨ÉÏÏÂÎÄÖĞÖ¸¶¨ÁËIdP£¬Òò´ËÌø¹ı±¾µØµÇÂ¼¶øÖ±½Ó×ªµ½Ö¸¶¨µÄIdP¡£
+        //åœ¨æˆæƒä¸Šä¸‹æ–‡ä¸­æŒ‡å®šäº†IdPï¼Œå› æ­¤è·³è¿‡æœ¬åœ°ç™»å½•è€Œç›´æ¥è½¬åˆ°æŒ‡å®šçš„IdPã€‚
         if (context?.IdP != null && await schemeProvider.GetSchemeAsync(context.IdP) != null)
         {
             bool local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
@@ -166,7 +165,7 @@ public class LoginModel(
             return;
         }
 
-        // ÔØÈëËùÓĞÉí·İÑéÖ¤·½°¸¡£
+        // è½½å…¥æ‰€æœ‰èº«ä»½éªŒè¯æ–¹æ¡ˆã€‚
         IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
 
         List<ExternalProvider> providers = schemes
@@ -177,7 +176,7 @@ public class LoginModel(
                 AuthenticationScheme = x.Name
             }).ToList();
 
-        //´Ó´æ´¢¼ÓÔØÑéÖ¤·½°¸¡£
+        //ä»å­˜å‚¨åŠ è½½éªŒè¯æ–¹æ¡ˆã€‚
         IEnumerable<ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
             .Select(x => new ExternalProvider
@@ -192,9 +191,9 @@ public class LoginModel(
         Client? client = context?.Client;
         if (client != null)
         {
-            allowLocal = client.EnableLocalLogin; //¿Í»§¶ËÊÇ·ñÔÊĞí±¾µØµÇÂ¼
+            allowLocal = client.EnableLocalLogin; //å®¢æˆ·ç«¯æ˜¯å¦å…è®¸æœ¬åœ°ç™»å½•
             if (client.IdentityProviderRestrictions.Count != 0)
-                //¹ıÂËÖ»ÓĞ¿Í»§¶ËÔÊĞíµÄµÇÂ¼Ìá¹©Æ÷¡£
+                //è¿‡æ»¤åªæœ‰å®¢æˆ·ç«¯å…è®¸çš„ç™»å½•æä¾›å™¨ã€‚
                 providers = providers.Where(provider =>
                     client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
         }
@@ -212,46 +211,46 @@ public class LoginModel(
     {
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
-        public string Username { get; set; } = default!;
+        public string Username { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = default!;
+        public string Password { get; set; } = null!;
 
         [Display(Name = "Remember me on this device")]
         public bool RememberLogin { get; set; }
 
         public string? ReturnUrl { get; set; }
 
-        public string Button { get; set; } = default!;
+        public string Button { get; set; } = null!;
     }
 
     public class ViewModel
     {
         /// <summary>
-        ///     »ñÈ¡»òÉèÖÃÊÇ·ñÔÊĞí¼Ç×¡µÇÂ¼¡£
+        ///     è·å–æˆ–è®¾ç½®æ˜¯å¦å…è®¸è®°ä½ç™»å½•ã€‚
         /// </summary>
         public bool AllowRememberLogin { get; set; } = true;
 
         /// <summary>
-        ///     »ñÈ¡»òÉèÖÃÊÇ·ñÆôÓÃ±¾µØµÇÂ¼¡£
+        ///     è·å–æˆ–è®¾ç½®æ˜¯å¦å¯ç”¨æœ¬åœ°ç™»å½•ã€‚
         /// </summary>
         public bool EnableLocalLogin { get; set; } = true;
 
         /// <summary>
-        ///     »ñÈ¡ËùÓĞÍâ²¿µÇÂ¼Ìá¹©Æ÷¡£
+        ///     è·å–æ‰€æœ‰å¤–éƒ¨ç™»å½•æä¾›å™¨ã€‚
         /// </summary>
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
 
         /// <summary>
-        ///     »ñÈ¡¿É¼ûµÄÍâ²¿µÇÂ¼Ìá¹©Æ÷¡£
+        ///     è·å–å¯è§çš„å¤–éƒ¨ç™»å½•æä¾›å™¨ã€‚
         /// </summary>
         public IEnumerable<ExternalProvider> VisibleExternalProviders =>
             ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         /// <summary>
-        ///     Ö»ÊÇÊÇ·ñ½öÍâ²¿µÇÂ¼¡£µ±ÇÒ½öµ±½ûÓÃ±¾µØµÇÂ¼£¬ÇÒÍâ²¿µÇÂ¼Ìá¹©Æ÷Ö»ÓĞ1¸öÊ±£¬¸ÃÊôĞÔÎªtrue¡£
+        ///     åªæ˜¯æ˜¯å¦ä»…å¤–éƒ¨ç™»å½•ã€‚å½“ä¸”ä»…å½“ç¦ç”¨æœ¬åœ°ç™»å½•ï¼Œä¸”å¤–éƒ¨ç™»å½•æä¾›å™¨åªæœ‰1ä¸ªæ—¶ï¼Œè¯¥å±æ€§ä¸ºtrueã€‚
         /// </summary>
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
 
@@ -264,7 +263,7 @@ public class LoginModel(
 
     public class ExternalProvider
     {
-        public string DisplayName { get; set; } = default!;
-        public string AuthenticationScheme { get; set; } = default!;
+        public string DisplayName { get; set; } = null!;
+        public string AuthenticationScheme { get; set; } = null!;
     }
 }

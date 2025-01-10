@@ -11,9 +11,9 @@ public class IndexModel(
     RealNameManager realNameManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {
-    public IEnumerable<RealNameAuthentication> Authentications { get; set; } = default!;
+    public IEnumerable<RealNameAuthentication> Authentications { get; set; } = null!;
 
-    public IEnumerable<RealNameRequest> Requests { get; set; } = default!;
+    public IEnumerable<RealNameRequest> Requests { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {

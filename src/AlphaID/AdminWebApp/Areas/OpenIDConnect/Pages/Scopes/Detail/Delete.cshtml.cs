@@ -9,9 +9,9 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
     [Display(Name = "Scope name")]
-    public string ScopeName { get; set; } = default!;
+    public string ScopeName { get; set; } = null!;
 
-    public ApiScope Data { get; set; } = default!;
+    public ApiScope Data { get; set; } = null!;
 
     public IActionResult OnGet(int id)
     {

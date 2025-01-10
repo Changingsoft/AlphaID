@@ -8,10 +8,10 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class OfModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager) : PageModel
 {
-    public OrganizationMember Member { get; set; } = default!;
+    public OrganizationMember Member { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdOperationResult? OperationResult { get; set; }
 

@@ -12,9 +12,9 @@ public class RemovePasswordModel(NaturalPersonManager userManager) : PageModel
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
-    public string Password { get; set; } = default!;
+    public string Password { get; set; } = null!;
 
-    public IList<UserLoginInfo> Logins { get; set; } = default!;
+    public IList<UserLoginInfo> Logins { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 

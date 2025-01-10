@@ -9,7 +9,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders;
 public class NewModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public void OnGet()
     {
@@ -56,11 +56,11 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
     {
         [Display(Name = "Scheme", Description = "A unique name to identity this provider.")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string Scheme { get; set; } = default!;
+        public string Scheme { get; set; } = null!;
 
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; set; } = null!;
 
         /// <summary>
         /// </summary>

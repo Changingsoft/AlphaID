@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
@@ -65,8 +65,8 @@ public static class HttpClientExtensions
             element.Value = kvp.Value;
         }
 
-        DocumentRequest? submit = form.GetSubmission(submitButton);
-        var target = (Uri)submit?.Target;
+        DocumentRequest submit = form.GetSubmission(submitButton) ?? throw new InvalidOperationException("Submission is null.");
+        var target = (Uri)submit.Target;
         if (submitButton.HasAttribute("formaction"))
         {
             string formAction = submitButton.GetAttribute("formaction")!;

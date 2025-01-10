@@ -6,7 +6,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
 public class RequestModel(RealNameRequestManager requestManager) : PageModel
 {
-    public RealNameRequest Data { get; set; } = default!;
+    public RealNameRequest Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

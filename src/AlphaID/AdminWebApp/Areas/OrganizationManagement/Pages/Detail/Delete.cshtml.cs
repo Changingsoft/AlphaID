@@ -7,12 +7,12 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 public class DeleteModel(OrganizationManager organizationManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
+    public string Anchor { get; set; } = null!;
 
-    public GenericOrganization Organization { get; set; } = default!;
+    public GenericOrganization Organization { get; set; } = null!;
 
     [BindProperty]
-    public DeleteForm Input { get; set; } = default!;
+    public DeleteForm Input { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
@@ -59,6 +59,6 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
     {
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
     }
 }

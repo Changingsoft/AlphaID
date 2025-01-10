@@ -14,11 +14,11 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
 {
     [Display(Name = "Client Id")]
     [Required(ErrorMessage = "Validate_Required")]
-    public string ClientId { get; set; } = default!;
+    public string ClientId { get; set; } = null!;
 
     [Display(Name = "Client name")]
     [Required(ErrorMessage = "Validate_Required")]
-    public string ClientName { get; set; } = default!;
+    public string ClientName { get; set; } = null!;
 
     [Display(Name = "Client secret")]
     [Required(ErrorMessage = "Validate_Required")]
@@ -26,9 +26,9 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
 
     [Display(Name = "Sign-in callback URI")]
     [DataType(DataType.Url, ErrorMessage = "Validate_DataType_Url")]
-    public string SigninCallbackUri { get; set; } = default!;
+    public string SigninCallbackUri { get; set; } = null!;
 
-    public List<SelectListItem> ScopeItems { get; set; } = default!;
+    public List<SelectListItem> ScopeItems { get; set; } = null!;
 
     public List<SelectListItem> AllowedGrantTypes { get; set; } =
     [

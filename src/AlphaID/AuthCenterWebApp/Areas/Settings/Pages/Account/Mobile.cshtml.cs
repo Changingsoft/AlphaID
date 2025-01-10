@@ -12,19 +12,19 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 public class MobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
-    public string Mobile { get; set; } = default!;
+    public string Mobile { get; set; } = null!;
 
     public bool MobileValid { get; set; }
 
     [Display(Name = "New mobile phone number")]
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
-    public string NewMobile { get; set; } = default!;
+    public string NewMobile { get; set; } = null!;
 
     [Display(Name = "Verification code")]
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
-    public string VerificationCode { get; set; } = default!;
+    public string VerificationCode { get; set; } = null!;
 
     public bool VerificationCodeSent { get; set; }
 

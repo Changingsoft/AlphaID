@@ -13,7 +13,7 @@ public record AddressInfo
     ///     国家。
     /// </summary>
     [MaxLength(50)]
-    public string Country { get; set; } = default!;
+    public string Country { get; set; } = null!;
 
     /// <summary>
     ///     地区/省
@@ -25,13 +25,13 @@ public record AddressInfo
     ///     城市
     /// </summary>
     [MaxLength(50)]
-    public string Locality { get; set; } = default!;
+    public string Locality { get; set; } = null!;
 
     /// <summary>
     ///     街道1
     /// </summary>
     [MaxLength(50)]
-    public string Street1 { get; set; } = default!;
+    public string Street1 { get; set; } = null!;
 
     /// <summary>
     ///     街道2
@@ -49,7 +49,7 @@ public record AddressInfo
     ///     收件人
     /// </summary>
     [MaxLength(50)]
-    public string Receiver { get; set; } = default!;
+    public string Receiver { get; set; } = null!;
 
     /// <summary>
     ///     收件人联系方式。

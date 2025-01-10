@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes;
 public class NewModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public void OnGet()
     {
@@ -54,7 +54,7 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
     public class InputModel
     {
         [Display(Name = "Name")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         public string? DisplayName { get; set; }

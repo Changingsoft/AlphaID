@@ -20,7 +20,7 @@ public class LoginWithRecoveryCodeModel(
     IEventService eventService) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public string? ReturnUrl { get; set; }
 
@@ -91,6 +91,6 @@ public class LoginWithRecoveryCodeModel(
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Text)]
         [Display(Name = "Recovery code")]
-        public string RecoveryCode { get; set; } = default!;
+        public string RecoveryCode { get; set; } = null!;
     }
 }

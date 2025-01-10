@@ -11,7 +11,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secretGenerator) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Client Id", Description = "Unique ID of the client.")]
@@ -143,7 +143,7 @@ public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secre
     {
         [Display(Name = "Client name", Description = "Friendly name for display.")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string ClientName { get; set; } = default!;
+        public string ClientName { get; set; } = null!;
 
         [Display(Name = "Require client secret", Description = "Specifies the client is a credential client.")]
         public bool RequireClientSecret { get; set; } = true;

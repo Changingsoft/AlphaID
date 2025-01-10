@@ -9,7 +9,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources;
 public class NewModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public List<SelectListItem> AvailableClaims { get; set; } =
     [
@@ -73,7 +73,7 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]

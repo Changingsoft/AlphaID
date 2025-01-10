@@ -9,7 +9,7 @@ namespace AuthCenterWebApp.Pages.Home.Error;
 [SecurityHeaders]
 public class Index(IIdentityServerInteractionService interaction, IWebHostEnvironment environment) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     public async Task OnGet(string errorId)
     {

@@ -15,12 +15,12 @@ public class UserInRole
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string UserId { get; set; } = default!;
+    public string UserId { get; set; } = null!;
 
     /// <summary>
     ///     角色名称。
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string RoleName { get; set; } = default!;
+    public string RoleName { get; set; } = null!;
 }

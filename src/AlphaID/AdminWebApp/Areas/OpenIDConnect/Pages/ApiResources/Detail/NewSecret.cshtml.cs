@@ -10,7 +10,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 public class NewSecretModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet(int id)
     {
@@ -58,11 +58,11 @@ public class NewSecretModel(ConfigurationDbContext dbContext) : PageModel
 
     public class InputModel
     {
-        public string Type { get; set; } = default!;
+        public string Type { get; set; } = null!;
 
-        public string Description { get; set; } = default!;
+        public string Description { get; set; } = null!;
 
-        public string Value { get; set; } = default!;
+        public string Value { get; set; } = null!;
 
         public DateTime? Expires { get; set; }
     }

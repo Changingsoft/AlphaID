@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class RealNameModel(NaturalPersonManager userManager, RealNameManager realNameManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = default!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public IEnumerable<RealNameAuthentication> RealNameAuthentications { get; set; } = [];
 

@@ -8,7 +8,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
@@ -77,28 +77,28 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
         organization.Fapiao = null;
         Result = await organizationManager.UpdateAsync(organization);
-        Input = default!;
+        Input = null!;
         return Page();
     }
 
     public class InputModel
     {
         [Display(Name = "Name")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Taxpayer ID")]
-        public string TaxpayerId { get; set; } = default!;
+        public string TaxpayerId { get; set; } = null!;
 
         [Display(Name = "Address")]
-        public string Address { get; set; } = default!;
+        public string Address { get; set; } = null!;
 
         [Display(Name = "Contact")]
-        public string Contact { get; set; } = default!;
+        public string Contact { get; set; } = null!;
 
         [Display(Name = "Bank")]
-        public string Bank { get; set; } = default!;
+        public string Bank { get; set; } = null!;
 
         [Display(Name = "Account")]
-        public string Account { get; set; } = default!;
+        public string Account { get; set; } = null!;
     }
 }

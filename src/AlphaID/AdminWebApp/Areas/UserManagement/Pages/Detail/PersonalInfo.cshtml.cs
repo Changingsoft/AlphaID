@@ -7,10 +7,10 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class PersonalInfoModel(NaturalPersonManager personManager) : PageModel
 {
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 

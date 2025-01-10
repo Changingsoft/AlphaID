@@ -2,8 +2,8 @@
 
 public class OrganizationModel
 {
-    public string SubjectId { get; set; } = default!;
-    public string Name { get; set; } = default!;
+    public string SubjectId { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
     public string? Domicile { get; set; }
 

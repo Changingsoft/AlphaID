@@ -38,11 +38,11 @@ public class DocumentedRealNameAuthentication : RealNameAuthentication
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string DocumentId { get; protected set; } = default!;
+    public string DocumentId { get; protected set; } = null!;
 
     /// <summary>
     ///     指示一个身份证明文件。
     /// </summary>
     [ForeignKey(nameof(DocumentId))]
-    public IdentityDocument Document { get; protected set; } = default!;
+    public IdentityDocument Document { get; protected set; } = null!;
 }

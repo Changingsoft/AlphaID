@@ -64,7 +64,7 @@ public class NaturalPerson : IdentityUser
     ///     用户名称
     /// </summary>
     [PersonalData]
-    public virtual PersonNameInfo PersonName { get; set; } = default!;
+    public virtual PersonNameInfo PersonName { get; set; } = null!;
 
     /// <summary>
     ///     昵称。

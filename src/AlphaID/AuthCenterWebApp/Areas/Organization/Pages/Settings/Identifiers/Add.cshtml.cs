@@ -14,7 +14,7 @@ public class AddModel(OrganizationIdentifierManager identifierManager, Organizat
 
     [BindProperty]
     [Display(Name = "Identifier Value")]
-    public string Value { get; set; } = default!;
+    public string Value { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

@@ -15,11 +15,11 @@ public class WithChineseIdCardModel(
 {
     [BindProperty]
     [Display(Name = "身份证个人信息面")]
-    public IFormFile PersonalSide { get; set; } = default!;
+    public IFormFile PersonalSide { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "身份证国徽面")]
-    public IFormFile IssuerSide { get; set; } = default!;
+    public IFormFile IssuerSide { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

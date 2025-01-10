@@ -33,16 +33,16 @@ public class WechatAppClient
     [Key]
     [MaxLength(50)]
     [Unicode(false)]
-    public string ClientId { get; protected set; } = default!;
+    public string ClientId { get; protected set; } = null!;
 
     /// <summary>
     ///     Secret.
     /// </summary>
     [MaxLength(100)]
     [Unicode(false)]
-    public string Secret { get; protected internal set; } = default!;
+    public string Secret { get; protected internal set; } = null!;
 
     /// <summary>
     /// </summary>
-    public ICollection<string> RedirectUriList { get; protected set; } = default!;
+    public ICollection<string> RedirectUriList { get; protected set; } = null!;
 }

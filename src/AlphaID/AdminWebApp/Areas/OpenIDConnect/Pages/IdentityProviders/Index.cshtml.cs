@@ -5,7 +5,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityProviders;
 
 public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public IEnumerable<IdentityProvider> Results { get; set; } = default!;
+    public IEnumerable<IdentityProvider> Results { get; set; } = null!;
 
     public void OnGet()
     {

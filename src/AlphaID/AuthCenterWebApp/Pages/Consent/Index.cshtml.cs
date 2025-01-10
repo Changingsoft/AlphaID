@@ -19,10 +19,10 @@ public class Index(
     IEventService events,
     ILogger<Index> logger) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string returnUrl)
     {
@@ -219,24 +219,24 @@ public class Index(
 
     public class ViewModel
     {
-        public string ClientName { get; set; } = default!;
+        public string ClientName { get; set; } = null!;
         public string? ClientUrl { get; set; }
         public string? ClientLogoUrl { get; set; }
         public bool AllowRememberConsent { get; set; }
 
-        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = default!;
-        public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = default!;
+        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = null!;
+        public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = null!;
     }
 
     public class InputModel
     {
-        public string Button { get; set; } = default!;
-        public IEnumerable<string> ScopesConsented { get; set; } = default!;
+        public string Button { get; set; } = null!;
+        public IEnumerable<string> ScopesConsented { get; set; } = null!;
 
         [Display(Name = "Remember my decision")]
         public bool RememberConsent { get; set; } = true;
 
-        public string ReturnUrl { get; set; } = default!;
+        public string ReturnUrl { get; set; } = null!;
 
         [Display(Name = "Description")]
         public string? Description { get; set; }

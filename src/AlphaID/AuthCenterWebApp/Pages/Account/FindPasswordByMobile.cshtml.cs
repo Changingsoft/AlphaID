@@ -17,7 +17,7 @@ public class FindPasswordByMobileModel(
     [Display(Name = "PhoneNumber phone number")]
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
-    public string Mobile { get; set; } = default!;
+    public string Mobile { get; set; } = null!;
 
     public void OnGet()
     {

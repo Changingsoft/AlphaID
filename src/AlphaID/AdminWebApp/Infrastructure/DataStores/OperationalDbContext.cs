@@ -5,7 +5,7 @@ namespace AdminWebApp.Infrastructure.DataStores;
 
 public class OperationalDbContext(DbContextOptions<OperationalDbContext> options) : DbContext(options)
 {
-    public DbSet<UserInRole> UserInRoles { get; protected set; } = default!;
+    public DbSet<UserInRole> UserInRoles { get; protected set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

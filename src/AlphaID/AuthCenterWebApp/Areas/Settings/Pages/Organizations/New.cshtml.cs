@@ -17,10 +17,10 @@ public class NewModel(
     [Required(ErrorMessage = "Validate_Required")]
     [PageRemote(AdditionalFields = "__RequestVerificationToken", PageHandler = "CheckName", HttpMethod = "Post",
         ErrorMessage = "Organization name exists.")]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet()
     {

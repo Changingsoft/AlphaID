@@ -21,7 +21,7 @@ public class FindPasswordByEmailModel(
     private readonly ProductInfo _production = production.Value;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public void OnGet()
     {
@@ -66,6 +66,6 @@ public class FindPasswordByEmailModel(
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress]
         [Display(Name = "Email")]
-        public string Email { get; set; } = default!;
+        public string Email { get; set; } = null!;
     }
 }

@@ -36,19 +36,19 @@ public class WechatUserIdentifier
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string AppId { get; protected set; } = default!;
+    public string AppId { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OpenId { get; protected set; } = default!;
+    public string OpenId { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; protected set; } = default!;
+    public string PersonId { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
@@ -58,11 +58,11 @@ public class WechatUserIdentifier
     /// <summary>
     /// </summary>
     [MaxLength(200)]
-    public string UserPrincipalName { get; protected internal set; } = default!;
+    public string UserPrincipalName { get; protected internal set; } = null!;
 
     /// <summary>
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string UserSecret { get; protected internal set; } = default!;
+    public string UserSecret { get; protected internal set; } = null!;
 }

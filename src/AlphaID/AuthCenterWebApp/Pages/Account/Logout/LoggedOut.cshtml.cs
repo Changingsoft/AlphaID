@@ -9,7 +9,7 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 [AllowAnonymous]
 public class LoggedOut(IIdentityServerInteractionService interactionService) : PageModel
 {
-    public LoggedOutViewModel View { get; set; } = default!;
+    public LoggedOutViewModel View { get; set; } = null!;
 
     public string? ReturnUrl { get; set; }
 

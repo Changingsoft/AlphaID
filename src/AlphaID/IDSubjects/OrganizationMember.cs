@@ -34,44 +34,44 @@ public class OrganizationMember
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; protected set; } = default!;
+    public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
     ///     Person Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; protected set; } = default!;
+    public string PersonId { get; protected set; } = null!;
 
     /// <summary>
     ///     GenericOrganization.
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public GenericOrganization Organization { get; protected set; } = default!;
+    public GenericOrganization Organization { get; protected set; } = null!;
 
     /// <summary>
     ///     Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public NaturalPerson Person { get; protected set; } = default!;
+    public NaturalPerson Person { get; protected set; } = null!;
 
     /// <summary>
     ///     部门。
     /// </summary>
     [MaxLength(50)]
-    public string? Department { get; set; } = default!;
+    public string? Department { get; set; } = null!;
 
     /// <summary>
     ///     职务。
     /// </summary>
     [MaxLength(50)]
-    public string? Title { get; set; } = default!;
+    public string? Title { get; set; } = null!;
 
     /// <summary>
     ///     备注。
     /// </summary>
     [MaxLength(50)]
-    public string? Remark { get; set; } = default!;
+    public string? Remark { get; set; } = null!;
 
     /// <summary>
     ///     Is Owner of the organization.

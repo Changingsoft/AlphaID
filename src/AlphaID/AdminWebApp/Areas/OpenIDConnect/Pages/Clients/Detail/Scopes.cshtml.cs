@@ -8,10 +8,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class ScopesModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
 
     [BindProperty]
-    public List<SelectListItem> ScopeItems { get; set; } = default!;
+    public List<SelectListItem> ScopeItems { get; set; } = null!;
 
     public string? OperationMessage { get; set; }
 

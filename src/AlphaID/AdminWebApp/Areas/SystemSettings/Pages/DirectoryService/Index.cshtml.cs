@@ -5,7 +5,7 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryService;
 
 public class IndexModel(DirectoryServiceManager directoryServiceManager) : PageModel
 {
-    public DirectoryServiceDescriptor Data { get; set; } = default!;
+    public DirectoryServiceDescriptor Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int anchor)
     {

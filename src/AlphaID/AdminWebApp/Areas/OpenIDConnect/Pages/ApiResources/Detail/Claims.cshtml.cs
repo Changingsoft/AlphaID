@@ -10,9 +10,9 @@ public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
 {
     [BindProperty]
     [Display(Name = "New claim type")]
-    public string NewClaim { get; set; } = default!;
+    public string NewClaim { get; set; } = null!;
 
-    public ApiResource Data { get; set; } = default!;
+    public ApiResource Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

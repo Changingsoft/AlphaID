@@ -41,13 +41,13 @@ public class OrganizationBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string AccountNumber { get; set; } = default!;
+    public string AccountNumber { get; set; } = null!;
 
     /// <summary>
     ///     户名
     /// </summary>
     [MaxLength(100)]
-    public string AccountName { get; set; } = default!;
+    public string AccountName { get; set; } = null!;
 
     /// <summary>
     ///     开户行
@@ -69,10 +69,10 @@ public class OrganizationBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; protected set; } = default!;
+    public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public GenericOrganization Organization { get; protected set; } = default!;
+    public GenericOrganization Organization { get; protected set; } = null!;
 }

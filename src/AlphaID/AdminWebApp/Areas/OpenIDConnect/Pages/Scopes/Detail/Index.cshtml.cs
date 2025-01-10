@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes.Detail;
 
 public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public ApiScope Data { get; set; } = default!;
+    public ApiScope Data { get; set; } = null!;
 
     public IActionResult OnGet(int id)
     {

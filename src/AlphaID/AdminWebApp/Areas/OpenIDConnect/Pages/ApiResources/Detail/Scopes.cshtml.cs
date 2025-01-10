@@ -15,10 +15,10 @@ public class ScopesModel : PageModel
         AllScopes = _dbContext.ApiScopes.Select(p => p.Name);
     }
 
-    public ApiResource Data { get; set; } = default!;
+    public ApiResource Data { get; set; } = null!;
 
     [BindProperty]
-    public string SelectedScope { get; set; } = default!;
+    public string SelectedScope { get; set; } = null!;
 
     public IEnumerable<string> AllScopes { get; set; }
 

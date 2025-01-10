@@ -9,22 +9,22 @@ namespace AlphaId.EntityFramework;
 
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
 {
-    public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = default!;
+    public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = null!;
 
-    public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = default!;
+    public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = null!;
 
     /// <summary>
     ///     Organizations.
     /// </summary>
-    public DbSet<GenericOrganization> Organizations { get; protected set; } = default!;
+    public DbSet<GenericOrganization> Organizations { get; protected set; } = null!;
 
-    public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = default!;
+    public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = null!;
 
-    public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = default!;
+    public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = null!;
 
-    public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = default!;
+    public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = null!;
 
-    public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = default!;
+    public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

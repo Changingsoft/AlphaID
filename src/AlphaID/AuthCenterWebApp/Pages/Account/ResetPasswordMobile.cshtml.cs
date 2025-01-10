@@ -16,30 +16,30 @@ public class ResetPasswordMobileModel(
     IVerificationCodeService verificationCodeService) : PageModel
 {
     [BindProperty]
-    public string Code { get; set; } = default!;
+    public string Code { get; set; } = null!;
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
     [Display(Name = "PhoneNumber phone number")]
-    public string PhoneNumber { get; set; } = default!;
+    public string PhoneNumber { get; set; } = null!;
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
     [Display(Name = "Verification code")]
-    public string VerificationCode { get; set; } = default!;
+    public string VerificationCode { get; set; } = null!;
 
     [BindProperty]
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Validate_Required")]
     [Display(Name = "New password")]
-    public string NewPassword { get; set; } = default!;
+    public string NewPassword { get; set; } = null!;
 
     [BindProperty]
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Validate_Required")]
     [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
     [Display(Name = "Confirm password")]
-    public string ConfirmPassword { get; set; } = default!;
+    public string ConfirmPassword { get; set; } = null!;
 
     public IActionResult OnGet(string code, string phone)
     {

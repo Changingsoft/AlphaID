@@ -10,13 +10,13 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     [BindProperty]
-    public AddPropertyModel AddProperty { get; set; } = default!;
+    public AddPropertyModel AddProperty { get; set; } = null!;
 
     public IActionResult OnGet(int anchor)
     {
@@ -306,10 +306,10 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
     {
         [Display(Name = "Key")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Key { get; set; } = default!;
+        public string Key { get; set; } = null!;
 
         [Display(Name = "Value")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Value { get; set; } = default!;
+        public string Value { get; set; } = null!;
     }
 }

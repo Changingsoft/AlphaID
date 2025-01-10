@@ -9,7 +9,7 @@ public class IndexModel(
     OrganizationManager organizationManager,
     NaturalPersonManager personManager) : PageModel
 {
-    public GenericOrganization Organization { get; set; } = default!;
+    public GenericOrganization Organization { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> Members { get; set; } = [];
 

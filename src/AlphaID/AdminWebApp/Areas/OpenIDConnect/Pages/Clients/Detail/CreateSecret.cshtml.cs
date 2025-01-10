@@ -10,10 +10,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class CreateSecretModel(ConfigurationDbContext configurationDbContext) : PageModel
 {
-    public Client Client { get; set; } = default!;
+    public Client Client { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet(int anchor)
     {
@@ -65,7 +65,7 @@ public class CreateSecretModel(ConfigurationDbContext configurationDbContext) : 
     {
         [Display(Name = "Secret")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Secret { get; set; } = default!;
+        public string Secret { get; set; } = null!;
 
         [Display(Name = "Expires")]
         public DateTime? Expires { get; set; }

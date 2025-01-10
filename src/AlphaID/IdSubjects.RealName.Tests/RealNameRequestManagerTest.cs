@@ -1,4 +1,4 @@
-﻿using IdSubjects.RealName.Requesting;
+using IdSubjects.RealName.Requesting;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.RealName.Tests;
@@ -12,21 +12,19 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
     public async Task AddRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        {
-            var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
-            var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
-            await personManager.CreateAsync(_person);
-            RealNameRequest request = new ChineseIdCardRealNameRequest(_person.Id, "张三", Sex.Male, "汉",
-                new DateOnly(1990, 1, 1), "Address",
-                "370686193704095897", "Issuer", new DateOnly(2000, 1, 1), new DateOnly(2020, 1, 1),
-                new BinaryDataInfo("image/jpg", [0xff, 0xfe]),
-                new BinaryDataInfo("image/jpg", [0xff, 0xfe]));
-            IdOperationResult result = await realnameRequestManager.CreateAsync(request);
+        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
+        await personManager.CreateAsync(_person);
+        RealNameRequest request = new ChineseIdCardRealNameRequest(_person.Id, "张三", Sex.Male, "汉",
+            new DateOnly(1990, 1, 1), "Address",
+            "370686193704095897", "Issuer", new DateOnly(2000, 1, 1), new DateOnly(2020, 1, 1),
+            new BinaryDataInfo("image/jpg", [0xff, 0xfe]),
+            new BinaryDataInfo("image/jpg", [0xff, 0xfe]));
+        IdOperationResult result = await realnameRequestManager.CreateAsync(request);
 
-            Assert.True(result.Succeeded);
-            Assert.Equal(_person.Id, request.PersonId);
-            Assert.False(request.Accepted.HasValue);
-        }
+        Assert.True(result.Succeeded);
+        Assert.Equal(_person.Id, request.PersonId);
+        Assert.False(request.Accepted.HasValue);
     }
 
     [Fact]

@@ -8,10 +8,10 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
 
     [BindProperty]
-    public AddClaimModel Input { get; set; } = default!;
+    public AddClaimModel Input { get; set; } = null!;
 
     public IActionResult OnGet(int anchor)
     {
@@ -71,11 +71,11 @@ public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
         [Display(Name = "Type")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
-        public string Type { get; set; } = default!;
+        public string Type { get; set; } = null!;
 
         [Display(Name = "Value")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(255, ErrorMessage = "Validate_StringLength")]
-        public string Value { get; set; } = default!;
+        public string Value { get; set; } = null!;
     }
 }

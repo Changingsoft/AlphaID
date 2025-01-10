@@ -41,7 +41,7 @@ public class ChinesePersonName
     ///     名字（不含姓氏部分）。
     /// </summary>
     [MaxLength(10)]
-    public string GivenName { get; protected set; } = default!;
+    public string GivenName { get; protected set; } = null!;
 
     /// <summary>
     ///     姓名。
@@ -59,7 +59,7 @@ public class ChinesePersonName
     /// </summary>
     [MaxLength(40)]
     [Unicode(false)]
-    public string PhoneticGivenName { get; protected set; } = default!;
+    public string PhoneticGivenName { get; protected set; } = null!;
 
     /// <summary>
     /// </summary>

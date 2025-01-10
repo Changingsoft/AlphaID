@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
@@ -80,26 +80,26 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
     {
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Taxpayer ID")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string TaxpayerId { get; set; } = default!;
+        public string TaxpayerId { get; set; } = null!;
 
         [Display(Name = "Address")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Address { get; set; } = default!;
+        public string Address { get; set; } = null!;
 
         [Display(Name = "Contact")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Contact { get; set; } = default!;
+        public string Contact { get; set; } = null!;
 
         [Display(Name = "Bank")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Bank { get; set; } = default!;
+        public string Bank { get; set; } = null!;
 
         [Display(Name = "Account")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Account { get; set; } = default!;
+        public string Account { get; set; } = null!;
     }
 }

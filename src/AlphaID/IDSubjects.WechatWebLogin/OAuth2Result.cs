@@ -11,13 +11,13 @@ public class OAuth2Result
     ///     Access Token.
     /// </summary>
     [JsonProperty("access_token")]
-    public string AccessToken { get; set; } = default!;
+    public string AccessToken { get; set; } = null!;
 
     /// <summary>
     ///     Token Type。
     /// </summary>
     [JsonProperty("token_type")]
-    public string TokenType { get; set; } = default!;
+    public string TokenType { get; set; } = null!;
 
     /// <summary>
     ///     Expires in seconds.
@@ -46,5 +46,5 @@ public class OAuth2Result
     ///     OpenID Connect 令牌。
     /// </summary>
     [JsonProperty("id_token")]
-    public string IdToken { get; set; } = default!;
+    public string IdToken { get; set; } = null!;
 }

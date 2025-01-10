@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 
 public class IndexModel(ConfigurationDbContext context) : PageModel
 {
-    public IEnumerable<Client> Clients { get; set; } = default!;
+    public IEnumerable<Client> Clients { get; set; } = null!;
 
     public void OnGet()
     {

@@ -6,14 +6,14 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Register;
 public class RegisterByChineseIdCardModel : PageModel
 {
     [BindProperty]
-    public string IdCardFrontBase64 { get; set; } = default!;
+    public string IdCardFrontBase64 { get; set; } = null!;
 
     [BindProperty]
-    public string IdCardBackBase64 { get; set; } = default!;
+    public string IdCardBackBase64 { get; set; } = null!;
 
     [Display(Name = "PhoneNumber phone number")]
     [BindProperty]
-    public string Mobile { get; set; } = default!;
+    public string Mobile { get; set; } = null!;
 
     [Display(Name = "Email")]
     [EmailAddress]

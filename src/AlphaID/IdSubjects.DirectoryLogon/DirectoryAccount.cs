@@ -36,14 +36,14 @@ public class DirectoryAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; protected internal set; } = default!;
+    public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
     ///     目录对象的objectGUID。
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string ObjectId { get; protected internal set; } = default!;
+    public string ObjectId { get; protected internal set; } = null!;
 
     /// <summary>
     ///     目录服务Id.
@@ -54,7 +54,7 @@ public class DirectoryAccount
     ///     目录服务。
     /// </summary>
     [ForeignKey(nameof(ServiceId))]
-    public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = default!;
+    public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = null!;
 
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     internal UserPrincipal? GetUserPrincipal()

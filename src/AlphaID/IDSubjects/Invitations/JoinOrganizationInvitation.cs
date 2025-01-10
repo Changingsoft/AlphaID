@@ -18,14 +18,14 @@ public class JoinOrganizationInvitation
     ///     被邀请人Id.
     /// </summary>
     [MaxLength(50)]
-    public string InviteeId { get; set; } = default!;
+    public string InviteeId { get; set; } = null!;
 
     /// <summary>
     ///     组织Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; set; } = default!;
+    public string OrganizationId { get; set; } = null!;
 
     /// <summary>
     ///     邀请发出时间。
@@ -41,7 +41,7 @@ public class JoinOrganizationInvitation
     ///     发出邀请的人
     /// </summary>
     [MaxLength(50)]
-    public string Inviter { get; set; } = default!;
+    public string Inviter { get; set; } = null!;
 
     /// <summary>
     ///     期望的可见性。

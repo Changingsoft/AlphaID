@@ -30,7 +30,7 @@ public class SignUpModel(
     private readonly ProductInfo _production = production.Value;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "User name")]
@@ -147,22 +147,22 @@ public class SignUpModel(
         [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-        public string Mobile { get; set; } = default!;
+        public string Mobile { get; set; } = null!;
 
         [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string VerificationCode { get; set; } = default!;
+        public string VerificationCode { get; set; } = null!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string Surname { get; set; } = default!;
+        public string Surname { get; set; } = null!;
 
         [Display(Name = "Given name", Prompt = "Given name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; set; } = null!;
 
         [Display(Name = "Gender")]
         public Gender? Sex { get; set; }
@@ -175,14 +175,14 @@ public class SignUpModel(
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; set; } = null!;
 
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; set; } = null!;
 
         [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]
         [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
@@ -191,7 +191,7 @@ public class SignUpModel(
         [Display(Name = "Captcha code")]
         [Required(ErrorMessage = "Validate_Required")]
         [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
-        public string CaptchaCode { get; set; } = default!;
+        public string CaptchaCode { get; set; } = null!;
 
         [Display(Name = "Agree the")]
         public bool Agree { get; set; }

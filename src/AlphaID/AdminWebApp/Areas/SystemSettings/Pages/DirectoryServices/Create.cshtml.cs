@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryServices;
 public class CreateModel(DirectoryServiceManager directoryServiceManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public void OnGet()
     {
@@ -59,12 +59,12 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Server", Prompt = "ldap.example.com")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string ServerAddress { get; set; } = default!;
+        public string ServerAddress { get; set; } = null!;
 
         [Display(Name = "LDAP Type")]
         public LdapType LdapType { get; set; }
@@ -82,17 +82,17 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
         [Display(Name = "Root DN", Prompt = "DC=example,DC=com")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(150, ErrorMessage = "Validate_StringLength")]
-        public string RootDn { get; set; } = default!;
+        public string RootDn { get; set; } = null!;
 
         [Display(Name = "User OU", Prompt = "OU=Users,DC=example,DC=com")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(150, ErrorMessage = "Validate_StringLength")]
-        public string DefaultUserOu { get; set; } = default!;
+        public string DefaultUserOu { get; set; } = null!;
 
         [Display(Name = "UPN suffix", Prompt = "example.com")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(20, ErrorMessage = "Validate_StringLength")]
-        public string UpnSuffix { get; set; } = default!;
+        public string UpnSuffix { get; set; } = null!;
 
         [Display(Name = "NT Domain Name")]
         [StringLength(20, ErrorMessage = "Validate_StringLength")]

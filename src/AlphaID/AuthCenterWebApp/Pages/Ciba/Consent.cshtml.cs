@@ -17,10 +17,10 @@ public class Consent(
     IEventService events,
     ILogger<Consent> logger) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string id)
     {
@@ -206,21 +206,21 @@ public class Consent(
 
     public class InputModel
     {
-        public string Button { get; set; } = default!;
-        public IEnumerable<string> ScopesConsented { get; set; } = default!;
-        public string Id { get; set; } = default!;
-        public string Description { get; set; } = default!;
+        public string Button { get; set; } = null!;
+        public IEnumerable<string> ScopesConsented { get; set; } = null!;
+        public string Id { get; set; } = null!;
+        public string Description { get; set; } = null!;
     }
 
     public class ViewModel
     {
-        public string ClientName { get; set; } = default!;
+        public string ClientName { get; set; } = null!;
         public string? ClientUrl { get; set; }
         public string? ClientLogoUrl { get; set; }
 
         public string? BindingMessage { get; set; }
 
-        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = default!;
-        public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = default!;
+        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = null!;
+        public IEnumerable<ScopeViewModel> ApiScopes { get; set; } = null!;
     }
 }

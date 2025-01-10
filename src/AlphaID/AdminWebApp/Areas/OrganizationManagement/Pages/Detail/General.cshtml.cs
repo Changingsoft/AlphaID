@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 public class GeneralModel(OrganizationManager manager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IdOperationResult? OperationResult { get; set; }
 
@@ -57,7 +57,7 @@ public class GeneralModel(OrganizationManager manager) : PageModel
     {
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Domicile")]
         public string? Domicile { get; set; }

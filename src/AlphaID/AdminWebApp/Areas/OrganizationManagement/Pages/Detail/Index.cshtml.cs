@@ -6,9 +6,9 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
+    public string Anchor { get; set; } = null!;
 
-    public GenericOrganization Organization { get; set; } = default!;
+    public GenericOrganization Organization { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {

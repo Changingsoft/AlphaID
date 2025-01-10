@@ -13,7 +13,7 @@ public class CreateDirectoryAccountModel(
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
@@ -75,24 +75,24 @@ public class CreateDirectoryAccountModel(
 
         [Display(Name = "SAM Account Name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string SamAccountName { get; set; } = default!;
+        public string SamAccountName { get; set; } = null!;
 
         [Display(Name = "UPN Prefix Part")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string UpnPart { get; set; } = default!;
+        public string UpnPart { get; set; } = null!;
 
         [Display(Name = "Directory Entry Name")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string EntryName { get; set; } = default!;
+        public string EntryName { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        public string Surname { get; set; } = default!;
+        public string Surname { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        public string GivenName { get; set; } = default!;
+        public string GivenName { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        public string DisplayName { get; set; } = default!;
+        public string DisplayName { get; set; } = null!;
 
         public string? PinyinSurname { get; set; }
 
@@ -102,7 +102,7 @@ public class CreateDirectoryAccountModel(
 
         [Display(Name = "PhoneNumber Phone Number")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Mobile { get; set; } = default!;
+        public string Mobile { get; set; } = null!;
 
         [Display(Name = "Email Address")]
         public string? Email { get; set; }
@@ -111,13 +111,13 @@ public class CreateDirectoryAccountModel(
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; set; } = null!;
 
         [Display(Name = "Confirm Password")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; set; } = null!;
     }
 }

@@ -15,7 +15,7 @@ public sealed class DescriptionForTagHelper : TagHelper
     /// <summary>
     /// </summary>
     [HtmlAttributeName(ForAttributeName)]
-    public ModelExpression For { get; set; } = default!;
+    public ModelExpression For { get; set; } = null!;
 
     /// <summary>
     /// </summary>

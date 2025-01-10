@@ -26,10 +26,10 @@ public class BindLoginModel(
     SignInManager<NaturalPerson> signInManager,
     IOptions<LoginOptions> loginOptions) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string returnUrl)
     {
@@ -261,18 +261,18 @@ public class BindLoginModel(
     {
         [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Username { get; set; } = default!;
+        public string Username { get; set; } = null!;
 
         [Display(Name = "Password")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string Password { get; set; } = default!;
+        public string Password { get; set; } = null!;
 
         [Display(Name = "Remember my login")]
         public bool RememberLogin { get; set; }
 
-        public string ReturnUrl { get; set; } = default!;
+        public string ReturnUrl { get; set; } = null!;
 
-        public string Button { get; set; } = default!;
+        public string Button { get; set; } = null!;
     }
 
     public class ViewModel
@@ -296,7 +296,7 @@ public class BindLoginModel(
         public class ExternalProvider
         {
             public string? DisplayName { get; set; }
-            public string AuthenticationScheme { get; set; } = default!;
+            public string AuthenticationScheme { get; set; } = null!;
         }
     }
 }

@@ -27,7 +27,7 @@ public class EmailModel(
     public string? StatusMessage { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     private async Task LoadAsync(NaturalPerson user)
     {
@@ -128,6 +128,6 @@ public class EmailModel(
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress]
         [Display(Name = "New email")]
-        public string NewEmail { get; set; } = default!;
+        public string NewEmail { get; set; } = null!;
     }
 }

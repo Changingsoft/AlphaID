@@ -7,9 +7,9 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 public class DirectoryAccountsModel(NaturalPersonManager personManager, DirectoryAccountManager directoryAccountManager)
     : PageModel
 {
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
-    public IEnumerable<DirectoryAccount> LogonAccounts { get; set; } = default!;
+    public IEnumerable<DirectoryAccount> LogonAccounts { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

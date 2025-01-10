@@ -7,9 +7,9 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class IndexModel(NaturalPersonManager userManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = default!;
+    public NaturalPerson Data { get; set; } = null!;
 
-    public IList<UserLoginInfo> ExternalLogins { get; set; } = default!;
+    public IList<UserLoginInfo> ExternalLogins { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 

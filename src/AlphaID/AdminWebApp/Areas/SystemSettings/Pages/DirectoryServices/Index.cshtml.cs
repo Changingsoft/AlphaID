@@ -4,7 +4,7 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryServices;
 
 public class IndexModel(DirectoryServiceManager directoryServiceManager) : PageModel
 {
-    public IEnumerable<DirectoryServiceDescriptor> DirectoryServices { get; set; } = default!;
+    public IEnumerable<DirectoryServiceDescriptor> DirectoryServices { get; set; } = null!;
 
     public void OnGet()
     {

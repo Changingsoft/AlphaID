@@ -61,7 +61,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     ///     姓名。
     /// </summary>
     [MaxLength(20)]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     ///     性别。
@@ -72,7 +72,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     ///     民族。
     /// </summary>
     [MaxLength(20)]
-    public string Ethnicity { get; set; } = default!;
+    public string Ethnicity { get; set; } = null!;
 
     /// <summary>
     ///     出生日期。
@@ -83,20 +83,20 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     ///     住址。
     /// </summary>
     [MaxLength(150)]
-    public string Address { get; set; } = default!;
+    public string Address { get; set; } = null!;
 
     /// <summary>
     ///     身份证号码。
     /// </summary>
     [MaxLength(18)]
     [Unicode(false)]
-    public string CardNumber { get; set; } = default!;
+    public string CardNumber { get; set; } = null!;
 
     /// <summary>
     ///     签发机关。
     /// </summary>
     [MaxLength(20)]
-    public string Issuer { get; set; } = default!;
+    public string Issuer { get; set; } = null!;
 
     /// <summary>
     ///     签发日期。
@@ -111,12 +111,12 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     ///     个人信息面。
     /// </summary>
-    public BinaryDataInfo PersonalSide { get; set; } = default!;
+    public BinaryDataInfo PersonalSide { get; set; } = null!;
 
     /// <summary>
     ///     签发者信息面。
     /// </summary>
-    public BinaryDataInfo IssuerSide { get; set; } = default!;
+    public BinaryDataInfo IssuerSide { get; set; } = null!;
 
     /// <summary>
     ///     重写，创建RealNameAuthentication。

@@ -5,7 +5,7 @@ namespace AdminWebApp.Areas.RealName.Pages.Authentication;
 
 public class IndexModel(RealNameManager realNameManager) : PageModel
 {
-    public RealNameAuthentication Data { get; set; } = default!;
+    public RealNameAuthentication Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

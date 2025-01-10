@@ -41,7 +41,7 @@ public class OrganizationController(
     [HttpGet("{id}/Members")]
     public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
     {
-        NaturalPerson? visitor = default;
+        NaturalPerson? visitor = null;
         string? visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
             visitor = await personManager.FindByIdAsync(User.SubjectId()!);

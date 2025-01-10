@@ -29,7 +29,7 @@ public record ExternalLoginProviderInfo
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     ///     显示名称。
@@ -42,7 +42,7 @@ public record ExternalLoginProviderInfo
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string RegisteredClientId { get; set; } = default!;
+    public string RegisteredClientId { get; set; } = null!;
 
     /// <summary>
     ///     指定Provider Key的生成器。

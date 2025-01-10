@@ -22,7 +22,7 @@ public class DirectoryServiceDescriptor
     ///     Name
     /// </summary>
     [MaxLength(50)]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     ///     获取LDAP的类型。
@@ -34,19 +34,19 @@ public class DirectoryServiceDescriptor
     ///     Server (Host address and port)
     /// </summary>
     [MaxLength(50)]
-    public string ServerAddress { get; set; } = default!;
+    public string ServerAddress { get; set; } = null!;
 
     /// <summary>
     ///     Root DN.
     /// </summary>
     [MaxLength(150)]
-    public string RootDn { get; set; } = default!;
+    public string RootDn { get; set; } = null!;
 
     /// <summary>
     ///     Default User Account OU Path
     /// </summary>
     [MaxLength(150)]
-    public string DefaultUserAccountContainer { get; set; } = default!;
+    public string DefaultUserAccountContainer { get; set; } = null!;
 
     /// <summary>
     ///     UserName.
@@ -66,14 +66,14 @@ public class DirectoryServiceDescriptor
     /// </summary>
     [MaxLength(20)]
     [Unicode(false)]
-    public string UpnSuffix { get; set; } = default!;
+    public string UpnSuffix { get; set; } = null!;
 
     /// <summary>
     ///     SAMAccountName prefix domain name.
     /// </summary>
     [MaxLength(10)]
     [Unicode(false)]
-    public string? SamDomainPart { get; set; } = default!;
+    public string? SamDomainPart { get; set; } = null!;
 
     /// <summary>
     ///     获取或设置外部登录提供器信息。

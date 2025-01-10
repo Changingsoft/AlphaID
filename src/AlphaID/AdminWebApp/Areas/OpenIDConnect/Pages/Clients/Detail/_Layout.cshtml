@@ -2,7 +2,7 @@
 @inject ConfigurationDbContext DbContext
 @{
     Layout = "Shared/_Layout";
-    Client? client = default!;
+    Client? client = null!;
     if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out var clientId))
     {
         client = DbContext.Clients.FirstOrDefault(p => p.Id == clientId);

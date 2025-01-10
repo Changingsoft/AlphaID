@@ -11,7 +11,7 @@ public class BindDirectoryAccountModel(
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<DirectorySearchItem> SearchItems { get; set; } = [];
 

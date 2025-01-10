@@ -12,7 +12,7 @@ public class IndexModel(
     IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService,
     ILogger<IndexModel> logger) : PageModel
 {
-    public BackchannelUserLoginRequest LoginRequest { get; set; } = default!;
+    public BackchannelUserLoginRequest LoginRequest { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string id)
     {

@@ -16,7 +16,7 @@ public class ChangeUserNameModel(
     [Display(Name = "User name")]
     [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
     [PageRemote(HttpMethod = "Post", PageHandler = "CheckName", AdditionalFields = "__RequestVerificationToken")]
-    public string UserName { get; set; } = default!;
+    public string UserName { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 

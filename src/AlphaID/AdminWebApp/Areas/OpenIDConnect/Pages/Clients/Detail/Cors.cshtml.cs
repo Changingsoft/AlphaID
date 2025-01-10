@@ -8,11 +8,11 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class CorsModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public Client Data { get; set; } = default!;
+    public Client Data { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "New origin")]
-    public string NewOrigin { get; set; } = default!;
+    public string NewOrigin { get; set; } = null!;
 
     public IActionResult OnGet(int anchor)
     {

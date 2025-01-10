@@ -7,12 +7,12 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.IdentityResources.Detail;
 
 public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public IdentityResource Data { get; set; } = default!;
+    public IdentityResource Data { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Name")]
     [StringLength(200, ErrorMessage = "Validate_StringLength")]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     public IActionResult OnGet(int id)
     {

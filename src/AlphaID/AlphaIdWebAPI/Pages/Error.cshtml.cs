@@ -12,7 +12,7 @@ public class ErrorModel : PageModel
 {
     /// <summary>
     /// </summary>
-    public string RequestId { get; set; } = default!;
+    public string RequestId { get; set; } = null!;
 
     /// <summary>
     /// </summary>

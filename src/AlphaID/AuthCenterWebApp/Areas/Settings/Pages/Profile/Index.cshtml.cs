@@ -11,9 +11,9 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 public class IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 

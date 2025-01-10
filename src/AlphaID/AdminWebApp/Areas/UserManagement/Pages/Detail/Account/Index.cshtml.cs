@@ -6,12 +6,12 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class IndexModel(NaturalPersonManager userManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = default!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public bool HasPassword { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public string? OperationResultMessage { get; set; }
 
@@ -57,6 +57,6 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
     {
         [Display(Name = "User name")]
         [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        public string UserName { get; set; } = default!;
+        public string UserName { get; set; } = null!;
     }
 }

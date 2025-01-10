@@ -45,8 +45,8 @@ public class OrganizationControllerTest(AlphaIdApiFactory factory)
 
     internal record OrganizationModel(string? Domicile, string? Contact, string? LegalPersonName, DateTime? Expires)
     {
-        public string SubjectId { get; set; } = default!;
-        public string Name { get; set; } = default!;
+        public string SubjectId { get; set; } = null!;
+        public string Name { get; set; } = null!;
     }
 
     internal record OrganizationSearchResult(IEnumerable<OrganizationModel> Organizations, bool More);

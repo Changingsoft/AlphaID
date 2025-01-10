@@ -12,11 +12,11 @@ public class ChangePasswordModel(
     ILogger<ChangePasswordModel> logger) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = default!;
+    public NaturalPerson Person { get; set; } = null!;
 
-    public IList<UserLoginInfo> ExternalLogins { get; set; } = default!;
+    public IList<UserLoginInfo> ExternalLogins { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 
@@ -58,17 +58,17 @@ public class ChangePasswordModel(
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
-        public string CurrentPassword { get; set; } = default!;
+        public string CurrentPassword { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(100, ErrorMessage = "Validate_StringLength", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; set; } = null!;
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; set; } = null!;
     }
 }

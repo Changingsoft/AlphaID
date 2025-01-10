@@ -37,7 +37,7 @@ public abstract class RealNameRequest
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; protected internal set; } = default!;
+    public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
     ///     提交时间。

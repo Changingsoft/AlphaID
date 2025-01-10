@@ -17,10 +17,10 @@ public class Index(
     IDeviceFlowInteractionService interaction,
     IEventService eventService) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string? userCode)
     {
@@ -54,7 +54,7 @@ public class Index(
         DeviceFlowAuthorizationRequest? request = await interaction.GetAuthorizationContextAsync(Input.UserCode ?? throw new ArgumentNullException(nameof(Input.UserCode)));
         if (request == null) return RedirectToPage("/Home/Error/Index");
 
-        ConsentResponse grantedConsent = default!;
+        ConsentResponse grantedConsent = null!;
 
         // user clicked 'no' - send back the standard 'access_denied' response
         if (Input.Button == "no")

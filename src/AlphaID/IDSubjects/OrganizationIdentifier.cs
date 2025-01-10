@@ -14,12 +14,12 @@ public class OrganizationIdentifier
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; set; } = default!;
+    public string OrganizationId { get; set; } = null!;
 
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; set; } = default!;
+    public virtual GenericOrganization Organization { get; set; } = null!;
 
     /// <summary>
     /// </summary>
@@ -29,5 +29,5 @@ public class OrganizationIdentifier
     /// <summary>
     /// </summary>
     [MaxLength(30)]
-    public string Value { get; set; } = default!;
+    public string Value { get; set; } = null!;
 }

@@ -8,7 +8,7 @@ public class SmtpMailSenderOptions
     /// <summary>
     ///     SMTP Server.
     /// </summary>
-    public string Server { get; set; } = default!;
+    public string Server { get; set; } = null!;
 
     /// <summary>
     ///     SMTP Protocol Port. Use 25 by default.
@@ -34,10 +34,10 @@ public class SmtpMailSenderOptions
     /// <summary>
     ///     发送人电子邮件地址。
     /// </summary>
-    public string FromMailAddress { get; set; } = default!;
+    public string FromMailAddress { get; set; } = null!;
 
     /// <summary>
     ///     发送人显示名称。
     /// </summary>
-    public string FromDisplayName { get; set; } = default!;
+    public string FromDisplayName { get; set; } = null!;
 }

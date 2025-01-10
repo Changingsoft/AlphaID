@@ -35,7 +35,7 @@ public class PersonBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string AccountNumber { get; set; } = default!;
+    public string AccountNumber { get; set; } = null!;
 
     /// <summary>
     ///     户名
@@ -54,10 +54,10 @@ public class PersonBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; protected internal set; } = default!;
+    public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public virtual NaturalPerson Person { get; protected internal set; } = default!;
+    public virtual NaturalPerson Person { get; protected internal set; } = null!;
 }

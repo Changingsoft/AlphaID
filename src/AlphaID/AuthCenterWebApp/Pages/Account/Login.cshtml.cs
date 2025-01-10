@@ -27,10 +27,10 @@ public class LoginModel(
     IOptions<LoginOptions> loginOptions,
     ILogger<LoginModel>? logger) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string? returnUrl)
     {
@@ -212,19 +212,19 @@ public class LoginModel(
     {
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
-        public string Username { get; set; } = default!;
+        public string Username { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = default!;
+        public string Password { get; set; } = null!;
 
         [Display(Name = "Remember me on this device")]
         public bool RememberLogin { get; set; }
 
         public string? ReturnUrl { get; set; }
 
-        public string Button { get; set; } = default!;
+        public string Button { get; set; } = null!;
     }
 
     public class ViewModel
@@ -264,7 +264,7 @@ public class LoginModel(
 
     public class ExternalProvider
     {
-        public string DisplayName { get; set; } = default!;
-        public string AuthenticationScheme { get; set; } = default!;
+        public string DisplayName { get; set; } = null!;
+        public string AuthenticationScheme { get; set; } = null!;
     }
 }

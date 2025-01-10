@@ -13,7 +13,7 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPerson
     public string? Role { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet(string? role)
     {
@@ -29,7 +29,7 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPerson
         NaturalPerson person = await personManager.FindByNameAsync(Input.UserName) ??
                                throw new InvalidOperationException("User cannot found.");
         await userInRoleManager.AddRole(person.Id, role);
-        Input = default!;
+        Input = null!;
         return RedirectToPage();
     }
 
@@ -42,8 +42,8 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPerson
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
-        public string UserName { get; set; } = default!;
+        public string UserName { get; set; } = null!;
 
-        public string PhoneticSearchHint { get; set; } = default!;
+        public string PhoneticSearchHint { get; set; } = null!;
     }
 }

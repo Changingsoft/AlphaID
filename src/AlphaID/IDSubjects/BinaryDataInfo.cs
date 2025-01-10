@@ -31,10 +31,10 @@ public record BinaryDataInfo
     /// </summary>
     [MaxLength(100)]
     [Unicode(false)]
-    public string MimeType { get; set; } = default!;
+    public string MimeType { get; set; } = null!;
 
     /// <summary>
     ///     数据。
     /// </summary>
-    public byte[] Data { get; set; } = default!;
+    public byte[] Data { get; set; } = null!;
 }

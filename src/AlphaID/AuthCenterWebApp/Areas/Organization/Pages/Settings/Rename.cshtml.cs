@@ -10,7 +10,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
     [BindProperty]
     [Display(Name = "Name")]
     [StringLength(50, ErrorMessage = "Validate_StringLength")]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

@@ -24,7 +24,7 @@ public class ChangePasswordModel(
     public string? ReturnUrl { get; set; }
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
 
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
@@ -100,17 +100,17 @@ public class ChangePasswordModel(
         [Display(Name = "Current password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
-        public string OldPassword { get; set; } = default!;
+        public string OldPassword { get; set; } = null!;
 
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
-        public string NewPassword { get; set; } = default!;
+        public string NewPassword { get; set; } = null!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
         [Required(ErrorMessage = "Validate_Required")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; set; } = null!;
     }
 }

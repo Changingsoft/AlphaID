@@ -2,11 +2,11 @@
 
 internal record MembershipModel(string? Title, string? Department, string? Remark)
 {
-    public string PersonId { get; set; } = default!;
+    public string PersonId { get; set; } = null!;
 
-    public string PersonName { get; set; } = default!;
+    public string PersonName { get; set; } = null!;
 
-    public string OrganizationId { get; set; } = default!;
+    public string OrganizationId { get; set; } = null!;
 
-    public string OrganizationName { get; set; } = default!;
+    public string OrganizationName { get; set; } = null!;
 }

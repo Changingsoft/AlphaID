@@ -17,11 +17,11 @@ public class Index(
     IResourceStore resourceStore,
     IEventService events) : PageModel
 {
-    public ViewModel View { get; set; } = default!;
+    public ViewModel View { get; set; } = null!;
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
-    public string ClientId { get; set; } = default!;
+    public string ClientId { get; set; } = null!;
 
     public async Task OnGet()
     {
@@ -69,19 +69,19 @@ public class Index(
 
     public class ViewModel
     {
-        public IEnumerable<GrantViewModel> Grants { get; set; } = default!;
+        public IEnumerable<GrantViewModel> Grants { get; set; } = null!;
     }
 
     public class GrantViewModel
     {
-        public string ClientId { get; set; } = default!;
-        public string ClientName { get; set; } = default!;
+        public string ClientId { get; set; } = null!;
+        public string ClientName { get; set; } = null!;
         public string? ClientUrl { get; set; }
         public string? ClientLogoUrl { get; set; }
         public string? Description { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Expires { get; set; }
-        public IEnumerable<string> IdentityGrantNames { get; set; } = default!;
-        public IEnumerable<string> ApiGrantNames { get; set; } = default!;
+        public IEnumerable<string> IdentityGrantNames { get; set; } = null!;
+        public IEnumerable<string> ApiGrantNames { get; set; } = null!;
     }
 }

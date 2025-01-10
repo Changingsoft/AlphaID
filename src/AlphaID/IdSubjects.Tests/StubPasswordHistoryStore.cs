@@ -33,9 +33,9 @@ public class StubPasswordHistoryStore : IPasswordHistoryStore
 
     private record PasswordHistory
     {
-        public string UserId { get; init; } = default!;
+        public string UserId { get; init; } = null!;
 
-        public string Data { get; init; } = default!;
+        public string Data { get; init; } = null!;
 
         public DateTimeOffset WhenCreated { get; init; }
     }

@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
 public class IndexModel(ConfigurationDbContext context) : PageModel
 {
-    public ApiResource Data { get; set; } = default!;
+    public ApiResource Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

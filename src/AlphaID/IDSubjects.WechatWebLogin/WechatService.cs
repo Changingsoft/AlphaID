@@ -16,12 +16,12 @@ public class WechatService
     [Key]
     [MaxLength(50)]
     [Unicode(false)]
-    public string AppId { get; set; } = default!;
+    public string AppId { get; set; } = null!;
 
     /// <summary>
     ///     Secret.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string Secret { get; set; } = default!;
+    public string Secret { get; set; } = null!;
 }

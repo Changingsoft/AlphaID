@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Financial;
 public class IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
     : PageModel
 {
-    public GenericOrganization Data { get; set; } = default!;
+    public GenericOrganization Data { get; set; } = null!;
 
     public IEnumerable<OrganizationBankAccount> BankAccounts { get; set; } = [];
 

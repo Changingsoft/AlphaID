@@ -2,7 +2,7 @@
 @inject ConfigurationDbContext DbContext
 @{
     Layout = "Shared/_Layout";
-    IdentityProvider? provider = default!;
+    IdentityProvider? provider = null!;
     if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out var providerId))
     {
         provider = DbContext.IdentityProviders.FirstOrDefault(p => p.Id == providerId);

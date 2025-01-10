@@ -7,15 +7,15 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class SecurityModel(NaturalPersonManager manager) : PageModel
 {
-    public string OperationMessage = default!;
+    public string OperationMessage = null!;
 
     [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = default!;
+    public string Anchor { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Data { get; set; } = default!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {

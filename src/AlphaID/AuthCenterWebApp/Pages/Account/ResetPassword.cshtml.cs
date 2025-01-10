@@ -14,7 +14,7 @@ namespace AuthCenterWebApp.Pages.Account;
 public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet(string? code)
     {
@@ -48,21 +48,21 @@ public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
         [EmailAddress(ErrorMessage = "{0}µÄ¸ñÊ½´íÎó")]
-        public string Email { get; set; } = default!;
+        public string Email { get; set; } = null!;
 
         [Display(Name = "New password")]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-        public string Password { get; set; } = default!;
+        public string Password { get; set; } = null!;
 
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         [Compare("Password", ErrorMessage = "Validate_PasswordConfirm")]
-        public string ConfirmPassword { get; set; } = default!;
+        public string ConfirmPassword { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]
-        public string Code { get; set; } = default!;
+        public string Code { get; set; } = null!;
     }
 }

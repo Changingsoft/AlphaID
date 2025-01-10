@@ -21,7 +21,7 @@ public class NavItemActiveClassTagHelper : TagHelper
     /// </summary>
     [HtmlAttributeNotBound]
     [ViewContext]
-    public ViewContext ViewContext { get; set; } = default!;
+    public ViewContext ViewContext { get; set; } = null!;
 
     /// <summary>
     /// </summary>

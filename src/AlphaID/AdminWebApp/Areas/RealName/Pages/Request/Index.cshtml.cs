@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.RealName.Pages.Request;
 
 public class IndexModel(RealNameRequestManager requestManager) : PageModel
 {
-    public RealNameRequest Data { get; set; } = default!;
+    public RealNameRequest Data { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 

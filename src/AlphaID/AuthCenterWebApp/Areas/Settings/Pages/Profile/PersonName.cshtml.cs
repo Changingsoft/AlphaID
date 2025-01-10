@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 public class PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager) : PageModel
 {
     [BindProperty]
-    public InputMode Input { get; set; } = default!;
+    public InputMode Input { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 

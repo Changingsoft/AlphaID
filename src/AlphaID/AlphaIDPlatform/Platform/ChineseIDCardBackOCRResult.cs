@@ -8,7 +8,7 @@ public class ChineseIdCardBackOcrResult
     /// <summary>
     ///     签发机关。
     /// </summary>
-    public string Issuer { get; set; } = default!;
+    public string Issuer { get; set; } = null!;
 
     /// <summary>
     ///     签发日期字符串。

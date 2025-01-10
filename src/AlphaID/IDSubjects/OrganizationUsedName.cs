@@ -21,19 +21,19 @@ public class OrganizationUsedName
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; protected set; } = default!;
+    public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
     ///     所属组织
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; protected set; } = default!;
+    public virtual GenericOrganization Organization { get; protected set; } = null!;
 
     /// <summary>
     ///     名称。
     /// </summary>
     [MaxLength(100)]
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     ///     弃用日期。

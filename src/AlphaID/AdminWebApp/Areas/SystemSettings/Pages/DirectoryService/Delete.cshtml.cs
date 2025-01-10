@@ -7,12 +7,12 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryService;
 
 public class DeleteModel(DirectoryServiceManager directoryServiceManager) : PageModel
 {
-    public DirectoryServiceDescriptor Data { get; set; } = default!;
+    public DirectoryServiceDescriptor Data { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Service name")]
     [StringLength(50, ErrorMessage = "Validate_StringLength")]
-    public string ServiceName { get; set; } = default!;
+    public string ServiceName { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int anchor)
     {

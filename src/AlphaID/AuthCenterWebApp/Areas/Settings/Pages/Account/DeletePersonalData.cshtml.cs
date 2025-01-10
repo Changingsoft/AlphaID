@@ -12,7 +12,7 @@ public class DeletePersonalDataModel(
     ILogger<DeletePersonalDataModel> logger) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public bool RequirePassword { get; set; }
 
@@ -54,6 +54,6 @@ public class DeletePersonalDataModel(
         [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        public string Password { get; set; } = default!;
+        public string Password { get; set; } = null!;
     }
 }

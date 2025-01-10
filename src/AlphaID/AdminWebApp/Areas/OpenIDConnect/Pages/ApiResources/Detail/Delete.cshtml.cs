@@ -7,11 +7,11 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
 public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 {
-    public ApiResource Data { get; set; } = default!;
+    public ApiResource Data { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Resources name")]
-    public string ResourceName { get; set; } = default!;
+    public string ResourceName { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {

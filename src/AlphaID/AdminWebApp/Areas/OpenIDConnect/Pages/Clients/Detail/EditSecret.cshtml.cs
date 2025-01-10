@@ -8,12 +8,12 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
 public class EditSecretModel(ConfigurationDbContext configurationDbContext) : PageModel
 {
-    public Client Client { get; set; } = default!;
+    public Client Client { get; set; } = null!;
 
-    public ClientSecret Secret { get; set; } = default!;
+    public ClientSecret Secret { get; set; } = null!;
 
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet(int anchor, int secretId)
     {

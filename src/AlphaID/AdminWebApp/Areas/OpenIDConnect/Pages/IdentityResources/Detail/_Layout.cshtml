@@ -2,7 +2,7 @@
 @inject ConfigurationDbContext DbContext
 @{
     Layout = "Shared/_Layout";
-    IdentityResource? identityResource = default!;
+    IdentityResource? identityResource = null!;
     if (int.TryParse(ViewContext.RouteData.Values["anchor"]?.ToString(), out var resourceId))
     {
         identityResource = DbContext.IdentityResources.FirstOrDefault(p => p.Id == resourceId);

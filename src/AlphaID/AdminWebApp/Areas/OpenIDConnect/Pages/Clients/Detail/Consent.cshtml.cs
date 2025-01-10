@@ -8,9 +8,9 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 public class ConsentModel(ConfigurationDbContext configurationDbContext) : PageModel
 {
     [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    public InputModel Input { get; set; } = null!;
 
-    public Client Client { get; set; } = default!;
+    public Client Client { get; set; } = null!;
 
     public string? OperationMessage { get; set; }
 

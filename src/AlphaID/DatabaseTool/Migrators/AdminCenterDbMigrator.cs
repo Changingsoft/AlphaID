@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using AdminWebApp.Infrastructure.DataStores;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +8,8 @@ internal class AdminCenterDbMigrator(OperationalDbContext db) : DatabaseMigrator
 {
     public override async Task AddTestingDataAsync()
     {
-        string[] adminWebAppTestingFiles = Directory.GetFiles("./TestingData/AdminWebAppData", "*.sql");
-        foreach (string file in adminWebAppTestingFiles)
+        string[] files = Directory.GetFiles("./TestingData/AdminWebAppData", "*.sql");
+        foreach (string file in files)
             await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
     }
 }

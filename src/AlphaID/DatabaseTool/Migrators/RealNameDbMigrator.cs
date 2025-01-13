@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using AlphaId.RealName.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +8,8 @@ internal class RealNameDbMigrator(RealNameDbContext db) : DatabaseMigrator(db)
 {
     public override async Task AddTestingDataAsync()
     {
-        string[] idSubjectsDbSqlFiles = Directory.GetFiles("./TestingData/RealNameDbContext", "*.sql");
-        foreach (string file in idSubjectsDbSqlFiles)
+        string[] files = Directory.GetFiles("./TestingData/RealNameDbContext", "*.sql");
+        foreach (string file in files)
             await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
     }
 }

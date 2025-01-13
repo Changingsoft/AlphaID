@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using AlphaId.DirectoryLogon.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +8,8 @@ internal class DirectoryLogonDbMigrator(DirectoryLogonDbContext db) : DatabaseMi
 {
     public override async Task AddTestingDataAsync()
     {
-        string[] directoryLogonDataSqlFiles = Directory.GetFiles("./TestingData/DirectoryLogonData", "*.sql");
-        foreach (string file in directoryLogonDataSqlFiles)
+        string[] files = Directory.GetFiles("./TestingData/DirectoryLogonData", "*.sql");
+        foreach (string file in files)
             await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
     }
 }

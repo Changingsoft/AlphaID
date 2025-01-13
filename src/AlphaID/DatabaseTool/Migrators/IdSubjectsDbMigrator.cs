@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using AlphaId.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +8,8 @@ internal class IdSubjectsDbMigrator(IdSubjectsDbContext db) : DatabaseMigrator(d
 {
     public override async Task AddTestingDataAsync()
     {
-        string[] idSubjectsDbSqlFiles = Directory.GetFiles("./TestingData/IDSubjectsDbContext", "*.sql");
-        foreach (string file in idSubjectsDbSqlFiles)
+        string[] files = Directory.GetFiles("./TestingData/IDSubjectsDbContext", "*.sql");
+        foreach (string file in files)
             await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
     }
 }

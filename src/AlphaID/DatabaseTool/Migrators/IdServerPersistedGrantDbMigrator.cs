@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +8,8 @@ internal class IdServerPersistedGrantDbMigrator(PersistedGrantDbContext db) : Da
 {
     public override async Task AddTestingDataAsync()
     {
-        string[] sqlFiles = Directory.GetFiles("./TestingData/PersistedGrantDbContext", "*.sql");
-        foreach (string file in sqlFiles)
+        string[] files = Directory.GetFiles("./TestingData/PersistedGrantDbContext", "*.sql");
+        foreach (string file in files)
             await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
     }
 }

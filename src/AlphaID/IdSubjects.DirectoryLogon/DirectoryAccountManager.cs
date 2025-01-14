@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Claims;
@@ -18,6 +18,7 @@ namespace IdSubjects.DirectoryLogon;
 /// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
 public class DirectoryAccountManager(
+    NaturalPersonManager naturalPersonManager,
     IDirectoryAccountStore directoryAccountStore,
     IEnumerable<ISubjectGenerator> subjectGenerators,
     ILogger<DirectoryAccountManager>? logger = null)
@@ -27,9 +28,9 @@ public class DirectoryAccountManager(
     /// </summary>
     /// <returns></returns>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public async Task<IdOperationResult> CreateAsync(NaturalPersonManager manager, DirectoryAccount account)
+    public async Task<IdOperationResult> CreateAsync(DirectoryAccount account)
     {
-        NaturalPerson? person = await manager.FindByIdAsync(account.PersonId);
+        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(account.PersonId);
         if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
         using PrincipalContext context = account.DirectoryServiceDescriptor.GetUserContainerContext();
         UserPrincipal newAccount = new(context)
@@ -69,13 +70,13 @@ public class DirectoryAccountManager(
             //Create external login
             if (account.DirectoryServiceDescriptor.ExternalLoginProvider != null)
             {
-                ClaimsPrincipal p = new(new ClaimsIdentity(new Claim[]
-                {
+                ClaimsPrincipal p = new(new ClaimsIdentity(
+                [
                     new(JwtClaimTypes.Subject,
                         $"{account.DirectoryServiceDescriptor.SamDomainPart}\\{newAccount.SamAccountName}"),
                     new(JwtClaimTypes.ClientId,
                         account.DirectoryServiceDescriptor.ExternalLoginProvider.RegisteredClientId)
-                }));
+                ]));
 
                 ISubjectGenerator generator =
                     account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator != null
@@ -85,12 +86,12 @@ public class DirectoryAccountManager(
                         : subjectGenerators.First();
 
                 string providerKey = generator.Generate(p);
-                IdentityResult identityResult = await manager.AddLoginAsync(person,
+                IdentityResult identityResult = await naturalPersonManager.AddLoginAsync(person,
                     new UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey,
                         account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
                 if (!identityResult.Succeeded)
                 {
-                    logger?.LogError("未能创建外部登录，错误消息：{errors}", identityResult.Errors.Select(p => p.Description));
+                    logger?.LogError("未能创建外部登录，错误消息：{errors}", identityResult.Errors.Select(e => e.Description));
                     throw new InvalidOperationException("未能创建外部登录。");
                 }
             }
@@ -141,15 +142,13 @@ public class DirectoryAccountManager(
     /// </summary>
     /// <param name="account"></param>
     /// <param name="entryObjectGuid"></param>
-    /// <param name="manager"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public async Task<IdOperationResult> BindExistsAccount(NaturalPersonManager manager,
-        DirectoryAccount account,
+    public async Task<IdOperationResult> BindExistsAccount(DirectoryAccount account,
         string entryObjectGuid)
     {
-        NaturalPerson? person = await manager.FindByIdAsync(account.PersonId);
+        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(account.PersonId);
         if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
 
         using PrincipalContext context = account.DirectoryServiceDescriptor.GetRootContext();
@@ -171,11 +170,11 @@ public class DirectoryAccountManager(
             string anchorValue = user.Guid?.ToString() ?? user.Name;
             if (user.SamAccountName != null)
                 anchorValue = $"{account.DirectoryServiceDescriptor.SamDomainPart}\\{user.SamAccountName}";
-            ClaimsPrincipal principal = new(new ClaimsIdentity(new Claim[]
-            {
+            ClaimsPrincipal principal = new(new ClaimsIdentity(
+            [
                 new(JwtClaimTypes.Subject, anchorValue),
                 new(JwtClaimTypes.ClientId, account.DirectoryServiceDescriptor.ExternalLoginProvider.RegisteredClientId)
-            }));
+            ]));
 
             ISubjectGenerator generator =
                 account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator != null
@@ -184,7 +183,7 @@ public class DirectoryAccountManager(
                         account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator)
                     : subjectGenerators.First();
             string providerKey = generator.Generate(principal);
-            IdentityResult identityResult = await manager.AddLoginAsync(person,
+            IdentityResult identityResult = await naturalPersonManager.AddLoginAsync(person,
                 new UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey,
                     account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
             if (!identityResult.Succeeded)

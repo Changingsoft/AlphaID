@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
@@ -11,7 +11,7 @@ namespace IdSubjects.DirectoryLogon;
 ///     Logon Account
 /// </summary>
 [Table("LogonAccount")]
-[PrimaryKey(nameof(PersonId), nameof(ServiceId))]
+[PrimaryKey(nameof(ObjectId), nameof(ServiceId))]
 public class DirectoryAccount
 {
     /// <summary>

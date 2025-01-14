@@ -50,7 +50,7 @@ public class BindDirectoryAccountModel(
         if (directoryService == null)
             return Page();
         var logonAccount = new DirectoryAccount(directoryService, person.Id);
-        await directoryAccountManager.BindExistsAccount(personManager, logonAccount, entryGuid.ToString());
+        await directoryAccountManager.BindExistsAccount(logonAccount, entryGuid.ToString());
         return RedirectToPage("DirectoryAccounts", new { anchor });
     }
 }

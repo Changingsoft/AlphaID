@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
+public class ResetPasswordModel(NaturalPersonService naturalPersonService, NaturalPersonManager userManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -36,7 +37,7 @@ public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
             // Don't reveal that the user does not exist
             return RedirectToPage("./ResetPasswordConfirmation");
 
-        IdentityResult result = await userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+        IdentityResult result = await naturalPersonService.ResetPasswordAsync(user, Input.Code, Input.Password);
         if (result.Succeeded) return RedirectToPage("./ResetPasswordConfirmation");
 
         foreach (IdentityError error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
@@ -47,7 +48,7 @@ public class ResetPasswordModel(NaturalPersonManager userManager) : PageModel
     {
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
-        [EmailAddress(ErrorMessage = "{0}µƒ∏Ò Ω¥ÌŒÛ")]
+        [EmailAddress(ErrorMessage = "{0}ÁöÑÊ†ºÂºèÈîôËØØ")]
         public string Email { get; set; } = null!;
 
         [Display(Name = "New password")]

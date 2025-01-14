@@ -16,14 +16,14 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>
                 {
-                    b.Property<string>("PersonId")
+                    b.Property<string>("ObjectId")
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
@@ -31,13 +31,13 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ObjectId")
+                    b.Property<string>("PersonId")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("PersonId", "ServiceId");
+                    b.HasKey("ObjectId", "ServiceId");
 
                     b.HasIndex("ServiceId");
 

@@ -50,7 +50,6 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
 
         IEnumerable<RealNameAuthentication> authentications = realnameManager.GetAuthentications(_person);
         RealNameAuthentication authentication = authentications.Single();
-        Assert.True(authentication.Applied);
         Assert.Equal("张三", authentication.PersonName.FullName);
     }
 

@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class AdvancedModel(NaturalPersonManager naturalPersonManager) : PageModel
+public class AdvancedModel(NaturalPersonService naturalPersonService, NaturalPersonManager naturalPersonManager) : PageModel
 {
     public NaturalPerson Data { get; set; } = null!;
 
@@ -41,7 +42,7 @@ public class AdvancedModel(NaturalPersonManager naturalPersonManager) : PageMode
 
         Data.Enabled = Input.Enabled;
 
-        Result = await naturalPersonManager.UpdateAsync(person);
+        Result = await naturalPersonService.UpdateAsync(person);
         return Page();
     }
 

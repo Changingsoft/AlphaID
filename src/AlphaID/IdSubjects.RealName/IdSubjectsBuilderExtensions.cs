@@ -1,4 +1,4 @@
-﻿using IdSubjects.DependencyInjection;
+using IdSubjects.DependencyInjection;
 using IdSubjects.RealName.Requesting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -21,8 +21,6 @@ public static class IdSubjectsBuilderExtensions
         builder.Services.TryAddScoped<RealNameRequestManager>();
 
         //添加拦截器。
-        builder.AddInterceptor<RealNameUpdateInterceptor>();
-        builder.AddInterceptor<RealNameDeleteInterceptor>();
 
         var realNameBuilder = new RealNameBuilder(builder.Services);
         return realNameBuilder;

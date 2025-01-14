@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
-public class RemovePasswordModel(NaturalPersonManager userManager) : PageModel
+public class RemovePasswordModel(NaturalPersonService naturalPersonService, NaturalPersonManager userManager) : PageModel
 {
     [Display(Name = "Password")]
     [DataType(DataType.Password)]
@@ -31,11 +32,11 @@ public class RemovePasswordModel(NaturalPersonManager userManager) : PageModel
         Logins = await userManager.GetLoginsAsync(person);
         if (!Logins.Any())
         {
-            ModelState.AddModelError("", "Äú²»ÄÜÒÆ³ıÃÜÂë£¬ÒòÎªÃ»ÓĞÈÎºÎÍâ²¿µÇÂ¼¿ÉÓÃ£¬ÒÆ³ıÃÜÂëºó£¬Äú½«ÍêÈ«ÎŞ·¨Ê¹ÓÃ¸ÃÕË»§¡£ÒªÒÆ³ıÃÜÂë£¬ÇëÌí¼ÓÖÁÉÙÒ»¸öÍâ²¿µÇÂ¼¡£");
+            ModelState.AddModelError("", "æ‚¨ä¸èƒ½ç§»é™¤å¯†ç ï¼Œå› ä¸ºæ²¡æœ‰ä»»ä½•å¤–éƒ¨ç™»å½•å¯ç”¨ï¼Œç§»é™¤å¯†ç åï¼Œæ‚¨å°†å®Œå…¨æ— æ³•ä½¿ç”¨è¯¥è´¦æˆ·ã€‚è¦ç§»é™¤å¯†ç ï¼Œè¯·æ·»åŠ è‡³å°‘ä¸€ä¸ªå¤–éƒ¨ç™»å½•ã€‚");
             Result = IdentityResult.Failed(new IdentityError
             {
                 Code = "Cannot remove password",
-                Description = "Äú²»ÄÜÒÆ³ıÃÜÂë£¬ÒòÎªÃ»ÓĞÈÎºÎÍâ²¿µÇÂ¼¿ÉÓÃ£¬ÒÆ³ıÃÜÂëºó£¬Äú½«ÍêÈ«ÎŞ·¨Ê¹ÓÃ¸ÃÕË»§¡£ÒªÒÆ³ıÃÜÂë£¬ÇëÌí¼ÓÖÁÉÙÒ»¸öÍâ²¿µÇÂ¼¡£"
+                Description = "æ‚¨ä¸èƒ½ç§»é™¤å¯†ç ï¼Œå› ä¸ºæ²¡æœ‰ä»»ä½•å¤–éƒ¨ç™»å½•å¯ç”¨ï¼Œç§»é™¤å¯†ç åï¼Œæ‚¨å°†å®Œå…¨æ— æ³•ä½¿ç”¨è¯¥è´¦æˆ·ã€‚è¦ç§»é™¤å¯†ç ï¼Œè¯·æ·»åŠ è‡³å°‘ä¸€ä¸ªå¤–éƒ¨ç™»å½•ã€‚"
             });
             return Page();
         }
@@ -46,11 +47,11 @@ public class RemovePasswordModel(NaturalPersonManager userManager) : PageModel
         //check password
         if (!await userManager.CheckPasswordAsync(person, Password))
         {
-            ModelState.AddModelError(nameof(Password), "ÃÜÂë´íÎó£¡");
+            ModelState.AddModelError(nameof(Password), "å¯†ç é”™è¯¯ï¼");
             return Page();
         }
 
-        Result = await userManager.RemovePasswordAsync(person);
+        Result = await naturalPersonService.RemovePasswordAsync(person);
         Password = string.Empty;
         return Page();
     }

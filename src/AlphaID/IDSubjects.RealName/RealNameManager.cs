@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.RealName;
 
@@ -42,6 +42,7 @@ public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonMa
             return result;
 
         //为 person 应用更改。
+        person.PersonName = authentication.PersonName;
         IdentityResult identityResult = await naturalPersonManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
             return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());

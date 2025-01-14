@@ -1,35 +1,26 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Tests;
 
-public class StubNaturalPersonStore : NaturalPersonStoreBase
+public class StubNaturalPersonStore(IdentityErrorDescriber describer)
+    : UserStoreBase<NaturalPerson, string, IdentityUserClaim<string>, IdentityUserLogin<string>,
+        IdentityUserToken<string>>(describer), INaturalPersonStore
 {
     private readonly HashSet<NaturalPerson> _set = [];
     private readonly HashSet<NaturalPerson> _trackedSet = [];
 
     public override IQueryable<NaturalPerson> Users => _set.AsQueryable();
 
-    public override Task AddClaimsAsync(NaturalPerson user,
-        IEnumerable<Claim> claims,
-        CancellationToken cancellationToken)
-    {
-        throw new NotSupportedException();
-    }
 
-    public override Task AddLoginAsync(NaturalPerson user, UserLoginInfo login, CancellationToken cancellationToken)
-    {
-        throw new NotSupportedException();
-    }
-
-    public override Task<IdentityResult> CreateAsync(NaturalPerson user, CancellationToken cancellationToken)
+    public override Task<IdentityResult> CreateAsync(NaturalPerson user, CancellationToken cancellationToken = default)
     {
         _trackedSet.Add(user);
         _set.Add(Clone(user)!);
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public override Task<IdentityResult> DeleteAsync(NaturalPerson user, CancellationToken cancellationToken)
+    public override Task<IdentityResult> DeleteAsync(NaturalPerson user, CancellationToken cancellationToken = default)
     {
         _trackedSet.Remove(user);
         NaturalPerson origin = _set.Single(p => p.Id == user.Id);
@@ -37,7 +28,7 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public override Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+    public override Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken = default)
     {
         NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail);
         result ??= Clone(_set.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail));
@@ -47,7 +38,7 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
         return Task.FromResult(result);
     }
 
-    public override Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
+    public Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
     {
         NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
         result ??= Clone(_set.FirstOrDefault(p => p.PhoneNumber == phoneNumber));
@@ -57,12 +48,12 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
         return Task.FromResult(result);
     }
 
-    public override Task<NaturalPerson?> GetOriginalAsync(NaturalPerson person, CancellationToken cancellationToken)
+    public Task<NaturalPerson?> GetOriginalAsync(NaturalPerson person, CancellationToken cancellationToken = default)
     {
         return Task.FromResult(_set.FirstOrDefault(p => p.Id == person.Id));
     }
 
-    public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken)
+    public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.Id == userId);
         if (result == null)
@@ -75,14 +66,7 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
         return Task.FromResult(result);
     }
 
-    public override Task<NaturalPerson?> FindByLoginAsync(string loginProvider,
-        string providerKey,
-        CancellationToken cancellationToken)
-    {
-        throw new NotSupportedException();
-    }
-
-    public override Task<NaturalPerson?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+    public override Task<NaturalPerson?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken = default)
     {
         NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName);
         result ??= Clone(_set.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName));
@@ -92,70 +76,90 @@ public class StubNaturalPersonStore : NaturalPersonStoreBase
         return Task.FromResult(result);
     }
 
-    public override Task<IList<Claim>> GetClaimsAsync(NaturalPerson user, CancellationToken cancellationToken)
+    protected override Task<NaturalPerson?> FindUserAsync(string userId, CancellationToken cancellationToken)
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
-    public override Task<IList<UserLoginInfo>> GetLoginsAsync(NaturalPerson user, CancellationToken cancellationToken)
+    protected override Task<IdentityUserLogin<string>?> FindUserLoginAsync(string userId, string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
-    public override Task<string?> GetTokenAsync(NaturalPerson user,
-        string loginProvider,
-        string name,
-        CancellationToken cancellationToken)
+    protected override Task<IdentityUserLogin<string>?> FindUserLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
-    public override Task<IList<NaturalPerson>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken)
+    public override Task<IList<Claim>> GetClaimsAsync(NaturalPerson user, CancellationToken cancellationToken = new CancellationToken())
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
-    public override Task RemoveClaimsAsync(NaturalPerson user,
+    public override Task AddClaimsAsync(NaturalPerson user,
         IEnumerable<Claim> claims,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = new CancellationToken())
     {
-        throw new NotSupportedException();
-    }
-
-    public override Task RemoveLoginAsync(NaturalPerson user,
-        string loginProvider,
-        string providerKey,
-        CancellationToken cancellationToken)
-    {
-        throw new NotSupportedException();
-    }
-
-    public override Task RemoveTokenAsync(NaturalPerson user,
-        string loginProvider,
-        string name,
-        CancellationToken cancellationToken)
-    {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
     public override Task ReplaceClaimAsync(NaturalPerson user,
         Claim claim,
         Claim newClaim,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = new CancellationToken())
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
-    public override Task SetTokenAsync(NaturalPerson user,
+    public override Task RemoveClaimsAsync(NaturalPerson user,
+        IEnumerable<Claim> claims,
+        CancellationToken cancellationToken = new CancellationToken())
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<IList<NaturalPerson>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken = new CancellationToken())
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task<IdentityUserToken<string>?> FindTokenAsync(NaturalPerson user, string loginProvider, string name, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task AddUserTokenAsync(IdentityUserToken<string> token)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task RemoveUserTokenAsync(IdentityUserToken<string> token)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task AddLoginAsync(NaturalPerson user,
+        UserLoginInfo login,
+        CancellationToken cancellationToken = new CancellationToken())
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task RemoveLoginAsync(NaturalPerson user,
         string loginProvider,
-        string name,
-        string? value,
-        CancellationToken cancellationToken)
+        string providerKey,
+        CancellationToken cancellationToken = new CancellationToken())
     {
-        throw new NotSupportedException();
+        throw new NotImplementedException();
     }
 
-    public override Task<IdentityResult> UpdateAsync(NaturalPerson user, CancellationToken cancellationToken)
+    public override Task<IList<UserLoginInfo>> GetLoginsAsync(NaturalPerson user, CancellationToken cancellationToken = new CancellationToken())
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public override Task<IdentityResult> UpdateAsync(NaturalPerson user, CancellationToken cancellationToken = default)
     {
         _trackedSet.Add(user);
 

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class OtherNamesModel(NaturalPersonManager personManager) : PageModel
+public class OtherNamesModel(NaturalPersonManager personManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     [Display(Name = "Nick name", Description = "2 to 10 characters. Leave blank to remove it.")]
@@ -32,7 +33,7 @@ public class OtherNamesModel(NaturalPersonManager personManager) : PageModel
         if (person == null)
             throw new InvalidOperationException("Can not find user.");
         person.NickName = NickName;
-        Result = await personManager.UpdateAsync(person);
+        Result = await naturalPersonService.UpdateAsync(person);
         return Page();
     }
 }

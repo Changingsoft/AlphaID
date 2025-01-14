@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using IdSubjects.Subjects;
@@ -12,6 +13,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class ResetPasswordMobileModel(
+    NaturalPersonService naturalPersonService,
     NaturalPersonManager userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
@@ -55,7 +57,7 @@ public class ResetPasswordMobileModel(
     public async Task<IActionResult> OnPostAsync()
     {
         if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phone))
-            ModelState.AddModelError(nameof(PhoneNumber), "移动电话号码无效");
+            ModelState.AddModelError(nameof(PhoneNumber), "绉诲姩鐢佃瘽鍙风爜鏃犳晥");
 
         if (!ModelState.IsValid)
             return Page();
@@ -68,7 +70,7 @@ public class ResetPasswordMobileModel(
         if (!await verificationCodeService.VerifyAsync(PhoneNumber, VerificationCode))
             return RedirectToPage("ResetPasswordConfirmation");
 
-        IdentityResult result = await userManager.ResetPasswordAsync(person, Code, NewPassword);
+        IdentityResult result = await naturalPersonService.ResetPasswordAsync(person, Code, NewPassword);
         if (result.Succeeded) return RedirectToPage("ResetPasswordConfirmation");
 
         foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);

@@ -19,7 +19,6 @@ using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
 using IdSubjects.ChineseName;
-using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;
@@ -173,6 +172,8 @@ builder.Services
         };
     });
 
+var platform = builder.Services.AddAlphaIdPlatform();
+
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
@@ -188,8 +189,7 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 });
 
 //自然人管理器
-IdSubjectsBuilder idSubjectsBuilder = builder.Services.AddIdSubjects();
-idSubjectsBuilder
+platform.IdSubjects
     .AddDefaultStores()
     .AddDbContext(options =>
     {
@@ -197,17 +197,15 @@ idSubjectsBuilder
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-    idSubjectsBuilder.AddRealName()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
+platform.IdSubjects.AddRealName()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
-    idSubjectsBuilder.AddDirectoryLogin()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
+platform.IdSubjects.AddDirectoryLogin()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();

@@ -1,4 +1,5 @@
 using System.Reflection;
+using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
@@ -6,7 +7,7 @@ using AlphaIdWebAPI;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
-using IdSubjects.DependencyInjection;
+using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -37,14 +38,14 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 
-//∆Ù”√Controller
+//ÂêØÁî®Controller
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 
-//∆Ù”√CORS
+//ÂêØÁî®CORS
 builder.Services.AddCors(options =>
 {
-    //ÃÌº”ƒ¨»œ≤ﬂ¬‘°£
+    //Ê∑ªÂä†ÈªòËÆ§Á≠ñÁï•„ÄÇ
     options.AddDefaultPolicy(policyBuilder =>
     {
         policyBuilder.SetIsOriginAllowed(_ => true)
@@ -72,9 +73,9 @@ builder.Services.AddSwaggerGen(options =>
                 TokenUrl = new Uri(builder.Configuration["SwaggerOauthOptions:TokenEndpoint"]!),
                 Scopes = new Dictionary<string, string>
                 {
-                    { "openid", "ªÒ»°”√ªßId±Í ∂" },
-                    { "profile", "ªÒ»°”√ªßª˘±æ–≈œ¢" },
-                    { "realname", "ªÒ»°◊‘»ª»Àµƒ µ√˚–≈œ¢" }
+                    { "openid", "Ëé∑ÂèñÁî®Êà∑IdÊ†áËØÜ" },
+                    { "profile", "Ëé∑ÂèñÁî®Êà∑Âü∫Êú¨‰ø°ÊÅØ" },
+                    { "realname", "Ëé∑ÂèñËá™ÁÑ∂‰∫∫ÁöÑÂÆûÂêç‰ø°ÊÅØ" }
                 }
             }
         }
@@ -82,14 +83,14 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-//≈‰÷√…Ì∑›—È÷§∑˛ŒÒ°£
+//ÈÖçÁΩÆË∫´‰ªΩÈ™åËØÅÊúçÂä°„ÄÇ
 builder.Services
     .AddAuthentication(options =>
     {
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     })
-    //ÃÌº”JWT—È÷§°£
+    //Ê∑ªÂä†JWTÈ™åËØÅ„ÄÇ
     .AddJwtBearer(options =>
     {
         options.MetadataAddress = builder.Configuration["JwtOptions:MetadataAddress"]!;
@@ -100,7 +101,7 @@ builder.Services
         };
     });
 
-//ÃÌº” ⁄»®≤ﬂ¬‘°£
+//Ê∑ªÂä†ÊéàÊùÉÁ≠ñÁï•„ÄÇ
 builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
@@ -121,15 +122,16 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
-//≥÷æ√ªØ
+var platform = builder.Services.AddAlphaIdPlatform();
+
+//ÊåÅ‰πÖÂåñ
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
 }).AddScoped<ConfigurationStoreOptions>();
 
 
-IdSubjectsBuilder idSubjectsBuilder = builder.Services.AddIdSubjects();
-idSubjectsBuilder
+platform.IdSubjects
     .AddDefaultStores()
     .AddDbContext(options =>
     {
@@ -137,12 +139,16 @@ idSubjectsBuilder
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-    idSubjectsBuilder.AddRealName()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
-
+platform.IdSubjects.AddRealName()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+platform.IdSubjects.AddDirectoryLogin()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
+    });
 
 WebApplication app = builder.Build();
 

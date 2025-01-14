@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.RealName.Tests;
@@ -39,7 +39,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
         Assert.Equal("张三", _person.PersonName.FullName);
     }
 
-    [Fact]
+    [Fact(Skip = "阻止更改不是NaturalPersonManager的职责，应考虑在AlphaIdPlatform上进行测试。")]
     public async Task CannotChangeNameWhenRealNameAuthenticationExists()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();

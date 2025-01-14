@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
+public class SetPasswordModel(NaturalPersonService naturalPersonService, NaturalPersonManager userManager) : PageModel
 {
     [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [DataType(DataType.Password)]
@@ -24,7 +25,7 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
         return person == null
             ? NotFound()
             : await userManager.HasPasswordAsync(person)
-                ? throw new InvalidOperationException("用户已具有密码，无法手动添加密码")
+                ? throw new InvalidOperationException("鐢ㄦ埛宸插叿鏈夊瘑鐮侊紝鏃犳硶鎵嬪姩娣诲姞瀵嗙爜")
                 : (IActionResult)Page();
     }
 
@@ -33,9 +34,9 @@ public class SetPasswordModel(NaturalPersonManager userManager) : PageModel
         NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
-        if (await userManager.HasPasswordAsync(person)) throw new InvalidOperationException("用户已具有密码，无法手动添加密码");
+        if (await userManager.HasPasswordAsync(person)) throw new InvalidOperationException("鐢ㄦ埛宸插叿鏈夊瘑鐮侊紝鏃犳硶鎵嬪姩娣诲姞瀵嗙爜");
 
-        IdentityResult result = await userManager.AddPasswordAsync(person, NewPassword);
+        IdentityResult result = await naturalPersonService.AddPasswordAsync(person, NewPassword);
         if (result.Succeeded) return RedirectToPage("SetPasswordSuccess", new { anchor });
 
         foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);

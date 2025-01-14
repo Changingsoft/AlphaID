@@ -125,29 +125,26 @@ builder.Services.AddRazorPages(options =>
     });
 
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-var idSubjectsBuilder = builder.Services.AddIdSubjects();
-    idSubjectsBuilder
+
+//Add AlphaIdPlatform.
+var platform = builder.Services.AddAlphaIdPlatform();
+
+platform.IdSubjects
     .AddDefaultStores()
     .AddDbContext(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
-if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-{
-    idSubjectsBuilder.AddRealName()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
-}
+platform.RealName
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
-{
-    idSubjectsBuilder.AddDirectoryLogin()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
-}
+platform.DirectoryLogon
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 
 var identityBuilder = builder.Services.AddIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()

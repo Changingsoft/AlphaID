@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
@@ -11,7 +11,7 @@ namespace IdSubjects.DirectoryLogon;
 ///     Logon Account
 /// </summary>
 [Table("LogonAccount")]
-[PrimaryKey(nameof(PersonId), nameof(ServiceId))]
+[PrimaryKey(nameof(ObjectId), nameof(ServiceId))]
 public class DirectoryAccount
 {
     /// <summary>
@@ -56,15 +56,24 @@ public class DirectoryAccount
     [ForeignKey(nameof(ServiceId))]
     public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = null!;
 
+    /// <summary>
+    ///    获取用户主体。
+    /// </summary>
+    /// <returns></returns>
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    internal UserPrincipal? GetUserPrincipal()
+    public UserPrincipal? GetUserPrincipal()
     {
         PrincipalContext context = DirectoryServiceDescriptor.GetRootContext();
         return UserPrincipal.FindByIdentity(context, ObjectId);
     }
 
+    /// <summary>
+    ///    设置密码。
+    /// </summary>
+    /// <param name="password"></param>
+    /// <param name="mustChangePassword"></param>
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    internal void SetPassword(string? password, bool mustChangePassword = false)
+    public void SetPassword(string? password, bool mustChangePassword = false)
     {
         using UserPrincipal? user = GetUserPrincipal();
         ArgumentNullException.ThrowIfNull(user);

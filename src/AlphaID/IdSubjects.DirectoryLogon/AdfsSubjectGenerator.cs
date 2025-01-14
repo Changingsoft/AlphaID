@@ -1,10 +1,13 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using IdentityModel;
 
 namespace IdSubjects.DirectoryLogon;
 
+/// <summary>
+/// 用于生成ADFS中的主体值的生成器。
+/// </summary>
 internal class AdfsSubjectGenerator : ISubjectGenerator
 {
     private const string PpidPrivacyEntropy =

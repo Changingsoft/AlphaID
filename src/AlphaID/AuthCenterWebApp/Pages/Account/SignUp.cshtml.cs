@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
 using Duende.IdentityServer;
@@ -20,6 +21,7 @@ namespace AuthCenterWebApp.Pages.Account;
 //[SecurityHeaders]
 [AllowAnonymous]
 public class SignUpModel(
+    NaturalPersonService naturalPersonService,
     NaturalPersonManager naturalPersonManager,
     IVerificationCodeService verificationCodeService,
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
@@ -69,7 +71,7 @@ public class SignUpModel(
                 externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ??
                 externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out DateOnly dateOfBirth))
             Input.DateOfBirth = dateOfBirth;
-        ExternalLoginMessage = $"ÄúÕıÔÚ´ÓÍâ²¿µÇÂ¼²¢´´½¨{_production.Name}£¬Çë²¹È«Ïà¹ØÄÚÈİÒÔ´´½¨{_production.Name}¡£";
+        ExternalLoginMessage = $"æ‚¨æ­£åœ¨ä»å¤–éƒ¨ç™»å½•å¹¶åˆ›å»º{_production.Name}ï¼Œè¯·è¡¥å…¨ç›¸å…³å†…å®¹ä»¥åˆ›å»º{_production.Name}ã€‚";
         return Page();
     }
 
@@ -77,7 +79,7 @@ public class SignUpModel(
     {
         if (!Input.Agree)
         {
-            ModelState.AddModelError("Input.Agree", $"Äú±ØĞëÁË½â²¢Í¬Òâ·şÎñĞ­Òé£¬²ÅÄÜ¼ÌĞø´´½¨{_production.Name}¡£");
+            ModelState.AddModelError("Input.Agree", $"æ‚¨å¿…é¡»äº†è§£å¹¶åŒæ„æœåŠ¡åè®®ï¼Œæ‰èƒ½ç»§ç»­åˆ›å»º{_production.Name}ã€‚");
             return Page();
         }
 
@@ -87,11 +89,11 @@ public class SignUpModel(
             return Page();
 
         if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
-            ModelState.AddModelError("Input.VerificationCode", "ÑéÖ¤ÂëÎŞĞ§");
+            ModelState.AddModelError("Input.VerificationCode", "éªŒè¯ç æ— æ•ˆ");
         if (!ModelState.IsValid)
             return Page();
 
-        //Èç¹ûÀ´×ÔÍâ²ºµÇÂ¼£¿
+        //å¦‚æœæ¥è‡ªå¤–åŸ ç™»å½•ï¼Ÿ
         AuthenticateResult externalLoginResult =
             await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
@@ -112,7 +114,7 @@ public class SignUpModel(
         person.DateOfBirth = Input.DateOfBirth;
         person.Gender = Input.Sex;
 
-        IdentityResult result = await naturalPersonManager.CreateAsync(person, Input.NewPassword);
+        IdentityResult result = await naturalPersonService.CreateAsync(person, Input.NewPassword);
         if (result.Succeeded)
         {
             if (externalLoginResult.Succeeded)
@@ -137,7 +139,7 @@ public class SignUpModel(
 
     public async Task<IActionResult> OnPostSendVerificationCodeAsync(string mobile)
     {
-        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("ÒÆ¶¯µç»°ºÅÂëÎŞĞ§¡£");
+        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("ç§»åŠ¨ç”µè¯å·ç æ— æ•ˆã€‚");
         await verificationCodeService.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }

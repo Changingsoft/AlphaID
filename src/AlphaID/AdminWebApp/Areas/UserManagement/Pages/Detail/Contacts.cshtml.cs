@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class ContactsModel(NaturalPersonManager manager) : PageModel
+public class ContactsModel(NaturalPersonManager manager, NaturalPersonService naturalPersonService) : PageModel
 {
     public NaturalPerson Data { get; set; } = null!;
 
@@ -38,21 +39,21 @@ public class ContactsModel(NaturalPersonManager manager) : PageModel
 
         Data = data;
 
-        //ÑéÖ¤ÒÆ¶¯µç»°ºÅÂë»òµç×ÓÓÊ¼şµØÖ·ÊÇ·ñÒÑ±»×¢²á£¿
+        //éªŒè¯ç§»åŠ¨ç”µè¯å·ç æˆ–ç”µå­é‚®ä»¶åœ°å€æ˜¯å¦å·²è¢«æ³¨å†Œï¼Ÿ
         if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out MobilePhoneNumber phoneNumber))
         {
-            ModelState.AddModelError("", "ÒÆ¶¯µç»°ºÅÂë¸ñÊ½²»ÕıÈ·¡£");
+            ModelState.AddModelError("", "ç§»åŠ¨ç”µè¯å·ç æ ¼å¼ä¸æ­£ç¡®ã€‚");
             return Page();
         }
 
         if (manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == phoneNumber.ToString()))
-            ModelState.AddModelError("", "ÒÆ¶¯µç»°ºÅÂëÒÑ±»×¢²á¡£");
+            ModelState.AddModelError("", "ç§»åŠ¨ç”µè¯å·ç å·²è¢«æ³¨å†Œã€‚");
         if (manager.Users.Any(p => p.Id != anchor && p.Email == Input.Email))
-            ModelState.AddModelError("", "µç×ÓÓÊ¼şµØÖ·ÒÑ±»×¢²á¡£");
+            ModelState.AddModelError("", "ç”µå­é‚®ä»¶åœ°å€å·²è¢«æ³¨å†Œã€‚");
 
         if (!ModelState.IsValid) return Page();
 
-        Result = await manager.UpdateAsync(Data);
+        Result = await naturalPersonService.UpdateAsync(Data);
         return Page();
     }
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ChangePasswordModel(
+    NaturalPersonService naturalPersonService,
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager,
     ILogger<ChangePasswordModel> logger) : PageModel
@@ -40,7 +42,7 @@ public class ChangePasswordModel(
         ExternalLogins = await userManager.GetLoginsAsync(user);
 
         IdentityResult changePasswordResult =
-            await userManager.ChangePasswordAsync(user, Input.CurrentPassword, Input.NewPassword);
+            await naturalPersonService.ChangePasswordAsync(user, Input.CurrentPassword, Input.NewPassword);
         if (!changePasswordResult.Succeeded)
         {
             Result = changePasswordResult;

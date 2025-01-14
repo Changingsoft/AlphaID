@@ -1,4 +1,4 @@
-﻿using AdminWebApp.Infrastructure.DataStores;
+using AdminWebApp.Infrastructure.DataStores;
 using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.EntityFramework.SecurityAuditing;
@@ -10,6 +10,7 @@ using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 IHostBuilder builder = Host.CreateDefaultBuilder(args);
 builder
@@ -21,7 +22,9 @@ builder
     })
     .ConfigureServices((hostContext, services) =>
     {
-        IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects()
+        var platform = services.AddAlphaIdPlatform();
+
+        platform.IdSubjects
             .AddDefaultStores()
             .AddDbContext(options =>
             {
@@ -32,7 +35,7 @@ builder
                 });
             });
 
-        idSubjectsBuilder.AddRealName()
+        platform.IdSubjects.AddRealName()
             .AddDefaultStores()
             .AddDbContext(options =>
             {
@@ -40,7 +43,7 @@ builder
                     sql => { sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name); });
             });
 
-        idSubjectsBuilder.AddDirectoryLogin()
+        platform.IdSubjects.AddDirectoryLogin()
             .AddDefaultStores()
             .AddDbContext(options =>
             {
@@ -100,5 +103,19 @@ builder
 IHost host = builder.Build();
 
 await using AsyncServiceScope scope = host.Services.CreateAsyncScope();
+Console.WriteLine(@"即将开始执行数据库工具。您将使用下列选项来处理数据：");
+Console.WriteLine($@"- 删除数据库: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.DropDatabase}");
+Console.WriteLine($@"- 添加测试数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.AddTestingData}");
+Console.WriteLine(@"此操作不可逆，请务必核实设置是否正确，并在操作前备份数据库。是否继续（y/N）");
+if (Console.ReadKey().Key != ConsoleKey.Y)
+{
+    Console.WriteLine(@"用户取消了操作。按任意键退出...");
+    Console.ReadKey();
+    return;
+}
+
 var executor = scope.ServiceProvider.GetRequiredService<DatabaseExecutor>();
 await executor.ExecuteAsync();
+
+Console.WriteLine(@"数据库工具已执行完成。按任意键退出...");
+Console.ReadKey();

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.DirectoryLogonDb
 {
     [DbContext(typeof(DirectoryLogonDbContext))]
-    [Migration("20231208090404_Init")]
+    [Migration("20250114090426_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -19,17 +19,14 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>
                 {
-                    b.Property<string>("PersonId")
+                    b.Property<string>("ObjectId")
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
@@ -37,13 +34,13 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ObjectId")
+                    b.Property<string>("PersonId")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("PersonId", "ServiceId");
+                    b.HasKey("ObjectId", "ServiceId");
 
                     b.HasIndex("ServiceId");
 
@@ -145,9 +142,9 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("SubjectGenerator")
-                                .HasMaxLength(50)
+                                .HasMaxLength(255)
                                 .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
+                                .HasColumnType("varchar(255)");
 
                             b1.HasKey("DirectoryServiceDescriptorId");
 

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.Helpers
 @model IndexModel
@@ -8,7 +8,7 @@
 }
 
 @section head {
-    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css"/>
+    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
     <style>
         .label {
             cursor: pointer;
@@ -35,7 +35,7 @@
     <a href="@User.ProfileUrl()" class="btn btn-sm">@L["Go to your profile"]</a>
 </div>
 
-<hr/>
+<hr />
 <div class="row g-3">
     <div class="col-md">
         <div class="form-label">@SL["Surname"]</div>
@@ -51,10 +51,7 @@
     </div>
     <div class="col-md">
         <a asp-page="PersonName" class="btn">@L["Edit person name"]</a>
-        @if (Product.Value.Feature.RealName)
-        {
-            <a asp-page="/RealName/Index" class="btn">@L["Real-name authentication"]</a>
-        }
+        <a asp-page="/RealName/Index" class="btn">@L["Real-name authentication"]</a>
     </div>
 </div>
 <div class="row g-3">
@@ -67,25 +64,23 @@
         <input type="text" class="form-control" disabled="disabled" value="@Model.Person.PhoneticGivenName">
     </div>
     <div class="col-md">
-
     </div>
     <div class="col-md">
-
     </div>
 </div>
-<hr/>
+<hr />
 <div class="row">
     <div class="col-9">
         <form method="post">
             <div class="mb-3">
                 <label asp-for="Input.Bio" class="form-label"></label>
-                <input asp-for="Input.Bio" class="form-control"/>
+                <input asp-for="Input.Bio" class="form-control" />
                 <span asp-description-for="Input.Bio"></span>
                 <span asp-validation-for="Input.Bio" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.DateOfBirth" class="form-label"></label>
-                <input asp-for="Input.DateOfBirth" class="form-control"/>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
                 <span asp-description-for="Input.DateOfBirth"></span>
                 <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
@@ -96,7 +91,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Input.Website" class="form-label"></label>
-                <input asp-for="Input.Website" class="form-control"/>
+                <input asp-for="Input.Website" class="form-control" />
                 <span asp-description-for="Input.Website"></span>
                 <span asp-validation-for="Input.Website" class="text-danger"></span>
             </div>
@@ -142,7 +137,7 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {

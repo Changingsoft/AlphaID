@@ -15,6 +15,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class ChangePasswordModel(
+    NaturalPersonService naturalPersonService,
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager,
     IIdentityServerInteractionService interaction) : PageModel
@@ -59,7 +60,7 @@ public class ChangePasswordModel(
                                throw new InvalidOperationException(
                                    "Unable to load must change password authentication user.");
         IdentityResult identityResult =
-            await userManager.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
+            await naturalPersonService.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
         if (identityResult.Succeeded)
         {
             //Sign out MustChangePasswordScheme
@@ -90,7 +91,7 @@ public class ChangePasswordModel(
             throw new Exception("invalid return URL");
         }
 
-        ModelState.AddModelError("", "¸ü¸ÄÃÜÂë²Ù×÷ÎŞĞ§£¡");
+        ModelState.AddModelError("", "æ›´æ”¹å¯†ç æ“ä½œæ— æ•ˆï¼");
         foreach (IdentityError error in identityResult.Errors) ModelState.AddModelError("", error.Description);
         return Page();
     }

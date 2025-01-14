@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class DeleteModel(NaturalPersonManager userManager) : PageModel
+public class DeleteModel(NaturalPersonManager userManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
@@ -33,14 +34,14 @@ public class DeleteModel(NaturalPersonManager userManager) : PageModel
 
 
         if (Input.DisplayName != Person.PersonName.FullName)
-            ModelState.AddModelError(nameof(Input.DisplayName), "√˚≥∆≤ª“ª÷¬");
+            ModelState.AddModelError(nameof(Input.DisplayName), "ÂêçÁß∞‰∏ç‰∏ÄËá¥");
 
         if (!ModelState.IsValid)
             return Page();
 
         try
         {
-            IdentityResult result = await userManager.DeleteAsync(Person);
+            IdentityResult result = await naturalPersonService.DeleteAsync(Person);
             if (result.Succeeded)
             {
                 return RedirectToPage("DeleteSuccess");

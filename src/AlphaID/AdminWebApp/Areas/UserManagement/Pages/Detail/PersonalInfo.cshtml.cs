@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PersonalInfoModel(NaturalPersonManager personManager) : PageModel
+public class PersonalInfoModel(NaturalPersonManager personManager, NaturalPersonService naturalPersonService) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
 
@@ -41,7 +42,7 @@ public class PersonalInfoModel(NaturalPersonManager personManager) : PageModel
         Person.DateOfBirth = Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(Input.DateOfBirth.Value) : null;
         Person.Gender = Input.Gender;
 
-        Result = await personManager.UpdateAsync(Person);
+        Result = await naturalPersonService.UpdateAsync(Person);
         return Page();
     }
 

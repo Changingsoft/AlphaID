@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
@@ -6,7 +6,7 @@ using System.DirectoryServices.AccountManagement;
 
 namespace IdSubjects.DirectoryLogon;
 
-internal static class NaturalPersonExtensions
+public static class NaturalPersonExtensions
 {
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public static void Apply(this NaturalPerson person, UserPrincipal userPrincipal)

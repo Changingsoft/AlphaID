@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager) : PageModel
+public class PersonNameModel(NaturalPersonManager personManager, RealNameManager realNameManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputMode Input { get; set; } = null!;
@@ -48,7 +49,7 @@ public class PersonNameModel(NaturalPersonManager personManager, RealNameManager
         person.PhoneticSurname = Input.PhoneticSurname;
         person.PhoneticGivenName = Input.PhoneticGivenName;
 
-        Result = await personManager.UpdateAsync(person);
+        Result = await naturalPersonService.UpdateAsync(person);
         return Page();
     }
 

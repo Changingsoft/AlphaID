@@ -173,6 +173,8 @@ builder.Services
         };
     });
 
+var platform = builder.Services.AddAlphaIdPlatform();
+
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
@@ -188,8 +190,7 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 });
 
 //自然人管理器
-IdSubjectsBuilder idSubjectsBuilder = builder.Services.AddIdSubjects();
-idSubjectsBuilder
+platform.IdSubjects
     .AddDefaultStores()
     .AddDbContext(options =>
     {

@@ -57,14 +57,14 @@ public class DirectoryAccount
     public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = null!;
 
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    internal UserPrincipal? GetUserPrincipal()
+    public UserPrincipal? GetUserPrincipal()
     {
         PrincipalContext context = DirectoryServiceDescriptor.GetRootContext();
         return UserPrincipal.FindByIdentity(context, ObjectId);
     }
 
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    internal void SetPassword(string? password, bool mustChangePassword = false)
+    public void SetPassword(string? password, bool mustChangePassword = false)
     {
         using UserPrincipal? user = GetUserPrincipal();
         ArgumentNullException.ThrowIfNull(user);

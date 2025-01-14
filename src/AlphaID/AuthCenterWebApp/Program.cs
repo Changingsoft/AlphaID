@@ -124,9 +124,12 @@ builder.Services.AddRazorPages(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 
+//Add AlphaIdPlatform.
+var platform = builder.Services.AddAlphaIdPlatform();
+
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-var idSubjectsBuilder = builder.Services.AddIdSubjects();
-    idSubjectsBuilder
+
+platform.IdSubjects
     .AddDefaultStores()
     .AddDbContext(options =>
     {

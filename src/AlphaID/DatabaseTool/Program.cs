@@ -22,7 +22,9 @@ builder
     })
     .ConfigureServices((hostContext, services) =>
     {
-        IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects()
+        var platform = services.AddAlphaIdPlatform();
+
+        platform.IdSubjects
             .AddDefaultStores()
             .AddDbContext(options =>
             {

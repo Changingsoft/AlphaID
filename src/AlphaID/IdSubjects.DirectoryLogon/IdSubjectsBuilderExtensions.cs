@@ -1,4 +1,4 @@
-﻿using IdSubjects.DependencyInjection;
+using IdSubjects.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -18,10 +18,6 @@ public static class IdSubjectsBuilderExtensions
         builder.Services.TryAddScoped<DirectoryServiceManager>();
         builder.Services.TryAddScoped<DirectoryAccountManager>();
 
-        //注册所需拦截器。
-        builder.AddInterceptor<DirectoryAccountUpdateInterceptor>();
-        builder.AddInterceptor<DirectoryAccountCreateInterceptor>();
-        builder.AddInterceptor<UserPasswordInterceptor>();
 
         builder.Services.AddScoped<ISubjectGenerator, AdfsSubjectGenerator>();
 

@@ -21,10 +21,10 @@ public class CreateDirectoryAccountModel(
         if (person == null)
             return NotFound();
 
-        //×¼±¸ĞÕÃûÈ«Æ´+Éí·İÖ¤ºó4Î»
+        //å‡†å¤‡å§“åå…¨æ‹¼+èº«ä»½è¯å4ä½
         string accountName = $"{person.PhoneticSurname}{person.PhoneticGivenName}".ToLower();
 
-        //×¼±¸ÓĞ¹Ø×ÊÁÏ
+        //å‡†å¤‡æœ‰å…³èµ„æ–™
         Input = new InputModel
         {
             SamAccountName = accountName,
@@ -50,7 +50,7 @@ public class CreateDirectoryAccountModel(
 
         DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(Input.ServiceId);
         if (directoryService == null)
-            ModelState.AddModelError("", "ÇëÑ¡ÔñÒ»¸öÄ¿Â¼·şÎñ");
+            ModelState.AddModelError("", "è¯·é€‰æ‹©ä¸€ä¸ªç›®å½•æœåŠ¡");
 
         if (!ModelState.IsValid)
             return Page();
@@ -58,7 +58,7 @@ public class CreateDirectoryAccountModel(
         try
         {
             var logonAccount = new DirectoryAccount(directoryService!, person.Id);
-            await directoryAccountManager.CreateAsync(naturalPersonManager, logonAccount);
+            await directoryAccountManager.CreateAsync(logonAccount);
             return RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception ex)

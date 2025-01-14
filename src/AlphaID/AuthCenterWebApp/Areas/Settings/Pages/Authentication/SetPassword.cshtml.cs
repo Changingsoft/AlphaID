@@ -1,6 +1,7 @@
-﻿#nullable disable
+#nullable disable
 
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class SetPasswordModel(
+    NaturalPersonService naturalPersonService,
     NaturalPersonManager userManager,
     SignInManager<NaturalPerson> signInManager) : PageModel
 {
@@ -35,7 +37,7 @@ public class SetPasswordModel(
         NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
-        IdentityResult addPasswordResult = await userManager.AddPasswordAsync(user, Input.NewPassword);
+        IdentityResult addPasswordResult = await naturalPersonService.AddPasswordAsync(user, Input.NewPassword);
         if (!addPasswordResult.Succeeded)
         {
             foreach (IdentityError error in addPasswordResult.Errors)

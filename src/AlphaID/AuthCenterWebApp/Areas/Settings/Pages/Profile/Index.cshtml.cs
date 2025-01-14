@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using AlphaIdPlatform.Identity;
 using AuthCenterWebApp.Services;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager) : PageModel
+public class IndexModel(NaturalPersonManager personManager, PersonSignInManager signInManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -20,7 +21,7 @@ public class IndexModel(NaturalPersonManager personManager, PersonSignInManager 
     public async Task<IActionResult> OnGetAsync()
     {
         NaturalPerson? person = await personManager.GetUserAsync(User);
-        Person = person ?? throw new InvalidOperationException("ÎŞ·¨´ÓµÇÂ¼ÕÒµ½ÓÃ»§ĞÅÏ¢£¬ÇëÁªÏµÏµÍ³¹ÜÀíÔ±¡£");
+        Person = person ?? throw new InvalidOperationException("æ— æ³•ä»ç™»å½•æ‰¾åˆ°ç”¨æˆ·ä¿¡æ¯ï¼Œè¯·è”ç³»ç³»ç»Ÿç®¡ç†å‘˜ã€‚");
         Input = new InputModel
         {
             Bio = person.Bio,
@@ -45,7 +46,7 @@ public class IndexModel(NaturalPersonManager personManager, PersonSignInManager 
         person.Gender = Input.Gender;
         person.DateOfBirth = Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(Input.DateOfBirth.Value) : null;
 
-        Result = await personManager.UpdateAsync(person);
+        Result = await naturalPersonService.UpdateAsync(person);
         return Page();
     }
 

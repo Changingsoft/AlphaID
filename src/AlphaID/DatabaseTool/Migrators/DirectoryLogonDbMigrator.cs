@@ -1,5 +1,5 @@
 using System.Text;
-using AlphaId.DirectoryLogon.EntityFramework;
+using AlphaId.EntityFramework.DirectoryAccountManagement;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTool.Migrators;

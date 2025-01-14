@@ -1,14 +1,11 @@
-using AdminWebApp.Infrastructure.DataStores;
-using AlphaId.DirectoryLogon.EntityFramework;
-using AlphaId.EntityFramework;
+using AlphaId.EntityFramework.DirectoryAccountManagement;
+using AlphaId.EntityFramework.IdSubjects;
+using AlphaId.EntityFramework.RealName;
 using AlphaId.EntityFramework.SecurityAuditing;
-using AlphaId.RealName.EntityFramework;
 using DatabaseTool;
 using DatabaseTool.Migrators;
-using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
-using IdSubjects.SecurityAuditing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -23,34 +20,15 @@ builder
     .ConfigureServices((hostContext, services) =>
     {
         var platform = services.AddAlphaIdPlatform();
-
-        platform.IdSubjects
-            .AddDefaultStores()
-            .AddDbContext(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"), sql =>
+        platform.AddEntityFramework(options =>
+        {
+            options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+                sql =>
                 {
-                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
                     sql.UseNetTopologySuite();
+                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
                 });
-            });
-
-        platform.IdSubjects.AddRealName()
-            .AddDefaultStores()
-            .AddDbContext(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"),
-                    sql => { sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name); });
-            });
-
-        platform.IdSubjects.AddDirectoryLogin()
-            .AddDefaultStores()
-            .AddDbContext(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("DirectoryLogonDataConnection"),
-                    sql => { sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name); });
-            });
-
+        });
 
         //用于IdentityServer的ConfigurationDbContext和PersistenceGrantDbContext
         services.AddIdentityServer()
@@ -68,20 +46,7 @@ builder
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
             });
 
-        //用于AdminWebApp的OperationalDbContext
-        services.AddDbContext<OperationalDbContext>(options =>
-        {
-            options.UseSqlServer(hostContext.Configuration.GetConnectionString("AdminWebAppDataConnection"),
-                sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
-        });
 
-        services.AddAuditLog()
-            .AddDefaultStore()
-            .AddDbContext(options =>
-            {
-                options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"),
-                    sql => { sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name); });
-            });
 
         //数据库执行器
         services.AddScoped<DatabaseExecutor>().Configure<DatabaseExecutorOptions>(options =>

@@ -1,10 +1,9 @@
 using System.Data;
 using System.Globalization;
-using AlphaId.DirectoryLogon.EntityFramework;
-using AlphaId.EntityFramework;
+using AlphaId.EntityFramework.DirectoryAccountManagement;
+using AlphaId.EntityFramework.IdSubjects;
+using AlphaId.EntityFramework.RealName;
 using AlphaId.PlatformServices.Aliyun;
-using AlphaId.RealName.EntityFramework;
-using AlphaID.EntityFramework;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Identity;
@@ -20,8 +19,6 @@ using IdentityModel;
 using IdSubjects;
 using IdSubjects.ChineseName;
 using IdSubjects.DependencyInjection;
-using IdSubjects.DirectoryLogon;
-using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -64,7 +61,7 @@ builder.Host.UseSerilog((ctx, configuration) =>
                     return false;
                 })
                 .WriteTo.MSSqlServer(
-                    builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
                     sinkOptions: new MSSqlServerSinkOptions() { TableName = "AuditLog" },
                     columnOptions: new ColumnOptions()
                     {
@@ -128,23 +125,13 @@ builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("
 
 //Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
-
-platform.IdSubjects
-    .AddDefaultStores()
-    .AddDbContext(options =>
+platform.AddEntityFramework(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sql =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
-            sqlOptions => { sqlOptions.UseNetTopologySuite(); });
+        sql.UseNetTopologySuite();
     });
-platform.RealName
-    .AddDefaultStores()
-    .AddDbContext(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
-
-platform.DirectoryLogon
-    .AddDefaultStores()
-    .AddDbContext(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
+});
 
 var identityBuilder = builder.Services.AddIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
@@ -217,7 +204,7 @@ builder.Services.AddIdentityServer(options =>
     {
         options.ConfigureDbContext = b =>
         {
-            b.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
+            b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         };
     })
     .AddOperationalStore(options =>
@@ -225,7 +212,7 @@ builder.Services.AddIdentityServer(options =>
         options.EnableTokenCleanup = true;
         options.ConfigureDbContext = b =>
         {
-            b.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
+            b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         };
     })
     .AddAspNetIdentity<NaturalPerson>()

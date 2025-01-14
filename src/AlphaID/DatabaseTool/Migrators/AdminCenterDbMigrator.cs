@@ -1,5 +1,5 @@
 using System.Text;
-using AdminWebApp.Infrastructure.DataStores;
+using AlphaId.EntityFramework.Admin;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTool.Migrators;

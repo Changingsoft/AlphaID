@@ -4,14 +4,15 @@ using System.Security.Claims;
 using AdminWebApp;
 using AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 using AdminWebApp.Domain.Security;
-using AdminWebApp.Infrastructure.DataStores;
 using AdminWebApp.Services;
-using AlphaId.DirectoryLogon.EntityFramework;
-using AlphaId.EntityFramework;
+using AlphaId.EntityFramework.Admin;
+using AlphaId.EntityFramework.DirectoryAccountManagement;
+using AlphaId.EntityFramework.IdSubjects;
+using AlphaId.EntityFramework.RealName;
 using AlphaId.EntityFramework.SecurityAuditing;
 using AlphaId.PlatformServices.Aliyun;
-using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Admin;
 using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
@@ -21,7 +22,6 @@ using IdentityModel;
 using IdSubjects.ChineseName;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
-using IdSubjects.SecurityAuditing;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -61,7 +61,7 @@ builder.Host.UseSerilog((context, configuration) =>
                     return false;
                 })
                 .WriteTo.MSSqlServer(
-                    builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
                     new MSSqlServerSinkOptions { TableName = "AuditLog" },
                     columnOptions: new ColumnOptions
                     {
@@ -173,14 +173,22 @@ builder.Services
     });
 
 var platform = builder.Services.AddAlphaIdPlatform();
+platform.AddEntityFramework(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sql =>
+    {
+        sql.UseNetTopologySuite();
+    });
+});
 
+//DbContext for Duende IdentityServer.
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }).AddScoped<ConfigurationStoreOptions>();
 builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }).AddScoped<OperationalStoreOptions>();
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
@@ -188,24 +196,6 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(OperationalDbContext)));
 });
 
-//自然人管理器
-platform.IdSubjects
-    .AddDefaultStores()
-    .AddDbContext(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
-            sqlOptions => { sqlOptions.UseNetTopologySuite(); });
-    });
-
-platform.IdSubjects.AddRealName()
-    .AddDefaultStores()
-    .AddDbContext(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
-
-platform.IdSubjects.AddDirectoryLogin()
-    .AddDefaultStores()
-    .AddDbContext(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();

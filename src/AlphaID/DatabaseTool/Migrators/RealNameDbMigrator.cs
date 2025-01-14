@@ -1,5 +1,5 @@
 using System.Text;
-using AlphaId.RealName.EntityFramework;
+using AlphaId.EntityFramework.RealName;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTool.Migrators;

@@ -13,6 +13,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.11" />
 		<PackageReference Include="MinVer" Version="5.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -52,10 +54,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\AdminWebApp\AdminWebApp.csproj" />
-	  <ProjectReference Include="..\AlphaId.DirectoryLogon.EntityFramework\AlphaId.DirectoryLogon.EntityFramework.csproj" />
 	  <ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
-	  <ProjectReference Include="..\AlphaId.RealName.EntityFramework\AlphaId.RealName.EntityFramework.csproj" />
+	  <ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

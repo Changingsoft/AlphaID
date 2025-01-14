@@ -1,7 +1,7 @@
 using System.Reflection;
-using AlphaId.DirectoryLogon.EntityFramework;
-using AlphaId.EntityFramework;
-using AlphaId.RealName.EntityFramework;
+using AlphaId.EntityFramework.DirectoryAccountManagement;
+using AlphaId.EntityFramework.IdSubjects;
+using AlphaId.EntityFramework.RealName;
 using AlphaIdPlatform;
 using AlphaIdWebAPI;
 using Duende.IdentityServer.EntityFramework.DbContexts;
@@ -123,32 +123,18 @@ builder.Services.AddAuthorization(options =>
 });
 
 var platform = builder.Services.AddAlphaIdPlatform();
+platform.AddEntityFramework(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions => { sqlOptions.UseNetTopologySuite(); });
+});
 
-//持久化
+//DbContext for Duende IdentityServer.
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
 }).AddScoped<ConfigurationStoreOptions>();
 
-
-platform.IdSubjects
-    .AddDefaultStores()
-    .AddDbContext(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection"),
-            sqlOptions => { sqlOptions.UseNetTopologySuite(); });
-    });
-
-platform.IdSubjects.AddRealName()
-    .AddDefaultStores()
-    .AddDbContext(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
-platform.IdSubjects.AddDirectoryLogin()
-    .AddDefaultStores()
-    .AddDbContext(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
-    });
 
 WebApplication app = builder.Build();
 

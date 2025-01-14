@@ -23,9 +23,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaId.RealName.EntityFramework\AlphaId.RealName.EntityFramework.csproj" />
 		<ProjectReference Include="..\AlphaId.PlatformServices\AlphaId.PlatformServices.csproj" />
-		<ProjectReference Include="..\AlphaId.DirectoryLogon.EntityFramework\AlphaId.DirectoryLogon.EntityFramework.csproj" />
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
@@ -85,6 +83,10 @@
 	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultTitleNavBarPartial.zh-cn.resx">
 	    <DependentUpon>_DefaultTitleNavBarPartial.resx</DependentUpon>
 	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Infrastructure\DataStores\" />
 	</ItemGroup>
 
 	<ProjectExtensions>

@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using AdminWebApp.Domain.Security;
+using AlphaIdPlatform.Admin;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 

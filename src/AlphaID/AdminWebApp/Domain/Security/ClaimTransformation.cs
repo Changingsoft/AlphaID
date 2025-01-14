@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using AlphaIdPlatform.Admin;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
+using IdSubjects.SecurityAuditing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AlphaIdPlatform.DependencyInjection;
 public class AlphaIdPlatformBuilder(IServiceCollection services, 
     IdSubjectsBuilder idSubjects, 
     DirectoryLogonBuilder directoryLogon,
-    RealNameBuilder realNameBuilder)
+    RealNameBuilder realNameBuilder,
+    AuditLogBuilder auditLogBuilder)
 {
     public IServiceCollection Services { get; } = services;
 
@@ -21,4 +23,6 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     public DirectoryLogonBuilder DirectoryLogon { get; } = directoryLogon;
 
     public RealNameBuilder RealName { get; } = realNameBuilder;
+
+    public AuditLogBuilder AuditLog { get; } = auditLogBuilder;
 }

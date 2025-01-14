@@ -124,10 +124,10 @@ builder.Services.AddRazorPages(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 
+builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
+
 //Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
-
-builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
 
 platform.IdSubjects
     .AddDefaultStores()
@@ -136,21 +136,15 @@ platform.IdSubjects
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)),
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
-if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-{
-    platform.IdSubjects.AddRealName()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
-}
+platform.RealName
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
-{
-    platform.IdSubjects.AddDirectoryLogin()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
-}
+platform.DirectoryLogon
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 
 var identityBuilder = builder.Services.AddIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()

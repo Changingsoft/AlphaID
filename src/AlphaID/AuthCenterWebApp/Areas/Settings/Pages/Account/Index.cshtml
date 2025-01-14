@@ -1,4 +1,4 @@
-﻿@page
+@page
 @inject IOptions<ProductInfo> Product
 @model IndexModel
 @{
@@ -15,17 +15,15 @@
 <h3>@L["Personal data"]</h3>
 <a asp-page="PersonalData" class="btn">@L["Manage personal data"]</a>
 
-@if (Product.Value.Feature.DirectoryAccountManagement)
-{
-    <h3>@L["Managed directory accounts"]</h3>
-    <table class="table">
-        <thead>
+<h3>@L["Managed directory accounts"]</h3>
+<table class="table">
+    <thead>
         <tr>
             <th>@L["Directory service"]</th>
             <th>@L["Object Id"]</th>
         </tr>
-        </thead>
-        <tbody>
+    </thead>
+    <tbody>
         @if (Model.DirectoryAccounts.Count() != 0)
         {
             foreach (var account in Model.DirectoryAccounts)
@@ -42,6 +40,5 @@
                 <td colspan="2">@L["Directory account not found."]</td>
             </tr>
         }
-        </tbody>
-    </table>
-}
+    </tbody>
+</table>

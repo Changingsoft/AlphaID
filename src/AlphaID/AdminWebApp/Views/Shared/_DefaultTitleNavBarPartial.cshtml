@@ -1,4 +1,4 @@
-﻿<header class="navbar navbar-expand-md d-print-none">
+<header class="navbar navbar-expand-md d-print-none">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,10 +12,10 @@
         <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item d-none d-md-flex me-3">
                 <div class="btn-list">
-                    <partial name="_SelectLanguagePartial"/>
+                    <partial name="_SelectLanguagePartial" />
                 </div>
             </div>
-            <partial name="_LoginPartial"/>
+            <partial name="_LoginPartial" />
         </div>
     </div>
 </header>
@@ -48,21 +48,18 @@
                             </span>
                         </a>
                     </li>
-                    @if (Product.Value.Feature.RealName)
-                    {
-                        <li class="nav-item" asp-path="/RealName">
-                            <a class="nav-link" asp-area="RealName" asp-page="/Index">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-user-shield"></use>
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    @L["Real name"]
-                                </span>
-                            </a>
-                        </li>
-                    }
+                    <li class="nav-item" asp-path="/RealName">
+                        <a class="nav-link" asp-area="RealName" asp-page="/Index">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <use xlink:href="/lib/tabler-icons/tabler-sprite-nostroke.svg#tabler-user-shield"></use>
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                @L["Real name"]
+                            </span>
+                        </a>
+                    </li>
                     <li class="nav-item" asp-path="/OrganizationManagement">
                         <a class="nav-link" asp-area="OrganizationManagement" asp-page="/Index">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">

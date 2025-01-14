@@ -139,11 +139,10 @@ platform.IdSubjects
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-    platform.IdSubjects.AddRealName()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
+platform.IdSubjects.AddRealName()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
 platform.IdSubjects.AddDirectoryLogin()
     .AddDefaultStores()
     .AddDbContext(options =>

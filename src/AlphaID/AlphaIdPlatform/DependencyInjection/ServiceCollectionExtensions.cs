@@ -1,6 +1,7 @@
 using AlphaIdPlatform.DependencyInjection;
 using AlphaIdPlatform.Identity;
 using IdSubjects.DirectoryLogon;
+using IdSubjects.RealName;
 
 // ReSharper disable CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -22,9 +23,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<DirectoryServiceManager>();
         services.AddScoped<DirectoryAccountManager>();
         var idSubjectsBuilder = services.AddIdSubjects();
+        var directoryLoginBuilder = idSubjectsBuilder.AddDirectoryLogin();
+        var realnameBuilder = idSubjectsBuilder.AddRealName();
 
         services.AddScoped<NaturalPersonService>();
 
-        return new AlphaIdPlatformBuilder(services, idSubjectsBuilder);
+        return new AlphaIdPlatformBuilder(services, idSubjectsBuilder, directoryLoginBuilder, realnameBuilder);
     }
 }

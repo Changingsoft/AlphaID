@@ -19,7 +19,6 @@ using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
 using IdSubjects.ChineseName;
-using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;
@@ -198,17 +197,15 @@ platform.IdSubjects
             sqlOptions => { sqlOptions.UseNetTopologySuite(); });
     });
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-    platform.IdSubjects.AddRealName()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
+platform.IdSubjects.AddRealName()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
 
-if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
-    platform.IdSubjects.AddDirectoryLogin()
-        .AddDefaultStores()
-        .AddDbContext(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
+platform.IdSubjects.AddDirectoryLogin()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));
 
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();

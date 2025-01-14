@@ -132,7 +132,7 @@ platform.AddEntityFramework(options =>
 //DbContext for Duende IdentityServer.
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OidcConfigurationDataConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }).AddScoped<ConfigurationStoreOptions>();
 
 

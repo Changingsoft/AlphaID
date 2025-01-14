@@ -14,6 +14,7 @@ namespace IdSubjects.DirectoryLogon;
 /// <remarks>
 ///     Init.
 /// </remarks>
+/// <param name="naturalPersonManager"></param>
 /// <param name="directoryAccountStore"></param>
 /// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
@@ -37,7 +38,7 @@ public class DirectoryAccountManager(
         {
             SamAccountName = person.UserName
         };
-        person.Apply(newAccount);
+        person.ApplyTo(newAccount);
 
         newAccount.Save();
 
@@ -159,7 +160,7 @@ public class DirectoryAccountManager(
             return IdOperationResult.Failed("找不到指定的目录对象。");
         }
 
-        person.Apply(user);
+        person.ApplyTo(user);
         user.Save();
         account.ObjectId = entryObjectGuid;
         await directoryAccountStore.CreateAsync(account);

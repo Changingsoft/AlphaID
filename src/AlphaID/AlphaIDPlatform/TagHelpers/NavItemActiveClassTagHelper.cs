@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -34,7 +34,7 @@ public class NavItemActiveClassTagHelper : TagHelper
             return;
         var restrictMatch = false;
         var targetPath = Path;
-        if (Path.EndsWith("!"))
+        if (Path.EndsWith('!'))
         {
             restrictMatch = true;
             targetPath = targetPath[..^1];

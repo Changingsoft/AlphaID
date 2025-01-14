@@ -17,13 +17,14 @@ namespace AlphaIdPlatform.Identity;
 /// 自然人服务。
 /// </summary>
 /// <param name="personManager"></param>
+/// <param name="serviceManager"></param>
 /// <param name="accountManager"></param>
+/// <param name="authenticationStore"></param>
 public class NaturalPersonService(
     NaturalPersonManager personManager,
     DirectoryServiceManager? serviceManager,
     DirectoryAccountManager? accountManager,
-    IRealNameAuthenticationStore? authenticationStore,
-    ILogger<NaturalPersonService>? logger)
+    IRealNameAuthenticationStore? authenticationStore)
 {
     /// <summary>
     /// 
@@ -159,6 +160,7 @@ public class NaturalPersonService(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public async Task<IdentityResult?> UpdateAsync(NaturalPerson person)
     {
         var result = await personManager.UpdateAsync(person);
@@ -174,7 +176,7 @@ public class NaturalPersonService(
                 UserPrincipal? userPrincipal = account.GetUserPrincipal();
                 if (userPrincipal != null)
                 {
-                    person.Apply(userPrincipal);
+                    person.ApplyTo(userPrincipal);
                     userPrincipal.Save();
                 }
             }

@@ -56,6 +56,10 @@ public class DirectoryAccount
     [ForeignKey(nameof(ServiceId))]
     public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = null!;
 
+    /// <summary>
+    ///    获取用户主体。
+    /// </summary>
+    /// <returns></returns>
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public UserPrincipal? GetUserPrincipal()
     {
@@ -63,6 +67,11 @@ public class DirectoryAccount
         return UserPrincipal.FindByIdentity(context, ObjectId);
     }
 
+    /// <summary>
+    ///    设置密码。
+    /// </summary>
+    /// <param name="password"></param>
+    /// <param name="mustChangePassword"></param>
     [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public void SetPassword(string? password, bool mustChangePassword = false)
     {

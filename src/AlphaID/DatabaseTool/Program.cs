@@ -35,7 +35,7 @@ builder
                 });
             });
 
-        idSubjectsBuilder.AddRealName()
+        platform.IdSubjects.AddRealName()
             .AddDefaultStores()
             .AddDbContext(options =>
             {
@@ -43,7 +43,7 @@ builder
                     sql => { sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name); });
             });
 
-        idSubjectsBuilder.AddDirectoryLogin()
+        platform.IdSubjects.AddDirectoryLogin()
             .AddDefaultStores()
             .AddDbContext(options =>
             {

@@ -180,21 +180,6 @@ public class NaturalPersonService(
             }
         }
 
-        if (authenticationStore != null)
-        {
-            IQueryable<RealNameAuthentication> personAuthentications = authenticationStore.FindByPerson(person);
-            IEnumerable<RealNameAuthentication> _pendingAuthentications =
-                [.. personAuthentications.Where(a => !a.Applied)];
-            if (_pendingAuthentications.Any())
-            {
-                foreach (RealNameAuthentication authentication in _pendingAuthentications)
-                {
-                    authentication.ApplyToPerson(person);
-                    logger?.LogDebug("拦截器使用{authentication}覆盖了{person}的信息。", authentication, person);
-                }
-            }
-        }
-
         return result;
     }
 

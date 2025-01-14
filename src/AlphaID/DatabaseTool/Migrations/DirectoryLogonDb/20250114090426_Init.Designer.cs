@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.DirectoryLogonDb
 {
     [DbContext(typeof(DirectoryLogonDbContext))]
-    [Migration("20250114032546_Init")]
+    [Migration("20250114090426_Init")]
     partial class Init
     {
         /// <inheritdoc />

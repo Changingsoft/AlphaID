@@ -138,7 +138,7 @@ platform.IdSubjects
     });
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 {
-    idSubjectsBuilder.AddRealName()
+    platform.IdSubjects.AddRealName()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(RealNameDbContext))));
@@ -146,7 +146,7 @@ if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.DirectoryAccountManagementFeature] ?? "false"))
 {
-    idSubjectsBuilder.AddDirectoryLogin()
+    platform.IdSubjects.AddDirectoryLogin()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(DirectoryLogonDbContext))));

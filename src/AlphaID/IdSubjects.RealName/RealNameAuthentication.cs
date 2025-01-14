@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -70,11 +70,6 @@ public abstract class RealNameAuthentication
     /// </summary>
     [MaxLength(200)]
     public string? Remarks { get; set; }
-
-    /// <summary>
-    ///     是否已经应用。
-    /// </summary>
-    public bool Applied { get; protected internal set; }
 
     /// <summary>
     ///     将实名认证信息应用到自然人。

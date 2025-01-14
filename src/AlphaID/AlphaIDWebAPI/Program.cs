@@ -1,4 +1,5 @@
 using System.Reflection;
+using AlphaId.DirectoryLogon.EntityFramework;
 using AlphaId.EntityFramework;
 using AlphaId.RealName.EntityFramework;
 using AlphaIdPlatform;
@@ -6,7 +7,7 @@ using AlphaIdWebAPI;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
-using IdSubjects.DependencyInjection;
+using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -139,11 +140,16 @@ platform.IdSubjects
     });
 
 if (bool.Parse(builder.Configuration[FeatureSwitch.RealNameFeature] ?? "false"))
-    idSubjectsBuilder.AddRealName()
+    platform.IdSubjects.AddRealName()
         .AddDefaultStores()
         .AddDbContext(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("IDSubjectsDataConnection")));
-
+platform.IdSubjects.AddDirectoryLogin()
+    .AddDefaultStores()
+    .AddDbContext(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DirectoryLogonDataConnection"));
+    });
 
 WebApplication app = builder.Build();
 

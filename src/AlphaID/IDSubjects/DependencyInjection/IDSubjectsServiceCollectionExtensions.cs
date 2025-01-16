@@ -1,4 +1,4 @@
-﻿using IdSubjects;
+using IdSubjects;
 using IdSubjects.DependencyInjection;
 using IdSubjects.Invitations;
 using IdSubjects.Payments;
@@ -30,7 +30,7 @@ public static class IdSubjectsServiceCollectionExtensions
         services.AddHttpContextAccessor();
 
         // 由IdSubjects使用的服务。
-        services.TryAddScoped<ApplicationUserManager>();
+        services.TryAddScoped<ApplicationUserManager<ApplicationUser>>();
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
@@ -47,7 +47,7 @@ public static class IdSubjectsServiceCollectionExtensions
 
         //添加基础标识
         IdentityBuilder identityBuilder = services.AddIdentityCore<ApplicationUser>()
-                .AddUserManager<ApplicationUserManager>()
+                .AddUserManager<ApplicationUserManager<ApplicationUser>>()
                 .AddUserValidator<PhoneNumberValidator>();
 
         if (setupAction != null) services.Configure(setupAction);

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class EnableAuthenticatorModel(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     ILogger<EnableAuthenticatorModel> logger,
     UrlEncoder urlEncoder,
     IOptions<ProductInfo> production) : PageModel

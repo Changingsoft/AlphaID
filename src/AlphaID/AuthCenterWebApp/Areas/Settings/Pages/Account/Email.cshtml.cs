@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class EmailModel(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     IEmailSender emailSender,
     IOptions<ProductInfo> production) : PageModel
 {

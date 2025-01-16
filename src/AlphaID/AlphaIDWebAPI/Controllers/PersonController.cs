@@ -1,4 +1,4 @@
-﻿using AlphaIdPlatform;
+using AlphaIdPlatform;
 using AlphaIdPlatform.Security;
 using IdSubjects;
 using IdSubjects.Subjects;
@@ -20,7 +20,7 @@ namespace AlphaIdWebAPI.Controllers;
 [ApiController]
 [Authorize]
 public class PersonController(
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     IOptions<SystemUrlInfo> urlInfo,
     OrganizationMemberManager memberManager) : ControllerBase
 {

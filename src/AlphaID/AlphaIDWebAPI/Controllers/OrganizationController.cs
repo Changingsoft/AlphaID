@@ -1,4 +1,4 @@
-﻿using AlphaIdPlatform.Security;
+using AlphaIdPlatform.Security;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ namespace AlphaIdWebAPI.Controllers;
 public class OrganizationController(
     IOrganizationStore organizationStore,
     OrganizationMemberManager memberManager,
-    ApplicationUserManager personManager) : ControllerBase
+    ApplicationUserManager<ApplicationUser> personManager) : ControllerBase
 {
     /// <summary>
     ///     获取组织信息。

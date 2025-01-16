@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PersonalInfoModel(ApplicationUserManager personManager, NaturalPersonService naturalPersonService) : PageModel
+public class PersonalInfoModel(ApplicationUserManager<ApplicationUser> personManager, NaturalPersonService naturalPersonService) : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;
 

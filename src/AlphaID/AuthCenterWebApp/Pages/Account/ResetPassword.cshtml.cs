@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordModel(NaturalPersonService naturalPersonService, ApplicationUserManager userManager) : PageModel
+public class ResetPasswordModel(NaturalPersonService naturalPersonService, ApplicationUserManager<ApplicationUser> userManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;

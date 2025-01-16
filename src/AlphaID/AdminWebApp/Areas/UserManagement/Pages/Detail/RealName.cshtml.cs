@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class RealNameModel(ApplicationUserManager userManager, RealNameManager realNameManager) : PageModel
+public class RealNameModel(ApplicationUserManager<ApplicationUser> userManager, RealNameManager realNameManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 

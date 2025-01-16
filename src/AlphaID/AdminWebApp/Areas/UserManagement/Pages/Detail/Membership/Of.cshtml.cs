@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(OrganizationMemberManager memberManager, ApplicationUserManager applicationUserManager) : PageModel
+public class OfModel(OrganizationMemberManager memberManager, ApplicationUserManager<ApplicationUser> applicationUserManager) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 

@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     OrganizationMemberManager memberManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;
@@ -58,7 +58,7 @@ public class IndexModel(
         ApplicationUser? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
         {
-            ModelState.AddModelError(nameof(UserName), "’“≤ªµΩ»À‘±");
+            ModelState.AddModelError(nameof(UserName), "Êâæ‰∏çÂà∞‰∫∫Âëò");
             return Page();
         }
 

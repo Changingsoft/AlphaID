@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using AuthCenterWebApp.Areas.Organization;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Services.Authorization;
 public class OrganizationOwnerRequirementHandler(
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager,
-    ApplicationUserManager personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
+    ApplicationUserManager<ApplicationUser> personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
         OrganizationOwnerRequirement requirement)

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages;
 
-public class SearchModel(ApplicationUserManager personManager) : PageModel
+public class SearchModel(ApplicationUserManager<ApplicationUser> personManager) : PageModel
 {
     public IEnumerable<ApplicationUser> Results { get; set; } = [];
 

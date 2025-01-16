@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
-public class AvatarModel(ApplicationUserManager personManager) : PageModel
+public class AvatarModel(ApplicationUserManager<ApplicationUser> personManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

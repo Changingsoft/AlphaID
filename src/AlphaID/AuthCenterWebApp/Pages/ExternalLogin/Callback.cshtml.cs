@@ -19,15 +19,15 @@ public class Callback(
     IIdentityServerInteractionService interaction,
     IEventService events,
     ILogger<Callback> logger,
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
-        //´ÓÍâ²¿µÇÂ¼ÈÏÖ¤
+        //ä»å¤–éƒ¨ç™»å½•è®¤è¯
         AuthenticateResult result =
             await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-        if (result.Succeeded != true) throw new Exception("Íâ²¿µÇÂ¼´íÎó¡£");
+        if (result.Succeeded != true) throw new Exception("å¤–éƒ¨ç™»å½•é”™è¯¯ã€‚");
 
         ClaimsPrincipal? externalUser = result.Principal;
 
@@ -59,13 +59,13 @@ public class Callback(
         var localSignInProps = new AuthenticationProperties();
         CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
 
-        // Ç©·¢±¾µØµÇÂ¼Æ¾¾İ¡£
+        // ç­¾å‘æœ¬åœ°ç™»å½•å‡­æ®ã€‚
         await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
-        //×¢Ïúµ±Ç°µÄÍâ²¿µÇÂ¼Æ¾¾İ¡£
+        //æ³¨é”€å½“å‰çš„å¤–éƒ¨ç™»å½•å‡­æ®ã€‚
         await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
-        // ´¦Àí·µ»ØURL¡£
+        // å¤„ç†è¿”å›URLã€‚
         // check if external login is in the context of an OIDC request
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
         await events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true,
@@ -81,10 +81,10 @@ public class Callback(
     }
 
     /// <summary>
-    /// ²¶»ñÍâ²¿µÇÂ¼ÉÏÏÂÎÄ¡£
+    /// æ•è·å¤–éƒ¨ç™»å½•ä¸Šä¸‹æ–‡ã€‚
     /// </summary>
     /// <remarks>
-    /// Èç¹ûÍâ²¿µÇÂ¼ÊÇ»ùÓÚOIDC£¬ÎÒÃÇĞèÒª´¦ÀíÒ»Ğ©ÊÂÇéÒÔ±ãµÇ³ö£¨×¢Ïú£©ÄÜÕı³£¹¤×÷¡£
+    /// å¦‚æœå¤–éƒ¨ç™»å½•æ˜¯åŸºäºOIDCï¼Œæˆ‘ä»¬éœ€è¦å¤„ç†ä¸€äº›äº‹æƒ…ä»¥ä¾¿ç™»å‡ºï¼ˆæ³¨é”€ï¼‰èƒ½æ­£å¸¸å·¥ä½œã€‚
     /// this will be different for WS-Fed, SAML2p or other protocols.
     /// </remarks>
     /// <param name="externalResult"></param>
@@ -94,14 +94,14 @@ public class Callback(
         List<Claim> localClaims,
         AuthenticationProperties localSignInProps)
     {
-        // ²¶»ñÓÃÓÚµÇÂ¼µÄ±êÊ¶Ìá¹©·½£¨IdP£©£¬ÒÔ±ã»á»°ÖªµÀÓÃ»§´ÓÄÄÀïÀ´µÄ¡£
+        // æ•è·ç”¨äºç™»å½•çš„æ ‡è¯†æä¾›æ–¹ï¼ˆIdPï¼‰ï¼Œä»¥ä¾¿ä¼šè¯çŸ¥é“ç”¨æˆ·ä»å“ªé‡Œæ¥çš„ã€‚
         localClaims.Add(new Claim(JwtClaimTypes.IdentityProvider, externalResult.Properties!.Items[".AuthScheme"]!));
 
-        // Èç¹ûÍâ²¿ÏµÍ³·¢ËÍÁË»á»°IDÉùÃ÷£¬½«Æä¸´ÖÆ¹ıÀ´£¬ÒÔ±ãºóĞø¿ÉÓÃËü×öµ¥µãµÇ³ö¡£
+        // å¦‚æœå¤–éƒ¨ç³»ç»Ÿå‘é€äº†ä¼šè¯IDå£°æ˜ï¼Œå°†å…¶å¤åˆ¶è¿‡æ¥ï¼Œä»¥ä¾¿åç»­å¯ç”¨å®ƒåšå•ç‚¹ç™»å‡ºã€‚
         Claim? sidClaim = externalResult.Principal!.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
         if (sidClaim != null) localClaims.Add(new Claim(JwtClaimTypes.SessionId, sidClaim.Value));
 
-        // Èç¹ûÍâ²¿Ìá¹©Æ÷Ç©·¢ÁË id_token£¬ÎÒÃÇ½«Æä±£´æÒÔ±ãºóĞø×¢Ïú¡£
+        // å¦‚æœå¤–éƒ¨æä¾›å™¨ç­¾å‘äº† id_tokenï¼Œæˆ‘ä»¬å°†å…¶ä¿å­˜ä»¥ä¾¿åç»­æ³¨é”€ã€‚
         string? idToken = externalResult.Properties.GetTokenValue("id_token");
         if (idToken != null)
             localSignInProps.StoreTokens([new AuthenticationToken { Name = "id_token", Value = idToken }]);

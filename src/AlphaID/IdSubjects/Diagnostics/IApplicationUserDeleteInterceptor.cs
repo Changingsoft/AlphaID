@@ -12,7 +12,7 @@ public interface IApplicationUserDeleteInterceptor : IInterceptor
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    Task<IdentityResult> PreDeleteAsync(ApplicationUserManager personManager, ApplicationUser person);
+    Task<IdentityResult> PreDeleteAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person);
 
     /// <summary>
     ///     在删除自然人之后调用。
@@ -20,5 +20,5 @@ public interface IApplicationUserDeleteInterceptor : IInterceptor
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    Task PostDeleteAsync(ApplicationUserManager personManager, ApplicationUser person);
+    Task PostDeleteAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person);
 }

@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class FindPasswordByMobileModel(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
@@ -26,7 +26,7 @@ public class FindPasswordByMobileModel(
     public async Task<IActionResult> OnPostAsync()
     {
         if (!MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
-            ModelState.AddModelError(nameof(Mobile), "ÎŞĞ§µÄÒÆ¶¯µç»°ºÅÂë");
+            ModelState.AddModelError(nameof(Mobile), "æ— æ•ˆçš„ç§»åŠ¨ç”µè¯å·ç ");
 
         if (!ModelState.IsValid)
             return Page();
@@ -36,7 +36,7 @@ public class FindPasswordByMobileModel(
 
         ApplicationUser? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
-            //²»Ö´ĞĞ²Ù×÷
+            //ä¸æ‰§è¡Œæ“ä½œ
             return RedirectToPage("ResetPasswordMobile", new { code, phone = Mobile });
 
         code = await userManager.GeneratePasswordResetTokenAsync(person);

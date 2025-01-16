@@ -1,9 +1,9 @@
-﻿using IdSubjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Components;
 
-public class PeopleNavPanel(ApplicationUserManager personManager) : ViewComponent
+public class PeopleNavPanel(ApplicationUserManager<ApplicationUser> personManager) : ViewComponent
 {
     public IViewComponentResult Invoke()
     {

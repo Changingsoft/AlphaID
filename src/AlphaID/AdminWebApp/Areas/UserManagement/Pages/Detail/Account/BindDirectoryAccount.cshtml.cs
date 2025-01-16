@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class BindDirectoryAccountModel(
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     DirectoryAccountManager directoryAccountManager,
     DirectoryServiceManager directoryServiceManager) : PageModel
 {

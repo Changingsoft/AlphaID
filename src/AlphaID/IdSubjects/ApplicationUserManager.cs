@@ -29,20 +29,20 @@ namespace IdSubjects;
 /// <param name="interceptors"></param>
 /// <param name="passwordHistoryManager"></param>
 /// <param name="eventService"></param>
-public class ApplicationUserManager(
-    IApplicationUserStore store,
+public class ApplicationUserManager<T>(
+    IApplicationUserStore<T> store,
     IOptions<IdSubjectsOptions> optionsAccessor,
-    IPasswordHasher<ApplicationUser> passwordHasher,
-    IEnumerable<IUserValidator<ApplicationUser>> userValidators,
-    IEnumerable<IPasswordValidator<ApplicationUser>> passwordValidators,
+    IPasswordHasher<T> passwordHasher,
+    IEnumerable<IUserValidator<T>> userValidators,
+    IEnumerable<IPasswordValidator<T>> passwordValidators,
     ILookupNormalizer keyNormalizer,
     ApplicationUserIdentityErrorDescriber errors,
     IServiceProvider services,
-    ILogger<ApplicationUserManager> logger,
+    ILogger<ApplicationUserManager<T>> logger,
     IEnumerable<IInterceptor> interceptors,
     PasswordHistoryManager passwordHistoryManager,
     IEventService eventService)
-    : UserManager<ApplicationUser>(store,
+    : UserManager<T>(store,
         optionsAccessor,
         passwordHasher,
         userValidators,
@@ -51,6 +51,7 @@ public class ApplicationUserManager(
         errors,
         services,
         logger)
+where T : ApplicationUser
 {
     /// <summary>
     ///     获取或设置IdSubjectsOptions。
@@ -60,7 +61,7 @@ public class ApplicationUserManager(
     /// <summary>
     ///     获取 IApplicationUserStore.
     /// </summary>
-    public new IApplicationUserStore Store { get; } = store;
+    public new IApplicationUserStore<T> Store { get; } = store;
 
     /// <summary>
     ///     获取拦截器。
@@ -102,23 +103,11 @@ public class ApplicationUserManager(
     }
 
     /// <summary>
-    ///     获取 Natural Person 的原始未更改版本。
-    ///     此方法相当于从存取器获取位于持久化基础结构中的没有更改的原始版本。
-    /// </summary>
-    /// <param name="current"></param>
-    /// <returns></returns>
-    [Obsolete("此方法已过时，不在支持这种方式。")]
-    public virtual Task<ApplicationUser?> GetOriginalAsync(ApplicationUser current)
-    {
-        return Store.GetOriginalAsync(current, CancellationToken.None);
-    }
-
-    /// <summary>
     ///     已重写。创建用户。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> CreateAsync(ApplicationUser user)
+    public override async Task<IdentityResult> CreateAsync(T user)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
@@ -137,7 +126,7 @@ public class ApplicationUserManager(
     /// <param name="user"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
+    public override async Task<IdentityResult> CreateAsync(T user, string password)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
@@ -159,7 +148,7 @@ public class ApplicationUserManager(
     /// <param name="person"></param>
     /// <param name="authenticationMethod"></param>
     /// <returns></returns>
-    public virtual Task AccessSuccededAsync(ApplicationUser person, string authenticationMethod)
+    public virtual Task AccessSuccededAsync(T person, string authenticationMethod)
     {
         //todo 记录任何登录成功次数、上次登录时间，登录方式，登录IP等。
         Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person,
@@ -172,7 +161,7 @@ public class ApplicationUserManager(
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    protected override Task<IdentityResult> UpdateUserAsync(ApplicationUser user)
+    protected override Task<IdentityResult> UpdateUserAsync(T user)
     {
         user.WhenChanged = TimeProvider.GetUtcNow();
         return base.UpdateUserAsync(user);
@@ -186,7 +175,7 @@ public class ApplicationUserManager(
     /// </remarks>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> UpdateAsync(ApplicationUser user)
+    public override async Task<IdentityResult> UpdateAsync(T user)
     {
 
         user.PersonWhenChanged = TimeProvider.GetUtcNow();
@@ -204,7 +193,7 @@ public class ApplicationUserManager(
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> DeleteAsync(ApplicationUser user)
+    public override async Task<IdentityResult> DeleteAsync(T user)
     {
         //正式执行删除。
         IdentityResult result = await base.DeleteAsync(user);
@@ -223,7 +212,7 @@ public class ApplicationUserManager(
     /// <param name="user"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> AddPasswordAsync(ApplicationUser user, string password)
+    public override async Task<IdentityResult> AddPasswordAsync(T user, string password)
     {
         //检查密码历史记录
         if (Options.Password.RememberPasswordHistory > 0)
@@ -250,7 +239,7 @@ public class ApplicationUserManager(
     /// <param name="currentPassword"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> ChangePasswordAsync(ApplicationUser user,
+    public override async Task<IdentityResult> ChangePasswordAsync(T user,
         string currentPassword,
         string newPassword)
     {
@@ -302,7 +291,7 @@ public class ApplicationUserManager(
     /// <param name="token"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword)
+    public override async Task<IdentityResult> ResetPasswordAsync(T user, string token, string newPassword)
     {
         //重设密码是否受密码最短寿命限制？不受最短寿命限制。
         //检查密码历史记录
@@ -337,7 +326,7 @@ public class ApplicationUserManager(
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> RemovePasswordAsync(ApplicationUser user)
+    public override async Task<IdentityResult> RemovePasswordAsync(T user)
     {
         user.PasswordLastSet = null;
         IdentityResult result = await base.RemovePasswordAsync(user);
@@ -354,7 +343,7 @@ public class ApplicationUserManager(
     }
 
     /// <inheritdoc />
-    protected override async Task<IdentityResult> UpdatePasswordHash(ApplicationUser user,
+    protected override async Task<IdentityResult> UpdatePasswordHash(T user,
         string newPassword,
         bool validatePassword)
     {
@@ -370,7 +359,7 @@ public class ApplicationUserManager(
     /// <param name="person"></param>
     /// <param name="personName"></param>
     /// <returns></returns>
-    public Task<IdentityResult> AdminChangePersonNameAsync(ApplicationUser person, PersonNameInfo personName)
+    public Task<IdentityResult> AdminChangePersonNameAsync(T person, PersonNameInfo personName)
     {
         person.PersonName = personName;
         return UpdateAsync(person);
@@ -385,7 +374,7 @@ public class ApplicationUserManager(
     /// <param name="mustChangePassword"></param>
     /// <param name="unlockUser"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> AdminResetPasswordAsync(ApplicationUser person,
+    public virtual async Task<IdentityResult> AdminResetPasswordAsync(T person,
         string newPassword,
         bool mustChangePassword,
         bool unlockUser)
@@ -414,7 +403,7 @@ public class ApplicationUserManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> UnlockUserAsync(ApplicationUser person)
+    public virtual async Task<IdentityResult> UnlockUserAsync(T person)
     {
         Logger.LogDebug("正在解锁用户{user}", person);
         if (await IsLockedOutAsync(person)) return await SetLockoutEndDateAsync(person, null);
@@ -428,7 +417,7 @@ public class ApplicationUserManager(
     /// <param name="user"></param>
     /// <param name="tzName"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> SetTimeZone(ApplicationUser user, string tzName)
+    public virtual async Task<IdentityResult> SetTimeZone(T user, string tzName)
     {
         string? ianaTimeZoneName = null;
         if (TZConvert.KnownWindowsTimeZoneIds.Contains(tzName))
@@ -452,7 +441,7 @@ public class ApplicationUserManager(
     /// <param name="contentType"></param>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> SetProfilePictureAsync(ApplicationUser person,
+    public virtual async Task<IdentityResult> SetProfilePictureAsync(T person,
         string contentType,
         byte[] bytes)
     {
@@ -476,7 +465,7 @@ public class ApplicationUserManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> ClearProfilePictureAsync(ApplicationUser person)
+    public virtual async Task<IdentityResult> ClearProfilePictureAsync(T person)
     {
         person.ProfilePicture = null;
         IdentityResult result = await UpdateAsync(person);
@@ -488,7 +477,7 @@ public class ApplicationUserManager(
     }
 
     /// <inheritdoc />
-    public override async Task<IdentityResult> SetPhoneNumberAsync(ApplicationUser user, string? phoneNumber)
+    public override async Task<IdentityResult> SetPhoneNumberAsync(T user, string? phoneNumber)
     {
         IdentityResult result = await base.SetPhoneNumberAsync(user, phoneNumber);
         if (!result.Succeeded) return result;

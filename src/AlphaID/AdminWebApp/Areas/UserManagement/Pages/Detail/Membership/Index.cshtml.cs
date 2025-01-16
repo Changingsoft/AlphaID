@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class IndexModel(
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager) : PageModel
 {

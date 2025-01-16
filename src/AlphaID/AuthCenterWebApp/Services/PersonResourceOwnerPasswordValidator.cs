@@ -1,4 +1,4 @@
-﻿using Duende.IdentityServer.AspNetIdentity;
+using Duende.IdentityServer.AspNetIdentity;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 using IdSubjects;
@@ -17,7 +17,7 @@ namespace AuthCenterWebApp.Services;
 /// <param name="signInManager"></param>
 /// <param name="logger"></param>
 public class PersonResourceOwnerPasswordValidator(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     ILogger<PersonResourceOwnerPasswordValidator> logger,
     IOptions<IdSubjectsOptions> options,

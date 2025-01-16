@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class PersonNameModel(ApplicationUserManager personManager, RealNameManager realNameManager, NaturalPersonService naturalPersonService) : PageModel
+public class PersonNameModel(ApplicationUserManager<ApplicationUser> personManager, RealNameManager realNameManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputMode Input { get; set; } = null!;

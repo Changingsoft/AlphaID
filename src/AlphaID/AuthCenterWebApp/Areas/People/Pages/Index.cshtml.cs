@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
-public class IndexModel(ApplicationUserManager personManager, OrganizationMemberManager organizationMemberManager)
+public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, OrganizationMemberManager organizationMemberManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

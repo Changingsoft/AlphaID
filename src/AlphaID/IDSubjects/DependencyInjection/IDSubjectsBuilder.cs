@@ -41,12 +41,15 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     /// <summary>
     ///     Add natural person store implementation into the system.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TStore"></typeparam>
+    /// <typeparam name="TUser"></typeparam>
     /// <returns></returns>
-    public IdSubjectsBuilder AddPersonStore<T>() where T : class, IApplicationUserStore
+    public IdSubjectsBuilder AddPersonStore<TStore, TUser>()
+        where TStore : class, IApplicationUserStore<TUser>
+        where TUser : ApplicationUser
     {
-        Services.TryAddScoped<IApplicationUserStore, T>();
-        IdentityBuilder.AddUserStore<T>(); //As IUserStore<ApplicationUser>
+        Services.TryAddScoped<IApplicationUserStore<TUser>, TStore>();
+        IdentityBuilder.AddUserStore<TStore>(); //As IUserStore<ApplicationUser>
         return this;
     }
 

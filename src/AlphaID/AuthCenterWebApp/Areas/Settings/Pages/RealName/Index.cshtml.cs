@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
 public class IndexModel(
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     RealNameManager realNameManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {

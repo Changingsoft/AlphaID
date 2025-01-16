@@ -13,7 +13,7 @@ public abstract class ApplicationUserUpdateInterceptor : IApplicationUserUpdateI
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns>始终返回表示成功的IdentityResult。</returns>
-    public virtual Task<IdentityResult> PreUpdateAsync(ApplicationUserManager personManager, ApplicationUser person)
+    public virtual Task<IdentityResult> PreUpdateAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person)
     {
         return Task.FromResult(IdentityResult.Success);
     }
@@ -23,7 +23,7 @@ public abstract class ApplicationUserUpdateInterceptor : IApplicationUserUpdateI
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PostUpdateAsync(ApplicationUserManager personManager, ApplicationUser person)
+    public virtual Task PostUpdateAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person)
     {
         return Task.CompletedTask;
     }

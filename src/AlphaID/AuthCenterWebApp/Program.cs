@@ -135,7 +135,7 @@ platform.AddEntityFramework(options =>
 
 var identityBuilder = builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders()
-    .AddUserManager<ApplicationUserManager>()
+    .AddUserManager<ApplicationUserManager<ApplicationUser>>()
     .AddSignInManager<PersonSignInManager>()
     .AddUserStore<ApplicationUserStore>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()

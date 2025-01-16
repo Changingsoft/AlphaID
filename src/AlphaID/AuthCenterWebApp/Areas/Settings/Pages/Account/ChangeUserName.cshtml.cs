@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class ChangeUserNameModel(
-    ApplicationUserManager manager,
+    ApplicationUserManager<ApplicationUser> manager,
     ILogger<ChangeUserNameModel>? logger,
     PersonSignInManager signInManager) : PageModel
 {
@@ -25,7 +25,7 @@ public class ChangeUserNameModel(
         ApplicationUser? person = await manager.GetUserAsync(User);
         if (person == null)
         {
-            logger?.LogWarning("´ÓÓÃ»§µÄµÇÂ¼ĞÅÏ¢ÎŞ·¨²éÑ¯µ½ÓÃ»§");
+            logger?.LogWarning("ä»ç”¨æˆ·çš„ç™»å½•ä¿¡æ¯æ— æ³•æŸ¥è¯¢åˆ°ç”¨æˆ·");
             return NotFound();
         }
 
@@ -37,7 +37,7 @@ public class ChangeUserNameModel(
         ApplicationUser? person = await manager.GetUserAsync(User);
         if (person == null)
         {
-            logger?.LogWarning("´ÓÓÃ»§µÄµÇÂ¼ĞÅÏ¢ÎŞ·¨²éÑ¯µ½ÓÃ»§");
+            logger?.LogWarning("ä»ç”¨æˆ·çš„ç™»å½•ä¿¡æ¯æ— æ³•æŸ¥è¯¢åˆ°ç”¨æˆ·");
             return NotFound();
         }
 
@@ -51,6 +51,6 @@ public class ChangeUserNameModel(
 
     public IActionResult OnPostCheckName(string userName)
     {
-        return new JsonResult(true); //todo ÓÃ»§ÊäÈëÓÃ»§ÃûÊ±ÊµÊ±ÑéÖ¤ÓÃ»§ÃûÊÇ·ñ¿ÉÓÃ
+        return new JsonResult(true); //todo ç”¨æˆ·è¾“å…¥ç”¨æˆ·åæ—¶å®æ—¶éªŒè¯ç”¨æˆ·åæ˜¯å¦å¯ç”¨
     }
 }

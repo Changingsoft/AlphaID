@@ -15,7 +15,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByEmailModel(
     IEmailSender emailSender,
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     IOptions<ProductInfo> production) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -48,12 +48,12 @@ public class FindPasswordByEmailModel(
 
             await emailSender.SendEmailAsync(
                 Input.Email,
-                $"ÖØÖÃ{_production.Name}ÕË»§ÃÜÂë",
-                $"<p>ÄúÒÑÇëÇóÍ¨¹ıÓÊ¼şÖØÉè{_production.Name}ÃÜÂë¡£Çëµã»÷<a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>ÕâÀï</a>£¬¿ªÊ¼ÖØÉèÃÜÂë¡£</p>" +
-                $"<p>ÈôÎŞ·¨µã»÷Á´½Ó£¬Çë½«ÏÂÁĞÁ´½Ó¸´ÖÆ£¬²¢ÔÚä¯ÀÀÆ÷ÖĞÕ³Ìù²¢´ò¿ª£º</p>" +
+                $"é‡ç½®{_production.Name}è´¦æˆ·å¯†ç ",
+                $"<p>æ‚¨å·²è¯·æ±‚é€šè¿‡é‚®ä»¶é‡è®¾{_production.Name}å¯†ç ã€‚è¯·ç‚¹å‡»<a href='{HtmlEncoder.Default.Encode(callbackUrl!)}'>è¿™é‡Œ</a>ï¼Œå¼€å§‹é‡è®¾å¯†ç ã€‚</p>" +
+                $"<p>è‹¥æ— æ³•ç‚¹å‡»é“¾æ¥ï¼Œè¯·å°†ä¸‹åˆ—é“¾æ¥å¤åˆ¶ï¼Œå¹¶åœ¨æµè§ˆå™¨ä¸­ç²˜è´´å¹¶æ‰“å¼€ï¼š</p>" +
                 $"<p><span>{HtmlEncoder.Default.Encode(callbackUrl!)}<span></p>" +
                 $"<p></p>" +
-                $"<p>{_production.Name}ÍÅ¶Ó</p>");
+                $"<p>{_production.Name}å›¢é˜Ÿ</p>");
 
             return RedirectToPage("FindPasswordByEmailConfirmation");
         }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class DirectoryAccountsModel(ApplicationUserManager personManager, DirectoryAccountManager directoryAccountManager)
+public class DirectoryAccountsModel(ApplicationUserManager<ApplicationUser> personManager, DirectoryAccountManager directoryAccountManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

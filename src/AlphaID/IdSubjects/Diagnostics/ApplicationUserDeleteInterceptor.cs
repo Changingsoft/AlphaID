@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Diagnostics;
 
@@ -11,7 +11,7 @@ public abstract class ApplicationUserDeleteInterceptor : IApplicationUserDeleteI
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task<IdentityResult> PreDeleteAsync(ApplicationUserManager personManager, ApplicationUser person)
+    public virtual Task<IdentityResult> PreDeleteAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person)
     {
         return Task.FromResult(IdentityResult.Success);
     }
@@ -21,7 +21,7 @@ public abstract class ApplicationUserDeleteInterceptor : IApplicationUserDeleteI
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PostDeleteAsync(ApplicationUserManager personManager, ApplicationUser person)
+    public virtual Task PostDeleteAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person)
     {
         return Task.CompletedTask;
     }

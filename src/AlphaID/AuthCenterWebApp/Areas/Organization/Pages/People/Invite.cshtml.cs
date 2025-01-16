@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class InviteModel(
-    ApplicationUserManager applicationUserManager,
+    ApplicationUserManager<ApplicationUser> applicationUserManager,
     JoinOrganizationInvitationManager joinOrganizationInvitationManager,
     OrganizationManager organizationManager) : PageModel
 {

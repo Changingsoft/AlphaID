@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Diagnostics;
 
@@ -12,7 +12,7 @@ public abstract class ApplicationUserCreateInterceptor : IApplicationUserCreateI
     /// <param name="person"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public virtual Task<IdentityResult> PreCreateAsync(ApplicationUserManager personManager,
+    public virtual Task<IdentityResult> PreCreateAsync(ApplicationUserManager<ApplicationUser> personManager,
         ApplicationUser person,
         string? password = null)
     {
@@ -24,7 +24,7 @@ public abstract class ApplicationUserCreateInterceptor : IApplicationUserCreateI
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PostCreateAsync(ApplicationUserManager personManager, ApplicationUser person)
+    public virtual Task PostCreateAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person)
     {
         return Task.CompletedTask;
     }

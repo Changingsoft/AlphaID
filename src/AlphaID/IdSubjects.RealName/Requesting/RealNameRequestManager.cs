@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.RealName.Requesting;
+namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
 ///     实名认证请求管理器。
@@ -13,7 +13,7 @@
 public class RealNameRequestManager(
     IRealNameRequestStore store,
     RealNameManager realNameManager,
-    ApplicationUserManager applicationUserManager,
+    ApplicationUserManager<ApplicationUser> applicationUserManager,
     IRealNameRequestAuditorProvider? provider = null)
 {
     /// <summary>

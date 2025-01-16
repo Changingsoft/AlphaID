@@ -21,7 +21,7 @@ namespace AlphaIdPlatform.Identity;
 /// <param name="accountManager"></param>
 /// <param name="authenticationStore"></param>
 public class NaturalPersonService(
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     DirectoryServiceManager? serviceManager,
     DirectoryAccountManager? accountManager,
     IRealNameAuthenticationStore? authenticationStore)

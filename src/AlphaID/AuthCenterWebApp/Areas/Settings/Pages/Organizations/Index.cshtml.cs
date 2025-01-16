@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
-public class IndexModel(OrganizationMemberManager memberManager, ApplicationUserManager personManager) : PageModel
+public class IndexModel(OrganizationMemberManager memberManager, ApplicationUserManager<ApplicationUser> personManager) : PageModel
 {
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 

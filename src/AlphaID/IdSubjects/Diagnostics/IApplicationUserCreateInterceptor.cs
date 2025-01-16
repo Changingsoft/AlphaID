@@ -13,7 +13,7 @@ public interface IApplicationUserCreateInterceptor : IInterceptor
     /// <param name="person"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    Task<IdentityResult> PreCreateAsync(ApplicationUserManager personManager,
+    Task<IdentityResult> PreCreateAsync(ApplicationUserManager<ApplicationUser> personManager,
         ApplicationUser person,
         string? password = null);
 
@@ -23,5 +23,5 @@ public interface IApplicationUserCreateInterceptor : IInterceptor
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    Task PostCreateAsync(ApplicationUserManager personManager, ApplicationUser person);
+    Task PostCreateAsync(ApplicationUserManager<ApplicationUser> personManager, ApplicationUser person);
 }

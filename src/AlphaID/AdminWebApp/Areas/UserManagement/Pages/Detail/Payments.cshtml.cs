@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PaymentsModel(ApplicationUserManager personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
+public class PaymentsModel(ApplicationUserManager<ApplicationUser> personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;
 
@@ -53,7 +53,7 @@ public class PaymentsModel(ApplicationUserManager personManager, ApplicationUser
         BankAccounts = bankAccountManager.GetBankAccounts(person);
 
         if (BankAccounts.Any(p => p.AccountNumber == AccountNumber))
-            ModelState.AddModelError(nameof(AccountNumber), "¥À’À∫≈“—¥Ê‘⁄°£");
+            ModelState.AddModelError(nameof(AccountNumber), "Ê≠§Ë¥¶Âè∑Â∑≤Â≠òÂú®„ÄÇ");
         if (!ModelState.IsValid)
             return Page();
 

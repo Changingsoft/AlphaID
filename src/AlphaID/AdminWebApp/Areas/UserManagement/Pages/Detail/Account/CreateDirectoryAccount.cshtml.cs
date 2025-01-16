@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 public class CreateDirectoryAccountModel(
     DirectoryServiceManager directoryServiceManager,
     DirectoryAccountManager directoryAccountManager,
-    ApplicationUserManager applicationUserManager) : PageModel
+    ApplicationUserManager<ApplicationUser> applicationUserManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class IndexModel(ApplicationUserManager personManager, PersonSignInManager signInManager, NaturalPersonService naturalPersonService) : PageModel
+public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, PersonSignInManager signInManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class OtherNamesModel(ApplicationUserManager personManager, NaturalPersonService naturalPersonService) : PageModel
+public class OtherNamesModel(ApplicationUserManager<ApplicationUser> personManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     [Display(Name = "Nick name", Description = "2 to 10 characters. Leave blank to remove it.")]

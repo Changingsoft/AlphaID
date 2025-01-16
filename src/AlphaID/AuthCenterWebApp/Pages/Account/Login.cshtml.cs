@@ -22,7 +22,7 @@ public class LoginModel(
     IAuthenticationSchemeProvider schemeProvider,
     IIdentityProviderStore identityProviderStore,
     IEventService events,
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     IOptions<LoginOptions> loginOptions) : PageModel
 {

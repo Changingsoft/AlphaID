@@ -9,7 +9,7 @@ public class ServiceProviderFixture : IDisposable
         var services = new ServiceCollection();
 
         services.AddIdSubjects()
-            .AddPersonStore<StubApplicationUserStore>()
+            .AddPersonStore<StubApplicationUserStore, ApplicationUser>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
 
         RootServiceProvider = services.BuildServiceProvider();

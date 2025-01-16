@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class Disable2FaModel(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     ILogger<Disable2FaModel> logger) : PageModel
 {
     [TempData]

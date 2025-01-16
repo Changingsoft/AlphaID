@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class MobileModel(ApplicationUserManager userManager, IVerificationCodeService verificationCodeService) : PageModel
+public class MobileModel(ApplicationUserManager<ApplicationUser> userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = null!;
@@ -34,7 +34,7 @@ public class MobileModel(ApplicationUserManager userManager, IVerificationCodeSe
     {
         ApplicationUser? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
-            return BadRequest("ÎŞ·¨´¦ÀíÓÃ»§Id.");
+            return BadRequest("æ— æ³•å¤„ç†ç”¨æˆ·Id.");
 
         MobileValid = person.PhoneNumberConfirmed;
         Mobile = person.PhoneNumber ?? "";
@@ -47,28 +47,28 @@ public class MobileModel(ApplicationUserManager userManager, IVerificationCodeSe
     {
         ApplicationUser? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
-            return BadRequest("ÎŞ·¨´¦ÀíÓÃ»§Id.");
+            return BadRequest("æ— æ³•å¤„ç†ç”¨æˆ·Id.");
 
         if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
-            ModelState.AddModelError(nameof(NewMobile), "ÒÆ¶¯µç»°ºÅÂëÎŞĞ§¡£");
+            ModelState.AddModelError(nameof(NewMobile), "ç§»åŠ¨ç”µè¯å·ç æ— æ•ˆã€‚");
             return Page();
         }
 
         if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode))
         {
-            ModelState.AddModelError(nameof(VerificationCode), "ÑéÖ¤ÂëÎŞĞ§¡£");
+            ModelState.AddModelError(nameof(VerificationCode), "éªŒè¯ç æ— æ•ˆã€‚");
             return Page();
         }
 
         IdentityResult result = await userManager.SetPhoneNumberAsync(person, NewMobile);
         if (result.Succeeded)
         {
-            OperationMessage = "ÒÆ¶¯µç»°ºÅÂëÒÑ±ä¸ü¡£";
+            OperationMessage = "ç§»åŠ¨ç”µè¯å·ç å·²å˜æ›´ã€‚";
             return Page();
         }
 
-        OperationMessage = "ÎŞ·¨±ä¸üÒÆ¶¯µç»°ºÅÂë¡£";
+        OperationMessage = "æ— æ³•å˜æ›´ç§»åŠ¨ç”µè¯å·ç ã€‚";
         return Page();
     }
 
@@ -76,7 +76,7 @@ public class MobileModel(ApplicationUserManager userManager, IVerificationCodeSe
     {
         if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
-            ModelState.AddModelError(nameof(NewMobile), "ÒÆ¶¯µç»°ºÅÂëÎŞĞ§¡£");
+            ModelState.AddModelError(nameof(NewMobile), "ç§»åŠ¨ç”µè¯å·ç æ— æ•ˆã€‚");
             return Page();
         }
 

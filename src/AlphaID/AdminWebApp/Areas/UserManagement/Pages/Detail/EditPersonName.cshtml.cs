@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class EditPersonNameModel(ApplicationUserManager applicationUserManager) : PageModel
+public class EditPersonNameModel(ApplicationUserManager<ApplicationUser> applicationUserManager) : PageModel
 {
     public InputModel Input { get; set; } = null!;
 

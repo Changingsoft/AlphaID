@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security;
 
-public class RoleMembersModel(UserInRoleManager userInRoleManager, ApplicationUserManager personManager) : PageModel
+public class RoleMembersModel(UserInRoleManager userInRoleManager, ApplicationUserManager<ApplicationUser> personManager) : PageModel
 {
     public IEnumerable<UserInRole>? RoleMembers { get; set; }
 

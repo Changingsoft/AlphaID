@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
-public class AuthenticationsModel(RealNameManager realNameManager, ApplicationUserManager applicationUserManager)
+public class AuthenticationsModel(RealNameManager realNameManager, ApplicationUserManager<ApplicationUser> applicationUserManager)
     : PageModel
 {
     public IEnumerable<RealNameAuthentication> Authentications { get; set; } = [];

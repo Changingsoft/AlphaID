@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class IndexModel(ApplicationUserManager userManager) : PageModel
+public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 

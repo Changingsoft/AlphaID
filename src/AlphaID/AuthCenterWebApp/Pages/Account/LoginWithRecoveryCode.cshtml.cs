@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -14,7 +14,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class LoginWithRecoveryCodeModel(
     SignInManager<ApplicationUser> signInManager,
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     ILogger<LoginWithRecoveryCodeModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel

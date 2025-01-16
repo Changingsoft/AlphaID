@@ -10,15 +10,15 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest;
 
 public class WithChineseIdCardModel(
     IChineseIdCardOcrService chineseIdCardOcrService,
-    ApplicationUserManager applicationUserManager,
+    ApplicationUserManager<ApplicationUser> applicationUserManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {
     [BindProperty]
-    [Display(Name = "Éí·ÝÖ¤¸öÈËÐÅÏ¢Ãæ")]
+    [Display(Name = "èº«ä»½è¯ä¸ªäººä¿¡æ¯é¢")]
     public IFormFile PersonalSide { get; set; } = null!;
 
     [BindProperty]
-    [Display(Name = "Éí·ÝÖ¤¹ú»ÕÃæ")]
+    [Display(Name = "èº«ä»½è¯å›½å¾½é¢")]
     public IFormFile IssuerSide { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
@@ -51,8 +51,8 @@ public class WithChineseIdCardModel(
         var issuerSideInfo = new BinaryDataInfo(IssuerSide.ContentType, issuerSideStream.ToArray());
         Sex sex = personalSideOcr.SexString switch
         {
-            "ÄÐ" => Sex.Male,
-            "Å®" => Sex.Female,
+            "ç”·" => Sex.Male,
+            "å¥³" => Sex.Female,
             _ => throw new ArgumentOutOfRangeException(nameof(personalSideOcr.SexString))
         };
 

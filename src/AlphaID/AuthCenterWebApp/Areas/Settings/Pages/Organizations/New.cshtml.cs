@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 public class NewModel(
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager,
-    ApplicationUserManager personManager) : PageModel
+    ApplicationUserManager<ApplicationUser> personManager) : PageModel
 {
     [BindProperty]
     [Display(Name = "Name", Description = "Full name of organization.")]

@@ -5,7 +5,7 @@ namespace IdSubjects.Tests;
 
 public class StubApplicationUserStore(IdentityErrorDescriber describer)
     : UserStoreBase<ApplicationUser, string, IdentityUserClaim<string>, IdentityUserLogin<string>,
-        IdentityUserToken<string>>(describer), IApplicationUserStore
+        IdentityUserToken<string>>(describer), IApplicationUserStore<ApplicationUser>
 {
     private readonly HashSet<ApplicationUser> _set = [];
     private readonly HashSet<ApplicationUser> _trackedSet = [];

@@ -1,4 +1,4 @@
-﻿using System.Transactions;
+using System.Transactions;
 
 namespace IdSubjects.Invitations;
 
@@ -13,7 +13,7 @@ namespace IdSubjects.Invitations;
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
 {

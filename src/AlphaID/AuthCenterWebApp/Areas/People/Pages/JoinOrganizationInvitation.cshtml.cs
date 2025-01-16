@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.People.Pages;
 
 public class JoinOrganizationInvitationModel(
-    ApplicationUserManager personManager,
+    ApplicationUserManager<ApplicationUser> personManager,
     JoinOrganizationInvitationManager invitationsManager) : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

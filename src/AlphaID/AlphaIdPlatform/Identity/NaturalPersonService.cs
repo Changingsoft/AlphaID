@@ -21,7 +21,7 @@ namespace AlphaIdPlatform.Identity;
 /// <param name="accountManager"></param>
 /// <param name="authenticationStore"></param>
 public class NaturalPersonService(
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     DirectoryServiceManager? serviceManager,
     DirectoryAccountManager? accountManager,
     IRealNameAuthenticationStore? authenticationStore)
@@ -33,7 +33,7 @@ public class NaturalPersonService(
     /// <param name="oldPassword"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> ChangePasswordAsync(NaturalPerson person, string oldPassword, string newPassword)
+    public async Task<IdentityResult> ChangePasswordAsync(ApplicationUser person, string oldPassword, string newPassword)
     {
         var result = await personManager.ChangePasswordAsync(person, oldPassword, newPassword);
         if (!result.Succeeded)
@@ -58,7 +58,7 @@ public class NaturalPersonService(
     /// <param name="person"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> CreateAsync(NaturalPerson person, string newPassword)
+    public async Task<IdentityResult> CreateAsync(ApplicationUser person, string newPassword)
     {
         var result = await personManager.CreateAsync(person, newPassword);
         if(!result.Succeeded)
@@ -86,7 +86,7 @@ public class NaturalPersonService(
     /// <param name="person"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> AddPasswordAsync(NaturalPerson person, string newPassword)
+    public async Task<IdentityResult> AddPasswordAsync(ApplicationUser person, string newPassword)
     {
         var result = await personManager.AddPasswordAsync(person, newPassword);
         if (!result.Succeeded)
@@ -112,7 +112,7 @@ public class NaturalPersonService(
     /// <param name="inputCode"></param>
     /// <param name="inputPassword"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> ResetPasswordAsync(NaturalPerson person, string inputCode, string inputPassword)
+    public async Task<IdentityResult> ResetPasswordAsync(ApplicationUser person, string inputCode, string inputPassword)
     {
         var result = await personManager.ResetPasswordAsync(person, inputCode, inputPassword);
         if (!result.Succeeded)
@@ -136,7 +136,7 @@ public class NaturalPersonService(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public async Task<IdentityResult?> RemovePasswordAsync(NaturalPerson person)
+    public async Task<IdentityResult?> RemovePasswordAsync(ApplicationUser person)
     {
         var result = await personManager.RemovePasswordAsync(person);
         if (!result.Succeeded)
@@ -161,7 +161,7 @@ public class NaturalPersonService(
     /// <param name="person"></param>
     /// <returns></returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-    public async Task<IdentityResult?> UpdateAsync(NaturalPerson person)
+    public async Task<IdentityResult?> UpdateAsync(ApplicationUser person)
     {
         var result = await personManager.UpdateAsync(person);
         if (!result.Succeeded)
@@ -190,7 +190,7 @@ public class NaturalPersonService(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> DeleteAsync(NaturalPerson person)
+    public async Task<IdentityResult> DeleteAsync(ApplicationUser person)
     {
         var result = await personManager.DeleteAsync(person);
         if (!result.Succeeded)

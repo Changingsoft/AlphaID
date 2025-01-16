@@ -20,7 +20,7 @@ namespace AlphaIdWebAPI.Controllers;
 [ApiController]
 [Authorize]
 public class PersonController(
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     IOptions<SystemUrlInfo> urlInfo,
     OrganizationMemberManager memberManager) : ControllerBase
 {
@@ -40,7 +40,7 @@ public class PersonController(
     public async Task<ActionResult<PersonInfoModel>> GetUserInfoAsync(string userName)
     {
         //hack 为保持兼容性，下一版本将不再支持SubjectId查询
-        NaturalPerson? person = await personManager.FindByNameAsync(userName) ?? await personManager.FindByIdAsync(userName);
+        ApplicationUser? person = await personManager.FindByNameAsync(userName) ?? await personManager.FindByIdAsync(userName);
         if (person == null)
             return NotFound();
 
@@ -139,11 +139,11 @@ public class PersonController(
 
         var pinyinSearchSet = personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(keywords)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint);
         int pinyinSearchSetCount = pinyinSearchSet.Count();
-        var pinyinSearchResult = new List<NaturalPerson>(pinyinSearchSet.Take(30));
+        var pinyinSearchResult = new List<ApplicationUser>(pinyinSearchSet.Take(30));
 
         var nameSearchSet = personManager.Users.Where(p => p.PersonName.FullName.StartsWith(keywords)).OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName);
         int nameSearchSetCount = nameSearchSet.Count();
-        var nameSearchResult = new List<NaturalPerson>(nameSearchSet.Take(30));
+        var nameSearchResult = new List<ApplicationUser>(nameSearchSet.Take(30));
 
         var searchResults = pinyinSearchResult.UnionBy(nameSearchResult, p => p.Id);
 
@@ -168,13 +168,13 @@ public class PersonController(
     [HttpGet("{userName}/Memberships")]
     public async Task<ActionResult<IEnumerable<MembershipModel>>> GetMemberships(string userName)
     {
-        NaturalPerson? visitor = null;
+        ApplicationUser? visitor = null;
         string? visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
             visitor = await personManager.FindByIdAsync(User.SubjectId()!);
 
         //hack 为保持兼容性，下一版本将不再支持SubjectId查询
-        NaturalPerson? person = await personManager.FindByNameAsync(userName) ?? await personManager.FindByIdAsync(userName);
+        ApplicationUser? person = await personManager.FindByNameAsync(userName) ?? await personManager.FindByIdAsync(userName);
         if (person == null)
             return new ActionResult<IEnumerable<MembershipModel>>([]);
 
@@ -217,7 +217,7 @@ public class PersonController(
         ///     通过NaturalPerson初始化自然人。
         /// </summary>
         /// <param name="person"></param>
-        public SuggestedPersonModel(NaturalPerson person)
+        public SuggestedPersonModel(ApplicationUser person)
             : this(person.UserName,
                 person.PersonName.FullName)
         {

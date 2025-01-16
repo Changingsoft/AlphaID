@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SecurityModel(NaturalPersonManager manager) : PageModel
+public class SecurityModel(ApplicationUserManager manager) : PageModel
 {
     public string OperationMessage = null!;
 
@@ -15,11 +15,11 @@ public class SecurityModel(NaturalPersonManager manager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Data { get; set; } = null!;
+    public ApplicationUser Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await manager.FindByIdAsync(Anchor);
         if (person == null) return NotFound();
 
         Data = person;
@@ -33,7 +33,7 @@ public class SecurityModel(NaturalPersonManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await manager.FindByIdAsync(Anchor);
         if (person == null) return NotFound();
 
         Data = person;

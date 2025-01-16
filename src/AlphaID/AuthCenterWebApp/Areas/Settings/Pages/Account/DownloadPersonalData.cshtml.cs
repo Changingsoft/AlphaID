@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DownloadPersonalDataModel(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
     private readonly JsonSerializerOptions serializerOptions = new()
@@ -26,13 +26,13 @@ public class DownloadPersonalDataModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(User));
 
         // Only include personal data for download
-        IEnumerable<PropertyInfo> personalDataProps = typeof(NaturalPerson).GetProperties()
+        IEnumerable<PropertyInfo> personalDataProps = typeof(ApplicationUser).GetProperties()
             .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
         Dictionary<string, object?> personalData =

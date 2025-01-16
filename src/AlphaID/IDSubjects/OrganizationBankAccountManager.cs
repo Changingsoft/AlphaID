@@ -13,7 +13,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public IEnumerable<OrganizationBankAccount> GetBankAccounts(GenericOrganization organization)
+    public IEnumerable<OrganizationBankAccount> GetBankAccounts(Organization organization)
     {
         return store.BankAccounts.Where(b => b.OrganizationId == organization.Id);
     }
@@ -22,7 +22,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public OrganizationBankAccount? GetDefault(GenericOrganization organization)
+    public OrganizationBankAccount? GetDefault(Organization organization)
     {
         return store.BankAccounts.FirstOrDefault(b => b.OrganizationId == organization.Id && b.Default);
     }
@@ -36,7 +36,7 @@ public class OrganizationBankAccountManager(IOrganizationBankAccountStore store)
     /// <param name="usage"></param>
     /// <param name="isDefault"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AddAsync(GenericOrganization organization,
+    public async Task<IdOperationResult> AddAsync(Organization organization,
         string accountNumber,
         string accountName,
         string bank,

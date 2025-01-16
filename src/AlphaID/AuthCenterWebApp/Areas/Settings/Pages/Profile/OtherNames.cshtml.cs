@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class OtherNamesModel(NaturalPersonManager personManager, NaturalPersonService naturalPersonService) : PageModel
+public class OtherNamesModel(ApplicationUserManager personManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     [Display(Name = "Nick name", Description = "2 to 10 characters. Leave blank to remove it.")]
@@ -18,7 +18,7 @@ public class OtherNamesModel(NaturalPersonManager personManager, NaturalPersonSe
 
     public async Task OnGet()
     {
-        NaturalPerson? person = await personManager.GetUserAsync(User);
+        ApplicationUser? person = await personManager.GetUserAsync(User);
         if (person == null)
             throw new InvalidOperationException("Can not find user.");
 
@@ -29,7 +29,7 @@ public class OtherNamesModel(NaturalPersonManager personManager, NaturalPersonSe
     {
         if (!ModelState.IsValid)
             return Page();
-        NaturalPerson? person = await personManager.GetUserAsync(User);
+        ApplicationUser? person = await personManager.GetUserAsync(User);
         if (person == null)
             throw new InvalidOperationException("Can not find user.");
         person.NickName = NickName;

@@ -133,11 +133,11 @@ platform.AddEntityFramework(options =>
     });
 });
 
-var identityBuilder = builder.Services.AddIdentity<NaturalPerson, IdentityRole>()
+var identityBuilder = builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders()
-    .AddUserManager<NaturalPersonManager>()
+    .AddUserManager<ApplicationUserManager>()
     .AddSignInManager<PersonSignInManager>()
-    .AddUserStore<NaturalPersonStore2>()
+    .AddUserStore<ApplicationUserStore>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
 var authBuilder = builder.Services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
@@ -215,7 +215,7 @@ builder.Services.AddIdentityServer(options =>
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         };
     })
-    .AddAspNetIdentity<NaturalPerson>()
+    .AddAspNetIdentity<ApplicationUser>()
     .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<IEventSink, AuditLogEventSink>();

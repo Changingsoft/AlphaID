@@ -6,10 +6,10 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     OrganizationMemberManager memberManager) : PageModel
 {
-    public GenericOrganization Organization { get; set; } = null!;
+    public Organization Organization { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
@@ -38,7 +38,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        GenericOrganization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
@@ -49,13 +49,13 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostAddMemberAsync(string anchor)
     {
-        GenericOrganization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
         Members = await memberManager.GetMembersAsync(org);
 
-        NaturalPerson? person = await personManager.FindByNameAsync(UserName);
+        ApplicationUser? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
         {
             ModelState.AddModelError(nameof(UserName), "找不到人员");
@@ -82,7 +82,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
     {
-        GenericOrganization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;

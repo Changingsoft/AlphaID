@@ -29,20 +29,20 @@ namespace IdSubjects;
 /// <param name="interceptors"></param>
 /// <param name="passwordHistoryManager"></param>
 /// <param name="eventService"></param>
-public class NaturalPersonManager(
-    INaturalPersonStore store,
+public class ApplicationUserManager(
+    IApplicationUserStore store,
     IOptions<IdSubjectsOptions> optionsAccessor,
-    IPasswordHasher<NaturalPerson> passwordHasher,
-    IEnumerable<IUserValidator<NaturalPerson>> userValidators,
-    IEnumerable<IPasswordValidator<NaturalPerson>> passwordValidators,
+    IPasswordHasher<ApplicationUser> passwordHasher,
+    IEnumerable<IUserValidator<ApplicationUser>> userValidators,
+    IEnumerable<IPasswordValidator<ApplicationUser>> passwordValidators,
     ILookupNormalizer keyNormalizer,
-    NaturalPersonIdentityErrorDescriber errors,
+    ApplicationUserIdentityErrorDescriber errors,
     IServiceProvider services,
-    ILogger<NaturalPersonManager> logger,
+    ILogger<ApplicationUserManager> logger,
     IEnumerable<IInterceptor> interceptors,
     PasswordHistoryManager passwordHistoryManager,
     IEventService eventService)
-    : UserManager<NaturalPerson>(store,
+    : UserManager<ApplicationUser>(store,
         optionsAccessor,
         passwordHasher,
         userValidators,
@@ -58,9 +58,9 @@ public class NaturalPersonManager(
     public new IdSubjectsOptions Options { get; set; } = optionsAccessor.Value;
 
     /// <summary>
-    ///     获取 INaturalPersonStore.
+    ///     获取 IApplicationUserStore.
     /// </summary>
-    public new INaturalPersonStore Store { get; } = store;
+    public new IApplicationUserStore Store { get; } = store;
 
     /// <summary>
     ///     获取拦截器。
@@ -69,7 +69,7 @@ public class NaturalPersonManager(
 
     /// <summary>
     /// </summary>
-    public new NaturalPersonIdentityErrorDescriber ErrorDescriber { get; } = errors;
+    public new ApplicationUserIdentityErrorDescriber ErrorDescriber { get; } = errors;
 
     /// <summary>
     ///     获取或设置时间提供器以便于可测试性。
@@ -92,12 +92,12 @@ public class NaturalPersonManager(
     /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准 E.164 格式。</param>
     /// <param name="cancellation"></param>
     /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
-    public virtual async Task<NaturalPerson?> FindByMobileAsync(string mobile, CancellationToken cancellation)
+    public virtual async Task<ApplicationUser?> FindByMobileAsync(string mobile, CancellationToken cancellation)
     {
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
             return null;
         string phoneNumberString = phoneNumber.ToString();
-        NaturalPerson? person = await Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
+        ApplicationUser? person = await Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
         return person;
     }
 
@@ -108,7 +108,7 @@ public class NaturalPersonManager(
     /// <param name="current"></param>
     /// <returns></returns>
     [Obsolete("此方法已过时，不在支持这种方式。")]
-    public virtual Task<NaturalPerson?> GetOriginalAsync(NaturalPerson current)
+    public virtual Task<ApplicationUser?> GetOriginalAsync(ApplicationUser current)
     {
         return Store.GetOriginalAsync(current, CancellationToken.None);
     }
@@ -118,7 +118,7 @@ public class NaturalPersonManager(
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> CreateAsync(NaturalPerson user)
+    public override async Task<IdentityResult> CreateAsync(ApplicationUser user)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
@@ -137,7 +137,7 @@ public class NaturalPersonManager(
     /// <param name="user"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> CreateAsync(NaturalPerson user, string password)
+    public override async Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
@@ -159,7 +159,7 @@ public class NaturalPersonManager(
     /// <param name="person"></param>
     /// <param name="authenticationMethod"></param>
     /// <returns></returns>
-    public virtual Task AccessSuccededAsync(NaturalPerson person, string authenticationMethod)
+    public virtual Task AccessSuccededAsync(ApplicationUser person, string authenticationMethod)
     {
         //todo 记录任何登录成功次数、上次登录时间，登录方式，登录IP等。
         Logger.LogInformation("用户{person}成功执行了登录，登录成功计数器+1，记录登录时间{time}，登录方式为：{authenticationMethod}", person,
@@ -172,7 +172,7 @@ public class NaturalPersonManager(
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    protected override Task<IdentityResult> UpdateUserAsync(NaturalPerson user)
+    protected override Task<IdentityResult> UpdateUserAsync(ApplicationUser user)
     {
         user.WhenChanged = TimeProvider.GetUtcNow();
         return base.UpdateUserAsync(user);
@@ -186,7 +186,7 @@ public class NaturalPersonManager(
     /// </remarks>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> UpdateAsync(NaturalPerson user)
+    public override async Task<IdentityResult> UpdateAsync(ApplicationUser user)
     {
 
         user.PersonWhenChanged = TimeProvider.GetUtcNow();
@@ -204,7 +204,7 @@ public class NaturalPersonManager(
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> DeleteAsync(NaturalPerson user)
+    public override async Task<IdentityResult> DeleteAsync(ApplicationUser user)
     {
         //正式执行删除。
         IdentityResult result = await base.DeleteAsync(user);
@@ -223,7 +223,7 @@ public class NaturalPersonManager(
     /// <param name="user"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> AddPasswordAsync(NaturalPerson user, string password)
+    public override async Task<IdentityResult> AddPasswordAsync(ApplicationUser user, string password)
     {
         //检查密码历史记录
         if (Options.Password.RememberPasswordHistory > 0)
@@ -250,7 +250,7 @@ public class NaturalPersonManager(
     /// <param name="currentPassword"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> ChangePasswordAsync(NaturalPerson user,
+    public override async Task<IdentityResult> ChangePasswordAsync(ApplicationUser user,
         string currentPassword,
         string newPassword)
     {
@@ -302,7 +302,7 @@ public class NaturalPersonManager(
     /// <param name="token"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> ResetPasswordAsync(NaturalPerson user, string token, string newPassword)
+    public override async Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword)
     {
         //重设密码是否受密码最短寿命限制？不受最短寿命限制。
         //检查密码历史记录
@@ -333,11 +333,11 @@ public class NaturalPersonManager(
 
     /// <summary>
     ///     已重写。移除本地登录密码。
-    ///     该方法还会清空<see cref="NaturalPerson.PasswordLastSet" />的值。
+    ///     该方法还会清空<see cref="ApplicationUser.PasswordLastSet" />的值。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public override async Task<IdentityResult> RemovePasswordAsync(NaturalPerson user)
+    public override async Task<IdentityResult> RemovePasswordAsync(ApplicationUser user)
     {
         user.PasswordLastSet = null;
         IdentityResult result = await base.RemovePasswordAsync(user);
@@ -354,7 +354,7 @@ public class NaturalPersonManager(
     }
 
     /// <inheritdoc />
-    protected override async Task<IdentityResult> UpdatePasswordHash(NaturalPerson user,
+    protected override async Task<IdentityResult> UpdatePasswordHash(ApplicationUser user,
         string newPassword,
         bool validatePassword)
     {
@@ -370,7 +370,7 @@ public class NaturalPersonManager(
     /// <param name="person"></param>
     /// <param name="personName"></param>
     /// <returns></returns>
-    public Task<IdentityResult> AdminChangePersonNameAsync(NaturalPerson person, PersonNameInfo personName)
+    public Task<IdentityResult> AdminChangePersonNameAsync(ApplicationUser person, PersonNameInfo personName)
     {
         person.PersonName = personName;
         return UpdateAsync(person);
@@ -385,7 +385,7 @@ public class NaturalPersonManager(
     /// <param name="mustChangePassword"></param>
     /// <param name="unlockUser"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> AdminResetPasswordAsync(NaturalPerson person,
+    public virtual async Task<IdentityResult> AdminResetPasswordAsync(ApplicationUser person,
         string newPassword,
         bool mustChangePassword,
         bool unlockUser)
@@ -414,7 +414,7 @@ public class NaturalPersonManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> UnlockUserAsync(NaturalPerson person)
+    public virtual async Task<IdentityResult> UnlockUserAsync(ApplicationUser person)
     {
         Logger.LogDebug("正在解锁用户{user}", person);
         if (await IsLockedOutAsync(person)) return await SetLockoutEndDateAsync(person, null);
@@ -428,7 +428,7 @@ public class NaturalPersonManager(
     /// <param name="user"></param>
     /// <param name="tzName"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> SetTimeZone(NaturalPerson user, string tzName)
+    public virtual async Task<IdentityResult> SetTimeZone(ApplicationUser user, string tzName)
     {
         string? ianaTimeZoneName = null;
         if (TZConvert.KnownWindowsTimeZoneIds.Contains(tzName))
@@ -452,7 +452,7 @@ public class NaturalPersonManager(
     /// <param name="contentType"></param>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> SetProfilePictureAsync(NaturalPerson person,
+    public virtual async Task<IdentityResult> SetProfilePictureAsync(ApplicationUser person,
         string contentType,
         byte[] bytes)
     {
@@ -476,7 +476,7 @@ public class NaturalPersonManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> ClearProfilePictureAsync(NaturalPerson person)
+    public virtual async Task<IdentityResult> ClearProfilePictureAsync(ApplicationUser person)
     {
         person.ProfilePicture = null;
         IdentityResult result = await UpdateAsync(person);
@@ -488,7 +488,7 @@ public class NaturalPersonManager(
     }
 
     /// <inheritdoc />
-    public override async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson user, string? phoneNumber)
+    public override async Task<IdentityResult> SetPhoneNumberAsync(ApplicationUser user, string? phoneNumber)
     {
         IdentityResult result = await base.SetPhoneNumberAsync(user, phoneNumber);
         if (!result.Succeeded) return result;

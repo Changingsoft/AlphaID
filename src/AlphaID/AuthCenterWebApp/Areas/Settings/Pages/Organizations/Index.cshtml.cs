@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
-public class IndexModel(OrganizationMemberManager memberManager, NaturalPersonManager personManager) : PageModel
+public class IndexModel(OrganizationMemberManager memberManager, ApplicationUserManager personManager) : PageModel
 {
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
@@ -13,7 +13,7 @@ public class IndexModel(OrganizationMemberManager memberManager, NaturalPersonMa
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await personManager.GetUserAsync(User);
+        ApplicationUser? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
 
         Members = await memberManager.GetMembersOfAsync(person);
@@ -22,7 +22,7 @@ public class IndexModel(OrganizationMemberManager memberManager, NaturalPersonMa
 
     public async Task<IActionResult> OnPostLeaveAsync(string organizationId)
     {
-        NaturalPerson? person = await personManager.GetUserAsync(User);
+        ApplicationUser? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
         Members = await memberManager.GetMembersOfAsync(person);
         OrganizationMember? member = Members.FirstOrDefault(m => m.OrganizationId == organizationId);

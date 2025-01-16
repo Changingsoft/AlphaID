@@ -16,8 +16,8 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class LoginWith2FaModel(
-    SignInManager<NaturalPerson> signInManager,
-    NaturalPersonManager userManager,
+    SignInManager<ApplicationUser> signInManager,
+    ApplicationUserManager userManager,
     ILogger<LoginWith2FaModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel
@@ -47,7 +47,7 @@ public class LoginWith2FaModel(
         returnUrl ??= Url.Content("~/");
         AuthorizationRequest context = await interactionService.GetAuthorizationContextAsync(returnUrl);
 
-        NaturalPerson user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
+        ApplicationUser user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
                              throw new InvalidOperationException("Unable to load two-factor authentication user.");
         string authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 

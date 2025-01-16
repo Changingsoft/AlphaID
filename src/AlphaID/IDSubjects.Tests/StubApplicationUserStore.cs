@@ -3,34 +3,34 @@ using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Tests;
 
-public class StubNaturalPersonStore(IdentityErrorDescriber describer)
-    : UserStoreBase<NaturalPerson, string, IdentityUserClaim<string>, IdentityUserLogin<string>,
-        IdentityUserToken<string>>(describer), INaturalPersonStore
+public class StubApplicationUserStore(IdentityErrorDescriber describer)
+    : UserStoreBase<ApplicationUser, string, IdentityUserClaim<string>, IdentityUserLogin<string>,
+        IdentityUserToken<string>>(describer), IApplicationUserStore
 {
-    private readonly HashSet<NaturalPerson> _set = [];
-    private readonly HashSet<NaturalPerson> _trackedSet = [];
+    private readonly HashSet<ApplicationUser> _set = [];
+    private readonly HashSet<ApplicationUser> _trackedSet = [];
 
-    public override IQueryable<NaturalPerson> Users => _set.AsQueryable();
+    public override IQueryable<ApplicationUser> Users => _set.AsQueryable();
 
 
-    public override Task<IdentityResult> CreateAsync(NaturalPerson user, CancellationToken cancellationToken = default)
+    public override Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken = default)
     {
         _trackedSet.Add(user);
         _set.Add(Clone(user)!);
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public override Task<IdentityResult> DeleteAsync(NaturalPerson user, CancellationToken cancellationToken = default)
+    public override Task<IdentityResult> DeleteAsync(ApplicationUser user, CancellationToken cancellationToken = default)
     {
         _trackedSet.Remove(user);
-        NaturalPerson origin = _set.Single(p => p.Id == user.Id);
+        ApplicationUser origin = _set.Single(p => p.Id == user.Id);
         _set.Remove(origin);
         return Task.FromResult(IdentityResult.Success);
     }
 
-    public override Task<NaturalPerson?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken = default)
+    public override Task<ApplicationUser?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken = default)
     {
-        NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail);
+        ApplicationUser? result = _trackedSet.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail);
         result ??= Clone(_set.FirstOrDefault(p => p.NormalizedEmail == normalizedEmail));
 
         if (result != null)
@@ -38,9 +38,9 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         return Task.FromResult(result);
     }
 
-    public Task<NaturalPerson?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+    public Task<ApplicationUser?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
     {
-        NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
+        ApplicationUser? result = _trackedSet.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
         result ??= Clone(_set.FirstOrDefault(p => p.PhoneNumber == phoneNumber));
 
         if (result != null)
@@ -48,14 +48,14 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         return Task.FromResult(result);
     }
 
-    public Task<NaturalPerson?> GetOriginalAsync(NaturalPerson person, CancellationToken cancellationToken = default)
+    public Task<ApplicationUser?> GetOriginalAsync(ApplicationUser person, CancellationToken cancellationToken = default)
     {
         return Task.FromResult(_set.FirstOrDefault(p => p.Id == person.Id));
     }
 
-    public override Task<NaturalPerson?> FindByIdAsync(string userId, CancellationToken cancellationToken = default)
+    public override Task<ApplicationUser?> FindByIdAsync(string userId, CancellationToken cancellationToken = default)
     {
-        NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.Id == userId);
+        ApplicationUser? result = _trackedSet.FirstOrDefault(p => p.Id == userId);
         if (result == null)
         {
             result = Clone(_set.FirstOrDefault(p => p.Id == userId));
@@ -66,9 +66,9 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         return Task.FromResult(result);
     }
 
-    public override Task<NaturalPerson?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken = default)
+    public override Task<ApplicationUser?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken = default)
     {
-        NaturalPerson? result = _trackedSet.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName);
+        ApplicationUser? result = _trackedSet.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName);
         result ??= Clone(_set.FirstOrDefault(p => p.NormalizedUserName == normalizedUserName));
 
         if (result != null)
@@ -76,7 +76,7 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         return Task.FromResult(result);
     }
 
-    protected override Task<NaturalPerson?> FindUserAsync(string userId, CancellationToken cancellationToken)
+    protected override Task<ApplicationUser?> FindUserAsync(string userId, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
@@ -91,19 +91,19 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         throw new NotImplementedException();
     }
 
-    public override Task<IList<Claim>> GetClaimsAsync(NaturalPerson user, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IList<Claim>> GetClaimsAsync(ApplicationUser user, CancellationToken cancellationToken = new CancellationToken())
     {
         throw new NotImplementedException();
     }
 
-    public override Task AddClaimsAsync(NaturalPerson user,
+    public override Task AddClaimsAsync(ApplicationUser user,
         IEnumerable<Claim> claims,
         CancellationToken cancellationToken = new CancellationToken())
     {
         throw new NotImplementedException();
     }
 
-    public override Task ReplaceClaimAsync(NaturalPerson user,
+    public override Task ReplaceClaimAsync(ApplicationUser user,
         Claim claim,
         Claim newClaim,
         CancellationToken cancellationToken = new CancellationToken())
@@ -111,19 +111,19 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         throw new NotImplementedException();
     }
 
-    public override Task RemoveClaimsAsync(NaturalPerson user,
+    public override Task RemoveClaimsAsync(ApplicationUser user,
         IEnumerable<Claim> claims,
         CancellationToken cancellationToken = new CancellationToken())
     {
         throw new NotImplementedException();
     }
 
-    public override Task<IList<NaturalPerson>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IList<ApplicationUser>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken = new CancellationToken())
     {
         throw new NotImplementedException();
     }
 
-    protected override Task<IdentityUserToken<string>?> FindTokenAsync(NaturalPerson user, string loginProvider, string name, CancellationToken cancellationToken)
+    protected override Task<IdentityUserToken<string>?> FindTokenAsync(ApplicationUser user, string loginProvider, string name, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
@@ -138,14 +138,14 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         throw new NotImplementedException();
     }
 
-    public override Task AddLoginAsync(NaturalPerson user,
+    public override Task AddLoginAsync(ApplicationUser user,
         UserLoginInfo login,
         CancellationToken cancellationToken = new CancellationToken())
     {
         throw new NotImplementedException();
     }
 
-    public override Task RemoveLoginAsync(NaturalPerson user,
+    public override Task RemoveLoginAsync(ApplicationUser user,
         string loginProvider,
         string providerKey,
         CancellationToken cancellationToken = new CancellationToken())
@@ -153,17 +153,17 @@ public class StubNaturalPersonStore(IdentityErrorDescriber describer)
         throw new NotImplementedException();
     }
 
-    public override Task<IList<UserLoginInfo>> GetLoginsAsync(NaturalPerson user, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IList<UserLoginInfo>> GetLoginsAsync(ApplicationUser user, CancellationToken cancellationToken = new CancellationToken())
     {
         throw new NotImplementedException();
     }
 
 
-    public override Task<IdentityResult> UpdateAsync(NaturalPerson user, CancellationToken cancellationToken = default)
+    public override Task<IdentityResult> UpdateAsync(ApplicationUser user, CancellationToken cancellationToken = default)
     {
         _trackedSet.Add(user);
 
-        NaturalPerson? found = _set.FirstOrDefault(p => p.Id == user.Id);
+        ApplicationUser? found = _set.FirstOrDefault(p => p.Id == user.Id);
         if (found != null)
         {
             _set.Remove(found);

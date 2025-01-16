@@ -30,12 +30,12 @@ public static class IdSubjectsServiceCollectionExtensions
         services.AddHttpContextAccessor();
 
         // 由IdSubjects使用的服务。
-        services.TryAddScoped<NaturalPersonManager>();
+        services.TryAddScoped<ApplicationUserManager>();
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
-        services.TryAddScoped<NaturalPersonIdentityErrorDescriber>();
-        services.TryAddScoped<PersonBankAccountManager>();
+        services.TryAddScoped<ApplicationUserIdentityErrorDescriber>();
+        services.TryAddScoped<ApplicationUserBankAccountManager>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
         services.TryAddScoped<OrganizationBankAccountManager>();
         services.TryAddScoped<OrganizationIdentifierManager>();
@@ -46,8 +46,8 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<IEventSink, DefaultEventSink>();
 
         //添加基础标识
-        IdentityBuilder identityBuilder = services.AddIdentityCore<NaturalPerson>()
-                .AddUserManager<NaturalPersonManager>()
+        IdentityBuilder identityBuilder = services.AddIdentityCore<ApplicationUser>()
+                .AddUserManager<ApplicationUserManager>()
                 .AddUserValidator<PhoneNumberValidator>();
 
         if (setupAction != null) services.Configure(setupAction);

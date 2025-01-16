@@ -22,11 +22,11 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class SignUpModel(
     NaturalPersonService naturalPersonService,
-    NaturalPersonManager naturalPersonManager,
+    ApplicationUserManager applicationUserManager,
     IVerificationCodeService verificationCodeService,
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,
-    SignInManager<NaturalPerson> signInManager,
+    SignInManager<ApplicationUser> signInManager,
     IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -102,14 +102,14 @@ public class SignUpModel(
             chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
         var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
         string userName = Input.Email ?? phoneNumber.PhoneNumber;
-        var personBuilder = new PersonBuilder(userName,
+        var personBuilder = new ApplicationUserBuilder(userName,
             new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
         if (Input.Email != null)
             personBuilder.SetEmail(Input.Email);
 
-        NaturalPerson person = personBuilder.Build();
+        ApplicationUser person = personBuilder.Build();
 
         person.DateOfBirth = Input.DateOfBirth;
         person.Gender = Input.Sex;
@@ -123,7 +123,7 @@ public class SignUpModel(
                 Claim userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
                                     externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
                                     throw new Exception("Unknown userid");
-                await naturalPersonManager.AddLoginAsync(person,
+                await applicationUserManager.AddLoginAsync(person,
                     new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value,
                         externalLoginResult.Properties.Items["schemeDisplayName"]));
             }

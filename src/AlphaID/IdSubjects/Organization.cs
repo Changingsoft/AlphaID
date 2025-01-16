@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
@@ -12,18 +12,18 @@ namespace IdSubjects;
 [Index(nameof(Name))]
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
-public class GenericOrganization
+public class Organization
 {
     /// <summary>
     ///     for persistence.
     /// </summary>
-    protected internal GenericOrganization()
+    protected internal Organization()
     {
     }
 
     /// <summary>
     /// </summary>
-    public GenericOrganization(string name)
+    public Organization(string name)
     {
         Name = name;
     }

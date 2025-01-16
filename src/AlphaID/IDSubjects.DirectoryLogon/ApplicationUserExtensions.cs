@@ -9,7 +9,7 @@ namespace IdSubjects.DirectoryLogon;
 /// <summary>
 ///    自然人扩展。
 /// </summary>
-public static class NaturalPersonExtensions
+public static class ApplicationUserExtensions
 {
     /// <summary>
     ///    应用自然人信息到用户主体。
@@ -17,7 +17,7 @@ public static class NaturalPersonExtensions
     /// <param name="person"></param>
     /// <param name="userPrincipal"></param>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public static void ApplyTo(this NaturalPerson person, UserPrincipal userPrincipal)
+    public static void ApplyTo(this ApplicationUser person, UserPrincipal userPrincipal)
     {
         userPrincipal.EmailAddress = person.Email;
         userPrincipal.GivenName = person.PersonName.GivenName;

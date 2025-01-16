@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security;
 
-public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPersonManager personManager) : PageModel
+public class RoleMembersModel(UserInRoleManager userInRoleManager, ApplicationUserManager personManager) : PageModel
 {
     public IEnumerable<UserInRole>? RoleMembers { get; set; }
 
@@ -26,7 +26,7 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, NaturalPerson
 
     public async Task<IActionResult> OnPostAddMemberAsync(string role)
     {
-        NaturalPerson person = await personManager.FindByNameAsync(Input.UserName) ??
+        ApplicationUser person = await personManager.FindByNameAsync(Input.UserName) ??
                                throw new InvalidOperationException("User cannot found.");
         await userInRoleManager.AddRole(person.Id, role);
         Input = null!;

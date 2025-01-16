@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class IndexModel(NaturalPersonManager userManager) : PageModel
+public class IndexModel(ApplicationUserManager userManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = null!;
+    public ApplicationUser Data { get; set; } = null!;
 
     public bool HasPassword { get; set; }
 
@@ -17,7 +17,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -33,7 +33,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

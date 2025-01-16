@@ -14,12 +14,12 @@ namespace IdSubjects.DirectoryLogon;
 /// <remarks>
 ///     Init.
 /// </remarks>
-/// <param name="naturalPersonManager"></param>
+/// <param name="applicationUserManager"></param>
 /// <param name="directoryAccountStore"></param>
 /// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
 public class DirectoryAccountManager(
-    NaturalPersonManager naturalPersonManager,
+    ApplicationUserManager applicationUserManager,
     IDirectoryAccountStore directoryAccountStore,
     IEnumerable<ISubjectGenerator> subjectGenerators,
     ILogger<DirectoryAccountManager>? logger = null)
@@ -31,7 +31,7 @@ public class DirectoryAccountManager(
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public async Task<IdOperationResult> CreateAsync(DirectoryAccount account)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(account.PersonId);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(account.PersonId);
         if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
         using PrincipalContext context = account.DirectoryServiceDescriptor.GetUserContainerContext();
         UserPrincipal newAccount = new(context)
@@ -87,7 +87,7 @@ public class DirectoryAccountManager(
                         : subjectGenerators.First();
 
                 string providerKey = generator.Generate(p);
-                IdentityResult identityResult = await naturalPersonManager.AddLoginAsync(person,
+                IdentityResult identityResult = await applicationUserManager.AddLoginAsync(person,
                     new UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey,
                         account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
                 if (!identityResult.Succeeded)
@@ -149,7 +149,7 @@ public class DirectoryAccountManager(
     public async Task<IdOperationResult> BindExistsAccount(DirectoryAccount account,
         string entryObjectGuid)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(account.PersonId);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(account.PersonId);
         if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
 
         using PrincipalContext context = account.DirectoryServiceDescriptor.GetRootContext();
@@ -184,7 +184,7 @@ public class DirectoryAccountManager(
                         account.DirectoryServiceDescriptor.ExternalLoginProvider.SubjectGenerator)
                     : subjectGenerators.First();
             string providerKey = generator.Generate(principal);
-            IdentityResult identityResult = await naturalPersonManager.AddLoginAsync(person,
+            IdentityResult identityResult = await applicationUserManager.AddLoginAsync(person,
                 new UserLoginInfo(account.DirectoryServiceDescriptor.ExternalLoginProvider.Name, providerKey,
                     account.DirectoryServiceDescriptor.ExternalLoginProvider.DisplayName));
             if (!identityResult.Succeeded)
@@ -203,7 +203,7 @@ public class DirectoryAccountManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public IEnumerable<DirectoryAccount> GetLogonAccounts(NaturalPerson person)
+    public IEnumerable<DirectoryAccount> GetLogonAccounts(ApplicationUser person)
     {
         return directoryAccountStore.Accounts.Where(p => p.PersonId == person.Id);
     }

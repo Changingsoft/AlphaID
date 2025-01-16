@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class IndexModel(DirectoryAccountManager directoryAccountManager, NaturalPersonManager naturalPersonManager)
+public class IndexModel(DirectoryAccountManager directoryAccountManager, ApplicationUserManager applicationUserManager)
     : PageModel
 {
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public IEnumerable<DirectoryAccount> DirectoryAccounts { get; set; } = [];
 
     public async Task OnGet()
     {
-        Person = await naturalPersonManager.GetUserAsync(User) ?? throw new InvalidOperationException("找不到用户。");
+        Person = await applicationUserManager.GetUserAsync(User) ?? throw new InvalidOperationException("找不到用户。");
         DirectoryAccounts = directoryAccountManager.GetLogonAccounts(Person);
     }
 }

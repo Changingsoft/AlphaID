@@ -7,16 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
+public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
-    public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = null!;
+    public DbSet<ApplicationUserBankAccount> PersonBankAccounts { get; protected set; } = null!;
 
     public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = null!;
 
     /// <summary>
     ///     Organizations.
     /// </summary>
-    public DbSet<GenericOrganization> Organizations { get; protected set; } = null!;
+    public DbSet<Organization> Organizations { get; protected set; } = null!;
 
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = null!;
 
@@ -30,9 +30,9 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     {
         base.OnModelCreating(builder);
         //Rename table name.
-        builder.Entity<NaturalPerson>(b =>
+        builder.Entity<ApplicationUser>(b =>
         {
-            b.ToTable("NaturalPerson");
+            b.ToTable("ApplicationUser");
             b.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.PasswordHash).HasMaxLength(100).IsUnicode(false);
             b.Property(p => p.SecurityStamp).HasMaxLength(50).IsUnicode(false);
@@ -41,7 +41,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
         });
         builder.Entity<IdentityUserLogin<string>>(b =>
         {
-            b.ToTable("NaturalPersonLogin");
+            b.ToTable("ApplicationUserLogin");
             b.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.ProviderKey).HasMaxLength(256).IsUnicode(false);
             b.Property(p => p.ProviderDisplayName).HasMaxLength(50);
@@ -49,7 +49,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
         });
         builder.Entity<IdentityUserToken<string>>(b =>
         {
-            b.ToTable("NaturalPersonToken");
+            b.ToTable("ApplicationUserToken");
             b.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.LoginProvider).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.Name).HasMaxLength(50);
@@ -57,13 +57,13 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
         });
         builder.Entity<IdentityUserRole<string>>(b =>
         {
-            b.ToTable("UserInRole");
+            b.ToTable("ApplicationUserInRole");
             b.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.RoleId).HasMaxLength(50).IsUnicode(false);
         });
         builder.Entity<IdentityUserClaim<string>>(b =>
         {
-            b.ToTable("NaturalPersonClaim");
+            b.ToTable("ApplicationUserClaim");
             b.Property(p => p.ClaimType).HasMaxLength(256).IsUnicode(false);
             b.Property(p => p.ClaimValue).HasMaxLength(50);
         });

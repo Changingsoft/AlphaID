@@ -10,13 +10,13 @@ namespace AuthCenterWebApp.Services;
 ///     自然人登录管理器。继承自<see cref="SignInManager{TUser}"></see>
 /// </summary>
 public class PersonSignInManager(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     IHttpContextAccessor contextAccessor,
-    IUserClaimsPrincipalFactory<NaturalPerson> claimsFactory,
+    IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
     IOptions<IdentityOptions> optionsAccessor,
-    ILogger<SignInManager<NaturalPerson>> logger,
+    ILogger<SignInManager<ApplicationUser>> logger,
     IAuthenticationSchemeProvider schemes,
-    IUserConfirmation<NaturalPerson> confirmation) : SignInManager<NaturalPerson>(userManager,
+    IUserConfirmation<ApplicationUser> confirmation) : SignInManager<ApplicationUser>(userManager,
     contextAccessor,
     claimsFactory,
     optionsAccessor,
@@ -33,7 +33,7 @@ public class PersonSignInManager(
     /// <param name="password">密码</param>
     /// <param name="lockoutOnFailure">指示登录失败时是否锁定。</param>
     /// <returns></returns>
-    public override async Task<SignInResult> CheckPasswordSignInAsync(NaturalPerson user,
+    public override async Task<SignInResult> CheckPasswordSignInAsync(ApplicationUser user,
         string password,
         bool lockoutOnFailure)
     {
@@ -56,7 +56,7 @@ public class PersonSignInManager(
         return result;
     }
 
-    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
+    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(ApplicationUser person)
     {
         var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));

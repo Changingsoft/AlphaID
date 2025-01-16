@@ -4,7 +4,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 public class IndexModel(IOrganizationStore organizationStore) : PageModel
 {
-    public IEnumerable<GenericOrganization> Last10Orgs { get; set; } = null!;
+    public IEnumerable<Organization> Last10Orgs { get; set; } = null!;
 
     public int OrgCount { get; set; }
 

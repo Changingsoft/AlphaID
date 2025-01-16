@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class MobileModel(NaturalPersonManager userManager, IVerificationCodeService verificationCodeService) : PageModel
+public class MobileModel(ApplicationUserManager userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = null!;
@@ -32,7 +32,7 @@ public class MobileModel(NaturalPersonManager userManager, IVerificationCodeServ
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
+        ApplicationUser? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
             return BadRequest("无法处理用户Id.");
 
@@ -45,7 +45,7 @@ public class MobileModel(NaturalPersonManager userManager, IVerificationCodeServ
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
+        ApplicationUser? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
             return BadRequest("无法处理用户Id.");
 

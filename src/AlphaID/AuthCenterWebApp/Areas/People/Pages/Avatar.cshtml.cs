@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
-public class AvatarModel(NaturalPersonManager personManager) : PageModel
+public class AvatarModel(ApplicationUserManager personManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person =
+        ApplicationUser? person =
             await personManager.FindByNameAsync(anchor) ?? await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();

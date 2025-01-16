@@ -11,7 +11,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
 
     public async Task<IActionResult> OnGetAsync(string anchor, string personId)
     {
-        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = await memberManager.GetMembersAsync(org);
@@ -32,7 +32,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
 
     public async Task<IActionResult> OnPostAsync(string anchor, string personId)
     {
-        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = await memberManager.GetMembersAsync(org);

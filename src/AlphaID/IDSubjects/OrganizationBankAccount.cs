@@ -24,7 +24,7 @@ public class OrganizationBankAccount
     /// <param name="accountNumber"></param>
     /// <param name="accountName"></param>
     /// <param name="bankName"></param>
-    internal OrganizationBankAccount(GenericOrganization organization,
+    internal OrganizationBankAccount(Organization organization,
         string accountNumber,
         string accountName,
         string? bankName)
@@ -74,5 +74,5 @@ public class OrganizationBankAccount
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public GenericOrganization Organization { get; protected set; } = null!;
+    public Organization Organization { get; protected set; } = null!;
 }

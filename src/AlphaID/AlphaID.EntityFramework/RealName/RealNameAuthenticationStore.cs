@@ -40,7 +40,7 @@ internal class RealNameAuthenticationStore(RealNameDbContext dbContext) : IRealN
         return IdOperationResult.Success;
     }
 
-    public IQueryable<RealNameAuthentication> FindByPerson(NaturalPerson person)
+    public IQueryable<RealNameAuthentication> FindByPerson(ApplicationUser person)
     {
         return dbContext.RealNameAuthentications.Where(a => a.PersonId == person.Id);
     }

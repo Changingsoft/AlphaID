@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Components;
 
-public class PeopleNavPanel(NaturalPersonManager personManager) : ViewComponent
+public class PeopleNavPanel(ApplicationUserManager personManager) : ViewComponent
 {
     public IViewComponentResult Invoke()
     {

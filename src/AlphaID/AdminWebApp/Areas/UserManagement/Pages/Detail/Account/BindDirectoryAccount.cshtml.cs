@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class BindDirectoryAccountModel(
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     DirectoryAccountManager directoryAccountManager,
     DirectoryServiceManager directoryServiceManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public IEnumerable<DirectorySearchItem> SearchItems { get; set; } = [];
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -26,7 +26,7 @@ public class BindDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostSearchAsync(string anchor, int serviceId, string keywords)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -41,7 +41,7 @@ public class BindDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostBindAsync(string anchor, int serviceId, Guid entryGuid)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;

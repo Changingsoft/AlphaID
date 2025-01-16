@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class EmailModel(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     IEmailSender emailSender,
     IOptions<ProductInfo> production) : PageModel
 {
@@ -29,7 +29,7 @@ public class EmailModel(
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    private async Task LoadAsync(NaturalPerson user)
+    private async Task LoadAsync(ApplicationUser user)
     {
         string? email = await userManager.GetEmailAsync(user);
         Email = email;
@@ -44,7 +44,7 @@ public class EmailModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await LoadAsync(user);
@@ -53,7 +53,7 @@ public class EmailModel(
 
     public async Task<IActionResult> OnPostChangeEmailAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)
@@ -89,7 +89,7 @@ public class EmailModel(
 
     public async Task<IActionResult> OnPostSendVerificationEmailAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)

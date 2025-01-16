@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class IndexModel(
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = null!;
 
@@ -23,7 +23,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -33,13 +33,13 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
         OrganizationMembers = await memberManager.GetMembersOfAsync(person);
 
-        GenericOrganization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
+        Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
         if (org == null)
         {
             ModelState.AddModelError(nameof(Input.OrganizationId), "Organization Not Found.");
@@ -67,7 +67,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;

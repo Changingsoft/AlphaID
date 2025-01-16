@@ -7,9 +7,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 public class IndexModel(
     OrganizationMemberManager organizationMemberManager,
     OrganizationManager organizationManager,
-    NaturalPersonManager personManager) : PageModel
+    ApplicationUserManager personManager) : PageModel
 {
-    public GenericOrganization Organization { get; set; } = null!;
+    public IdSubjects.Organization Organization { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> Members { get; set; } = [];
 
@@ -19,13 +19,13 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
         Organization = organization;
 
-        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        ApplicationUser? visitor = await personManager.GetUserAsync(User);
 
 
         Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
@@ -35,13 +35,13 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
         Organization = organization;
 
-        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        ApplicationUser? visitor = await personManager.GetUserAsync(User);
 
         Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
@@ -62,13 +62,13 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
         Organization = organization;
 
-        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        ApplicationUser? visitor = await personManager.GetUserAsync(User);
 
         Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
@@ -89,13 +89,13 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
         Organization = organization;
 
-        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        ApplicationUser? visitor = await personManager.GetUserAsync(User);
 
         Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);

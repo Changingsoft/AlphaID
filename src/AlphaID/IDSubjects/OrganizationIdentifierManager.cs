@@ -49,7 +49,7 @@ public class OrganizationIdentifierManager(
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public IEnumerable<OrganizationIdentifier> GetIdentifiers(GenericOrganization organization)
+    public IEnumerable<OrganizationIdentifier> GetIdentifiers(Organization organization)
     {
         return store.Identifiers.Where(i => i.OrganizationId == organization.Id);
     }

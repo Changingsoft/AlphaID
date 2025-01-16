@@ -34,7 +34,7 @@
 		<None Update="TestingData\DirectoryLogonData\202304211625.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="TestingData\IDSubjectsDbContext\202303291105.sql">
+		<None Update="TestingData\IdSubjectsDbContext\202303291105.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="TestingData\PersistedGrantDbContext\202303281103.sql">
@@ -48,6 +48,7 @@
 	<ItemGroup>
 		<Folder Include="Migrations\AdminWebAppDb\" />
 		<Folder Include="Migrations\DirectoryLogonDb\" />
+		<Folder Include="Migrations\IdSubjectsDb\" />
 		<Folder Include="Migrations\PersistedGrantDb\" />
 		<Folder Include="Migrations\RealNameDb\" />
 		<Folder Include="TestingData\AdminWebAppData\" />

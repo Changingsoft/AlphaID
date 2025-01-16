@@ -19,7 +19,7 @@ namespace AlphaIdWebAPI.Controllers;
 public class OrganizationController(
     IOrganizationStore organizationStore,
     OrganizationMemberManager memberManager,
-    NaturalPersonManager personManager) : ControllerBase
+    ApplicationUserManager personManager) : ControllerBase
 {
     /// <summary>
     ///     获取组织信息。
@@ -29,7 +29,7 @@ public class OrganizationController(
     [HttpGet("{id}")]
     public async Task<ActionResult<OrganizationModel>> GetAsync(string id)
     {
-        GenericOrganization? org = await organizationStore.FindByIdAsync(id);
+        Organization? org = await organizationStore.FindByIdAsync(id);
         return org == null ? NotFound() : new OrganizationModel(org);
     }
 
@@ -41,13 +41,13 @@ public class OrganizationController(
     [HttpGet("{id}/Members")]
     public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
     {
-        NaturalPerson? visitor = null;
+        ApplicationUser? visitor = null;
         string? visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
             visitor = await personManager.FindByIdAsync(User.SubjectId()!);
 
         //todo 从令牌确定访问者。
-        GenericOrganization? org = await organizationStore.FindByIdAsync(id);
+        Organization? org = await organizationStore.FindByIdAsync(id);
         if (org == null)
             return [];
         IEnumerable<OrganizationMember> members = await memberManager.GetVisibleMembersAsync(org, visitor);
@@ -67,7 +67,7 @@ public class OrganizationController(
     [AllowAnonymous]
     public IEnumerable<OrganizationModel> Search(string q)
     {
-        IQueryable<GenericOrganization> searchResults =
+        IQueryable<Organization> searchResults =
             organizationStore.Organizations.Where(p => p.Name.Contains(q) && p.Enabled);
 
         IQueryable<OrganizationModel> result = searchResults.Take(50).Select(p => new OrganizationModel(p));
@@ -99,7 +99,7 @@ public class OrganizationController(
     }
 
     /// <summary>
-    ///     GenericOrganization.
+    ///     Organization.
     /// </summary>
     /// <param name="SubjectId">Id</param>
     /// <param name="Name">名称。</param>
@@ -116,7 +116,7 @@ public class OrganizationController(
         /// <summary>
         /// </summary>
         /// <param name="organization"></param>
-        public OrganizationModel(GenericOrganization organization)
+        public OrganizationModel(Organization organization)
             : this(organization.Id,
                 organization.Name,
                 organization.Domicile,

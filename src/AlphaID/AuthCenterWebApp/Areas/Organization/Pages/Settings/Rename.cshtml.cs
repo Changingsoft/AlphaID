@@ -16,7 +16,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -26,7 +26,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();

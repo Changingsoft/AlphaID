@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PersonalInfoModel(NaturalPersonManager personManager, NaturalPersonService naturalPersonService) : PageModel
+public class PersonalInfoModel(ApplicationUserManager personManager, NaturalPersonService naturalPersonService) : PageModel
 {
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -17,7 +17,7 @@ public class PersonalInfoModel(NaturalPersonManager personManager, NaturalPerson
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -31,7 +31,7 @@ public class PersonalInfoModel(NaturalPersonManager personManager, NaturalPerson
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;

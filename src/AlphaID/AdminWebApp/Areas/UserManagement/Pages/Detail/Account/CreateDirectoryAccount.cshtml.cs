@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 public class CreateDirectoryAccountModel(
     DirectoryServiceManager directoryServiceManager,
     DirectoryAccountManager directoryAccountManager,
-    NaturalPersonManager naturalPersonManager) : PageModel
+    ApplicationUserManager applicationUserManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
@@ -17,7 +17,7 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -44,7 +44,7 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

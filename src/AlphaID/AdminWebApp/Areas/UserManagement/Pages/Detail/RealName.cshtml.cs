@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class RealNameModel(NaturalPersonManager userManager, RealNameManager realNameManager) : PageModel
+public class RealNameModel(ApplicationUserManager userManager, RealNameManager realNameManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = null!;
+    public ApplicationUser Data { get; set; } = null!;
 
     public IEnumerable<RealNameAuthentication> RealNameAuthentications { get; set; } = [];
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

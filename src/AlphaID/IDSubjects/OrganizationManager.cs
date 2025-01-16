@@ -1,7 +1,7 @@
 ﻿namespace IdSubjects;
 
 /// <summary>
-///     GenericOrganization Manager
+///     Organization Manager
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -10,7 +10,7 @@ public class OrganizationManager(IOrganizationStore store)
 {
     /// <summary>
     /// </summary>
-    public IQueryable<GenericOrganization> Organizations => Store.Organizations;
+    public IQueryable<Organization> Organizations => Store.Organizations;
 
     /// <summary>
     ///     获取组织存取器。
@@ -24,7 +24,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> CreateAsync(GenericOrganization org)
+    public Task<IdOperationResult> CreateAsync(Organization org)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
@@ -38,9 +38,9 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="name"></param>
     /// <returns></returns>
     [Obsolete("该方法查询的组织不具有跟踪能力，无法用于更改。应使用FindByName")]
-    public IEnumerable<GenericOrganization> SearchByName(string name)
+    public IEnumerable<Organization> SearchByName(string name)
     {
-        IQueryable<GenericOrganization> results = Store.Organizations.Where(o => o.Name == name);
+        IQueryable<Organization> results = Store.Organizations.Where(o => o.Name == name);
         return results;
     }
 
@@ -48,7 +48,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public virtual IEnumerable<GenericOrganization> FindByName(string name)
+    public virtual IEnumerable<Organization> FindByName(string name)
     {
         return Store.FindByName(name);
     }
@@ -59,9 +59,9 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="name">组织的完整名称。</param>
     /// <param name="organization">如果未找到组织，该值为null，如果找到1个组织，该值为该组织，如果找到多个组织，该值为第一个组织。</param>
     /// <returns>如果未找到组织或找到了单个组织，则返回true，否则返回false。</returns>
-    public bool TryFindSingleOrDefaultByName(string name, out GenericOrganization? organization)
+    public bool TryFindSingleOrDefaultByName(string name, out Organization? organization)
     {
-        GenericOrganization[] result = Store.FindByName(name).ToArray();
+        Organization[] result = Store.FindByName(name).ToArray();
         switch (result.Length)
         {
             case 0:
@@ -77,11 +77,11 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    ///     Delete GenericOrganization.
+    ///     Delete Organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> DeleteAsync(GenericOrganization organization)
+    public Task<IdOperationResult> DeleteAsync(Organization organization)
     {
         return Store.DeleteAsync(organization);
     }
@@ -91,7 +91,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task<GenericOrganization?> FindByIdAsync(string id)
+    public Task<Organization?> FindByIdAsync(string id)
     {
         return Store.FindByIdAsync(id);
     }
@@ -101,7 +101,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GenericOrganization? FindById(string id)
+    public Organization? FindById(string id)
     {
         return Store.FindById(id);
     }
@@ -111,7 +111,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> UpdateAsync(GenericOrganization org)
+    public Task<IdOperationResult> UpdateAsync(Organization org)
     {
         org.WhenChanged = TimeProvider.GetUtcNow();
         return Store.UpdateAsync(org);
@@ -127,7 +127,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="applyChangeWhenDuplicated">即便名称重复也要更改。默认为false。</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<IdOperationResult> ChangeNameAsync(GenericOrganization org,
+    public async Task<IdOperationResult> ChangeNameAsync(Organization org,
         string newName,
         DateOnly changeDate,
         bool recordUsedName,

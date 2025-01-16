@@ -13,7 +13,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public IActionResult OnGet(string anchor)
         {
-            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
                 return RedirectToPage("../Who", new { anchor });
             if (organization == null)
                 return NotFound();
@@ -23,7 +23,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public async Task<IActionResult> OnPostRevoke(string anchor, int invitationId)
         {
-            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
                 return RedirectToPage("../Who", new { anchor });
             if (organization == null)
                 return NotFound();

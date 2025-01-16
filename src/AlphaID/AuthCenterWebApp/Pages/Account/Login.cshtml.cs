@@ -22,8 +22,8 @@ public class LoginModel(
     IAuthenticationSchemeProvider schemeProvider,
     IIdentityProviderStore identityProviderStore,
     IEventService events,
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
     IOptions<LoginOptions> loginOptions) : PageModel
 {
     public ViewModel View { get; set; } = null!;
@@ -75,7 +75,7 @@ public class LoginModel(
         if (ModelState.IsValid)
         {
             //登录过程。
-            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Username)
+            ApplicationUser? user = await userManager.FindByEmailAsync(Input.Username)
                                   ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
                                   ?? await userManager.FindByNameAsync(Input.Username);
             if (user != null)

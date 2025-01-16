@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.RealName;
+namespace IdSubjects.RealName;
 
 /// <summary>
 ///     实名认证存取器接口。
@@ -43,7 +43,7 @@ public interface IRealNameAuthenticationStore
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    IQueryable<RealNameAuthentication> FindByPerson(NaturalPerson person);
+    IQueryable<RealNameAuthentication> FindByPerson(ApplicationUser person);
 
     /// <summary>
     ///     查找指定Id的实名认证信息。

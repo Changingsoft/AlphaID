@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
-public class AuthenticationModel(RealNameManager realNameManager, NaturalPersonManager naturalPersonManager) : PageModel
+public class AuthenticationModel(RealNameManager realNameManager, ApplicationUserManager applicationUserManager) : PageModel
 {
     public RealNameAuthentication Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string id)
     {
-        NaturalPerson? person = await naturalPersonManager.GetUserAsync(User);
+        ApplicationUser? person = await applicationUserManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
         IEnumerable<RealNameAuthentication> authentications = realNameManager.GetAuthentications(person);

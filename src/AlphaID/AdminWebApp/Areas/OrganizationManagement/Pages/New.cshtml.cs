@@ -47,7 +47,7 @@ public class NewModel(OrganizationManager manager) : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        IEnumerable<GenericOrganization> nameExists = manager.FindByName(Name);
+        IEnumerable<Organization> nameExists = manager.FindByName(Name);
         if (nameExists.Any())
             if (!RegisterWithSameNameAnyway)
             {
@@ -57,7 +57,7 @@ public class NewModel(OrganizationManager manager) : PageModel
 
         var factory = new OrganizationBuilder(Name);
 
-        GenericOrganization org = factory.Organization;
+        Organization org = factory.Organization;
         org.Domicile = Domicile;
         org.Representative = LegalPersonName;
         org.EstablishedAt = EstablishedAt;

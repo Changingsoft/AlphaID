@@ -20,7 +20,7 @@ public class AddModel(OrganizationIdentifierManager identifierManager, Organizat
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -29,7 +29,7 @@ public class AddModel(OrganizationIdentifierManager identifierManager, Organizat
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();

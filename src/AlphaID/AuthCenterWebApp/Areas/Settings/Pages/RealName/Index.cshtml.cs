@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
 public class IndexModel(
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     RealNameManager realNameManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {
@@ -17,7 +17,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await personManager.GetUserAsync(User);
+        ApplicationUser? person = await personManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
         Authentications = realNameManager.GetAuthentications(person);

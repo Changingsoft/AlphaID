@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class TwoFactorAuthenticationModel(
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager) : PageModel
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager) : PageModel
 {
     public bool HasAuthenticator { get; set; }
 
@@ -25,7 +25,7 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         HasAuthenticator = await userManager.GetAuthenticatorKeyAsync(user) != null;
@@ -38,7 +38,7 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await signInManager.ForgetTwoFactorClientAsync();

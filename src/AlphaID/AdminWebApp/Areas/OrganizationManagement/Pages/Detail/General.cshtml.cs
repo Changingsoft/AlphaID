@@ -13,7 +13,7 @@ public class GeneralModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        GenericOrganization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
 
@@ -33,7 +33,7 @@ public class GeneralModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        GenericOrganization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
 

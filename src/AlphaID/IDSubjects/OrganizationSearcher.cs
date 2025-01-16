@@ -14,15 +14,15 @@ public class OrganizationSearcher(IOrganizationStore organizationStore)
     /// </summary>
     /// <param name="keywords"></param>
     /// <returns></returns>
-    public IEnumerable<GenericOrganization> Search(string keywords)
+    public IEnumerable<Organization> Search(string keywords)
     {
         keywords = keywords.Trim();
         if (string.IsNullOrEmpty(keywords))
             return [];
 
-        var result = new HashSet<GenericOrganization>();
+        var result = new HashSet<Organization>();
 
-        IQueryable<GenericOrganization> mainResult = organizationStore.Organizations.Where(p =>
+        IQueryable<Organization> mainResult = organizationStore.Organizations.Where(p =>
             p.Name.Contains(keywords) || p.UsedNames.Any(n => n.Name.Contains(keywords)));
 
         result.UnionWith(mainResult);

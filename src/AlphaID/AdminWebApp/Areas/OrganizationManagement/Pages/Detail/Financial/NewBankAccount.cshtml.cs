@@ -15,7 +15,7 @@ public class NewBankAccountModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
 
@@ -24,7 +24,7 @@ public class NewBankAccountModel(
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        GenericOrganization? org = await organizationManager.FindByIdAsync(anchor);
+        Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
 

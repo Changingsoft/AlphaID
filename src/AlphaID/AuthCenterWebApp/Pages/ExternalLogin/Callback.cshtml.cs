@@ -19,8 +19,8 @@ public class Callback(
     IIdentityServerInteractionService interaction,
     IEventService events,
     ILogger<Callback> logger,
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager) : PageModel
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
@@ -49,7 +49,7 @@ public class Callback(
         string providerUserId = userIdClaim.Value;
         string returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 
-        NaturalPerson? user = await userManager.FindByLoginAsync(provider, providerUserId);
+        ApplicationUser? user = await userManager.FindByLoginAsync(provider, providerUserId);
         if (user == null) return RedirectToPage("/Account/BindLogin", new { returnUrl });
 
         // this allows us to collect any additional claims or properties

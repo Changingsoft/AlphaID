@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.IDSubjectsDb
+namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -13,26 +13,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "JoinOrganizationInvitation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InviteeId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    WhenExpired = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Inviter = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ExpectVisibility = table.Column<int>(type: "int", nullable: false),
-                    Accepted = table.Column<bool>(type: "bit", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JoinOrganizationInvitation", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NaturalPerson",
+                name: "ApplicationUser",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
@@ -83,7 +64,26 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaturalPerson", x => x.Id);
+                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JoinOrganizationInvitation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InviteeId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    WhenCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    WhenExpired = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Inviter = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ExpectVisibility = table.Column<int>(type: "int", nullable: false),
+                    Accepted = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JoinOrganizationInvitation", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,7 +149,27 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "NaturalPersonClaim",
+                name: "ApplicationUserBankAccount",
+                columns: table => new
+                {
+                    AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserBankAccount", x => new { x.AccountNumber, x.PersonId });
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserBankAccount_ApplicationUser_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "ApplicationUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ApplicationUserClaim",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -160,17 +180,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaturalPersonClaim", x => x.Id);
+                    table.PrimaryKey("PK_ApplicationUserClaim", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NaturalPersonClaim_NaturalPerson_UserId",
+                        name: "FK_ApplicationUserClaim_ApplicationUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "NaturalPerson",
+                        principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NaturalPersonLogin",
+                name: "ApplicationUserLogin",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
@@ -180,17 +200,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaturalPersonLogin", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_ApplicationUserLogin", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_NaturalPersonLogin_NaturalPerson_UserId",
+                        name: "FK_ApplicationUserLogin_ApplicationUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "NaturalPerson",
+                        principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NaturalPersonToken",
+                name: "ApplicationUserToken",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
@@ -200,31 +220,11 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaturalPersonToken", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_ApplicationUserToken", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_NaturalPersonToken_NaturalPerson_UserId",
+                        name: "FK_ApplicationUserToken_ApplicationUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PersonBankAccount",
-                columns: table => new
-                {
-                    AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonBankAccount", x => new { x.AccountNumber, x.PersonId });
-                    table.ForeignKey(
-                        name: "FK_PersonBankAccount_NaturalPerson_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "NaturalPerson",
+                        principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -286,9 +286,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 {
                     table.PrimaryKey("PK_OrganizationMember", x => new { x.PersonId, x.OrganizationId });
                     table.ForeignKey(
-                        name: "FK_OrganizationMember_NaturalPerson_PersonId",
+                        name: "FK_OrganizationMember_ApplicationUser_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "NaturalPerson",
+                        principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -321,6 +321,30 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "ApplicationUserInRole",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    RoleId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserInRole", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserInRole_ApplicationUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "ApplicationUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserInRole_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoleClaim",
                 columns: table => new
                 {
@@ -341,70 +365,56 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "UserInRole",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    RoleId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserInRole", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_UserInRole_NaturalPerson_UserId",
-                        column: x => x.UserId,
-                        principalTable: "NaturalPerson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserInRole_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "NaturalPerson",
+                table: "ApplicationUser",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_PersonName_FullName",
-                table: "NaturalPerson",
+                name: "IX_ApplicationUser_PersonName_FullName",
+                table: "ApplicationUser",
                 column: "PersonName_FullName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_PersonName_SearchHint",
-                table: "NaturalPerson",
+                name: "IX_ApplicationUser_PersonName_SearchHint",
+                table: "ApplicationUser",
                 column: "PersonName_SearchHint");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_WhenChanged",
-                table: "NaturalPerson",
+                name: "IX_ApplicationUser_WhenChanged",
+                table: "ApplicationUser",
                 column: "WhenChanged");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPerson_WhenCreated",
-                table: "NaturalPerson",
+                name: "IX_ApplicationUser_WhenCreated",
+                table: "ApplicationUser",
                 column: "WhenCreated");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "NaturalPerson",
+                table: "ApplicationUser",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPersonClaim_UserId",
-                table: "NaturalPersonClaim",
+                name: "IX_ApplicationUserBankAccount_PersonId",
+                table: "ApplicationUserBankAccount",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserClaim_UserId",
+                table: "ApplicationUserClaim",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NaturalPersonLogin_UserId",
-                table: "NaturalPersonLogin",
+                name: "IX_ApplicationUserInRole_RoleId",
+                table: "ApplicationUserInRole",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserLogin_UserId",
+                table: "ApplicationUserLogin",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -448,11 +458,6 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 column: "WhenCreated");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonBankAccount_PersonId",
-                table: "PersonBankAccount",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "Role",
                 column: "NormalizedName",
@@ -463,27 +468,28 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 name: "IX_RoleClaim_RoleId",
                 table: "RoleClaim",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserInRole_RoleId",
-                table: "UserInRole",
-                column: "RoleId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ApplicationUserBankAccount");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationUserClaim");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationUserInRole");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationUserLogin");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationUserToken");
+
+            migrationBuilder.DropTable(
                 name: "JoinOrganizationInvitation");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPersonClaim");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPersonLogin");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPersonToken");
 
             migrationBuilder.DropTable(
                 name: "OrganizationBankAccount");
@@ -501,19 +507,13 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                 name: "PasswordHistory");
 
             migrationBuilder.DropTable(
-                name: "PersonBankAccount");
-
-            migrationBuilder.DropTable(
                 name: "RoleClaim");
 
             migrationBuilder.DropTable(
-                name: "UserInRole");
+                name: "ApplicationUser");
 
             migrationBuilder.DropTable(
                 name: "Organization");
-
-            migrationBuilder.DropTable(
-                name: "NaturalPerson");
 
             migrationBuilder.DropTable(
                 name: "Role");

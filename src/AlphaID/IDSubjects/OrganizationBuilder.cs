@@ -11,7 +11,7 @@ public class OrganizationBuilder
     /// <param name="name"></param>
     public OrganizationBuilder(string name)
     {
-        Organization = new GenericOrganization
+        Organization = new Organization
         {
             Name = name.Trim()
         };
@@ -20,5 +20,5 @@ public class OrganizationBuilder
     /// <summary>
     ///     获取此构建器所构建的组织。
     /// </summary>
-    public GenericOrganization Organization { get; }
+    public Organization Organization { get; }
 }

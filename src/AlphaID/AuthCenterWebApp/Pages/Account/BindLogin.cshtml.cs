@@ -22,8 +22,8 @@ public class BindLoginModel(
     IAuthenticationSchemeProvider schemeProvider,
     IIdentityProviderStore identityProviderStore,
     IEventService events,
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
     IOptions<LoginOptions> loginOptions) : PageModel
 {
     public ViewModel View { get; set; } = null!;
@@ -78,7 +78,7 @@ public class BindLoginModel(
                 throw new Exception("无效的外部登录");
 
             //登录过程。
-            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Username)
+            ApplicationUser? user = await userManager.FindByEmailAsync(Input.Username)
                                   ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
                                   ?? await userManager.FindByNameAsync(Input.Username);
             if (user != null)
@@ -250,7 +250,7 @@ public class BindLoginModel(
     }
 
 
-    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
+    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(ApplicationUser person)
     {
         var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));

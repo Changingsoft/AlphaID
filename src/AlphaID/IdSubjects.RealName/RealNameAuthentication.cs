@@ -75,7 +75,7 @@ public abstract class RealNameAuthentication
     ///     将实名认证信息应用到自然人。
     /// </summary>
     /// <param name="person"></param>
-    public virtual void ApplyToPerson(NaturalPerson person)
+    public virtual void ApplyToPerson(ApplicationUser person)
     {
         person.PersonName = PersonName;
     }

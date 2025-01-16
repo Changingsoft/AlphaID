@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(OrganizationMemberManager memberManager, NaturalPersonManager naturalPersonManager) : PageModel
+public class OfModel(OrganizationMemberManager memberManager, ApplicationUserManager applicationUserManager) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 
@@ -20,7 +20,7 @@ public class OfModel(OrganizationMemberManager memberManager, NaturalPersonManag
 
     public async Task<IActionResult> OnGetAsync(string anchor, string orgId)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(person);
@@ -41,7 +41,7 @@ public class OfModel(OrganizationMemberManager memberManager, NaturalPersonManag
 
     public async Task<IActionResult> OnPostAsync(string anchor, string orgId)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(person);

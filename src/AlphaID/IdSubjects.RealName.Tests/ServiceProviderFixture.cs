@@ -1,4 +1,4 @@
-﻿using IdSubjects.DependencyInjection;
+using IdSubjects.DependencyInjection;
 using IdSubjects.Tests;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +10,7 @@ public class ServiceProviderFixture
     {
         var services = new ServiceCollection();
         IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects()
-            .AddPersonStore<StubNaturalPersonStore>()
+            .AddPersonStore<StubApplicationUserStore>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
         idSubjectsBuilder.AddRealName()
             .AddRealNameAuthenticationStore<StubRealNameAuthenticationStore>()

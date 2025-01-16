@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class FindPasswordByMobileModel(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
@@ -34,7 +34,7 @@ public class FindPasswordByMobileModel(
         string code = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         var normalPhoneNumber = phoneNumber.ToString();
 
-        NaturalPerson? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
+        ApplicationUser? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
             //²»Ö´ÐÐ²Ù×÷
             return RedirectToPage("ResetPasswordMobile", new { code, phone = Mobile });

@@ -1,7 +1,7 @@
 ﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
-///     Provide GenericOrganization info.
+///     Provide Organization info.
 /// </summary>
 public interface IOrganizationInfoProvider
 {

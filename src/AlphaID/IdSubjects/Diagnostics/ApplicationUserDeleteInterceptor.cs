@@ -4,17 +4,14 @@ namespace IdSubjects.Diagnostics;
 
 /// <summary>
 /// </summary>
-public abstract class NaturalPersonCreateInterceptor : INaturalPersonCreateInterceptor
+public abstract class ApplicationUserDeleteInterceptor : IApplicationUserDeleteInterceptor
 {
     /// <summary>
     /// </summary>
     /// <param name="personManager"></param>
     /// <param name="person"></param>
-    /// <param name="password"></param>
     /// <returns></returns>
-    public virtual Task<IdentityResult> PreCreateAsync(NaturalPersonManager personManager,
-        NaturalPerson person,
-        string? password = null)
+    public virtual Task<IdentityResult> PreDeleteAsync(ApplicationUserManager personManager, ApplicationUser person)
     {
         return Task.FromResult(IdentityResult.Success);
     }
@@ -24,7 +21,7 @@ public abstract class NaturalPersonCreateInterceptor : INaturalPersonCreateInter
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PostCreateAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task PostDeleteAsync(ApplicationUserManager personManager, ApplicationUser person)
     {
         return Task.CompletedTask;
     }

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,13 +7,13 @@ namespace IdSubjects.Payments;
 /// <summary>
 ///     银行账户。
 /// </summary>
-[Table("PersonBankAccount")]
+[Table("ApplicationUserBankAccount")]
 [PrimaryKey(nameof(AccountNumber), nameof(PersonId))]
-public class PersonBankAccount
+public class ApplicationUserBankAccount
 {
     /// <summary>
     /// </summary>
-    protected internal PersonBankAccount()
+    protected internal ApplicationUserBankAccount()
     {
     }
 
@@ -23,7 +23,7 @@ public class PersonBankAccount
     /// <param name="accountNumber"></param>
     /// <param name="accountName"></param>
     /// <param name="bankName"></param>
-    public PersonBankAccount(string accountNumber, string? accountName, string? bankName)
+    public ApplicationUserBankAccount(string accountNumber, string? accountName, string? bankName)
     {
         AccountNumber = accountNumber;
         AccountName = accountName;
@@ -59,5 +59,5 @@ public class PersonBankAccount
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public virtual NaturalPerson Person { get; protected internal set; } = null!;
+    public virtual ApplicationUser Person { get; protected internal set; } = null!;
 }

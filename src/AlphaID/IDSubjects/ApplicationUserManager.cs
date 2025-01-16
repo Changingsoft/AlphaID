@@ -482,7 +482,7 @@ where T : ApplicationUser
         IdentityResult result = await base.SetPhoneNumberAsync(user, phoneNumber);
         if (!result.Succeeded) return result;
 
-        //todo 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
+        //todo: 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
         user.PhoneNumberConfirmed = true;
         return await UpdateUserAsync(user);
     }

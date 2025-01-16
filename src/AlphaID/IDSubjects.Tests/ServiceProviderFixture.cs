@@ -8,7 +8,7 @@ public class ServiceProviderFixture : IDisposable
     {
         var services = new ServiceCollection();
 
-        services.AddIdSubjects()
+        services.AddIdSubjects<ApplicationUser>()
             .AddPersonStore<StubApplicationUserStore, ApplicationUser>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
 

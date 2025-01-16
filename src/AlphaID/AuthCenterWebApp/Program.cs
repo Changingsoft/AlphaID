@@ -6,7 +6,6 @@ using AlphaId.EntityFramework.RealName;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
-using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
@@ -121,8 +120,6 @@ builder.Services.AddRazorPages(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 
-builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-
 //Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
@@ -133,19 +130,17 @@ platform.AddEntityFramework(options =>
     });
 });
 
-var identityBuilder = builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
+builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
+var identityBuilder = builder.Services.AddIdSubjectsIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders()
-    .AddUserManager<ApplicationUserManager<ApplicationUser>>()
     .AddSignInManager<PersonSignInManager>()
     .AddUserStore<ApplicationUserStore>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
-var authBuilder = builder.Services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
-{
-    o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
-    o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-});
 
+//配置外部登录。
+var authBuilder = builder.Services.AddAuthentication();
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))

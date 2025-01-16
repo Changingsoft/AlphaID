@@ -1,5 +1,6 @@
 using AlphaIdPlatform.DependencyInjection;
 using AlphaIdPlatform.Identity;
+using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 
@@ -22,7 +23,7 @@ public static class ServiceCollectionExtensions
     public static AlphaIdPlatformBuilder AddAlphaIdPlatform(this IServiceCollection services)
     {
         //Add required services
-        var idSubjectsBuilder = services.AddIdSubjects();
+        var idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>();
         var directoryLoginBuilder = idSubjectsBuilder.AddDirectoryLogin();
         var realnameBuilder = idSubjectsBuilder.AddRealName();
         var auditLogBuilder = services.AddAuditLog();

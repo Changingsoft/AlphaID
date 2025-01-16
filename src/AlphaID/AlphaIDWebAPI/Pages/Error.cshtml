@@ -1,0 +1,17 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewBag.Title = "Error!";
+}
+
+<h1 class="text-danger">Error！:-(</h1>
+<h2 class="text-danger">Errors occurred when process requests.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<p>Contact administrator, or retry again later.</p>

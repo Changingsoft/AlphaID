@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Diagnostics;
 
 /// <summary>
 ///     自然人拦截器接口。
 /// </summary>
-public interface INaturalPersonUpdateInterceptor : IInterceptor
+public interface IApplicationUserUpdateInterceptor : IInterceptor
 {
     /// <summary>
     ///     在更新自然人之前调用。

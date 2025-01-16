@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 namespace IdSubjects;
 
 /// <summary>
-///     一个关于NaturalPerson的组合接口以便于实现NaturalPersonStore.
+///     一个关于ApplicationUser的组合接口以便于实现ApplicationUserStore.
 /// </summary>
 public interface IApplicationUserStore :
     IUserStore<ApplicationUser>

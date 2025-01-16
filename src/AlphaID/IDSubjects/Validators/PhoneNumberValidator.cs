@@ -1,4 +1,4 @@
-﻿using IdSubjects.Subjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Validators;
@@ -18,7 +18,7 @@ public class PhoneNumberValidator : IUserValidator<ApplicationUser>
     {
         ApplicationUserManager applicationUserManager = manager as ApplicationUserManager ??
                                                     throw new InvalidOperationException(
-                                                        "无法转换UserManger到NaturalPersonManager。");
+                                                        "无法转换UserManger到ApplicationUserManager。");
         var errors = new List<IdentityError>();
         string? phoneNumber = await applicationUserManager.GetPhoneNumberAsync(user);
         if (phoneNumber == null) return errors.Count > 0 ? IdentityResult.Failed([.. errors]) : IdentityResult.Success;

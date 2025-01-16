@@ -10,10 +10,10 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.IDSubjectsDb
+namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20241229153659_Init")]
+    [Migration("20250116034537_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AlphaId.EntityFramework.PasswordHistory", b =>
+            modelBuilder.Entity("AlphaId.EntityFramework.IdSubjects.PasswordHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,117 +56,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.ToTable("PasswordHistory");
                 });
 
-            modelBuilder.Entity("IdSubjects.GenericOrganization", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Contact")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Domicile")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateOnly?>("EstablishedAt")
-                        .HasColumnType("date");
-
-                    b.Property<Geometry>("Location")
-                        .HasColumnType("geography");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Representative")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<DateOnly?>("TermBegin")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("TermEnd")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Website")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTimeOffset>("WhenChanged")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset>("WhenCreated")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name");
-
-                    b.HasIndex("WhenChanged");
-
-                    b.HasIndex("WhenCreated");
-
-                    b.ToTable("Organization");
-                });
-
-            modelBuilder.Entity("IdSubjects.Invitations.JoinOrganizationInvitation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("Accepted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ExpectVisibility")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InviteeId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Inviter")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("OrganizationId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTimeOffset>("WhenCreated")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset>("WhenExpired")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("JoinOrganizationInvitation");
-                });
-
-            modelBuilder.Entity("IdSubjects.NaturalPerson", b =>
+            modelBuilder.Entity("IdSubjects.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -296,7 +186,117 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.HasIndex("WhenCreated");
 
-                    b.ToTable("NaturalPerson", (string)null);
+                    b.ToTable("ApplicationUser", (string)null);
+                });
+
+            modelBuilder.Entity("IdSubjects.Invitations.JoinOrganizationInvitation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ExpectVisibility")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InviteeId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Inviter")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OrganizationId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("WhenExpired")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JoinOrganizationInvitation");
+                });
+
+            modelBuilder.Entity("IdSubjects.Organization", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Contact")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Domicile")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly?>("EstablishedAt")
+                        .HasColumnType("date");
+
+                    b.Property<Geometry>("Location")
+                        .HasColumnType("geography");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Representative")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateOnly?>("TermBegin")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("TermEnd")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTimeOffset>("WhenChanged")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("WhenCreated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("WhenChanged");
+
+                    b.HasIndex("WhenCreated");
+
+                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("IdSubjects.OrganizationBankAccount", b =>
@@ -422,7 +422,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.ToTable("OrganizationUsedName");
                 });
 
-            modelBuilder.Entity("IdSubjects.Payments.PersonBankAccount", b =>
+            modelBuilder.Entity("IdSubjects.Payments.ApplicationUserBankAccount", b =>
                 {
                     b.Property<string>("AccountNumber")
                         .HasMaxLength(50)
@@ -446,7 +446,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("PersonBankAccount");
+                    b.ToTable("ApplicationUserBankAccount");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -533,7 +533,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("NaturalPersonClaim", (string)null);
+                    b.ToTable("ApplicationUserClaim", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -562,7 +562,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("NaturalPersonLogin", (string)null);
+                    b.ToTable("ApplicationUserLogin", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -581,7 +581,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserInRole", (string)null);
+                    b.ToTable("ApplicationUserInRole", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -607,87 +607,14 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("NaturalPersonToken", (string)null);
+                    b.ToTable("ApplicationUserToken", (string)null);
                 });
 
-            modelBuilder.Entity("IdSubjects.GenericOrganization", b =>
-                {
-                    b.OwnsOne("IdSubjects.FapiaoInfo", "Fapiao", b1 =>
-                        {
-                            b1.Property<string>("GenericOrganizationId")
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("Account")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Address")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Bank")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Contact")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("TaxPayerId")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.HasKey("GenericOrganizationId");
-
-                            b1.ToTable("Organization");
-
-                            b1.WithOwner()
-                                .HasForeignKey("GenericOrganizationId");
-                        });
-
-                    b.OwnsOne("IdSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
-                        {
-                            b1.Property<string>("GenericOrganizationId")
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<byte[]>("Data")
-                                .IsRequired()
-                                .HasColumnType("varbinary(max)");
-
-                            b1.Property<string>("MimeType")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(100)");
-
-                            b1.HasKey("GenericOrganizationId");
-
-                            b1.ToTable("Organization");
-
-                            b1.WithOwner()
-                                .HasForeignKey("GenericOrganizationId");
-                        });
-
-                    b.Navigation("Fapiao");
-
-                    b.Navigation("ProfilePicture");
-                });
-
-            modelBuilder.Entity("IdSubjects.NaturalPerson", b =>
+            modelBuilder.Entity("IdSubjects.ApplicationUser", b =>
                 {
                     b.OwnsOne("IdSubjects.AddressInfo", "Address", b1 =>
                         {
-                            b1.Property<string>("NaturalPersonId")
+                            b1.Property<string>("ApplicationUserId")
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("Contact")
@@ -732,17 +659,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
-                            b1.HasKey("NaturalPersonId");
+                            b1.HasKey("ApplicationUserId");
 
-                            b1.ToTable("NaturalPerson");
+                            b1.ToTable("ApplicationUser");
 
                             b1.WithOwner()
-                                .HasForeignKey("NaturalPersonId");
+                                .HasForeignKey("ApplicationUserId");
                         });
 
                     b.OwnsOne("IdSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
                         {
-                            b1.Property<string>("NaturalPersonId")
+                            b1.Property<string>("ApplicationUserId")
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<byte[]>("Data")
@@ -755,17 +682,17 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(100)");
 
-                            b1.HasKey("NaturalPersonId");
+                            b1.HasKey("ApplicationUserId");
 
-                            b1.ToTable("NaturalPerson");
+                            b1.ToTable("ApplicationUser");
 
                             b1.WithOwner()
-                                .HasForeignKey("NaturalPersonId");
+                                .HasForeignKey("ApplicationUserId");
                         });
 
                     b.OwnsOne("IdSubjects.PersonNameInfo", "PersonName", b1 =>
                         {
-                            b1.Property<string>("NaturalPersonId")
+                            b1.Property<string>("ApplicationUserId")
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("FullName")
@@ -789,16 +716,16 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
-                            b1.HasKey("NaturalPersonId");
+                            b1.HasKey("ApplicationUserId");
 
                             b1.HasIndex("FullName");
 
                             b1.HasIndex("SearchHint");
 
-                            b1.ToTable("NaturalPerson");
+                            b1.ToTable("ApplicationUser");
 
                             b1.WithOwner()
-                                .HasForeignKey("NaturalPersonId");
+                                .HasForeignKey("ApplicationUserId");
                         });
 
                     b.Navigation("Address");
@@ -809,9 +736,82 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Navigation("ProfilePicture");
                 });
 
+            modelBuilder.Entity("IdSubjects.Organization", b =>
+                {
+                    b.OwnsOne("IdSubjects.FapiaoInfo", "Fapiao", b1 =>
+                        {
+                            b1.Property<string>("OrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("Account")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Bank")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Contact")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("TaxPayerId")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.HasKey("OrganizationId");
+
+                            b1.ToTable("Organization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrganizationId");
+                        });
+
+                    b.OwnsOne("IdSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
+                        {
+                            b1.Property<string>("OrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("MimeType")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(100)");
+
+                            b1.HasKey("OrganizationId");
+
+                            b1.ToTable("Organization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrganizationId");
+                        });
+
+                    b.Navigation("Fapiao");
+
+                    b.Navigation("ProfilePicture");
+                });
+
             modelBuilder.Entity("IdSubjects.OrganizationBankAccount", b =>
                 {
-                    b.HasOne("IdSubjects.GenericOrganization", "Organization")
+                    b.HasOne("IdSubjects.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -822,7 +822,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("IdSubjects.OrganizationIdentifier", b =>
                 {
-                    b.HasOne("IdSubjects.GenericOrganization", "Organization")
+                    b.HasOne("IdSubjects.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -833,13 +833,13 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("IdSubjects.OrganizationMember", b =>
                 {
-                    b.HasOne("IdSubjects.GenericOrganization", "Organization")
+                    b.HasOne("IdSubjects.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdSubjects.NaturalPerson", "Person")
+                    b.HasOne("IdSubjects.ApplicationUser", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -852,7 +852,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("IdSubjects.OrganizationUsedName", b =>
                 {
-                    b.HasOne("IdSubjects.GenericOrganization", "Organization")
+                    b.HasOne("IdSubjects.Organization", "Organization")
                         .WithMany("UsedNames")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -861,9 +861,9 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("IdSubjects.Payments.PersonBankAccount", b =>
+            modelBuilder.Entity("IdSubjects.Payments.ApplicationUserBankAccount", b =>
                 {
-                    b.HasOne("IdSubjects.NaturalPerson", "Person")
+                    b.HasOne("IdSubjects.ApplicationUser", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -883,7 +883,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("IdSubjects.NaturalPerson", null)
+                    b.HasOne("IdSubjects.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -892,7 +892,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("IdSubjects.NaturalPerson", null)
+                    b.HasOne("IdSubjects.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -907,7 +907,7 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdSubjects.NaturalPerson", null)
+                    b.HasOne("IdSubjects.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -916,14 +916,14 @@ namespace DatabaseTool.Migrations.IDSubjectsDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("IdSubjects.NaturalPerson", null)
+                    b.HasOne("IdSubjects.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdSubjects.GenericOrganization", b =>
+            modelBuilder.Entity("IdSubjects.Organization", b =>
                 {
                     b.Navigation("UsedNames");
                 });

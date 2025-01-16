@@ -7,7 +7,7 @@ namespace IdSubjects.Payments;
 /// <summary>
 ///     银行账户。
 /// </summary>
-[Table("PersonBankAccount")]
+[Table("ApplicationUserBankAccount")]
 [PrimaryKey(nameof(AccountNumber), nameof(PersonId))]
 public class ApplicationUserBankAccount
 {

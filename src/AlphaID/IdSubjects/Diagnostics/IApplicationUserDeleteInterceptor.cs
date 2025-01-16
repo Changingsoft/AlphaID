@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Diagnostics;
 
 /// <summary>
 /// </summary>
-public interface INaturalPersonDeleteInterceptor : IInterceptor
+public interface IApplicationUserDeleteInterceptor : IInterceptor
 {
     /// <summary>
     ///     在删除自然人之前调用。

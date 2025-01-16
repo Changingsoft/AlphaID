@@ -9,7 +9,7 @@ namespace IdSubjects.DirectoryLogon;
 /// <summary>
 ///    自然人扩展。
 /// </summary>
-public static class NaturalPersonExtensions
+public static class ApplicationUserExtensions
 {
     /// <summary>
     ///    应用自然人信息到用户主体。

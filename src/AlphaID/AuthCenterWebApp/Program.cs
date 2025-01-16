@@ -137,7 +137,7 @@ var identityBuilder = builder.Services.AddIdentity<ApplicationUser, IdentityRole
     .AddDefaultTokenProviders()
     .AddUserManager<ApplicationUserManager>()
     .AddSignInManager<PersonSignInManager>()
-    .AddUserStore<ApplicationUserStore2>()
+    .AddUserStore<ApplicationUserStore>()
     .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
 var authBuilder = builder.Services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>

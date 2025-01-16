@@ -13,7 +13,7 @@ public static class IdSubjectsBuilderExtensions
     /// <returns></returns>
     public static IdSubjectsBuilder AddDefaultStores(this IdSubjectsBuilder builder)
     {
-        builder.AddPersonStore<ApplicationUserStore2>();
+        builder.AddPersonStore<ApplicationUserStore>();
         builder.AddOrganizationStore<OrganizationStore>();
         builder.AddOrganizationMemberStore<OrganizationMemberStore>();
         builder.AddPasswordHistoryStore<PasswordHistoryStore>();

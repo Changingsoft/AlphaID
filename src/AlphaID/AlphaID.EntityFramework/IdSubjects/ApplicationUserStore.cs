@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-public class ApplicationUserStore2(IdSubjectsDbContext context, IdentityErrorDescriber? describer = null)
+public class ApplicationUserStore(IdSubjectsDbContext context, IdentityErrorDescriber? describer = null)
     : UserStore<ApplicationUser>(context, describer), IApplicationUserStore
 {
     public async Task<ApplicationUser?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)

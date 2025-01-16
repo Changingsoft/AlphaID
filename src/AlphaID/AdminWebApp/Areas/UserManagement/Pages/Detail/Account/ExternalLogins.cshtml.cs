@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class ExternalLoginsModel(NaturalPersonManager personManager) : PageModel
+public class ExternalLoginsModel(ApplicationUserManager personManager) : PageModel
 {
     public IEnumerable<UserLoginInfo> Logins { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         Logins = await personManager.GetLoginsAsync(person);
@@ -20,7 +20,7 @@ public class ExternalLoginsModel(NaturalPersonManager personManager) : PageModel
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string provider, string providerKey)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         IdentityResult result = await personManager.RemoveLoginAsync(person, provider, providerKey);

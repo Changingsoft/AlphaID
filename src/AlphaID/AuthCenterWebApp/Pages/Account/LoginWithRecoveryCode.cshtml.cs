@@ -13,8 +13,8 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [AllowAnonymous]
 public class LoginWithRecoveryCodeModel(
-    SignInManager<NaturalPerson> signInManager,
-    NaturalPersonManager userManager,
+    SignInManager<ApplicationUser> signInManager,
+    ApplicationUserManager userManager,
     ILogger<LoginWithRecoveryCodeModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel
@@ -38,7 +38,7 @@ public class LoginWithRecoveryCodeModel(
     {
         if (!ModelState.IsValid) return Page();
 
-        NaturalPerson user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
+        ApplicationUser user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
                              throw new InvalidOperationException("Unable to load two-factor authentication user.");
         string recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
 

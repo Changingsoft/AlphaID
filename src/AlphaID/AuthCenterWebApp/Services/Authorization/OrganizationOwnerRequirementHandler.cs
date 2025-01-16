@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Services.Authorization;
 public class OrganizationOwnerRequirementHandler(
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager,
-    NaturalPersonManager personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
+    ApplicationUserManager personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
         OrganizationOwnerRequirement requirement)
@@ -19,7 +19,7 @@ public class OrganizationOwnerRequirementHandler(
         var httpContext = context.Resource as HttpContext;
         Debug.Assert(httpContext != null);
 
-        NaturalPerson? person = await personManager.GetUserAsync(context.User);
+        ApplicationUser? person = await personManager.GetUserAsync(context.User);
         if (person == null)
             return;
 

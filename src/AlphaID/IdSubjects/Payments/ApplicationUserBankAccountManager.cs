@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.Payments;
+namespace IdSubjects.Payments;
 
 /// <summary>
 ///     银行账户管理器。
@@ -6,14 +6,14 @@
 /// <remarks>
 /// </remarks>
 /// <param name="store"></param>
-public class PersonBankAccountManager(IPersonBankAccountStore store)
+public class ApplicationUserBankAccountManager(IApplicationUserBankAccountStore store)
 {
     /// <summary>
     ///     获取某个人的银行账户信息
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public IEnumerable<PersonBankAccount> GetBankAccounts(NaturalPerson person)
+    public IEnumerable<ApplicationUserBankAccount> GetBankAccounts(ApplicationUser person)
     {
         return store.BankAccounts.Where(bankAccount => bankAccount.PersonId == person.Id);
     }
@@ -24,12 +24,12 @@ public class PersonBankAccountManager(IPersonBankAccountStore store)
     /// <param name="person"></param>
     /// <param name="bankAccount"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AddBankAccountAsync(NaturalPerson person, BankAccountInfo bankAccount)
+    public async Task<IdOperationResult> AddBankAccountAsync(ApplicationUser person, BankAccountInfo bankAccount)
     {
         if (store.BankAccounts.Any(a => a.PersonId == person.Id && a.AccountNumber == bankAccount.AccountNumber))
             return IdOperationResult.Failed("Bank account exists.");
 
-        return await store.CreateAsync(new PersonBankAccount
+        return await store.CreateAsync(new ApplicationUserBankAccount
         {
             AccountNumber = bankAccount.AccountNumber,
             AccountName = bankAccount.AccountName,
@@ -45,9 +45,9 @@ public class PersonBankAccountManager(IPersonBankAccountStore store)
     /// <param name="person"></param>
     /// <param name="accountNumber"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RemoveBankAccountAsync(NaturalPerson person, string accountNumber)
+    public async Task<IdOperationResult> RemoveBankAccountAsync(ApplicationUser person, string accountNumber)
     {
-        PersonBankAccount? bankAccount =
+        ApplicationUserBankAccount? bankAccount =
             store.BankAccounts.FirstOrDefault(b => b.PersonId == person.Id && b.AccountNumber == accountNumber);
         if (bankAccount == null)
             return IdOperationResult.Failed("Bank account not found.");

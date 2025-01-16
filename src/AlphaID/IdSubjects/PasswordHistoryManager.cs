@@ -1,4 +1,4 @@
-﻿using IdSubjects.DependencyInjection;
+using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
@@ -12,7 +12,7 @@ namespace IdSubjects;
 /// <param name="options">选项。</param>
 public class PasswordHistoryManager(
     IPasswordHistoryStore store,
-    IPasswordHasher<NaturalPerson> passwordHasher,
+    IPasswordHasher<ApplicationUser> passwordHasher,
     IOptions<IdSubjectsOptions> options)
 {
     private readonly IdSubjectsPasswordOptions _options = options.Value.Password;
@@ -25,7 +25,7 @@ public class PasswordHistoryManager(
     /// <param name="person"></param>
     /// <param name="password"></param>
     /// <returns>如果命中，则返回true，否则返回false。</returns>
-    public bool Hit(NaturalPerson person, string password)
+    public bool Hit(ApplicationUser person, string password)
     {
         //取出密码历史
         IEnumerable<string> passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
@@ -39,7 +39,7 @@ public class PasswordHistoryManager(
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
-    public async Task Pass(NaturalPerson person, string password)
+    public async Task Pass(ApplicationUser person, string password)
     {
         await store.AddAsync(passwordHasher.HashPassword(person, password), person.Id, TimeProvider.GetUtcNow());
         await store.TrimHistory(person.Id, _options.RememberPasswordHistory);
@@ -50,7 +50,7 @@ public class PasswordHistoryManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public Task Clear(NaturalPerson person)
+    public Task Clear(ApplicationUser person)
     {
         return store.ClearAsync(person.Id);
     }

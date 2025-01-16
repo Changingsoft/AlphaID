@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class EditPersonNameModel(NaturalPersonManager naturalPersonManager) : PageModel
+public class EditPersonNameModel(ApplicationUserManager applicationUserManager) : PageModel
 {
     public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
         Input = new InputModel
         {
@@ -25,7 +25,7 @@ public class EditPersonNameModel(NaturalPersonManager naturalPersonManager) : Pa
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         if (!ModelState.IsValid)
@@ -35,7 +35,7 @@ public class EditPersonNameModel(NaturalPersonManager naturalPersonManager) : Pa
             new ChinesePersonName(Input.Surname, Input.GivenName, Input.PinyinSurname, Input.PinyinGivenName);
         var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname,
             chinesePersonName.GivenName);
-        await naturalPersonManager.AdminChangePersonNameAsync(person, personName);
+        await applicationUserManager.AdminChangePersonNameAsync(person, personName);
         return RedirectToPage("Index");
     }
 

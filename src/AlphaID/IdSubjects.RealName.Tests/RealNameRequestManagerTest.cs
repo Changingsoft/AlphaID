@@ -6,13 +6,13 @@ namespace IdSubjects.RealName.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly NaturalPerson _person = new("zhangsan", new PersonNameInfo("张三"));
+    private readonly ApplicationUser _person = new("zhangsan", new PersonNameInfo("张三"));
 
     [Fact]
     public async Task AddRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
         var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
         await personManager.CreateAsync(_person);
         RealNameRequest request = new ChineseIdCardRealNameRequest(_person.Id, "张三", Sex.Male, "汉",
@@ -31,7 +31,7 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
     public async Task AcceptRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
         var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
         var realnameManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
 
@@ -57,7 +57,7 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
     public async Task RefuseRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
         var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
         scope.ServiceProvider.GetRequiredService<RealNameManager>();
 

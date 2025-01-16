@@ -13,7 +13,7 @@ namespace IdSubjects.Invitations;
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
 {
@@ -25,7 +25,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="person"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(NaturalPerson person)
+    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(ApplicationUser person)
     {
         return store.Invitations.Where(i =>
             i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
@@ -50,7 +50,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="inviter"></param>
     /// <returns></returns>
     public async Task<IdOperationResult> InviteMemberAsync(GenericOrganization organization,
-        NaturalPerson invitee,
+        ApplicationUser invitee,
         string inviter)
     {
         var errors = new List<string>();
@@ -92,7 +92,7 @@ public class JoinOrganizationInvitationManager(
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
+        ApplicationUser? person = await personManager.FindByIdAsync(invitation.InviteeId);
         GenericOrganization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
         IdOperationResult? result = null;
         if (organization != null && person != null)

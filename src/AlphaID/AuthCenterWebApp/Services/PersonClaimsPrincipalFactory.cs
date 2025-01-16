@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Identity;
 namespace AuthCenterWebApp.Services;
 
 public class PersonClaimsPrincipalFactory(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     IOptions<IdSubjectsOptions> optionsAccessor,
-    IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<NaturalPerson>(userManager, optionsAccessor)
+    IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<ApplicationUser>(userManager, optionsAccessor)
 {
     private readonly SystemUrlInfo _systemUrl = systemUrlOptions.Value;
 
-    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)
+    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
         id.AddClaim(new Claim(JwtClaimTypes.Name, user.PersonName.FullName));

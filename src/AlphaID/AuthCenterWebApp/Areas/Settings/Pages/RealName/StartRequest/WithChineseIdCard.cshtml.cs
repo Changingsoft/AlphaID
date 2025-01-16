@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest;
 
 public class WithChineseIdCardModel(
     IChineseIdCardOcrService chineseIdCardOcrService,
-    NaturalPersonManager naturalPersonManager,
+    ApplicationUserManager applicationUserManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {
     [BindProperty]
@@ -25,7 +25,7 @@ public class WithChineseIdCardModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await naturalPersonManager.GetUserAsync(User);
+        ApplicationUser? person = await applicationUserManager.GetUserAsync(User);
         if (person == null) return BadRequest("Can not find person.");
 
         return Page();
@@ -36,7 +36,7 @@ public class WithChineseIdCardModel(
         if (!ModelState.IsValid)
             return Page();
 
-        NaturalPerson? person = await naturalPersonManager.GetUserAsync(User);
+        ApplicationUser? person = await applicationUserManager.GetUserAsync(User);
         if (person == null) return BadRequest("Can not find person.");
 
         var personalSideStream = new MemoryStream();

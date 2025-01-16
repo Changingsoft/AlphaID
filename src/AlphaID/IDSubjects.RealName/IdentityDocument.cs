@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,5 +39,5 @@ public abstract class IdentityDocument
     ///     将实名信息应用到自然人。
     /// </summary>
     /// <param name="person">要应用的自然人。</param>
-    internal abstract void ApplyRealName(NaturalPerson person);
+    internal abstract void ApplyRealName(ApplicationUser person);
 }

@@ -19,7 +19,7 @@ namespace AlphaIdWebAPI.Controllers;
 public class OrganizationController(
     IOrganizationStore organizationStore,
     OrganizationMemberManager memberManager,
-    NaturalPersonManager personManager) : ControllerBase
+    ApplicationUserManager personManager) : ControllerBase
 {
     /// <summary>
     ///     获取组织信息。
@@ -41,7 +41,7 @@ public class OrganizationController(
     [HttpGet("{id}/Members")]
     public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
     {
-        NaturalPerson? visitor = null;
+        ApplicationUser? visitor = null;
         string? visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
             visitor = await personManager.FindByIdAsync(User.SubjectId()!);

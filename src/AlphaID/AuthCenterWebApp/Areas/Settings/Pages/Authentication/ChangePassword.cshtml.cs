@@ -9,14 +9,14 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ChangePasswordModel(
     NaturalPersonService naturalPersonService,
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
     ILogger<ChangePasswordModel> logger) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public IList<UserLoginInfo> ExternalLogins { get; set; } = null!;
 
@@ -24,7 +24,7 @@ public class ChangePasswordModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         Person = user;
         ExternalLogins = await userManager.GetLoginsAsync(user);
@@ -36,7 +36,7 @@ public class ChangePasswordModel(
     {
         if (!ModelState.IsValid) return Page();
 
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         Person = user;
         ExternalLogins = await userManager.GetLoginsAsync(user);

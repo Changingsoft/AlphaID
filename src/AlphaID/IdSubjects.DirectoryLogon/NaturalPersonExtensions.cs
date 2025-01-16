@@ -17,7 +17,7 @@ public static class NaturalPersonExtensions
     /// <param name="person"></param>
     /// <param name="userPrincipal"></param>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public static void ApplyTo(this NaturalPerson person, UserPrincipal userPrincipal)
+    public static void ApplyTo(this ApplicationUser person, UserPrincipal userPrincipal)
     {
         userPrincipal.EmailAddress = person.Email;
         userPrincipal.GivenName = person.PersonName.GivenName;

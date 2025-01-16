@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class InviteModel(
-    NaturalPersonManager naturalPersonManager,
+    ApplicationUserManager applicationUserManager,
     JoinOrganizationInvitationManager joinOrganizationInvitationManager,
     OrganizationManager organizationManager) : PageModel
 {
@@ -33,7 +33,7 @@ public class InviteModel(
             return RedirectToPage("../Who", new { anchor });
         if (organization == null)
             return NotFound();
-        NaturalPerson? person = await naturalPersonManager.FindByNameAsync(Invitee);
+        ApplicationUser? person = await applicationUserManager.FindByNameAsync(Invitee);
         if (person == null)
             ModelState.AddModelError(nameof(Invitee), "Cannot find person.");
 
@@ -46,7 +46,7 @@ public class InviteModel(
 
     public IActionResult OnGetFindPerson(string term)
     {
-        IQueryable<FindPersonModel> searchResults = naturalPersonManager.Users.Where(p =>
+        IQueryable<FindPersonModel> searchResults = applicationUserManager.Users.Where(p =>
                 p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.PersonName.FullName.StartsWith(term))
             .Select(p => new FindPersonModel { UserName = p.UserName, Name = p.PersonName.FullName });
         return new JsonResult(searchResults);

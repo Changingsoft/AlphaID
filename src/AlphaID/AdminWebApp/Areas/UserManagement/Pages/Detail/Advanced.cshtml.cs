@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class AdvancedModel(NaturalPersonService naturalPersonService, NaturalPersonManager naturalPersonManager) : PageModel
+public class AdvancedModel(NaturalPersonService naturalPersonService, ApplicationUserManager applicationUserManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = null!;
+    public ApplicationUser Data { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -17,7 +17,7 @@ public class AdvancedModel(NaturalPersonService naturalPersonService, NaturalPer
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Data = person;
@@ -32,7 +32,7 @@ public class AdvancedModel(NaturalPersonService naturalPersonService, NaturalPer
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Data = person;

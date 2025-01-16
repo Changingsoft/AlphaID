@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -88,7 +88,7 @@ public class ChineseIdCardDocument : IdentityDocument
         get { return Attachments.FirstOrDefault(a => a.Name == IssuerSideAttachmentName); }
     }
 
-    internal override void ApplyRealName(NaturalPerson person)
+    internal override void ApplyRealName(ApplicationUser person)
     {
         //todo 应用时要考虑姓氏和名字拆分？
         var personName = new PersonNameInfo(Name);

@@ -13,7 +13,7 @@ public abstract class NaturalPersonUpdateInterceptor : INaturalPersonUpdateInter
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns>始终返回表示成功的IdentityResult。</returns>
-    public virtual Task<IdentityResult> PreUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task<IdentityResult> PreUpdateAsync(ApplicationUserManager personManager, ApplicationUser person)
     {
         return Task.FromResult(IdentityResult.Success);
     }
@@ -23,7 +23,7 @@ public abstract class NaturalPersonUpdateInterceptor : INaturalPersonUpdateInter
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PostUpdateAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task PostUpdateAsync(ApplicationUserManager personManager, ApplicationUser person)
     {
         return Task.CompletedTask;
     }

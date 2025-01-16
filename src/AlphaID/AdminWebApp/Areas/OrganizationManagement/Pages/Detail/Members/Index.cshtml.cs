@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     OrganizationMemberManager memberManager) : PageModel
 {
     public GenericOrganization Organization { get; set; } = null!;
@@ -55,7 +55,7 @@ public class IndexModel(
         Organization = org;
         Members = await memberManager.GetMembersAsync(org);
 
-        NaturalPerson? person = await personManager.FindByNameAsync(UserName);
+        ApplicationUser? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
         {
             ModelState.AddModelError(nameof(UserName), "找不到人员");

@@ -11,7 +11,7 @@ public abstract class NaturalPersonDeleteInterceptor : INaturalPersonDeleteInter
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task<IdentityResult> PreDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task<IdentityResult> PreDeleteAsync(ApplicationUserManager personManager, ApplicationUser person)
     {
         return Task.FromResult(IdentityResult.Success);
     }
@@ -21,7 +21,7 @@ public abstract class NaturalPersonDeleteInterceptor : INaturalPersonDeleteInter
     /// <param name="personManager"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    public virtual Task PostDeleteAsync(NaturalPersonManager personManager, NaturalPerson person)
+    public virtual Task PostDeleteAsync(ApplicationUserManager personManager, ApplicationUser person)
     {
         return Task.CompletedTask;
     }

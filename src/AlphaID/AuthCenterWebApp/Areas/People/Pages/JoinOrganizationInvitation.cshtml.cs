@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.People.Pages;
 
 public class JoinOrganizationInvitationModel(
-    NaturalPersonManager personManager,
+    ApplicationUserManager personManager,
     JoinOrganizationInvitationManager invitationsManager) : PageModel
 {
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public JoinOrganizationInvitation Invitation { get; set; } = null!;
 
@@ -17,7 +17,7 @@ public class JoinOrganizationInvitationModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor, int invitationId)
     {
-        NaturalPerson? person = await personManager.FindByNameAsync(anchor);
+        ApplicationUser? person = await personManager.FindByNameAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
         IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person);
@@ -34,7 +34,7 @@ public class JoinOrganizationInvitationModel(
         string button,
         MembershipVisibility visibility)
     {
-        NaturalPerson? person = await personManager.FindByNameAsync(anchor);
+        ApplicationUser? person = await personManager.FindByNameAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
         IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person);

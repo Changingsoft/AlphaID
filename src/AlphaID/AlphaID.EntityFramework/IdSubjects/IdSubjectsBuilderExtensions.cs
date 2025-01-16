@@ -13,11 +13,11 @@ public static class IdSubjectsBuilderExtensions
     /// <returns></returns>
     public static IdSubjectsBuilder AddDefaultStores(this IdSubjectsBuilder builder)
     {
-        builder.AddPersonStore<NaturalPersonStore2>();
+        builder.AddPersonStore<ApplicationUserStore2>();
         builder.AddOrganizationStore<OrganizationStore>();
         builder.AddOrganizationMemberStore<OrganizationMemberStore>();
         builder.AddPasswordHistoryStore<PasswordHistoryStore>();
-        builder.AddPersonBankAccountStore<PersonBankAccountStore>();
+        builder.AddPersonBankAccountStore<ApplicationUserBankAccountStore>();
         builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
         builder.AddOrganizationBankAccountStore<OrganizationBankAccountStore>();
         builder.AddOrganizationIdentifierStore<OrganizationIdentifierStore>();

@@ -15,7 +15,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByEmailModel(
     IEmailSender emailSender,
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     IOptions<ProductInfo> production) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -31,7 +31,7 @@ public class FindPasswordByEmailModel(
     {
         if (ModelState.IsValid)
         {
-            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
+            ApplicationUser? user = await userManager.FindByEmailAsync(Input.Email);
             if (user == null || !await userManager.IsEmailConfirmedAsync(user))
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("FindPasswordByEmailConfirmation");

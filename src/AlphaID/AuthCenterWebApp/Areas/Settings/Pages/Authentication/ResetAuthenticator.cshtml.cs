@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ResetAuthenticatorModel(
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
     ILogger<ResetAuthenticatorModel> logger) : PageModel
 {
     [TempData]
@@ -17,13 +17,13 @@ public class ResetAuthenticatorModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         return user == null ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await userManager.SetTwoFactorEnabledAsync(user, false);

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class ChangeUserNameModel(
-    NaturalPersonManager manager,
+    ApplicationUserManager manager,
     ILogger<ChangeUserNameModel>? logger,
     PersonSignInManager signInManager) : PageModel
 {
@@ -22,7 +22,7 @@ public class ChangeUserNameModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await manager.GetUserAsync(User);
+        ApplicationUser? person = await manager.GetUserAsync(User);
         if (person == null)
         {
             logger?.LogWarning("从用户的登录信息无法查询到用户");
@@ -34,7 +34,7 @@ public class ChangeUserNameModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson? person = await manager.GetUserAsync(User);
+        ApplicationUser? person = await manager.GetUserAsync(User);
         if (person == null)
         {
             logger?.LogWarning("从用户的登录信息无法查询到用户");

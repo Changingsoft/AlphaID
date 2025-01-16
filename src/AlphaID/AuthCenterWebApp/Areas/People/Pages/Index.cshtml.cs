@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
-public class IndexModel(NaturalPersonManager personManager, OrganizationMemberManager organizationMemberManager)
+public class IndexModel(ApplicationUserManager personManager, OrganizationMemberManager organizationMemberManager)
     : PageModel
 {
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public bool UserIsOwner { get; set; }
 
@@ -17,13 +17,13 @@ public class IndexModel(NaturalPersonManager personManager, OrganizationMemberMa
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
         //Support both userAnchor and user ID.
-        NaturalPerson? person = await personManager.FindByNameAsync(anchor)
+        ApplicationUser? person = await personManager.FindByNameAsync(anchor)
                                 ?? await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        ApplicationUser? visitor = await personManager.GetUserAsync(User);
 
         Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
 

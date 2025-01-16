@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.RealName.Tests;
+namespace IdSubjects.RealName.Tests;
 
 internal class StubRealNameAuthenticationStore : IRealNameAuthenticationStore
 {
@@ -29,7 +29,7 @@ internal class StubRealNameAuthenticationStore : IRealNameAuthenticationStore
         return Task.FromResult(IdOperationResult.Success);
     }
 
-    public IQueryable<RealNameAuthentication> FindByPerson(NaturalPerson person)
+    public IQueryable<RealNameAuthentication> FindByPerson(ApplicationUser person)
     {
         return _set.Where(a => a.PersonId == person.Id).AsQueryable();
     }

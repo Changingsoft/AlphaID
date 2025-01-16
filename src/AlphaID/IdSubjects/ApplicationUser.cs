@@ -11,12 +11,12 @@ namespace IdSubjects;
 [Table("NaturalPerson")]
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
-public class NaturalPerson : IdentityUser
+public class ApplicationUser : IdentityUser
 {
     /// <summary>
     ///     for persistence.
     /// </summary>
-    public NaturalPerson()
+    public ApplicationUser()
     {
     }
 
@@ -24,7 +24,7 @@ public class NaturalPerson : IdentityUser
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="personName"></param>
-    public NaturalPerson(string userName, PersonNameInfo personName) : this()
+    public ApplicationUser(string userName, PersonNameInfo personName) : this()
     {
         // ReSharper disable VirtualMemberCallInConstructor
         UserName = userName;

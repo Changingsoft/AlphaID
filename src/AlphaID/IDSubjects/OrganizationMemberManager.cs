@@ -35,7 +35,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="visitor">The person who access this system. null if anonymous access.</param>
     /// <returns></returns>
     public Task<IEnumerable<OrganizationMember>> GetVisibleMembersAsync(GenericOrganization organization,
-        NaturalPerson? visitor)
+        ApplicationUser? visitor)
     {
         IQueryable<OrganizationMember>? members =
             store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
@@ -72,7 +72,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="person">要检索组织成员身份的目标用户。</param>
     /// <param name="visitor">访问者。如果传入null，代表匿名访问者。</param>
     /// <returns></returns>
-    public IEnumerable<OrganizationMember> GetVisibleMembersOf(NaturalPerson person, NaturalPerson? visitor)
+    public IEnumerable<OrganizationMember> GetVisibleMembersOf(ApplicationUser person, ApplicationUser? visitor)
     {
         //获取目标person的所有组织身份。
         IQueryable<OrganizationMember>? members = store.OrganizationMembers.Where(p => p.PersonId == person.Id);
@@ -95,7 +95,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(NaturalPerson person)
+    public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(ApplicationUser person)
     {
         IQueryable<OrganizationMember> members = store.OrganizationMembers.Where(p => p.PersonId == person.Id);
         return Task.FromResult(members.AsEnumerable());

@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ConfirmEmailModel(NaturalPersonManager userManager) : PageModel
+public class ConfirmEmailModel(ApplicationUserManager userManager) : PageModel
 {
     [TempData]
     public string StatusMessage { get; set; }
@@ -21,7 +21,7 @@ public class ConfirmEmailModel(NaturalPersonManager userManager) : PageModel
     {
         if (userId == null || code == null) return RedirectToPage("/Index");
 
-        NaturalPerson user = await userManager.FindByIdAsync(userId);
+        ApplicationUser user = await userManager.FindByIdAsync(userId);
         if (user == null) return NotFound($"Unable to load user with ID '{userId}'.");
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));

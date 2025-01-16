@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccountManager bankAccountManager) : PageModel
+public class PaymentsModel(ApplicationUserManager personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
 {
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
@@ -30,13 +30,13 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
     [MaxLength(150)]
     public string BankName { get; set; } = null!;
 
-    public IEnumerable<PersonBankAccount> BankAccounts { get; set; } = null!;
+    public IEnumerable<ApplicationUserBankAccount> BankAccounts { get; set; } = null!;
 
     public IdOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? result = await personManager.FindByIdAsync(Anchor);
+        ApplicationUser? result = await personManager.FindByIdAsync(Anchor);
         if (result == null)
             return NotFound();
         Person = result;
@@ -46,7 +46,7 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
 
     public async Task<IActionResult> OnPostAddBankAccountAsync()
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -66,7 +66,7 @@ public class PaymentsModel(NaturalPersonManager personManager, PersonBankAccount
 
     public async Task<IActionResult> OnPostRemoveBankAccountAsync(string accountNumber)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;

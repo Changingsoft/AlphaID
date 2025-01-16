@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class GenerateRecoveryCodesModel(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     ILogger<GenerateRecoveryCodesModel> logger) : PageModel
 {
     [TempData]
@@ -16,7 +16,7 @@ public class GenerateRecoveryCodesModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         bool isTwoFactorEnabled = await userManager.GetTwoFactorEnabledAsync(user);
@@ -28,7 +28,7 @@ public class GenerateRecoveryCodesModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         bool isTwoFactorEnabled = await userManager.GetTwoFactorEnabledAsync(user);

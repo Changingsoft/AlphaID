@@ -16,7 +16,7 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 [SecurityHeaders]
 [AllowAnonymous]
 public class Index(
-    SignInManager<NaturalPerson> signInManager,
+    SignInManager<ApplicationUser> signInManager,
     IIdentityServerInteractionService interaction,
     IEventService events) : PageModel
 {

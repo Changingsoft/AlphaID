@@ -8,12 +8,12 @@
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="realNameManager"></param>
-/// <param name="naturalPersonManager"></param>
+/// <param name="applicationUserManager"></param>
 /// <param name="provider"></param>
 public class RealNameRequestManager(
     IRealNameRequestStore store,
     RealNameManager realNameManager,
-    NaturalPersonManager naturalPersonManager,
+    ApplicationUserManager applicationUserManager,
     IRealNameRequestAuditorProvider? provider = null)
 {
     /// <summary>
@@ -41,7 +41,7 @@ public class RealNameRequestManager(
     /// <returns></returns>
     public async Task<IdOperationResult> CreateAsync(RealNameRequest request)
     {
-        if (!naturalPersonManager.Users.Any(p => p.Id == request.PersonId))
+        if (!applicationUserManager.Users.Any(p => p.Id == request.PersonId))
             throw new InvalidOperationException("找不到请求对应的自然人。");
         request.WhenCommitted = TimeProvider.GetUtcNow();
         IdOperationResult result = await store.CreateAsync(request);
@@ -71,7 +71,7 @@ public class RealNameRequestManager(
     /// <returns></returns>
     public async Task<IdOperationResult> AcceptAsync(RealNameRequest request, string? auditor = null)
     {
-        NaturalPerson? person = await naturalPersonManager.FindByIdAsync(request.PersonId);
+        ApplicationUser? person = await applicationUserManager.FindByIdAsync(request.PersonId);
         if (person == null)
             return IdOperationResult.Failed("Natural person not found.");
         request.SetAudit(true, auditor, TimeProvider.GetUtcNow());
@@ -99,7 +99,7 @@ public class RealNameRequestManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public IEnumerable<RealNameRequest> GetRequests(NaturalPerson person)
+    public IEnumerable<RealNameRequest> GetRequests(ApplicationUser person)
     {
         return store.Requests.Where(x => x.PersonId == person.Id);
     }

@@ -11,8 +11,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class SetPasswordModel(
     NaturalPersonService naturalPersonService,
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager) : PageModel
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; }
@@ -22,7 +22,7 @@ public class SetPasswordModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         bool hasPassword = await userManager.HasPasswordAsync(user);
@@ -34,7 +34,7 @@ public class SetPasswordModel(
     {
         if (!ModelState.IsValid) return Page();
 
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         IdentityResult addPasswordResult = await naturalPersonService.AddPasswordAsync(user, Input.NewPassword);

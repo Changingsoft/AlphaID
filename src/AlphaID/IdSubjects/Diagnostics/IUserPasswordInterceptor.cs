@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Diagnostics;
 
@@ -20,7 +20,7 @@ public interface IUserPasswordInterceptor : IInterceptor
     /// <param name="plainPassword">密码。如果为null，操作为移除密码。</param>
     /// <param name="cancellation"></param>
     /// <returns></returns>
-    Task<IdentityResult> PasswordChangingAsync(NaturalPerson person,
+    Task<IdentityResult> PasswordChangingAsync(ApplicationUser person,
         string? plainPassword,
         CancellationToken cancellation);
 
@@ -30,5 +30,5 @@ public interface IUserPasswordInterceptor : IInterceptor
     /// <param name="person"></param>
     /// <param name="cancellation"></param>
     /// <returns></returns>
-    Task PasswordChangedAsync(NaturalPerson person, CancellationToken cancellation);
+    Task PasswordChangedAsync(ApplicationUser person, CancellationToken cancellation);
 }

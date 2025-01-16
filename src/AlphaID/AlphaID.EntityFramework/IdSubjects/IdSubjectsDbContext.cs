@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
+public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
-    public DbSet<PersonBankAccount> PersonBankAccounts { get; protected set; } = null!;
+    public DbSet<ApplicationUserBankAccount> PersonBankAccounts { get; protected set; } = null!;
 
     public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = null!;
 
@@ -30,7 +30,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     {
         base.OnModelCreating(builder);
         //Rename table name.
-        builder.Entity<NaturalPerson>(b =>
+        builder.Entity<ApplicationUser>(b =>
         {
             b.ToTable("NaturalPerson");
             b.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);

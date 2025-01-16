@@ -9,8 +9,8 @@ namespace IdSubjects.RealName;
 ///     初始化实名认证管理器。
 /// </remarks>
 /// <param name="store"></param>
-/// <param name="naturalPersonManager"></param>
-public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonManager naturalPersonManager)
+/// <param name="applicationUserManager"></param>
+public class RealNameManager(IRealNameAuthenticationStore store, ApplicationUserManager applicationUserManager)
 {
     /// <summary>
     ///     获取可查询的实名认证信息集合。
@@ -23,7 +23,7 @@ public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonMa
     /// </summary>
     /// <param name="person"></param>
     /// <returns>与自然人相关的实名状态。如果没有，则返回null。</returns>
-    public virtual IEnumerable<RealNameAuthentication> GetAuthentications(NaturalPerson person)
+    public virtual IEnumerable<RealNameAuthentication> GetAuthentications(ApplicationUser person)
     {
         return store.FindByPerson(person);
     }
@@ -34,7 +34,7 @@ public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonMa
     /// <param name="person"></param>
     /// <param name="authentication"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AuthenticateAsync(NaturalPerson person, RealNameAuthentication authentication)
+    public async Task<IdOperationResult> AuthenticateAsync(ApplicationUser person, RealNameAuthentication authentication)
     {
         authentication.PersonId = person.Id;
         IdOperationResult result = await store.CreateAsync(authentication);
@@ -43,7 +43,7 @@ public class RealNameManager(IRealNameAuthenticationStore store, NaturalPersonMa
 
         //为 person 应用更改。
         person.PersonName = authentication.PersonName;
-        IdentityResult identityResult = await naturalPersonManager.UpdateAsync(person);
+        IdentityResult identityResult = await applicationUserManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
             return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());
 

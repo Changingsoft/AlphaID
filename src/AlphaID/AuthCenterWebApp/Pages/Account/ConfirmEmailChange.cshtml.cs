@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ConfirmEmailChangeModel(NaturalPersonManager userManager, SignInManager<NaturalPerson> signInManager)
+public class ConfirmEmailChangeModel(ApplicationUserManager userManager, SignInManager<ApplicationUser> signInManager)
     : PageModel
 {
     [TempData]
@@ -22,7 +22,7 @@ public class ConfirmEmailChangeModel(NaturalPersonManager userManager, SignInMan
     {
         if (userId == null || email == null || code == null) return RedirectToPage("/Index");
 
-        NaturalPerson user = await userManager.FindByIdAsync(userId);
+        ApplicationUser user = await userManager.FindByIdAsync(userId);
         if (user == null) return NotFound($"Unable to load user with ID '{userId}'.");
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));

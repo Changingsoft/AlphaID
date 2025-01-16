@@ -11,22 +11,22 @@ namespace AuthCenterWebApp.Services;
 ///     自然人资源所有者验证器。
 /// </summary>
 /// <remarks>
-///     该验证器会考虑<see cref="NaturalPerson.PasswordLastSet"></see>属性以确保密码有效。
+///     该验证器会考虑<see cref="ApplicationUser.PasswordLastSet"></see>属性以确保密码有效。
 /// </remarks>
 /// <param name="userManager"></param>
 /// <param name="signInManager"></param>
 /// <param name="logger"></param>
 public class PersonResourceOwnerPasswordValidator(
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
     ILogger<PersonResourceOwnerPasswordValidator> logger,
     IOptions<IdSubjectsOptions> options,
     TimeProvider timeProvider)
-    : ResourceOwnerPasswordValidator<NaturalPerson>(userManager, signInManager, logger)
+    : ResourceOwnerPasswordValidator<ApplicationUser>(userManager, signInManager, logger)
 {
     public override async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
     {
-        NaturalPerson? user = await userManager.FindByNameAsync(context.UserName);
+        ApplicationUser? user = await userManager.FindByNameAsync(context.UserName);
         if (user != null)
         {
             if (options.Value.Password.EnablePassExpires)

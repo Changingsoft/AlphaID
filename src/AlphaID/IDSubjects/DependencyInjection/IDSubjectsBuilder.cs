@@ -1,4 +1,4 @@
-﻿using IdSubjects.Diagnostics;
+using IdSubjects.Diagnostics;
 using IdSubjects.Invitations;
 using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
@@ -43,10 +43,10 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IdSubjectsBuilder AddPersonStore<T>() where T : class, INaturalPersonStore
+    public IdSubjectsBuilder AddPersonStore<T>() where T : class, IApplicationUserStore
     {
-        Services.TryAddScoped<INaturalPersonStore, T>();
-        IdentityBuilder.AddUserStore<T>(); //As IUserStore<NaturalPerson>
+        Services.TryAddScoped<IApplicationUserStore, T>();
+        IdentityBuilder.AddUserStore<T>(); //As IUserStore<ApplicationUser>
         return this;
     }
 
@@ -86,9 +86,9 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IdSubjectsBuilder AddPersonBankAccountStore<T>() where T : class, IPersonBankAccountStore
+    public IdSubjectsBuilder AddPersonBankAccountStore<T>() where T : class, IApplicationUserBankAccountStore
     {
-        Services.TryAddScoped<IPersonBankAccountStore, T>();
+        Services.TryAddScoped<IApplicationUserBankAccountStore, T>();
         return this;
     }
 

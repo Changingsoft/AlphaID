@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class ResetPasswordModel(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     IShortMessageService shortMessageService,
     IOptions<IdentityOptions> options) : PageModel
 {
@@ -22,14 +22,14 @@ public class ResetPasswordModel(
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public NaturalPerson Person { get; set; } = null!;
+    public ApplicationUser Person { get; set; } = null!;
 
     public string? OperationResult { get; set; }
 
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
         Input = new InputModel();
@@ -38,7 +38,7 @@ public class ResetPasswordModel(
 
     public async Task<IActionResult> OnPostAutoReset(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -65,7 +65,7 @@ public class ResetPasswordModel(
 
     public async Task<IActionResult> OnPostManualReset(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;

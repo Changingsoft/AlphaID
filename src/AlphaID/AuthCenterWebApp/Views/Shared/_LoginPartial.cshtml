@@ -1,5 +1,5 @@
-﻿@using AlphaIdPlatform.Security
-@inject SignInManager<NaturalPerson> SignInManager
+@using AlphaIdPlatform.Security
+@inject SignInManager<ApplicationUser> SignInManager
 
 @if (SignInManager.IsSignedIn(User))
 {

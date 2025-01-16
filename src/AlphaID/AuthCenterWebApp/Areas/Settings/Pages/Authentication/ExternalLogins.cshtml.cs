@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ExternalLoginsModel(
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
-    IUserStore<NaturalPerson> userStore) : PageModel
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
+    IUserStore<ApplicationUser> userStore) : PageModel
 {
     private const string LoginProviderKey = "LoginProvider";
     private const string XsrfKey = "XsrfId";
@@ -27,7 +27,7 @@ public class ExternalLoginsModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         CurrentLogins = await userManager.GetLoginsAsync(user);
@@ -36,7 +36,7 @@ public class ExternalLoginsModel(
             .ToList();
 
         string? passwordHash = null;
-        if (userStore is IUserPasswordStore<NaturalPerson> userPasswordStore)
+        if (userStore is IUserPasswordStore<ApplicationUser> userPasswordStore)
             passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
 
         ShowRemoveButton = passwordHash != null || CurrentLogins.Count > 1;
@@ -45,7 +45,7 @@ public class ExternalLoginsModel(
 
     public async Task<IActionResult> OnPostRemoveLoginAsync(string loginProvider, string providerKey)
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         IdentityResult result = await userManager.RemoveLoginAsync(user, loginProvider, providerKey);
@@ -74,7 +74,7 @@ public class ExternalLoginsModel(
 
     public async Task<IActionResult> OnGetLinkLoginCallbackAsync()
     {
-        NaturalPerson? user = await userManager.GetUserAsync(User);
+        ApplicationUser? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         string userId = await userManager.GetUserIdAsync(user);
         ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync(userId) ??

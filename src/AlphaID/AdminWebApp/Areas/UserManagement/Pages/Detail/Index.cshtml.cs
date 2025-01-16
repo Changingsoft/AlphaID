@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class IndexModel(NaturalPersonManager userManager) : PageModel
+public class IndexModel(ApplicationUserManager userManager) : PageModel
 {
-    public NaturalPerson Data { get; set; } = null!;
+    public ApplicationUser Data { get; set; } = null!;
 
     public IList<UserLoginInfo> ExternalLogins { get; set; } = null!;
 
@@ -15,7 +15,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -26,7 +26,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnGetPhotoAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -41,7 +41,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
             return BadRequest();
 
         IFormFile file = Request.Form.Files[0];
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         Debug.Assert(person != null);
 
         await using Stream stream = file.OpenReadStream();
@@ -55,7 +55,7 @@ public class IndexModel(NaturalPersonManager userManager) : PageModel
 
     public async Task<IActionResult> OnPostClearProfilePictureAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
+        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

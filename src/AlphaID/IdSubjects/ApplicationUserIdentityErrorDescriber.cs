@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects;
 
 /// <summary>
 ///     Error describer. 便于国际化。
 /// </summary>
-public class NaturalPersonIdentityErrorDescriber : IdentityErrorDescriber
+public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
 {
     /// <summary>
     ///     Invalid phone number format.

@@ -6,7 +6,7 @@ namespace IdSubjects.RealName.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly NaturalPerson _person = new("zhangsan", new PersonNameInfo("张小三"));
+    private readonly ApplicationUser _person = new("zhangsan", new PersonNameInfo("张小三"));
 
     [Fact]
     public async Task AddAuthentication()
@@ -28,7 +28,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
             "Test validator");
 
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
         await personManager.CreateAsync(_person);
 
         //Test
@@ -43,10 +43,10 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
     public async Task CannotChangeNameWhenRealNameAuthenticationExists()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<NaturalPersonManager>();
+        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
         await personManager.CreateAsync(_person);
 
-        NaturalPerson target = (await personManager.FindByIdAsync(_person.Id))!;
+        ApplicationUser target = (await personManager.FindByIdAsync(_person.Id))!;
 
         var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
         var authentication = new DocumentedRealNameAuthentication(

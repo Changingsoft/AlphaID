@@ -1,19 +1,19 @@
-﻿using IdSubjects.ChineseName;
+using IdSubjects.ChineseName;
 using Xunit;
 
 // ReSharper disable StringLiteralTypo
 
 namespace IdSubjects.Tests;
 
-public class PersonBuilderTests
+public class ApplicationUserBuilderTests
 {
     [Fact]
     public void UseChinesePersonNameTest()
     {
-        var builder = new PersonBuilder("PersonName", new PersonNameInfo("FullName", "Surname", "GivenName"));
+        var builder = new ApplicationUserBuilder("PersonName", new PersonNameInfo("FullName", "Surname", "GivenName"));
         builder.UseChinesePersonName(new ChinesePersonName("张", "三", "ZHANG", "SAN"));
 
-        NaturalPerson person = builder.Build();
+        ApplicationUser person = builder.Build();
         Assert.Equal("三", person.PersonName.GivenName);
         Assert.Equal("张三", person.PersonName.FullName);
         //Assert.Equal("ZHANG", person.PhoneticSurname);

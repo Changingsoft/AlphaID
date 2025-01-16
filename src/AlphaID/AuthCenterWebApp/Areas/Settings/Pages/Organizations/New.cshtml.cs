@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 public class NewModel(
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager,
-    NaturalPersonManager personManager) : PageModel
+    ApplicationUserManager personManager) : PageModel
 {
     [BindProperty]
     [Display(Name = "Name", Description = "Full name of organization.")]
@@ -51,7 +51,7 @@ public class NewModel(
         }
 
         //Add current person as owner.
-        NaturalPerson? person = await personManager.GetUserAsync(User);
+        ApplicationUser? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
 
         var member = new OrganizationMember(organization, person)

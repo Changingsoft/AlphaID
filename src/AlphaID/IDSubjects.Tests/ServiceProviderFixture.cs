@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.Tests;
 
@@ -9,7 +9,7 @@ public class ServiceProviderFixture : IDisposable
         var services = new ServiceCollection();
 
         services.AddIdSubjects()
-            .AddPersonStore<StubNaturalPersonStore>()
+            .AddPersonStore<StubApplicationUserStore>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
 
         RootServiceProvider = services.BuildServiceProvider();

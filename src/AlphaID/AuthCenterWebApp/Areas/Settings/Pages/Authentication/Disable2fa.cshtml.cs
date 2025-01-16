@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class Disable2FaModel(
-    NaturalPersonManager userManager,
+    ApplicationUserManager userManager,
     ILogger<Disable2FaModel> logger) : PageModel
 {
     [TempData]
@@ -16,7 +16,7 @@ public class Disable2FaModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         return user == null
             ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.")
             : !await userManager.GetTwoFactorEnabledAsync(user)
@@ -26,7 +26,7 @@ public class Disable2FaModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        NaturalPerson user = await userManager.GetUserAsync(User);
+        ApplicationUser user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         IdentityResult disable2FaResult = await userManager.SetTwoFactorEnabledAsync(user, false);

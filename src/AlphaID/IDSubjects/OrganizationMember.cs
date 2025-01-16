@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +21,7 @@ public class OrganizationMember
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="person"></param>
-    public OrganizationMember(GenericOrganization organization, NaturalPerson person)
+    public OrganizationMember(GenericOrganization organization, ApplicationUser person)
     {
         OrganizationId = organization.Id;
         Organization = organization ?? throw new ArgumentNullException(nameof(organization));
@@ -53,7 +53,7 @@ public class OrganizationMember
     ///     Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public NaturalPerson Person { get; protected set; } = null!;
+    public ApplicationUser Person { get; protected set; } = null!;
 
     /// <summary>
     ///     部门。

@@ -16,8 +16,8 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ChangePasswordModel(
     NaturalPersonService naturalPersonService,
-    NaturalPersonManager userManager,
-    SignInManager<NaturalPerson> signInManager,
+    ApplicationUserManager userManager,
+    SignInManager<ApplicationUser> signInManager,
     IIdentityServerInteractionService interaction) : PageModel
 {
     public bool RememberMe { get; set; }
@@ -56,7 +56,7 @@ public class ChangePasswordModel(
         string personId = authMustChangePasswordResult.Principal.FindFirstValue(ClaimTypes.Name) ??
                           throw new InvalidOperationException(
                               "Unable to load must change password authentication user.");
-        NaturalPerson person = await userManager.FindByIdAsync(personId) ??
+        ApplicationUser person = await userManager.FindByIdAsync(personId) ??
                                throw new InvalidOperationException(
                                    "Unable to load must change password authentication user.");
         IdentityResult identityResult =

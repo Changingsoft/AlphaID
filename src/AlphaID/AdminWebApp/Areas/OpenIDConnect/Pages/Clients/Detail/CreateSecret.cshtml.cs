@@ -28,7 +28,7 @@ public class CreateSecretModel(ConfigurationDbContext configurationDbContext) : 
         return Page();
     }
 
-    private string GeneratePassword()
+    private static string GeneratePassword()
     {
         var rng = RandomNumberGenerator.Create();
         var bytes = new byte[24];

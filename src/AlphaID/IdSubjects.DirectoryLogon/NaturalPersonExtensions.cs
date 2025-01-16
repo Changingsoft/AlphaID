@@ -6,10 +6,18 @@ using System.DirectoryServices.AccountManagement;
 
 namespace IdSubjects.DirectoryLogon;
 
+/// <summary>
+///    自然人扩展。
+/// </summary>
 public static class NaturalPersonExtensions
 {
+    /// <summary>
+    ///    应用自然人信息到用户主体。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="userPrincipal"></param>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
-    public static void Apply(this NaturalPerson person, UserPrincipal userPrincipal)
+    public static void ApplyTo(this NaturalPerson person, UserPrincipal userPrincipal)
     {
         userPrincipal.EmailAddress = person.Email;
         userPrincipal.GivenName = person.PersonName.GivenName;

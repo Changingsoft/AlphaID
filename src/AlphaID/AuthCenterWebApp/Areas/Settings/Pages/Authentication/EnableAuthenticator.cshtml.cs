@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -99,7 +99,7 @@ public class EnableAuthenticatorModel(
         AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey);
     }
 
-    private string FormatKey(string unformattedKey)
+    private static string FormatKey(string unformattedKey)
     {
         var result = new StringBuilder();
         var currentPosition = 0;

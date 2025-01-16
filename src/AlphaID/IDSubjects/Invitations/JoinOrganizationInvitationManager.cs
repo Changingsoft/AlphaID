@@ -49,7 +49,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="invitee">邀请人的用户名</param>
     /// <param name="inviter"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> InviteMemberAsync(GenericOrganization organization,
+    public async Task<IdOperationResult> InviteMemberAsync(Organization organization,
         ApplicationUser invitee,
         string inviter)
     {
@@ -93,7 +93,7 @@ public class JoinOrganizationInvitationManager(
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
         ApplicationUser? person = await personManager.FindByIdAsync(invitation.InviteeId);
-        GenericOrganization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
+        Organization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
         IdOperationResult? result = null;
         if (organization != null && person != null)
             result = await memberManager.CreateAsync(

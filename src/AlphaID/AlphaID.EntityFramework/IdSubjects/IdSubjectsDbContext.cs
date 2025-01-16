@@ -16,7 +16,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     /// <summary>
     ///     Organizations.
     /// </summary>
-    public DbSet<GenericOrganization> Organizations { get; protected set; } = null!;
+    public DbSet<Organization> Organizations { get; protected set; } = null!;
 
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = null!;
 

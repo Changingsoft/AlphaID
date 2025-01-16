@@ -6,7 +6,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class WhoModel(OrganizationManager organizationManager) : PageModel
 {
-    public GenericOrganization[] Organizations { get; set; } = [];
+    public IdSubjects.Organization[] Organizations { get; set; } = [];
 
     public IActionResult OnGet(string anchor)
     {

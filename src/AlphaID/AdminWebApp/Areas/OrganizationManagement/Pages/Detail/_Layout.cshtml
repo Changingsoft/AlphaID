@@ -3,7 +3,7 @@
     Layout = "Shared/_Layout";
 
     var anchor = ViewContext.RouteData.Values["anchor"]?.ToString();
-    GenericOrganization? org = null;
+    Organization? org = null;
     if (anchor != null)
     {
         org = await Manager.FindByIdAsync(anchor);

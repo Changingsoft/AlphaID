@@ -39,7 +39,7 @@ public class IndexModel(
         Person = person;
         OrganizationMembers = await memberManager.GetMembersOfAsync(person);
 
-        GenericOrganization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
+        Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
         if (org == null)
         {
             ModelState.AddModelError(nameof(Input.OrganizationId), "Organization Not Found.");

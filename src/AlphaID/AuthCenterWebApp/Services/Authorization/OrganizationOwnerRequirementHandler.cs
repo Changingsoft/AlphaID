@@ -27,7 +27,7 @@ public class OrganizationOwnerRequirementHandler(
         if (anchor == null)
             return;
 
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out Organization? organization))
             return;
         if (organization == null)
             return;

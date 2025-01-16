@@ -27,7 +27,7 @@ public class OrganizationUsedName
     ///     所属组织
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; protected set; } = null!;
+    public virtual Organization Organization { get; protected set; } = null!;
 
     /// <summary>
     ///     名称。

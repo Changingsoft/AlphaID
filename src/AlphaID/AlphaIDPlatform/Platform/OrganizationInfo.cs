@@ -1,7 +1,7 @@
 ﻿namespace AlphaIdPlatform.Platform;
 
 /// <summary>
-///     GenericOrganization info.
+///     Organization info.
 /// </summary>
 /// <remarks>
 ///     ctor.

@@ -37,7 +37,7 @@ public class NewModel(
         if (!ModelState.IsValid)
             return Page();
 
-        var organization = new GenericOrganization(Name)
+        var organization = new IdSubjects.Organization(Name)
         {
             Domicile = Input.Domicile,
             Representative = Input.Representative

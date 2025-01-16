@@ -14,7 +14,7 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        GenericOrganization? org = await manager.FindByIdAsync(Anchor);
+        Organization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
 
@@ -27,7 +27,7 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        GenericOrganization? org = await manager.FindByIdAsync(Anchor);
+        Organization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
 

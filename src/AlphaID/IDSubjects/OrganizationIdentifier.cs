@@ -19,7 +19,7 @@ public class OrganizationIdentifier
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public virtual GenericOrganization Organization { get; set; } = null!;
+    public virtual Organization Organization { get; set; } = null!;
 
     /// <summary>
     /// </summary>

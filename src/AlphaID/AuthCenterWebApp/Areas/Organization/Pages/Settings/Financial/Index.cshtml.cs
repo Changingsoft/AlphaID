@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 public class IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
     : PageModel
 {
-    public GenericOrganization Data { get; set; } = null!;
+    public IdSubjects.Organization Data { get; set; } = null!;
 
     public IEnumerable<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
@@ -15,7 +15,7 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -26,7 +26,7 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out GenericOrganization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -44,7 +44,7 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
-        GenericOrganization? data = await organizationManager.FindByIdAsync(anchor);
+        IdSubjects.Organization? data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;

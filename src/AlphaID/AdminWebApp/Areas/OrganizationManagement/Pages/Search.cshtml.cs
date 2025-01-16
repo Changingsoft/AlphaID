@@ -6,7 +6,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 public class SearchModel(OrganizationSearcher searcher) : PageModel
 {
-    public IEnumerable<GenericOrganization> Results { get; set; } = [];
+    public IEnumerable<Organization> Results { get; set; } = [];
 
     public IActionResult OnGet()
     {

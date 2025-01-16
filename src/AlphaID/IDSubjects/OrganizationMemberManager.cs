@@ -3,10 +3,10 @@ using System.Diagnostics;
 namespace IdSubjects;
 
 /// <summary>
-///     GenericOrganization Member Manager.
+///     Organization Member Manager.
 /// </summary>
 /// <remarks>
-///     Init GenericOrganization Member Manager via GenericOrganization Member store.
+///     Init Organization Member Manager via Organization Member store.
 /// </remarks>
 /// <param name="store"></param>
 public class OrganizationMemberManager(IOrganizationMemberStore store)
@@ -34,7 +34,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="organization">AN organization that members to get.</param>
     /// <param name="visitor">The person who access this system. null if anonymous access.</param>
     /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetVisibleMembersAsync(GenericOrganization organization,
+    public Task<IEnumerable<OrganizationMember>> GetVisibleMembersAsync(Organization organization,
         ApplicationUser? visitor)
     {
         IQueryable<OrganizationMember>? members =
@@ -59,7 +59,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="organization">Organization</param>
     /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetMembersAsync(GenericOrganization organization)
+    public Task<IEnumerable<OrganizationMember>> GetMembersAsync(Organization organization)
     {
         IQueryable<OrganizationMember> members =
             store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);

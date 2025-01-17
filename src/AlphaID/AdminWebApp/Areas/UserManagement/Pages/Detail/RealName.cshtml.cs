@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class RealNameModel(UserManager<NaturalPerson> userManager, RealNameManager<NaturalPerson> realNameManager) : PageModel
 {
-    public ApplicationUser Data { get; set; } = null!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public IEnumerable<RealNameAuthentication> RealNameAuthentications { get; set; } = [];
 

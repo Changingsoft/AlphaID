@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Register;
 
-public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserManager<ApplicationUser> manager) : PageModel
+public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserManager<NaturalPerson> manager) : PageModel
 {
     [BindProperty]
     [Display(Name = "User name")]
@@ -65,7 +65,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
             builder.SetEmail(Email);
 
 
-        ApplicationUser person = builder.Build();
+        NaturalPerson person = builder.Build();
 
         person.DateOfBirth = Input.DateOfBirth.HasValue
             ? DateOnly.FromDateTime(Input.DateOfBirth.Value)

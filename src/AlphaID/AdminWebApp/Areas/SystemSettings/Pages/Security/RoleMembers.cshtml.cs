@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Admin;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security;
 
-public class RoleMembersModel(UserInRoleManager userInRoleManager, UserManager<ApplicationUser> personManager) : PageModel
+public class RoleMembersModel(UserInRoleManager userInRoleManager, UserManager<NaturalPerson> personManager) : PageModel
 {
     public IEnumerable<UserInRole>? RoleMembers { get; set; }
 
@@ -27,7 +28,7 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, UserManager<A
 
     public async Task<IActionResult> OnPostAddMemberAsync(string role)
     {
-        ApplicationUser person = await personManager.FindByNameAsync(Input.UserName) ??
+        NaturalPerson person = await personManager.FindByNameAsync(Input.UserName) ??
                                throw new InvalidOperationException("User cannot found.");
         await userInRoleManager.AddRole(person.Id, role);
         Input = null!;

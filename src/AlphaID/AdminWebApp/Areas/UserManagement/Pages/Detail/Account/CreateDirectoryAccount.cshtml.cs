@@ -19,7 +19,7 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -46,7 +46,7 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

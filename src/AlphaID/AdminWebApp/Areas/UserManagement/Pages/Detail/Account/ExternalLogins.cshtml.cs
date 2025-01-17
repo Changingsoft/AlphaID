@@ -1,16 +1,17 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class ExternalLoginsModel(UserManager<ApplicationUser> personManager) : PageModel
+public class ExternalLoginsModel(UserManager<NaturalPerson> personManager) : PageModel
 {
     public IEnumerable<UserLoginInfo> Logins { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         Logins = await personManager.GetLoginsAsync(person);
@@ -20,7 +21,7 @@ public class ExternalLoginsModel(UserManager<ApplicationUser> personManager) : P
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string provider, string providerKey)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         IdentityResult result = await personManager.RemoveLoginAsync(person, provider, providerKey);

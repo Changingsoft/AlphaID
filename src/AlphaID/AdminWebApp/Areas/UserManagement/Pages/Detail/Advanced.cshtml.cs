@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class AdvancedModel(NaturalPersonService naturalPersonService, UserManager<NaturalPerson> applicationUserManager) : PageModel
 {
-    public ApplicationUser Data { get; set; } = null!;
+    public NaturalPerson Data { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;

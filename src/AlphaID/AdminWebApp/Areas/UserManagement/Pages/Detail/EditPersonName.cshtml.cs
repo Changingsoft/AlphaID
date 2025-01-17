@@ -16,8 +16,8 @@ public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicati
         if (person == null) return NotFound();
         Input = new InputModel
         {
-            Surname = person.PersonName.Surname,
-            GivenName = person.PersonName.GivenName ?? null!,
+            Surname = person.HumanName?.Surname,
+            GivenName = person.HumanName?.GivenName ?? null!,
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName ?? null!
         };
@@ -34,7 +34,7 @@ public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicati
 
         var chinesePersonName =
             new ChinesePersonName(Input.Surname, Input.GivenName, Input.PinyinSurname, Input.PinyinGivenName);
-        var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname,
+        var personName = new HumanNameInfo(chinesePersonName.FullName, chinesePersonName.Surname,
             chinesePersonName.GivenName);
         await applicationUserManager.AdminChangePersonNameAsync(person, personName);
         return RedirectToPage("Index");
@@ -58,6 +58,6 @@ public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicati
         [Display(Name = "Phonetic given name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(30, ErrorMessage = "Validate_StringLength")]
-        public string PinyinGivenName { get; set; } = null!;
+        public string? PinyinGivenName { get; set; }
     }
 }

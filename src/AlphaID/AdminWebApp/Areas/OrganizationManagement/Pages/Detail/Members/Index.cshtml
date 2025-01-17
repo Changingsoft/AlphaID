@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using AlphaIdPlatform.Helpers
 @model IndexModel
@@ -30,7 +30,7 @@
         {
             <tr>
                 <td>
-                    @member.Person.PersonName.FullName
+                    @member.Person.HumanName?.FullName
                     @Html.DisplayFor(m => member.IsOwner, "Ownership")
                 </td>
                 <td>@member.Title</td>

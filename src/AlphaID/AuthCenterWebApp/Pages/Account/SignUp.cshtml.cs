@@ -103,7 +103,7 @@ public class SignUpModel(
         var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
         string userName = Input.Email ?? phoneNumber.PhoneNumber;
         var personBuilder = new ApplicationUserBuilder<NaturalPerson>(userName,
-            new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
+            new HumanNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
         if (Input.Email != null)

@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NeutralLanguage>en-US</NeutralLanguage>
+	</PropertyGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="IDSubjects.Tests" />
+	</ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="IdentityModel" Version="6.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.7" />
+		<PackageReference Include="MinVer" Version="5.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NetTopologySuite" Version="2.5.0" />
+		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+		<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources.zh-CN.resx">
+		  <DependentUpon>Resources.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+</Project>

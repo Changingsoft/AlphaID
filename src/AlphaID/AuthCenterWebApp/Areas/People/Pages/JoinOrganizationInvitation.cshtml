@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using AlphaIdPlatform.Helpers
 @inject OrganizationManager OrganizationManager
 @model JoinOrganizationInvitationModel
@@ -6,7 +6,7 @@
     Organization? organization = await OrganizationManager.FindByIdAsync(Model.Invitation.OrganizationId);
 }
 <h2>@L["Join organization"]</h2>
-<p>@L["{0} invite you join in {1}", Model.Invitation.Inviter, organization]</p>
+<p>@L["{0} invite you join in {1}", Model.Invitation.Inviter, organization!]</p>
 <form method="post">
     <div class="mb-3">
         <select name="visibility" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()" class="form-select"></select>

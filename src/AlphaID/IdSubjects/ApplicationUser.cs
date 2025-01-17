@@ -23,11 +23,11 @@ public class ApplicationUser : IdentityUser
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="personName"></param>
-    public ApplicationUser(string userName, PersonNameInfo personName) : this()
+    public ApplicationUser(string userName, HumanNameInfo personName) : this()
     {
         // ReSharper disable VirtualMemberCallInConstructor
         UserName = userName;
-        PersonName = personName;
+        HumanName = personName;
         // ReSharper restore VirtualMemberCallInConstructor
     }
 
@@ -49,12 +49,6 @@ public class ApplicationUser : IdentityUser
     public virtual DateTimeOffset WhenChanged { get; set; }
 
     /// <summary>
-    ///     获取有关自然人更新的时间。
-    /// </summary>
-    [PersonalData]
-    public virtual DateTimeOffset PersonWhenChanged { get; protected internal set; }
-
-    /// <summary>
     ///     启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
     /// </summary>
     public virtual bool Enabled { get; set; } = true;
@@ -63,7 +57,7 @@ public class ApplicationUser : IdentityUser
     ///     用户名称
     /// </summary>
     [PersonalData]
-    public virtual PersonNameInfo PersonName { get; set; } = null!;
+    public virtual HumanNameInfo? HumanName { get; set; }
 
     /// <summary>
     ///     昵称。
@@ -86,29 +80,6 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     public virtual DateOnly? DateOfBirth { get; set; }
 
-    /// <summary>
-    ///     个人经历。
-    /// </summary>
-    [MaxLength(200)]
-    [PersonalData]
-    public virtual string? Bio { get; set; }
-
-
-    /// <summary>
-    ///     姓氏拼音
-    /// </summary>
-    [PersonalData]
-    [MaxLength(20)]
-    [Unicode(false)]
-    public virtual string? PhoneticSurname { get; set; }
-
-    /// <summary>
-    ///     名字拼音
-    /// </summary>
-    [PersonalData]
-    [MaxLength(40)]
-    [Unicode(false)]
-    public virtual string? PhoneticGivenName { get; set; }
 
     /// <summary>
     ///     User head image data.
@@ -150,6 +121,6 @@ public class ApplicationUser : IdentityUser
     /// <returns></returns>
     public override string ToString()
     {
-        return PersonName.FullName;
+        return UserName!;
     }
 }

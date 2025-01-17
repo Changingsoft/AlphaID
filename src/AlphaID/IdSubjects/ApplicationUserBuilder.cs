@@ -11,10 +11,10 @@ namespace IdSubjects;
 /// <param name="userName"></param>
 /// <param name="personName"></param>
 /// <exception cref="ArgumentException"></exception>
-public class ApplicationUserBuilder<T>(string userName, PersonNameInfo personName)
+public class ApplicationUserBuilder<T>(string userName, HumanNameInfo personName)
 where T : ApplicationUser, new()
 {
-    private readonly T _user = new() { UserName = userName, PersonName = personName };
+    private readonly T _user = new() { UserName = userName, HumanName = personName };
 
     /// <summary>
     ///     Initialize a person builder.
@@ -30,7 +30,7 @@ where T : ApplicationUser, new()
     /// <param name="userName"></param>
     /// <param name="fullName"></param>
     public ApplicationUserBuilder(string userName, string fullName)
-        : this(userName, new PersonNameInfo(fullName))
+        : this(userName, new HumanNameInfo(fullName))
     {
     }
 
@@ -51,9 +51,9 @@ where T : ApplicationUser, new()
     /// </summary>
     /// <param name="personName"></param>
     /// <returns></returns>
-    public ApplicationUserBuilder<T> SetPersonName(PersonNameInfo personName)
+    public ApplicationUserBuilder<T> SetPersonName(HumanNameInfo personName)
     {
-        _user.PersonName = personName;
+        _user.HumanName = personName;
         return this;
     }
 
@@ -90,9 +90,6 @@ where T : ApplicationUser, new()
         //Ensure person
         if (string.IsNullOrWhiteSpace(_user.UserName))
             throw new InvalidOperationException("Can not build person because user name is null or blank.");
-        if (string.IsNullOrWhiteSpace(_user.PersonName.FullName))
-            throw new InvalidOperationException(
-                "Can not build person because full name of person name is null or blank.");
 
         return _user;
     }

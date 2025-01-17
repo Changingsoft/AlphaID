@@ -56,7 +56,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         var chinesePersonName =
             new ChinesePersonName(Input.Surname, Input.GivenName, phoneticSurname, phoneticGivenName);
 
-        var personName = new PersonNameInfo(chinesePersonName.FullName, Input.Surname, Input.GivenName);
+        var personName = new HumanNameInfo(chinesePersonName.FullName, Input.Surname, Input.GivenName);
 
         builder
             .SetUserName(UserName)
@@ -73,7 +73,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         person.Gender = Input.Gender;
         person.PhoneticSurname = chinesePersonName.PhoneticSurname;
         person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
-        person.PersonName.SearchHint = $"{chinesePersonName.PhoneticSurname}{chinesePersonName.GivenName}";
+        person.SearchHint = $"{chinesePersonName.PhoneticSurname}{chinesePersonName.GivenName}";
 
 
         Result = await manager.CreateAsync(person);

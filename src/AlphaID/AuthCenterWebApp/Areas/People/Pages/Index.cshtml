@@ -1,13 +1,13 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewBag.Title = $"{Model.Person.PersonName.FullName} ({Model.Person.UserName})";
+    ViewBag.Title = $"{Model.Person.HumanName?.FullName} ({Model.Person.UserName})";
 }
 
 <div class="row">
     <div class="col-4">
         <img class="img-fluid mx-auto d-block rounded" src="@(Url.Page("/Avatar", new { anchor = Model.Person.UserName, area = "People" }))" title="Avatar"/>
-        <h2>@Model.Person.PersonName.FullName (@(Model.Person.UserName))</h2>
+        <h2>@Model.Person.HumanName?.FullName (@(Model.Person.UserName))</h2>
         <p>@Model.Person.Bio</p>
         @* <ul class="text-secondary">
         <li>

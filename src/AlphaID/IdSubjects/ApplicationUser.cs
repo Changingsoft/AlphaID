@@ -86,29 +86,6 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     public virtual DateOnly? DateOfBirth { get; set; }
 
-    /// <summary>
-    ///     个人经历。
-    /// </summary>
-    [MaxLength(200)]
-    [PersonalData]
-    public virtual string? Bio { get; set; }
-
-
-    /// <summary>
-    ///     姓氏拼音
-    /// </summary>
-    [PersonalData]
-    [MaxLength(20)]
-    [Unicode(false)]
-    public virtual string? PhoneticSurname { get; set; }
-
-    /// <summary>
-    ///     名字拼音
-    /// </summary>
-    [PersonalData]
-    [MaxLength(40)]
-    [Unicode(false)]
-    public virtual string? PhoneticGivenName { get; set; }
 
     /// <summary>
     ///     User head image data.

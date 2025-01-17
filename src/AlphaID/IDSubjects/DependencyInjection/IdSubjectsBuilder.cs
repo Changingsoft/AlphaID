@@ -72,9 +72,6 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
         return this;
     }
 
-    
-
-
     /// <summary>
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -92,6 +89,20 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
     public IdSubjectsBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
     {
         Services.TryAddScoped<IOrganizationIdentifierStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// 使用指定的Profile生成器。
+    /// </summary>
+    /// <typeparam name="TGenerator"></typeparam>
+    /// <typeparam name="TUser"></typeparam>
+    /// <returns></returns>
+    public IdSubjectsBuilder AddProfileUrlGenerator<TGenerator, TUser>() 
+        where TGenerator : ProfileUrlGenerator<TUser>
+        where TUser : ApplicationUser
+    {
+        Services.AddScoped<ProfileUrlGenerator<TUser>, TGenerator>();
         return this;
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 // ReSharper disable CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 #pragma warning restore IDE0130 // 命名空间与文件夹结构不匹配
-                               // ReSharper restore CheckNamespace
+// ReSharper restore CheckNamespace
 
 /// <summary>
 /// Extension methods for setting up AlphaIdPlatform services in an <see cref="IServiceCollection" />.
@@ -27,6 +27,8 @@ public static class ServiceCollectionExtensions
     {
         //Add required services
         var idSubjectsBuilder = services.AddIdSubjects<NaturalPerson>();
+        idSubjectsBuilder.AddProfileUrlGenerator<NaturalPersonProfileGenerator, NaturalPerson>();
+
         var directoryLoginBuilder = idSubjectsBuilder.AddDirectoryLogin<NaturalPerson>();
         var realnameBuilder = idSubjectsBuilder.AddRealName<NaturalPerson>();
         var auditLogBuilder = services.AddAuditLog();

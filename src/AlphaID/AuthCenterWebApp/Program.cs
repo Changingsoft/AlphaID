@@ -130,11 +130,13 @@ platform.AddEntityFramework(options =>
 
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
 builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
+//配置ProfileUrl
+builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddSignInManager<PersonSignInManager>()
     .AddUserStore<ApplicationUserStore>()
-    .AddClaimsPrincipalFactory<PersonClaimsPrincipalFactory>()
+    .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
 
 //配置外部登录。

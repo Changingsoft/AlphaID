@@ -1,29 +1,32 @@
-using System.Security.Claims;
-using AlphaIdPlatform;
-using AlphaIdPlatform.Identity;
 using IdentityModel;
-using IdSubjects;
-using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
-namespace AuthCenterWebApp.Services;
+namespace IdSubjects;
 
-public class PersonClaimsPrincipalFactory(
-    UserManager<NaturalPerson> userManager,
-    IOptions<IdSubjectsOptions> optionsAccessor,
-    IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<NaturalPerson>(userManager, optionsAccessor)
+/// <summary>
+///    为<see cref="ApplicationUser"/>生成声明的工厂。
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="userManager"></param>
+/// <param name="optionsAccessor"></param>
+/// <param name="profileUrlGenerator"></param>
+public class ApplicationUserClaimsPrincipalFactory<T>(UserManager<T> userManager, IOptions<IdentityOptions> optionsAccessor, ProfileUrlGenerator<T> profileUrlGenerator) : UserClaimsPrincipalFactory<T>(userManager, optionsAccessor)
+    where T : ApplicationUser
 {
-    private readonly SystemUrlInfo _systemUrl = systemUrlOptions.Value;
-
-    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)
+    /// <summary>
+    ///    为<see cref="ApplicationUser"/>生成声明。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(T user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
         string anchor = user.UserName!;
-        id.AddClaim(new Claim(JwtClaimTypes.Profile,
-            new Uri(_systemUrl.AuthCenterUrl, "/People/" + anchor).ToString()));
+        id.AddClaim(new Claim(JwtClaimTypes.Profile,profileUrlGenerator.GenerateProfileUrl(user).ToString()));
         if (user.ProfilePicture != null)
-            id.AddClaim(new Claim(JwtClaimTypes.Picture,
-                new Uri(_systemUrl.AuthCenterUrl, $"/People/{anchor}/Avatar").ToString()));
+            id.AddClaim(new Claim(JwtClaimTypes.Picture,profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt,
             ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.Locale != null)
@@ -60,9 +63,6 @@ public class PersonClaimsPrincipalFactory(
         id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName ?? user.Email ?? string.Empty));
 
-        //Custom claim type SearchHint.
-        if (user.SearchHint != null)
-            id.AddClaim(new Claim(AlphaIdJwtClaimTypes.SearchHint, user.SearchHint));
         return id;
     }
 }

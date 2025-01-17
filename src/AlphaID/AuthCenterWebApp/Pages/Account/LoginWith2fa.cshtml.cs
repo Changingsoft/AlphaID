@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.Events;
@@ -17,7 +17,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class LoginWith2FaModel(
     SignInManager<ApplicationUser> signInManager,
-    ApplicationUserManager userManager,
+    UserManager<ApplicationUser> userManager,
     ILogger<LoginWith2FaModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel

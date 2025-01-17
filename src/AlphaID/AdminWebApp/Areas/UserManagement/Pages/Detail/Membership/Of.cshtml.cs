@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Helpers;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(OrganizationMemberManager memberManager, ApplicationUserManager applicationUserManager) : PageModel
+public class OfModel(OrganizationMemberManager memberManager, UserManager<ApplicationUser> applicationUserManager) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 

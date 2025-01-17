@@ -7,6 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Infrastructure\**" />
+	  <Content Remove="Infrastructure\**" />
+	  <EmbeddedResource Remove="Infrastructure\**" />
+	  <None Remove="Infrastructure\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.6" />
@@ -83,10 +90,6 @@
 	  <EmbeddedResource Update="Resources\Views\Shared\_DefaultTitleNavBarPartial.zh-cn.resx">
 	    <DependentUpon>_DefaultTitleNavBarPartial.resx</DependentUpon>
 	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Infrastructure\DataStores\" />
 	</ItemGroup>
 
 	<ProjectExtensions>

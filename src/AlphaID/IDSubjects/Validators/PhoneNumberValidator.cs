@@ -16,7 +16,7 @@ public class PhoneNumberValidator : IUserValidator<ApplicationUser>
     /// <returns></returns>
     public virtual async Task<IdentityResult> ValidateAsync(UserManager<ApplicationUser> manager, ApplicationUser user)
     {
-        ApplicationUserManager applicationUserManager = manager as ApplicationUserManager ??
+        ApplicationUserManager<ApplicationUser> applicationUserManager = manager as ApplicationUserManager<ApplicationUser> ??
                                                     throw new InvalidOperationException(
                                                         "无法转换UserManger到ApplicationUserManager。");
         var errors = new List<IdentityError>();

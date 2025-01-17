@@ -10,7 +10,7 @@ namespace IdSubjects.RealName;
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="applicationUserManager"></param>
-public class RealNameManager(IRealNameAuthenticationStore store, ApplicationUserManager applicationUserManager)
+public class RealNameManager(IRealNameAuthenticationStore store, UserManager<ApplicationUser> applicationUserManager)
 {
     /// <summary>
     ///     获取可查询的实名认证信息集合。

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Register;
 
-public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, ApplicationUserManager manager) : PageModel
+public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserManager<ApplicationUser> manager) : PageModel
 {
     [BindProperty]
     [Display(Name = "User name")]
@@ -44,7 +44,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Appli
             if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
                 builder.SetMobile(phoneNumber);
             else
-                ModelState.AddModelError("", "ÒÆ¶¯µç»°ºÅÂëÎŞĞ§¡£");
+                ModelState.AddModelError("", "ç§»åŠ¨ç”µè¯å·ç æ— æ•ˆã€‚");
         }
 
         if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Appli
     }
 
     /// <summary>
-    ///     ¼ì²éÒÆ¶¯µç»°µÄÓĞĞ§ĞÔºÍÎ¨Ò»ĞÔ¡£
+    ///     æ£€æŸ¥ç§»åŠ¨ç”µè¯çš„æœ‰æ•ˆæ€§å’Œå”¯ä¸€æ€§ã€‚
     /// </summary>
     /// <param name="mobile"></param>
     /// <returns></returns>
@@ -94,10 +94,10 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Appli
             return new JsonResult(true);
 
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
-            return new JsonResult("ÒÆ¶¯µç»°ºÅÂëÎŞĞ§");
+            return new JsonResult("ç§»åŠ¨ç”µè¯å·ç æ— æ•ˆ");
 
         if (!manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString())) return new JsonResult(true);
-        return new JsonResult("´ËÒÆ¶¯µç»°ÒÑ×¢²á");
+        return new JsonResult("æ­¤ç§»åŠ¨ç”µè¯å·²æ³¨å†Œ");
     }
 
     public IActionResult OnPostCheckEmail(string email)
@@ -115,7 +115,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, Appli
     }
 
     /// <summary>
-    ///     »ñÈ¡Æ´Òô¡£
+    ///     è·å–æ‹¼éŸ³ã€‚
     /// </summary>
     /// <returns></returns>
     public IActionResult OnGetPinyin(string surname, string givenName)

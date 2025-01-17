@@ -1,10 +1,11 @@
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class DirectoryAccountsModel(ApplicationUserManager personManager, DirectoryAccountManager directoryAccountManager)
+public class DirectoryAccountsModel(UserManager<ApplicationUser> personManager, DirectoryAccountManager directoryAccountManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

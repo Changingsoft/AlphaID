@@ -1,4 +1,4 @@
-﻿using IntegrationTestUtilities;
+using IntegrationTestUtilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -14,7 +14,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task SetTimeZone()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
         await manager.CreateAsync(_person);
 
         //using IANA time zone name
@@ -32,7 +32,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task CreateWithPassword()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
 
         DateTimeOffset now = DateTimeOffset.UtcNow;
         manager.TimeProvider = new FrozenTimeProvider(now);
@@ -50,7 +50,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task CreateWithoutPassword()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
 
         DateTimeOffset now = DateTimeOffset.UtcNow;
         manager.TimeProvider = new FrozenTimeProvider(now);
@@ -68,7 +68,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task SetUpdateTimeWhenUpdate()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
         await manager.CreateAsync(_person);
 
         var utcNow = new DateTimeOffset(2023, 11, 4, 3, 50, 34, TimeSpan.Zero);
@@ -83,7 +83,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task AddPasswordWillSetPasswordLastSetTime()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         await manager.CreateAsync(_person);
 
         IdentityResult result = await manager.AddPasswordAsync(_person, "Password$1");
@@ -95,7 +95,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task RemovePassword()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         await manager.CreateAsync(_person, "Pass123$");
 
@@ -108,7 +108,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task ChangePassword()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
         manager.Options.Password.RememberPasswordHistory = 1;
 
         await manager.CreateAsync(_person, "Pass123$");

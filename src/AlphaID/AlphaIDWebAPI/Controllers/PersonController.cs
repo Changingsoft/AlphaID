@@ -1,8 +1,9 @@
-﻿using AlphaIdPlatform;
+using AlphaIdPlatform;
 using AlphaIdPlatform.Security;
 using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlphaIdWebAPI.Controllers;
@@ -20,7 +21,7 @@ namespace AlphaIdWebAPI.Controllers;
 [ApiController]
 [Authorize]
 public class PersonController(
-    ApplicationUserManager personManager,
+    UserManager<ApplicationUser> personManager,
     IOptions<SystemUrlInfo> urlInfo,
     OrganizationMemberManager memberManager) : ControllerBase
 {

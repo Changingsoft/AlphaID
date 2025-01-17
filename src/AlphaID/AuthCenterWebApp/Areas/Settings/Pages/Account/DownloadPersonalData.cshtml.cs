@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DownloadPersonalDataModel(
-    ApplicationUserManager userManager,
+    UserManager<ApplicationUser> userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
     private readonly JsonSerializerOptions serializerOptions = new()

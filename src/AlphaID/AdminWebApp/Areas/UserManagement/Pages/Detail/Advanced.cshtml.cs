@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class AdvancedModel(NaturalPersonService naturalPersonService, ApplicationUserManager applicationUserManager) : PageModel
+public class AdvancedModel(NaturalPersonService naturalPersonService, UserManager<ApplicationUser> applicationUserManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 

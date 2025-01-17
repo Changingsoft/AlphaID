@@ -1,6 +1,5 @@
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
-using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +67,7 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
 
         dbContext.Clients.Update(Data);
         await dbContext.SaveChangesAsync();
-        OperationMessage = "操作已成功！";
+        OperationMessage = "鎿嶄綔宸叉垚鍔燂紒";
         return Page();
     }
 

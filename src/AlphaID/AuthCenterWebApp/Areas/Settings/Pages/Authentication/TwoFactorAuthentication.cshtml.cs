@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class TwoFactorAuthenticationModel(
-    ApplicationUserManager userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager) : PageModel
 {
     public bool HasAuthenticator { get; set; }

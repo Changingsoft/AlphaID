@@ -1,12 +1,13 @@
 using IdSubjects;
 using IdSubjects.Invitations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
 public class JoinOrganizationInvitationModel(
-    ApplicationUserManager personManager,
+    UserManager<ApplicationUser> personManager,
     JoinOrganizationInvitationManager invitationsManager) : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

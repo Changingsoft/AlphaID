@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SetPasswordModel(NaturalPersonService naturalPersonService, ApplicationUserManager userManager) : PageModel
+public class SetPasswordModel(NaturalPersonService naturalPersonService, UserManager<ApplicationUser> userManager) : PageModel
 {
     [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [DataType(DataType.Password)]

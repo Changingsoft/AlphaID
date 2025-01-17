@@ -30,9 +30,8 @@ public class Index(IWebHostEnvironment env) : PageModel
             AuthenticateResult = result;
             if (result.Properties == null) return;
 
-            if (!result.Properties.Items.ContainsKey("client_list")) return;
+            if (!result.Properties.Items.TryGetValue("client_list", out string? encoded)) return;
 
-            string? encoded = result.Properties.Items["client_list"];
             if (encoded == null) return;
 
             byte[] bytes = Base64Url.Decode(encoded);

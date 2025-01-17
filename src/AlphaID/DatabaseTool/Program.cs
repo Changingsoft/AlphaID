@@ -1,11 +1,5 @@
-using AlphaId.EntityFramework.DirectoryAccountManagement;
-using AlphaId.EntityFramework.IdSubjects;
-using AlphaId.EntityFramework.RealName;
-using AlphaId.EntityFramework.SecurityAuditing;
 using DatabaseTool;
 using DatabaseTool.Migrators;
-using IdSubjects.DirectoryLogon;
-using IdSubjects.RealName;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

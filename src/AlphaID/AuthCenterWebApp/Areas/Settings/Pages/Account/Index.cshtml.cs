@@ -1,10 +1,11 @@
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class IndexModel(DirectoryAccountManager directoryAccountManager, ApplicationUserManager applicationUserManager)
+public class IndexModel(DirectoryAccountManager directoryAccountManager, UserManager<ApplicationUser> applicationUserManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;
@@ -13,7 +14,7 @@ public class IndexModel(DirectoryAccountManager directoryAccountManager, Applica
 
     public async Task OnGet()
     {
-        Person = await applicationUserManager.GetUserAsync(User) ?? throw new InvalidOperationException("’“≤ªµΩ”√ªß°£");
+        Person = await applicationUserManager.GetUserAsync(User) ?? throw new InvalidOperationException("Êâæ‰∏çÂà∞Áî®Êà∑„ÄÇ");
         DirectoryAccounts = directoryAccountManager.GetLogonAccounts(Person);
     }
 }

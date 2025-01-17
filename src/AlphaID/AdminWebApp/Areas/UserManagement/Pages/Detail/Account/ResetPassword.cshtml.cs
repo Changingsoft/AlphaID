@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class ResetPasswordModel(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     IShortMessageService shortMessageService,
     IOptions<IdentityOptions> options) : PageModel
 {
@@ -46,7 +46,7 @@ public class ResetPasswordModel(
 
         if (string.IsNullOrEmpty(Person.PhoneNumber))
         {
-            OperationResult = "ÎŞ·¨Í¨¹ı¶ÌĞÅÖØÖÃÃÜÂë¡£ÒòÎªÓÃ»§Ã»ÓĞÁôÏÂÒÆ¶¯µç»°ºÅÂë¡£";
+            OperationResult = "æ— æ³•é€šè¿‡çŸ­ä¿¡é‡ç½®å¯†ç ã€‚å› ä¸ºç”¨æˆ·æ²¡æœ‰ç•™ä¸‹ç§»åŠ¨ç”µè¯å·ç ã€‚";
             return Page();
         }
 
@@ -54,8 +54,8 @@ public class ResetPasswordModel(
         IdentityResult result = await userManager.AdminResetPasswordAsync(Person, password, true, true);
         if (result.Succeeded)
         {
-            await shortMessageService.SendAsync(Person.PhoneNumber, $"ÄúµÄ³õÊ¼ÃÜÂëÊÇ[{password}]£¨²»°üÀ¨·½À¨ºÅ£©");
-            OperationResult = "ÃÜÂëÒÑÖØÖÃ²¢¸æÖªÓÃ»§¡£";
+            await shortMessageService.SendAsync(Person.PhoneNumber, $"æ‚¨çš„åˆå§‹å¯†ç æ˜¯[{password}]ï¼ˆä¸åŒ…æ‹¬æ–¹æ‹¬å·ï¼‰");
+            OperationResult = "å¯†ç å·²é‡ç½®å¹¶å‘ŠçŸ¥ç”¨æˆ·ã€‚";
             return Page();
         }
 
@@ -79,7 +79,7 @@ public class ResetPasswordModel(
         }
 
 
-        OperationResult = "²Ù×÷ÒÑ³É¹¦¡£";
+        OperationResult = "æ“ä½œå·²æˆåŠŸã€‚";
         return Page();
     }
 
@@ -111,16 +111,16 @@ public class ResetPasswordModel(
             charset.Append(SymbolCharset);
         }
 
-        //²¹È«³¤¶È
+        //è¡¥å…¨é•¿åº¦
         while (sb.Length < _identityOptions.Password.RequiredLength)
             sb.Append(charset[Random.Shared.Next(charset.Length)]);
-        //Ï´ÅÆ
+        //æ´—ç‰Œ
         Shuffle(sb);
         return sb.ToString();
     }
 
     /// <summary>
-    ///     Ï´ÅÆ
+    ///     æ´—ç‰Œ
     /// </summary>
     /// <param name="sb"></param>
     /// <returns></returns>

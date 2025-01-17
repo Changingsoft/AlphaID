@@ -1,11 +1,12 @@
 using System.Diagnostics;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
-public class IndexModel(OrganizationMemberManager memberManager, ApplicationUserManager personManager) : PageModel
+public class IndexModel(OrganizationMemberManager memberManager, UserManager<ApplicationUser> personManager) : PageModel
 {
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 

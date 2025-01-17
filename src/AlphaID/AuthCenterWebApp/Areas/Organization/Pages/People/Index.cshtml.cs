@@ -1,4 +1,5 @@
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,7 +8,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 public class IndexModel(
     OrganizationMemberManager organizationMemberManager,
     OrganizationManager organizationManager,
-    ApplicationUserManager personManager) : PageModel
+    UserManager<ApplicationUser> personManager) : PageModel
 {
     public IdSubjects.Organization Organization { get; set; } = null!;
 

@@ -1,10 +1,11 @@
 using IdSubjects;
 using IdSubjects.RealName;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class RealNameModel(ApplicationUserManager userManager, RealNameManager realNameManager) : PageModel
+public class RealNameModel(UserManager<ApplicationUser> userManager, RealNameManager realNameManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 

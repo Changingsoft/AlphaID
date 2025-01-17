@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 namespace AuthCenterWebApp.Services;
 
 public class PersonClaimsPrincipalFactory(
-    ApplicationUserManager userManager,
+    UserManager<ApplicationUser> userManager,
     IOptions<IdSubjectsOptions> optionsAccessor,
     IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<ApplicationUser>(userManager, optionsAccessor)
 {

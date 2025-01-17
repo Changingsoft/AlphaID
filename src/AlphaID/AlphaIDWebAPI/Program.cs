@@ -1,14 +1,9 @@
 using System.Reflection;
-using AlphaId.EntityFramework.DirectoryAccountManagement;
-using AlphaId.EntityFramework.IdSubjects;
-using AlphaId.EntityFramework.RealName;
 using AlphaIdPlatform;
 using AlphaIdWebAPI;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
-using IdSubjects.DirectoryLogon;
-using IdSubjects.RealName;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;

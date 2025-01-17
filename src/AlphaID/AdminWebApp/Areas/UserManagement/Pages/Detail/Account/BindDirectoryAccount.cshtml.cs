@@ -1,11 +1,12 @@
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class BindDirectoryAccountModel(
-    ApplicationUserManager personManager,
+    UserManager<ApplicationUser> personManager,
     DirectoryAccountManager directoryAccountManager,
     DirectoryServiceManager directoryServiceManager) : PageModel
 {

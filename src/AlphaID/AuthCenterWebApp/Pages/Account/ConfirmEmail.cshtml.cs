@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using System.Text;
 using IdSubjects;
@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ConfirmEmailModel(ApplicationUserManager userManager) : PageModel
+public class ConfirmEmailModel(UserManager<ApplicationUser> userManager) : PageModel
 {
     [TempData]
     public string StatusMessage { get; set; }

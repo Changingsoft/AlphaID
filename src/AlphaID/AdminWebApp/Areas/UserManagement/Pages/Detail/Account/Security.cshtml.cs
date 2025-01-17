@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SecurityModel(ApplicationUserManager manager) : PageModel
+public class SecurityModel(UserManager<ApplicationUser> manager) : PageModel
 {
     public string OperationMessage = null!;
 
@@ -42,7 +43,7 @@ public class SecurityModel(ApplicationUserManager manager) : PageModel
         await manager.SetTwoFactorEnabledAsync(Data, Input.TwoFactorEnabled);
         await manager.SetLockoutEnabledAsync(Data, Input.LockoutEnabled);
         trans.Complete();
-        OperationMessage = "ÒÑ¸üÐÂ";
+        OperationMessage = "å·²æ›´æ–°";
         return Page();
     }
 

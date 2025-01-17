@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class IndexModel(ApplicationUserManager userManager) : PageModel
+public class IndexModel(UserManager<ApplicationUser> userManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 
@@ -44,12 +45,12 @@ public class IndexModel(ApplicationUserManager userManager) : PageModel
 
         if (userManager.Users.Any(p => p.Id != Data.Id && p.UserName == Input.UserName))
         {
-            ModelState.AddModelError("", "²»ÄÜÓëÆäËûÕË»§ÃûÏàÍ¬");
+            ModelState.AddModelError("", "ä¸èƒ½ä¸å…¶ä»–è´¦æˆ·åç›¸åŒ");
             return Page();
         }
 
         await userManager.SetUserNameAsync(Data, Input.UserName);
-        OperationResultMessage = "²Ù×÷ÒÑ³É¹¦¡£";
+        OperationResultMessage = "æ“ä½œå·²æˆåŠŸã€‚";
         return Page();
     }
 

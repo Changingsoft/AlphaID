@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Transactions;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,7 +11,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 public class NewModel(
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager,
-    ApplicationUserManager personManager) : PageModel
+    UserManager<ApplicationUser> personManager) : PageModel
 {
     [BindProperty]
     [Display(Name = "Name", Description = "Full name of organization.")]

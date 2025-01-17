@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using AlphaIdPlatform.Platform;
 using Microsoft.Extensions.Options;
@@ -94,6 +94,7 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
             BaseAddress = new Uri(_options.ServiceBaseUrl)
         };
 
+        // ReSharper disable once StringLiteralTypo
         var requestMsg = new HttpRequestMessage(HttpMethod.Post, "/rest/160601/ocr/ocr_idcard.json");
         requestMsg.Headers.Authorization = new AuthenticationHeaderValue("APPCODE", _options.AppCode);
         requestMsg.Content = JsonContent.Create(requestData);

@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Admin;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security;
 
-public class RoleMembersModel(UserInRoleManager userInRoleManager, ApplicationUserManager personManager) : PageModel
+public class RoleMembersModel(UserInRoleManager userInRoleManager, UserManager<ApplicationUser> personManager) : PageModel
 {
     public IEnumerable<UserInRole>? RoleMembers { get; set; }
 

@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +9,7 @@ namespace AuthCenterWebApp.Services;
 ///     自然人登录管理器。继承自<see cref="SignInManager{TUser}"></see>
 /// </summary>
 public class PersonSignInManager(
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     IHttpContextAccessor contextAccessor,
     IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
     IOptions<IdentityOptions> optionsAccessor,

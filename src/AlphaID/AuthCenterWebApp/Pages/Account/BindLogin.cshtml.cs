@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
@@ -22,7 +21,7 @@ public class BindLoginModel(
     IAuthenticationSchemeProvider schemeProvider,
     IIdentityProviderStore identityProviderStore,
     IEventService events,
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     IOptions<LoginOptions> loginOptions) : PageModel
 {
@@ -35,7 +34,7 @@ public class BindLoginModel(
     {
         AuthenticateResult externalLoginResult =
             await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-        if (!externalLoginResult.Succeeded) throw new Exception("ÎŞĞ§µÄÍâ²¿µÇÂ¼¡£");
+        if (!externalLoginResult.Succeeded) throw new Exception("æ— æ•ˆçš„å¤–éƒ¨ç™»å½•ã€‚");
 
         await BuildModelAsync(returnUrl);
 
@@ -44,10 +43,10 @@ public class BindLoginModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        //¼ì²éÎÒÃÇÊÇ·ñÔÚÊÚÈ¨ÇëÇóµÄÉÏÏÂÎÄÖĞ
+        //æ£€æŸ¥æˆ‘ä»¬æ˜¯å¦åœ¨æˆæƒè¯·æ±‚çš„ä¸Šä¸‹æ–‡ä¸­
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
-        //ÓÃ»§µã»÷ÁË¡°È¡Ïû¡±°´Å¥
+        //ç”¨æˆ·ç‚¹å‡»äº†â€œå–æ¶ˆâ€æŒ‰é’®
         if (Input.Button != "login")
         {
             if (context != null)
@@ -66,7 +65,7 @@ public class BindLoginModel(
                 return Redirect(Input.ReturnUrl);
             }
 
-            //ÓÉÓÚÎÒÃÇÃ»ÓĞÓĞĞ§µÄÉÏÏÂÎÄ£¬ÄÇÃ´ÎÒÃÇÖ»Ğè·µ»ØÖ÷Ò³
+            //ç”±äºæˆ‘ä»¬æ²¡æœ‰æœ‰æ•ˆçš„ä¸Šä¸‹æ–‡ï¼Œé‚£ä¹ˆæˆ‘ä»¬åªéœ€è¿”å›ä¸»é¡µ
             return Redirect("~/");
         }
 
@@ -75,9 +74,9 @@ public class BindLoginModel(
             AuthenticateResult externalLoginResult =
                 await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
             if (!externalLoginResult.Succeeded)
-                throw new Exception("ÎŞĞ§µÄÍâ²¿µÇÂ¼");
+                throw new Exception("æ— æ•ˆçš„å¤–éƒ¨ç™»å½•");
 
-            //µÇÂ¼¹ı³Ì¡£
+            //ç™»å½•è¿‡ç¨‹ã€‚
             ApplicationUser? user = await userManager.FindByEmailAsync(Input.Username)
                                   ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
                                   ?? await userManager.FindByNameAsync(Input.Username);
@@ -92,7 +91,7 @@ public class BindLoginModel(
                     return Page();
                 }
 
-                //ÎªÓÃ»§°ó¶¨Íâ²¿µÇÂ¼
+                //ä¸ºç”¨æˆ·ç»‘å®šå¤–éƒ¨ç™»å½•
                 ClaimsPrincipal? externalUser = externalLoginResult.Principal;
                 Claim userIdClaim = externalUser.FindFirst(JwtClaimTypes.Subject) ??
                                     externalUser.FindFirst(ClaimTypes.NameIdentifier) ??
@@ -167,7 +166,7 @@ public class BindLoginModel(
 
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
-        //ÔÚÊÚÈ¨ÉÏÏÂÎÄÖĞÖ¸¶¨ÁËIdP£¬Òò´ËÌø¹ı±¾µØµÇÂ¼¶øÖ±½Ó×ªµ½Ö¸¶¨µÄIdP¡£
+        //åœ¨æˆæƒä¸Šä¸‹æ–‡ä¸­æŒ‡å®šäº†IdPï¼Œå› æ­¤è·³è¿‡æœ¬åœ°ç™»å½•è€Œç›´æ¥è½¬åˆ°æŒ‡å®šçš„IdPã€‚
         if (context?.IdP != null && await schemeProvider.GetSchemeAsync(context.IdP) != null)
         {
             bool local = context.IdP == IdentityServerConstants.LocalIdentityProvider;

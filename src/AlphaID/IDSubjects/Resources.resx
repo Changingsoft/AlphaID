@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -148,7 +148,7 @@
     <value>Legal entity identifier</value>
   </data>
   <data name="LessThenMinimumPasswordAge" xml:space="preserve">
-    <value>Current password age is less then minimum password age requirement.</value>
+    <value>Current password age is less than minimum password age requirement.</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>

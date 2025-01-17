@@ -14,7 +14,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ResetPasswordMobileModel(
     NaturalPersonService naturalPersonService,
-    ApplicationUserManager userManager,
+    ApplicationUserManager<ApplicationUser> userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
     [BindProperty]

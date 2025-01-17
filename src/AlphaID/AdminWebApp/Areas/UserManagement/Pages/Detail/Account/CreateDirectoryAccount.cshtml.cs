@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
@@ -8,7 +9,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 public class CreateDirectoryAccountModel(
     DirectoryServiceManager directoryServiceManager,
     DirectoryAccountManager directoryAccountManager,
-    ApplicationUserManager applicationUserManager) : PageModel
+    UserManager<ApplicationUser> applicationUserManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 

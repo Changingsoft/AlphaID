@@ -32,9 +32,9 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
 
     public List<SelectListItem> AllowedGrantTypes { get; set; } =
     [
-        new SelectListItem("ÊÚÈ¨Âë", GrantType.AuthorizationCode, true),
-        new SelectListItem("¿Í»§¶ËÆ¾¾İ", GrantType.ClientCredentials, false),
-        new SelectListItem("×ÊÔ´ËùÓĞÕßÃÜÂë", GrantType.ResourceOwnerPassword, false)
+        new("æˆæƒç ", GrantType.AuthorizationCode, true),
+        new("å®¢æˆ·ç«¯å‡­æ®", GrantType.ClientCredentials, false),
+        new("èµ„æºæ‰€æœ‰è€…å¯†ç ", GrantType.ResourceOwnerPassword, false)
     ];
 
     public void OnGet()

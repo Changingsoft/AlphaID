@@ -12,11 +12,12 @@ namespace IdSubjects.Invitations;
 /// <param name="personManager"></param>
 /// <param name="organizationManager"></param>
 /// <param name="memberManager"></param>
-public class JoinOrganizationInvitationManager(
+public class JoinOrganizationInvitationManager<T>(
     IJoinOrganizationInvitationStore store,
-    UserManager<ApplicationUser> personManager,
+    UserManager<T> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
+where T : ApplicationUser
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
@@ -26,7 +27,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="person"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(ApplicationUser person)
+    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(T person)
     {
         return store.Invitations.Where(i =>
             i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
@@ -51,7 +52,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="inviter"></param>
     /// <returns></returns>
     public async Task<IdOperationResult> InviteMemberAsync(Organization organization,
-        ApplicationUser invitee,
+        T invitee,
         string inviter)
     {
         var errors = new List<string>();
@@ -99,7 +100,7 @@ public class JoinOrganizationInvitationManager(
         if (organization != null && person != null)
             result = await memberManager.CreateAsync(
                 new OrganizationMember(organization, person)
-                    { Visibility = invitation.ExpectVisibility });
+                { Visibility = invitation.ExpectVisibility });
         invitation.Accepted = true;
         await store.UpdateAsync(invitation);
         trans.Complete();

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using Duende.IdentityServer.Extensions;
 using IdSubjects;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class MobileModel(UserManager<ApplicationUser> userManager, IVerificationCodeService verificationCodeService) : PageModel
+public class MobileModel(UserManager<NaturalPerson> userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = null!;
@@ -32,7 +33,7 @@ public class MobileModel(UserManager<ApplicationUser> userManager, IVerification
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(User.GetSubjectId());
+        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
             return BadRequest("无法处理用户Id.");
 
@@ -45,7 +46,7 @@ public class MobileModel(UserManager<ApplicationUser> userManager, IVerification
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(User.GetSubjectId());
+        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
         if (person == null)
             return BadRequest("无法处理用户Id.");
 

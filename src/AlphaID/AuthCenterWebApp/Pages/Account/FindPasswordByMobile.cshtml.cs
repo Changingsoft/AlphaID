@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using IdSubjects.Subjects;
@@ -11,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class FindPasswordByMobileModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    ApplicationUserManager<NaturalPerson> userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
@@ -34,7 +35,7 @@ public class FindPasswordByMobileModel(
         string code = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         var normalPhoneNumber = phoneNumber.ToString();
 
-        ApplicationUser? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
+        NaturalPerson? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true })
             //不执行操作
             return RedirectToPage("ResetPasswordMobile", new { code, phone = Mobile });

@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
@@ -6,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class BindDirectoryAccountModel(
-    UserManager<ApplicationUser> personManager,
-    DirectoryAccountManager directoryAccountManager,
+    UserManager<NaturalPerson> personManager,
+    DirectoryAccountManager<NaturalPerson> directoryAccountManager,
     DirectoryServiceManager directoryServiceManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;

@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordModel(NaturalPersonService naturalPersonService, UserManager<ApplicationUser> userManager) : PageModel
+public class ResetPasswordModel(NaturalPersonService naturalPersonService, UserManager<NaturalPerson> userManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -32,7 +32,7 @@ public class ResetPasswordModel(NaturalPersonService naturalPersonService, UserM
     {
         if (!ModelState.IsValid) return Page();
 
-        ApplicationUser? user = await userManager.FindByEmailAsync(Input.Email);
+        NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
         if (user == null)
             // Don't reveal that the user does not exist
             return RedirectToPage("./ResetPasswordConfirmation");

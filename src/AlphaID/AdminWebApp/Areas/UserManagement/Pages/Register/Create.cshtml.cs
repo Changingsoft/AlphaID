@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.ChineseName;
 using IdSubjects.Subjects;
@@ -38,7 +39,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var builder = new ApplicationUserBuilder();
+        var builder = new ApplicationUserBuilder<NaturalPerson>();
         if (Mobile != null)
         {
             if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))

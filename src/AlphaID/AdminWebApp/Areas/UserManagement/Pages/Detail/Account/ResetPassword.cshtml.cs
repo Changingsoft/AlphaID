@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Options;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class ResetPasswordModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    ApplicationUserManager<NaturalPerson> userManager,
     IShortMessageService shortMessageService,
     IOptions<IdentityOptions> options) : PageModel
 {
@@ -22,14 +23,14 @@ public class ResetPasswordModel(
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public string? OperationResult { get; set; }
 
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
         Input = new InputModel();
@@ -38,7 +39,7 @@ public class ResetPasswordModel(
 
     public async Task<IActionResult> OnPostAutoReset(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -65,7 +66,7 @@ public class ResetPasswordModel(
 
     public async Task<IActionResult> OnPostManualReset(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;

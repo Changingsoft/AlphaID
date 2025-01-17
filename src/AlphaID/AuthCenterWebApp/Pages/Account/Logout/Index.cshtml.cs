@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
@@ -16,7 +17,7 @@ namespace AuthCenterWebApp.Pages.Account.Logout;
 [SecurityHeaders]
 [AllowAnonymous]
 public class Index(
-    SignInManager<ApplicationUser> signInManager,
+    SignInManager<NaturalPerson> signInManager,
     IIdentityServerInteractionService interaction,
     IEventService events) : PageModel
 {

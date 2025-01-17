@@ -1,13 +1,14 @@
 using System.Diagnostics;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : PageModel
+public class IndexModel(ApplicationUserManager<NaturalPerson> userManager) : PageModel
 {
-    public ApplicationUser Data { get; set; } = null!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public IList<UserLoginInfo> ExternalLogins { get; set; } = null!;
 
@@ -15,7 +16,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : P
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -26,7 +27,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : P
 
     public async Task<IActionResult> OnGetPhotoAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -41,7 +42,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : P
             return BadRequest();
 
         IFormFile file = Request.Form.Files[0];
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         Debug.Assert(person != null);
 
         await using Stream stream = file.OpenReadStream();
@@ -55,7 +56,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : P
 
     public async Task<IActionResult> OnPostClearProfilePictureAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

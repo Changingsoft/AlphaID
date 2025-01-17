@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class DeleteModel(UserManager<ApplicationUser> userManager, NaturalPersonService naturalPersonService) : PageModel
+public class DeleteModel(UserManager<NaturalPerson> userManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
 
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty]
     public DeletePersonForm Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -27,7 +27,7 @@ public class DeleteModel(UserManager<ApplicationUser> userManager, NaturalPerson
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;

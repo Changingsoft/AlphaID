@@ -23,9 +23,9 @@ public static class ServiceCollectionExtensions
     public static AlphaIdPlatformBuilder AddAlphaIdPlatform(this IServiceCollection services)
     {
         //Add required services
-        var idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>();
-        var directoryLoginBuilder = idSubjectsBuilder.AddDirectoryLogin();
-        var realnameBuilder = idSubjectsBuilder.AddRealName();
+        var idSubjectsBuilder = services.AddIdSubjects<NaturalPerson>();
+        var directoryLoginBuilder = idSubjectsBuilder.AddDirectoryLogin<NaturalPerson>();
+        var realnameBuilder = idSubjectsBuilder.AddRealName<NaturalPerson>();
         var auditLogBuilder = services.AddAuditLog();
 
         services.AddScoped<NaturalPersonService>();

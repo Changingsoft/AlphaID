@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Transactions;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 public class NewModel(
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager,
-    UserManager<ApplicationUser> personManager) : PageModel
+    UserManager<NaturalPerson> personManager) : PageModel
 {
     [BindProperty]
     [Display(Name = "Name", Description = "Full name of organization.")]
@@ -52,7 +53,7 @@ public class NewModel(
         }
 
         //Add current person as owner.
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
 
         var member = new OrganizationMember(organization, person)

@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {
-    public class InvitationsModel(JoinOrganizationInvitationManager manager, OrganizationManager organizationManager) : PageModel
+    public class InvitationsModel(JoinOrganizationInvitationManager<NaturalPerson> manager, OrganizationManager organizationManager) : PageModel
     {
         public IEnumerable<JoinOrganizationInvitation> Invitations { get; set; } = [];
 

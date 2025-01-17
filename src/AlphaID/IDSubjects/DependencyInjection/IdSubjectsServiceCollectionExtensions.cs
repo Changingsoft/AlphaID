@@ -31,17 +31,17 @@ public static class IdSubjectsServiceCollectionExtensions
         services.AddHttpContextAccessor();
 
         // 由IdSubjects使用的服务。
-        services.TryAddScoped<ApplicationUserManager<ApplicationUser>>();
+        services.TryAddScoped<ApplicationUserManager<TUser>>();
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
         services.TryAddScoped<ApplicationUserIdentityErrorDescriber>();
         services.TryAddScoped<ApplicationUserBankAccountManager>();
-        services.TryAddScoped<JoinOrganizationInvitationManager>();
+        services.TryAddScoped<JoinOrganizationInvitationManager<TUser>>();
         services.TryAddScoped<OrganizationBankAccountManager>();
         services.TryAddScoped<OrganizationIdentifierManager>();
         services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
-        services.TryAddScoped<PasswordHistoryManager>();
+        services.TryAddScoped<PasswordHistoryManager<TUser>>();
 
         services.TryAddScoped<IEventService, DefaultEventService>();
         services.TryAddScoped<IEventSink, DefaultEventSink>();
@@ -49,7 +49,7 @@ public static class IdSubjectsServiceCollectionExtensions
         //添加基础标识
         IdentityBuilder identityBuilder = services.AddIdentityCore<TUser>()
                 .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<T>使用
-                .AddUserValidator<PhoneNumberValidator>();
+                .AddUserValidator<PhoneNumberValidator<TUser>>();
 
         if (setupAction != null)
         {
@@ -74,7 +74,7 @@ public static class IdSubjectsServiceCollectionExtensions
     {
         var builder = services.AddIdentity<TUser, TRole>()
             .AddUserManager<ApplicationUserManager<TUser>>()
-            .AddUserValidator<PhoneNumberValidator>();
+            .AddUserValidator<PhoneNumberValidator<TUser>>();
         services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
         {
             o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;

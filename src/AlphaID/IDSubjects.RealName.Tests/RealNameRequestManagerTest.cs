@@ -14,7 +14,7 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
         var personManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
+        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager<ApplicationUser>>();
         await personManager.CreateAsync(_person);
         RealNameRequest request = new ChineseIdCardRealNameRequest(_person.Id, "张三", Sex.Male, "汉",
             new DateOnly(1990, 1, 1), "Address",
@@ -33,8 +33,8 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
         var personManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
-        var realnameManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
+        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager<ApplicationUser>>();
+        var realnameManager = scope.ServiceProvider.GetRequiredService<RealNameManager<ApplicationUser>>();
 
         await personManager.CreateAsync(_person);
         RealNameRequest request = new ChineseIdCardRealNameRequest(_person.Id, "张三", Sex.Male, "汉",
@@ -59,8 +59,8 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
         var personManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager>();
-        scope.ServiceProvider.GetRequiredService<RealNameManager>();
+        var realnameRequestManager = scope.ServiceProvider.GetRequiredService<RealNameRequestManager<ApplicationUser>>();
+        scope.ServiceProvider.GetRequiredService<RealNameManager<ApplicationUser>>();
 
         await personManager.CreateAsync(_person);
         RealNameRequest request = new ChineseIdCardRealNameRequest(_person.Id, "张三", Sex.Male, "汉",

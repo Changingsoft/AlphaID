@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
@@ -19,8 +20,8 @@ public class Callback(
     IIdentityServerInteractionService interaction,
     IEventService events,
     ILogger<Callback> logger,
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager) : PageModel
+    UserManager<NaturalPerson> userManager,
+    SignInManager<NaturalPerson> signInManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
@@ -49,7 +50,7 @@ public class Callback(
         string providerUserId = userIdClaim.Value;
         string returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 
-        ApplicationUser? user = await userManager.FindByLoginAsync(provider, providerUserId);
+        NaturalPerson? user = await userManager.FindByLoginAsync(provider, providerUserId);
         if (user == null) return RedirectToPage("/Account/BindLogin", new { returnUrl });
 
         // this allows us to collect any additional claims or properties

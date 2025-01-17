@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SetPasswordModel(NaturalPersonService naturalPersonService, UserManager<ApplicationUser> userManager) : PageModel
+public class SetPasswordModel(NaturalPersonService naturalPersonService, UserManager<NaturalPerson> userManager) : PageModel
 {
     [StringLength(30, ErrorMessage = "Validate_StringLength")]
     [DataType(DataType.Password)]
@@ -21,7 +21,7 @@ public class SetPasswordModel(NaturalPersonService naturalPersonService, UserMan
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         return person == null
             ? NotFound()
             : await userManager.HasPasswordAsync(person)
@@ -31,7 +31,7 @@ public class SetPasswordModel(NaturalPersonService naturalPersonService, UserMan
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         if (await userManager.HasPasswordAsync(person)) throw new InvalidOperationException("用户已具有密码，无法手动添加密码");

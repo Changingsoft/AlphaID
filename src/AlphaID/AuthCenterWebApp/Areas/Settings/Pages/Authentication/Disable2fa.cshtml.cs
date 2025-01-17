@@ -1,5 +1,6 @@
 #nullable disable
 
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class Disable2FaModel(
-    UserManager<ApplicationUser> userManager,
+    UserManager<NaturalPerson> userManager,
     ILogger<Disable2FaModel> logger) : PageModel
 {
     [TempData]
@@ -16,7 +17,7 @@ public class Disable2FaModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         return user == null
             ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.")
             : !await userManager.GetTwoFactorEnabledAsync(user)
@@ -26,7 +27,7 @@ public class Disable2FaModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         IdentityResult disable2FaResult = await userManager.SetTwoFactorEnabledAsync(user, false);

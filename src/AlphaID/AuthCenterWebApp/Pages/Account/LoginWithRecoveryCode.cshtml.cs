@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -13,8 +14,8 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [AllowAnonymous]
 public class LoginWithRecoveryCodeModel(
-    SignInManager<ApplicationUser> signInManager,
-    UserManager<ApplicationUser> userManager,
+    SignInManager<NaturalPerson> signInManager,
+    UserManager<NaturalPerson> userManager,
     ILogger<LoginWithRecoveryCodeModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel
@@ -38,7 +39,7 @@ public class LoginWithRecoveryCodeModel(
     {
         if (!ModelState.IsValid) return Page();
 
-        ApplicationUser user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
+        NaturalPerson user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
                              throw new InvalidOperationException("Unable to load two-factor authentication user.");
         string recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
 

@@ -1,8 +1,9 @@
+@using AlphaIdPlatform.Identity
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.TagHelpers
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<NaturalPerson> UserManager
 @inject IOptions<ProductInfo> Product
 @{
     Layout = "Tabler/_PageWrapper";

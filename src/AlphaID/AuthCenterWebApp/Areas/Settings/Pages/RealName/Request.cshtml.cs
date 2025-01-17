@@ -1,10 +1,11 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects.RealName.Requesting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
-public class RequestModel(RealNameRequestManager requestManager) : PageModel
+public class RequestModel(RealNameRequestManager<NaturalPerson> requestManager) : PageModel
 {
     public RealNameRequest Data { get; set; } = null!;
 

@@ -4,6 +4,7 @@ using AlphaId.EntityFramework.IdSubjects;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using AuthCenterWebApp;
@@ -129,7 +130,7 @@ platform.AddEntityFramework(options =>
 
 builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
 builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-var identityBuilder = builder.Services.AddIdSubjectsIdentity<ApplicationUser, IdentityRole>()
+var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddSignInManager<PersonSignInManager>()
     .AddUserStore<ApplicationUserStore>()
@@ -207,7 +208,7 @@ builder.Services.AddIdentityServer(options =>
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         };
     })
-    .AddAspNetIdentity<ApplicationUser>()
+    .AddAspNetIdentity<NaturalPerson>()
     .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<IEventSink, AuditLogEventSink>();

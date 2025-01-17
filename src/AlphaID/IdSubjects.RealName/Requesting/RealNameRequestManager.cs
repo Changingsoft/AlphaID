@@ -12,11 +12,12 @@ namespace IdSubjects.RealName.Requesting;
 /// <param name="realNameManager"></param>
 /// <param name="applicationUserManager"></param>
 /// <param name="provider"></param>
-public class RealNameRequestManager(
+public class RealNameRequestManager<T>(
     IRealNameRequestStore store,
-    RealNameManager realNameManager,
-    UserManager<ApplicationUser> applicationUserManager,
+    RealNameManager<T> realNameManager,
+    UserManager<T> applicationUserManager,
     IRealNameRequestAuditorProvider? provider = null)
+where T : ApplicationUser
 {
     /// <summary>
     ///     Time Provider.
@@ -49,7 +50,7 @@ public class RealNameRequestManager(
         IdOperationResult result = await store.CreateAsync(request);
         if (!result.Succeeded)
             return result;
-        
+
         // 如果有审核提供器，则使用审核提供器来获取审核器列表，实行自动审核。
         if (provider == null) return result;
 
@@ -73,7 +74,7 @@ public class RealNameRequestManager(
     /// <returns></returns>
     public async Task<IdOperationResult> AcceptAsync(RealNameRequest request, string? auditor = null)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(request.PersonId);
+        T? person = await applicationUserManager.FindByIdAsync(request.PersonId);
         if (person == null)
             return IdOperationResult.Failed("Natural person not found.");
         request.SetAudit(true, auditor, TimeProvider.GetUtcNow());

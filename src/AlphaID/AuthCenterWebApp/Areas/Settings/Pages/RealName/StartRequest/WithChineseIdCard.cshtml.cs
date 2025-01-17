@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using IdSubjects.RealName;
@@ -11,8 +12,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest;
 
 public class WithChineseIdCardModel(
     IChineseIdCardOcrService chineseIdCardOcrService,
-    UserManager<ApplicationUser> applicationUserManager,
-    RealNameRequestManager realNameRequestManager) : PageModel
+    UserManager<NaturalPerson> applicationUserManager,
+    RealNameRequestManager<NaturalPerson> realNameRequestManager) : PageModel
 {
     [BindProperty]
     [Display(Name = "身份证个人信息面")]
@@ -26,7 +27,7 @@ public class WithChineseIdCardModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await applicationUserManager.GetUserAsync(User);
+        NaturalPerson? person = await applicationUserManager.GetUserAsync(User);
         if (person == null) return BadRequest("Can not find person.");
 
         return Page();
@@ -37,7 +38,7 @@ public class WithChineseIdCardModel(
         if (!ModelState.IsValid)
             return Page();
 
-        ApplicationUser? person = await applicationUserManager.GetUserAsync(User);
+        NaturalPerson? person = await applicationUserManager.GetUserAsync(User);
         if (person == null) return BadRequest("Can not find person.");
 
         var personalSideStream = new MemoryStream();

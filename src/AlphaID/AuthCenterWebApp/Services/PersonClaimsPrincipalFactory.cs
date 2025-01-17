@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Identity;
 using IdentityModel;
 using IdSubjects;
 using IdSubjects.DependencyInjection;
@@ -8,13 +9,13 @@ using Microsoft.AspNetCore.Identity;
 namespace AuthCenterWebApp.Services;
 
 public class PersonClaimsPrincipalFactory(
-    UserManager<ApplicationUser> userManager,
+    UserManager<NaturalPerson> userManager,
     IOptions<IdSubjectsOptions> optionsAccessor,
-    IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<ApplicationUser>(userManager, optionsAccessor)
+    IOptions<SystemUrlInfo> systemUrlOptions) : UserClaimsPrincipalFactory<NaturalPerson>(userManager, optionsAccessor)
 {
     private readonly SystemUrlInfo _systemUrl = systemUrlOptions.Value;
 
-    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
+    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
         id.AddClaim(new Claim(JwtClaimTypes.Name, user.PersonName.FullName));

@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class RealNameModel(UserManager<ApplicationUser> userManager, RealNameManager realNameManager) : PageModel
+public class RealNameModel(UserManager<NaturalPerson> userManager, RealNameManager<NaturalPerson> realNameManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 
@@ -13,7 +14,7 @@ public class RealNameModel(UserManager<ApplicationUser> userManager, RealNameMan
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

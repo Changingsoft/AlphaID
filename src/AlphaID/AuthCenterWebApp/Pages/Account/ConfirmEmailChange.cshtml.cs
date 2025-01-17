@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Text;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +13,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ConfirmEmailChangeModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+public class ConfirmEmailChangeModel(UserManager<NaturalPerson> userManager, SignInManager<NaturalPerson> signInManager)
     : PageModel
 {
     [TempData]
@@ -22,7 +23,7 @@ public class ConfirmEmailChangeModel(UserManager<ApplicationUser> userManager, S
     {
         if (userId == null || email == null || code == null) return RedirectToPage("/Index");
 
-        ApplicationUser user = await userManager.FindByIdAsync(userId);
+        NaturalPerson user = await userManager.FindByIdAsync(userId);
         if (user == null) return NotFound($"Unable to load user with ID '{userId}'.");
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));

@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 public class IndexModel(
     OrganizationMemberManager organizationMemberManager,
     OrganizationManager organizationManager,
-    UserManager<ApplicationUser> personManager) : PageModel
+    UserManager<NaturalPerson> personManager) : PageModel
 {
     public IdSubjects.Organization Organization { get; set; } = null!;
 
@@ -26,7 +27,7 @@ public class IndexModel(
             return NotFound();
         Organization = organization;
 
-        ApplicationUser? visitor = await personManager.GetUserAsync(User);
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
 
         Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
@@ -42,7 +43,7 @@ public class IndexModel(
             return NotFound();
         Organization = organization;
 
-        ApplicationUser? visitor = await personManager.GetUserAsync(User);
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
         Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
@@ -69,7 +70,7 @@ public class IndexModel(
             return NotFound();
         Organization = organization;
 
-        ApplicationUser? visitor = await personManager.GetUserAsync(User);
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
         Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
@@ -96,7 +97,7 @@ public class IndexModel(
             return NotFound();
         Organization = organization;
 
-        ApplicationUser? visitor = await personManager.GetUserAsync(User);
+        NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
         Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
         UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);

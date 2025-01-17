@@ -1,5 +1,6 @@
 #nullable disable
 
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +9,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ResetAuthenticatorModel(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
+    UserManager<NaturalPerson> userManager,
+    SignInManager<NaturalPerson> signInManager,
     ILogger<ResetAuthenticatorModel> logger) : PageModel
 {
     [TempData]
@@ -17,13 +18,13 @@ public class ResetAuthenticatorModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         return user == null ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await userManager.SetTwoFactorEnabledAsync(user, false);

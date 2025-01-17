@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.RealName;
 using IdSubjects.RealName.Requesting;
@@ -8,9 +9,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
 public class IndexModel(
-    UserManager<ApplicationUser> personManager,
-    RealNameManager realNameManager,
-    RealNameRequestManager realNameRequestManager) : PageModel
+    UserManager<NaturalPerson> personManager,
+    RealNameManager<NaturalPerson> realNameManager,
+    RealNameRequestManager<NaturalPerson> realNameRequestManager) : PageModel
 {
     public IEnumerable<RealNameAuthentication> Authentications { get; set; } = null!;
 
@@ -18,7 +19,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
         Authentications = realNameManager.GetAuthentications(person);

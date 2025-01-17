@@ -14,11 +14,12 @@ public static class IdSubjectsBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns>返回一个实名认证构造器，见<see cref="RealNameBuilder" />。</returns>
-    public static RealNameBuilder AddRealName(this IdSubjectsBuilder builder)
+    public static RealNameBuilder AddRealName<T>(this IdSubjectsBuilder builder)
+    where T : ApplicationUser
     {
         //Add services
-        builder.Services.TryAddScoped<RealNameManager>();
-        builder.Services.TryAddScoped<RealNameRequestManager>();
+        builder.Services.TryAddScoped<RealNameManager<T>>();
+        builder.Services.TryAddScoped<RealNameRequestManager<T>>();
 
         //添加拦截器。
 

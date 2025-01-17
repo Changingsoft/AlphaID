@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Identity;
@@ -7,10 +8,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.People.Pages;
 
 public class JoinOrganizationInvitationModel(
-    UserManager<ApplicationUser> personManager,
-    JoinOrganizationInvitationManager invitationsManager) : PageModel
+    UserManager<NaturalPerson> personManager,
+    JoinOrganizationInvitationManager<NaturalPerson> invitationsManager) : PageModel
 {
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public JoinOrganizationInvitation Invitation { get; set; } = null!;
 
@@ -18,7 +19,7 @@ public class JoinOrganizationInvitationModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor, int invitationId)
     {
-        ApplicationUser? person = await personManager.FindByNameAsync(anchor);
+        NaturalPerson? person = await personManager.FindByNameAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
         IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person);
@@ -35,7 +36,7 @@ public class JoinOrganizationInvitationModel(
         string button,
         MembershipVisibility visibility)
     {
-        ApplicationUser? person = await personManager.FindByNameAsync(anchor);
+        NaturalPerson? person = await personManager.FindByNameAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
         IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person);

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class EnableAuthenticatorModel(
-    UserManager<ApplicationUser> userManager,
+    UserManager<NaturalPerson> userManager,
     ILogger<EnableAuthenticatorModel> logger,
     UrlEncoder urlEncoder,
     IOptions<ProductInfo> production) : PageModel
@@ -36,7 +37,7 @@ public class EnableAuthenticatorModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await LoadSharedKeyAndQrCodeUriAsync(user);
@@ -46,7 +47,7 @@ public class EnableAuthenticatorModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)
@@ -84,7 +85,7 @@ public class EnableAuthenticatorModel(
         return RedirectToPage("./TwoFactorAuthentication");
     }
 
-    private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user)
+    private async Task LoadSharedKeyAndQrCodeUriAsync(NaturalPerson user)
     {
         // Load the authenticator key & QR code URI to display on the form
         string unformattedKey = await userManager.GetAuthenticatorKeyAsync(user);

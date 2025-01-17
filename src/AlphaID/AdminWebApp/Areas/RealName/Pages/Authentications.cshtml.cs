@@ -1,8 +1,10 @@
+using AlphaIdPlatform.Identity;
+using IdSubjects;
 using IdSubjects.RealName;
 
 namespace AdminWebApp.Areas.RealName.Pages;
 
-public class AuthenticationsModel(RealNameManager realNameManager) : PageModel
+public class AuthenticationsModel(RealNameManager<NaturalPerson> realNameManager) : PageModel
 {
     public IEnumerable<RealNameAuthentication> Authentications { get; set; } = [];
 
@@ -11,12 +13,12 @@ public class AuthenticationsModel(RealNameManager realNameManager) : PageModel
     public void OnGet()
     {
         IQueryable<RealNameAuthentication> set = realNameManager.Authentications.OrderByDescending(a => a.ValidatedAt);
-        //Ó¦ÓÃ¹ýÂË
+        //åº”ç”¨è¿‡æ»¤
 
-        //¼ÆËã½á¹ûÊý
+        //è®¡ç®—ç»“æžœæ•°
         Count = set.Count();
 
-        //Ó¦ÓÃ·ÖÒ³
+        //åº”ç”¨åˆ†é¡µ
 
 
         Authentications = set.Take(1000).AsEnumerable();

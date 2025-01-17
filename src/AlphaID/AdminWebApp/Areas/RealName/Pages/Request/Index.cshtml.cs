@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Security;
 using IdSubjects;
 using IdSubjects.RealName.Requesting;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.RealName.Pages.Request;
 
-public class IndexModel(RealNameRequestManager requestManager) : PageModel
+public class IndexModel(RealNameRequestManager<NaturalPerson> requestManager) : PageModel
 {
     public RealNameRequest Data { get; set; } = null!;
 
@@ -37,7 +38,7 @@ public class IndexModel(RealNameRequestManager requestManager) : PageModel
 
         if (!Result.Succeeded) return Page();
 
-        //todo ¼ÌÐøÉóºËÏÂÒ»¸ö£¿
+        //todo ç»§ç»­å®¡æ ¸ä¸‹ä¸€ä¸ªï¼Ÿ
         return RedirectToPage("/Requests");
     }
 

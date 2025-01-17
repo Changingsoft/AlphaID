@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class DirectoryAccountsModel(UserManager<ApplicationUser> personManager, DirectoryAccountManager directoryAccountManager)
+public class DirectoryAccountsModel(UserManager<NaturalPerson> personManager, DirectoryAccountManager<NaturalPerson> directoryAccountManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

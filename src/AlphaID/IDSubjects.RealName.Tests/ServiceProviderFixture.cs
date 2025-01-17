@@ -12,7 +12,7 @@ public class ServiceProviderFixture
         IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>()
             .AddPersonStore<StubApplicationUserStore, ApplicationUser>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
-        idSubjectsBuilder.AddRealName()
+        idSubjectsBuilder.AddRealName<ApplicationUser>()
             .AddRealNameAuthenticationStore<StubRealNameAuthenticationStore>()
             .AddRealNameRequestStore<StubRealNameRequestStore>();
 

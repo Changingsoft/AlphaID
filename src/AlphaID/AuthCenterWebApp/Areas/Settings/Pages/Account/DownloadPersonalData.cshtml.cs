@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DownloadPersonalDataModel(
-    UserManager<ApplicationUser> userManager,
+    UserManager<NaturalPerson> userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
     private readonly JsonSerializerOptions serializerOptions = new()
@@ -26,13 +27,13 @@ public class DownloadPersonalDataModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         logger.LogInformation("User with ID '{UserId}' asked for their personal data.", userManager.GetUserId(User));
 
         // Only include personal data for download
-        IEnumerable<PropertyInfo> personalDataProps = typeof(ApplicationUser).GetProperties()
+        IEnumerable<PropertyInfo> personalDataProps = typeof(NaturalPerson).GetProperties()
             .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
         Dictionary<string, object?> personalData =

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
-public class IndexModel(OrganizationMemberManager memberManager, UserManager<ApplicationUser> personManager) : PageModel
+public class IndexModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> personManager) : PageModel
 {
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
@@ -14,7 +15,7 @@ public class IndexModel(OrganizationMemberManager memberManager, UserManager<App
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
 
         Members = await memberManager.GetMembersOfAsync(person);
@@ -23,7 +24,7 @@ public class IndexModel(OrganizationMemberManager memberManager, UserManager<App
 
     public async Task<IActionResult> OnPostLeaveAsync(string organizationId)
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
         Members = await memberManager.GetMembersOfAsync(person);
         OrganizationMember? member = Members.FirstOrDefault(m => m.OrganizationId == organizationId);

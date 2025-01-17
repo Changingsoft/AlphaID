@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
@@ -5,10 +6,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class IndexModel(DirectoryAccountManager directoryAccountManager, UserManager<ApplicationUser> applicationUserManager)
+public class IndexModel(DirectoryAccountManager<NaturalPerson> directoryAccountManager, UserManager<NaturalPerson> applicationUserManager)
     : PageModel
 {
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<DirectoryAccount> DirectoryAccounts { get; set; } = [];
 

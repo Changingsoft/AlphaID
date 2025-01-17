@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Security;
 using IdSubjects;
 using IdSubjects.Invitations;
@@ -9,8 +10,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class InviteModel(
-    UserManager<ApplicationUser> applicationUserManager,
-    JoinOrganizationInvitationManager joinOrganizationInvitationManager,
+    UserManager<NaturalPerson> applicationUserManager,
+    JoinOrganizationInvitationManager<NaturalPerson> joinOrganizationInvitationManager,
     OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]
@@ -34,7 +35,7 @@ public class InviteModel(
             return RedirectToPage("../Who", new { anchor });
         if (organization == null)
             return NotFound();
-        ApplicationUser? person = await applicationUserManager.FindByNameAsync(Invitee);
+        NaturalPerson? person = await applicationUserManager.FindByNameAsync(Invitee);
         if (person == null)
             ModelState.AddModelError(nameof(Invitee), "Cannot find person.");
 

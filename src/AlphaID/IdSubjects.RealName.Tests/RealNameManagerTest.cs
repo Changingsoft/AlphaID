@@ -32,7 +32,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
         await personManager.CreateAsync(_person);
 
         //Test
-        var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
+        var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager<ApplicationUser>>();
         IdOperationResult result = await realManager.AuthenticateAsync(_person, authentication);
 
         Assert.True(result.Succeeded);
@@ -48,7 +48,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 
         ApplicationUser target = (await personManager.FindByIdAsync(_person.Id))!;
 
-        var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager>();
+        var realManager = scope.ServiceProvider.GetRequiredService<RealNameManager<ApplicationUser>>();
         var authentication = new DocumentedRealNameAuthentication(
             new ChineseIdCardDocument
             {

@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -16,8 +17,8 @@ namespace AuthCenterWebApp.Pages.Account;
 [SecurityHeaders]
 [AllowAnonymous]
 public class LoginWith2FaModel(
-    SignInManager<ApplicationUser> signInManager,
-    UserManager<ApplicationUser> userManager,
+    SignInManager<NaturalPerson> signInManager,
+    UserManager<NaturalPerson> userManager,
     ILogger<LoginWith2FaModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel
@@ -47,7 +48,7 @@ public class LoginWith2FaModel(
         returnUrl ??= Url.Content("~/");
         AuthorizationRequest context = await interactionService.GetAuthorizationContextAsync(returnUrl);
 
-        ApplicationUser user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
+        NaturalPerson user = await signInManager.GetTwoFactorAuthenticationUserAsync() ??
                              throw new InvalidOperationException("Unable to load two-factor authentication user.");
         string authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 

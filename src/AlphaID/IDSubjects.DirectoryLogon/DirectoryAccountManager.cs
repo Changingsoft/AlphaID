@@ -19,7 +19,7 @@ namespace IdSubjects.DirectoryLogon;
 /// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
 public class DirectoryAccountManager(
-    ApplicationUserManager<ApplicationUser> applicationUserManager,
+    UserManager<ApplicationUser> applicationUserManager,
     IDirectoryAccountStore directoryAccountStore,
     IEnumerable<ISubjectGenerator> subjectGenerators,
     ILogger<DirectoryAccountManager>? logger = null)

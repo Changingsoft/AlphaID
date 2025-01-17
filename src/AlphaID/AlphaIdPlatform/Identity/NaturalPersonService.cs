@@ -1,15 +1,8 @@
 using IdSubjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
 using System.DirectoryServices.AccountManagement;
 using IdSubjects.RealName;
-using static System.Formats.Asn1.AsnWriter;
-using Microsoft.Extensions.Logging;
 
 namespace AlphaIdPlatform.Identity;
 
@@ -21,7 +14,7 @@ namespace AlphaIdPlatform.Identity;
 /// <param name="accountManager"></param>
 /// <param name="authenticationStore"></param>
 public class NaturalPersonService(
-    ApplicationUserManager<ApplicationUser> personManager,
+    UserManager<ApplicationUser> personManager,
     DirectoryServiceManager? serviceManager,
     DirectoryAccountManager? accountManager,
     IRealNameAuthenticationStore? authenticationStore)

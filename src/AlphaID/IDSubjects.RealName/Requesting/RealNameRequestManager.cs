@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
@@ -13,7 +15,7 @@ namespace IdSubjects.RealName.Requesting;
 public class RealNameRequestManager(
     IRealNameRequestStore store,
     RealNameManager realNameManager,
-    ApplicationUserManager<ApplicationUser> applicationUserManager,
+    UserManager<ApplicationUser> applicationUserManager,
     IRealNameRequestAuditorProvider? provider = null)
 {
     /// <summary>

@@ -49,12 +49,6 @@ public class ApplicationUser : IdentityUser
     public virtual DateTimeOffset WhenChanged { get; set; }
 
     /// <summary>
-    ///     获取有关自然人更新的时间。
-    /// </summary>
-    [PersonalData]
-    public virtual DateTimeOffset PersonWhenChanged { get; protected internal set; }
-
-    /// <summary>
     ///     启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
     /// </summary>
     public virtual bool Enabled { get; set; } = true;

@@ -43,7 +43,6 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         Assert.Equal(now, _person.PasswordLastSet!.Value);
         Assert.Equal(now, _person.WhenCreated);
         Assert.Equal(now, _person.WhenChanged);
-        Assert.Equal(now, _person.PersonWhenChanged);
     }
 
     [Fact]
@@ -61,7 +60,6 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         Assert.False(_person.PasswordLastSet.HasValue);
         Assert.Equal(now, _person.WhenCreated);
         Assert.Equal(now, _person.WhenChanged);
-        Assert.Equal(now, _person.PersonWhenChanged);
     }
 
     [Fact]

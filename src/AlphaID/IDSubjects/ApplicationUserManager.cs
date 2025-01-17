@@ -112,7 +112,6 @@ where T : ApplicationUser
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
-        user.PersonWhenChanged = utcNow;
         IdentityResult result = await base.CreateAsync(user);
         if (result.Succeeded)
             await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));
@@ -131,7 +130,6 @@ where T : ApplicationUser
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
-        user.PersonWhenChanged = utcNow;
         user.PasswordLastSet = utcNow;
         IdentityResult result = await base.CreateAsync(user, password);
         if (result.Succeeded)
@@ -177,8 +175,6 @@ where T : ApplicationUser
     /// <returns></returns>
     public override async Task<IdentityResult> UpdateAsync(T user)
     {
-
-        user.PersonWhenChanged = TimeProvider.GetUtcNow();
         IdentityResult result = await base.UpdateAsync(user);
         if (result.Succeeded)
             await EventService.RaiseAsync(new UpdatePersonSuccessEvent(user.UserName));

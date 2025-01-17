@@ -39,4 +39,10 @@ public class NaturalPerson : ApplicationUser
     [Unicode(false)]
     public virtual string? PhoneticGivenName { get; set; }
 
+    /// <summary>
+    ///     获取有关自然人更新的时间。当前未使用。
+    /// </summary>
+    [PersonalData]
+    public virtual DateTimeOffset? PersonWhenChanged { get; set; }
+
 }

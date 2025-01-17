@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class MobileModel(ApplicationUserManager<ApplicationUser> userManager, IVerificationCodeService verificationCodeService) : PageModel
+public class MobileModel(UserManager<ApplicationUser> userManager, IVerificationCodeService verificationCodeService) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = null!;

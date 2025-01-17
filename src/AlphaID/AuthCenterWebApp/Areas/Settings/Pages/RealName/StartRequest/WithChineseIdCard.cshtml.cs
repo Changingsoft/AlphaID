@@ -3,6 +3,7 @@ using AlphaIdPlatform.Platform;
 using IdSubjects;
 using IdSubjects.RealName;
 using IdSubjects.RealName.Requesting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,7 +11,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.RealName.StartRequest;
 
 public class WithChineseIdCardModel(
     IChineseIdCardOcrService chineseIdCardOcrService,
-    ApplicationUserManager<ApplicationUser> applicationUserManager,
+    UserManager<ApplicationUser> applicationUserManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {
     [BindProperty]

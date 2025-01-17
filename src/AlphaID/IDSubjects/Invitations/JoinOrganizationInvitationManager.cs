@@ -1,4 +1,5 @@
 using System.Transactions;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Invitations;
 
@@ -13,7 +14,7 @@ namespace IdSubjects.Invitations;
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
-    ApplicationUserManager<ApplicationUser> personManager,
+    UserManager<ApplicationUser> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
 {

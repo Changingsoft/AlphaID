@@ -1,11 +1,12 @@
 using IdSubjects;
 using IdSubjects.RealName.Requesting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
-public class RequestsModel(RealNameRequestManager realNameRequestManager, ApplicationUserManager<ApplicationUser> applicationUserManager)
+public class RequestsModel(RealNameRequestManager realNameRequestManager, UserManager<ApplicationUser> applicationUserManager)
     : PageModel
 {
     public IEnumerable<RealNameRequest> RealNameRequests { get; set; } = [];

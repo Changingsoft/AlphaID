@@ -91,14 +91,14 @@ public class StubApplicationUserStore(IdentityErrorDescriber describer)
         throw new NotImplementedException();
     }
 
-    public override Task<IList<Claim>> GetClaimsAsync(ApplicationUser user, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IList<Claim>> GetClaimsAsync(ApplicationUser user, CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
 
     public override Task AddClaimsAsync(ApplicationUser user,
         IEnumerable<Claim> claims,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
@@ -106,19 +106,19 @@ public class StubApplicationUserStore(IdentityErrorDescriber describer)
     public override Task ReplaceClaimAsync(ApplicationUser user,
         Claim claim,
         Claim newClaim,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
 
     public override Task RemoveClaimsAsync(ApplicationUser user,
         IEnumerable<Claim> claims,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
 
-    public override Task<IList<ApplicationUser>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IList<ApplicationUser>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
@@ -140,7 +140,7 @@ public class StubApplicationUserStore(IdentityErrorDescriber describer)
 
     public override Task AddLoginAsync(ApplicationUser user,
         UserLoginInfo login,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
@@ -148,12 +148,12 @@ public class StubApplicationUserStore(IdentityErrorDescriber describer)
     public override Task RemoveLoginAsync(ApplicationUser user,
         string loginProvider,
         string providerKey,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }
 
-    public override Task<IList<UserLoginInfo>> GetLoginsAsync(ApplicationUser user, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<IList<UserLoginInfo>> GetLoginsAsync(ApplicationUser user, CancellationToken cancellationToken = new())
     {
         throw new NotImplementedException();
     }

@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    ApplicationUserManager<ApplicationUser> personManager,
+    UserManager<ApplicationUser> personManager,
     OrganizationMemberManager memberManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;

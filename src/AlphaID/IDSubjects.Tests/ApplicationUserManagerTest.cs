@@ -83,7 +83,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task AddPasswordWillSetPasswordLastSetTime()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var manager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         await manager.CreateAsync(_person);
 
         IdentityResult result = await manager.AddPasswordAsync(_person, "Password$1");
@@ -95,7 +95,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     public async Task RemovePassword()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
-        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var manager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         await manager.CreateAsync(_person, "Pass123$");
 

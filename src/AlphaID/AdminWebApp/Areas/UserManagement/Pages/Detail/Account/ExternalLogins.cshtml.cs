@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class ExternalLoginsModel(ApplicationUserManager<ApplicationUser> personManager) : PageModel
+public class ExternalLoginsModel(UserManager<ApplicationUser> personManager) : PageModel
 {
     public IEnumerable<UserLoginInfo> Logins { get; set; } = null!;
 

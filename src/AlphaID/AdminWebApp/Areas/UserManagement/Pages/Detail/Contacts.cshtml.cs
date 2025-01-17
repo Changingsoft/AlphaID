@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class ContactsModel(ApplicationUserManager<ApplicationUser> manager, NaturalPersonService naturalPersonService) : PageModel
+public class ContactsModel(UserManager<ApplicationUser> manager, NaturalPersonService naturalPersonService) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 

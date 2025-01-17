@@ -19,7 +19,7 @@ public class Callback(
     IIdentityServerInteractionService interaction,
     IEventService events,
     ILogger<Callback> logger,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()

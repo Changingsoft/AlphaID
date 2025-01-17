@@ -1,8 +1,6 @@
 using System.Data;
 using System.Globalization;
-using AlphaId.EntityFramework.DirectoryAccountManagement;
 using AlphaId.EntityFramework.IdSubjects;
-using AlphaId.EntityFramework.RealName;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
@@ -25,7 +23,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
-public class RemovePasswordModel(NaturalPersonService naturalPersonService, ApplicationUserManager<ApplicationUser> userManager) : PageModel
+public class RemovePasswordModel(NaturalPersonService naturalPersonService, UserManager<ApplicationUser> userManager) : PageModel
 {
     [Display(Name = "Password")]
     [DataType(DataType.Password)]

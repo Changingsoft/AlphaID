@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class DeleteModel(ApplicationUserManager<ApplicationUser> userManager, NaturalPersonService naturalPersonService) : PageModel
+public class DeleteModel(UserManager<ApplicationUser> userManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;

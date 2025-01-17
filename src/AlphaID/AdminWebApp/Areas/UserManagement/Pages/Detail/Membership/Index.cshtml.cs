@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class IndexModel(
-    ApplicationUserManager<ApplicationUser> personManager,
+    UserManager<ApplicationUser> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager) : PageModel
 {

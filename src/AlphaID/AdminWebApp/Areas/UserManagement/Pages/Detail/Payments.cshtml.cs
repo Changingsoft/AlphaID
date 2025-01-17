@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.Payments;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PaymentsModel(ApplicationUserManager<ApplicationUser> personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
+public class PaymentsModel(UserManager<ApplicationUser> personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;
 

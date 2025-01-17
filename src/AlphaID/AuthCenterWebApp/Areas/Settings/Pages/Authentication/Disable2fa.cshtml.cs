@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class Disable2FaModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     ILogger<Disable2FaModel> logger) : PageModel
 {
     [TempData]

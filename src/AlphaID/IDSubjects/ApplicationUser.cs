@@ -8,7 +8,6 @@ namespace IdSubjects;
 /// <summary>
 ///     表示一个自然人个体。
 /// </summary>
-[Table("ApplicationUser")] //这里更改可能无效，需到DbContext的OnModelCreating方法中修改。
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
 public class ApplicationUser : IdentityUser

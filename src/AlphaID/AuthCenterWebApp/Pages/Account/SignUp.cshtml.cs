@@ -22,7 +22,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class SignUpModel(
     NaturalPersonService naturalPersonService,
-    ApplicationUserManager<ApplicationUser> applicationUserManager,
+    UserManager<ApplicationUser> applicationUserManager,
     IVerificationCodeService verificationCodeService,
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,

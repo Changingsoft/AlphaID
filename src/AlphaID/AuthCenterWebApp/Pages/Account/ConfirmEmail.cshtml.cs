@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ConfirmEmailModel(ApplicationUserManager<ApplicationUser> userManager) : PageModel
+public class ConfirmEmailModel(UserManager<ApplicationUser> userManager) : PageModel
 {
     [TempData]
     public string StatusMessage { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ResetAuthenticatorModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     ILogger<ResetAuthenticatorModel> logger) : PageModel
 {

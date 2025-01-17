@@ -8,7 +8,7 @@ using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 
-public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secretGenerator) : PageModel
+public class CustomModel(ConfigurationDbContext context, ISecretGenerator secretGenerator) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -92,7 +92,7 @@ public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secre
         if (Input.RequireClientSecret)
         {
             if (string.IsNullOrWhiteSpace(Input.ClientSecret))
-                ModelState.AddModelError("Input.ClientSecret", "µ±Ñ¡ÔñĞèÒª¿Í»§¶ËÃÜÔ¿Ê±£¬ÇëÌá¹©¿Í»§¶ËÃÜÔ¿¡£");
+                ModelState.AddModelError("Input.ClientSecret", "å½“é€‰æ‹©éœ€è¦å®¢æˆ·ç«¯å¯†é’¥æ—¶ï¼Œè¯·æä¾›å®¢æˆ·ç«¯å¯†é’¥ã€‚");
             else
                 client.ClientSecrets.Add(new ClientSecret
                 {
@@ -115,7 +115,7 @@ public class CustomeModel(ConfigurationDbContext context, ISecretGenerator secre
         if (!ModelState.IsValid)
             return Page();
 
-        //Ìí¼ÓÄ¬ÈÏµÄScopes
+        //æ·»åŠ é»˜è®¤çš„Scopes
         client.AllowedScopes.Add(new ClientScope { Scope = "openid" });
         client.AllowedScopes.Add(new ClientScope { Scope = "profile" });
         client.AllowedScopes.Add(new ClientScope { Scope = "user_impersonation" });

@@ -16,7 +16,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ChangePasswordModel(
     NaturalPersonService naturalPersonService,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     IIdentityServerInteractionService interaction) : PageModel
 {

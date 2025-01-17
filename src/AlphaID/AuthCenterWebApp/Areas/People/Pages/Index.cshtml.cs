@@ -1,11 +1,12 @@
 using AlphaIdPlatform.Security;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
-public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, OrganizationMemberManager organizationMemberManager)
+public class IndexModel(UserManager<ApplicationUser> personManager, OrganizationMemberManager organizationMemberManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

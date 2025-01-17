@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Register;
 
-public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, ApplicationUserManager<ApplicationUser> manager) : PageModel
+public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserManager<ApplicationUser> manager) : PageModel
 {
     [BindProperty]
     [Display(Name = "User name")]

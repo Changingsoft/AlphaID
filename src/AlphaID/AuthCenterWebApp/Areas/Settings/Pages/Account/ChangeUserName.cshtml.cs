@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class ChangeUserNameModel(
-    ApplicationUserManager<ApplicationUser> manager,
+    UserManager<ApplicationUser> manager,
     ILogger<ChangeUserNameModel>? logger,
     PersonSignInManager signInManager) : PageModel
 {

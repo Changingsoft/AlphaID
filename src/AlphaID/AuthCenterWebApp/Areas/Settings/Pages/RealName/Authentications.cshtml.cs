@@ -1,11 +1,12 @@
 using IdSubjects;
 using IdSubjects.RealName;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
-public class AuthenticationsModel(RealNameManager realNameManager, ApplicationUserManager<ApplicationUser> applicationUserManager)
+public class AuthenticationsModel(RealNameManager realNameManager, UserManager<ApplicationUser> applicationUserManager)
     : PageModel
 {
     public IEnumerable<RealNameAuthentication> Authentications { get; set; } = [];

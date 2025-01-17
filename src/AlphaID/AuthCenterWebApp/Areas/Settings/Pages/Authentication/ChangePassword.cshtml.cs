@@ -9,7 +9,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ChangePasswordModel(
     NaturalPersonService naturalPersonService,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     ILogger<ChangePasswordModel> logger) : PageModel
 {

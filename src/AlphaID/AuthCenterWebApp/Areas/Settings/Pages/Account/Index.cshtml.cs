@@ -1,10 +1,11 @@
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class IndexModel(DirectoryAccountManager directoryAccountManager, ApplicationUserManager<ApplicationUser> applicationUserManager)
+public class IndexModel(DirectoryAccountManager directoryAccountManager, UserManager<ApplicationUser> applicationUserManager)
     : PageModel
 {
     public ApplicationUser Person { get; set; } = null!;

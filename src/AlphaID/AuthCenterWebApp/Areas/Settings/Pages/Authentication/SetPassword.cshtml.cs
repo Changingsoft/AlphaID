@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class SetPasswordModel(
     NaturalPersonService naturalPersonService,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager) : PageModel
 {
     [BindProperty]

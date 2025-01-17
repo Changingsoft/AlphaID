@@ -13,26 +13,26 @@ public class NewModel(ConfigurationDbContext dbContext) : PageModel
 
     public List<SelectListItem> AvailableClaims { get; set; } =
     [
-        new SelectListItem("sub", "sub"),
-        new SelectListItem("name", "name"),
-        new SelectListItem("given_name", "given_name"),
-        new SelectListItem("family_name", "family_name"),
-        new SelectListItem("middle_name", "middle_name"),
-        new SelectListItem("nickname", "nickname"),
-        new SelectListItem("preferred_username", "preferred_username"),
-        new SelectListItem("profile", "profile"),
-        new SelectListItem("picture", "picture"),
-        new SelectListItem("website", "website"),
-        new SelectListItem("email", "email"),
-        new SelectListItem("email_verified", "email_verified"),
-        new SelectListItem("gender", "gender"),
-        new SelectListItem("birthdate", "birthdate"),
-        new SelectListItem("zoneinfo", "zoneinfo"),
-        new SelectListItem("locale", "locale"),
-        new SelectListItem("phone_number", "phone_number"),
-        new SelectListItem("phone_number_verified", "phone_number_verified"),
-        new SelectListItem("address", "address"),
-        new SelectListItem("updated_at", "updated_at")
+        new("sub", "sub"),
+        new("name", "name"),
+        new("given_name", "given_name"),
+        new("family_name", "family_name"),
+        new("middle_name", "middle_name"),
+        new("nickname", "nickname"),
+        new("preferred_username", "preferred_username"),
+        new("profile", "profile"),
+        new("picture", "picture"),
+        new("website", "website"),
+        new("email", "email"),
+        new("email_verified", "email_verified"),
+        new("gender", "gender"),
+        new("birthdate", "birthdate"),
+        new("zoneinfo", "zoneinfo"),
+        new("locale", "locale"),
+        new("phone_number", "phone_number"),
+        new("phone_number_verified", "phone_number_verified"),
+        new("address", "address"),
+        new("updated_at", "updated_at")
     ];
 
     public void OnGet()

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -106,7 +106,7 @@
 	  <comment>Add Scope</comment>
   </data>
   <data name="Are you sure you want remove this claim?" xml:space="preserve">
-		<value>Are you sure you want remove this claim?</value>
+		<value>Are you sure you want to remove this claim?</value>
 	</data>
   <data name="Remove" xml:space="preserve">
 	  <value>Remove</value>

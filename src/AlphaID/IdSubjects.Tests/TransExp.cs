@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace IdSubjects.Tests;
@@ -23,7 +23,7 @@ public static class TransExp<TIn, TOut>
         MemberInitExpression memberInitExpression =
             Expression.MemberInit(Expression.New(typeof(TOut)), [.. memberBindingList]);
         Expression<Func<TIn, TOut>> lambda =
-            Expression.Lambda<Func<TIn, TOut>>(memberInitExpression, [parameterExpression]);
+            Expression.Lambda<Func<TIn, TOut>>(memberInitExpression, parameterExpression);
 
         return lambda.Compile();
     }

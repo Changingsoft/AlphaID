@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DeletePersonalDataModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     ILogger<DeletePersonalDataModel> logger) : PageModel
 {

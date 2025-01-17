@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ConfirmEmailChangeModel(ApplicationUserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+public class ConfirmEmailChangeModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
     : PageModel
 {
     [TempData]

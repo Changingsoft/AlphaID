@@ -1,10 +1,11 @@
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
-public class AvatarModel(ApplicationUserManager<ApplicationUser> personManager) : PageModel
+public class AvatarModel(UserManager<ApplicationUser> personManager) : PageModel
 {
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

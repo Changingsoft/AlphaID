@@ -6,13 +6,14 @@ using System.Text;
 using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class EnableAuthenticatorModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     ILogger<EnableAuthenticatorModel> logger,
     UrlEncoder urlEncoder,
     IOptions<ProductInfo> production) : PageModel

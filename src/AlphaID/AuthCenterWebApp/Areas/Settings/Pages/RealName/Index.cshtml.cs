@@ -1,13 +1,14 @@
 using IdSubjects;
 using IdSubjects.RealName;
 using IdSubjects.RealName.Requesting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
 public class IndexModel(
-    ApplicationUserManager<ApplicationUser> personManager,
+    UserManager<ApplicationUser> personManager,
     RealNameManager realNameManager,
     RealNameRequestManager realNameRequestManager) : PageModel
 {

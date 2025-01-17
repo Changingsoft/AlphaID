@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class IndexModel(ApplicationUserManager<ApplicationUser> userManager) : PageModel
+public class IndexModel(UserManager<ApplicationUser> userManager) : PageModel
 {
     public ApplicationUser Data { get; set; } = null!;
 

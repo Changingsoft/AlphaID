@@ -5,6 +5,7 @@ using AlphaIdPlatform;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -15,7 +16,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByEmailModel(
     IEmailSender emailSender,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     IOptions<ProductInfo> production) : PageModel
 {
     private readonly ProductInfo _production = production.Value;

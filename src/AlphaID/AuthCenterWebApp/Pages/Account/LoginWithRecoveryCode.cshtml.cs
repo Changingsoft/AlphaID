@@ -14,7 +14,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class LoginWithRecoveryCodeModel(
     SignInManager<ApplicationUser> signInManager,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     ILogger<LoginWithRecoveryCodeModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel

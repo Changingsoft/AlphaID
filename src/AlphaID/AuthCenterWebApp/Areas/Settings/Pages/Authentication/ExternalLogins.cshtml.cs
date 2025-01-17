@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ExternalLoginsModel(
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     IUserStore<ApplicationUser> userStore) : PageModel
 {
@@ -112,8 +112,7 @@ public class ExternalLoginsModel(
 
         if (expectedXsrf != null)
         {
-            if (!items.ContainsKey(XsrfKey)) return null;
-            string? userId = items[XsrfKey];
+            if (!items.TryGetValue(XsrfKey, out string? userId)) return null;
             if (userId != expectedXsrf) return null;
         }
 

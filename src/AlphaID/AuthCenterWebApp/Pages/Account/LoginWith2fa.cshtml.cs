@@ -17,7 +17,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class LoginWith2FaModel(
     SignInManager<ApplicationUser> signInManager,
-    ApplicationUserManager<ApplicationUser> userManager,
+    UserManager<ApplicationUser> userManager,
     ILogger<LoginWith2FaModel> logger,
     IIdentityServerInteractionService interactionService,
     IEventService eventService) : PageModel

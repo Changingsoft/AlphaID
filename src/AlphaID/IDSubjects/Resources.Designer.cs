@@ -151,7 +151,7 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Current password age is less then minimum password age requirement. 的本地化字符串。
+        ///   查找类似 Current password age is less than minimum password age requirement. 的本地化字符串。
         /// </summary>
         public static string LessThenMinimumPasswordAge {
             get {

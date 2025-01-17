@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SecurityModel(ApplicationUserManager<ApplicationUser> manager) : PageModel
+public class SecurityModel(UserManager<ApplicationUser> manager) : PageModel
 {
     public string OperationMessage = null!;
 

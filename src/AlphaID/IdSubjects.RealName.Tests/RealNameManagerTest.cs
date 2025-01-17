@@ -28,7 +28,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
             "Test validator");
 
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var personManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         await personManager.CreateAsync(_person);
 
         //Test
@@ -43,7 +43,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
     public async Task CannotChangeNameWhenRealNameAuthenticationExists()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var personManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         await personManager.CreateAsync(_person);
 
         ApplicationUser target = (await personManager.FindByIdAsync(_person.Id))!;

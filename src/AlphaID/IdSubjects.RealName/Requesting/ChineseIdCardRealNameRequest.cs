@@ -145,7 +145,7 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
             IssuerSide.Data, IssuerSide.MimeType));
 
         var authentication = new DocumentedRealNameAuthentication(document,
-            new PersonNameInfo(Name),
+            new HumanNameInfo(Name),
             AuditTime.Value,
             Auditor!);
         return authentication;

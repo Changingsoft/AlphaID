@@ -8,7 +8,7 @@ namespace IdSubjects.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly ApplicationUser _person = new("zhangsan", new PersonNameInfo("张三"));
+    private readonly ApplicationUser _person = new("zhangsan", new HumanNameInfo("张三"));
 
     [Fact]
     public async Task SetTimeZone()

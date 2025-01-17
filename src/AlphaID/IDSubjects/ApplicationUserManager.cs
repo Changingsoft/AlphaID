@@ -355,9 +355,9 @@ where T : ApplicationUser
     /// <param name="person"></param>
     /// <param name="personName"></param>
     /// <returns></returns>
-    public Task<IdentityResult> AdminChangePersonNameAsync(T person, PersonNameInfo personName)
+    public Task<IdentityResult> AdminChangePersonNameAsync(T person, HumanNameInfo personName)
     {
-        person.PersonName = personName;
+        person.HumanName = personName;
         return UpdateAsync(person);
     }
 

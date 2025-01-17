@@ -24,7 +24,7 @@ public class DocumentedRealNameAuthentication : RealNameAuthentication
     /// <param name="validatedAt"></param>
     /// <param name="validatedBy"></param>
     public DocumentedRealNameAuthentication(IdentityDocument document,
-        PersonNameInfo personName,
+        HumanNameInfo personName,
         DateTimeOffset validatedAt,
         string validatedBy)
         : base(personName, validatedAt, validatedBy)

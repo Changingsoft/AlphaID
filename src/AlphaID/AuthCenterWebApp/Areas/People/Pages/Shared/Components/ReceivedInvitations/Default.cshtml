@@ -24,7 +24,7 @@
                             @{
                                 Organization? organization = await OrganizationManager.FindByIdAsync(invitation.OrganizationId);
                             }
-                            <a asp-page="/JoinOrganizationInvitation" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-invitationId="@invitation.Id">@L["{0} invite you join {1}", invitation.Inviter, organization]</a>
+                            <a asp-page="/JoinOrganizationInvitation" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-invitationId="@invitation.Id">@L["{0} invite you join {1}", invitation.Inviter, organization!]</a>
                         </div>
                         <div class="col-auto">
                             <a href="#" class="list-group-item-actions">

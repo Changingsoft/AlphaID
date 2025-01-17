@@ -45,7 +45,7 @@ public class PersonController(
         if (person == null)
             return NotFound();
 
-        return new PersonInfoModel(person.Id, person.PersonName.FullName, person.PersonName.SearchHint,
+        return new PersonInfoModel(person.Id, person.HumanName?.FullName, person.SearchHint,
             new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString());
     }
 
@@ -71,9 +71,9 @@ public class PersonController(
         if (q.Length >= 3)
         {
             IQueryable<SuggestedPersonModel> pinyinSearchSet = personManager.Users
-                .Where(p => p.PersonName.SearchHint!.StartsWith(q))
-                .OrderBy(p => p.PersonName.SearchHint!.Length)
-                .ThenBy(p => p.PersonName.SearchHint)
+                .Where(p => p.SearchHint!.StartsWith(q))
+                .OrderBy(p => p.SearchHint!.Length)
+                .ThenBy(p => p.SearchHint)
                 .Take(10).Select(p => new SuggestedPersonModel(p)
                 {
                     AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString()
@@ -84,8 +84,8 @@ public class PersonController(
         if (q.Length >= 4)
         {
             IQueryable<SuggestedPersonModel> userNameSearchSet = personManager.Users
-                .Where(p => p.UserName.StartsWith(q))
-                .OrderBy(p => p.UserName.Length)
+                .Where(p => p.UserName!.StartsWith(q))
+                .OrderBy(p => p.UserName!.Length)
                 .ThenBy(p => p.UserName)
                 .Take(10).Select(p => new SuggestedPersonModel(p)
                 {
@@ -95,9 +95,9 @@ public class PersonController(
         }
 
         IQueryable<SuggestedPersonModel> nameSearchSet = personManager.Users
-            .Where(p => p.PersonName.FullName.StartsWith(q))
-            .OrderBy(p => p.PersonName.FullName.Length)
-            .ThenBy(p => p.PersonName.FullName)
+            .Where(p => p.HumanName!.FullName.StartsWith(q))
+            .OrderBy(p => p.HumanName!.FullName.Length)
+            .ThenBy(p => p.HumanName!.FullName)
             .Take(10).Select(p => new SuggestedPersonModel(p)
             {
                 AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString()
@@ -135,14 +135,14 @@ public class PersonController(
             if (result == null)
                 return Task.FromResult(new PersonSearchResult([]));
 
-            return Task.FromResult(new PersonSearchResult([new PersonInfoModel(result.Id, result.PersonName.FullName, result.PersonName.SearchHint, new Uri(_urlInfo.AuthCenterUrl, $"/People/{result.Id}/Avatar").ToString())]));
+            return Task.FromResult(new PersonSearchResult([new PersonInfoModel(result.Id, result.HumanName?.FullName, result.SearchHint, new Uri(_urlInfo.AuthCenterUrl, $"/People/{result.Id}/Avatar").ToString())]));
         }
 
-        var pinyinSearchSet = personManager.Users.Where(p => p.PersonName.SearchHint!.StartsWith(keywords)).OrderBy(p => p.PersonName.SearchHint!.Length).ThenBy(p => p.PersonName.SearchHint);
+        var pinyinSearchSet = personManager.Users.Where(p => p.SearchHint!.StartsWith(keywords)).OrderBy(p => p.SearchHint!.Length).ThenBy(p => p.SearchHint);
         int pinyinSearchSetCount = pinyinSearchSet.Count();
         var pinyinSearchResult = new List<NaturalPerson>(pinyinSearchSet.Take(30));
 
-        var nameSearchSet = personManager.Users.Where(p => p.PersonName.FullName.StartsWith(keywords)).OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName);
+        var nameSearchSet = personManager.Users.Where(p => p.HumanName!.FullName.StartsWith(keywords)).OrderBy(p => p.HumanName!.FullName.Length).ThenBy(p => p.HumanName!.FullName);
         int nameSearchSetCount = nameSearchSet.Count();
         var nameSearchResult = new List<NaturalPerson>(nameSearchSet.Take(30));
 
@@ -151,7 +151,7 @@ public class PersonController(
         var final = new List<PersonInfoModel>();
         foreach (var person in searchResults)
         {
-            final.Add(new PersonInfoModel(person.Id, person.PersonName.FullName, person.PersonName.SearchHint, new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString()));
+            final.Add(new PersonInfoModel(person.Id, person.HumanName?.FullName, person.SearchHint, new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString()));
         }
 
         return Task.FromResult(new PersonSearchResult(final, pinyinSearchSetCount > 30 || nameSearchSetCount > 30));
@@ -192,7 +192,7 @@ public class PersonController(
     /// <param name="AvatarUrl">头像Url</param>
     public record PersonInfoModel(
         string SubjectId,
-        string Name,
+        string? Name,
         string? SearchHint,
         string? AvatarUrl)
     {
@@ -211,7 +211,7 @@ public class PersonController(
     /// <param name="AvatarUrl"></param>
     public record SuggestedPersonModel(
         string UserName,
-        string Name,
+        string? Name,
         string? AvatarUrl = null)
     {
         /// <summary>
@@ -219,8 +219,8 @@ public class PersonController(
         /// </summary>
         /// <param name="person"></param>
         public SuggestedPersonModel(NaturalPerson person)
-            : this(person.UserName,
-                person.PersonName.FullName)
+            : this(person.UserName!,
+                person.HumanName?.FullName)
         {
         }
     }

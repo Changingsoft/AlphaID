@@ -49,8 +49,8 @@ public class InviteModel(
     public IActionResult OnGetFindPerson(string term)
     {
         IQueryable<FindPersonModel> searchResults = applicationUserManager.Users.Where(p =>
-                p.UserName.StartsWith(term) || p.Email!.StartsWith(term) || p.PersonName.FullName.StartsWith(term))
-            .Select(p => new FindPersonModel { UserName = p.UserName, Name = p.PersonName.FullName });
+                p.UserName!.StartsWith(term) || p.Email!.StartsWith(term) || p.HumanName!.FullName.StartsWith(term))
+            .Select(p => new FindPersonModel { UserName = p.UserName!, Name = p.HumanName!.FullName });
         return new JsonResult(searchResults);
     }
 

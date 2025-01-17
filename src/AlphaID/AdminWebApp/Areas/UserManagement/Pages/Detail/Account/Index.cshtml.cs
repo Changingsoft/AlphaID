@@ -27,7 +27,7 @@ public class IndexModel(UserManager<NaturalPerson> userManager) : PageModel
         HasPassword = await userManager.HasPasswordAsync(Data);
         Input = new InputModel
         {
-            UserName = Data.UserName
+            UserName = Data.UserName!
         };
 
         return Page();

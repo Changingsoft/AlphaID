@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +23,7 @@ public class ChinesePersonName
     /// <param name="givenName"></param>
     /// <param name="phoneticSurname"></param>
     /// <param name="phoneticGivenName"></param>
-    public ChinesePersonName(string? surname, string givenName, string? phoneticSurname, string phoneticGivenName)
+    public ChinesePersonName(string? surname, string givenName, string? phoneticSurname, string? phoneticGivenName)
     {
         Surname = surname;
         GivenName = givenName;
@@ -59,7 +59,7 @@ public class ChinesePersonName
     /// </summary>
     [MaxLength(40)]
     [Unicode(false)]
-    public string PhoneticGivenName { get; protected set; } = null!;
+    public string? PhoneticGivenName { get; protected set; }
 
     /// <summary>
     /// </summary>

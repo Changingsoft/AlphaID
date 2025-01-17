@@ -33,7 +33,7 @@ public class DeleteModel(UserManager<NaturalPerson> userManager, NaturalPersonSe
         Person = person;
 
 
-        if (Input.DisplayName != Person.PersonName.FullName)
+        if (Input.DisplayName != Person.UserName)
             ModelState.AddModelError(nameof(Input.DisplayName), "名称不一致");
 
         if (!ModelState.IsValid)

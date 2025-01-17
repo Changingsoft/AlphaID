@@ -14,7 +14,7 @@ public static class PersonBuilderExtensions
     public static ApplicationUserBuilder<T> UseChinesePersonName<T>(this ApplicationUserBuilder<T> builder, ChinesePersonName chinesePersonName)
     where T : ApplicationUser, new()
     {
-        var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname,
+        var personName = new HumanNameInfo(chinesePersonName.FullName, chinesePersonName.Surname,
             chinesePersonName.GivenName);
         builder.SetPersonName(personName);
         return builder;

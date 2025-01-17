@@ -45,4 +45,10 @@ public class NaturalPerson : ApplicationUser
     [PersonalData]
     public virtual DateTimeOffset? PersonWhenChanged { get; set; }
 
+    /// <summary>
+    ///     检索提示，当以名称搜索时，搜索器将考虑检索提示的内容作为搜索参考。非拉丁语名字通常将注音名字作为检索提示，以方便在英文键盘状态下提高检索效率。
+    /// </summary>
+    [MaxLength(60)]
+    public virtual string? SearchHint { get; set; }
+
 }

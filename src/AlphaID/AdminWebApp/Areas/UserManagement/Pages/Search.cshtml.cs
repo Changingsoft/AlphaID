@@ -22,10 +22,10 @@ public class SearchModel(ApplicationUserManager<NaturalPerson> personManager) : 
         }
 
         var pinyinResult = new List<NaturalPerson>(personManager.Users
-            .Where(p => p.PersonName.SearchHint!.StartsWith(q)).OrderBy(p => p.PersonName.SearchHint!.Length)
-            .ThenBy(p => p.PersonName.SearchHint));
-        var nameResult = new List<NaturalPerson>(personManager.Users.Where(p => p.PersonName.FullName.StartsWith(q))
-            .OrderBy(p => p.PersonName.FullName.Length).ThenBy(p => p.PersonName.FullName));
+            .Where(p => p.SearchHint!.StartsWith(q)).OrderBy(p => p.SearchHint!.Length)
+            .ThenBy(p => p.SearchHint));
+        var nameResult = new List<NaturalPerson>(personManager.Users.Where(p => p.HumanName!.FullName.StartsWith(q))
+            .OrderBy(p => p.HumanName!.FullName.Length).ThenBy(p => p.HumanName!.FullName));
 
         Results = pinyinResult.UnionBy(nameResult, p => p.Id);
         return Page();

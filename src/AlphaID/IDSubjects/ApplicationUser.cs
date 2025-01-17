@@ -23,11 +23,11 @@ public class ApplicationUser : IdentityUser
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="personName"></param>
-    public ApplicationUser(string userName, PersonNameInfo personName) : this()
+    public ApplicationUser(string userName, HumanNameInfo personName) : this()
     {
         // ReSharper disable VirtualMemberCallInConstructor
         UserName = userName;
-        PersonName = personName;
+        HumanName = personName;
         // ReSharper restore VirtualMemberCallInConstructor
     }
 
@@ -57,7 +57,7 @@ public class ApplicationUser : IdentityUser
     ///     用户名称
     /// </summary>
     [PersonalData]
-    public virtual PersonNameInfo PersonName { get; set; } = null!;
+    public virtual HumanNameInfo? HumanName { get; set; }
 
     /// <summary>
     ///     昵称。
@@ -121,6 +121,6 @@ public class ApplicationUser : IdentityUser
     /// <returns></returns>
     public override string ToString()
     {
-        return PersonName.FullName;
+        return UserName!;
     }
 }

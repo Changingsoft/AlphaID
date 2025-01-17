@@ -22,7 +22,7 @@ public abstract class RealNameAuthentication
     /// <param name="personName"></param>
     /// <param name="validatedAt"></param>
     /// <param name="validatedBy"></param>
-    protected RealNameAuthentication(PersonNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
+    protected RealNameAuthentication(HumanNameInfo personName, DateTimeOffset validatedAt, string validatedBy)
     {
         ValidatedAt = validatedAt;
         ValidatedBy = validatedBy;
@@ -47,7 +47,7 @@ public abstract class RealNameAuthentication
     /// <summary>
     ///     与此实名认证有关的个人名称信息。
     /// </summary>
-    public PersonNameInfo PersonName { get; protected set; } = null!;
+    public HumanNameInfo PersonName { get; protected set; } = null!;
 
     /// <summary>
     ///     认证通过的时间。
@@ -77,6 +77,6 @@ public abstract class RealNameAuthentication
     /// <param name="person"></param>
     public virtual void ApplyToPerson(ApplicationUser person)
     {
-        person.PersonName = PersonName;
+        person.HumanName = PersonName;
     }
 }

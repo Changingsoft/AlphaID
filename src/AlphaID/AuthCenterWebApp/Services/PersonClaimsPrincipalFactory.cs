@@ -18,8 +18,7 @@ public class PersonClaimsPrincipalFactory(
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
-        id.AddClaim(new Claim(JwtClaimTypes.Name, user.PersonName.FullName));
-        string anchor = user.UserName;
+        string anchor = user.UserName!;
         id.AddClaim(new Claim(JwtClaimTypes.Profile,
             new Uri(_systemUrl.AuthCenterUrl, "/People/" + anchor).ToString()));
         if (user.ProfilePicture != null)
@@ -31,12 +30,16 @@ public class PersonClaimsPrincipalFactory(
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));
         if (user.TimeZone != null)
             id.AddClaim(new Claim(JwtClaimTypes.ZoneInfo, user.TimeZone));
-        if (user.PersonName.GivenName != null)
-            id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.PersonName.GivenName));
-        if (user.PersonName.Surname != null)
-            id.AddClaim(new Claim(JwtClaimTypes.FamilyName, user.PersonName.Surname));
-        if (user.PersonName.MiddleName != null)
-            id.AddClaim(new Claim(JwtClaimTypes.MiddleName, user.PersonName.MiddleName));
+        if (user.HumanName != null)
+        {
+            id.AddClaim(new Claim(JwtClaimTypes.Name, user.HumanName.FullName));
+            if (user.HumanName.GivenName != null)
+                id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.HumanName.GivenName));
+            if (user.HumanName.Surname != null)
+                id.AddClaim(new Claim(JwtClaimTypes.FamilyName, user.HumanName.Surname));
+            if (user.HumanName.MiddleName != null)
+                id.AddClaim(new Claim(JwtClaimTypes.MiddleName, user.HumanName.MiddleName));
+        }
         if (user.NickName != null)
             id.AddClaim(new Claim(JwtClaimTypes.NickName, user.NickName));
         if (user.Address != null)
@@ -45,10 +48,6 @@ public class PersonClaimsPrincipalFactory(
                 $"{user.Address.Country},{user.Address.Region},{user.Address.Locality},{user.Address.PostalCode},{user.Address.Street1},{user.Address.Street2},{user.Address.Street3},{user.Address.Receiver},{user.Address.Contact}"));
         if (user.WebSite != null)
             id.AddClaim(new Claim(JwtClaimTypes.WebSite, user.WebSite));
-
-        //Custom claim type SearchHint.
-        if (user.PersonName.SearchHint != null)
-            id.AddClaim(new Claim(AlphaIdJwtClaimTypes.SearchHint, user.PersonName.SearchHint));
         if (user.DateOfBirth.HasValue)
             id.AddClaim(new Claim(JwtClaimTypes.BirthDate, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
         if (user.PhoneNumber != null)
@@ -60,6 +59,10 @@ public class PersonClaimsPrincipalFactory(
             id.AddClaim(new Claim(JwtClaimTypes.Email, user.Email));
         id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName ?? user.Email ?? string.Empty));
+
+        //Custom claim type SearchHint.
+        if (user.SearchHint != null)
+            id.AddClaim(new Claim(AlphaIdJwtClaimTypes.SearchHint, user.SearchHint));
         return id;
     }
 }

@@ -84,7 +84,7 @@ public class OrganizationController(
     /// <param name="Department"></param>
     /// <param name="Remarks"></param>
     public record MemberModel(
-        string Name,
+        string? Name,
         string UserName,
         string? Title,
         string? Department,
@@ -94,7 +94,7 @@ public class OrganizationController(
         /// </summary>
         /// <param name="member"></param>
         public MemberModel(OrganizationMember member)
-            : this(member.Person.PersonName.FullName, member.Person.UserName, member.Title, member.Department,
+            : this(member.Person.HumanName?.FullName, member.Person.UserName!, member.Title, member.Department,
                 member.Remark)
         {
         }

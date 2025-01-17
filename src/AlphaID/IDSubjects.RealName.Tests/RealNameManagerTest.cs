@@ -6,7 +6,7 @@ namespace IdSubjects.RealName.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly ApplicationUser _person = new("zhangsan", new PersonNameInfo("张小三"));
+    private readonly ApplicationUser _person = new("zhangsan", new HumanNameInfo("张小三"));
 
     [Fact]
     public async Task AddAuthentication()
@@ -23,7 +23,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
                 Issuer = "Issuer",
                 Sex = Sex.Male
             },
-            new PersonNameInfo("张三", "张", "三"),
+            new HumanNameInfo("张三", "张", "三"),
             DateTimeOffset.UtcNow,
             "Test validator");
 
@@ -36,7 +36,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
         IdOperationResult result = await realManager.AuthenticateAsync(_person, authentication);
 
         Assert.True(result.Succeeded);
-        Assert.Equal("张三", _person.PersonName.FullName);
+        Assert.Equal("张三", _person.HumanName?.FullName);
     }
 
     [Fact(Skip = "阻止更改不是NaturalPersonManager的职责，应考虑在AlphaIdPlatform上进行测试。")]
@@ -61,13 +61,13 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
                 Issuer = "Issuer",
                 Sex = Sex.Male
             },
-            new PersonNameInfo("张三", "张", "三"),
+            new HumanNameInfo("张三", "张", "三"),
             DateTimeOffset.UtcNow,
             "Test validator");
         await realManager.AuthenticateAsync(target, authentication);
 
 
-        target.PersonName = new PersonNameInfo("张三三");
+        target.HumanName = new HumanNameInfo("张三三");
         IdentityResult result = await personManager.UpdateAsync(target);
         Assert.False(result.Succeeded);
     }

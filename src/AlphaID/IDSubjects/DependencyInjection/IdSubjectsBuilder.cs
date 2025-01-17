@@ -1,6 +1,4 @@
 using IdSubjects.Diagnostics;
-using IdSubjects.Invitations;
-using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -74,36 +72,8 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
         return this;
     }
 
-    /// <summary>
-    ///     Add organization member store implementation into the system.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public IdSubjectsBuilder AddOrganizationMemberStore<T>() where T : class, IOrganizationMemberStore
-    {
-        Services.TryAddScoped<IOrganizationMemberStore, T>();
-        return this;
-    }
+    
 
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public IdSubjectsBuilder AddPersonBankAccountStore<T>() where T : class, IApplicationUserBankAccountStore
-    {
-        Services.TryAddScoped<IApplicationUserBankAccountStore, T>();
-        return this;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public IdSubjectsBuilder AddJoinOrganizationInvitationStore<T>() where T : class, IJoinOrganizationInvitationStore
-    {
-        Services.TryAddScoped<IJoinOrganizationInvitationStore, T>();
-        return this;
-    }
 
     /// <summary>
     /// </summary>

@@ -1,8 +1,12 @@
+using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Invitations;
+using AlphaIdPlatform.Payments;
 using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AlphaIdPlatform.DependencyInjection;
 
@@ -44,4 +48,37 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     /// 获取审计日志构建器。
     /// </summary>
     public AuditLogBuilder AuditLog { get; } = auditLogBuilder;
+
+    /// <summary>
+    ///     Add organization member store implementation into the system.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AlphaIdPlatformBuilder AddOrganizationMemberStore<T>() where T : class, IOrganizationMemberStore
+    {
+        Services.TryAddScoped<IOrganizationMemberStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AlphaIdPlatformBuilder AddJoinOrganizationInvitationStore<T>() where T : class, IJoinOrganizationInvitationStore
+    {
+        Services.TryAddScoped<IJoinOrganizationInvitationStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AlphaIdPlatformBuilder AddPersonBankAccountStore<T>() where T : class, IApplicationUserBankAccountStore
+    {
+        Services.TryAddScoped<IApplicationUserBankAccountStore, T>();
+        return this;
+    }
+
+
 }

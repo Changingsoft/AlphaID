@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.Payments;
+namespace AlphaIdPlatform.Payments;
 
 /// <summary>
 /// </summary>

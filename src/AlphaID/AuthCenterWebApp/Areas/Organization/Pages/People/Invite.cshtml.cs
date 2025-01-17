@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Security;
 using IdSubjects;
-using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,7 +11,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class InviteModel(
     UserManager<NaturalPerson> applicationUserManager,
-    JoinOrganizationInvitationManager<NaturalPerson> joinOrganizationInvitationManager,
+    JoinOrganizationInvitationManager joinOrganizationInvitationManager,
     OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]

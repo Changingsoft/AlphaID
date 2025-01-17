@@ -1,4 +1,7 @@
-namespace IdSubjects.Payments;
+using AlphaIdPlatform.Identity;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Payments;
 
 /// <summary>
 ///     银行账户管理器。
@@ -13,7 +16,7 @@ public class ApplicationUserBankAccountManager(IApplicationUserBankAccountStore 
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public IEnumerable<ApplicationUserBankAccount> GetBankAccounts(ApplicationUser person)
+    public IEnumerable<ApplicationUserBankAccount> GetBankAccounts(NaturalPerson person)
     {
         return store.BankAccounts.Where(bankAccount => bankAccount.PersonId == person.Id);
     }
@@ -24,7 +27,7 @@ public class ApplicationUserBankAccountManager(IApplicationUserBankAccountStore 
     /// <param name="person"></param>
     /// <param name="bankAccount"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AddBankAccountAsync(ApplicationUser person, BankAccountInfo bankAccount)
+    public async Task<IdOperationResult> AddBankAccountAsync(NaturalPerson person, BankAccountInfo bankAccount)
     {
         if (store.BankAccounts.Any(a => a.PersonId == person.Id && a.AccountNumber == bankAccount.AccountNumber))
             return IdOperationResult.Failed("Bank account exists.");
@@ -45,7 +48,7 @@ public class ApplicationUserBankAccountManager(IApplicationUserBankAccountStore 
     /// <param name="person"></param>
     /// <param name="accountNumber"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RemoveBankAccountAsync(ApplicationUser person, string accountNumber)
+    public async Task<IdOperationResult> RemoveBankAccountAsync(NaturalPerson person, string accountNumber)
     {
         ApplicationUserBankAccount? bankAccount =
             store.BankAccounts.FirstOrDefault(b => b.PersonId == person.Id && b.AccountNumber == accountNumber);

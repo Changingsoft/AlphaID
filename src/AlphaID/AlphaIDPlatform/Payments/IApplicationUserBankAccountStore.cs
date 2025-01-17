@@ -1,4 +1,6 @@
-namespace IdSubjects.Payments;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Payments;
 
 /// <summary>
 ///     提供持久化个人银行账户的能力。

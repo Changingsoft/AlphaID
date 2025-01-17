@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Payments;
 using IdSubjects;
-using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

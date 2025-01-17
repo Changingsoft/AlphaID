@@ -1,4 +1,6 @@
-﻿namespace IdSubjects.Invitations;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Invitations;
 
 /// <summary>
 /// </summary>

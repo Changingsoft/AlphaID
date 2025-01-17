@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AlphaIdPlatform.Identity;
+using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects.Payments;
+namespace AlphaIdPlatform.Payments;
 
 /// <summary>
 ///     银行账户。
@@ -59,5 +61,5 @@ public class ApplicationUserBankAccount
     /// <summary>
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public virtual ApplicationUser Person { get; protected internal set; } = null!;
+    public virtual NaturalPerson Person { get; protected internal set; } = null!;
 }

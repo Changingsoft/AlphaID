@@ -1,7 +1,9 @@
 using System.Transactions;
+using AlphaIdPlatform.Identity;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdSubjects.Invitations;
+namespace AlphaIdPlatform.Invitations;
 
 /// <summary>
 ///     加入组织邀请管理器。
@@ -12,12 +14,11 @@ namespace IdSubjects.Invitations;
 /// <param name="personManager"></param>
 /// <param name="organizationManager"></param>
 /// <param name="memberManager"></param>
-public class JoinOrganizationInvitationManager<T>(
+public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
-    UserManager<T> personManager,
+    UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
-where T : ApplicationUser
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
@@ -27,7 +28,7 @@ where T : ApplicationUser
     /// <param name="person"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(T person)
+    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(NaturalPerson person)
     {
         return store.Invitations.Where(i =>
             i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
@@ -52,7 +53,7 @@ where T : ApplicationUser
     /// <param name="inviter"></param>
     /// <returns></returns>
     public async Task<IdOperationResult> InviteMemberAsync(Organization organization,
-        T invitee,
+        NaturalPerson invitee,
         string inviter)
     {
         var errors = new List<string>();
@@ -94,7 +95,7 @@ where T : ApplicationUser
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        ApplicationUser? person = await personManager.FindByIdAsync(invitation.InviteeId);
+        NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
         Organization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
         IdOperationResult? result = null;
         if (organization != null && person != null)

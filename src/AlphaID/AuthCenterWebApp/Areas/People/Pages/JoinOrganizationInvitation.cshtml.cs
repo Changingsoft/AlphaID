@@ -1,6 +1,6 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Invitations;
 using IdSubjects;
-using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,7 +9,7 @@ namespace AuthCenterWebApp.Areas.People.Pages;
 
 public class JoinOrganizationInvitationModel(
     UserManager<NaturalPerson> personManager,
-    JoinOrganizationInvitationManager<NaturalPerson> invitationsManager) : PageModel
+    JoinOrganizationInvitationManager invitationsManager) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
 

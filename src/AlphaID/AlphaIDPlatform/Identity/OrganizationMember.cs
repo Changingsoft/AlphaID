@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects;
+namespace AlphaIdPlatform.Identity;
 
 /// <summary>
 ///     组织的人员。
@@ -21,7 +22,7 @@ public class OrganizationMember
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="person"></param>
-    public OrganizationMember(Organization organization, ApplicationUser person)
+    public OrganizationMember(Organization organization, NaturalPerson person)
     {
         OrganizationId = organization.Id;
         Organization = organization ?? throw new ArgumentNullException(nameof(organization));
@@ -53,7 +54,7 @@ public class OrganizationMember
     ///     Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
-    public ApplicationUser Person { get; protected set; } = null!;
+    public NaturalPerson Person { get; protected set; } = null!;
 
     /// <summary>
     ///     部门。

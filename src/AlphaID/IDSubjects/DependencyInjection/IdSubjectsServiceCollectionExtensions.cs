@@ -1,7 +1,5 @@
 using IdSubjects;
 using IdSubjects.DependencyInjection;
-using IdSubjects.Invitations;
-using IdSubjects.Payments;
 using IdSubjects.SecurityAuditing;
 using IdSubjects.Validators;
 using Microsoft.AspNetCore.Identity;
@@ -33,11 +31,8 @@ public static class IdSubjectsServiceCollectionExtensions
         // 由IdSubjects使用的服务。
         services.TryAddScoped<ApplicationUserManager<TUser>>();
         services.TryAddScoped<OrganizationManager>();
-        services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<OrganizationSearcher>();
         services.TryAddScoped<ApplicationUserIdentityErrorDescriber>();
-        services.TryAddScoped<ApplicationUserBankAccountManager>();
-        services.TryAddScoped<JoinOrganizationInvitationManager<TUser>>();
         services.TryAddScoped<OrganizationBankAccountManager>();
         services.TryAddScoped<OrganizationIdentifierManager>();
         services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();

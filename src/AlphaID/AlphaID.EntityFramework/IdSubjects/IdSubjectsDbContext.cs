@@ -1,7 +1,7 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Invitations;
+using AlphaIdPlatform.Payments;
 using IdSubjects;
-using IdSubjects.Invitations;
-using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

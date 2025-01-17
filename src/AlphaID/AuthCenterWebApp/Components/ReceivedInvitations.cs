@@ -1,11 +1,11 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Invitations;
 using IdSubjects;
-using IdSubjects.Invitations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthCenterWebApp.Components;
 
-public class ReceivedInvitations(JoinOrganizationInvitationManager<NaturalPerson> manager) : ViewComponent
+public class ReceivedInvitations(JoinOrganizationInvitationManager manager) : ViewComponent
 {
     public IViewComponentResult Invoke(NaturalPerson person)
     {

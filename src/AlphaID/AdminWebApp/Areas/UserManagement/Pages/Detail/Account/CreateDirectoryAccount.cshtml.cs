@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
@@ -8,8 +9,8 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class CreateDirectoryAccountModel(
     DirectoryServiceManager directoryServiceManager,
-    DirectoryAccountManager directoryAccountManager,
-    UserManager<ApplicationUser> applicationUserManager) : PageModel
+    DirectoryAccountManager<NaturalPerson> directoryAccountManager,
+    UserManager<NaturalPerson> applicationUserManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
@@ -18,7 +19,7 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -45,7 +46,7 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

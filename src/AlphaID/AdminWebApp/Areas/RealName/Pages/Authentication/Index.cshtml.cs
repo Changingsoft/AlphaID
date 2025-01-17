@@ -1,9 +1,10 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.RealName.Pages.Authentication;
 
-public class IndexModel(RealNameManager realNameManager) : PageModel
+public class IndexModel(RealNameManager<NaturalPerson> realNameManager) : PageModel
 {
     public RealNameAuthentication Data { get; set; } = null!;
 

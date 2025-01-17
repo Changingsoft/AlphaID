@@ -10,10 +10,11 @@ namespace IdSubjects;
 /// <param name="store">密码历史存取器。</param>
 /// <param name="passwordHasher">密码哈希器。</param>
 /// <param name="options">选项。</param>
-public class PasswordHistoryManager(
+public class PasswordHistoryManager<T>(
     IPasswordHistoryStore store,
-    IPasswordHasher<ApplicationUser> passwordHasher,
+    IPasswordHasher<T> passwordHasher,
     IOptions<IdSubjectsOptions> options)
+where T : ApplicationUser
 {
     private readonly IdSubjectsPasswordOptions _options = options.Value.Password;
 
@@ -25,7 +26,7 @@ public class PasswordHistoryManager(
     /// <param name="person"></param>
     /// <param name="password"></param>
     /// <returns>如果命中，则返回true，否则返回false。</returns>
-    public bool Hit(ApplicationUser person, string password)
+    public bool Hit(T person, string password)
     {
         //取出密码历史
         IEnumerable<string> passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
@@ -39,7 +40,7 @@ public class PasswordHistoryManager(
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
-    public async Task Pass(ApplicationUser person, string password)
+    public async Task Pass(T person, string password)
     {
         await store.AddAsync(passwordHasher.HashPassword(person, password), person.Id, TimeProvider.GetUtcNow());
         await store.TrimHistory(person.Id, _options.RememberPasswordHistory);
@@ -50,7 +51,7 @@ public class PasswordHistoryManager(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public Task Clear(ApplicationUser person)
+    public Task Clear(T person)
     {
         return store.ClearAsync(person.Id);
     }

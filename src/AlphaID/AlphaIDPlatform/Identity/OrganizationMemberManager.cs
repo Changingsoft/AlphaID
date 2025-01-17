@@ -1,6 +1,7 @@
+using IdSubjects;
 using System.Diagnostics;
 
-namespace IdSubjects;
+namespace AlphaIdPlatform.Identity;
 
 /// <summary>
 ///     Organization Member Manager.
@@ -35,7 +36,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="visitor">The person who access this system. null if anonymous access.</param>
     /// <returns></returns>
     public Task<IEnumerable<OrganizationMember>> GetVisibleMembersAsync(Organization organization,
-        ApplicationUser? visitor)
+        NaturalPerson? visitor)
     {
         IQueryable<OrganizationMember>? members =
             store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
@@ -72,7 +73,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="person">要检索组织成员身份的目标用户。</param>
     /// <param name="visitor">访问者。如果传入null，代表匿名访问者。</param>
     /// <returns></returns>
-    public IEnumerable<OrganizationMember> GetVisibleMembersOf(ApplicationUser person, ApplicationUser? visitor)
+    public IEnumerable<OrganizationMember> GetVisibleMembersOf(NaturalPerson person, NaturalPerson? visitor)
     {
         //获取目标person的所有组织身份。
         IQueryable<OrganizationMember>? members = store.OrganizationMembers.Where(p => p.PersonId == person.Id);
@@ -85,9 +86,9 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
         List<string> visitorMemberOfOrgIds = [.. store.OrganizationMembers.Where(m => m.PersonId == visitor.Id).Select(m => m.OrganizationId)];
 
         return members.Where(m =>
-            m.Visibility >= MembershipVisibility.AuthenticatedUser || (m.Visibility == MembershipVisibility.Private &&
+            m.Visibility >= MembershipVisibility.AuthenticatedUser || m.Visibility == MembershipVisibility.Private &&
                                                                        visitorMemberOfOrgIds
-                                                                           .Contains(m.OrganizationId)));
+                                                                           .Contains(m.OrganizationId));
     }
 
     /// <summary>
@@ -95,7 +96,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(ApplicationUser person)
+    public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(NaturalPerson person)
     {
         IQueryable<OrganizationMember> members = store.OrganizationMembers.Where(p => p.PersonId == person.Id);
         return Task.FromResult(members.AsEnumerable());

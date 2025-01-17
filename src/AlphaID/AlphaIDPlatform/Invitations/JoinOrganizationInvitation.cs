@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects.Invitations;
+namespace AlphaIdPlatform.Invitations;
 
 /// <summary>
 /// </summary>

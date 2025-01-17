@@ -11,9 +11,10 @@ namespace IdSubjects;
 /// <param name="userName"></param>
 /// <param name="personName"></param>
 /// <exception cref="ArgumentException"></exception>
-public class ApplicationUserBuilder(string userName, PersonNameInfo personName)
+public class ApplicationUserBuilder<T>(string userName, PersonNameInfo personName)
+where T : ApplicationUser, new()
 {
-    private readonly ApplicationUser _user = new(userName, personName);
+    private readonly T _user = new() { UserName = userName, PersonName = personName };
 
     /// <summary>
     ///     Initialize a person builder.
@@ -38,7 +39,7 @@ public class ApplicationUserBuilder(string userName, PersonNameInfo personName)
     /// <param name="userName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public ApplicationUserBuilder SetUserName(string userName)
+    public ApplicationUserBuilder<T> SetUserName(string userName)
     {
         if (string.IsNullOrWhiteSpace(userName))
             throw new ArgumentException("User name is blank or empty");
@@ -50,7 +51,7 @@ public class ApplicationUserBuilder(string userName, PersonNameInfo personName)
     /// </summary>
     /// <param name="personName"></param>
     /// <returns></returns>
-    public ApplicationUserBuilder SetPersonName(PersonNameInfo personName)
+    public ApplicationUserBuilder<T> SetPersonName(PersonNameInfo personName)
     {
         _user.PersonName = personName;
         return this;
@@ -62,7 +63,7 @@ public class ApplicationUserBuilder(string userName, PersonNameInfo personName)
     /// <param name="mobilePhoneNumber"></param>
     /// <param name="confirmed"></param>
     /// <returns></returns>
-    public ApplicationUserBuilder SetMobile(MobilePhoneNumber? mobilePhoneNumber, bool confirmed = false)
+    public ApplicationUserBuilder<T> SetMobile(MobilePhoneNumber? mobilePhoneNumber, bool confirmed = false)
     {
         _user.PhoneNumber = mobilePhoneNumber?.ToString();
         _user.PhoneNumberConfirmed = mobilePhoneNumber.HasValue && confirmed;
@@ -73,7 +74,7 @@ public class ApplicationUserBuilder(string userName, PersonNameInfo personName)
     /// </summary>
     /// <param name="email"></param>
     /// <param name="confirmed"></param>
-    public ApplicationUserBuilder SetEmail(string? email, bool confirmed = false)
+    public ApplicationUserBuilder<T> SetEmail(string? email, bool confirmed = false)
     {
         _user.Email = email;
         _user.EmailConfirmed = email != null && confirmed;
@@ -84,7 +85,7 @@ public class ApplicationUserBuilder(string userName, PersonNameInfo personName)
     /// </summary>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public ApplicationUser Build()
+    public T Build()
     {
         //Ensure person
         if (string.IsNullOrWhiteSpace(_user.UserName))

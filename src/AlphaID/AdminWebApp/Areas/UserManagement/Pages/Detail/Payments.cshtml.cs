@@ -1,14 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Payments;
 using IdSubjects;
-using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PaymentsModel(UserManager<ApplicationUser> personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
+public class PaymentsModel(UserManager<NaturalPerson> personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
 {
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
@@ -37,7 +38,7 @@ public class PaymentsModel(UserManager<ApplicationUser> personManager, Applicati
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? result = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? result = await personManager.FindByIdAsync(Anchor);
         if (result == null)
             return NotFound();
         Person = result;
@@ -47,7 +48,7 @@ public class PaymentsModel(UserManager<ApplicationUser> personManager, Applicati
 
     public async Task<IActionResult> OnPostAddBankAccountAsync()
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -67,7 +68,7 @@ public class PaymentsModel(UserManager<ApplicationUser> personManager, Applicati
 
     public async Task<IActionResult> OnPostRemoveBankAccountAsync(string accountNumber)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;

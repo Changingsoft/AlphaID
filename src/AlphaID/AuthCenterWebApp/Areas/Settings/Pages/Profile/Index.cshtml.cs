@@ -9,18 +9,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, PersonSignInManager signInManager, NaturalPersonService naturalPersonService) : PageModel
+public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, PersonSignInManager signInManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         Person = person ?? throw new InvalidOperationException("无法从登录找到用户信息，请联系系统管理员。");
         Input = new InputModel
         {
@@ -34,7 +34,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, P
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
         Person = person;
 
@@ -56,7 +56,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, P
             return BadRequest();
 
         IFormFile file = Request.Form.Files[0];
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         if (person == null)
             return BadRequest();
         await using Stream stream = file.OpenReadStream();
@@ -74,7 +74,7 @@ public class IndexModel(ApplicationUserManager<ApplicationUser> personManager, P
 
     public async Task<IActionResult> OnPostClearProfilePictureAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         if (person == null)
             return BadRequest();
         Result = await personManager.ClearProfilePictureAsync(person);

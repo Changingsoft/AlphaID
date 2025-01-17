@@ -1,13 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class IndexModel(UserManager<ApplicationUser> userManager) : PageModel
+public class IndexModel(UserManager<NaturalPerson> userManager) : PageModel
 {
-    public ApplicationUser Data { get; set; } = null!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public bool HasPassword { get; set; }
 
@@ -18,7 +19,7 @@ public class IndexModel(UserManager<ApplicationUser> userManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -34,7 +35,7 @@ public class IndexModel(UserManager<ApplicationUser> userManager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        ApplicationUser? person = await userManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 

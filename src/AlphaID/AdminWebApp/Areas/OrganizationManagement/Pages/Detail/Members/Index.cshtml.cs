@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    UserManager<ApplicationUser> personManager,
+    UserManager<NaturalPerson> personManager,
     OrganizationMemberManager memberManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;
@@ -56,7 +57,7 @@ public class IndexModel(
         Organization = org;
         Members = await memberManager.GetMembersAsync(org);
 
-        ApplicationUser? person = await personManager.FindByNameAsync(UserName);
+        NaturalPerson? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
         {
             ModelState.AddModelError(nameof(UserName), "找不到人员");

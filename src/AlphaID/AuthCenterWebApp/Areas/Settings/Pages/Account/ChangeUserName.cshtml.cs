@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using AuthCenterWebApp.Services;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class ChangeUserNameModel(
-    UserManager<ApplicationUser> manager,
+    UserManager<NaturalPerson> manager,
     ILogger<ChangeUserNameModel>? logger,
     PersonSignInManager signInManager) : PageModel
 {
@@ -22,7 +23,7 @@ public class ChangeUserNameModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await manager.GetUserAsync(User);
+        NaturalPerson? person = await manager.GetUserAsync(User);
         if (person == null)
         {
             logger?.LogWarning("从用户的登录信息无法查询到用户");
@@ -34,7 +35,7 @@ public class ChangeUserNameModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await manager.GetUserAsync(User);
+        NaturalPerson? person = await manager.GetUserAsync(User);
         if (person == null)
         {
             logger?.LogWarning("从用户的登录信息无法查询到用户");

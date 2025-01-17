@@ -13,6 +13,7 @@ using AlphaId.PlatformServices.Aliyun;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Admin;
 using AlphaIdPlatform.Debugging;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using AlphaIdPlatform.RazorPages;
 using Duende.IdentityServer.EntityFramework.DbContexts;
@@ -202,7 +203,7 @@ builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrServi
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
 
-builder.Services.AddScoped<DirectoryAccountManager>()
+builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
     .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>()
     .AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>()
     .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
@@ -221,7 +222,7 @@ builder.Services.AddScoped<IClaimsTransformation, ClaimTransformation>();
 //目录服务
 builder.Services.AddScoped<DirectoryServiceManager>()
     .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
-builder.Services.AddScoped<DirectoryAccountManager>()
+builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
     .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>();
 
 //安全角色管理

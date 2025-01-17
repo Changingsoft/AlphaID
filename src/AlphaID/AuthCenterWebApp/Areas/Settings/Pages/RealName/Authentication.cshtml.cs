@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
@@ -6,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.RealName;
 
-public class AuthenticationModel(RealNameManager realNameManager, UserManager<ApplicationUser> applicationUserManager) : PageModel
+public class AuthenticationModel(RealNameManager<NaturalPerson> realNameManager, UserManager<NaturalPerson> applicationUserManager) : PageModel
 {
     public RealNameAuthentication Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string id)
     {
-        ApplicationUser? person = await applicationUserManager.GetUserAsync(User);
+        NaturalPerson? person = await applicationUserManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
         IEnumerable<RealNameAuthentication> authentications = realNameManager.GetAuthentications(person);

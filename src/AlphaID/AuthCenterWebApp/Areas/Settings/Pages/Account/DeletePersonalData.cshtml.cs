@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class DeletePersonalDataModel(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
+    UserManager<NaturalPerson> userManager,
+    SignInManager<NaturalPerson> signInManager,
     ILogger<DeletePersonalDataModel> logger) : PageModel
 {
     [BindProperty]
@@ -18,7 +19,7 @@ public class DeletePersonalDataModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         RequirePassword = await userManager.HasPasswordAsync(user);
@@ -27,7 +28,7 @@ public class DeletePersonalDataModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         RequirePassword = await userManager.HasPasswordAsync(user);

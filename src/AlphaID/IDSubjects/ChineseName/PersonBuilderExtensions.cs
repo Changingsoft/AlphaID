@@ -1,7 +1,7 @@
-﻿namespace IdSubjects.ChineseName;
+namespace IdSubjects.ChineseName;
 
 /// <summary>
-///     针对<see cref="ApplicationUserBuilder" />的扩展。
+///     针对<see cref="ApplicationUserBuilder{T}" />的扩展。
 /// </summary>
 public static class PersonBuilderExtensions
 {
@@ -11,7 +11,8 @@ public static class PersonBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="chinesePersonName">中国人名称。</param>
     /// <returns></returns>
-    public static ApplicationUserBuilder UseChinesePersonName(this ApplicationUserBuilder builder, ChinesePersonName chinesePersonName)
+    public static ApplicationUserBuilder<T> UseChinesePersonName<T>(this ApplicationUserBuilder<T> builder, ChinesePersonName chinesePersonName)
+    where T : ApplicationUser, new()
     {
         var personName = new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname,
             chinesePersonName.GivenName);

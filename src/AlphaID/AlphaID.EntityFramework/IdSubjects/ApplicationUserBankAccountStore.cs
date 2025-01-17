@@ -1,5 +1,5 @@
-﻿using IdSubjects;
-using IdSubjects.Payments;
+using AlphaIdPlatform.Payments;
+using IdSubjects;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 

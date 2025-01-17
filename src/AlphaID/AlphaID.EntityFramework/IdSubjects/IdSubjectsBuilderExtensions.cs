@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,9 @@ public static class IdSubjectsBuilderExtensions
     /// <returns></returns>
     public static IdSubjectsBuilder AddDefaultStores(this IdSubjectsBuilder builder)
     {
-        builder.AddPersonStore<ApplicationUserStore, ApplicationUser>();
+        builder.AddPersonStore<ApplicationUserStore, NaturalPerson>();
         builder.AddOrganizationStore<OrganizationStore>();
-        builder.AddOrganizationMemberStore<OrganizationMemberStore>();
         builder.AddPasswordHistoryStore<PasswordHistoryStore>();
-        builder.AddPersonBankAccountStore<ApplicationUserBankAccountStore>();
-        builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
         builder.AddOrganizationBankAccountStore<OrganizationBankAccountStore>();
         builder.AddOrganizationIdentifierStore<OrganizationIdentifierStore>();
 

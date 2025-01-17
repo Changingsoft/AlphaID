@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Encodings.Web;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class EmailModel(
-    UserManager<ApplicationUser> userManager,
+    UserManager<NaturalPerson> userManager,
     IEmailSender emailSender,
     IOptions<ProductInfo> production) : PageModel
 {
@@ -30,7 +31,7 @@ public class EmailModel(
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    private async Task LoadAsync(ApplicationUser user)
+    private async Task LoadAsync(NaturalPerson user)
     {
         string? email = await userManager.GetEmailAsync(user);
         Email = email;
@@ -45,7 +46,7 @@ public class EmailModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await LoadAsync(user);
@@ -54,7 +55,7 @@ public class EmailModel(
 
     public async Task<IActionResult> OnPostChangeEmailAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)
@@ -90,7 +91,7 @@ public class EmailModel(
 
     public async Task<IActionResult> OnPostSendVerificationEmailAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         if (!ModelState.IsValid)

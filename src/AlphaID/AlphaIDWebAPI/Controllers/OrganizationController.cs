@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Security;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,7 @@ namespace AlphaIdWebAPI.Controllers;
 public class OrganizationController(
     IOrganizationStore organizationStore,
     OrganizationMemberManager memberManager,
-    UserManager<ApplicationUser> personManager) : ControllerBase
+    UserManager<NaturalPerson> personManager) : ControllerBase
 {
     /// <summary>
     ///     获取组织信息。
@@ -42,7 +43,7 @@ public class OrganizationController(
     [HttpGet("{id}/Members")]
     public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
     {
-        ApplicationUser? visitor = null;
+        NaturalPerson? visitor = null;
         string? visitorSubjectId = User.SubjectId();
         if (visitorSubjectId != null)
             visitor = await personManager.FindByIdAsync(User.SubjectId()!);

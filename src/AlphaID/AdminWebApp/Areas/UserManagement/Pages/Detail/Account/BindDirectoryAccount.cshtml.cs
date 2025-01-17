@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
@@ -6,19 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class BindDirectoryAccountModel(
-    UserManager<ApplicationUser> personManager,
-    DirectoryAccountManager directoryAccountManager,
+    UserManager<NaturalPerson> personManager,
+    DirectoryAccountManager<NaturalPerson> directoryAccountManager,
     DirectoryServiceManager directoryServiceManager) : PageModel
 {
     public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
 
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<DirectorySearchItem> SearchItems { get; set; } = [];
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -27,7 +28,7 @@ public class BindDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostSearchAsync(string anchor, int serviceId, string keywords)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -42,7 +43,7 @@ public class BindDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostBindAsync(string anchor, int serviceId, Guid entryGuid)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;

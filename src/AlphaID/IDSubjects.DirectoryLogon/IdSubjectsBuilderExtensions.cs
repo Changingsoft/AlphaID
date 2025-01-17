@@ -13,10 +13,11 @@ public static class IdSubjectsBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns>返回目录管理构造器。</returns>
-    public static DirectoryLogonBuilder AddDirectoryLogin(this IdSubjectsBuilder builder)
+    public static DirectoryLogonBuilder AddDirectoryLogin<T>(this IdSubjectsBuilder builder)
+    where T : ApplicationUser
     {
         builder.Services.TryAddScoped<DirectoryServiceManager>();
-        builder.Services.TryAddScoped<DirectoryAccountManager>();
+        builder.Services.TryAddScoped<DirectoryAccountManager<T>>();
 
 
         builder.Services.AddScoped<ISubjectGenerator, AdfsSubjectGenerator>();

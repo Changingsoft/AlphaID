@@ -18,11 +18,12 @@ namespace IdSubjects.DirectoryLogon;
 /// <param name="directoryAccountStore"></param>
 /// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
-public class DirectoryAccountManager(
-    UserManager<ApplicationUser> applicationUserManager,
+public class DirectoryAccountManager<T>(
+    UserManager<T> applicationUserManager,
     IDirectoryAccountStore directoryAccountStore,
     IEnumerable<ISubjectGenerator> subjectGenerators,
-    ILogger<DirectoryAccountManager>? logger = null)
+    ILogger<DirectoryAccountManager<T>>? logger = null)
+where T : ApplicationUser
 {
     /// <summary>
     ///     Create account.
@@ -31,7 +32,7 @@ public class DirectoryAccountManager(
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public async Task<IdOperationResult> CreateAsync(DirectoryAccount account)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(account.PersonId);
+        T? person = await applicationUserManager.FindByIdAsync(account.PersonId);
         if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
         using PrincipalContext context = account.DirectoryServiceDescriptor.GetUserContainerContext();
         UserPrincipal newAccount = new(context)
@@ -149,7 +150,7 @@ public class DirectoryAccountManager(
     public async Task<IdOperationResult> BindExistsAccount(DirectoryAccount account,
         string entryObjectGuid)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(account.PersonId);
+        T? person = await applicationUserManager.FindByIdAsync(account.PersonId);
         if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
 
         using PrincipalContext context = account.DirectoryServiceDescriptor.GetRootContext();

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class IndexModel(
-    UserManager<ApplicationUser> personManager,
+    UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
 
-    public ApplicationUser Person { get; set; } = null!;
+    public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = null!;
 
@@ -24,7 +25,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -34,7 +35,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostJoinOrganizationAsync()
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -68,7 +69,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
     {
-        ApplicationUser? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
         if (person == null)
             return NotFound();
         Person = person;

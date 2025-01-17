@@ -40,7 +40,7 @@ public class ApplicationUserManager<T>(
     IServiceProvider services,
     ILogger<ApplicationUserManager<T>> logger,
     IEnumerable<IInterceptor> interceptors,
-    PasswordHistoryManager passwordHistoryManager,
+    PasswordHistoryManager<T> passwordHistoryManager,
     IEventService eventService)
     : UserManager<T>(store,
         optionsAccessor,
@@ -80,7 +80,7 @@ where T : ApplicationUser
     /// <summary>
     ///     获取用于密码历史的管理器。
     /// </summary>
-    public PasswordHistoryManager PasswordHistoryManager { get; } = passwordHistoryManager;
+    public PasswordHistoryManager<T> PasswordHistoryManager { get; } = passwordHistoryManager;
 
     /// <summary>
     ///     获取审计事件服务。
@@ -93,12 +93,12 @@ where T : ApplicationUser
     /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准 E.164 格式。</param>
     /// <param name="cancellation"></param>
     /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
-    public virtual async Task<ApplicationUser?> FindByMobileAsync(string mobile, CancellationToken cancellation)
+    public virtual async Task<T?> FindByMobileAsync(string mobile, CancellationToken cancellation)
     {
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
             return null;
         string phoneNumberString = phoneNumber.ToString();
-        ApplicationUser? person = await Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
+        T? person = await Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
         return person;
     }
 

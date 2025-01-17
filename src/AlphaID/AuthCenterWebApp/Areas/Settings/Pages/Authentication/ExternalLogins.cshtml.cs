@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
@@ -9,9 +10,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class ExternalLoginsModel(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
-    IUserStore<ApplicationUser> userStore) : PageModel
+    UserManager<NaturalPerson> userManager,
+    SignInManager<NaturalPerson> signInManager,
+    IUserStore<NaturalPerson> userStore) : PageModel
 {
     private const string LoginProviderKey = "LoginProvider";
     private const string XsrfKey = "XsrfId";
@@ -27,7 +28,7 @@ public class ExternalLoginsModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         CurrentLogins = await userManager.GetLoginsAsync(user);
@@ -36,7 +37,7 @@ public class ExternalLoginsModel(
             .ToList();
 
         string? passwordHash = null;
-        if (userStore is IUserPasswordStore<ApplicationUser> userPasswordStore)
+        if (userStore is IUserPasswordStore<NaturalPerson> userPasswordStore)
             passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
 
         ShowRemoveButton = passwordHash != null || CurrentLogins.Count > 1;
@@ -45,7 +46,7 @@ public class ExternalLoginsModel(
 
     public async Task<IActionResult> OnPostRemoveLoginAsync(string loginProvider, string providerKey)
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         IdentityResult result = await userManager.RemoveLoginAsync(user, loginProvider, providerKey);
@@ -74,7 +75,7 @@ public class ExternalLoginsModel(
 
     public async Task<IActionResult> OnGetLinkLoginCallbackAsync()
     {
-        ApplicationUser? user = await userManager.GetUserAsync(User);
+        NaturalPerson? user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         string userId = await userManager.GetUserIdAsync(user);
         ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync(userId) ??

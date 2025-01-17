@@ -24,5 +24,5 @@ where T : ApplicationUser
     /// <param name="cancellationToken">可取消令牌。</param>
     /// <returns></returns>
     [Obsolete("不再提供此方法。")]
-    Task<T?> GetOriginalAsync(ApplicationUser person, CancellationToken cancellationToken);
+    Task<T?> GetOriginalAsync(T person, CancellationToken cancellationToken);
 }

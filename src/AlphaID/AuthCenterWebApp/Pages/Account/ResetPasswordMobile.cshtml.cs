@@ -14,7 +14,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class ResetPasswordMobileModel(
     NaturalPersonService naturalPersonService,
-    ApplicationUserManager<ApplicationUser> userManager,
+    ApplicationUserManager<NaturalPerson> userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
     [BindProperty]
@@ -64,7 +64,7 @@ public class ResetPasswordMobileModel(
 
         var normalPhoneNumber = phone.ToString();
 
-        ApplicationUser? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
+        NaturalPerson? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
         if (person is not { PhoneNumberConfirmed: true }) return RedirectToPage("ResetPasswordConfirmation");
 
         if (!await verificationCodeService.VerifyAsync(PhoneNumber, VerificationCode))

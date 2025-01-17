@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Helpers;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(OrganizationMemberManager memberManager, UserManager<ApplicationUser> applicationUserManager) : PageModel
+public class OfModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> applicationUserManager) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 
@@ -21,7 +22,7 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Applic
 
     public async Task<IActionResult> OnGetAsync(string anchor, string orgId)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(person);
@@ -42,7 +43,7 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Applic
 
     public async Task<IActionResult> OnPostAsync(string anchor, string orgId)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(person);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
-public class RemovePasswordModel(NaturalPersonService naturalPersonService, UserManager<ApplicationUser> userManager) : PageModel
+public class RemovePasswordModel(NaturalPersonService naturalPersonService, UserManager<NaturalPerson> userManager) : PageModel
 {
     [Display(Name = "Password")]
     [DataType(DataType.Password)]
@@ -21,13 +21,13 @@ public class RemovePasswordModel(NaturalPersonService naturalPersonService, User
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await userManager.GetUserAsync(User);
+        NaturalPerson? person = await userManager.GetUserAsync(User);
         return person == null ? NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.") : Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await userManager.GetUserAsync(User);
+        NaturalPerson? person = await userManager.GetUserAsync(User);
         if (person == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         Logins = await userManager.GetLoginsAsync(person);
         if (!Logins.Any())

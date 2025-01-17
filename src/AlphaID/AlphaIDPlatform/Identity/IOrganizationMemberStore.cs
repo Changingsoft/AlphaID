@@ -1,4 +1,6 @@
-﻿namespace IdSubjects;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Identity;
 
 /// <summary>
 ///     提供组织成员信息的持久化能力。

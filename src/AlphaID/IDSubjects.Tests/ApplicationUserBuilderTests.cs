@@ -10,7 +10,7 @@ public class ApplicationUserBuilderTests
     [Fact]
     public void UseChinesePersonNameTest()
     {
-        var builder = new ApplicationUserBuilder("PersonName", new PersonNameInfo("FullName", "Surname", "GivenName"));
+        var builder = new ApplicationUserBuilder<ApplicationUser>("PersonName", new PersonNameInfo("FullName", "Surname", "GivenName"));
         builder.UseChinesePersonName(new ChinesePersonName("张", "三", "ZHANG", "SAN"));
 
         ApplicationUser person = builder.Build();

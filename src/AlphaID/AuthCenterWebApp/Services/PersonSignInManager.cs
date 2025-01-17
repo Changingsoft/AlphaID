@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -9,13 +10,13 @@ namespace AuthCenterWebApp.Services;
 ///     自然人登录管理器。继承自<see cref="SignInManager{TUser}"></see>
 /// </summary>
 public class PersonSignInManager(
-    ApplicationUserManager<ApplicationUser> userManager,
+    ApplicationUserManager<NaturalPerson> userManager,
     IHttpContextAccessor contextAccessor,
-    IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
+    IUserClaimsPrincipalFactory<NaturalPerson> claimsFactory,
     IOptions<IdentityOptions> optionsAccessor,
-    ILogger<SignInManager<ApplicationUser>> logger,
+    ILogger<SignInManager<NaturalPerson>> logger,
     IAuthenticationSchemeProvider schemes,
-    IUserConfirmation<ApplicationUser> confirmation) : SignInManager<ApplicationUser>(userManager,
+    IUserConfirmation<NaturalPerson> confirmation) : SignInManager<NaturalPerson>(userManager,
     contextAccessor,
     claimsFactory,
     optionsAccessor,
@@ -32,7 +33,7 @@ public class PersonSignInManager(
     /// <param name="password">密码</param>
     /// <param name="lockoutOnFailure">指示登录失败时是否锁定。</param>
     /// <returns></returns>
-    public override async Task<SignInResult> CheckPasswordSignInAsync(ApplicationUser user,
+    public override async Task<SignInResult> CheckPasswordSignInAsync(NaturalPerson user,
         string password,
         bool lockoutOnFailure)
     {
@@ -55,7 +56,7 @@ public class PersonSignInManager(
         return result;
     }
 
-    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(ApplicationUser person)
+    private static ClaimsPrincipal GenerateMustChangePasswordPrincipal(NaturalPerson person)
     {
         var identity = new ClaimsIdentity(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         identity.AddClaim(new Claim(ClaimTypes.Name, person.Id));

@@ -1,17 +1,18 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.ChineseName;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class EditPersonNameModel(ApplicationUserManager<ApplicationUser> applicationUserManager) : PageModel
+public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicationUserManager) : PageModel
 {
     public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
         Input = new InputModel
         {
@@ -25,7 +26,7 @@ public class EditPersonNameModel(ApplicationUserManager<ApplicationUser> applica
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        ApplicationUser? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null) return NotFound();
 
         if (!ModelState.IsValid)

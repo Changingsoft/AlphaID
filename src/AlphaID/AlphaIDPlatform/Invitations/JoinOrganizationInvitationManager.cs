@@ -1,7 +1,9 @@
 using System.Transactions;
+using AlphaIdPlatform.Identity;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdSubjects.Invitations;
+namespace AlphaIdPlatform.Invitations;
 
 /// <summary>
 ///     加入组织邀请管理器。
@@ -14,7 +16,7 @@ namespace IdSubjects.Invitations;
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
-    UserManager<ApplicationUser> personManager,
+    UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
 {
@@ -26,7 +28,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="person"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(ApplicationUser person)
+    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(NaturalPerson person)
     {
         return store.Invitations.Where(i =>
             i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
@@ -51,7 +53,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="inviter"></param>
     /// <returns></returns>
     public async Task<IdOperationResult> InviteMemberAsync(Organization organization,
-        ApplicationUser invitee,
+        NaturalPerson invitee,
         string inviter)
     {
         var errors = new List<string>();
@@ -93,13 +95,13 @@ public class JoinOrganizationInvitationManager(
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-        ApplicationUser? person = await personManager.FindByIdAsync(invitation.InviteeId);
+        NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
         Organization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
         IdOperationResult? result = null;
         if (organization != null && person != null)
             result = await memberManager.CreateAsync(
                 new OrganizationMember(organization, person)
-                    { Visibility = invitation.ExpectVisibility });
+                { Visibility = invitation.ExpectVisibility });
         invitation.Accepted = true;
         await store.UpdateAsync(invitation);
         trans.Complete();

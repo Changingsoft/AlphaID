@@ -1,13 +1,14 @@
+using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Invitations;
+using AlphaIdPlatform.Payments;
 using IdSubjects;
-using IdSubjects.Invitations;
-using IdSubjects.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<ApplicationUser>(options)
+public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
 {
     public DbSet<ApplicationUserBankAccount> PersonBankAccounts { get; protected set; } = null!;
 
@@ -30,7 +31,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     {
         base.OnModelCreating(builder);
         //Rename table name.
-        builder.Entity<ApplicationUser>(b =>
+        builder.Entity<NaturalPerson>(b =>
         {
             b.ToTable("ApplicationUser");
             b.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);

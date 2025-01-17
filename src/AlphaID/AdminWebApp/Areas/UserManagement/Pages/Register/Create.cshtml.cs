@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.ChineseName;
 using IdSubjects.Subjects;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Register;
 
-public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserManager<ApplicationUser> manager) : PageModel
+public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserManager<NaturalPerson> manager) : PageModel
 {
     [BindProperty]
     [Display(Name = "User name")]
@@ -38,7 +39,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var builder = new ApplicationUserBuilder();
+        var builder = new ApplicationUserBuilder<NaturalPerson>();
         if (Mobile != null)
         {
             if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
@@ -64,7 +65,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
             builder.SetEmail(Email);
 
 
-        ApplicationUser person = builder.Build();
+        NaturalPerson person = builder.Build();
 
         person.DateOfBirth = Input.DateOfBirth.HasValue
             ? DateOnly.FromDateTime(Input.DateOfBirth.Value)

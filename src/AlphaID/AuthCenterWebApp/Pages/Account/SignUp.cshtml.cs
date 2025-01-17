@@ -22,11 +22,11 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class SignUpModel(
     NaturalPersonService naturalPersonService,
-    UserManager<ApplicationUser> applicationUserManager,
+    UserManager<NaturalPerson> applicationUserManager,
     IVerificationCodeService verificationCodeService,
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,
-    SignInManager<ApplicationUser> signInManager,
+    SignInManager<NaturalPerson> signInManager,
     IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -102,14 +102,14 @@ public class SignUpModel(
             chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
         var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
         string userName = Input.Email ?? phoneNumber.PhoneNumber;
-        var personBuilder = new ApplicationUserBuilder(userName,
+        var personBuilder = new ApplicationUserBuilder<NaturalPerson>(userName,
             new PersonNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
         personBuilder.SetMobile(phoneNumber, true);
         personBuilder.UseChinesePersonName(chinesePersonName);
         if (Input.Email != null)
             personBuilder.SetEmail(Input.Email);
 
-        ApplicationUser person = personBuilder.Build();
+        NaturalPerson person = personBuilder.Build();
 
         person.DateOfBirth = Input.DateOfBirth;
         person.Gender = Input.Sex;

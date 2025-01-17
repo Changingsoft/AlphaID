@@ -24,6 +24,11 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.Services.AddScoped<IUserInRoleStore,UserInRoleStore>();
         builder.Services.AddDbContext<OperationalDbContext>(options);
 
+        builder.AddOrganizationMemberStore<OrganizationMemberStore>();
+        builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
+        builder.AddPersonBankAccountStore<ApplicationUserBankAccountStore>();
+
+
         return builder;
     }
 }

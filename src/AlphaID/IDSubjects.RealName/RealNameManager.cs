@@ -10,7 +10,8 @@ namespace IdSubjects.RealName;
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="applicationUserManager"></param>
-public class RealNameManager(IRealNameAuthenticationStore store, UserManager<ApplicationUser> applicationUserManager)
+public class RealNameManager<T>(IRealNameAuthenticationStore store, UserManager<T> applicationUserManager)
+where T : ApplicationUser
 {
     /// <summary>
     ///     获取可查询的实名认证信息集合。
@@ -23,7 +24,7 @@ public class RealNameManager(IRealNameAuthenticationStore store, UserManager<App
     /// </summary>
     /// <param name="person"></param>
     /// <returns>与自然人相关的实名状态。如果没有，则返回null。</returns>
-    public virtual IEnumerable<RealNameAuthentication> GetAuthentications(ApplicationUser person)
+    public virtual IEnumerable<RealNameAuthentication> GetAuthentications(T person)
     {
         return store.FindByPerson(person);
     }
@@ -34,7 +35,7 @@ public class RealNameManager(IRealNameAuthenticationStore store, UserManager<App
     /// <param name="person"></param>
     /// <param name="authentication"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AuthenticateAsync(ApplicationUser person, RealNameAuthentication authentication)
+    public async Task<IdOperationResult> AuthenticateAsync(T person, RealNameAuthentication authentication)
     {
         authentication.PersonId = person.Id;
         IdOperationResult result = await store.CreateAsync(authentication);

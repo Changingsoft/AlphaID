@@ -6,7 +6,8 @@ namespace IdSubjects.Validators;
 /// <summary>
 ///     移动电话号码验证器。
 /// </summary>
-public class PhoneNumberValidator : IUserValidator<ApplicationUser>
+public class PhoneNumberValidator<T> : IUserValidator<T>
+where T:ApplicationUser
 {
     /// <summary>
     ///     添加对移动电话号码格式和唯一性的验证。
@@ -14,9 +15,9 @@ public class PhoneNumberValidator : IUserValidator<ApplicationUser>
     /// <param name="manager"></param>
     /// <param name="user"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> ValidateAsync(UserManager<ApplicationUser> manager, ApplicationUser user)
+    public virtual async Task<IdentityResult> ValidateAsync(UserManager<T> manager, T user)
     {
-        ApplicationUserManager<ApplicationUser> applicationUserManager = manager as ApplicationUserManager<ApplicationUser> ??
+        ApplicationUserManager<T> applicationUserManager = manager as ApplicationUserManager<T> ??
                                                     throw new InvalidOperationException(
                                                         "无法转换UserManger到ApplicationUserManager。");
         var errors = new List<IdentityError>();

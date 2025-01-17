@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Transactions;
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
-public class SecurityModel(UserManager<ApplicationUser> manager) : PageModel
+public class SecurityModel(UserManager<NaturalPerson> manager) : PageModel
 {
     public string OperationMessage = null!;
 
@@ -16,11 +17,11 @@ public class SecurityModel(UserManager<ApplicationUser> manager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public ApplicationUser Data { get; set; } = null!;
+    public NaturalPerson Data { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await manager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
         if (person == null) return NotFound();
 
         Data = person;
@@ -34,7 +35,7 @@ public class SecurityModel(UserManager<ApplicationUser> manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await manager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await manager.FindByIdAsync(Anchor);
         if (person == null) return NotFound();
 
         Data = person;

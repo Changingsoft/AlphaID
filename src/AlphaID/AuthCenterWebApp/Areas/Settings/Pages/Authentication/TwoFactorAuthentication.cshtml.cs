@@ -1,5 +1,6 @@
 #nullable disable
 
+using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +9,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 
 public class TwoFactorAuthenticationModel(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager) : PageModel
+    UserManager<NaturalPerson> userManager,
+    SignInManager<NaturalPerson> signInManager) : PageModel
 {
     public bool HasAuthenticator { get; set; }
 
@@ -25,7 +26,7 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         HasAuthenticator = await userManager.GetAuthenticatorKeyAsync(user) != null;
@@ -38,7 +39,7 @@ public class TwoFactorAuthenticationModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser user = await userManager.GetUserAsync(User);
+        NaturalPerson user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
 
         await signInManager.ForgetTwoFactorClientAsync();

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class PersonNameModel(UserManager<ApplicationUser> personManager, RealNameManager realNameManager, NaturalPersonService naturalPersonService) : PageModel
+public class PersonNameModel(UserManager<NaturalPerson> personManager, RealNameManager<NaturalPerson> realNameManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputMode Input { get; set; } = null!;
@@ -17,7 +17,7 @@ public class PersonNameModel(UserManager<ApplicationUser> personManager, RealNam
 
     public async Task<IActionResult> OnGetAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
         bool hasRealName = realNameManager.GetAuthentications(person).Any();
@@ -41,7 +41,7 @@ public class PersonNameModel(UserManager<ApplicationUser> personManager, RealNam
 
     public async Task<IActionResult> OnPostAsync()
     {
-        ApplicationUser? person = await personManager.GetUserAsync(User);
+        NaturalPerson? person = await personManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
         person.PersonName = new PersonNameInfo($"{Input.Surname}{Input.GivenName}", Input.Surname, Input.GivenName,

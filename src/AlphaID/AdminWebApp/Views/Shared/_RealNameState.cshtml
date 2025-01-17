@@ -1,5 +1,6 @@
-﻿@using IdSubjects.RealName
-@inject RealNameManager RealNameManager
+@using AlphaIdPlatform.Identity
+@using IdSubjects.RealName
+@inject RealNameManager<NaturalPerson> RealNameManager
 @model string
 
 @if (RealNameManager.IsAuthenticated(Model))

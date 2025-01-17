@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using AlphaIdPlatform;
+using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByEmailModel(
     IEmailSender emailSender,
-    UserManager<ApplicationUser> userManager,
+    UserManager<NaturalPerson> userManager,
     IOptions<ProductInfo> production) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -32,7 +33,7 @@ public class FindPasswordByEmailModel(
     {
         if (ModelState.IsValid)
         {
-            ApplicationUser? user = await userManager.FindByEmailAsync(Input.Email);
+            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
             if (user == null || !await userManager.IsEmailConfirmedAsync(user))
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("FindPasswordByEmailConfirmation");

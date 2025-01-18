@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
-using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

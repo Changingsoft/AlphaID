@@ -3,7 +3,6 @@ using Duende.IdentityServer.AspNetIdentity;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 using IdSubjects;
-using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthCenterWebApp.Services;

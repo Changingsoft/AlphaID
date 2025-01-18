@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
-using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

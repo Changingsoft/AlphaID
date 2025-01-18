@@ -7,6 +7,7 @@ namespace AlphaIdPlatform.Subjects;
 /// <summary>
 ///     组织的曾用名。
 /// </summary>
+[Owned]
 [Table("OrganizationUsedName")]
 public class OrganizationUsedName
 {
@@ -22,12 +23,6 @@ public class OrganizationUsedName
     [MaxLength(50)]
     [Unicode(false)]
     public string OrganizationId { get; protected set; } = null!;
-
-    /// <summary>
-    ///     所属组织
-    /// </summary>
-    [ForeignKey(nameof(OrganizationId))]
-    public virtual Organization Organization { get; protected set; } = null!;
 
     /// <summary>
     ///     名称。

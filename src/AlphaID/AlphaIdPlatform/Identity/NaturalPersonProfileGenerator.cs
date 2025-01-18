@@ -1,10 +1,5 @@
 using IdSubjects;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlphaIdPlatform.Identity;
 internal class NaturalPersonProfileGenerator(IOptions<OidcProfileUrlOptions> options) : ProfileUrlGenerator<NaturalPerson>(options)

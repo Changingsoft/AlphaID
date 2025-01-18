@@ -1,6 +1,5 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
-using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthCenterWebApp.Components;

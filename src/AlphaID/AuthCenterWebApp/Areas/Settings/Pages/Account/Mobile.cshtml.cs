@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using Duende.IdentityServer.Extensions;
-using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

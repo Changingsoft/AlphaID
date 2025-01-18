@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     发票信息

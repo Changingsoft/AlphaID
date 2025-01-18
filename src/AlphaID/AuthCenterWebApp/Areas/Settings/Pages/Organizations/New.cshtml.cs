@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Transactions;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ public class NewModel(
         if (!ModelState.IsValid)
             return Page();
 
-        var organization = new IdSubjects.Organization(Name)
+        var organization = new AlphaIdPlatform.Subjects.Organization(Name)
         {
             Domicile = Input.Domicile,
             Representative = Input.Representative

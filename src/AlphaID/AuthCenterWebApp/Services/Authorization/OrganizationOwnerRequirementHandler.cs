@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Subjects;
 using AuthCenterWebApp.Areas.Organization;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;

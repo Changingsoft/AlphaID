@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class WhoModel(OrganizationManager organizationManager) : PageModel
 {
-    public IdSubjects.Organization[] Organizations { get; set; } = [];
+    public AlphaIdPlatform.Subjects.Organization[] Organizations { get; set; } = [];
 
     public IActionResult OnGet(string anchor)
     {

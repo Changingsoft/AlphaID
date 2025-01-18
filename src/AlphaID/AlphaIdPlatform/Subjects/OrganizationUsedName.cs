@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     组织的曾用名。

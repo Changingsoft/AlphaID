@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using IdSubjects;
 
-namespace IdSubjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 /// </summary>

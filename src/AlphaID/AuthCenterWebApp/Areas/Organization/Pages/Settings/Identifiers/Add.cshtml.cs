@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,7 +21,7 @@ public class AddModel(OrganizationIdentifierManager identifierManager, Organizat
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -29,7 +30,7 @@ public class AddModel(OrganizationIdentifierManager identifierManager, Organizat
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();

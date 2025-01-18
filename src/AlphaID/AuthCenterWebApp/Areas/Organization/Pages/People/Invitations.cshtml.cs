@@ -1,5 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,7 +15,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public IActionResult OnGet(string anchor)
         {
-            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
                 return RedirectToPage("../Who", new { anchor });
             if (organization == null)
                 return NotFound();
@@ -24,7 +25,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public async Task<IActionResult> OnPostRevoke(string anchor, int invitationId)
         {
-            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+            if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
                 return RedirectToPage("../Who", new { anchor });
             if (organization == null)
                 return NotFound();

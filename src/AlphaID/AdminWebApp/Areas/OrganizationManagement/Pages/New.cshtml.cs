@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,7 +52,7 @@ public class NewModel(OrganizationManager manager) : PageModel
         if (nameExists.Any())
             if (!RegisterWithSameNameAnyway)
             {
-                ModelState.AddModelError(nameof(Name), "库中存在同名的组织，如果确实要注册，请勾选“即使名称相同，也要注册”复选框");
+                ModelState.AddModelError(nameof(Name), "搴撲腑瀛樺湪鍚屽悕鐨勭粍缁囷紝濡傛灉纭疄瑕佹敞鍐岋紝璇峰嬀閫夆�滃嵆浣垮悕绉扮浉鍚岋紝涔熻娉ㄥ唽鈥濆閫夋");
                 return Page();
             }
 

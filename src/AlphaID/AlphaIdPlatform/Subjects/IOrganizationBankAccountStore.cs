@@ -1,4 +1,6 @@
-﻿namespace IdSubjects;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     提供组织银行账户存取能力。

@@ -1,4 +1,6 @@
-﻿namespace IdSubjects;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     Provide CURD for organization.

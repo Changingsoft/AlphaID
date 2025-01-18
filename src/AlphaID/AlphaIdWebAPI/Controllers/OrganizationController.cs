@@ -1,5 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Security;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

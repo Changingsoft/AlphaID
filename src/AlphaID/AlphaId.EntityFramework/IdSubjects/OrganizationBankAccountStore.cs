@@ -1,4 +1,5 @@
-﻿using IdSubjects;
+using AlphaIdPlatform.Subjects;
+using IdSubjects;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 

@@ -1,6 +1,8 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Payments;
+using AlphaIdPlatform.Subjects;
+using IdSubjects;
 using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
@@ -48,6 +50,39 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     /// 获取审计日志构建器。
     /// </summary>
     public AuditLogBuilder AuditLog { get; } = auditLogBuilder;
+
+    /// <summary>
+    ///     Add generic organization store implementation into the system.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AlphaIdPlatformBuilder AddOrganizationStore<T>() where T : class, IOrganizationStore
+    {
+        Services.TryAddScoped<IOrganizationStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AlphaIdPlatformBuilder AddOrganizationBankAccountStore<T>() where T : class, IOrganizationBankAccountStore
+    {
+        Services.TryAddScoped<IOrganizationBankAccountStore, T>();
+        return this;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AlphaIdPlatformBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
+    {
+        Services.TryAddScoped<IOrganizationIdentifierStore, T>();
+        return this;
+    }
+
+
 
     /// <summary>
     ///     Add organization member store implementation into the system.

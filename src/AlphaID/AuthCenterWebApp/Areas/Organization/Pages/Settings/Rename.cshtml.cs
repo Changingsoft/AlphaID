@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,7 +17,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -26,7 +27,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();

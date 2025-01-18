@@ -1,4 +1,3 @@
-using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
@@ -13,10 +12,10 @@ namespace IdSubjects;
 public class PasswordHistoryManager<T>(
     IPasswordHistoryStore store,
     IPasswordHasher<T> passwordHasher,
-    IOptions<IdSubjectsOptions> options)
+    IOptions<PasswordLifetimeOptions> options)
 where T : ApplicationUser
 {
-    private readonly IdSubjectsPasswordOptions _options = options.Value.Password;
+    private readonly PasswordLifetimeOptions _options = options.Value;
 
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 

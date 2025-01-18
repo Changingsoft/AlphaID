@@ -22,7 +22,7 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="setupAction"></param>
     /// <returns></returns>
     public static IdSubjectsBuilder AddIdSubjects<TUser>(this IServiceCollection services,
-        Action<IdSubjectsOptions>? setupAction = null)
+        Action<IdentityOptions>? setupAction = null)
         where TUser : ApplicationUser
     {
         //IdSubjects需要访问HttpContext.
@@ -44,7 +44,6 @@ public static class IdSubjectsServiceCollectionExtensions
         if (setupAction != null)
         {
             services.Configure(setupAction);
-            services.Configure((Action<IdentityOptions>)setupAction);
         }
 
         return new IdSubjectsBuilder(services, identityBuilder);
@@ -58,7 +57,7 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjectsIdentity<TUser, TRole>(this IServiceCollection services, Action<IdSubjectsOptions>? setupAction = null)
+    public static IdentityBuilder AddIdSubjectsIdentity<TUser, TRole>(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
         where TUser : ApplicationUser
         where TRole : class
     {

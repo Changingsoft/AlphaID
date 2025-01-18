@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace IdSubjects.DependencyInjection;
+namespace IdSubjects;
 
 /// <summary>
 ///     密码选项。
 /// </summary>
-public class IdSubjectsPasswordOptions : PasswordOptions
+public class PasswordLifetimeOptions
 {
     /// <summary>
     ///     是否启用密码过期。默认为false。

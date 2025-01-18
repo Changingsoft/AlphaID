@@ -1,5 +1,4 @@
 using System.Transactions;
-using IdSubjects.DependencyInjection;
 using IdSubjects.Diagnostics;
 using IdSubjects.SecurityAuditing;
 using IdSubjects.SecurityAuditing.Events;
@@ -31,7 +30,7 @@ namespace IdSubjects;
 /// <param name="eventService"></param>
 public class ApplicationUserManager<T>(
     IApplicationUserStore<T> store,
-    IOptions<IdSubjectsOptions> optionsAccessor,
+    IOptions<IdentityOptions> optionsAccessor,
     IPasswordHasher<T> passwordHasher,
     IEnumerable<IUserValidator<T>> userValidators,
     IEnumerable<IPasswordValidator<T>> passwordValidators,
@@ -39,6 +38,7 @@ public class ApplicationUserManager<T>(
     ApplicationUserIdentityErrorDescriber errors,
     IServiceProvider services,
     ILogger<ApplicationUserManager<T>> logger,
+    IOptions<PasswordLifetimeOptions> passwordLifetimeOptions,
     IEnumerable<IInterceptor> interceptors,
     PasswordHistoryManager<T> passwordHistoryManager,
     IEventService eventService)
@@ -54,9 +54,9 @@ public class ApplicationUserManager<T>(
 where T : ApplicationUser
 {
     /// <summary>
-    ///     获取或设置IdSubjectsOptions。
+    /// 
     /// </summary>
-    public new IdSubjectsOptions Options { get; set; } = optionsAccessor.Value;
+    public virtual PasswordLifetimeOptions PasswordLifetime => passwordLifetimeOptions.Value;
 
     /// <summary>
     ///     获取 IApplicationUserStore.
@@ -211,7 +211,7 @@ where T : ApplicationUser
     public override async Task<IdentityResult> AddPasswordAsync(T user, string password)
     {
         //检查密码历史记录
-        if (Options.Password.RememberPasswordHistory > 0)
+        if (PasswordLifetime.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, password))
             {
                 await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName,"HitPasswordHistory"));
@@ -222,7 +222,7 @@ where T : ApplicationUser
         IdentityResult result = await base.AddPasswordAsync(user, password);
 
         //记录密码历史
-        if (Options.Password.RememberPasswordHistory > 0)
+        if (PasswordLifetime.RememberPasswordHistory > 0)
             await PasswordHistoryManager.Pass(user, password);
 
         return result;
@@ -240,11 +240,11 @@ where T : ApplicationUser
         string newPassword)
     {
         //检查密码最小寿命。
-        if (Options.Password.MinimumAge > 0)
+        if (PasswordLifetime.MinimumAge > 0)
             if (user.PasswordLastSet.HasValue)
             {
                 DateTimeOffset coldDownEnd = TimeProvider.GetUtcNow()
-                    .AddMinutes(Options.Password.MinimumAge);
+                    .AddMinutes(PasswordLifetime.MinimumAge);
                 if (user.PasswordLastSet.Value > coldDownEnd)
                 {
                     await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "MinimumPasswordAge"));
@@ -253,7 +253,7 @@ where T : ApplicationUser
             }
 
         //检查密码历史记录
-        if (Options.Password.RememberPasswordHistory > 0)
+        if (PasswordLifetime.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, newPassword))
             {
                 await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
@@ -272,7 +272,7 @@ where T : ApplicationUser
         }
 
         //记录密码历史
-        if (Options.Password.RememberPasswordHistory > 0)
+        if (PasswordLifetime.RememberPasswordHistory > 0)
             await PasswordHistoryManager.Pass(user, newPassword);
 
         trans.Complete();
@@ -291,7 +291,7 @@ where T : ApplicationUser
     {
         //重设密码是否受密码最短寿命限制？不受最短寿命限制。
         //检查密码历史记录
-        if (Options.Password.RememberPasswordHistory > 0)
+        if (PasswordLifetime.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, newPassword))
             {
                 await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
@@ -309,7 +309,7 @@ where T : ApplicationUser
         }
 
         //记录密码历史
-        if (Options.Password.RememberPasswordHistory > 0)
+        if (PasswordLifetime.RememberPasswordHistory > 0)
             await PasswordHistoryManager.Pass(user, newPassword);
 
         await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户重置了密码。"));

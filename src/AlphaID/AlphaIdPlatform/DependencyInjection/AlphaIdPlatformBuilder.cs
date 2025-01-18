@@ -62,17 +62,6 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
         return this;
     }
 
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public AlphaIdPlatformBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
-    {
-        Services.TryAddScoped<IOrganizationIdentifierStore, T>();
-        return this;
-    }
-
-
 
     /// <summary>
     ///     Add organization member store implementation into the system.

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers;
 
-public class AddModel(OrganizationIdentifierManager identifierManager, OrganizationManager organizationManager)
+public class AddModel(OrganizationManager organizationManager)
     : PageModel
 {
     [BindProperty]
@@ -40,10 +40,11 @@ public class AddModel(OrganizationIdentifierManager identifierManager, Organizat
 
         var identifier = new OrganizationIdentifier
         {
-            Organization = organization, OrganizationId = organization.Id, Type = Type, Value = Value
+            Type = Type, Value = Value
         };
+        organization.OrganizationIdentifiers.Add(identifier);
 
-        Result = await identifierManager.AddIdentifierAsync(identifier);
+        Result = await organizationManager.UpdateAsync(organization);
         if (Result.Succeeded)
             return RedirectToPage("Index", new { anchor });
 

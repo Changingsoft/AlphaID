@@ -21,7 +21,7 @@ public class PersonResourceOwnerPasswordValidator(
     UserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
     ILogger<PersonResourceOwnerPasswordValidator> logger,
-    IOptions<IdSubjectsOptions> options,
+    IOptions<PasswordLifetimeOptions> options,
     TimeProvider timeProvider)
 #pragma warning disable CS9107 // 参数捕获到封闭类型状态，其值也传递给基构造函数。该值也可能由基类捕获。
     : ResourceOwnerPasswordValidator<NaturalPerson>(userManager, signInManager, logger)
@@ -32,9 +32,9 @@ public class PersonResourceOwnerPasswordValidator(
         NaturalPerson? user = await userManager.FindByNameAsync(context.UserName);
         if (user != null)
         {
-            if (options.Value.Password.EnablePassExpires)
+            if (options.Value.EnablePassExpires)
             {
-                if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < timeProvider.GetUtcNow().AddDays(0 - options.Value.Password.PasswordExpiresDay))
+                if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < timeProvider.GetUtcNow().AddDays(0 - options.Value.PasswordExpiresDay))
                 {
                     logger.LogInformation(
                         "Authentication failed for username: {username}, reason: User must change password before first login.",

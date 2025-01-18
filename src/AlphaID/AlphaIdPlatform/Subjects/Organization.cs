@@ -137,6 +137,11 @@ public class Organization
     public virtual ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
     /// <summary>
+    /// 组织标识。
+    /// </summary>
+    public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; set; } = [];
+
+    /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>

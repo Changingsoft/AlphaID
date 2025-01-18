@@ -24,25 +24,23 @@ public class ApplicationUserClaimsPrincipalFactory<T>(UserManager<T> userManager
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
         string anchor = user.UserName!;
-        id.AddClaim(new Claim(JwtClaimTypes.Profile,profileUrlGenerator.GenerateProfileUrl(user).ToString()));
+        id.AddClaim(new Claim(JwtClaimTypes.Profile, profileUrlGenerator.GenerateProfileUrl(user).ToString()));
         if (user.ProfilePicture != null)
-            id.AddClaim(new Claim(JwtClaimTypes.Picture,profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
+            id.AddClaim(new Claim(JwtClaimTypes.Picture, profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt,
             ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
         if (user.Locale != null)
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));
         if (user.TimeZone != null)
             id.AddClaim(new Claim(JwtClaimTypes.ZoneInfo, user.TimeZone));
-        if (user.HumanName != null)
-        {
-            id.AddClaim(new Claim(JwtClaimTypes.Name, user.HumanName.FullName));
-            if (user.HumanName.GivenName != null)
-                id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.HumanName.GivenName));
-            if (user.HumanName.Surname != null)
-                id.AddClaim(new Claim(JwtClaimTypes.FamilyName, user.HumanName.Surname));
-            if (user.HumanName.MiddleName != null)
-                id.AddClaim(new Claim(JwtClaimTypes.MiddleName, user.HumanName.MiddleName));
-        }
+        if (user.FullName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.Name, user.FullName));
+        if (user.GivenName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.GivenName));
+        if (user.FamilyName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.FamilyName, user.FamilyName));
+        if (user.MiddleName != null)
+            id.AddClaim(new Claim(JwtClaimTypes.MiddleName, user.MiddleName));
         if (user.NickName != null)
             id.AddClaim(new Claim(JwtClaimTypes.NickName, user.NickName));
         if (user.Address != null)

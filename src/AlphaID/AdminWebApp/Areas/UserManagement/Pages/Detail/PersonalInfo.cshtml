@@ -1,7 +1,7 @@
 @page
 @model PersonalInfoModel
 @{
-    ViewBag.Title = L["Personal info of {0}", Model.Person.HumanName?.FullName ?? Model.Person.UserName!];
+    ViewBag.Title = L["Personal info of {0}", Model.Person.FullName ?? Model.Person.UserName!];
 }
 @Html.DisplayFor(m => m.Result)
 <h2>@ViewBag.Title</h2>

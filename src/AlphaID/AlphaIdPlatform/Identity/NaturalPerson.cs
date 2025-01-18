@@ -15,6 +15,7 @@ namespace AlphaIdPlatform.Identity;
 /// </summary>
 public class NaturalPerson : ApplicationUser
 {
+
     /// <summary>
     ///     个人经历。
     /// </summary>

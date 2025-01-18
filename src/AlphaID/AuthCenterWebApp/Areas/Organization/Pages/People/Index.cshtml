@@ -47,7 +47,7 @@
                                     </a>
                                 </div>
                                 <div class="col-6 text-truncate">
-                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@(member.Person.HumanName?.FullName ?? member.Person.UserName!)</a>
+                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@(member.Person.FullName ?? member.Person.UserName!)</a>
                                     <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
                                 </div>
                                 <div class="col-2">

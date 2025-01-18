@@ -350,19 +350,6 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     强制更改用户的姓名信息。
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="personName"></param>
-    /// <returns></returns>
-    public Task<IdentityResult> AdminChangePersonNameAsync(T person, HumanNameInfo personName)
-    {
-        person.HumanName = personName;
-        return UpdateAsync(person);
-    }
-
-
-    /// <summary>
     ///     管理员重置用户密码。
     /// </summary>
     /// <param name="person"></param>

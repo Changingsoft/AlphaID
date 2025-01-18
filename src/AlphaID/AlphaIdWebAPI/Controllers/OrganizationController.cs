@@ -94,7 +94,7 @@ public class OrganizationController(
         /// </summary>
         /// <param name="member"></param>
         public MemberModel(OrganizationMember member)
-            : this(member.Person.HumanName?.FullName, member.Person.UserName!, member.Title, member.Department,
+            : this(member.Person.FullName, member.Person.UserName!, member.Title, member.Department,
                 member.Remark)
         {
         }

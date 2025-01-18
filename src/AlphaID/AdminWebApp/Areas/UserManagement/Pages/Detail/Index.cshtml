@@ -2,7 +2,7 @@
 @using AlphaIdPlatform
 @model IndexModel
 @{
-    ViewBag.Title = $"{Model.Data.HumanName?.FullName}";
+    ViewBag.Title = $"{Model.Data.FullName}";
 }
 
 @section head{
@@ -36,19 +36,19 @@
                     <div class="datagrid-item">
                         <div class="datagrid-title">@SL["Surname"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.HumanName.Surname @Model.Data.PhoneticSurname
+                            @Model.Data.FamilyName @Model.Data.PhoneticSurname
                         </div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@SL["Given name"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.HumanName.GivenName @Model.Data.PhoneticGivenName
+                            @Model.Data.GivenName @Model.Data.PhoneticGivenName
                         </div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Display"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.HumanName.FullName
+                            @Model.Data.FullName
                         </div>
                     </div>
                     <div class="datagrid-item">

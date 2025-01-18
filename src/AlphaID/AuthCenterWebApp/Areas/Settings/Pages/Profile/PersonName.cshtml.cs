@@ -30,9 +30,9 @@ public class PersonNameModel(UserManager<NaturalPerson> personManager, RealNameM
 
         Input = new InputMode
         {
-            Surname = person.HumanName?.Surname,
-            MiddleName = person.HumanName?.MiddleName,
-            GivenName = person.HumanName?.GivenName,
+            Surname = person.FamilyName,
+            MiddleName = person.MiddleName,
+            GivenName = person.GivenName,
             PhoneticSurname = person.PhoneticSurname,
             PhoneticGivenName = person.PhoneticGivenName
         };
@@ -44,8 +44,9 @@ public class PersonNameModel(UserManager<NaturalPerson> personManager, RealNameM
         NaturalPerson? person = await personManager.GetUserAsync(User);
         if (person == null) return NotFound();
 
-        person.HumanName = new HumanNameInfo($"{Input.Surname}{Input.GivenName}", Input.Surname, Input.GivenName,
-            Input.MiddleName);
+        person.FamilyName = Input.Surname;
+        person.GivenName = Input.GivenName;
+        person.FullName = $"{Input.Surname}{Input.GivenName}";
         person.PhoneticSurname = Input.PhoneticSurname;
         person.PhoneticGivenName = Input.PhoneticGivenName;
 

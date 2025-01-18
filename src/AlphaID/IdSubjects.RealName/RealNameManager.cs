@@ -43,7 +43,10 @@ where T : ApplicationUser
             return result;
 
         //为 person 应用更改。
-        person.HumanName = authentication.PersonName;
+        person.FamilyName = authentication.PersonName.Surname;
+        person.GivenName = authentication.PersonName.GivenName;
+        person.MiddleName = authentication.PersonName.MiddleName;
+        person.FullName = authentication.PersonName.FullName;
         IdentityResult identityResult = await applicationUserManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
             return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());

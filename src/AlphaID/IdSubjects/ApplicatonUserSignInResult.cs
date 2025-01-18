@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
-namespace AuthCenterWebApp.Services;
+namespace IdSubjects;
 
 /// <summary>
 ///     自然人登录结果。继承自<see cref="SignInResult"></see>
 /// </summary>
-public class PersonSignInResult : SignInResult
+public class ApplicatonUserSignInResult:SignInResult
 {
     /// <summary>
     ///     指示用户必须更改密码。

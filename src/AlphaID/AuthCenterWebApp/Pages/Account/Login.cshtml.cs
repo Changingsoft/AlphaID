@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using AuthCenterWebApp.Services;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +37,7 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
         if (Input.Name != Organization.Name)
         {
-            ModelState.AddModelError("", "ÊäÈëµÄ×éÖ¯Ãû³Æ²»Ò»ÖÂ");
+            ModelState.AddModelError("", "è¾“å…¥çš„ç»„ç»‡åç§°ä¸ä¸€è‡´");
             return Page();
         }
 

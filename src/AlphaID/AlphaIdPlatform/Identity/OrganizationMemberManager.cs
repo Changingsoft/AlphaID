@@ -1,5 +1,6 @@
 using IdSubjects;
 using System.Diagnostics;
+using AlphaIdPlatform.Subjects;
 
 namespace AlphaIdPlatform.Identity;
 

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,7 +15,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -35,7 +36,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostSaveAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
@@ -70,7 +71,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostClearAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();

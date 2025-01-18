@@ -8,6 +8,7 @@ using AlphaIdPlatform.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
+// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 #pragma warning restore IDE0130 // 命名空间与文件夹结构不匹配
 
@@ -24,6 +25,9 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.Services.AddScoped<IUserInRoleStore,UserInRoleStore>();
         builder.Services.AddDbContext<OperationalDbContext>(options);
 
+        builder.AddOrganizationStore<OrganizationStore>();
+        builder.AddOrganizationBankAccountStore<OrganizationBankAccountStore>();
+        builder.AddOrganizationIdentifierStore<OrganizationIdentifierStore>();
         builder.AddOrganizationMemberStore<OrganizationMemberStore>();
         builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
         builder.AddPersonBankAccountStore<ApplicationUserBankAccountStore>();

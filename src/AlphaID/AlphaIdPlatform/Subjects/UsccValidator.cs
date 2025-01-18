@@ -1,6 +1,7 @@
-﻿using IdSubjects.Subjects;
+using IdSubjects;
+using IdSubjects.Subjects;
 
-namespace IdSubjects.Validators;
+namespace AlphaIdPlatform.Subjects;
 
 internal class UsccValidator : OrganizationIdentifierValidator
 {

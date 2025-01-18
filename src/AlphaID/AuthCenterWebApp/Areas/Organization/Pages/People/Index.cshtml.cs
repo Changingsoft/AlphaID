@@ -1,4 +1,5 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ public class IndexModel(
     OrganizationManager organizationManager,
     UserManager<NaturalPerson> personManager) : PageModel
 {
-    public IdSubjects.Organization Organization { get; set; } = null!;
+    public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> Members { get; set; } = [];
 
@@ -21,7 +22,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
@@ -37,7 +38,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
@@ -64,7 +65,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();
@@ -91,7 +92,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out IdSubjects.Organization? organization))
+        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
             return RedirectToPage("/Who");
         if (organization == null)
             return NotFound();

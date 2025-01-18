@@ -1,4 +1,6 @@
-﻿namespace IdSubjects;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     组织的标识符存取接口。

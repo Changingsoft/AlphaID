@@ -1,4 +1,5 @@
-﻿using IdSubjects;
+using AlphaIdPlatform.Subjects;
+using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Components;

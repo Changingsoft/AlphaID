@@ -1,6 +1,6 @@
-﻿using IdSubjects.Validators;
+using IdSubjects;
 
-namespace IdSubjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 /// </summary>

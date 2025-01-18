@@ -1,4 +1,6 @@
-﻿namespace IdSubjects;
+using IdSubjects;
+
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     组织标识符验证器。

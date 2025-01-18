@@ -61,36 +61,7 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
         return this;
     }
 
-    /// <summary>
-    ///     Add generic organization store implementation into the system.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public IdSubjectsBuilder AddOrganizationStore<T>() where T : class, IOrganizationStore
-    {
-        Services.TryAddScoped<IOrganizationStore, T>();
-        return this;
-    }
 
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public IdSubjectsBuilder AddOrganizationBankAccountStore<T>() where T : class, IOrganizationBankAccountStore
-    {
-        Services.TryAddScoped<IOrganizationBankAccountStore, T>();
-        return this;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public IdSubjectsBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
-    {
-        Services.TryAddScoped<IOrganizationIdentifierStore, T>();
-        return this;
-    }
 
     /// <summary>
     /// 使用指定的Profile生成器。

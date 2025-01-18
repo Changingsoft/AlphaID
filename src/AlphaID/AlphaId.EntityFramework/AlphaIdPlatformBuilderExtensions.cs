@@ -28,8 +28,6 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.AddOrganizationStore<OrganizationStore>();
         builder.AddOrganizationMemberStore<OrganizationMemberStore>();
         builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
-        builder.AddPersonBankAccountStore<ApplicationUserBankAccountStore>();
-
 
         return builder;
     }

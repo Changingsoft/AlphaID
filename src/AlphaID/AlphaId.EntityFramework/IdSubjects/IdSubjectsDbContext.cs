@@ -1,8 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Payments;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +9,6 @@ namespace AlphaId.EntityFramework.IdSubjects;
 
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
 {
-    public DbSet<ApplicationUserBankAccount> PersonBankAccounts { get; protected set; } = null!;
-
     public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = null!;
 
     /// <summary>

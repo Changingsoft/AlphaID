@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Payments;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class PaymentsModel(UserManager<NaturalPerson> personManager, ApplicationUserBankAccountManager bankAccountManager) : PageModel
+public class PaymentsModel(UserManager<NaturalPerson> personManager) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
 
@@ -32,9 +31,9 @@ public class PaymentsModel(UserManager<NaturalPerson> personManager, Application
     [MaxLength(150)]
     public string BankName { get; set; } = null!;
 
-    public IEnumerable<ApplicationUserBankAccount> BankAccounts { get; set; } = null!;
+    public IEnumerable<NaturalPersonBankAccount> BankAccounts { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public IdentityResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -42,7 +41,7 @@ public class PaymentsModel(UserManager<NaturalPerson> personManager, Application
         if (result == null)
             return NotFound();
         Person = result;
-        BankAccounts = bankAccountManager.GetBankAccounts(Person);
+        BankAccounts = result.BankAccounts;
         return Page();
     }
 
@@ -52,17 +51,21 @@ public class PaymentsModel(UserManager<NaturalPerson> personManager, Application
         if (person == null)
             return NotFound();
         Person = person;
-        BankAccounts = bankAccountManager.GetBankAccounts(person);
+        BankAccounts = person.BankAccounts;
 
         if (BankAccounts.Any(p => p.AccountNumber == AccountNumber))
             ModelState.AddModelError(nameof(AccountNumber), "此账号已存在。");
         if (!ModelState.IsValid)
             return Page();
 
-        Result = await bankAccountManager.AddBankAccountAsync(person,
-            new BankAccountInfo(AccountNumber, AccountName, BankName));
-        if (Result.Succeeded)
-            BankAccounts = bankAccountManager.GetBankAccounts(person);
+        person.BankAccounts.Add(new NaturalPersonBankAccount()
+        {
+            AccountNumber = AccountNumber,
+            AccountName = AccountName,
+            BankName = BankName,
+        });
+
+        Result = await personManager.UpdateAsync(person);
         return Page();
     }
 
@@ -72,10 +75,14 @@ public class PaymentsModel(UserManager<NaturalPerson> personManager, Application
         if (person == null)
             return NotFound();
         Person = person;
-        BankAccounts = bankAccountManager.GetBankAccounts(person);
+        BankAccounts = person.BankAccounts;
 
-        Result = await bankAccountManager.RemoveBankAccountAsync(person, accountNumber);
-        if (Result.Succeeded) BankAccounts = bankAccountManager.GetBankAccounts(person);
+        var account = person.BankAccounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+        if (account != null)
+        {
+            person.BankAccounts.Remove(account);
+            Result = await personManager.UpdateAsync(person);
+        }
         return Page();
     }
 }

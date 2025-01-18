@@ -1,8 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Payments;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
@@ -83,16 +81,5 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
         Services.TryAddScoped<IJoinOrganizationInvitationStore, T>();
         return this;
     }
-
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public AlphaIdPlatformBuilder AddPersonBankAccountStore<T>() where T : class, IApplicationUserBankAccountStore
-    {
-        Services.TryAddScoped<IApplicationUserBankAccountStore, T>();
-        return this;
-    }
-
 
 }

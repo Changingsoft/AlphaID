@@ -52,4 +52,8 @@ public class NaturalPerson : ApplicationUser
     [MaxLength(60)]
     public virtual string? SearchHint { get; set; }
 
+    /// <summary>
+    /// 银行账户。
+    /// </summary>
+    public virtual ICollection<NaturalPersonBankAccount> BankAccounts { get; set; } = [];
 }

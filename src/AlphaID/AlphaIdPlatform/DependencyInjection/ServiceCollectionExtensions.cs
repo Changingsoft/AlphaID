@@ -1,12 +1,9 @@
 using AlphaIdPlatform.DependencyInjection;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Payments;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
-using IdSubjects.Validators;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
@@ -40,7 +37,6 @@ public static class ServiceCollectionExtensions
         services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
-        services.TryAddScoped<ApplicationUserBankAccountManager>();
 
         services.AddScoped<NaturalPersonService>();
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
@@ -22,6 +22,9 @@
 	  <ProjectReference Include="..\IdSubjects.DirectoryLogon\IdSubjects.DirectoryLogon.csproj" />
 	  <ProjectReference Include="..\IdSubjects.RealName\IdSubjects.RealName.csproj" />
 	  <ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Payments\" />
 	</ItemGroup>
 
 </Project>

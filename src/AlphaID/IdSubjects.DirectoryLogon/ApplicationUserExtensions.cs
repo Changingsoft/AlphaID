@@ -20,9 +20,10 @@ public static class ApplicationUserExtensions
     public static void ApplyTo(this ApplicationUser person, UserPrincipal userPrincipal)
     {
         userPrincipal.EmailAddress = person.Email;
-        userPrincipal.GivenName = person.HumanName.GivenName;
-        userPrincipal.Surname = person.HumanName.Surname;
-        userPrincipal.DisplayName = person.HumanName.FullName;
+        userPrincipal.GivenName = person.GivenName;
+        userPrincipal.Surname = person.FamilyName;
+        userPrincipal.MiddleName = person.MiddleName;
+        userPrincipal.DisplayName = person.Name;
         //userPrincipal.SamAccountName = person.UserName;
 
         var entry = (DirectoryEntry)userPrincipal.GetUnderlyingObject();

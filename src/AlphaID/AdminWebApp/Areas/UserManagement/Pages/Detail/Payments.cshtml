@@ -1,7 +1,7 @@
 @page
 @model PaymentsModel
 @{
-    ViewBag.Title = L["Payments of {0}", Model.Person.HumanName?.FullName ?? Model.Person.UserName!];
+    ViewBag.Title = L["Payments of {0}", Model.Person.Name ?? Model.Person.UserName!];
 }
 <h2>@ViewBag.Title</h2>
 <form method="post" asp-page-handler="RemoveBankAccount">

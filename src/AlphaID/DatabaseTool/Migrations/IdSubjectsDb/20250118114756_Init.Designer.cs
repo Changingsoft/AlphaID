@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20250117022703_Init")]
+    [Migration("20250118114756_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("PasswordHistory");
                 });
 
-            modelBuilder.Entity("IdSubjects.ApplicationUser", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Identity.NaturalPerson", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -89,9 +89,17 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FamilyName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Gender")
                         .HasColumnType("varchar(6)")
                         .HasComment("性别");
+
+                    b.Property<string>("GivenName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Locale")
                         .HasMaxLength(10)
@@ -103,6 +111,14 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NickName")
                         .HasMaxLength(20)
@@ -124,7 +140,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Property<DateTimeOffset?>("PasswordLastSet")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTimeOffset>("PersonWhenChanged")
+                    b.Property<DateTimeOffset?>("PersonWhenChanged")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PhoneNumber")
@@ -144,6 +160,10 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasMaxLength(20)
                         .IsUnicode(false)
                         .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SearchHint")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("SecurityStamp")
                         .HasMaxLength(50)
@@ -189,7 +209,44 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("ApplicationUser", (string)null);
                 });
 
-            modelBuilder.Entity("IdSubjects.Invitations.JoinOrganizationInvitation", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Identity.OrganizationMember", b =>
+                {
+                    b.Property<string>("PersonId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("OrganizationId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Department")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsOwner")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Visibility")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonId", "OrganizationId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("OrganizationMember");
+                });
+
+            modelBuilder.Entity("AlphaIdPlatform.Invitations.JoinOrganizationInvitation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -228,6 +285,33 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.HasKey("Id");
 
                     b.ToTable("JoinOrganizationInvitation");
+                });
+
+            modelBuilder.Entity("AlphaIdPlatform.Payments.ApplicationUserBankAccount", b =>
+                {
+                    b.Property<string>("AccountNumber")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PersonId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("AccountName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("AccountNumber", "PersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("ApplicationUserBankAccount");
                 });
 
             modelBuilder.Entity("IdSubjects.Organization", b =>
@@ -356,43 +440,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("OrganizationIdentifier");
                 });
 
-            modelBuilder.Entity("IdSubjects.OrganizationMember", b =>
-                {
-                    b.Property<string>("PersonId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("OrganizationId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Department")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Remark")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Visibility")
-                        .HasColumnType("int");
-
-                    b.HasKey("PersonId", "OrganizationId");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("OrganizationMember");
-                });
-
             modelBuilder.Entity("IdSubjects.OrganizationUsedName", b =>
                 {
                     b.Property<int>("Id")
@@ -420,33 +467,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("OrganizationUsedName");
-                });
-
-            modelBuilder.Entity("IdSubjects.Payments.ApplicationUserBankAccount", b =>
-                {
-                    b.Property<string>("AccountNumber")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("PersonId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("AccountName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("BankName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("AccountNumber", "PersonId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("ApplicationUserBankAccount");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -610,11 +630,34 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("ApplicationUserToken", (string)null);
                 });
 
-            modelBuilder.Entity("IdSubjects.ApplicationUser", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Identity.NaturalPerson", b =>
                 {
+                    b.OwnsOne("IdSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
+                        {
+                            b1.Property<string>("NaturalPersonId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<byte[]>("Data")
+                                .IsRequired()
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("MimeType")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(100)");
+
+                            b1.HasKey("NaturalPersonId");
+
+                            b1.ToTable("ApplicationUser");
+
+                            b1.WithOwner()
+                                .HasForeignKey("NaturalPersonId");
+                        });
+
                     b.OwnsOne("IdSubjects.AddressInfo", "Address", b1 =>
                         {
-                            b1.Property<string>("ApplicationUserId")
+                            b1.Property<string>("NaturalPersonId")
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("Contact")
@@ -659,81 +702,47 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
-                            b1.HasKey("ApplicationUserId");
+                            b1.HasKey("NaturalPersonId");
 
                             b1.ToTable("ApplicationUser");
 
                             b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.OwnsOne("IdSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<byte[]>("Data")
-                                .IsRequired()
-                                .HasColumnType("varbinary(max)");
-
-                            b1.Property<string>("MimeType")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(100)");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("ApplicationUser");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.OwnsOne("IdSubjects.PersonNameInfo", "PersonName", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("FullName")
-                                .IsRequired()
-                                .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)");
-
-                            b1.Property<string>("GivenName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("MiddleName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("SearchHint")
-                                .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)");
-
-                            b1.Property<string>("Surname")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.HasIndex("FullName");
-
-                            b1.HasIndex("SearchHint");
-
-                            b1.ToTable("ApplicationUser");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
+                                .HasForeignKey("NaturalPersonId");
                         });
 
                     b.Navigation("Address");
 
-                    b.Navigation("PersonName")
+                    b.Navigation("ProfilePicture");
+                });
+
+            modelBuilder.Entity("AlphaIdPlatform.Identity.OrganizationMember", b =>
+                {
+                    b.HasOne("IdSubjects.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProfilePicture");
+                    b.HasOne("AlphaIdPlatform.Identity.NaturalPerson", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("AlphaIdPlatform.Payments.ApplicationUserBankAccount", b =>
+                {
+                    b.HasOne("AlphaIdPlatform.Identity.NaturalPerson", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("IdSubjects.Organization", b =>
@@ -831,25 +840,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("IdSubjects.OrganizationMember", b =>
-                {
-                    b.HasOne("IdSubjects.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IdSubjects.ApplicationUser", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("IdSubjects.OrganizationUsedName", b =>
                 {
                     b.HasOne("IdSubjects.Organization", "Organization")
@@ -859,17 +849,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsRequired();
 
                     b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("IdSubjects.Payments.ApplicationUserBankAccount", b =>
-                {
-                    b.HasOne("IdSubjects.ApplicationUser", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -883,7 +862,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("IdSubjects.ApplicationUser", null)
+                    b.HasOne("AlphaIdPlatform.Identity.NaturalPerson", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -892,7 +871,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("IdSubjects.ApplicationUser", null)
+                    b.HasOne("AlphaIdPlatform.Identity.NaturalPerson", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -907,7 +886,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdSubjects.ApplicationUser", null)
+                    b.HasOne("AlphaIdPlatform.Identity.NaturalPerson", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -916,7 +895,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("IdSubjects.ApplicationUser", null)
+                    b.HasOne("AlphaIdPlatform.Identity.NaturalPerson", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

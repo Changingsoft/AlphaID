@@ -77,6 +77,9 @@ public abstract class RealNameAuthentication
     /// <param name="person"></param>
     public virtual void ApplyToPerson(ApplicationUser person)
     {
-        person.HumanName = PersonName;
+        person.FamilyName = PersonName.Surname;
+        person.GivenName = PersonName.GivenName;
+        person.MiddleName = PersonName.MiddleName;
+        person.Name = PersonName.FullName;
     }
 }

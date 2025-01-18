@@ -39,7 +39,10 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var builder = new ApplicationUserBuilder<NaturalPerson>();
+        if(!ModelState.IsValid)
+            return Page();
+
+        var builder = new ApplicationUserBuilder<NaturalPerson>(Email!, null, null);
         if (Mobile != null)
         {
             if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
@@ -59,13 +62,16 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         var personName = new HumanNameInfo(chinesePersonName.FullName, Input.Surname, Input.GivenName);
 
         builder
-            .SetUserName(UserName)
-            .SetPersonName(personName);
+            .SetUserName(UserName);
         if (Email != null)
             builder.SetEmail(Email);
 
 
         NaturalPerson person = builder.Build();
+        person.FamilyName = personName.Surname;
+        person.GivenName = personName.GivenName;
+        person.Name = personName.FullName;
+        person.MiddleName = personName.MiddleName;
 
         person.DateOfBirth = Input.DateOfBirth.HasValue
             ? DateOnly.FromDateTime(Input.DateOfBirth.Value)

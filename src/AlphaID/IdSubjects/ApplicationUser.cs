@@ -22,12 +22,18 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     /// </summary>
     /// <param name="userName"></param>
-    /// <param name="personName"></param>
-    public ApplicationUser(string userName, HumanNameInfo personName) : this()
+    /// <param name="familyName"></param>
+    /// <param name="givenName"></param>
+    /// <param name="middleName"></param>
+    /// <param name="nickName"></param>
+    public ApplicationUser(string userName, string? familyName, string? givenName, string? middleName = null, string? nickName = null) : this()
     {
         // ReSharper disable VirtualMemberCallInConstructor
         UserName = userName;
-        HumanName = personName;
+        FamilyName = familyName;
+        GivenName = givenName;
+        MiddleName = middleName;
+        NickName = nickName;
         // ReSharper restore VirtualMemberCallInConstructor
     }
 
@@ -49,15 +55,37 @@ public class ApplicationUser : IdentityUser
     public virtual DateTimeOffset WhenChanged { get; set; }
 
     /// <summary>
-    ///     启用或禁用该自然人。如果禁用，自然人不会出现在一般搜索结果中。但可以通过Id查询。
+    ///     启用或禁用该自然人。如果禁用，用户将无法登录。
     /// </summary>
     public virtual bool Enabled { get; set; } = true;
 
     /// <summary>
-    ///     用户名称
+    ///    姓。
     /// </summary>
+    [MaxLength(50)]
     [PersonalData]
-    public virtual HumanNameInfo? HumanName { get; set; }
+    public string? FamilyName { get;set; }
+
+    /// <summary>
+    ///    中间名。
+    /// </summary>
+    [MaxLength(50)]
+    [PersonalData]
+    public string? MiddleName { get;set; }
+
+    /// <summary>
+    ///    名。
+    /// </summary>
+    [MaxLength(50)]
+    [PersonalData]
+    public string? GivenName { get;set; }
+
+    /// <summary>
+    /// 全名。
+    /// </summary>
+    [MaxLength(50)]
+    [PersonalData]
+    public string? Name { get; set; }
 
     /// <summary>
     ///     昵称。

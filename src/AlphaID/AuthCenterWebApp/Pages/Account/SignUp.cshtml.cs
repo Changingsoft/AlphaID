@@ -102,14 +102,18 @@ public class SignUpModel(
             chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
         var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
         string userName = Input.Email ?? phoneNumber.PhoneNumber;
-        var personBuilder = new ApplicationUserBuilder<NaturalPerson>(userName,
-            new HumanNameInfo(chinesePersonName.FullName, chinesePersonName.Surname, chinesePersonName.GivenName));
+        var personBuilder = new ApplicationUserBuilder<NaturalPerson>(userName, chinesePersonName.Surname, chinesePersonName.GivenName);
         personBuilder.SetMobile(phoneNumber, true);
-        personBuilder.UseChinesePersonName(chinesePersonName);
         if (Input.Email != null)
             personBuilder.SetEmail(Input.Email);
 
         NaturalPerson person = personBuilder.Build();
+        person.FamilyName = chinesePersonName.Surname;
+        person.GivenName = chinesePersonName.GivenName;
+        person.Name = chinesePersonName.FullName;
+        person.PhoneticSurname = chinesePersonName.PhoneticSurname;
+        person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
+        person.SearchHint = chinesePersonName.PhoneticName;
 
         person.DateOfBirth = Input.DateOfBirth;
         person.Gender = Input.Sex;

@@ -45,7 +45,7 @@ public class PersonController(
         if (person == null)
             return NotFound();
 
-        return new PersonInfoModel(person.Id, person.HumanName?.FullName, person.SearchHint,
+        return new PersonInfoModel(person.Id, person.Name, person.SearchHint,
             new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString());
     }
 
@@ -95,9 +95,9 @@ public class PersonController(
         }
 
         IQueryable<SuggestedPersonModel> nameSearchSet = personManager.Users
-            .Where(p => p.HumanName!.FullName.StartsWith(q))
-            .OrderBy(p => p.HumanName!.FullName.Length)
-            .ThenBy(p => p.HumanName!.FullName)
+            .Where(p => p.Name!.StartsWith(q))
+            .OrderBy(p => p.Name!.Length)
+            .ThenBy(p => p.Name)
             .Take(10).Select(p => new SuggestedPersonModel(p)
             {
                 AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString()
@@ -106,55 +106,6 @@ public class PersonController(
 
 
         return set;
-    }
-
-    /// <summary>
-    /// 查找某个自然人。
-    /// </summary>
-    /// <remarks>
-    /// 此接口将被废弃。应使用/api/Person/Suggestions。
-    /// </remarks>
-    /// <param name="keywords">关键词。可以通过手机号码、姓名汉字、姓名全拼</param>
-    /// <returns>返回匹配的自然人信息。如果匹配数量超过50条，则只返回前50条。</returns>
-    [Obsolete("不再支持，应使用Suggestions。")]
-    [HttpGet("Search/{keywords}")]
-    public Task<PersonSearchResult> Search(string keywords)
-    {
-        if (string.IsNullOrWhiteSpace(keywords))
-        {
-            return Task.FromResult(new PersonSearchResult([]));
-        }
-
-        keywords = keywords.Trim();
-        if (keywords.Length < 2)
-            return Task.FromResult(new PersonSearchResult([]));
-
-        if (MobilePhoneNumber.TryParse(keywords, out MobilePhoneNumber number))
-        {
-            var result = personManager.Users.SingleOrDefault(p => p.PhoneNumber == number.ToString());
-            if (result == null)
-                return Task.FromResult(new PersonSearchResult([]));
-
-            return Task.FromResult(new PersonSearchResult([new PersonInfoModel(result.Id, result.HumanName?.FullName, result.SearchHint, new Uri(_urlInfo.AuthCenterUrl, $"/People/{result.Id}/Avatar").ToString())]));
-        }
-
-        var pinyinSearchSet = personManager.Users.Where(p => p.SearchHint!.StartsWith(keywords)).OrderBy(p => p.SearchHint!.Length).ThenBy(p => p.SearchHint);
-        int pinyinSearchSetCount = pinyinSearchSet.Count();
-        var pinyinSearchResult = new List<NaturalPerson>(pinyinSearchSet.Take(30));
-
-        var nameSearchSet = personManager.Users.Where(p => p.HumanName!.FullName.StartsWith(keywords)).OrderBy(p => p.HumanName!.FullName.Length).ThenBy(p => p.HumanName!.FullName);
-        int nameSearchSetCount = nameSearchSet.Count();
-        var nameSearchResult = new List<NaturalPerson>(nameSearchSet.Take(30));
-
-        var searchResults = pinyinSearchResult.UnionBy(nameSearchResult, p => p.Id);
-
-        var final = new List<PersonInfoModel>();
-        foreach (var person in searchResults)
-        {
-            final.Add(new PersonInfoModel(person.Id, person.HumanName?.FullName, person.SearchHint, new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString()));
-        }
-
-        return Task.FromResult(new PersonSearchResult(final, pinyinSearchSetCount > 30 || nameSearchSetCount > 30));
     }
 
     /// <summary>
@@ -220,7 +171,7 @@ public class PersonController(
         /// <param name="person"></param>
         public SuggestedPersonModel(NaturalPerson person)
             : this(person.UserName!,
-                person.HumanName?.FullName)
+                person.Name)
         {
         }
     }

@@ -29,7 +29,7 @@
                     <tr>
                         <td>
                             <img src="@Url.Page("Detail/Index", "Photo", new { Anchor = person.Id })" class="img-fluid img-thumbnail" width="36"/>
-                            <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person!.HumanName?.FullName</a>
+                            <a asp-page="Detail/Index" asp-route-anchor="@person.Id">@person!.Name</a>
                         </td>
                         <td>
                             <partial name="_RealNameState" model="person.Id"/>

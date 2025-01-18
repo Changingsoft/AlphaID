@@ -9,31 +9,23 @@ namespace IdSubjects;
 ///     Create a builder use user name and person name info.
 /// </remarks>
 /// <param name="userName"></param>
-/// <param name="personName"></param>
+/// <param name="familyName"></param>
+/// <param name="givenName"></param>
+/// <param name="middleName"></param>
+/// <param name="nickName"></param>
 /// <exception cref="ArgumentException"></exception>
-public class ApplicationUserBuilder<T>(string userName, HumanNameInfo personName)
+public class ApplicationUserBuilder<T>(string userName, string? familyName, string? givenName, string? middleName = null, string? nickName = null)
 where T : ApplicationUser, new()
 {
-    private readonly T _user = new() { UserName = userName, HumanName = personName };
-
-    /// <summary>
-    ///     Initialize a person builder.
-    /// </summary>
-    public ApplicationUserBuilder()
-        : this(string.Empty, string.Empty)
+    private readonly T _user = new()
     {
-    }
-
-    /// <summary>
-    ///     Create a builder use user name and full name
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="fullName"></param>
-    public ApplicationUserBuilder(string userName, string fullName)
-        : this(userName, new HumanNameInfo(fullName))
-    {
-    }
-
+        UserName = userName,
+        FamilyName = familyName,
+        GivenName = givenName,
+        MiddleName = middleName,
+        NickName = nickName
+    };
+    
     /// <summary>
     /// </summary>
     /// <param name="userName"></param>
@@ -44,16 +36,6 @@ where T : ApplicationUser, new()
         if (string.IsNullOrWhiteSpace(userName))
             throw new ArgumentException("User name is blank or empty");
         _user.UserName = userName;
-        return this;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="personName"></param>
-    /// <returns></returns>
-    public ApplicationUserBuilder<T> SetPersonName(HumanNameInfo personName)
-    {
-        _user.HumanName = personName;
         return this;
     }
 

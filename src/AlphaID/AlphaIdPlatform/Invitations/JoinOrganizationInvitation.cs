@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Subjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaIdPlatform.Invitations;

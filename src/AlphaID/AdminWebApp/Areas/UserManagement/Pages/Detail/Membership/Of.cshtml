@@ -1,4 +1,7 @@
-﻿@page "{orgId}"
+@page "{orgId}"
+@using AlphaIdPlatform.Subjects
+@using AspNetWebLib.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model OfModel
 @{
     ViewBag.Title = L["Membership of {0}", Model.Member.Organization.Name];

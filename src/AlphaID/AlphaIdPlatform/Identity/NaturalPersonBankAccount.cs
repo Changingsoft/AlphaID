@@ -36,5 +36,5 @@ public class NaturalPersonBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string PersonId { get; set; } = null!;
+    public string NaturalPersonId { get; set; } = null!;
 }

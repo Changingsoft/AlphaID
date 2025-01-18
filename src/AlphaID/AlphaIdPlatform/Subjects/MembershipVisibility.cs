@@ -1,4 +1,4 @@
-namespace AlphaIdPlatform.Identity;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     Membership Visibility

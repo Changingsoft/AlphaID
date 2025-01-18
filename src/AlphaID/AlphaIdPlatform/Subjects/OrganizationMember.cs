@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AlphaIdPlatform.Subjects;
+using AlphaIdPlatform.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlphaIdPlatform.Identity;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     组织的人员。

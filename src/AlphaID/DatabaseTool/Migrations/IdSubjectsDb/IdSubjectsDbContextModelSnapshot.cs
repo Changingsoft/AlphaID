@@ -311,7 +311,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("ApplicationUserBankAccount");
                 });
 
-            modelBuilder.Entity("IdSubjects.Organization", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.Organization", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -380,42 +380,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("Organization");
                 });
 
-            modelBuilder.Entity("IdSubjects.OrganizationBankAccount", b =>
-                {
-                    b.Property<string>("AccountNumber")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("OrganizationId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("AccountName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("BankName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("Default")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Usage")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("AccountNumber", "OrganizationId");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("OrganizationBankAccount");
-                });
-
-            modelBuilder.Entity("IdSubjects.OrganizationIdentifier", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.OrganizationIdentifier", b =>
                 {
                     b.Property<string>("Value")
                         .HasMaxLength(30)
@@ -437,7 +402,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.ToTable("OrganizationIdentifier");
                 });
 
-            modelBuilder.Entity("IdSubjects.OrganizationUsedName", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.OrganizationUsedName", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -714,7 +679,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
             modelBuilder.Entity("AlphaIdPlatform.Identity.OrganizationMember", b =>
                 {
-                    b.HasOne("IdSubjects.Organization", "Organization")
+                    b.HasOne("AlphaIdPlatform.Subjects.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -742,9 +707,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("IdSubjects.Organization", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.Organization", b =>
                 {
-                    b.OwnsOne("IdSubjects.FapiaoInfo", "Fapiao", b1 =>
+                    b.OwnsOne("AlphaIdPlatform.Subjects.FapiaoInfo", "Fapiao", b1 =>
                         {
                             b1.Property<string>("OrganizationId")
                                 .HasColumnType("varchar(50)");
@@ -810,14 +775,54 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("OrganizationId");
                         });
 
+                    b.OwnsMany("AlphaIdPlatform.Subjects.OrganizationBankAccount", "BankAccounts", b1 =>
+                        {
+                            b1.Property<string>("AccountNumber")
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("AccountName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("BankName")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<bool>("Default")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("OrganizationId")
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("Usage")
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)");
+
+                            b1.HasKey("AccountNumber");
+
+                            b1.HasIndex("OrganizationId");
+
+                            b1.ToTable("OrganizationBankAccount");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrganizationId");
+                        });
+
+                    b.Navigation("BankAccounts");
+
                     b.Navigation("Fapiao");
 
                     b.Navigation("ProfilePicture");
                 });
 
-            modelBuilder.Entity("IdSubjects.OrganizationBankAccount", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.OrganizationIdentifier", b =>
                 {
-                    b.HasOne("IdSubjects.Organization", "Organization")
+                    b.HasOne("AlphaIdPlatform.Subjects.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -826,20 +831,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("IdSubjects.OrganizationIdentifier", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.OrganizationUsedName", b =>
                 {
-                    b.HasOne("IdSubjects.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("IdSubjects.OrganizationUsedName", b =>
-                {
-                    b.HasOne("IdSubjects.Organization", "Organization")
+                    b.HasOne("AlphaIdPlatform.Subjects.Organization", "Organization")
                         .WithMany("UsedNames")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -899,7 +893,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IdSubjects.Organization", b =>
+            modelBuilder.Entity("AlphaIdPlatform.Subjects.Organization", b =>
                 {
                     b.Navigation("UsedNames");
                 });

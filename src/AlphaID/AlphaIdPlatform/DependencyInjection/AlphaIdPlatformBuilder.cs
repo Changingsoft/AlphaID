@@ -66,16 +66,6 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public AlphaIdPlatformBuilder AddOrganizationBankAccountStore<T>() where T : class, IOrganizationBankAccountStore
-    {
-        Services.TryAddScoped<IOrganizationBankAccountStore, T>();
-        return this;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
     public AlphaIdPlatformBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
     {
         Services.TryAddScoped<IOrganizationIdentifierStore, T>();

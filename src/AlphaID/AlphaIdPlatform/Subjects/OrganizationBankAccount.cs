@@ -7,40 +7,16 @@ namespace AlphaIdPlatform.Subjects;
 /// <summary>
 ///     银行账户。
 /// </summary>
+[Owned]
 [Table("OrganizationBankAccount")]
-[PrimaryKey(nameof(AccountNumber), nameof(OrganizationId))]
 public class OrganizationBankAccount
 {
-    /// <summary>
-    /// </summary>
-    protected OrganizationBankAccount()
-    {
-    }
-
-    /// <summary>
-    ///     通过银行信息初始化银行账号。
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <param name="accountNumber"></param>
-    /// <param name="accountName"></param>
-    /// <param name="bankName"></param>
-    internal OrganizationBankAccount(Organization organization,
-        string accountNumber,
-        string accountName,
-        string? bankName)
-    {
-        AccountNumber = accountNumber;
-        AccountName = accountName;
-        BankName = bankName;
-        Organization = organization;
-        OrganizationId = organization.Id;
-    }
-
     /// <summary>
     ///     账号
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
+    [Key]
     public string AccountNumber { get; set; } = null!;
 
     /// <summary>
@@ -62,17 +38,12 @@ public class OrganizationBankAccount
 
     /// <summary>
     /// </summary>
-    public bool Default { get; protected internal set; } = false;
+    public bool Default { get; set; } = false;
 
     /// <summary>
     ///     主体Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; protected set; } = null!;
-
-    /// <summary>
-    /// </summary>
-    [ForeignKey(nameof(OrganizationId))]
-    public Organization Organization { get; protected set; } = null!;
+    public string OrganizationId { get; set; } = null!;
 }

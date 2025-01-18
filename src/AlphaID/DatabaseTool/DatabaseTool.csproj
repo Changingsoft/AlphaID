@@ -48,7 +48,6 @@
 	<ItemGroup>
 		<Folder Include="Migrations\AdminWebAppDb\" />
 		<Folder Include="Migrations\DirectoryLogonDb\" />
-		<Folder Include="Migrations\IdSubjectsDb\" />
 		<Folder Include="Migrations\PersistedGrantDb\" />
 		<Folder Include="Migrations\RealNameDb\" />
 		<Folder Include="TestingData\AdminWebAppData\" />

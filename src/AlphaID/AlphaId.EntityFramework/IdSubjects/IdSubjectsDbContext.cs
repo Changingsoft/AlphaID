@@ -22,8 +22,6 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
 
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = null!;
 
-    public DbSet<OrganizationBankAccount> OrganizationBankAccounts { get; protected set; } = null!;
-
     public DbSet<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = null!;
 
     public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = null!;

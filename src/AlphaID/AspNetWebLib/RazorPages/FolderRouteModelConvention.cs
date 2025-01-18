@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace AlphaIdPlatform.RazorPages;
+namespace AspNetWebLib.RazorPages;
 
 /// <summary>
 ///     基于文件夹路径的路由模型约定。

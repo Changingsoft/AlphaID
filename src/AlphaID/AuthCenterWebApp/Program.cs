@@ -6,7 +6,7 @@ using AlphaIdPlatform;
 using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using AlphaIdPlatform.RazorPages;
+using AspNetWebLib.RazorPages;
 using AuthCenterWebApp;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;

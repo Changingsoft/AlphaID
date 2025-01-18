@@ -1,6 +1,6 @@
-﻿using AlphaIdPlatform.RazorPages;
+﻿using AspNetWebLib.RazorPages;
 
-namespace AlphaIdPlatform.Tests;
+namespace AspNetWebLib.Tests;
 
 public class FolderRouteModelConventionTest
 {

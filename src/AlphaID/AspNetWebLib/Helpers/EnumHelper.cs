@@ -2,7 +2,7 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace AlphaIdPlatform.Helpers;
+namespace AspNetWebLib.Helpers;
 
 /// <summary>
 ///     适用于枚举的帮助器类。

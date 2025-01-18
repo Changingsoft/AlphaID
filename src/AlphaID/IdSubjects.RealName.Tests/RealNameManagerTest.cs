@@ -6,7 +6,7 @@ namespace IdSubjects.RealName.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly ApplicationUser _person = new("zhangsan", "zhang", "san") { FullName = "张小三" };
+    private readonly ApplicationUser _person = new("zhangsan", "zhang", "san") { Name = "张小三" };
 
     [Fact]
     public async Task AddAuthentication()
@@ -36,6 +36,6 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
         IdOperationResult result = await realManager.AuthenticateAsync(_person, authentication);
 
         Assert.True(result.Succeeded);
-        Assert.Equal("张三", _person.FullName);
+        Assert.Equal("张三", _person.Name);
     }
 }

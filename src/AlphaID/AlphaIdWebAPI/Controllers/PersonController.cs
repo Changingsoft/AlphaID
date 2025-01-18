@@ -45,7 +45,7 @@ public class PersonController(
         if (person == null)
             return NotFound();
 
-        return new PersonInfoModel(person.Id, person.FullName, person.SearchHint,
+        return new PersonInfoModel(person.Id, person.Name, person.SearchHint,
             new Uri(_urlInfo.AuthCenterUrl, $"/People/{person.Id}/Avatar").ToString());
     }
 
@@ -95,9 +95,9 @@ public class PersonController(
         }
 
         IQueryable<SuggestedPersonModel> nameSearchSet = personManager.Users
-            .Where(p => p.FullName!.StartsWith(q))
-            .OrderBy(p => p.FullName!.Length)
-            .ThenBy(p => p.FullName)
+            .Where(p => p.Name!.StartsWith(q))
+            .OrderBy(p => p.Name!.Length)
+            .ThenBy(p => p.Name)
             .Take(10).Select(p => new SuggestedPersonModel(p)
             {
                 AvatarUrl = new Uri(_urlInfo.AuthCenterUrl, $"/People/{p.Id}/Avatar").ToString()
@@ -171,7 +171,7 @@ public class PersonController(
         /// <param name="person"></param>
         public SuggestedPersonModel(NaturalPerson person)
             : this(person.UserName!,
-                person.FullName)
+                person.Name)
         {
         }
     }

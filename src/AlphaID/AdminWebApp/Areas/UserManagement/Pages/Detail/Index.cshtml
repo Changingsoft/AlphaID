@@ -2,7 +2,7 @@
 @using AlphaIdPlatform
 @model IndexModel
 @{
-    ViewBag.Title = $"{Model.Data.FullName}";
+    ViewBag.Title = $"{Model.Data.Name}";
 }
 
 @section head{
@@ -48,7 +48,7 @@
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Display"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.FullName
+                            @Model.Data.Name
                         </div>
                     </div>
                     <div class="datagrid-item">

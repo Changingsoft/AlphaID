@@ -91,6 +91,6 @@ public class ChineseIdCardDocument : IdentityDocument
     internal override void ApplyRealName(ApplicationUser person)
     {
         //todo 应用时要考虑姓氏和名字拆分？
-        person.FullName = Name;
+        person.Name = Name;
     }
 }

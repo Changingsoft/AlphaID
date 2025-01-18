@@ -36,7 +36,7 @@ public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicati
             new ChinesePersonName(Input.Surname, Input.GivenName, Input.PinyinSurname, Input.PinyinGivenName);
         person.FamilyName = chinesePersonName.Surname;
         person.GivenName = chinesePersonName.GivenName;
-        person.FullName = chinesePersonName.FullName;
+        person.Name = chinesePersonName.FullName;
         person.PhoneticSurname = chinesePersonName.PhoneticSurname;
         person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
         person.SearchHint = chinesePersonName.PhoneticName;

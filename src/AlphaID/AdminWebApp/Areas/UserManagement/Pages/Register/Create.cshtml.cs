@@ -70,7 +70,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         NaturalPerson person = builder.Build();
         person.FamilyName = personName.Surname;
         person.GivenName = personName.GivenName;
-        person.FullName = personName.FullName;
+        person.Name = personName.FullName;
         person.MiddleName = personName.MiddleName;
 
         person.DateOfBirth = Input.DateOfBirth.HasValue

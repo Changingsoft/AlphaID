@@ -80,6 +80,6 @@ public abstract class RealNameAuthentication
         person.FamilyName = PersonName.Surname;
         person.GivenName = PersonName.GivenName;
         person.MiddleName = PersonName.MiddleName;
-        person.FullName = PersonName.FullName;
+        person.Name = PersonName.FullName;
     }
 }

@@ -85,7 +85,7 @@ public class ApplicationUser : IdentityUser
     /// </summary>
     [MaxLength(50)]
     [PersonalData]
-    public string? FullName { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     ///     昵称。

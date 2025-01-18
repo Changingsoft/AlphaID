@@ -34,7 +34,7 @@ public class CreateDirectoryAccountModel(
             EntryName = accountName,
             Surname = person.FamilyName!,
             GivenName = person.GivenName!,
-            DisplayName = person.FullName!,
+            DisplayName = person.Name!,
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName,
             PinyinDisplayName = person.PhoneticSurname + person.PhoneticGivenName,

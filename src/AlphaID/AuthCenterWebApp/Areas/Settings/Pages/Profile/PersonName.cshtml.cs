@@ -46,7 +46,7 @@ public class PersonNameModel(UserManager<NaturalPerson> personManager, RealNameM
 
         person.FamilyName = Input.Surname;
         person.GivenName = Input.GivenName;
-        person.FullName = $"{Input.Surname}{Input.GivenName}";
+        person.Name = $"{Input.Surname}{Input.GivenName}";
         person.PhoneticSurname = Input.PhoneticSurname;
         person.PhoneticGivenName = Input.PhoneticGivenName;
 

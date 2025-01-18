@@ -110,7 +110,7 @@ public class SignUpModel(
         NaturalPerson person = personBuilder.Build();
         person.FamilyName = chinesePersonName.Surname;
         person.GivenName = chinesePersonName.GivenName;
-        person.FullName = chinesePersonName.FullName;
+        person.Name = chinesePersonName.FullName;
         person.PhoneticSurname = chinesePersonName.PhoneticSurname;
         person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
         person.SearchHint = chinesePersonName.PhoneticName;

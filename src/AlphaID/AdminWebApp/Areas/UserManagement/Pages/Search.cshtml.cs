@@ -24,8 +24,8 @@ public class SearchModel(ApplicationUserManager<NaturalPerson> personManager) : 
         var pinyinResult = new List<NaturalPerson>(personManager.Users
             .Where(p => p.SearchHint!.StartsWith(q)).OrderBy(p => p.SearchHint!.Length)
             .ThenBy(p => p.SearchHint));
-        var nameResult = new List<NaturalPerson>(personManager.Users.Where(p => p.FullName!.StartsWith(q))
-            .OrderBy(p => p.FullName!.Length).ThenBy(p => p.FullName));
+        var nameResult = new List<NaturalPerson>(personManager.Users.Where(p => p.Name!.StartsWith(q))
+            .OrderBy(p => p.Name!.Length).ThenBy(p => p.Name));
 
         Results = pinyinResult.UnionBy(nameResult, p => p.Id);
         return Page();

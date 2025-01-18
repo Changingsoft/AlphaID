@@ -46,7 +46,7 @@ where T : ApplicationUser
         person.FamilyName = authentication.PersonName.Surname;
         person.GivenName = authentication.PersonName.GivenName;
         person.MiddleName = authentication.PersonName.MiddleName;
-        person.FullName = authentication.PersonName.FullName;
+        person.Name = authentication.PersonName.FullName;
         IdentityResult identityResult = await applicationUserManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
             return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());

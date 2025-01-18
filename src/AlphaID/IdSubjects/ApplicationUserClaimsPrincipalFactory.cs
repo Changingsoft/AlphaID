@@ -33,8 +33,8 @@ public class ApplicationUserClaimsPrincipalFactory<T>(UserManager<T> userManager
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));
         if (user.TimeZone != null)
             id.AddClaim(new Claim(JwtClaimTypes.ZoneInfo, user.TimeZone));
-        if (user.FullName != null)
-            id.AddClaim(new Claim(JwtClaimTypes.Name, user.FullName));
+        if (user.Name != null)
+            id.AddClaim(new Claim(JwtClaimTypes.Name, user.Name));
         if (user.GivenName != null)
             id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.GivenName));
         if (user.FamilyName != null)

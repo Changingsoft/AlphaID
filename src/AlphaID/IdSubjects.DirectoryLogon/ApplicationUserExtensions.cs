@@ -23,7 +23,7 @@ public static class ApplicationUserExtensions
         userPrincipal.GivenName = person.GivenName;
         userPrincipal.Surname = person.FamilyName;
         userPrincipal.MiddleName = person.MiddleName;
-        userPrincipal.DisplayName = person.FullName;
+        userPrincipal.DisplayName = person.Name;
         //userPrincipal.SamAccountName = person.UserName;
 
         var entry = (DirectoryEntry)userPrincipal.GetUnderlyingObject();

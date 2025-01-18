@@ -42,6 +42,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaId.PlatformServices\AlphaId.PlatformServices.csproj" />
+		<ProjectReference Include="..\AspNetWebLib\AspNetWebLib.csproj" />
 		<ProjectReference Include="..\IdSubjects.DirectoryLogon\IdSubjects.DirectoryLogon.csproj" />
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />

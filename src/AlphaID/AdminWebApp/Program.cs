@@ -15,7 +15,7 @@ using AlphaIdPlatform.Admin;
 using AlphaIdPlatform.Debugging;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using AlphaIdPlatform.RazorPages;
+using AspNetWebLib.RazorPages;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;

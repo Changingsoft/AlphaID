@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AlphaIdPlatform.Helpers;
+using AspNetWebLib.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace AlphaIdPlatform.Tests;
+namespace AspNetWebLib.Tests;
 
 public class EnumHelperTest
 {

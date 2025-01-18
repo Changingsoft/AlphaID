@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Identifiers;
 
-public class IndexModel(OrganizationManager organizationManager, OrganizationIdentifierManager identifierManager)
+public class IndexModel(OrganizationManager organizationManager)
     : PageModel
 {
     public IEnumerable<OrganizationIdentifier> Identifiers { get; set; } = [];
@@ -18,7 +18,7 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationIde
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
-        Identifiers = identifierManager.GetIdentifiers(organization);
+        Identifiers = organization.OrganizationIdentifiers;
         return Page();
     }
 
@@ -28,7 +28,7 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationIde
             return RedirectToPage("/Who", new { anchor });
         if (organization == null)
             return NotFound();
-        Identifiers = identifierManager.GetIdentifiers(organization);
+        Identifiers = organization.OrganizationIdentifiers;
 
         string[] keyPart = idKey.Split('|');
         var type = Enum.Parse<OrganizationIdentifierType>(keyPart[0]);
@@ -36,9 +36,9 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationIde
         if (identifier == null)
             return Page();
 
-        Result = await identifierManager.RemoveIdentifierAsync(identifier);
-        if (Result.Succeeded) Identifiers = identifierManager.GetIdentifiers(organization);
+        organization.OrganizationIdentifiers.Remove(identifier);
 
+        Result = await organizationManager.UpdateAsync(organization);
         return Page();
     }
 }

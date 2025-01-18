@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;

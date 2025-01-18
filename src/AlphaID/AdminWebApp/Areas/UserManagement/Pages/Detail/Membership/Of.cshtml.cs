@@ -5,6 +5,7 @@ using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using AlphaIdPlatform.Subjects;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 

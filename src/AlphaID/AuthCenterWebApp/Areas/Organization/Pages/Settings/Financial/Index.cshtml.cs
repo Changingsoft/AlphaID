@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
-public class IndexModel(OrganizationManager organizationManager, OrganizationBankAccountManager bankAccountManager)
-    : PageModel
+public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
     public AlphaIdPlatform.Subjects.Organization Data { get; set; } = null!;
 
-    public IEnumerable<OrganizationBankAccount> BankAccounts { get; set; } = [];
+    public ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
     public IdOperationResult? Result { get; set; }
 
@@ -21,7 +20,7 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
         if (organization == null)
             return NotFound();
         Data = organization;
-        BankAccounts = bankAccountManager.GetBankAccounts(Data);
+        BankAccounts = organization.BankAccounts;
         return Page();
     }
 
@@ -32,14 +31,14 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
         if (organization == null)
             return NotFound();
         Data = organization;
-        BankAccounts = bankAccountManager.GetBankAccounts(Data);
+        BankAccounts = organization.BankAccounts;
 
         OrganizationBankAccount? bankAccount = BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null) return Page();
 
-        Result = await bankAccountManager.RemoveAsync(bankAccount);
-        if (Result.Succeeded)
-            BankAccounts = bankAccountManager.GetBankAccounts(Data);
+        BankAccounts.Remove(bankAccount);
+
+        Result = await organizationManager.UpdateAsync(organization);
         return Page();
     }
 
@@ -49,14 +48,17 @@ public class IndexModel(OrganizationManager organizationManager, OrganizationBan
         if (data == null)
             return NotFound();
         Data = data;
-        BankAccounts = bankAccountManager.GetBankAccounts(data);
+        BankAccounts = data.BankAccounts;
 
         OrganizationBankAccount? bankAccount = BankAccounts.FirstOrDefault(b => b.AccountNumber == accountNumber);
         if (bankAccount == null) return Page();
 
-        Result = await bankAccountManager.SetDefault(bankAccount);
-        if (Result.Succeeded)
-            BankAccounts = bankAccountManager.GetBankAccounts(data);
+        var oldAccount = BankAccounts.FirstOrDefault(b => b.Default);
+        if (oldAccount != null)
+            oldAccount.Default = false;
+        bankAccount.Default = true;
+
+        Result = await organizationManager.UpdateAsync(data);
         return Page();
     }
 }

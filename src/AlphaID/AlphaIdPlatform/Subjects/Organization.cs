@@ -132,6 +132,16 @@ public class Organization
     public virtual ICollection<OrganizationUsedName> UsedNames { get; protected set; } = [];
 
     /// <summary>
+    ///    银行账号。
+    /// </summary>
+    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
+
+    /// <summary>
+    /// 组织标识。
+    /// </summary>
+    public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; set; } = [];
+
+    /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>

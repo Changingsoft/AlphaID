@@ -26,12 +26,8 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.Services.AddDbContext<OperationalDbContext>(options);
 
         builder.AddOrganizationStore<OrganizationStore>();
-        builder.AddOrganizationBankAccountStore<OrganizationBankAccountStore>();
-        builder.AddOrganizationIdentifierStore<OrganizationIdentifierStore>();
         builder.AddOrganizationMemberStore<OrganizationMemberStore>();
         builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
-        builder.AddPersonBankAccountStore<ApplicationUserBankAccountStore>();
-
 
         return builder;
     }

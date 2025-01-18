@@ -6,6 +6,7 @@ namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 /// </summary>
+[Owned]
 [Table("OrganizationIdentifier")]
 [PrimaryKey(nameof(Value), nameof(Type))]
 public class OrganizationIdentifier
@@ -15,11 +16,6 @@ public class OrganizationIdentifier
     [MaxLength(50)]
     [Unicode(false)]
     public string OrganizationId { get; set; } = null!;
-
-    /// <summary>
-    /// </summary>
-    [ForeignKey(nameof(OrganizationId))]
-    public virtual Organization Organization { get; set; } = null!;
 
     /// <summary>
     /// </summary>

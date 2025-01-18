@@ -2,14 +2,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlphaIdPlatform.Subjects;
+namespace AlphaIdPlatform.Identity;
 
 /// <summary>
 ///     银行账户。
 /// </summary>
 [Owned]
-[Table("OrganizationBankAccount")]
-public class OrganizationBankAccount
+[Table("NaturalPersonBankAccount")]
+public class NaturalPersonBankAccount
 {
     /// <summary>
     ///     账号
@@ -23,7 +23,7 @@ public class OrganizationBankAccount
     ///     户名
     /// </summary>
     [MaxLength(100)]
-    public string AccountName { get; set; } = null!;
+    public string? AccountName { get; set; }
 
     /// <summary>
     ///     开户行
@@ -32,18 +32,9 @@ public class OrganizationBankAccount
     public string? BankName { get; set; }
 
     /// <summary>
-    /// </summary>
-    [MaxLength(20)]
-    public string? Usage { get; set; }
-
-    /// <summary>
-    /// </summary>
-    public bool Default { get; set; } = false;
-
-    /// <summary>
     ///     主体Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    public string OrganizationId { get; set; } = null!;
+    public string NaturalPersonId { get; set; } = null!;
 }

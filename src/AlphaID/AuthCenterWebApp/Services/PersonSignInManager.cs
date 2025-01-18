@@ -41,9 +41,9 @@ public class PersonSignInManager(
         if (!result.Succeeded) return result;
 
         //如果密码验证成功，则检查是否需要强制修改密码。
-        if (userManager.Options.Password.EnablePassExpires)
+        if (userManager.PasswordLifetime.EnablePassExpires)
             if (user.PasswordLastSet == null || user.PasswordLastSet.Value <
-                TimeProvider.GetUtcNow().AddDays(0 - userManager.Options.Password.PasswordExpiresDay))
+                TimeProvider.GetUtcNow().AddDays(0 - userManager.PasswordLifetime.PasswordExpiresDay))
             {
                 ClaimsPrincipal principal = GenerateMustChangePasswordPrincipal(user);
                 await base.SignOutAsync();

@@ -1,8 +1,5 @@
-using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Payments;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
@@ -62,27 +59,6 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
         return this;
     }
 
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public AlphaIdPlatformBuilder AddOrganizationBankAccountStore<T>() where T : class, IOrganizationBankAccountStore
-    {
-        Services.TryAddScoped<IOrganizationBankAccountStore, T>();
-        return this;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public AlphaIdPlatformBuilder AddOrganizationIdentifierStore<T>() where T : class, IOrganizationIdentifierStore
-    {
-        Services.TryAddScoped<IOrganizationIdentifierStore, T>();
-        return this;
-    }
-
-
 
     /// <summary>
     ///     Add organization member store implementation into the system.
@@ -104,16 +80,5 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
         Services.TryAddScoped<IJoinOrganizationInvitationStore, T>();
         return this;
     }
-
-    /// <summary>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public AlphaIdPlatformBuilder AddPersonBankAccountStore<T>() where T : class, IApplicationUserBankAccountStore
-    {
-        Services.TryAddScoped<IApplicationUserBankAccountStore, T>();
-        return this;
-    }
-
 
 }

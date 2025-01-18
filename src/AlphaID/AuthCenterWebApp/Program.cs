@@ -12,11 +12,10 @@ using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using Duende.IdentityServer.EntityFramework.Stores;
-using Duende.IdentityServer.Services;
 using IdentityModel;
 using IdSubjects;
 using IdSubjects.ChineseName;
-using IdSubjects.DependencyInjection;
+using IdSubjects.SecurityAuditing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -26,6 +25,7 @@ using Newtonsoft.Json;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
+using IEventSink = Duende.IdentityServer.Services.IEventSink;
 
 // ReSharper disable All
 
@@ -128,8 +128,10 @@ platform.AddEntityFramework(options =>
     });
 });
 
-builder.Services.Configure<IdSubjectsOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
-builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdSubjectsOptions"));
+builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
+builder.Services.Configure<PasswordLifetimeOptions>(builder.Configuration.GetSection("PasswordLifetimeOptions"));
+builder.Services.Configure<AuditEventsOptions>(builder.Configuration.GetSection("AuditEventsOptions"));
+
 //配置ProfileUrl
 builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()

@@ -1,9 +1,6 @@
 using System.Security.Claims;
-using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
-using IdentityModel;
 using IdSubjects;
-using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthCenterWebApp.Services;

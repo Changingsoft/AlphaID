@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
-public class NewBankAccountModel(
-    OrganizationManager organizationManager,
-    OrganizationBankAccountManager bankAccountManager) : PageModel
+public class NewBankAccountModel(OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -35,8 +33,16 @@ public class NewBankAccountModel(
         if (!ModelState.IsValid)
             return Page();
 
-        Result = await bankAccountManager.AddAsync(organization, Input.AccountNumber, Input.AccountName,
-            Input.BankName, Input.Usage, Input.SetDefault);
+        organization.BankAccounts.Add(new OrganizationBankAccount()
+        {
+            AccountName = Input.AccountName,
+            AccountNumber = Input.AccountNumber,
+            BankName = Input.BankName,
+            Usage = Input.Usage,
+        });
+        //todo 没有使用Input.SetDefault
+
+        Result = await organizationManager.UpdateAsync(organization);
 
         if (!Result.Succeeded)
             return Page();

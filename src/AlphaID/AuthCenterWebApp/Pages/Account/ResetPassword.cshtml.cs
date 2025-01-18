@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using AlphaIdPlatform.Identity;
-using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

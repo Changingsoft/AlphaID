@@ -107,7 +107,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
-        manager.Options.Password.RememberPasswordHistory = 1;
+        manager.PasswordLifetime.RememberPasswordHistory = 1;
 
         await manager.CreateAsync(_person, "Pass123$");
 

@@ -1,4 +1,3 @@
-using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Subjects;
 using IdSubjects;

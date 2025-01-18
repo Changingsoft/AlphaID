@@ -1,8 +1,8 @@
 using IdSubjects;
 using System.Diagnostics;
-using AlphaIdPlatform.Subjects;
+using AlphaIdPlatform.Identity;
 
-namespace AlphaIdPlatform.Identity;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 ///     Organization Member Manager.

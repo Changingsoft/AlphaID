@@ -1,4 +1,4 @@
-﻿namespace AspNetWebLib;
+namespace AspNetWebLib;
 
 /// <summary>
 ///     针对日期时间的扩展方法。

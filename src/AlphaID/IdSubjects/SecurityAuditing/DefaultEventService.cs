@@ -1,4 +1,3 @@
-﻿using IdSubjects.DependencyInjection;
 using IdSubjects.SecurityAuditing.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -14,13 +13,13 @@ namespace IdSubjects.SecurityAuditing;
 /// <param name="options">The options.</param>
 /// <param name="context">The context.</param>
 /// <param name="sink">The sink.</param>
-public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpContextAccessor context, IEventSink sink)
+public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpContextAccessor context, IEventSink sink)
     : IEventService
 {
     /// <summary>
     ///     The options
     /// </summary>
-    protected IdSubjectsOptions Options { get; } = options.Value;
+    protected AuditEventsOptions Options { get; } = options.Value;
 
     /// <summary>
     ///     The context
@@ -59,10 +58,10 @@ public class DefaultEventService(IOptions<IdSubjectsOptions> options, IHttpConte
     {
         return evtType switch
         {
-            AuditLogEventTypes.Failure => Options.Events.RaiseFailureEvents,
-            AuditLogEventTypes.Information => Options.Events.RaiseInformationEvents,
-            AuditLogEventTypes.Success => Options.Events.RaiseSuccessEvents,
-            AuditLogEventTypes.Error => Options.Events.RaiseErrorEvents,
+            AuditLogEventTypes.Failure => Options.RaiseFailureEvents,
+            AuditLogEventTypes.Information => Options.RaiseInformationEvents,
+            AuditLogEventTypes.Success => Options.RaiseSuccessEvents,
+            AuditLogEventTypes.Error => Options.RaiseErrorEvents,
             _ => throw new ArgumentOutOfRangeException(nameof(evtType))
         };
     }

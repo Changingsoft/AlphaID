@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -52,4 +47,8 @@ public class NaturalPerson : ApplicationUser
     [MaxLength(60)]
     public virtual string? SearchHint { get; set; }
 
+    /// <summary>
+    /// 银行账户。
+    /// </summary>
+    public virtual ICollection<NaturalPersonBankAccount> BankAccounts { get; set; } = [];
 }

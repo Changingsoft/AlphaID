@@ -2,7 +2,6 @@
 
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

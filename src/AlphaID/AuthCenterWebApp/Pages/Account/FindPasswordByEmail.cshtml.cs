@@ -4,7 +4,6 @@ using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

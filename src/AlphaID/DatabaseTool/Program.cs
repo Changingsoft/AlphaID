@@ -2,6 +2,7 @@ using DatabaseTool;
 using DatabaseTool.Migrators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
 
 IHostBuilder builder = Host.CreateDefaultBuilder(args);
 builder
@@ -62,19 +63,31 @@ builder
 IHost host = builder.Build();
 
 await using AsyncServiceScope scope = host.Services.CreateAsyncScope();
+var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+var environment = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
+var connectionString = configuration.GetConnectionString("FertDataConnection");
 Console.WriteLine(@"即将开始执行数据库工具。您将使用下列选项来处理数据：");
+Console.WriteLine($@"- 环境: {environment.EnvironmentName}");
+Console.WriteLine($@"- 数据库连接字符串: {connectionString}");
 Console.WriteLine($@"- 删除数据库: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.DropDatabase}");
 Console.WriteLine($@"- 添加测试数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.AddTestingData}");
-Console.WriteLine(@"此操作不可逆，请务必核实设置是否正确，并在操作前备份数据库。是否继续（y/N）");
-if (Console.ReadKey().Key != ConsoleKey.Y)
+if (!args.Contains("NonInteractive", StringComparer.OrdinalIgnoreCase))
 {
-    Console.WriteLine(@"用户取消了操作。按任意键退出...");
-    Console.ReadKey();
-    return;
+    Console.WriteLine(@"此操作不可逆，请务必核实设置是否正确，并在操作前备份数据库。是否继续（y/N）");
+    if (Console.ReadKey(true).Key != ConsoleKey.Y)
+    {
+        Console.WriteLine(@"用户取消了操作。按任意键退出...");
+        Console.ReadKey(true);
+        return;
+    }
 }
+Console.WriteLine(@"数据库工具开始执行...");
 
 var executor = scope.ServiceProvider.GetRequiredService<DatabaseExecutor>();
 await executor.ExecuteAsync();
 
-Console.WriteLine(@"数据库工具已执行完成。按任意键退出...");
-Console.ReadKey();
+if (!args.Contains("NonInteractive", StringComparer.OrdinalIgnoreCase))
+{
+    Console.WriteLine(@"数据库工具已执行完成。按任意键退出...");
+    Console.ReadKey(true);
+}

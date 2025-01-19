@@ -11,7 +11,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
@@ -36,7 +36,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
         BankAccounts.Remove(bankAccount);
 
-        await organizationManager.UpdateAsync(data);
+        Result = await organizationManager.UpdateAsync(data);
         return Page();
     }
 

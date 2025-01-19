@@ -1,4 +1,5 @@
 using AlphaIdPlatform.Invitations;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 
 namespace AlphaId.EntityFramework.IdSubjects;
@@ -7,24 +8,24 @@ public class JoinOrganizationInvitationStore(IdSubjectsDbContext dbContext) : IJ
 {
     public IQueryable<JoinOrganizationInvitation> Invitations => dbContext.JoinOrganizationInvitations;
 
-    public async Task<IdOperationResult> CreateAsync(JoinOrganizationInvitation invitation)
+    public async Task<OrganizationOperationResult> CreateAsync(JoinOrganizationInvitation invitation)
     {
         dbContext.JoinOrganizationInvitations.Add(invitation);
         await dbContext.SaveChangesAsync();
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 
-    public async Task<IdOperationResult> UpdateAsync(JoinOrganizationInvitation invitation)
+    public async Task<OrganizationOperationResult> UpdateAsync(JoinOrganizationInvitation invitation)
     {
         dbContext.JoinOrganizationInvitations.Update(invitation);
         await dbContext.SaveChangesAsync();
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 
-    public async Task<IdOperationResult> DeleteAsync(JoinOrganizationInvitation invitation)
+    public async Task<OrganizationOperationResult> DeleteAsync(JoinOrganizationInvitation invitation)
     {
         dbContext.JoinOrganizationInvitations.Remove(invitation);
         await dbContext.SaveChangesAsync();
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 }

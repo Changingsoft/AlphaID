@@ -18,7 +18,7 @@ public class IndexModel(
 
     public bool UserIsOwner { get; set; }
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {

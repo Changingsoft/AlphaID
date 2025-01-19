@@ -1,4 +1,4 @@
-﻿using AlphaIdPlatform.Subjects;
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,24 +15,24 @@ internal class OrganizationMemberStore(IdSubjectsDbContext dbContext) : IOrganiz
             p.PersonId == personId && p.OrganizationId == organizationId);
     }
 
-    public async Task<IdOperationResult> CreateAsync(OrganizationMember item)
+    public async Task<OrganizationOperationResult> CreateAsync(OrganizationMember item)
     {
         dbContext.OrganizationMembers.Add(item);
         await dbContext.SaveChangesAsync();
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 
-    public async Task<IdOperationResult> DeleteAsync(OrganizationMember item)
+    public async Task<OrganizationOperationResult> DeleteAsync(OrganizationMember item)
     {
         dbContext.OrganizationMembers.Remove(item);
         await dbContext.SaveChangesAsync();
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 
-    public async Task<IdOperationResult> UpdateAsync(OrganizationMember item)
+    public async Task<OrganizationOperationResult> UpdateAsync(OrganizationMember item)
     {
         dbContext.OrganizationMembers.Update(item);
         await dbContext.SaveChangesAsync();
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 }

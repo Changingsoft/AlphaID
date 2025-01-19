@@ -37,7 +37,7 @@ public class IndexModel(
     [Display(Name = "MembershipVisibility")]
     public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Public;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
@@ -73,7 +73,7 @@ public class IndexModel(
             Visibility = Visibility
         };
 
-        IdOperationResult result = await memberManager.CreateAsync(member);
+        OrganizationOperationResult result = await memberManager.CreateAsync(member);
         if (!result.Succeeded)
         {
             foreach (string error in result.Errors) ModelState.AddModelError("", error);

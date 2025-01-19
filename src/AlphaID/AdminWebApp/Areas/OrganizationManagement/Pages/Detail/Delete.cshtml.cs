@@ -15,7 +15,7 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
     [BindProperty]
     public DeleteForm Input { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -43,7 +43,7 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
         try
         {
-            IdOperationResult result = await organizationManager.DeleteAsync(Organization);
+            OrganizationOperationResult result = await organizationManager.DeleteAsync(Organization);
             if (result.Succeeded)
                 return RedirectToPage("DeleteSuccess");
             Result = result;

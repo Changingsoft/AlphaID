@@ -26,7 +26,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> CreateAsync(Organization org)
+    public Task<OrganizationOperationResult> CreateAsync(Organization org)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
@@ -83,7 +83,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> DeleteAsync(Organization organization)
+    public Task<OrganizationOperationResult> DeleteAsync(Organization organization)
     {
         return Store.DeleteAsync(organization);
     }
@@ -113,7 +113,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> UpdateAsync(Organization org)
+    public Task<OrganizationOperationResult> UpdateAsync(Organization org)
     {
         org.WhenChanged = TimeProvider.GetUtcNow();
         return Store.UpdateAsync(org);
@@ -129,7 +129,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="applyChangeWhenDuplicated">即便名称重复也要更改。默认为false。</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<IdOperationResult> ChangeNameAsync(Organization org,
+    public async Task<OrganizationOperationResult> ChangeNameAsync(Organization org,
         string newName,
         DateOnly changeDate,
         bool recordUsedName,
@@ -137,11 +137,11 @@ public class OrganizationManager(IOrganizationStore store)
     {
         newName = newName.Trim().Trim('\r', '\n');
         if (newName == org.Name)
-            return IdOperationResult.Failed("名称相同");
+            return OrganizationOperationResult.Failed("名称相同");
 
         bool nameExists = Store.Organizations.Any(p => p.Name == newName);
         if (!applyChangeWhenDuplicated && nameExists)
-            return IdOperationResult.Failed("存在重复名称");
+            return OrganizationOperationResult.Failed("存在重复名称");
 
         if (recordUsedName)
             org.UsedNames.Add(new OrganizationUsedName
@@ -151,6 +151,6 @@ public class OrganizationManager(IOrganizationStore store)
             });
         org.Name = newName;
         await UpdateAsync(org);
-        return IdOperationResult.Success;
+        return OrganizationOperationResult.Success;
     }
 }

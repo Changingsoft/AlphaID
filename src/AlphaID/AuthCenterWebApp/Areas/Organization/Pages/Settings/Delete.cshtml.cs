@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
 public class DeleteModel(OrganizationManager manager) : PageModel
 {
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

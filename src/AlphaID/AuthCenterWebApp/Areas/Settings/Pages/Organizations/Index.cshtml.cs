@@ -12,7 +12,7 @@ public class IndexModel(OrganizationMemberManager memberManager, UserManager<Nat
 {
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {

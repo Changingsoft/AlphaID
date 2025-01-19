@@ -32,7 +32,7 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
         if (org == null)
             return NotFound();
 
-        IdOperationResult result = await manager.ChangeNameAsync(org, Input.NewName,
+        OrganizationOperationResult result = await manager.ChangeNameAsync(org, Input.NewName,
             DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
         if (!result.Succeeded)
         {

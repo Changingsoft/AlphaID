@@ -107,11 +107,11 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> CreateAsync(OrganizationMember member)
+    public async Task<OrganizationOperationResult> CreateAsync(OrganizationMember member)
     {
         if (store.OrganizationMembers.Any(p =>
                 p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
-            return IdOperationResult.Failed(Resources.Membership_exists);
+            return OrganizationOperationResult.Failed(Resources.Membership_exists);
         return await store.CreateAsync(member);
     }
 
@@ -120,13 +120,13 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> LeaveOrganizationAsync(OrganizationMember member)
+    public async Task<OrganizationOperationResult> LeaveOrganizationAsync(OrganizationMember member)
     {
         IQueryable<OrganizationMember> members =
             store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
 
         if (member.IsOwner && members.Count(m => m.IsOwner) <= 1)
-            return IdOperationResult.Failed(Resources.LastOwnerCannotLeave);
+            return OrganizationOperationResult.Failed(Resources.LastOwnerCannotLeave);
 
         return await store.DeleteAsync(member);
     }
@@ -136,7 +136,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> RemoveAsync(OrganizationMember member)
+    public Task<OrganizationOperationResult> RemoveAsync(OrganizationMember member)
     {
         return store.DeleteAsync(member);
     }
@@ -146,7 +146,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> UpdateAsync(OrganizationMember member)
+    public Task<OrganizationOperationResult> UpdateAsync(OrganizationMember member)
     {
         return store.UpdateAsync(member);
     }
@@ -156,7 +156,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> SetOwner(OrganizationMember member)
+    public async Task<OrganizationOperationResult> SetOwner(OrganizationMember member)
     {
         var members = await GetMembersAsync(member.Organization);
         if (members.Count(m => m.IsOwner) <= 5)
@@ -165,7 +165,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
             //todo need log to audit log.
             return await UpdateAsync(member);
         }
-        return IdOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
+        return OrganizationOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
     }
 
     /// <summary>
@@ -173,7 +173,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> UnsetOwner(OrganizationMember member)
+    public async Task<OrganizationOperationResult> UnsetOwner(OrganizationMember member)
     {
         var members = await GetMembersAsync(member.Organization);
         if (members.Count(m => m.IsOwner) > 1)
@@ -182,6 +182,6 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
             //todo need log to audit log.
             return await UpdateAsync(member);
         }
-        return IdOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
+        return OrganizationOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
     }
 }

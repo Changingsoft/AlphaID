@@ -22,7 +22,7 @@ public class IndexModel(
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -58,7 +58,7 @@ public class IndexModel(
             Visibility = Input.Visibility
         };
 
-        IdOperationResult result = await memberManager.CreateAsync(member);
+        OrganizationOperationResult result = await memberManager.CreateAsync(member);
         if (!result.Succeeded)
         {
             foreach (string error in result.Errors) ModelState.AddModelError("", error);

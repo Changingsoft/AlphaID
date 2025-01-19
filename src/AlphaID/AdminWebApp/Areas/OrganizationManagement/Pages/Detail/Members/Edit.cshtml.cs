@@ -47,7 +47,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
         member.IsOwner = Input.IsOwner;
         member.Visibility = Input.Visibility;
 
-        IdOperationResult result = await memberManager.UpdateAsync(member);
+        OrganizationOperationResult result = await memberManager.UpdateAsync(member);
         if (result.Succeeded) return RedirectToPage("Index", new { anchor });
 
         foreach (string error in result.Errors) ModelState.AddModelError("", error);

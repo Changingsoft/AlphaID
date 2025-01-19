@@ -16,7 +16,7 @@ public class JoinOrganizationInvitationModel(
 
     public JoinOrganizationInvitation Invitation { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor, int invitationId)
     {

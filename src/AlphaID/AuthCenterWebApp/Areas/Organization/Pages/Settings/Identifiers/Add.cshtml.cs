@@ -17,7 +17,7 @@ public class AddModel(OrganizationManager organizationManager)
     [Display(Name = "Identifier Value")]
     public string Value { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

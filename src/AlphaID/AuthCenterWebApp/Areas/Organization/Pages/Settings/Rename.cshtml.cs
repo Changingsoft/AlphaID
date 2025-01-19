@@ -13,7 +13,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
     [StringLength(50, ErrorMessage = "Validate_StringLength")]
     public string Name { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

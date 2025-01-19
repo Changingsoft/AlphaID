@@ -42,11 +42,11 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         if(!ModelState.IsValid)
             return Page();
 
-        var builder = new ApplicationUserBuilder<NaturalPerson>(Email!, null, null);
+        var person = new NaturalPerson();
         if (Mobile != null)
         {
             if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
-                builder.SetMobile(phoneNumber);
+                person.PhoneNumber = phoneNumber.ToString();
             else
                 ModelState.AddModelError("", "移动电话号码无效。");
         }
@@ -54,33 +54,20 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         if (!ModelState.IsValid)
             return Page();
 
-
-        (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(Input.Surname, Input.GivenName);
-        var chinesePersonName =
-            new ChinesePersonName(Input.Surname, Input.GivenName, phoneticSurname, phoneticGivenName);
-
-        var personName = new HumanNameInfo(chinesePersonName.FullName, Input.Surname, Input.GivenName);
-
-        builder
-            .SetUserName(UserName);
-        if (Email != null)
-            builder.SetEmail(Email);
-
-
-        NaturalPerson person = builder.Build();
-        person.FamilyName = personName.Surname;
-        person.GivenName = personName.GivenName;
-        person.Name = personName.FullName;
-        person.MiddleName = personName.MiddleName;
+        person.UserName = UserName;
+        person.Email = Email;
+        person.FamilyName = Input.Surname;
+        person.GivenName = Input.GivenName;
+        //person.MiddleName not used.
+        person.Name = Input.DisplayName;
+        person.PhoneticSurname = Input.PhoneticSurname;
+        person.PhoneticGivenName = Input.PhoneticGivenName;
+        person.SearchHint = $"{Input.PhoneticSurname}{Input.GivenName}";
 
         person.DateOfBirth = Input.DateOfBirth.HasValue
             ? DateOnly.FromDateTime(Input.DateOfBirth.Value)
             : null;
         person.Gender = Input.Gender;
-        person.PhoneticSurname = chinesePersonName.PhoneticSurname;
-        person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
-        person.SearchHint = $"{chinesePersonName.PhoneticSurname}{chinesePersonName.GivenName}";
-
 
         Result = await manager.CreateAsync(person);
 

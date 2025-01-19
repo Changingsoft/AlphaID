@@ -1,20 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace IdSubjects;
+namespace IdSubjects.RealName;
 
 /// <summary>
 ///     表示个人名称。
 /// </summary>
-[Owned]
-[Index(nameof(FullName))]
 public record HumanNameInfo
 {
     /// <summary>
     ///     For persistence.
     /// </summary>
-    protected HumanNameInfo()
+    public HumanNameInfo()
     {
     }
 
@@ -36,29 +33,21 @@ public record HumanNameInfo
     /// <summary>
     /// 姓氏，也表示为Family Name。
     /// </summary>
-    [PersonalData]
-    [MaxLength(50)]
     public string? Surname { get; protected set; }
 
     /// <summary>
     /// 中间名。
     /// </summary>
-    [PersonalData]
-    [MaxLength(50)]
     public string? MiddleName { get; protected set; }
 
     /// <summary>
     /// 名。
     /// </summary>
-    [PersonalData]
-    [MaxLength(50)]
     public string? GivenName { get; protected set; }
 
     /// <summary>
     /// 完整人名。
     /// </summary>
-    [PersonalData]
-    [MaxLength(150)]
     public string FullName { get; protected set; } = null!;
 
     /// <summary>

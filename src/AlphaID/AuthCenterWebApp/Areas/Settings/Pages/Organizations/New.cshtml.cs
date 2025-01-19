@@ -46,7 +46,7 @@ public class NewModel(
             Representative = Input.Representative
         };
 
-        IdOperationResult result = await organizationManager.CreateAsync(organization);
+        OrganizationOperationResult result = await organizationManager.CreateAsync(organization);
         if (!result.Succeeded)
         {
             ModelState.AddModelError("", result.Errors.Aggregate((x, y) => $"{x}, {y}"));
@@ -64,7 +64,7 @@ public class NewModel(
             Remark = Input.Remark,
             IsOwner = true
         };
-        IdOperationResult joinOrgResult = await memberManager.CreateAsync(member);
+        OrganizationOperationResult joinOrgResult = await memberManager.CreateAsync(member);
         if (!joinOrgResult.Succeeded)
         {
             ModelState.AddModelError("", joinOrgResult.Errors.Aggregate((x, y) => $"{x}, {y}"));

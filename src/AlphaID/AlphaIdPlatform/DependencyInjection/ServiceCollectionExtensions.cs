@@ -34,7 +34,6 @@ public static class ServiceCollectionExtensions
 
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationSearcher>();
-        services.TryAddScoped<OrganizationIdentifierValidator, UsccValidator>();
         services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
 

@@ -19,7 +19,7 @@ public class InviteModel(
     [Display(Name = "Invitee")]
     public string Invitee { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

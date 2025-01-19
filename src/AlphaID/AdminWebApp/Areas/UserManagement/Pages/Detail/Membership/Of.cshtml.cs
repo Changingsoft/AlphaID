@@ -16,7 +16,7 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Natura
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public IdOperationResult? OperationResult { get; set; }
+    public OrganizationOperationResult? OperationResult { get; set; }
 
     public IEnumerable<SelectListItem> MembershipVisibilities { get; set; } =
         EnumHelper.GetSelectListItems<MembershipVisibility>();

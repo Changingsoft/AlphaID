@@ -10,7 +10,7 @@ public class IndexModel(OrganizationManager organizationManager)
 {
     public IEnumerable<OrganizationIdentifier> Identifiers { get; set; } = [];
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

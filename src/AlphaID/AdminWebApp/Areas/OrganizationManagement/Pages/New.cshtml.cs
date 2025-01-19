@@ -37,7 +37,7 @@ public class NewModel(OrganizationManager manager) : PageModel
     [DataType(DataType.Date)]
     public DateOnly? TermEnd { get; set; }
 
-    public IdOperationResult? OperationResult { get; set; }
+    public OrganizationOperationResult? OperationResult { get; set; }
 
     public void OnGet()
     {
@@ -69,7 +69,7 @@ public class NewModel(OrganizationManager manager) : PageModel
 
         try
         {
-            IdOperationResult result = await manager.CreateAsync(org);
+            OrganizationOperationResult result = await manager.CreateAsync(org);
             if (result.Succeeded)
                 return RedirectToPage("Detail/Index", new { anchor = org.Id });
 

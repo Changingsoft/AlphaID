@@ -11,7 +11,7 @@ public class IndexModel(OrganizationManager manager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public IdOperationResult OperationResult { get; set; } = null!;
+    public OrganizationOperationResult OperationResult { get; set; } = null!;
 
     public IActionResult OnGet(string anchor)
     {
@@ -47,7 +47,7 @@ public class IndexModel(OrganizationManager manager) : PageModel
         organization.Representative = Input.Representative;
 
         await manager.UpdateAsync(organization);
-        OperationResult = IdOperationResult.Success;
+        OperationResult = OrganizationOperationResult.Success;
         return Page();
     }
 

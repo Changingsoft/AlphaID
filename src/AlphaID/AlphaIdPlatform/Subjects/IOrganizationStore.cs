@@ -38,19 +38,19 @@ public interface IOrganizationStore
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task<IdOperationResult> CreateAsync(Organization organization);
+    Task<OrganizationOperationResult> CreateAsync(Organization organization);
 
     /// <summary>
     ///     Update organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task<IdOperationResult> UpdateAsync(Organization organization);
+    Task<OrganizationOperationResult> UpdateAsync(Organization organization);
 
     /// <summary>
     ///     Delete organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
-    Task<IdOperationResult> DeleteAsync(Organization organization);
+    Task<OrganizationOperationResult> DeleteAsync(Organization organization);
 }

@@ -53,7 +53,7 @@ public class JoinOrganizationInvitationManager(
     /// <param name="invitee">邀请人的用户名</param>
     /// <param name="inviter"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> InviteMemberAsync(Organization organization,
+    public async Task<OrganizationOperationResult> InviteMemberAsync(Organization organization,
         NaturalPerson invitee,
         string inviter)
     {
@@ -67,7 +67,7 @@ public class JoinOrganizationInvitationManager(
                 i.WhenExpired > TimeProvider.GetUtcNow()))
             errors.Add("You've been sent invitation to this person.");
         if (errors.Count != 0)
-            return IdOperationResult.Failed([.. errors]);
+            return OrganizationOperationResult.Failed([.. errors]);
 
         return await store.CreateAsync(new JoinOrganizationInvitation
         {
@@ -85,20 +85,20 @@ public class JoinOrganizationInvitationManager(
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> AcceptAsync(JoinOrganizationInvitation invitation)
+    public async Task<OrganizationOperationResult> AcceptAsync(JoinOrganizationInvitation invitation)
     {
         if (invitation.Accepted.HasValue)
-            return IdOperationResult.Failed("Invitation has been processed.");
+            return OrganizationOperationResult.Failed("Invitation has been processed.");
 
         OrganizationMember? existedMember =
             await memberManager.GetMemberAsync(invitation.InviteeId, invitation.OrganizationId);
-        if (existedMember != null) return IdOperationResult.Failed("Person is already a member.");
+        if (existedMember != null) return OrganizationOperationResult.Failed("Person is already a member.");
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
         NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
         Organization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
-        IdOperationResult? result = null;
+        OrganizationOperationResult? result = null;
         if (organization != null && person != null)
             result = await memberManager.CreateAsync(
                 new OrganizationMember(organization, person)
@@ -107,7 +107,7 @@ public class JoinOrganizationInvitationManager(
         await store.UpdateAsync(invitation);
         trans.Complete();
 
-        return result ?? IdOperationResult.Success;
+        return result ?? OrganizationOperationResult.Success;
     }
 
     /// <summary>
@@ -115,10 +115,10 @@ public class JoinOrganizationInvitationManager(
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
-    public async Task<IdOperationResult> RefuseAsync(JoinOrganizationInvitation invitation)
+    public async Task<OrganizationOperationResult> RefuseAsync(JoinOrganizationInvitation invitation)
     {
         if (invitation.Accepted.HasValue)
-            return IdOperationResult.Failed("Invitation has been processed.");
+            return OrganizationOperationResult.Failed("Invitation has been processed.");
 
         invitation.Accepted = false;
         return await store.UpdateAsync(invitation);
@@ -139,7 +139,7 @@ public class JoinOrganizationInvitationManager(
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
-    public Task<IdOperationResult> Revoke(JoinOrganizationInvitation invitation)
+    public Task<OrganizationOperationResult> Revoke(JoinOrganizationInvitation invitation)
     {
         return store.DeleteAsync(invitation);
     }

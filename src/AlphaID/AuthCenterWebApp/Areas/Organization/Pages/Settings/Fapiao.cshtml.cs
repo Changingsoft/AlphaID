@@ -11,7 +11,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

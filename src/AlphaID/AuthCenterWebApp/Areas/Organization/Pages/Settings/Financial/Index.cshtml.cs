@@ -11,7 +11,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
-    public IdOperationResult? Result { get; set; }
+    public OrganizationOperationResult? Result { get; set; }
 
     public IActionResult OnGet(string anchor)
     {

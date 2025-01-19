@@ -10,7 +10,7 @@ public class GeneralModel(OrganizationManager manager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public IdOperationResult? OperationResult { get; set; }
+    public OrganizationOperationResult? OperationResult { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
@@ -50,7 +50,7 @@ public class GeneralModel(OrganizationManager manager) : PageModel
         org.TermEnd = Input.TermEnd.HasValue ? DateOnly.FromDateTime(Input.TermEnd.Value) : null;
 
         await manager.UpdateAsync(org);
-        OperationResult = IdOperationResult.Success;
+        OperationResult = OrganizationOperationResult.Success;
         return Page();
     }
 

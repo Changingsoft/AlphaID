@@ -1,3 +1,4 @@
+using AlphaIdPlatform.Subjects;
 using IdSubjects;
 
 namespace AlphaIdPlatform.Invitations;
@@ -14,17 +15,17 @@ public interface IJoinOrganizationInvitationStore
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
-    Task<IdOperationResult> CreateAsync(JoinOrganizationInvitation invitation);
+    Task<OrganizationOperationResult> CreateAsync(JoinOrganizationInvitation invitation);
 
     /// <summary>
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
-    Task<IdOperationResult> UpdateAsync(JoinOrganizationInvitation invitation);
+    Task<OrganizationOperationResult> UpdateAsync(JoinOrganizationInvitation invitation);
 
     /// <summary>
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
-    Task<IdOperationResult> DeleteAsync(JoinOrganizationInvitation invitation);
+    Task<OrganizationOperationResult> DeleteAsync(JoinOrganizationInvitation invitation);
 }

@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
     {
         public IEnumerable<JoinOrganizationInvitation> Invitations { get; set; } = [];
 
-        public IdOperationResult? Result { get; set; }
+        public OrganizationOperationResult? Result { get; set; }
 
         public IActionResult OnGet(string anchor)
         {

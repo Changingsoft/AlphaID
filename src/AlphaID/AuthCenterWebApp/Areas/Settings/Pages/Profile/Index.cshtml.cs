@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using AlphaIdPlatform.Identity;
-using AuthCenterWebApp.Services;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Profile;
 
-public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, PersonSignInManager signInManager, NaturalPersonService naturalPersonService) : PageModel
+public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, SignInManager<NaturalPerson> signInManager, NaturalPersonService naturalPersonService) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;

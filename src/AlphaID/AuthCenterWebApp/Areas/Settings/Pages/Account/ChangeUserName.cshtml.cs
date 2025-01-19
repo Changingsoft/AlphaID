@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 public class ChangeUserNameModel(
     UserManager<NaturalPerson> manager,
     ILogger<ChangeUserNameModel>? logger,
-    PersonSignInManager signInManager) : PageModel
+    SignInManager<NaturalPerson> signInManager) : PageModel
 {
     [BindProperty]
     [Display(Name = "User name")]

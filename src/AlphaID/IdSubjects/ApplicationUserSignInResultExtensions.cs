@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
-namespace AuthCenterWebApp.Services;
+namespace IdSubjects;
 
-public static class SignInResultExtensions
+/// <summary>
+///    自然人登录结果扩展。
+/// </summary>
+public static class ApplicationUserSignInResultExtensions
 {
     /// <summary>
     ///     获取一个值，指示用户必须更改其密码。
@@ -11,7 +14,7 @@ public static class SignInResultExtensions
     /// <returns></returns>
     public static bool MustChangePassword(this SignInResult signInResult)
     {
-        if (signInResult is not PersonSignInResult result)
+        if (signInResult is not ApplicatonUserSignInResult result)
             return false;
         return result.MustChangePassword;
     }

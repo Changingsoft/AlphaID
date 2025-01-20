@@ -39,11 +39,4 @@ public class OrganizationBankAccount
     /// <summary>
     /// </summary>
     public bool Default { get; set; } = false;
-
-    /// <summary>
-    ///     主体Id.
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string OrganizationId { get; set; } = null!;
 }

@@ -1,3 +1,4 @@
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -92,13 +93,11 @@ namespace DatabaseTool.Migrations.RealNameDb
                     PersonName_Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     PersonName_MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     PersonName_GivenName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    PersonName_FullName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    PersonName_SearchHint = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    PersonName_FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ValidatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     ValidatedBy = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ExpiresAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Remarks = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    Applied = table.Column<bool>(type: "bit", nullable: false),
                     Discriminator = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     DocumentId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
                 },
@@ -117,16 +116,6 @@ namespace DatabaseTool.Migrations.RealNameDb
                 name: "IX_RealNameAuthentication_DocumentId",
                 table: "RealNameAuthentication",
                 column: "DocumentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RealNameAuthentication_PersonName_FullName",
-                table: "RealNameAuthentication",
-                column: "PersonName_FullName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RealNameAuthentication_PersonName_SearchHint",
-                table: "RealNameAuthentication",
-                column: "PersonName_SearchHint");
         }
 
         /// <inheritdoc />

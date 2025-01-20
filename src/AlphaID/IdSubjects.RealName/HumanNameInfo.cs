@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.RealName;
@@ -33,21 +34,25 @@ public record HumanNameInfo
     /// <summary>
     /// 姓氏，也表示为Family Name。
     /// </summary>
+    [MaxLength(50)]
     public string? Surname { get; protected set; }
 
     /// <summary>
     /// 中间名。
     /// </summary>
+    [MaxLength(50)]
     public string? MiddleName { get; protected set; }
 
     /// <summary>
     /// 名。
     /// </summary>
+    [MaxLength(50)]
     public string? GivenName { get; protected set; }
 
     /// <summary>
     /// 完整人名。
     /// </summary>
+    [MaxLength(50)]
     public string FullName { get; protected set; } = null!;
 
     /// <summary>

@@ -17,7 +17,7 @@ builder
         var platform = services.AddAlphaIdPlatform();
         platform.AddEntityFramework(options =>
         {
-            options.UseSqlServer(hostContext.Configuration.GetConnectionString("IDSubjectsDataConnection"),
+            options.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnection"),
                 sql =>
                 {
                     sql.UseNetTopologySuite();
@@ -30,14 +30,14 @@ builder
             .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = b =>
-                    b.UseSqlServer(hostContext.Configuration.GetConnectionString("OidcConfigurationDataConnection"),
+                    b.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnection"),
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
             })
             .AddOperationalStore(options =>
             {
                 options.ConfigureDbContext = b =>
                     b.UseSqlServer(
-                        hostContext.Configuration.GetConnectionString("OidcPersistedGrantDataConnection"),
+                        hostContext.Configuration.GetConnectionString("DefaultConnection"),
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
             });
 
@@ -65,7 +65,7 @@ IHost host = builder.Build();
 await using AsyncServiceScope scope = host.Services.CreateAsyncScope();
 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 var environment = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
-var connectionString = configuration.GetConnectionString("FertDataConnection");
+var connectionString = configuration.GetConnectionString("DefaultConnection");
 Console.WriteLine(@"即将开始执行数据库工具。您将使用下列选项来处理数据：");
 Console.WriteLine($@"- 环境: {environment.EnvironmentName}");
 Console.WriteLine($@"- 数据库连接字符串: {connectionString}");

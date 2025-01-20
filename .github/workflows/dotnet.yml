@@ -26,6 +26,20 @@ jobs:
     - name: Build
       run: dotnet build --no-restore AlphaID.sln
       working-directory: src/AlphaID
+    - name: mssql suite
+      uses: potatoqualitee/mssqlsuite@v1.8
+      with:
+        # The apps to install
+        install: localdb
+    - name: Run database tool
+      uses: Amadevus/pwsh-script@v2.0.3
+      with:
+    # PowerShell script to execute in Actions-hydrated context
+        script: DatabaseTool.exe NonInteractive --environment Development
+        working-directory: src/AlphaID/DatabaseTool/bin/Debug/net8.0
     - name: Test
       run: dotnet test --no-build --verbosity normal AlphaID.sln
+      working-directory: src/AlphaID
+    - name: Publish
+      run: dotnet publish --no-build AlphaID.sln
       working-directory: src/AlphaID

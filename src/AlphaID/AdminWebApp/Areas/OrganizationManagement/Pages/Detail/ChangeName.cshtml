@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model ChangeNameModel
 @{
     ViewBag.Title = L["Change name"];
@@ -24,10 +24,6 @@
     <div class="form-check">
         <input asp-for="Input.RecordUsedName" class="form-check-input"/>
         <label asp-for="Input.RecordUsedName" class="form-check-label"></label>
-    </div>
-    <div class="form-check">
-        <input asp-for="Input.ApplyChangeWhenNameDuplicated" class="form-check-input"/>
-        <label asp-for="Input.ApplyChangeWhenNameDuplicated" class="form-check-label"></label>
     </div>
     <div asp-validation-summary="All"></div>
     <button type="submit" class="btn btn-primary">@L["Change"]</button>

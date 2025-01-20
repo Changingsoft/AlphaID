@@ -31,9 +31,14 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
         Organization? org = await manager.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
-
-        OrganizationOperationResult result = await manager.ChangeNameAsync(org, Input.NewName,
-            DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
+        OrganizationOperationResult result;
+        if (Input.RecordUsedName)
+            result = await manager.RenameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate));
+        else
+        {
+            org.Name = Input.NewName;
+            result = await manager.UpdateAsync(org);
+        }
         if (!result.Succeeded)
         {
             foreach (string error in result.Errors) ModelState.AddModelError("", error);
@@ -60,8 +65,5 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
         [Display(Name = "Record used name")]
         public bool RecordUsedName { get; set; } = true;
-
-        [Display(Name = "Apply changes when name duplicated")]
-        public bool ApplyChangeWhenNameDuplicated { get; set; } = false;
     }
 }

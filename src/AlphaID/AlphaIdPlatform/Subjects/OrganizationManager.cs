@@ -26,24 +26,13 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<OrganizationOperationResult> CreateAsync(Organization org)
+    public async Task<OrganizationOperationResult> CreateAsync(Organization org)
     {
-        DateTimeOffset utcNow = TimeProvider.GetUtcNow();
-        org.WhenCreated = utcNow;
-        org.WhenChanged = utcNow;
-        return Store.CreateAsync(org);
-    }
-
-    /// <summary>
-    ///     Find by name.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    [Obsolete("该方法查询的组织不具有跟踪能力，无法用于更改。应使用FindByName")]
-    public IEnumerable<Organization> SearchByName(string name)
-    {
-        IQueryable<Organization> results = Store.Organizations.Where(o => o.Name == name);
-        return results;
+        if (Store.Organizations.Any(p => p.Name == org.Name))
+            return OrganizationOperationResult.Failed("名称重复");
+        org.WhenCreated = TimeProvider.GetUtcNow();
+        org.WhenChanged = org.WhenCreated;
+        return await Store.CreateAsync(org);
     }
 
     /// <summary>
@@ -52,30 +41,17 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public virtual IEnumerable<Organization> FindByName(string name)
     {
-        return Store.FindByName(name);
+        return Store.Organizations.Where(p => p.Name == name || p.UsedNames.Any(q => q.Name == name));
     }
 
     /// <summary>
-    ///     使用组织名称尝试查找单个组织。
+    /// 按现用名称查找组织。
     /// </summary>
-    /// <param name="name">组织的完整名称。</param>
-    /// <param name="organization">如果未找到组织，该值为null，如果找到1个组织，该值为该组织，如果找到多个组织，该值为第一个组织。</param>
-    /// <returns>如果未找到组织或找到了单个组织，则返回true，否则返回false。</returns>
-    public bool TryFindSingleOrDefaultByName(string name, out Organization? organization)
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public virtual Organization? FindByCurrentName(string name)
     {
-        Organization[] result = Store.FindByName(name).ToArray();
-        switch (result.Length)
-        {
-            case 0:
-                organization = null;
-                return true;
-            case 1:
-                organization = result[0];
-                return true;
-            default:
-                organization = result[0];
-                return false;
-        }
+        return Store.Organizations.FirstOrDefault(p => p.Name == name);
     }
 
     /// <summary>
@@ -99,24 +75,16 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    ///     通过组织 Id 查找组织。这是同步版本。
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public Organization? FindById(string id)
-    {
-        return Store.FindById(id);
-    }
-
-    /// <summary>
     ///     Update organization information.
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<OrganizationOperationResult> UpdateAsync(Organization org)
+    public async Task<OrganizationOperationResult> UpdateAsync(Organization org)
     {
+        if (Store.Organizations.Any(p => p.Name == org.Name && p.Id != org.Id))
+            return OrganizationOperationResult.Failed("名称重复");
         org.WhenChanged = TimeProvider.GetUtcNow();
-        return Store.UpdateAsync(org);
+        return await Store.UpdateAsync(org);
     }
 
     /// <summary>
@@ -125,32 +93,21 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="org">要更改名称的组织。</param>
     /// <param name="newName">新名称。</param>
     /// <param name="changeDate">更改时间。</param>
-    /// <param name="recordUsedName">更改前的名称记录到曾用名。</param>
-    /// <param name="applyChangeWhenDuplicated">即便名称重复也要更改。默认为false。</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<OrganizationOperationResult> ChangeNameAsync(Organization org,
-        string newName,
-        DateOnly changeDate,
-        bool recordUsedName,
-        bool applyChangeWhenDuplicated = false)
+    public async Task<OrganizationOperationResult> RenameAsync(Organization org, string newName, DateOnly? changeDate = null)
     {
         newName = newName.Trim().Trim('\r', '\n');
         if (newName == org.Name)
-            return OrganizationOperationResult.Failed("名称相同");
+            return OrganizationOperationResult.Failed("名称相同。");
 
-        bool nameExists = Store.Organizations.Any(p => p.Name == newName);
-        if (!applyChangeWhenDuplicated && nameExists)
-            return OrganizationOperationResult.Failed("存在重复名称");
-
-        if (recordUsedName)
-            org.UsedNames.Add(new OrganizationUsedName
-            {
-                Name = org.Name,
-                DeprecateTime = changeDate
-            });
+        org.UsedNames.Add(new OrganizationUsedName
+        {
+            Name = org.Name,
+            //使用本地时间以避免早上8点前日期被减一天。
+            DeprecateTime = changeDate ?? DateOnly.FromDateTime(TimeProvider.GetLocalNow().DateTime),
+        });
         org.Name = newName;
-        await UpdateAsync(org);
-        return OrganizationOperationResult.Success;
+        return await UpdateAsync(org);
     }
 }

@@ -22,8 +22,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who");
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -38,8 +37,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who");
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -65,8 +63,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who");
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -92,8 +89,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who");
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;

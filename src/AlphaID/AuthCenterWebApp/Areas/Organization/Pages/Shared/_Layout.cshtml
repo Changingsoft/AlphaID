@@ -13,12 +13,9 @@
         var subjectId = User.SubjectId();
         if (anchor != null && subjectId != null)
         {
-            var orgs = (await OrganizationManager.FindByAnchorAsync(anchor)).ToList();
-            if (orgs.Count == 1)
-            {
-                var org = orgs.First();
+            var org = OrganizationManager.FindByCurrentName(anchor);
+            if (org != null)
                 isOwner = (await MemberManager.GetMembersAsync(org)).Any(m => m.PersonId == subjectId && m.IsOwner);
-            }
         }
     }
 }

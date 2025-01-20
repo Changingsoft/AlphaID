@@ -26,6 +26,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
+		<ProjectReference Include="..\IntegrationTestUtilities\IntegrationTestUtilities.csproj" />
 	</ItemGroup>
 
 </Project>

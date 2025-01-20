@@ -11,8 +11,7 @@ public class DeleteModel(OrganizationManager manager) : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who", new { anchor });
+        var organization = manager.FindByCurrentName(anchor);
         if (organization == null) return NotFound();
 
         return Page();
@@ -20,8 +19,7 @@ public class DeleteModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        if (!manager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who", new { anchor });
+        var organization = manager.FindByCurrentName(anchor);
         if (organization == null) return NotFound();
 
         Result = await manager.DeleteAsync(organization);

@@ -13,12 +13,6 @@ public class OrganizationIdentifier
 {
     /// <summary>
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string OrganizationId { get; set; } = null!;
-
-    /// <summary>
-    /// </summary>
     [Column(TypeName = "varchar(30)")]
     public OrganizationIdentifierType Type { get; set; }
 

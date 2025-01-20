@@ -18,13 +18,6 @@ public class OrganizationUsedName
     public int Id { get; protected set; }
 
     /// <summary>
-    ///     组织Id.
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string OrganizationId { get; protected set; } = null!;
-
-    /// <summary>
     ///     名称。
     /// </summary>
     [MaxLength(100)]

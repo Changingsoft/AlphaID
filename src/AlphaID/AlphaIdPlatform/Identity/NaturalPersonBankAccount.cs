@@ -30,11 +30,4 @@ public class NaturalPersonBankAccount
     /// </summary>
     [MaxLength(100)]
     public string? BankName { get; set; }
-
-    /// <summary>
-    ///     主体Id.
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string NaturalPersonId { get; set; } = null!;
 }

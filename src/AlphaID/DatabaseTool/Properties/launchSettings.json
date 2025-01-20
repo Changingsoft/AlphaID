@@ -2,7 +2,7 @@
   "profiles": {
     "DatabaseTool": {
       "commandName": "Project",
-      "commandLineArgs": "DropDatabase=true AddTestingData=true",
+      "commandLineArgs": "",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }

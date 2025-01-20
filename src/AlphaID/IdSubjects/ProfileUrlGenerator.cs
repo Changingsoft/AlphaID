@@ -11,6 +11,11 @@ public class ProfileUrlGenerator<T>(IOptions<OidcProfileUrlOptions> options)
     where T : ApplicationUser
 {
     /// <summary>
+    /// 
+    /// </summary>
+    protected OidcProfileUrlOptions Options { get; } = options.Value;
+
+    /// <summary>
     /// 生成用户个人资料URL。
     /// </summary>
     /// <param name="user"></param>

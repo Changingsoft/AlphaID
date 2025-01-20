@@ -25,6 +25,7 @@ namespace IdSubjects;
 /// <param name="errors"></param>
 /// <param name="services"></param>
 /// <param name="logger"></param>
+/// <param name="passwordLifetimeOptions"></param>
 /// <param name="interceptors"></param>
 /// <param name="passwordHistoryManager"></param>
 /// <param name="eventService"></param>

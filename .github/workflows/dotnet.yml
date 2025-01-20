@@ -21,8 +21,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore src/AlphaID/AlphaID.sln
+      run: dotnet restore AlphaID.sln
+      working-directory: src/AlphaID
     - name: Build
-      run: dotnet build --no-restore src/AlphaID/AlphaID.sln
+      run: dotnet build --no-restore AlphaID.sln
+      working-directory: src/AlphaID
     - name: Test
-      run: dotnet test --no-build --verbosity normal src/AlphaID/AlphaID.sln
+      run: dotnet test --no-build --verbosity normal AlphaID.sln
+      working-directory: src/AlphaID

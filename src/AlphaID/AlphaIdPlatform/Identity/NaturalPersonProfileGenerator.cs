@@ -6,11 +6,11 @@ internal class NaturalPersonProfileGenerator(IOptions<OidcProfileUrlOptions> opt
 {
     public override Uri GenerateProfileUrl(NaturalPerson user)
     {
-        return new Uri(options.Value.ProfileUrlBase, $"/People/{user.UserName}");
+        return new Uri(Options.ProfileUrlBase, $"/People/{user.UserName}");
     }
 
     public override Uri GenerateProfilePictureUrl(NaturalPerson user)
     {
-        return new Uri(options.Value.ProfileUrlBase, $"/People/{user.UserName}/Avatar");
+        return new Uri(Options.ProfileUrlBase, $"/People/{user.UserName}/Avatar");
     }
 }

@@ -1,11 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.RealName;
 
 /// <summary>
 ///     表示个人名称。
 /// </summary>
+[Owned]
 public record HumanNameInfo
 {
     /// <summary>

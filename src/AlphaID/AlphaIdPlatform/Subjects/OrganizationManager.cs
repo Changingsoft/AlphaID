@@ -30,9 +30,8 @@ public class OrganizationManager(IOrganizationStore store)
     {
         if (Store.Organizations.Any(p => p.Name == org.Name))
             return OrganizationOperationResult.Failed("名称重复");
-        DateTimeOffset utcNow = TimeProvider.GetUtcNow();
-        org.WhenCreated = utcNow;
-        org.WhenChanged = utcNow;
+        org.WhenCreated = TimeProvider.GetUtcNow();
+        org.WhenChanged = org.WhenCreated;
         return await Store.CreateAsync(org);
     }
 
@@ -94,29 +93,21 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="org">要更改名称的组织。</param>
     /// <param name="newName">新名称。</param>
     /// <param name="changeDate">更改时间。</param>
-    /// 
-    /// 
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<OrganizationOperationResult> ChangeNameAsync(Organization org,
-        string newName,
-        DateOnly changeDate)
+    public async Task<OrganizationOperationResult> RenameAsync(Organization org, string newName, DateOnly? changeDate = null)
     {
         newName = newName.Trim().Trim('\r', '\n');
         if (newName == org.Name)
-            return OrganizationOperationResult.Failed("名称相同");
-
-        bool nameExists = Store.Organizations.Any(p => p.Name == newName);
-        if (nameExists)
-            return OrganizationOperationResult.Failed("存在重复名称");
+            return OrganizationOperationResult.Failed("名称相同。");
 
         org.UsedNames.Add(new OrganizationUsedName
         {
             Name = org.Name,
-            DeprecateTime = changeDate
+            //使用本地时间以避免早上8点前日期被减一天。
+            DeprecateTime = changeDate ?? DateOnly.FromDateTime(TimeProvider.GetLocalNow().DateTime),
         });
         org.Name = newName;
-        await UpdateAsync(org);
-        return OrganizationOperationResult.Success;
+        return await UpdateAsync(org);
     }
 }

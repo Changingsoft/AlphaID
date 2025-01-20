@@ -32,8 +32,8 @@ jobs:
         # The apps to install
         install: localdb
     - name: Run database tool
-      run: DatabaseTool/bin/Debug/net8.0/DatabaseTool.exe NonInteractive --environment Development
-      working-directory: src/AlphaID
+      run: DatabaseTool.exe NonInteractive --environment Development
+      working-directory: src/AlphaID/DatabaseTool/bin/Debug/net8.0/
     - name: Test
       run: dotnet test --no-build --verbosity normal AlphaID.sln
       working-directory: src/AlphaID

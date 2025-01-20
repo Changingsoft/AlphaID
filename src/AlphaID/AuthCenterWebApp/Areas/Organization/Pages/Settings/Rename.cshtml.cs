@@ -36,7 +36,7 @@ public class RenameModel(OrganizationManager manager) : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        Result = await manager.ChangeNameAsync(organization, Name, DateOnly.FromDateTime(DateTime.UtcNow), true);
+        Result = await manager.ChangeNameAsync(organization, Name, DateOnly.FromDateTime(DateTime.UtcNow));
         if (!Result.Succeeded)
             return Page();
 

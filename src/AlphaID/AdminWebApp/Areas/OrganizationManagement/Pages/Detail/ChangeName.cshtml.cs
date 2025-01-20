@@ -33,7 +33,7 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
             return NotFound();
 
         OrganizationOperationResult result = await manager.ChangeNameAsync(org, Input.NewName,
-            DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName, Input.ApplyChangeWhenNameDuplicated);
+            DateOnly.FromDateTime(Input.ChangeDate));
         if (!result.Succeeded)
         {
             foreach (string error in result.Errors) ModelState.AddModelError("", error);

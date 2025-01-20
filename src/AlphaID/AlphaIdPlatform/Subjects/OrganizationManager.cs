@@ -28,7 +28,7 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public async Task<OrganizationOperationResult> CreateAsync(Organization org)
     {
-        if(Store.Organizations.Any(p => p.Name == org.Name))
+        if (Store.Organizations.Any(p => p.Name == org.Name))
             return OrganizationOperationResult.Failed("名称重复");
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
@@ -80,10 +80,12 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<OrganizationOperationResult> UpdateAsync(Organization org)
+    public async Task<OrganizationOperationResult> UpdateAsync(Organization org)
     {
+        if (Store.Organizations.Any(p => p.Name == org.Name && p.Id != org.Id))
+            return OrganizationOperationResult.Failed("名称重复");
         org.WhenChanged = TimeProvider.GetUtcNow();
-        return Store.UpdateAsync(org);
+        return await Store.UpdateAsync(org);
     }
 
     /// <summary>
@@ -92,30 +94,27 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="org">要更改名称的组织。</param>
     /// <param name="newName">新名称。</param>
     /// <param name="changeDate">更改时间。</param>
-    /// <param name="recordUsedName">更改前的名称记录到曾用名。</param>
-    /// <param name="applyChangeWhenDuplicated">即便名称重复也要更改。默认为false。</param>
+    /// 
+    /// 
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public async Task<OrganizationOperationResult> ChangeNameAsync(Organization org,
         string newName,
-        DateOnly changeDate,
-        bool recordUsedName,
-        bool applyChangeWhenDuplicated = false)
+        DateOnly changeDate)
     {
         newName = newName.Trim().Trim('\r', '\n');
         if (newName == org.Name)
             return OrganizationOperationResult.Failed("名称相同");
 
         bool nameExists = Store.Organizations.Any(p => p.Name == newName);
-        if (!applyChangeWhenDuplicated && nameExists)
+        if (nameExists)
             return OrganizationOperationResult.Failed("存在重复名称");
 
-        if (recordUsedName)
-            org.UsedNames.Add(new OrganizationUsedName
-            {
-                Name = org.Name,
-                DeprecateTime = changeDate
-            });
+        org.UsedNames.Add(new OrganizationUsedName
+        {
+            Name = org.Name,
+            DeprecateTime = changeDate
+        });
         org.Name = newName;
         await UpdateAsync(org);
         return OrganizationOperationResult.Success;

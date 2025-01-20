@@ -14,8 +14,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who", new { anchor });
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
         Identifiers = organization.OrganizationIdentifiers;
@@ -24,8 +23,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public async Task<IActionResult> OnPostRemove(string anchor, string idKey)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who", new { anchor });
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
         Identifiers = organization.OrganizationIdentifiers;

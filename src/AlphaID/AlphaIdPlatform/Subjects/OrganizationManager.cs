@@ -26,24 +26,14 @@ public class OrganizationManager(IOrganizationStore store)
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
-    public Task<OrganizationOperationResult> CreateAsync(Organization org)
+    public async Task<OrganizationOperationResult> CreateAsync(Organization org)
     {
+        if(Store.Organizations.Any(p => p.Name == org.Name))
+            return OrganizationOperationResult.Failed("名称重复");
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         org.WhenCreated = utcNow;
         org.WhenChanged = utcNow;
-        return Store.CreateAsync(org);
-    }
-
-    /// <summary>
-    ///     Find by name.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    [Obsolete("该方法查询的组织不具有跟踪能力，无法用于更改。应使用FindByName")]
-    public IEnumerable<Organization> SearchByName(string name)
-    {
-        IQueryable<Organization> results = Store.Organizations.Where(o => o.Name == name);
-        return results;
+        return await Store.CreateAsync(org);
     }
 
     /// <summary>
@@ -52,30 +42,17 @@ public class OrganizationManager(IOrganizationStore store)
     /// <returns></returns>
     public virtual IEnumerable<Organization> FindByName(string name)
     {
-        return Store.FindByName(name);
+        return Store.Organizations.Where(p => p.Name == name || p.UsedNames.Any(q => q.Name == name));
     }
 
     /// <summary>
-    ///     使用组织名称尝试查找单个组织。
+    /// 按现用名称查找组织。
     /// </summary>
-    /// <param name="name">组织的完整名称。</param>
-    /// <param name="organization">如果未找到组织，该值为null，如果找到1个组织，该值为该组织，如果找到多个组织，该值为第一个组织。</param>
-    /// <returns>如果未找到组织或找到了单个组织，则返回true，否则返回false。</returns>
-    public bool TryFindSingleOrDefaultByName(string name, out Organization? organization)
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public virtual Organization? FindByCurrentName(string name)
     {
-        Organization[] result = Store.FindByName(name).ToArray();
-        switch (result.Length)
-        {
-            case 0:
-                organization = null;
-                return true;
-            case 1:
-                organization = result[0];
-                return true;
-            default:
-                organization = result[0];
-                return false;
-        }
+        return Store.Organizations.FirstOrDefault(p => p.Name == name);
     }
 
     /// <summary>
@@ -96,16 +73,6 @@ public class OrganizationManager(IOrganizationStore store)
     public Task<Organization?> FindByIdAsync(string id)
     {
         return Store.FindByIdAsync(id);
-    }
-
-    /// <summary>
-    ///     通过组织 Id 查找组织。这是同步版本。
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public Organization? FindById(string id)
-    {
-        return Store.FindById(id);
     }
 
     /// <summary>

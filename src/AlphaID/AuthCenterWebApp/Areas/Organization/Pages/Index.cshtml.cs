@@ -10,8 +10,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public IActionResult OnGet(string anchor)
     {
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out AlphaIdPlatform.Subjects.Organization? organization))
-            return RedirectToPage("/Who", new { anchor });
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return NotFound();
 

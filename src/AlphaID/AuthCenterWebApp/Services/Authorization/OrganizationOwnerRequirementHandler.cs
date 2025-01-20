@@ -29,8 +29,7 @@ public class OrganizationOwnerRequirementHandler(
         if (anchor == null)
             return;
 
-        if (!organizationManager.TryGetSingleOrDefaultOrganization(anchor, out Organization? organization))
-            return;
+        var organization = organizationManager.FindByCurrentName(anchor);
         if (organization == null)
             return;
 

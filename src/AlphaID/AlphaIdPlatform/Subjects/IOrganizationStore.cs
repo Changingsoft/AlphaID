@@ -20,20 +20,6 @@ public interface IOrganizationStore
     Task<Organization?> FindByIdAsync(string id);
 
     /// <summary>
-    ///     通过组织 Id 查找组织。
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    Organization? FindById(string id);
-
-    /// <summary>
-    ///     通过组织名称查找组织。
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    IEnumerable<Organization> FindByName(string name);
-
-    /// <summary>
     ///     Create organization.
     /// </summary>
     /// <param name="organization"></param>

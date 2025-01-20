@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.RealNameDb
 {
     [DbContext(typeof(RealNameDbContext))]
-    [Migration("20240603090409_Init")]
+    [Migration("20250120091045_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace DatabaseTool.Migrations.RealNameDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -45,7 +45,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.ToTable("IdentityDocument");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityDocument");
+                    b.HasDiscriminator().HasValue("IdentityDocument");
 
                     b.UseTphMappingStrategy();
                 });
@@ -83,9 +83,6 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool>("Applied")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -117,7 +114,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.ToTable("RealNameAuthentication");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("RealNameAuthentication");
+                    b.HasDiscriminator().HasValue("RealNameAuthentication");
 
                     b.UseTphMappingStrategy();
                 });
@@ -159,7 +156,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.ToTable("RealNameRequest");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("RealNameRequest");
+                    b.HasDiscriminator().HasValue("RealNameRequest");
 
                     b.UseTphMappingStrategy();
                 });
@@ -289,15 +286,15 @@ namespace DatabaseTool.Migrations.RealNameDb
 
             modelBuilder.Entity("IdSubjects.RealName.RealNameAuthentication", b =>
                 {
-                    b.OwnsOne("IdSubjects.PersonNameInfo", "PersonName", b1 =>
+                    b.OwnsOne("IdSubjects.RealName.HumanNameInfo", "PersonName", b1 =>
                         {
                             b1.Property<string>("RealNameAuthenticationId")
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("FullName")
                                 .IsRequired()
-                                .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)");
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
 
                             b1.Property<string>("GivenName")
                                 .HasMaxLength(50)
@@ -307,19 +304,11 @@ namespace DatabaseTool.Migrations.RealNameDb
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
-                            b1.Property<string>("SearchHint")
-                                .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)");
-
                             b1.Property<string>("Surname")
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
                             b1.HasKey("RealNameAuthenticationId");
-
-                            b1.HasIndex("FullName");
-
-                            b1.HasIndex("SearchHint");
 
                             b1.ToTable("RealNameAuthentication");
 

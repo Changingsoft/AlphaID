@@ -1,0 +1,14 @@
+@using AlphaIdPlatform.Identity
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<NaturalPerson> UserManager
+<div class="card">
+    <div class="card-header">
+        人员
+    </div>
+    <div class="card-body">
+        <p>@(UserManager.Users.Count()) 个人员</p>
+    </div>
+</div>
+@code {
+
+}

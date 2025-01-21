@@ -1,0 +1,14 @@
+@using AlphaIdPlatform.Subjects
+@inject OrganizationManager OrganizationManager
+
+<div class="card">
+    <div class="card-header">
+        组织
+    </div>
+    <div class="card-body">
+        <p>@OrganizationManager.Organizations.Count() 个组织</p>
+    </div>
+</div>
+@code {
+
+}

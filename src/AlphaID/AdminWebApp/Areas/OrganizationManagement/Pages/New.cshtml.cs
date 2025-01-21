@@ -56,14 +56,14 @@ public class NewModel(OrganizationManager manager) : PageModel
                 return Page();
             }
 
-        var factory = new OrganizationBuilder(Name);
-
-        Organization org = factory.Organization;
-        org.Domicile = Domicile;
-        org.Representative = LegalPersonName;
-        org.EstablishedAt = EstablishedAt;
-        org.TermBegin = TermBegin;
-        org.TermEnd = TermEnd;
+        Organization org = new Organization(Name)
+        {
+            Domicile = Domicile,
+            Representative = LegalPersonName,
+            EstablishedAt = EstablishedAt,
+            TermBegin = TermBegin,
+            TermEnd = TermEnd
+        };
 
         if (!ModelState.IsValid) return Page();
 

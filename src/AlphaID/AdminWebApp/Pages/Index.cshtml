@@ -1,7 +1,7 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewBag.Title = $"{Product.Value.Name} {L["Management center"].Value}";
+    //ViewBag.Title = $"{Product.Value.Name}";
 }
 
 @section PageHeader
@@ -12,10 +12,10 @@
 <h3>Summary</h3>
 <div class="row">
     <div class="col-3">
-        <PeopleNavPanel></PeopleNavPanel>
+        <component type="typeof(PeopleNavPanel)" render-mode="Static"/>
     </div>
     <div class="col-3">
-        <OrganizationNavPanel></OrganizationNavPanel>
+        <component type="typeof(OrganizationNavPanel)" render-mode="Static"/>
     </div>
     <div class="col-3">
         <vc:oidc-nav-panel></vc:oidc-nav-panel>

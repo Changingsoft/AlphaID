@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "_Html";
 }
 
@@ -15,7 +15,10 @@
 </div>
 @await RenderSectionAsync("PageComponents", false)
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/tabler/dist/js/tabler.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", false)
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/tabler/dist/js/tabler.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", false)
+}

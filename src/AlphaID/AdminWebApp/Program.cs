@@ -118,6 +118,7 @@ builder.Services.AddRazorPages(options =>
 
 //启用API Controller
 builder.Services.AddControllers();
+builder.Services.AddServerSideBlazor();
 
 //配置授权策略。
 builder.Services.AddAuthorizationBuilder()
@@ -278,6 +279,7 @@ app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
+app.MapBlazorHub();
 
 app.Run();
 

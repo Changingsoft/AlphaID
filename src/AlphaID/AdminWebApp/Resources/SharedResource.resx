@@ -284,6 +284,9 @@
   <data name="Resource name" xml:space="preserve">
     <value>Resource name</value>
   </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
   <data name="Root DN" xml:space="preserve">
     <value>Root DN</value>
   </data>

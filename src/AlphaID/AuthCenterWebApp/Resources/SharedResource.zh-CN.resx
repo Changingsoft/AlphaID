@@ -324,4 +324,7 @@
   <data name="Reset password" xml:space="preserve">
     <value>重置密码</value>
   </data>
+  <data name="Return" xml:space="preserve">
+    <value>返回</value>
+  </data>
 </root>

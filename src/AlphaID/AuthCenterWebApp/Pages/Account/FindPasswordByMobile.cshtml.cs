@@ -15,7 +15,7 @@ public class FindPasswordByMobileModel(
     ApplicationUserManager<NaturalPerson> userManager,
     IVerificationCodeService verificationCodeService) : PageModel
 {
-    [Display(Name = "PhoneNumber phone number")]
+    [Display(Name = "Phone number")]
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
     public string Mobile { get; set; } = null!;

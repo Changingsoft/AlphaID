@@ -1,79 +1,80 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Platform;
 using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordMobileModel(
-    NaturalPersonService naturalPersonService,
-    ApplicationUserManager<NaturalPerson> userManager,
-    IVerificationCodeService verificationCodeService) : PageModel
+public class ResetPasswordMobileModel(ApplicationUserManager<NaturalPerson> userManager) : PageModel
 {
     [BindProperty]
-    public string Code { get; set; } = null!;
-
-    [BindProperty]
-    [Required(ErrorMessage = "Validate_Required")]
-    [Display(Name = "PhoneNumber phone number")]
-    public string PhoneNumber { get; set; } = null!;
-
-    [BindProperty]
-    [Required(ErrorMessage = "Validate_Required")]
-    [Display(Name = "Verification code")]
-    public string VerificationCode { get; set; } = null!;
-
-    [BindProperty]
-    [DataType(DataType.Password)]
-    [Required(ErrorMessage = "Validate_Required")]
-    [Display(Name = "New password")]
-    public string NewPassword { get; set; } = null!;
-
-    [BindProperty]
-    [DataType(DataType.Password)]
-    [Required(ErrorMessage = "Validate_Required")]
-    [Compare(nameof(NewPassword), ErrorMessage = "Validate_PasswordConfirm")]
-    [Display(Name = "Confirm password")]
-    public string ConfirmPassword { get; set; } = null!;
+    public InputModel Input { get; set; } = null!;
 
     public IActionResult OnGet(string code, string phone)
     {
-        if (code == null)
-            return BadRequest("A code must be supplied for password reset.");
-
-        Code = code;
-        PhoneNumber = phone;
+        Input = new InputModel
+        {
+            Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
+            PhoneNumber = phone
+        };
 
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phone))
-            ModelState.AddModelError(nameof(PhoneNumber), "移动电话号码无效");
+        if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out var phone))
+        {
+            ModelState.AddModelError(nameof(Input.PhoneNumber), "移动电话号码无效");
+        }
 
-        if (!ModelState.IsValid)
-            return Page();
+        if (!this.ModelState.IsValid)
+            return this.Page();
 
         var normalPhoneNumber = phone.ToString();
+        var person = userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
+        if (person == null || !person.PhoneNumberConfirmed)
+        {
+            return this.RedirectToPage("ResetPasswordConfirmation");
+        }
 
-        NaturalPerson? person = await userManager.FindByMobileAsync(normalPhoneNumber, HttpContext.RequestAborted);
-        if (person is not { PhoneNumberConfirmed: true }) return RedirectToPage("ResetPasswordConfirmation");
+        var result = await userManager.ResetPasswordAsync(person, this.Input.Code, this.Input.NewPassword);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                this.ModelState.AddModelError("", error.Description);
+                return Page();
+            }
+        }
 
-        if (!await verificationCodeService.VerifyAsync(PhoneNumber, VerificationCode))
-            return RedirectToPage("ResetPasswordConfirmation");
+        return RedirectToPage("ResetPasswordConfirmation");
+    }
 
-        IdentityResult result = await naturalPersonService.ResetPasswordAsync(person, Code, NewPassword);
-        if (result.Succeeded) return RedirectToPage("ResetPasswordConfirmation");
+    public class InputModel
+    {
+        public string Code { get; set; } = null!;
 
-        foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
-        return Page();
+        [Required(ErrorMessage = "{0}是必需的")]
+        [Display(Name = "移动电话号码")]
+        public string PhoneNumber { get; set; } = null!;
+
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "{0}是必需的")]
+        [Display(Name = "新密码")]
+        public string NewPassword { get; set; } = null!;
+
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "{0}是必需的")]
+        [Compare(nameof(NewPassword))]
+        [Display(Name = "确认密码")]
+        public string ConfirmPassword { get; set; } = null!;
     }
 }

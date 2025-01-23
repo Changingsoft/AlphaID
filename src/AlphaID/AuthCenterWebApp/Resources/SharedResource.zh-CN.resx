@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="2 to 10 characters. Leave blank to remove it." xml:space="preserve">
-	  <value>2到10个字符。留空则移除。</value>
+    <value>2到10个字符。留空则移除。</value>
   </data>
   <data name="Account" xml:space="preserve">
     <value>账户</value>
   </data>
   <data name="Account name" xml:space="preserve">
-	  <value>账户名</value>
+    <value>账户名</value>
   </data>
   <data name="Account number" xml:space="preserve">
-	  <value>账号</value>
+    <value>账号</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>地址</value>
@@ -136,16 +136,16 @@
     <value>同意</value>
   </data>
   <data name="Apply changes" xml:space="preserve">
-	  <value>应用更改</value>
+    <value>应用更改</value>
   </data>
   <data name="Bank" xml:space="preserve">
     <value>银行</value>
   </data>
   <data name="Bank name" xml:space="preserve">
-	  <value>创建</value>
+    <value>创建</value>
   </data>
   <data name="Bio" xml:space="preserve">
-	  <value>个性签名</value>
+    <value>个性签名</value>
   </data>
   <data name="Captcha code" xml:space="preserve">
     <value>验证码</value>
@@ -166,10 +166,10 @@
     <value>当前用户名</value>
   </data>
   <data name="Date of birth" xml:space="preserve">
-	  <value>出生日期</value>
+    <value>出生日期</value>
   </data>
   <data name="Delete" xml:space="preserve">
-	  <value>删除</value>
+    <value>删除</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>部门</value>
@@ -190,10 +190,10 @@
     <value>女</value>
   </data>
   <data name="Full name" xml:space="preserve">
-	  <value>全名</value>
+    <value>全名</value>
   </data>
   <data name="Full name of organization." xml:space="preserve">
-	  <value>组织的完整全称。</value>
+    <value>组织的完整全称。</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>性别</value>
@@ -202,19 +202,19 @@
     <value>名字</value>
   </data>
   <data name="Identifier type" xml:space="preserve">
-	  <value>标识类型</value>
+    <value>标识类型</value>
   </data>
   <data name="Identifier value" xml:space="preserve">
-	  <value>标识值</value>
+    <value>标识值</value>
   </data>
   <data name="Legal entity identifier" xml:space="preserve">
-	  <value>全球法人实体标识（LEI）</value>
+    <value>全球法人实体标识（LEI）</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>男</value>
   </data>
   <data name="Middle name" xml:space="preserve">
-	  <value>中间名</value>
+    <value>中间名</value>
   </data>
   <data name="Mobile phone number" xml:space="preserve">
     <value>移动电话号码</value>
@@ -234,23 +234,20 @@
   <data name="New user name" xml:space="preserve">
     <value>新用户名</value>
   </data>
-  <data name="Nick name" xml:space="preserve">
-	  <value>昵称</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
   <data name="Phone number" xml:space="preserve">
-	  <value>移动电话号码</value>
+    <value>移动电话号码</value>
   </data>
   <data name="Phonetic given name" xml:space="preserve">
-	  <value>注音名</value>
+    <value>注音名</value>
   </data>
   <data name="Phonetic surname" xml:space="preserve">
-	  <value>注音姓</value>
+    <value>注音姓</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-	  <value>隐私</value>
+    <value>隐私</value>
   </data>
   <data name="Recovery code" xml:space="preserve">
     <value>恢复代码</value>
@@ -268,10 +265,10 @@
     <value>记住这台设备</value>
   </data>
   <data name="Representative" xml:space="preserve">
-	  <value>负责人</value>
+    <value>负责人</value>
   </data>
   <data name="Short description about yourself." xml:space="preserve">
-	  <value>您自己的简短描述。</value>
+    <value>您自己的简短描述。</value>
   </data>
   <data name="Surname" xml:space="preserve">
     <value>姓氏</value>
@@ -289,10 +286,10 @@
     <value>统一社会信用代码</value>
   </data>
   <data name="Update" xml:space="preserve">
-	  <value>更新</value>
+    <value>更新</value>
   </data>
   <data name="Usage" xml:space="preserve">
-	  <value>用途</value>
+    <value>用途</value>
   </data>
   <data name="User name" xml:space="preserve">
     <value>用户名</value>
@@ -312,13 +309,22 @@
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+    <value>验证</value>
+  </data>
   <data name="Website" xml:space="preserve">
-	  <value>个人主页</value>
+    <value>个人主页</value>
   </data>
   <data name="Your personal website." xml:space="preserve">
-	  <value>您的个人主页。</value>
+    <value>您的个人主页。</value>
   </data>
-  <data name="Verify" xml:space="preserve">
-	  <value>验证</value>
+  <data name="Nick name" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="Reset password" xml:space="preserve">
+    <value>重置密码</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>返回</value>
   </data>
 </root>

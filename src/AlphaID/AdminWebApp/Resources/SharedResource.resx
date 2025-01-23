@@ -118,48 +118,48 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="A friendly name that appears on the user interface." xml:space="preserve">
-	  <value>A friendly name that appears on the user interface.</value>
+    <value>A friendly name that appears on the user interface.</value>
   </data>
   <data name="A unique name to identity this provider." xml:space="preserve">
-	  <value>A unique name to identity this provider.</value>
+    <value>A unique name to identity this provider.</value>
   </data>
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
   <data name="Account name" xml:space="preserve">
-	  <value>Account name</value>
+    <value>Account name</value>
   </data>
   <data name="Account number" xml:space="preserve">
-	  <value>Account number</value>
+    <value>Account number</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
   <data name="Age" xml:space="preserve">
-	  <value>Age</value>
+    <value>Age</value>
   </data>
   <data name="Allowed access token signing algorithms" xml:space="preserve">
     <value>Allowed access token signing algorithms</value>
   </data>
   <data name="Apply changes" xml:space="preserve">
-	  <value>Apply changes</value>
-	  <comment>Apply changes</comment>
+    <value>Apply changes</value>
+    <comment>Apply changes</comment>
   </data>
   <data name="Are you sure you want to delete it?" xml:space="preserve">
-	  <value>Are you sure you want to delete it?</value>
-	  <comment>Are you sure you want to delete it?</comment>
+    <value>Are you sure you want to delete it?</value>
+    <comment>Are you sure you want to delete it?</comment>
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
   </data>
   <data name="Bank name" xml:space="preserve">
-	  <value>Bank name</value>
+    <value>Bank name</value>
   </data>
   <data name="Client Id" xml:space="preserve">
-	  <value>Client Id</value>
+    <value>Client Id</value>
   </data>
   <data name="Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID." xml:space="preserve">
-	  <value>Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.</value>
+    <value>Client must specify Resource ID in authorization request, so that the Audience claim that issued the token includes the Resource ID.</value>
   </data>
   <data name="Client name" xml:space="preserve">
     <value>Client name</value>
@@ -210,7 +210,7 @@
     <value>Female</value>
   </data>
   <data name="Front channel logout URI" xml:space="preserve">
-	  <value>Front channel logout URI</value>
+    <value>Front channel logout URI</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
@@ -219,7 +219,7 @@
     <value>Given name</value>
   </data>
   <data name="Is owner" xml:space="preserve">
-	  <value>Is owner</value>
+    <value>Is owner</value>
   </data>
   <data name="Key" xml:space="preserve">
     <value>Key</value>
@@ -228,7 +228,7 @@
     <value>Male</value>
   </data>
   <data name="Membership visibility" xml:space="preserve">
-	  <value>Membership visibility</value>
+    <value>Membership visibility</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -243,16 +243,16 @@
     <value>Next</value>
   </data>
   <data name="Other" xml:space="preserve">
-	  <value>Other</value>
+    <value>Other</value>
   </data>
   <data name="Overview" xml:space="preserve">
-	  <value>Overview</value>
+    <value>Overview</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="People" xml:space="preserve">
-	  <value>People</value>
+    <value>People</value>
   </data>
   <data name="Phone number" xml:space="preserve">
     <value>Phone number</value>
@@ -267,8 +267,7 @@
     <value>Phonetic surname</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-	  <value>Privacy</value>
-	  <comment>Privacy</comment>
+    <value>Privacy</value>
   </data>
   <data name="Remark" xml:space="preserve">
     <value>Remark</value>
@@ -280,19 +279,22 @@
     <value>Required</value>
   </data>
   <data name="Resource ID" xml:space="preserve">
-	  <value>Resource ID</value>
+    <value>Resource ID</value>
   </data>
   <data name="Resource name" xml:space="preserve">
     <value>Resource name</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
   </data>
   <data name="Root DN" xml:space="preserve">
     <value>Root DN</value>
   </data>
   <data name="Scheme" xml:space="preserve">
-	  <value>Scheme</value>
+    <value>Scheme</value>
   </data>
   <data name="Search" xml:space="preserve">
-	  <value>Search</value>
+    <value>Search</value>
   </data>
   <data name="Secret" xml:space="preserve">
     <value>Secret</value>
@@ -310,17 +312,16 @@
     <value>Surname</value>
   </data>
   <data name="Taxpayer ID" xml:space="preserve">
-	  <value>Taxpayer ID</value>
+    <value>Taxpayer ID</value>
   </data>
   <data name="Terms of service" xml:space="preserve">
-	  <value>Terms of service</value>
-	  <comment>Terms of service</comment>
+    <value>Terms of service</value>
   </data>
   <data name="The client id already exists." xml:space="preserve">
-	  <value>The client id already exists.</value>
+    <value>The client id already exists.</value>
   </data>
   <data name="The {0} field is required." xml:space="preserve">
-	  <value>The {0} field is required.</value>
+    <value>The {0} field is required.</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
@@ -332,13 +333,13 @@
     <value>Unified social credit code</value>
   </data>
   <data name="Unique ID of the client." xml:space="preserve">
-	  <value>Unique ID of the client.</value>
+    <value>Unique ID of the client.</value>
   </data>
   <data name="Unique identifier for resource in OIDC workflow." xml:space="preserve">
-	  <value>Unique identifier for resource in OIDC workflow.</value>
+    <value>Unique identifier for resource in OIDC workflow.</value>
   </data>
   <data name="Unselected" xml:space="preserve">
-	  <value>Unselected</value>
+    <value>Unselected</value>
   </data>
   <data name="UPN suffix" xml:space="preserve">
     <value>UPN suffix</value>
@@ -353,7 +354,7 @@
     <value>User name</value>
   </data>
   <data name="Validate_DataType_Url" xml:space="preserve">
-	  <value>Require valid URL</value>
+    <value>Require valid URL</value>
   </data>
   <data name="Validate_EmailAddress" xml:space="preserve">
     <value>It isn't look like an email address.</value>

@@ -1,0 +1,7 @@
+<Project>
+    <PropertyGroup>
+        <MinVerSkip Condition="'$(Configuration)' == 'Debug'">true</MinVerSkip>
+        <Product>AlphaID</Product>
+        <Company>Changingsoft</Company>
+    </PropertyGroup>
+</Project>

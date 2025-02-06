@@ -31,6 +31,15 @@ public class PersonResourceOwnerPasswordValidator(
         NaturalPerson? user = await userManager.FindByNameAsync(context.UserName);
         if (user != null)
         {
+            if (!user.Enabled)
+            {
+                logger.LogInformation(
+                    "Authentication failed for username: {username}, reason: User is disabled.",
+                    context.UserName);
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant);
+                return;
+            }
+
             if (options.Value.EnablePassExpires)
             {
                 if (!user.PasswordLastSet.HasValue || user.PasswordLastSet.Value < timeProvider.GetUtcNow().AddDays(0 - options.Value.PasswordExpiresDay))

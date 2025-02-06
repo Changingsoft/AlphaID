@@ -72,7 +72,6 @@ public static class IdSubjectsServiceCollectionExtensions
         if (setupAction != null)
         {
             services.Configure(setupAction);
-            services.Configure((Action<IdentityOptions>)setupAction);
         }
         return builder;
     }

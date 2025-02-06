@@ -103,11 +103,7 @@ where T : ApplicationUser
         return person;
     }
 
-    /// <summary>
-    ///     已重写。创建用户。
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public override async Task<IdentityResult> CreateAsync(T user)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
@@ -121,17 +117,39 @@ where T : ApplicationUser
         return result;
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="password"></param>
-    /// <returns></returns>
+
+    /// <inheritdoc />
     public override async Task<IdentityResult> CreateAsync(T user, string password)
     {
         DateTimeOffset utcNow = TimeProvider.GetUtcNow();
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
         user.PasswordLastSet = utcNow;
+        IdentityResult result = await base.CreateAsync(user, password);
+        if (result.Succeeded)
+            await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));
+        else
+            await EventService.RaiseAsync(new CreatePersonFailureEvent(user.UserName, result.Errors));
+
+        return result;
+    }
+
+    /// <summary>
+    /// 使用指定的密码创建用户。并且指示用户在登录时是否必须更改密码。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <param name="mustChangePassword">如果为true，则用户登录时必须修改密码。如果为false，和<see cref="CreateAsync(T, string)"/>等效。</param>
+    /// <returns></returns>
+    public virtual async Task<IdentityResult> CreateAsync(T user, string password, bool mustChangePassword)
+    {
+        DateTimeOffset utcNow = TimeProvider.GetUtcNow();
+        user.WhenCreated = utcNow;
+        user.WhenChanged = utcNow;
+        if (!mustChangePassword)
+        {
+            user.PasswordLastSet = utcNow;
+        }
         IdentityResult result = await base.CreateAsync(user, password);
         if (result.Succeeded)
             await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));

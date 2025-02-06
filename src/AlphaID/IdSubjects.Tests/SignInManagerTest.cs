@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -14,20 +9,42 @@ public class SignInManagerTest(ServiceProviderFixture serviceProvider)
     [Fact]
     public async Task DisabledUserSignInShouldFail()
     {
+        //Create a test user.
         var user = new ApplicationUser()
         {
             Enabled = false,
         };
 
-        var userManager = serviceProvider.RootServiceProvider
-            .GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+
+        var userManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
         await userManager.CreateAsync(user);
 
-        var signInManager = serviceProvider.RootServiceProvider
-            .GetRequiredService<ApplicationUserSignInManager<ApplicationUser>>();
+        var signInManager = scope.ServiceProvider.GetRequiredService<ApplicationUserSignInManager<ApplicationUser>>();
 
         var result = await signInManager.CheckPasswordSignInAsync(user, "Pass123$", false);
         Assert.False(result.Succeeded);
         Assert.True(result.IsNotAllowed);
+    }
+
+    [Fact]
+    public async Task SignInMustChangePasswordWhenPasswordLastSetNull()
+    {
+        //Create a test user.
+        var user = new ApplicationUser()
+        {
+            UserName = "TestUser",
+        };
+
+        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+
+        var userManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        await userManager.CreateAsync(user, "Pass123$", true);
+
+        var signInManager = scope.ServiceProvider.GetRequiredService<ApplicationUserSignInManager<ApplicationUser>>();
+
+        var result = await signInManager.CheckPasswordSignInAsync(user, "Pass123$", false);
+        Assert.False(result.Succeeded);
+        Assert.True(result.MustChangePassword());
     }
 }

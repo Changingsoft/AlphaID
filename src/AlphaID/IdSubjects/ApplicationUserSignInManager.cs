@@ -39,6 +39,12 @@ public class ApplicationUserSignInManager<T>(ApplicationUserManager<T> userManag
         string password,
         bool lockoutOnFailure)
     {
+        if (!user.Enabled)
+        {
+            await userManager.AccessFailedAsync(user);
+            return SignInResult.NotAllowed;
+        }
+
         SignInResult result = await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
         if (!result.Succeeded) return result;
 

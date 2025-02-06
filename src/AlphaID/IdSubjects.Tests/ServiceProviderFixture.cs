@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.Tests;
@@ -11,6 +12,8 @@ public class ServiceProviderFixture : IDisposable
         services.AddIdSubjects<ApplicationUser>()
             .AddPersonStore<StubApplicationUserStore, ApplicationUser>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
+        services.AddScoped<ApplicationUserSignInManager<ApplicationUser>>();
+        services.AddScoped<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
 
         RootServiceProvider = services.BuildServiceProvider();
         ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();

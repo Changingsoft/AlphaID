@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
+using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -20,7 +21,8 @@ public class Callback(
     IEventService events,
     ILogger<Callback> logger,
     UserManager<NaturalPerson> userManager,
-    SignInManager<NaturalPerson> signInManager) : PageModel
+    SignInManager<NaturalPerson> signInManager,
+    IOptions<LoginOptions> loginOptions) : PageModel
 {
     public async Task<IActionResult> OnGetAsync()
     {
@@ -50,7 +52,19 @@ public class Callback(
         string returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
 
         NaturalPerson? user = await userManager.FindByLoginAsync(provider, providerUserId);
-        if (user == null) return RedirectToPage("/Account/BindLogin", new { returnUrl });
+        // 如果未找到用户，则尝试让用户本地登录以便绑定到外部登录。
+        // 如果未启用本地登录，则登录活动失败。
+        if (user == null)
+        {
+            if (loginOptions.Value.AllowLocalLogin)
+                return RedirectToPage("/Account/Login", new { returnUrl });
+            else
+                return RedirectToPage("/Account/LoginFailed");
+        }
+        
+        // 如果用户被禁用，则登录活动失败。
+        if(!user.Enabled)
+            return RedirectToPage("/Account/LoginFailed");
 
         // this allows us to collect any additional claims or properties
         // for the specific protocols used and store them in the local auth cookie.
@@ -59,7 +73,7 @@ public class Callback(
         var localSignInProps = new AuthenticationProperties();
         CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
 
-        // 签发本地登录凭据。
+        // 签发本地登录凭据。 
         await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
         //注销当前的外部登录凭据。

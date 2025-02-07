@@ -1,0 +1,23 @@
+@page
+@model AuthCenterWebApp.Pages.Account.LoginFailedModel
+@{
+    ViewBag.Title = L["Sign in failed."];
+}
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+        @Product.Value.Name @L["Account"]
+    </a>
+</div>
+<div class="card card-md">
+    <div class="card-body">
+        <h2 class="h2 text-center mb-4">@L["Attempt sign in failed."]</h2>
+        <p>This may be caused by the following reasons:</p>
+        <ul>
+            <li>Incorrect user name or password.</li>
+            <li>Sign in method not supported.</li>
+            <li>Incorrect account settings.</li>
+        </ul>
+        <p>Please try again or contact your administrator for help.</p>
+    </div>
+</div>

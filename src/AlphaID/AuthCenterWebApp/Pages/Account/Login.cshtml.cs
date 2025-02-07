@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
+using IdentityModel;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -28,12 +30,18 @@ public class LoginModel(
 {
     public ViewModel View { get; set; } = null!;
 
+    public AuthenticateResult ExternalLoginResult { get;set; } = null!;
+
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string? returnUrl)
     {
         await BuildModelAsync(returnUrl);
+
+        //尝试验证外部登录。
+        ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+
         if (View.IsExternalLoginOnly)
             // we only have one option for logging in and it's an external provider
             return RedirectToPage("/ExternalLogin/Challenge",
@@ -47,6 +55,9 @@ public class LoginModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
+        //先尝试验证外部登录。
+        ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+
         //检查我们是否在授权请求的上下文中
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
@@ -86,6 +97,34 @@ public class LoginModel(
                 {
                     await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName,
                         clientId: context?.Client.ClientId));
+
+                    //如果外部登录有效，则为用户创建外部登录关联。
+                    if(ExternalLoginResult.Succeeded)
+                    {
+                        //为用户绑定外部登录
+                        ClaimsPrincipal? externalUser = ExternalLoginResult.Principal;
+                        Claim userIdClaim = externalUser.FindFirst(JwtClaimTypes.Subject) ??
+                                            externalUser.FindFirst(ClaimTypes.NameIdentifier) ??
+                                            throw new Exception("Unknown userid");
+
+                        string? provider = ExternalLoginResult.Properties.Items[".AuthScheme"];
+                        string? providerDisplayName = ExternalLoginResult.Properties.Items["schemeDisplayName"];
+                        string providerUserId = userIdClaim.Value;
+                        await userManager.AddLoginAsync(user,
+                            new UserLoginInfo(provider!, providerUserId, providerDisplayName));
+
+                        // this allows us to collect any additional claims or properties
+                        // for the specific protocols used and store them in the local auth cookie.
+                        // this is typically used to store data needed for sign out from those protocols.
+                        var additionalLocalClaims = new List<Claim>();
+                        var localSignInProps = new AuthenticationProperties();
+                        CaptureExternalLoginContext(ExternalLoginResult, additionalLocalClaims, localSignInProps);
+
+                        await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
+
+                        // delete temporary cookie used during external authentication
+                        await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+                    }
 
                     if (context != null)
                     {
@@ -206,6 +245,23 @@ public class LoginModel(
         };
     }
 
+    private void CaptureExternalLoginContext(AuthenticateResult externalResult,
+        List<Claim> localClaims,
+        AuthenticationProperties localSignInProps)
+    {
+        // capture the idp used to log in, so the session knows where the user came from
+        localClaims.Add(new Claim(JwtClaimTypes.IdentityProvider, externalResult.Properties!.Items[".AuthScheme"]!));
+
+        // if the external system sent a session id claim, copy it over.
+        // so we can use it for single sign-out
+        Claim? sid = externalResult.Principal!.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
+        if (sid != null) localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
+
+        // if the external provider issued an id_token, we'll keep it for sign out
+        string? idToken = externalResult.Properties.GetTokenValue("id_token");
+        if (idToken != null)
+            localSignInProps.StoreTokens([new AuthenticationToken { Name = "id_token", Value = idToken }]);
+    }
 
     public class InputModel
     {

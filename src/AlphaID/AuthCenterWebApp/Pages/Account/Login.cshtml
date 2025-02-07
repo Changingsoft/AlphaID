@@ -15,6 +15,10 @@
         @if (Model.View.EnableLocalLogin)
         {
             <h2 class="h2 text-center mb-4">@L["Login to your account"]</h2>
+            @if(Model.ExternalLoginResult.Succeeded)
+            {
+                <p>You have signed in from an external login. login to your local account to bind your external login.</p>
+            }
             <form method="post">
                 <input type="hidden" asp-for="Input.ReturnUrl"/>
 

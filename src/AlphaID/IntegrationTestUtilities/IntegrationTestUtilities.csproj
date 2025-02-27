@@ -8,12 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="1.1.2" />
-		<PackageReference Include="MinVer" Version="5.0.0">
+		<PackageReference Include="AngleSharp" Version="1.2.0" />
+		<PackageReference Include="MinVer" Version="6.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="xunit.assert" Version="2.9.0" />
+		<PackageReference Include="xunit.assert" Version="2.9.3" />
 	</ItemGroup>
 
 </Project>

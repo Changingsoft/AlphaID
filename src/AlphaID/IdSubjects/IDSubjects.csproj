@@ -15,15 +15,15 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="IdentityModel" Version="6.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.7" />
-		<PackageReference Include="MinVer" Version="5.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.13" />
+		<PackageReference Include="MinVer" Version="6.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="NetTopologySuite" Version="2.5.0" />
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
-		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
-		<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+		<PackageReference Include="TimeZoneConverter" Version="7.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Resources.Designer.cs">

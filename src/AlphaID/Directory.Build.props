@@ -4,6 +4,6 @@
         <Product>AlphaID</Product>
         <Company>Changingsoft</Company>
         <DefineConstants>WINDOWS</DefineConstants>
-        <NoWarn>$(NoWarn);CA1416</NoWarn>
+        <NoWarn>CA1416</NoWarn>
     </PropertyGroup>
 </Project>

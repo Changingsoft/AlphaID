@@ -8,7 +8,7 @@ namespace AuthCenterWebApp.Pages;
 public static class Extensions
 {
     /// <summary>
-    ///     È·¶¨Éí·İÑéÖ¤·½°¸ÊÇ·ñÖ§³Ö×¢Ïú¡£
+    ///     ç¡®å®šèº«ä»½éªŒè¯æ–¹æ¡ˆæ˜¯å¦æ”¯æŒæ³¨é”€ã€‚
     /// </summary>
     public static async Task<bool> GetSchemeSupportsSignOutAsync(this HttpContext context, string scheme)
     {
@@ -18,7 +18,7 @@ public static class Extensions
     }
 
     /// <summary>
-    ///     ¼ì²éÖØ¶¨Ïò URI ÊÇ·ñÊÊÓÃÓÚ±¾»ú¿Í»§¶Ë¡£
+    ///     æ£€æŸ¥é‡å®šå‘ URI æ˜¯å¦é€‚ç”¨äºæœ¬æœºå®¢æˆ·ç«¯ã€‚
     /// </summary>
     public static bool IsNativeClient(this AuthorizationRequest context)
     {
@@ -27,13 +27,13 @@ public static class Extensions
     }
 
     /// <summary>
-    ///     ³ÊÏÖÓÃÓÚÖØ¶¨Ïò»ØÖØ¶¨Ïò URI µÄ¼ÓÔØÒ³¡£
+    ///     å‘ˆç°ç”¨äºé‡å®šå‘å›é‡å®šå‘ URI çš„åŠ è½½é¡µã€‚
     /// </summary>
     public static IActionResult LoadingPage(this PageModel page, string redirectUri)
     {
         page.HttpContext.Response.StatusCode = 200;
         page.HttpContext.Response.Headers.Location = "";
 
-        return page.RedirectToPage("/Redirect/LoginModel", new { RedirectUri = redirectUri });
+        return page.RedirectToPage("/Redirect/Index", new { RedirectUri = redirectUri });
     }
 }

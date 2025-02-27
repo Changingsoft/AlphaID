@@ -59,10 +59,10 @@ public class LoginWithRecoveryCodeModel(
                 if (context.IsNativeClient())
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
-                    return this.LoadingPage(returnUrl);
+                    return this.LoadingPage(returnUrl!);
 
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                return Redirect(returnUrl);
+                return Redirect(returnUrl!);
             }
 
             // request for a local page

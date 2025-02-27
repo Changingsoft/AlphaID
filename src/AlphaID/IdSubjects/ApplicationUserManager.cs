@@ -357,17 +357,6 @@ where T : ApplicationUser
         return result;
     }
 
-    /// <inheritdoc />
-    protected override async Task<IdentityResult> UpdatePasswordHash(T user,
-        string newPassword,
-        bool validatePassword)
-    {
-
-        IdentityResult result = await base.UpdatePasswordHash(user, newPassword, validatePassword);
-
-        return result;
-    }
-
     /// <summary>
     ///     管理员重置用户密码。
     /// </summary>

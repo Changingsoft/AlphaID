@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -326,5 +326,14 @@
   </data>
   <data name="Return" xml:space="preserve">
     <value>返回</value>
+  </data>
+  <data name="Birth date" xml:space="preserve">
+	  <value>出生日期</value>
+  </data>
+  <data name="Received from mobile phone short message." xml:space="preserve">
+	  <value>从手机短信接收。</value>
+  </data>
+  <data name="User name, email or phone number" xml:space="preserve">
+	  <value>用户名、电子邮件地址或移动电话号码</value>
   </data>
 </root>

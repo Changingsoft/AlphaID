@@ -266,7 +266,7 @@ public class LoginModel(
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
-        [Display(Name = "User name", Prompt = "Account name, email, mobile phone number, ID card number, etc.")]
+        [Display(Name = "Account", Prompt = "User name, email or phone number")]
         public string Username { get; set; } = null!;
 
         [Required(ErrorMessage = "Validate_Required")]

@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Identity;
 namespace AuthCenterWebApp.Services;
 
 /// <summary>
-///     自然人资源所有者验证器。
+/// 自然人资源所有者验证器。
 /// </summary>
 /// <remarks>
-///     该验证器会考虑<see cref="ApplicationUser.PasswordLastSet"></see>属性以确保密码有效。
+/// 该验证器会考虑<see cref="ApplicationUser.PasswordLastSet"></see>属性以确保密码有效。
 /// </remarks>
 /// <param name="userManager"></param>
 /// <param name="signInManager"></param>

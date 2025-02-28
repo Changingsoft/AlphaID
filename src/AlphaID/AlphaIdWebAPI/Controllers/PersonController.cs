@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlphaIdWebAPI.Controllers;
 
 /// <summary>
-///     与自然人有关的查询。
+/// 与自然人有关的查询。
 /// </summary>
 /// <remarks>
-///     Init Person Controller.
+/// Init Person Controller.
 /// </remarks>
 /// <param name="personManager"></param>
 /// <param name="urlInfo"></param>
@@ -28,7 +28,7 @@ public class PersonController(
     private readonly SystemUrlInfo _urlInfo = urlInfo.Value;
 
     /// <summary>
-    ///     通过 UserName 获取指定用户的信息。
+    /// 通过 UserName 获取指定用户的信息。
     /// </summary>
     /// <remarks>
     /// 重要提示！为保持兼容性，该查询接口仍支持传入自然人的SubjectId，但在后续版本中将不再支持。
@@ -51,7 +51,7 @@ public class PersonController(
 
 
     /// <summary>
-    ///     查找某个自然人。
+    /// 查找某个自然人。
     /// </summary>
     /// <param name="q">关键词。关键词非空长度必须大于2个字符时，才会返回可用结果。可以通过用户名、全名来查找自然人。</param>
     /// <returns>Return matched peoples, up to 50 records.</returns>
@@ -109,7 +109,7 @@ public class PersonController(
     }
 
     /// <summary>
-    ///     获取指定用户的组织成员身份。
+    /// 获取指定用户的组织成员身份。
     /// </summary>
     /// <remarks>
     /// 重要提示！MembersOf 接口将被废弃。请使用 Memberships。目前仍支持通过指定SubjectId查找组成员身份，后续将不再支持。
@@ -135,7 +135,7 @@ public class PersonController(
     }
 
     /// <summary>
-    ///     用户信息。
+    /// 用户信息。
     /// </summary>
     /// <param name="SubjectId">Subject Id</param>
     /// <param name="Name">全名</param>
@@ -155,7 +155,7 @@ public class PersonController(
     };
 
     /// <summary>
-    ///     自然人
+    /// 自然人
     /// </summary>
     /// <param name="UserName">用户名</param>
     /// <param name="Name">全名</param>
@@ -166,7 +166,7 @@ public class PersonController(
         string? AvatarUrl = null)
     {
         /// <summary>
-        ///     通过NaturalPerson初始化自然人。
+        /// 通过NaturalPerson初始化自然人。
         /// </summary>
         /// <param name="person"></param>
         public SuggestedPersonModel(NaturalPerson person)
@@ -177,7 +177,7 @@ public class PersonController(
     }
 
     /// <summary>
-    ///     组织的成员。
+    /// 组织的成员。
     /// </summary>
     /// <param name="Department">部门</param>
     /// <param name="Title">职务</param>
@@ -192,7 +192,7 @@ public class PersonController(
         string? Remark)
     {
         /// <summary>
-        ///     Init.
+        /// Init.
         /// </summary>
         /// <param name="member"></param>
         public MembershipModel(OrganizationMember member)

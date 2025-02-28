@@ -1,4 +1,4 @@
-﻿using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlphaIdWebAPI.Controllers.OAuth;
 
 /// <summary>
-///     OIDC Client.
+/// OIDC Client.
 /// </summary>
 /// <param name="dbContext"></param>
 [ApiController]
@@ -15,7 +15,7 @@ namespace AlphaIdWebAPI.Controllers.OAuth;
 public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
 {
     /// <summary>
-    ///     通过 client-id 获取客户端信息。
+    /// 通过 client-id 获取客户端信息。
     /// </summary>
     /// <remarks>
     /// 任何已经身份验证的依赖方，可通过此接口获取指定client-id的客户端的信息。

@@ -279,7 +279,7 @@ await app.RunAsync();
 namespace AuthCenterWebApp
 {
     /// <summary>
-    ///     for Testing.
+    /// for Testing.
     /// </summary>
     public class Program
     {

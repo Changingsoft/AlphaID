@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using AlphaIdPlatform.Admin;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authentication;
 namespace AdminWebApp.Domain.Security;
 
 /// <summary>
-///     Claim transformation for role-based claims.
+/// Claim transformation for role-based claims.
 /// </summary>
 /// <remarks>
-///     Initialize.
+/// Initialize.
 /// </remarks>
 /// <param name="environment"></param>
 /// <param name="manager"></param>

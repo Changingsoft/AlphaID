@@ -1,16 +1,16 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Security.Claims;
 using IdentityModel;
 
 namespace AlphaIdPlatform.Security;
 
 /// <summary>
-///     Extensions for ClaimsPrincipal.
+/// Extensions for ClaimsPrincipal.
 /// </summary>
 public static class ClaimsPrincipalExtensions
 {
     /// <summary>
-    ///     获取用户的Profile URL.
+    /// 获取用户的Profile URL.
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
@@ -20,7 +20,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    ///     获取用户的Avatar Url.
+    /// 获取用户的Avatar Url.
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
@@ -31,7 +31,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    ///     确定声明中是否包括User profile picture.
+    /// 确定声明中是否包括User profile picture.
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
@@ -52,7 +52,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    ///     将用户的角色显示为逗号分隔的字符串
+    /// 将用户的角色显示为逗号分隔的字符串
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>

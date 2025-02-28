@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-///     Logon Account
+/// Logon Account
 /// </summary>
 [Table("LogonAccount")]
 [PrimaryKey(nameof(ObjectId), nameof(ServiceId))]
@@ -32,26 +32,26 @@ public class DirectoryAccount
     }
 
     /// <summary>
-    ///     PersonId.
+    /// PersonId.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
-    ///     目录对象的objectGUID。
+    /// 目录对象的objectGUID。
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string ObjectId { get; protected internal set; } = null!;
 
     /// <summary>
-    ///     目录服务Id.
+    /// 目录服务Id.
     /// </summary>
     public int ServiceId { get; set; }
 
     /// <summary>
-    ///     目录服务。
+    /// 目录服务。
     /// </summary>
     [ForeignKey(nameof(ServiceId))]
     public DirectoryServiceDescriptor DirectoryServiceDescriptor { get; protected set; } = null!;

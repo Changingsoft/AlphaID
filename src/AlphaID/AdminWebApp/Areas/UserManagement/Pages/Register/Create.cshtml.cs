@@ -78,7 +78,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     }
 
     /// <summary>
-    ///     检查移动电话的有效性和唯一性。
+    /// 检查移动电话的有效性和唯一性。
     /// </summary>
     /// <param name="mobile"></param>
     /// <returns></returns>
@@ -109,7 +109,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     }
 
     /// <summary>
-    ///     获取拼音。
+    /// 获取拼音。
     /// </summary>
     /// <returns></returns>
     public IActionResult OnGetPinyin(string surname, string givenName)

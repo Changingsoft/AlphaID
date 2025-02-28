@@ -1,7 +1,7 @@
-﻿namespace IdSubjects.ChineseName;
+namespace IdSubjects.ChineseName;
 
 /// <summary>
-///     名字拼音转换上下文。
+/// 名字拼音转换上下文。
 /// </summary>
 public class ChineseNamePinyinConvertContext
 {
@@ -19,12 +19,12 @@ public class ChineseNamePinyinConvertContext
     }
 
     /// <summary>
-    ///     组成姓氏的汉字读音字符列表。
+    /// 组成姓氏的汉字读音字符列表。
     /// </summary>
     public List<PhoneticChineseChar> SurnameChars { get; }
 
     /// <summary>
-    ///     组成名字的汉字读音字符列表。
+    /// 组成名字的汉字读音字符列表。
     /// </summary>
     public List<PhoneticChineseChar> GivenNameChars { get; }
 }

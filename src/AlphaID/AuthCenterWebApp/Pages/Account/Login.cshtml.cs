@@ -285,28 +285,28 @@ public class LoginModel(
     public class ViewModel
     {
         /// <summary>
-        ///     获取或设置是否允许记住登录。
+        /// 获取或设置是否允许记住登录。
         /// </summary>
         public bool AllowRememberLogin { get; set; } = true;
 
         /// <summary>
-        ///     获取或设置是否启用本地登录。
+        /// 获取或设置是否启用本地登录。
         /// </summary>
         public bool EnableLocalLogin { get; set; } = true;
 
         /// <summary>
-        ///     获取所有外部登录提供器。
+        /// 获取所有外部登录提供器。
         /// </summary>
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
 
         /// <summary>
-        ///     获取可见的外部登录提供器。
+        /// 获取可见的外部登录提供器。
         /// </summary>
         public IEnumerable<ExternalProvider> VisibleExternalProviders =>
             ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         /// <summary>
-        ///     只是是否仅外部登录。当且仅当禁用本地登录，且外部登录提供器只有1个时，该属性为true。
+        /// 只是是否仅外部登录。当且仅当禁用本地登录，且外部登录提供器只有1个时，该属性为true。
         /// </summary>
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders.Count() == 1;
 

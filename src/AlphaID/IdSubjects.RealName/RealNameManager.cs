@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 namespace IdSubjects.RealName;
 
 /// <summary>
-///     实名认证管理器。
+/// 实名认证管理器。
 /// </summary>
 /// <remarks>
-///     初始化实名认证管理器。
+/// 初始化实名认证管理器。
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="applicationUserManager"></param>
@@ -14,13 +14,13 @@ public class RealNameManager<T>(IRealNameAuthenticationStore store, UserManager<
 where T : ApplicationUser
 {
     /// <summary>
-    ///     获取可查询的实名认证信息集合。
+    /// 获取可查询的实名认证信息集合。
     /// </summary>
     public IQueryable<RealNameAuthentication> Authentications => store.Authentications;
 
 
     /// <summary>
-    ///     获取与自然人相关的实名状态信息。
+    /// 获取与自然人相关的实名状态信息。
     /// </summary>
     /// <param name="person"></param>
     /// <returns>与自然人相关的实名状态。如果没有，则返回null。</returns>
@@ -30,7 +30,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     向指定的自然人添加实名认证信息。
+    /// 向指定的自然人添加实名认证信息。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="authentication"></param>
@@ -75,7 +75,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     查找指定的实名认证信息。
+    /// 查找指定的实名认证信息。
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

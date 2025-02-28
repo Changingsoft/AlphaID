@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects;
 
 /// <summary>
-///     表示存储的二进制数据信息。
+/// 表示存储的二进制数据信息。
 /// </summary>
 [Owned]
 public record BinaryDataInfo
@@ -16,7 +16,7 @@ public record BinaryDataInfo
     }
 
     /// <summary>
-    ///     使用MIME类型和数据初始化二进制数据信息。
+    /// 使用MIME类型和数据初始化二进制数据信息。
     /// </summary>
     /// <param name="mimeType"></param>
     /// <param name="data"></param>
@@ -27,14 +27,14 @@ public record BinaryDataInfo
     }
 
     /// <summary>
-    ///     MIME类型
+    /// MIME类型
     /// </summary>
     [MaxLength(100)]
     [Unicode(false)]
     public string MimeType { get; set; } = null!;
 
     /// <summary>
-    ///     数据。
+    /// 数据。
     /// </summary>
     public byte[] Data { get; set; } = null!;
 }

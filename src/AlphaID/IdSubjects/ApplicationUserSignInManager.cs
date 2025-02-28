@@ -29,7 +29,7 @@ public class ApplicationUserSignInManager<T>(ApplicationUserManager<T> userManag
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     重写。当使用密码登录成功时，检查是否必须更改密码，并通知PersonManager记录登录成功信息。
+    /// 重写。当使用密码登录成功时，检查是否必须更改密码，并通知PersonManager记录登录成功信息。
     /// </summary>
     /// <param name="user">自然人</param>
     /// <param name="password">密码</param>

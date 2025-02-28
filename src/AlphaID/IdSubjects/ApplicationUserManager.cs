@@ -1,5 +1,4 @@
 using System.Transactions;
-using IdSubjects.Diagnostics;
 using IdSubjects.SecurityAuditing;
 using IdSubjects.SecurityAuditing.Events;
 using IdSubjects.Subjects;
@@ -12,23 +11,22 @@ using TimeZoneConverter;
 namespace IdSubjects;
 
 /// <summary>
-///     自然人管理器。
+/// 自然人管理器。
 /// </summary>
 /// <remarks>
 /// </remarks>
-/// <param name="store"></param>
-/// <param name="optionsAccessor"></param>
-/// <param name="passwordHasher"></param>
-/// <param name="userValidators"></param>
-/// <param name="passwordValidators"></param>
-/// <param name="keyNormalizer"></param>
-/// <param name="errors"></param>
-/// <param name="services"></param>
-/// <param name="logger"></param>
-/// <param name="passwordLifetimeOptions"></param>
-/// <param name="interceptors"></param>
-/// <param name="passwordHistoryManager"></param>
-/// <param name="eventService"></param>
+/// <param name="store">一个<see cref="IApplicationUserStore{T}"/>的实现，提供存取用户的能力。</param>
+/// <param name="optionsAccessor">标识选项。</param>
+/// <param name="passwordHasher">密码哈希计算器。</param>
+/// <param name="userValidators">用户验证器集合。</param>
+/// <param name="passwordValidators">密码验证器集合。</param>
+/// <param name="keyNormalizer">键规范化处理器。</param>
+/// <param name="errors">错误描述器。</param>
+/// <param name="services">服务提供器。</param>
+/// <param name="logger">日志记录器。</param>
+/// <param name="passwordLifetimeOptions">密码生存期选项。</param>
+/// <param name="passwordHistoryManager">密码历史管理器。</param>
+/// <param name="eventService">事件服务。</param>
 public class ApplicationUserManager<T>(
     IApplicationUserStore<T> store,
     IOptions<IdentityOptions> optionsAccessor,
@@ -40,7 +38,6 @@ public class ApplicationUserManager<T>(
     IServiceProvider services,
     ILogger<ApplicationUserManager<T>> logger,
     IOptions<PasswordLifetimeOptions> passwordLifetimeOptions,
-    IEnumerable<IInterceptor> interceptors,
     PasswordHistoryManager<T> passwordHistoryManager,
     IEventService eventService)
     : UserManager<T>(store,
@@ -60,36 +57,32 @@ where T : ApplicationUser
     public virtual PasswordLifetimeOptions PasswordLifetime => passwordLifetimeOptions.Value;
 
     /// <summary>
-    ///     获取 IApplicationUserStore.
+    /// 获取 IApplicationUserStore。该属性已替换原属性。
     /// </summary>
     public new IApplicationUserStore<T> Store { get; } = store;
 
     /// <summary>
-    ///     获取拦截器。
-    /// </summary>
-    public IEnumerable<IInterceptor> Interceptors { get; } = interceptors;
-
-    /// <summary>
+    /// 获取错误描述器。该属性已替换原属性。
     /// </summary>
     public new ApplicationUserIdentityErrorDescriber ErrorDescriber { get; } = errors;
 
     /// <summary>
-    ///     获取或设置时间提供器以便于可测试性。
+    /// 获取或设置时间提供器以便于可测试性。
     /// </summary>
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     获取用于密码历史的管理器。
+    /// 获取用于密码历史的管理器。
     /// </summary>
     public PasswordHistoryManager<T> PasswordHistoryManager { get; } = passwordHistoryManager;
 
     /// <summary>
-    ///     获取审计事件服务。
+    /// 获取审计事件服务。
     /// </summary>
     protected IEventService EventService { get; } = eventService;
 
     /// <summary>
-    ///     通过移动电话号码查找自然人。
+    /// 通过移动电话号码查找自然人。
     /// </summary>
     /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准 E.164 格式。</param>
     /// <param name="cancellation"></param>
@@ -160,7 +153,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     当身份验证成功时，调用此方法以记录包括登录次数、上次登录时间、登录方式等信息。
+    /// 当身份验证成功时，调用此方法以记录包括登录次数、上次登录时间、登录方式等信息。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="authenticationMethod"></param>
@@ -174,7 +167,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     已重写。若用户实现不对账户相关字段变更时，不应在用户实现中调用该方法。
+    /// 已重写。若用户实现不对账户相关字段变更时，不应在用户实现中调用该方法。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -185,10 +178,10 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     更新Person信息。已重写并添加了审计日志和拦截器。
+    /// 更新Person信息。已重写并添加了审计日志和拦截器。
     /// </summary>
     /// <remarks>
-    ///     该方法用于更新自然人其他信息，账户有关操作不使用该方法，并且不会出发审计和拦截。请使用账户管理相关专用方法来操作账户管理任务。
+    /// 该方法用于更新自然人其他信息，账户有关操作不使用该方法，并且不会出发审计和拦截。请使用账户管理相关专用方法来操作账户管理任务。
     /// </remarks>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -204,7 +197,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     已重写，删除用户。
+    /// 已重写，删除用户。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -222,7 +215,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     已重写，添加密码。
+    /// 已重写，添加密码。
     /// </summary>
     /// <param name="user"></param>
     /// <param name="password"></param>
@@ -248,7 +241,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     已重写。修改密码。
+    /// 已重写。修改密码。
     /// </summary>
     /// <param name="user"></param>
     /// <param name="currentPassword"></param>
@@ -300,7 +293,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     已重写。用户重设密码。
+    /// 已重写。用户重设密码。
     /// </summary>
     /// <param name="user"></param>
     /// <param name="token"></param>
@@ -336,8 +329,8 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     已重写。移除本地登录密码。
-    ///     该方法还会清空<see cref="ApplicationUser.PasswordLastSet" />的值。
+    /// 已重写。移除本地登录密码。
+    /// 该方法还会清空<see cref="ApplicationUser.PasswordLastSet" />的值。
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -358,7 +351,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     管理员重置用户密码。
+    /// 管理员重置用户密码。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newPassword"></param>
@@ -390,7 +383,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     解锁用户。
+    /// 解锁用户。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
@@ -403,7 +396,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     尝试设置时区。
+    /// 尝试设置时区。
     /// </summary>
     /// <param name="user"></param>
     /// <param name="tzName"></param>
@@ -426,7 +419,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     设置头像。
+    /// 设置头像。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="contentType"></param>
@@ -452,7 +445,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     清除用户的头像。
+    /// 清除用户的头像。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>

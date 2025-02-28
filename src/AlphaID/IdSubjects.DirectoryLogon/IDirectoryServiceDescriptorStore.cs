@@ -1,4 +1,4 @@
-﻿namespace IdSubjects.DirectoryLogon;
+namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// </summary>
@@ -27,7 +27,7 @@ public interface IDirectoryServiceDescriptorStore
     Task DeleteAsync(DirectoryServiceDescriptor serviceDescriptor);
 
     /// <summary>
-    ///     Find by Id.
+    /// Find by Id.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

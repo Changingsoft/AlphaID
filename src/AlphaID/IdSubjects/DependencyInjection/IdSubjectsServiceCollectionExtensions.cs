@@ -11,12 +11,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 #pragma warning restore IDE0130 // 命名空间与文件夹结构不匹配
 
 /// <summary>
-///     Extensions for IdSubjects service injection.
+/// Extensions for IdSubjects service injection.
 /// </summary>
 public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>
-    ///     向基础设施添加AlphaId自然人标识管理功能。
+    /// 向基础设施添加AlphaId自然人标识管理功能。
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>

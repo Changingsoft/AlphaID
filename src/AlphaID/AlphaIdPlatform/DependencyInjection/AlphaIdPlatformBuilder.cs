@@ -49,7 +49,7 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     public AuditLogBuilder AuditLog { get; } = auditLogBuilder;
 
     /// <summary>
-    ///     Add generic organization store implementation into the system.
+    /// Add generic organization store implementation into the system.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -61,7 +61,7 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
 
 
     /// <summary>
-    ///     Add organization member store implementation into the system.
+    /// Add organization member store implementation into the system.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

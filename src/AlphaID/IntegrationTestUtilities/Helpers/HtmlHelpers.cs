@@ -7,12 +7,12 @@ using AngleSharp.Io;
 namespace IntegrationTestUtilities.Helpers;
 
 /// <summary>
-///     Helpers for HTML document.
+/// Helpers for HTML document.
 /// </summary>
 public class HtmlHelpers
 {
     /// <summary>
-    ///     Get document from Http Response Message.
+    /// Get document from Http Response Message.
     /// </summary>
     /// <param name="response"></param>
     /// <returns></returns>

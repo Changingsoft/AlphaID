@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace AlphaId.PlatformServices.Aliyun;
 
 /// <summary>
-///     阿里云身份证识别服务。
+/// 阿里云身份证识别服务。
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -17,7 +17,7 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
     private readonly AliyunChineseIdCardOcrServiceOptions _options = options.Value;
 
     /// <summary>
-    ///     识别身份证背面（国徽面）。
+    /// 识别身份证背面（国徽面）。
     /// </summary>
     /// <param name="idCardBackImageData"></param>
     /// <returns></returns>
@@ -68,7 +68,7 @@ public class AliyunChineseIdCardOcrService(IOptions<AliyunChineseIdCardOcrServic
 
 
     /// <summary>
-    ///     识别身份证正面（个人信息面）。
+    /// 识别身份证正面（个人信息面）。
     /// </summary>
     /// <param name="idCardFrontImageData"></param>
     /// <returns></returns>

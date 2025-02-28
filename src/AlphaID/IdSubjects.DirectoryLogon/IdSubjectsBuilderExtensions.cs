@@ -9,7 +9,7 @@ namespace IdSubjects.DirectoryLogon;
 public static class IdSubjectsBuilderExtensions
 {
     /// <summary>
-    ///     向基础结构添加Directory目录管理功能。
+    /// 向基础结构添加Directory目录管理功能。
     /// </summary>
     /// <param name="builder"></param>
     /// <returns>返回目录管理构造器。</returns>

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 namespace IdSubjects;
 
 /// <summary>
-///     密码历史管理器。
+/// 密码历史管理器。
 /// </summary>
 /// <param name="store">密码历史存取器。</param>
 /// <param name="passwordHasher">密码哈希器。</param>
@@ -20,7 +20,7 @@ where T : ApplicationUser
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     命中指定用户的密码历史。
+    /// 命中指定用户的密码历史。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
@@ -35,7 +35,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     将密码计入历史。
+    /// 将密码计入历史。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
@@ -46,7 +46,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     清除用户的密码历史。
+    /// 清除用户的密码历史。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>

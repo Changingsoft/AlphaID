@@ -1,14 +1,14 @@
-﻿using AlphaIdPlatform.Platform;
+using AlphaIdPlatform.Platform;
 
 namespace AlphaIdPlatform.Debugging;
 
 /// <summary>
-///     Chinese ID Card OCR Service for DEBUG.
+/// Chinese ID Card OCR Service for DEBUG.
 /// </summary>
 public class DebugChineseIdCardOcrService : IChineseIdCardOcrService
 {
     /// <summary>
-    ///     Recognize ID Card Back.
+    /// Recognize ID Card Back.
     /// </summary>
     /// <param name="idCardBackImageData"></param>
     /// <returns></returns>
@@ -23,7 +23,7 @@ public class DebugChineseIdCardOcrService : IChineseIdCardOcrService
     }
 
     /// <summary>
-    ///     RecognizeIDCardFront
+    /// RecognizeIDCardFront
     /// </summary>
     /// <param name="idCardFrontImageData"></param>
     /// <returns></returns>

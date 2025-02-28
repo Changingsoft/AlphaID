@@ -1,7 +1,7 @@
-﻿namespace IdSubjects.DirectoryLogon;
+namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-///     Directory Search Item.
+/// Directory Search Item.
 /// </summary>
 /// <param name="Name"> Directory entry name. </param>
 /// <param name="SamAccountName"> SAM Account Name </param>

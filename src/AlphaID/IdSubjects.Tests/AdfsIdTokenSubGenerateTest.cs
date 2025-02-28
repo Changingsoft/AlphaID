@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 using Xunit;
 
@@ -7,8 +7,8 @@ namespace IdSubjects.Tests;
 public class AdfsIdTokenSubGenerateTest
 {
     /// <summary>
-    ///     用于测试校准Microsoft AD FS生成id token的sub字段。
-    ///     <see href="https://github.com/MicrosoftDocs/azure-docs/issues/16150#issuecomment-429028832" />
+    /// 用于测试校准Microsoft AD FS生成id token的sub字段。
+    /// <see href="https://github.com/MicrosoftDocs/azure-docs/issues/16150#issuecomment-429028832" />
     /// </summary>
     [Fact]
     public void AdfsGenerateIdTokenSub()

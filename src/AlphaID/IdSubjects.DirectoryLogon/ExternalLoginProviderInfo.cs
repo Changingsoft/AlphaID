@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.DirectoryLogon;
@@ -25,27 +25,27 @@ public record ExternalLoginProviderInfo
     }
 
     /// <summary>
-    ///     名称。
+    /// 名称。
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string Name { get; set; } = null!;
 
     /// <summary>
-    ///     显示名称。
+    /// 显示名称。
     /// </summary>
     [MaxLength(50)]
     public string? DisplayName { get; set; }
 
     /// <summary>
-    ///     Alpha ID 作为 Client 在此外部登录提供者注册的 Client Id.
+    /// Alpha ID 作为 Client 在此外部登录提供者注册的 Client Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string RegisteredClientId { get; set; } = null!;
 
     /// <summary>
-    ///     指定Provider Key的生成器。
+    /// 指定Provider Key的生成器。
     /// </summary>
     [MaxLength(255)]
     [Unicode(false)]

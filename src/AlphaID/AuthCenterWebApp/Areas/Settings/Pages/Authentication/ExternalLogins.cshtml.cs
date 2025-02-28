@@ -95,9 +95,9 @@ public class ExternalLoginsModel(
     }
 
     /// <summary>
-    ///     参考<see cref="SignInManager{TUser}.GetExternalLoginInfoAsync(string)" />
-    ///     方法的实现。该实现替换了外部登录方案的常量值，以使用IdentityServer给出的外部登录方案。
-    ///     请参阅
+    /// 参考<see cref="SignInManager{TUser}.GetExternalLoginInfoAsync(string)" />
+    /// 方法的实现。该实现替换了外部登录方案的常量值，以使用IdentityServer给出的外部登录方案。
+    /// 请参阅
     /// </summary>
     /// <param name="expectedXsrf"></param>
     /// <returns></returns>

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
-///     实名认证请求管理器。
+/// 实名认证请求管理器。
 /// </summary>
 /// <remarks>
-///     初始化实名认证请求管理器。
+/// 初始化实名认证请求管理器。
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="realNameManager"></param>
@@ -20,12 +20,12 @@ public class RealNameRequestManager<T>(
 where T : ApplicationUser
 {
     /// <summary>
-    ///     Time Provider.
+    /// Time Provider.
     /// </summary>
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     获取待审核的实名认证请求。
+    /// 获取待审核的实名认证请求。
     /// </summary>
     public IEnumerable<RealNameRequest> PendingRequests
     {
@@ -33,12 +33,12 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     获取可查询的实名认证请求集合。
+    /// 获取可查询的实名认证请求集合。
     /// </summary>
     public IQueryable<RealNameRequest> Requests => store.Requests;
 
     /// <summary>
-    ///     创建实名认证请求。
+    /// 创建实名认证请求。
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -67,7 +67,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     审核通过一个实名认证请求。
+    /// 审核通过一个实名认证请求。
     /// </summary>
     /// <param name="request"></param>
     /// <param name="auditor"></param>
@@ -87,7 +87,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     更新实名认证信息。
+    /// 更新实名认证信息。
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -98,7 +98,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     获取与自然人关联的实名认真请求。
+    /// 获取与自然人关联的实名认真请求。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
@@ -108,7 +108,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     通过Id查找实名认证请求。
+    /// 通过Id查找实名认证请求。
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -118,7 +118,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     审核拒绝一个实名认证请求。
+    /// 审核拒绝一个实名认证请求。
     /// </summary>
     /// <param name="request"></param>
     /// <param name="auditor"></param>

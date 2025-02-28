@@ -1,7 +1,7 @@
-﻿namespace AlphaIdPlatform;
+namespace AlphaIdPlatform;
 
 /// <summary>
-///     系统URL选项。
+/// 系统URL选项。
 /// </summary>
 public class SystemUrlInfo
 {

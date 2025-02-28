@@ -3,7 +3,7 @@ using IdSubjects;
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
-///     Organization Manager
+/// Organization Manager
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -15,14 +15,14 @@ public class OrganizationManager(IOrganizationStore store)
     public IQueryable<Organization> Organizations => Store.Organizations;
 
     /// <summary>
-    ///     获取组织存取器。
+    /// 获取组织存取器。
     /// </summary>
     protected IOrganizationStore Store { get; } = store;
 
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     创建一个组织。
+    /// 创建一个组织。
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
@@ -55,7 +55,7 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    ///     Delete Organization.
+    /// Delete Organization.
     /// </summary>
     /// <param name="organization"></param>
     /// <returns></returns>
@@ -65,7 +65,7 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    ///     通过组织 Id 查找组织。
+    /// 通过组织 Id 查找组织。
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -75,7 +75,7 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    ///     Update organization information.
+    /// Update organization information.
     /// </summary>
     /// <param name="org"></param>
     /// <returns></returns>
@@ -88,7 +88,7 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    ///     更改组织的名称。
+    /// 更改组织的名称。
     /// </summary>
     /// <param name="org">要更改名称的组织。</param>
     /// <param name="newName">新名称。</param>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -371,5 +371,20 @@
   </data>
   <data name="Verification code" xml:space="preserve">
     <value>短信验证码</value>
+  </data>
+  <data name="Representative" xml:space="preserve">
+	  <value>负责人</value>
+  </data>
+  <data name="Current name" xml:space="preserve">
+	  <value>当前名称</value>
+  </data>
+  <data name="New name" xml:space="preserve">
+	  <value>新名称</value>
+  </data>
+  <data name="Change date" xml:space="preserve">
+	  <value>变更日期</value>
+  </data>
+  <data name="Record used name" xml:space="preserve">
+	  <value>记录曾用名</value>
   </data>
 </root>

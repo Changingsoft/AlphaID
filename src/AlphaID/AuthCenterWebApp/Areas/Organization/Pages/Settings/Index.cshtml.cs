@@ -13,9 +13,9 @@ public class IndexModel(OrganizationManager manager) : PageModel
 
     public OrganizationOperationResult OperationResult { get; set; } = null!;
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = manager.FindByCurrentName(anchor);
+        var organization = await manager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 
@@ -32,7 +32,7 @@ public class IndexModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = manager.FindByCurrentName(anchor);
+        var organization = await manager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 

@@ -12,18 +12,14 @@ public class NewModel(OrganizationManager manager) : PageModel
     [Required(ErrorMessage = "Validate_Required")]
     public string Name { get; set; } = null!;
 
-    [Required(ErrorMessage = "Validate_Required")]
-    [Display(Name = "Register with same name anyway")]
-    public bool RegisterWithSameNameAnyway { get; set; }
-
     [Display(Name = "Domicile")]
     public string? Domicile { get; set; }
 
     [Display(Name = "Contact")]
     public string? Contact { get; set; }
 
-    [Display(Name = "Legal person name")]
-    public string? LegalPersonName { get; set; }
+    [Display(Name = "Representative")]
+    public string? Representative { get; set; }
 
     [Display(Name = "Established at")]
     [DataType(DataType.Date)]
@@ -48,18 +44,10 @@ public class NewModel(OrganizationManager manager) : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        IEnumerable<Organization> nameExists = manager.FindByName(Name);
-        if (nameExists.Any())
-            if (!RegisterWithSameNameAnyway)
-            {
-                ModelState.AddModelError(nameof(Name), "库中存在同名的组织，如果确实要注册，请勾选“即使名称相同，也要注册”复选框");
-                return Page();
-            }
-
         Organization org = new Organization(Name)
         {
             Domicile = Domicile,
-            Representative = LegalPersonName,
+            Representative = Representative,
             EstablishedAt = EstablishedAt,
             TermBegin = TermBegin,
             TermEnd = TermEnd

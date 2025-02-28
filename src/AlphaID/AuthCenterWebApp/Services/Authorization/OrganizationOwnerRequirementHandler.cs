@@ -29,7 +29,7 @@ public class OrganizationOwnerRequirementHandler(
         if (anchor == null)
             return;
 
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return;
 

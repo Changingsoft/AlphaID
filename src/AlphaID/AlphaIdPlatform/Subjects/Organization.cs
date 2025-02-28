@@ -41,7 +41,7 @@ public class Organization
     /// Name.
     /// </summary>
     [MaxLength(100)]
-    public string Name { get; set; } = null!;
+    public string Name { get; protected internal set; } = null!;
 
     /// <summary>
     /// 住所。
@@ -147,6 +147,6 @@ public class Organization
     /// <returns></returns>
     public override string ToString()
     {
-        return this.Name;
+        return Name;
     }
 }

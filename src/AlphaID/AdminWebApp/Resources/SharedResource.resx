@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -373,5 +373,20 @@
   </data>
   <data name="Verification code" xml:space="preserve">
     <value>Verification code</value>
+  </data>
+  <data name="Representative" xml:space="preserve">
+	  <value>Representative</value>
+  </data>
+  <data name="Current name" xml:space="preserve">
+	  <value>Current name</value>
+  </data>
+  <data name="New name" xml:space="preserve">
+	  <value>New name</value>
+  </data>
+  <data name="Change date" xml:space="preserve">
+	  <value>Change date</value>
+  </data>
+  <data name="Record used name" xml:space="preserve">
+	  <value>Record used name</value>
   </data>
 </root>

@@ -22,7 +22,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -37,7 +37,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -63,7 +63,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -89,7 +89,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;

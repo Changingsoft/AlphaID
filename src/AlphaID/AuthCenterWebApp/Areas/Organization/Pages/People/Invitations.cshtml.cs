@@ -12,9 +12,9 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public OrganizationOperationResult? Result { get; set; }
 
-        public IActionResult OnGet(string anchor)
+        public async Task<IActionResult> OnGet(string anchor)
         {
-            var organization = organizationManager.FindByCurrentName(anchor);
+            var organization = await organizationManager.FindByNameAsync(anchor);
             if (organization == null)
                 return NotFound();
             Invitations = manager.GetIssuedInvitations(organization.Id);
@@ -23,7 +23,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public async Task<IActionResult> OnPostRevoke(string anchor, int invitationId)
         {
-            var organization = organizationManager.FindByCurrentName(anchor);
+            var organization = await organizationManager.FindByNameAsync(anchor);
             if (organization == null)
                 return NotFound();
 

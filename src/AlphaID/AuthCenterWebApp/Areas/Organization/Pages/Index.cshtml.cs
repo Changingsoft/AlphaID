@@ -8,9 +8,9 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
     public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 

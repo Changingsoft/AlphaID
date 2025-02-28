@@ -12,9 +12,9 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Identifiers = organization.OrganizationIdentifiers;
@@ -23,7 +23,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public async Task<IActionResult> OnPostRemove(string anchor, string idKey)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Identifiers = organization.OrganizationIdentifiers;

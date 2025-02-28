@@ -13,9 +13,9 @@ public class NewBankAccountModel(OrganizationManager organizationManager) : Page
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 
@@ -24,7 +24,7 @@ public class NewBankAccountModel(OrganizationManager organizationManager) : Page
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 

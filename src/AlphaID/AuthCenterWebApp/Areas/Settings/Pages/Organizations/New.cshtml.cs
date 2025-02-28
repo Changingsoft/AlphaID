@@ -78,7 +78,7 @@ public class NewModel(
 
     public IActionResult OnPostCheckName(string name)
     {
-        return organizationManager.FindByName(name).Any()
+        return organizationManager.Organizations.Any(o => o.Name == name)
             ? new JsonResult("Organization name exists.")
             : new JsonResult(true);
     }

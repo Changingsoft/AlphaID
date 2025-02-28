@@ -13,9 +13,9 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Data = organization;
@@ -25,7 +25,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
         Data = organization;

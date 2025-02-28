@@ -80,6 +80,24 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     }
 
     [Fact]
+    public async Task UserResetPasswordWithOldPassword()
+    {
+        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        manager.TimeProvider = new FrozenTimeProvider();
+
+        var user = new ApplicationUser("TestUser");
+        await manager.CreateAsync(user, "Pass123$"); //1st password
+        await manager.ChangePasswordAsync(user, "Pass123$", "NewPass123$"); //2nd password
+
+        //Reset password with old password
+        var token = await manager.GeneratePasswordResetTokenAsync(user);
+        var newPassword = "Pass123$"; //reuse 1st password
+        var result = await manager.ResetPasswordAsync(user, token, newPassword);
+        Assert.False(result.Succeeded);
+    }
+
+    [Fact]
     public async Task SetUpdateTimeWhenUpdate()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
@@ -136,7 +154,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         Assert.Single(passwords);
 
         //change password again with same old password will fail.
-        result = await manager.ChangePasswordAsync(_person, "Pass1234$", "Pass1234$");
+        result = await manager.ChangePasswordAsync(_person, "Pass1234$", "Pass123$");
         Assert.False(result.Succeeded);
     }
 }

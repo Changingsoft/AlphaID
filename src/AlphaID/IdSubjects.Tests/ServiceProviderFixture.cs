@@ -14,7 +14,8 @@ public class ServiceProviderFixture : IDisposable
 
         services.AddIdSubjectsIdentity<ApplicationUser, IdentityRole>()
             .AddUserStore<StubApplicationUserStore>()
-            .AddRoleStore<StubRoleStore>();
+            .AddRoleStore<StubRoleStore>()
+            .AddDefaultTokenProviders();
         services.AddIdSubjects<ApplicationUser>()
             .AddPersonStore<StubApplicationUserStore, ApplicationUser>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
@@ -23,6 +24,7 @@ public class ServiceProviderFixture : IDisposable
         services.Configure<PasswordLifetimeOptions>(options =>
         {
             options.EnablePassExpires = true;
+            options.RememberPasswordHistory = 1;
         });
         //注入一个假的HttpContext
         services.AddScoped<IHttpContextAccessor, MockHttpContextAccessor>();

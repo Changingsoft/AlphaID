@@ -226,7 +226,7 @@ where T : ApplicationUser
         if (PasswordLifetime.RememberPasswordHistory > 0)
             if (PasswordHistoryManager.Hit(user, password))
             {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName,"HitPasswordHistory"));
+                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
                 return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
             }
 
@@ -285,7 +285,7 @@ where T : ApplicationUser
 
         //记录密码历史
         if (PasswordLifetime.RememberPasswordHistory > 0)
-            await PasswordHistoryManager.Pass(user, newPassword);
+            await PasswordHistoryManager.Pass(user, currentPassword);
 
         trans.Complete();
         await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户修改了密码"));
@@ -363,7 +363,9 @@ where T : ApplicationUser
         bool mustChangePassword,
         bool unlockUser)
     {
-        if (mustChangePassword) user.PasswordLastSet = null;
+        if (mustChangePassword)
+            user.PasswordLastSet = null;
+
         IdentityResult result = await UpdatePasswordHash(user, newPassword, true);
         if (!result.Succeeded)
             return result;
@@ -389,9 +391,11 @@ where T : ApplicationUser
     /// <returns></returns>
     public virtual async Task<IdentityResult> UnlockUserAsync(T person)
     {
-        Logger.LogDebug("正在解锁用户{user}", person);
-        if (await IsLockedOutAsync(person)) return await SetLockoutEndDateAsync(person, null);
-        Logger.LogDebug("用户{user}未锁定，此操作无效果。", person);
+        if (await IsLockedOutAsync(person))
+        {
+            Logger.LogDebug("正在解锁用户{user}", person);
+            return await SetLockoutEndDateAsync(person, null);
+        }
         return IdentityResult.Success;
     }
 
@@ -415,7 +419,7 @@ where T : ApplicationUser
 
         Logger.LogDebug("给定的时区名称{TimeZoneString}不是有效的", tzName);
         return IdentityResult.Failed(new IdentityError
-            { Code = "Invalid_TzInfo", Description = "Invalid time zone name." });
+        { Code = "Invalid_TzInfo", Description = "Invalid time zone name." });
     }
 
     /// <summary>

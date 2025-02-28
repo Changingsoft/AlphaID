@@ -29,6 +29,15 @@ where T : ApplicationUser
     {
         //取出密码历史
         IEnumerable<string> passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
+        foreach (var p in passwords)
+        {
+            var result = passwordHasher.VerifyHashedPassword(person, p, password);
+            if (result == PasswordVerificationResult.Success ||
+                result == PasswordVerificationResult.SuccessRehashNeeded)
+                return true;
+        }
+
+        return false;
         return passwords
             .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis, password))
             .Any(result => result.HasFlag(PasswordVerificationResult.Success));

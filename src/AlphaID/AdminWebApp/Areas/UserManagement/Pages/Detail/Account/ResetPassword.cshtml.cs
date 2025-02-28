@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Text;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
@@ -45,16 +46,17 @@ public class ResetPasswordModel(
 
         Person = person;
 
-        if (string.IsNullOrEmpty(Person.PhoneNumber))
+        if (!Person.PhoneNumberConfirmed)
         {
-            OperationResult = "无法通过短信重置密码。因为用户没有留下移动电话号码。";
+            OperationResult = "无法通过短信重置密码。因为用户没有移动电话号码，或电话号码未经验证。";
             return Page();
         }
 
         string password = GeneratePassword();
-        IdentityResult result = await userManager.AdminResetPasswordAsync(Person, password, true, true);
+        IdentityResult result = await userManager.ResetPasswordAsync(Person, password, true, true);
         if (result.Succeeded)
         {
+            Debug.Assert(Person.PhoneNumber != null);
             await shortMessageService.SendAsync(Person.PhoneNumber, $"您的初始密码是[{password}]（不包括方括号）");
             OperationResult = "密码已重置并告知用户。";
             return Page();
@@ -71,7 +73,7 @@ public class ResetPasswordModel(
             return NotFound();
         Person = person;
 
-        IdentityResult result = await userManager.AdminResetPasswordAsync(Person, Input.NewPassword,
+        IdentityResult result = await userManager.ResetPasswordAsync(Person, Input.NewPassword,
             Input.UserMustChangePasswordOnNextLogin, Input.UnlockUser);
         if (!result.Succeeded)
         {

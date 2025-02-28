@@ -8,7 +8,7 @@ namespace IdSubjects.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly ApplicationUser _person = new("zhangsan", "zhang", "san");
+    private readonly ApplicationUser _person = new("zhangsan");
 
     [Fact]
     public async Task SetTimeZone()
@@ -60,6 +60,23 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         Assert.False(_person.PasswordLastSet.HasValue);
         Assert.Equal(now, _person.WhenCreated);
         Assert.Equal(now, _person.WhenChanged);
+    }
+
+    [Fact]
+    public async Task ResetPasswordForNoPasswordUser()
+    {
+        using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+
+        var user = new ApplicationUser("TestUser");
+        await manager.CreateAsync(user);
+
+        //Reset password for user without password
+        var newPassword = "Pass123$";
+        await manager.ResetPasswordAsync(user, newPassword, true, true);
+
+        Assert.NotNull(user.PasswordHash);
+        Assert.Null(user.PasswordLastSet);
     }
 
     [Fact]

@@ -6,7 +6,7 @@ namespace IdSubjects.RealName.Tests;
 [Collection(nameof(ServiceProviderCollection))]
 public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
 {
-    private readonly ApplicationUser _person = new("zhangsan", "zhang", "san") { Name = "张小三" };
+    private readonly ApplicationUser _person = new("zhangsan") { Name = "张小三" };
 
     [Fact]
     public async Task AddAuthentication()

@@ -22,19 +22,8 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     /// </summary>
     /// <param name="userName"></param>
-    /// <param name="familyName"></param>
-    /// <param name="givenName"></param>
-    /// <param name="middleName"></param>
-    /// <param name="nickName"></param>
-    public ApplicationUser(string userName, string? familyName, string? givenName, string? middleName = null, string? nickName = null) : this()
+    public ApplicationUser(string userName) : base(userName)
     {
-        // ReSharper disable VirtualMemberCallInConstructor
-        UserName = userName;
-        FamilyName = familyName;
-        GivenName = givenName;
-        MiddleName = middleName;
-        NickName = nickName;
-        // ReSharper restore VirtualMemberCallInConstructor
     }
 
 

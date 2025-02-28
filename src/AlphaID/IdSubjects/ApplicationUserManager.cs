@@ -353,31 +353,31 @@ where T : ApplicationUser
     /// <summary>
     /// 管理员重置用户密码。
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="user"></param>
     /// <param name="newPassword"></param>
     /// <param name="mustChangePassword"></param>
     /// <param name="unlockUser"></param>
     /// <returns></returns>
-    public virtual async Task<IdentityResult> AdminResetPasswordAsync(T person,
+    public virtual async Task<IdentityResult> ResetPasswordAsync(T user,
         string newPassword,
         bool mustChangePassword,
         bool unlockUser)
     {
-        if (mustChangePassword) person.PasswordLastSet = null;
-        IdentityResult result = await UpdatePasswordHash(person, newPassword, true);
+        if (mustChangePassword) user.PasswordLastSet = null;
+        IdentityResult result = await UpdatePasswordHash(user, newPassword, true);
         if (!result.Succeeded)
             return result;
 
         if (unlockUser)
-            result = await UnlockUserAsync(person);
+            result = await UnlockUserAsync(user);
         if (!result.Succeeded)
         {
             string errMessage = result.Errors.Select(p => p.Description).Aggregate((a, b) => $"{a}, {b}");
-            await EventService.RaiseAsync(new ChangePasswordFailureEvent(person.UserName, errMessage));
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, errMessage));
         }
         else
         {
-            await EventService.RaiseAsync(new ChangePasswordSuccessEvent(person.UserName, "管理员重置了用户密码。"));
+            await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "管理员重置了用户密码。"));
         }
         return result;
     }

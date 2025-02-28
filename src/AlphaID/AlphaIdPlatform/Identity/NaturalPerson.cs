@@ -10,6 +10,20 @@ namespace AlphaIdPlatform.Identity;
 /// </summary>
 public class NaturalPerson : ApplicationUser
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    public NaturalPerson()
+    {
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    public NaturalPerson(string userName) : base(userName)
+    {
+    }
 
     /// <summary>
     /// 个人经历。

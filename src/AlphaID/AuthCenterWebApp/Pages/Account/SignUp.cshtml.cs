@@ -103,20 +103,19 @@ public class SignUpModel(
         var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
         string userName = Input.Email ?? phoneNumber.PhoneNumber;
 
-        var person = new NaturalPerson();
-        person.UserName = userName;
-        person.Email = Input.Email;
-        person.PhoneNumber = phoneNumber.ToString();
-
-        person.FamilyName = chinesePersonName.Surname;
-        person.GivenName = chinesePersonName.GivenName;
-        person.Name = chinesePersonName.FullName;
-        person.PhoneticSurname = chinesePersonName.PhoneticSurname;
-        person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
-        person.SearchHint = chinesePersonName.PhoneticName;
-
-        person.DateOfBirth = Input.DateOfBirth;
-        person.Gender = Input.Sex;
+        var person = new NaturalPerson(userName)
+        {
+            Email = Input.Email,
+            PhoneNumber = phoneNumber.ToString(),
+            FamilyName = chinesePersonName.Surname,
+            GivenName = chinesePersonName.GivenName,
+            Name = chinesePersonName.FullName,
+            PhoneticSurname = chinesePersonName.PhoneticSurname,
+            PhoneticGivenName = chinesePersonName.PhoneticGivenName,
+            SearchHint = chinesePersonName.PhoneticName,
+            DateOfBirth = Input.DateOfBirth,
+            Gender = Input.Sex
+        };
 
         IdentityResult result = await naturalPersonService.CreateAsync(person, Input.NewPassword);
         if (result.Succeeded)

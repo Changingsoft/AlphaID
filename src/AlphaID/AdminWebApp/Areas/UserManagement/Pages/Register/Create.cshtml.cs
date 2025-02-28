@@ -42,7 +42,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         if(!ModelState.IsValid)
             return Page();
 
-        var person = new NaturalPerson();
+        var person = new NaturalPerson(UserName);
         if (Mobile != null)
         {
             if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
@@ -54,7 +54,6 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         if (!ModelState.IsValid)
             return Page();
 
-        person.UserName = UserName;
         person.Email = Email;
         person.FamilyName = Input.Surname;
         person.GivenName = Input.GivenName;

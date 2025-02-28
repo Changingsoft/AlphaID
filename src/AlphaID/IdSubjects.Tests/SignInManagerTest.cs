@@ -10,7 +10,7 @@ public class SignInManagerTest(ServiceProviderFixture serviceProvider)
     public async Task DisabledUserSignInShouldFail()
     {
         //Create a test user.
-        var user = new ApplicationUser()
+        var user = new ApplicationUser("TestUser")
         {
             Enabled = false,
         };
@@ -31,10 +31,7 @@ public class SignInManagerTest(ServiceProviderFixture serviceProvider)
     public async Task SignInMustChangePasswordWhenPasswordLastSetNull()
     {
         //Create a test user.
-        var user = new ApplicationUser()
-        {
-            UserName = "TestUser",
-        };
+        var user = new ApplicationUser("TestUser");
 
         using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
 

@@ -125,6 +125,25 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
     }
 
     [Fact]
+    public async Task UnlockUser()
+    {
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var user = new ApplicationUser("TestUser");
+        await manager.CreateAsync(user, "Pass123$");
+        //调用AccessFailedAsync 5次以锁定用户。
+        for(int i = 0; i < 5; i++)
+        {
+            await manager.AccessFailedAsync(user);
+        }
+        Assert.True(await manager.IsLockedOutAsync(user));
+
+        await manager.UnlockUserAsync(user);
+        Assert.Null(_person.LockoutEnd);
+        Assert.False(await manager.IsLockedOutAsync(user));
+    }
+
+    [Fact]
     public async Task RemovePassword()
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();

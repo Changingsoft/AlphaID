@@ -25,6 +25,8 @@ public static class IdSubjectsServiceCollectionExtensions
         Action<IdentityOptions>? setupAction = null)
         where TUser : ApplicationUser
     {
+        services.AddHttpContextAccessor();
+
         // 由IdSubjects使用的服务。
         services.TryAddScoped<ApplicationUserManager<TUser>>();
         services.TryAddScoped<ApplicationUserIdentityErrorDescriber>();

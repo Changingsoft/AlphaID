@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>
-    /// 向基础设施添加AlphaId自然人标识管理功能。
+    /// 向添加AlphaId自然人管理功能。
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
@@ -25,13 +25,12 @@ public static class IdSubjectsServiceCollectionExtensions
         Action<IdentityOptions>? setupAction = null)
         where TUser : ApplicationUser
     {
-        //IdSubjects需要访问HttpContext.
-        services.AddHttpContextAccessor();
-
         // 由IdSubjects使用的服务。
         services.TryAddScoped<ApplicationUserManager<TUser>>();
         services.TryAddScoped<ApplicationUserIdentityErrorDescriber>();
         services.TryAddScoped<PasswordHistoryManager<TUser>>();
+
+
 
         services.TryAddScoped<IEventService, DefaultEventService>();
         services.TryAddScoped<IEventSink, DefaultEventSink>();

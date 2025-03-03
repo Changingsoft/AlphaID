@@ -370,6 +370,8 @@ where T : ApplicationUser
         if (!result.Succeeded)
             return result;
 
+        result = await UpdateUserAsync(user);
+
         if (unlockUser)
             result = await UnlockUserAsync(user);
         if (!result.Succeeded)

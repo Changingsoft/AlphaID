@@ -16,13 +16,4 @@ where T : ApplicationUser
     /// <param name="cancellationToken">可取消令牌。</param>
     /// <returns></returns>
     Task<T?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// 获取指定自然人实体的未更改版本。
-    /// </summary>
-    /// <param name="person">自然人。</param>
-    /// <param name="cancellationToken">可取消令牌。</param>
-    /// <returns></returns>
-    [Obsolete("不再提供此方法。")]
-    Task<T?> GetOriginalAsync(T person, CancellationToken cancellationToken);
 }

@@ -48,11 +48,6 @@ public class StubApplicationUserStore(IdentityErrorDescriber describer)
         return Task.FromResult(result);
     }
 
-    public Task<ApplicationUser?> GetOriginalAsync(ApplicationUser person, CancellationToken cancellationToken = default)
-    {
-        return Task.FromResult(_set.FirstOrDefault(p => p.Id == person.Id));
-    }
-
     public override Task<ApplicationUser?> FindByIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         ApplicationUser? result = _trackedSet.FirstOrDefault(p => p.Id == userId);

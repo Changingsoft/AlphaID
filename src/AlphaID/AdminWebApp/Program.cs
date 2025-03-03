@@ -26,7 +26,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using Serilog;
@@ -156,21 +155,7 @@ builder.Services
 
         options.Events = new OpenIdConnectEvents
         {
-            OnRedirectToIdentityProvider = context =>
-            {
-                if (!builder.Environment.IsDevelopment())
-                {
-                    StringValues from = context.Request.Query["from"];
-                    if (from.Contains("netauth.changingsoft.com"))
-                    {
-                        context.ProtocolMessage.SetParameter("acr_values", "idp:netauth.changingsoft.com");
-                    }
-                    //指示认证中心直接使用AD FS来处理用户登录。
-                    //context.ProtocolMessage.SetParameter("acr_values", "idp:federal.changingsoft.com");
-                }
-
-                return Task.CompletedTask;
-            }
+            OnTokenValidated = OidcEvents.IssueRoleClaims
         };
     });
 
@@ -217,10 +202,6 @@ builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
 
 builder.Services.AddScoped<IdApiService>();
-
-
-//令牌转换服务
-builder.Services.AddScoped<IClaimsTransformation, ClaimTransformation>();
 
 //目录服务
 builder.Services.AddScoped<DirectoryServiceManager>()

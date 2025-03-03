@@ -12,9 +12,6 @@
 <p>@(SL["Email"]) : @Model.Person.Email <a asp-page="Email" class="btn">@L["Change your email"]</a></p>
 
 
-<h3>@L["Personal data"]</h3>
-<a asp-page="PersonalData" class="btn">@L["Manage personal data"]</a>
-
 <h3>@L["Managed directory accounts"]</h3>
 <table class="table">
     <thead>
@@ -42,3 +39,7 @@
         }
     </tbody>
 </table>
+
+<h3>@L["Personal data"]</h3>
+<a asp-page="PersonalData" class="btn">@L["Manage personal data"]</a>
+<a asp-page="DeletePersonalData" class="btn btn-danger">@L["Delete Account"]</a>

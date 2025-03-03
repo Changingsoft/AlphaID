@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Edit profile" xml:space="preserve">
-    <value>编辑个人配置</value>
+	  <value>编辑个人资料</value>
   </data>
   <data name="Organizations" xml:space="preserve">
     <value>组织</value>

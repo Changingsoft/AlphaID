@@ -336,4 +336,7 @@
   <data name="User name, email or phone number" xml:space="preserve">
 	  <value>用户名、电子邮件地址或移动电话号码</value>
   </data>
+  <data name="Delete Account" xml:space="preserve">
+	  <value>删除账户</value>
+  </data>
 </root>

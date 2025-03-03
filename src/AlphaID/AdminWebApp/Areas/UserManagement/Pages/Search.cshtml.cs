@@ -13,19 +13,17 @@ public class SearchModel(IUserStore<NaturalPerson> store) : PageModel
     public IQueryableUserStore<NaturalPerson> Store { get; set; } = store as IQueryableUserStore<NaturalPerson> ??
                                                                     throw new NotSupportedException("不支持查询用户。");
 
-    public IApplicationUserStore<NaturalPerson> ApplicationUserStore { get; set; } = store as IApplicationUserStore<NaturalPerson> ??
-                                                                                 throw new NotSupportedException("不支持ApplicationStore。");
-
-    public async Task<IActionResult> OnGetAsync(string q)
+    public IActionResult OnGet(string q)
     {
         if (string.IsNullOrWhiteSpace(q))
             return Page();
 
         if (MobilePhoneNumber.TryParse(q, out MobilePhoneNumber mobile))
         {
-            NaturalPerson? person =
-                await ApplicationUserStore.FindByPhoneNumberAsync(mobile.ToString(), HttpContext.RequestAborted);
-            return person != null ? RedirectToPage("Detail/Index", new { id = person.Id }) : Page();
+            string? personId = (from user in Store.Users
+                                where user.PhoneNumber == mobile.ToString()
+                                select user.Id).FirstOrDefault();
+            return personId != null ? RedirectToPage("Detail/Index", new { id = personId }) : Page();
         }
 
         Results = from user in Store.Users

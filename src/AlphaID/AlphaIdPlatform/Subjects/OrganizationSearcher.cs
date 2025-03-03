@@ -1,16 +1,16 @@
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
-///     组织搜索器。
+/// 组织搜索器。
 /// </summary>
 /// <remarks>
-///     初始化组织搜索器。
+/// 初始化组织搜索器。
 /// </remarks>
 /// <param name="organizationStore"></param>
 public class OrganizationSearcher(IOrganizationStore organizationStore)
 {
     /// <summary>
-    ///     搜索。
+    /// 搜索。
     /// </summary>
     /// <param name="keywords"></param>
     /// <returns></returns>

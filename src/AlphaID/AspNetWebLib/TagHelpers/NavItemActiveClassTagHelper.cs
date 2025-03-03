@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace AspNetWebLib.TagHelpers;
 
 /// <summary>
-///     根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。
+/// 根据Area和路由前缀，为 Nav Item 的 li 元素添加 active 样式。
 /// </summary>
 [HtmlTargetElement("li", Attributes = "asp-path")]
 [HtmlTargetElement("a", Attributes = "asp-path")]

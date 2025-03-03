@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model EmailModel
 @{
     ViewBag.Title = L["Manage Email"];
@@ -33,6 +33,7 @@
                 <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true"/>
                 <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
             </div>
+            <p>请在新的邮箱查收确认邮件，以便完成更改。</p>
             <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">@L["Change email"]</button>
         </form>
     </div>

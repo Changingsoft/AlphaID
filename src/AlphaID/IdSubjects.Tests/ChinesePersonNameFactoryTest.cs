@@ -1,4 +1,4 @@
-﻿using IdSubjects.ChineseName;
+using IdSubjects.ChineseName;
 using Xunit;
 
 namespace IdSubjects.Tests;
@@ -31,7 +31,7 @@ public class ChinesePersonNameFactoryTest
     }
 
     /// <summary>
-    ///     名字太短
+    /// 名字太短
     /// </summary>
     [Fact]
     public void FullNameTooShortTest()

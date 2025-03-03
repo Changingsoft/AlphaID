@@ -8,7 +8,7 @@ namespace AlphaId.EntityFramework.IdSubjects;
 public static class IdSubjectsBuilderExtensions
 {
     /// <summary>
-    ///     向AspNetCore Identity基础结构添加默认的存取器实现。
+    /// 向AspNetCore Identity基础结构添加默认的存取器实现。
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
@@ -21,7 +21,7 @@ public static class IdSubjectsBuilderExtensions
     }
 
     /// <summary>
-    ///     添加适用于IdSubjects的DbContext。
+    /// 添加适用于IdSubjects的DbContext。
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="options"></param>

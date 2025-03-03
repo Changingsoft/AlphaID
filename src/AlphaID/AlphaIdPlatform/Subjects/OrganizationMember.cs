@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
-///     组织的人员。
+/// 组织的人员。
 /// </summary>
 [Table("OrganizationMember")]
 [PrimaryKey(nameof(PersonId), nameof(OrganizationId))]
@@ -31,56 +31,56 @@ public class OrganizationMember
     }
 
     /// <summary>
-    ///     Organization Id.
+    /// Organization Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
-    ///     Person Id.
+    /// Person Id.
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
     public string PersonId { get; protected set; } = null!;
 
     /// <summary>
-    ///     Organization.
+    /// Organization.
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
     public Organization Organization { get; protected set; } = null!;
 
     /// <summary>
-    ///     Person.
+    /// Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
     public NaturalPerson Person { get; protected set; } = null!;
 
     /// <summary>
-    ///     部门。
+    /// 部门。
     /// </summary>
     [MaxLength(50)]
     public string? Department { get; set; } = null!;
 
     /// <summary>
-    ///     职务。
+    /// 职务。
     /// </summary>
     [MaxLength(50)]
     public string? Title { get; set; } = null!;
 
     /// <summary>
-    ///     备注。
+    /// 备注。
     /// </summary>
     [MaxLength(50)]
     public string? Remark { get; set; } = null!;
 
     /// <summary>
-    ///     Is Owner of the organization.
+    /// Is Owner of the organization.
     /// </summary>
     public bool IsOwner { get; set; }
 
     /// <summary>
-    ///     Membership visibility.
+    /// Membership visibility.
     /// </summary>
     public virtual MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
 

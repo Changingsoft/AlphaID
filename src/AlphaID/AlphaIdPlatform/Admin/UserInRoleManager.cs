@@ -1,16 +1,16 @@
-﻿namespace AlphaIdPlatform.Admin;
+namespace AlphaIdPlatform.Admin;
 
 /// <summary>
-///     UserInRole Manager.
+/// UserInRole Manager.
 /// </summary>
 /// <remarks>
-///     Ctor.
+/// Ctor.
 /// </remarks>
 /// <param name="store"></param>
 public class UserInRoleManager(IUserInRoleStore store)
 {
     /// <summary>
-    ///     Gets roles of user.
+    /// Gets roles of user.
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
@@ -22,7 +22,7 @@ public class UserInRoleManager(IUserInRoleStore store)
     }
 
     /// <summary>
-    ///     Gets users in role.
+    /// Gets users in role.
     /// </summary>
     /// <param name="roleName"></param>
     /// <returns></returns>
@@ -34,7 +34,7 @@ public class UserInRoleManager(IUserInRoleStore store)
     }
 
     /// <summary>
-    ///     Add user to role.
+    /// Add user to role.
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="roleName"></param>
@@ -52,7 +52,7 @@ public class UserInRoleManager(IUserInRoleStore store)
     }
 
     /// <summary>
-    ///     Remove a user from role.
+    /// Remove a user from role.
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="roleName"></param>

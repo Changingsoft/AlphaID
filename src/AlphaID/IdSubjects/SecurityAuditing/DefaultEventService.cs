@@ -5,10 +5,10 @@ using Microsoft.Extensions.Options;
 namespace IdSubjects.SecurityAuditing;
 
 /// <summary>
-///     默认事件服务。
+/// 默认事件服务。
 /// </summary>
 /// <remarks>
-///     Initializes a new instance of the <see cref="DefaultEventService" /> class.
+/// Initializes a new instance of the <see cref="DefaultEventService" /> class.
 /// </remarks>
 /// <param name="options">The options.</param>
 /// <param name="context">The context.</param>
@@ -17,22 +17,22 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     : IEventService
 {
     /// <summary>
-    ///     The options
+    /// The options
     /// </summary>
     protected AuditEventsOptions Options { get; } = options.Value;
 
     /// <summary>
-    ///     The context
+    /// The context
     /// </summary>
     protected IHttpContextAccessor Context { get; } = context;
 
     /// <summary>
-    ///     The sink
+    /// The sink
     /// </summary>
     protected IEventSink Sink { get; } = sink;
 
     /// <summary>
-    ///     Raises the specified event.
+    /// Raises the specified event.
     /// </summary>
     /// <param name="evt">The event.</param>
     /// <returns></returns>
@@ -49,7 +49,7 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     }
 
     /// <summary>
-    ///     Indicates if the type of event will be persisted.
+    /// Indicates if the type of event will be persisted.
     /// </summary>
     /// <param name="evtType"></param>
     /// <returns></returns>
@@ -67,11 +67,11 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     }
 
     /// <summary>
-    ///     Determines whether this event would be persisted.
+    /// Determines whether this event would be persisted.
     /// </summary>
     /// <param name="evt">The evt.</param>
     /// <returns>
-    ///     <c>true</c> if this event would be persisted; otherwise, <c>false</c>.
+    /// <c>true</c> if this event would be persisted; otherwise, <c>false</c>.
     /// </returns>
     protected virtual bool CanRaiseEvent(AuditLogEvent evt)
     {
@@ -79,7 +79,7 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     }
 
     /// <summary>
-    ///     Prepares the event.
+    /// Prepares the event.
     /// </summary>
     /// <param name="evt">The evt.</param>
     /// <returns></returns>

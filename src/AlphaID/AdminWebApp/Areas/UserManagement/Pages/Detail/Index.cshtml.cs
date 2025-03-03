@@ -3,6 +3,7 @@ using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
@@ -25,14 +26,12 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> userManager) : Pag
         return Page();
     }
 
-    public async Task<IActionResult> OnGetPhotoAsync(string anchor)
+    public IActionResult OnGetPhotoAsync(string anchor)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
-        if (person == null)
-            return NotFound();
+        var photo = userManager.Users.AsNoTracking().Where(u => u.Id == anchor).Select(u => u.ProfilePicture).FirstOrDefault();
 
-        if (person.ProfilePicture != null)
-            return File(person.ProfilePicture.Data, person.ProfilePicture.MimeType);
+        if (photo != null)
+            return File(photo.Data, photo.MimeType);
         return File("~/img/no-picture-avatar.png", "image/png");
     }
 

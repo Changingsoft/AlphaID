@@ -5,26 +5,26 @@ using Microsoft.EntityFrameworkCore;
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
-///     组织的曾用名。
+/// 组织的曾用名。
 /// </summary>
 [Owned]
 [Table("OrganizationUsedName")]
 public class OrganizationUsedName
 {
     /// <summary>
-    ///     ID
+    /// ID
     /// </summary>
     [Key]
     public int Id { get; protected set; }
 
     /// <summary>
-    ///     名称。
+    /// 名称。
     /// </summary>
     [MaxLength(100)]
     public string Name { get; set; } = null!;
 
     /// <summary>
-    ///     弃用日期。
+    /// 弃用日期。
     /// </summary>
     public DateOnly DeprecateTime { get; set; }
 }

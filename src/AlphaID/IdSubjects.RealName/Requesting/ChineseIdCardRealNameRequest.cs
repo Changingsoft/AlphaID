@@ -1,22 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
-///     表示一个使用身份证的实名认证请求。
+/// 表示一个使用身份证的实名认证请求。
 /// </summary>
 public class ChineseIdCardRealNameRequest : RealNameRequest
 {
     /// <summary>
-    ///     Ctor for persistence.
+    /// Ctor for persistence.
     /// </summary>
     protected ChineseIdCardRealNameRequest()
     {
     }
 
     /// <summary>
-    ///     初始化。
+    /// 初始化。
     /// </summary>
     /// <param name="personId"></param>
     /// <param name="name">姓名。</param>
@@ -58,68 +58,68 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
 
 
     /// <summary>
-    ///     姓名。
+    /// 姓名。
     /// </summary>
     [MaxLength(20)]
     public string Name { get; set; } = null!;
 
     /// <summary>
-    ///     性别。
+    /// 性别。
     /// </summary>
     public Sex Sex { get; set; }
 
     /// <summary>
-    ///     民族。
+    /// 民族。
     /// </summary>
     [MaxLength(20)]
     public string Ethnicity { get; set; } = null!;
 
     /// <summary>
-    ///     出生日期。
+    /// 出生日期。
     /// </summary>
     public DateOnly DateOfBirth { get; set; }
 
     /// <summary>
-    ///     住址。
+    /// 住址。
     /// </summary>
     [MaxLength(150)]
     public string Address { get; set; } = null!;
 
     /// <summary>
-    ///     身份证号码。
+    /// 身份证号码。
     /// </summary>
     [MaxLength(18)]
     [Unicode(false)]
     public string CardNumber { get; set; } = null!;
 
     /// <summary>
-    ///     签发机关。
+    /// 签发机关。
     /// </summary>
     [MaxLength(20)]
     public string Issuer { get; set; } = null!;
 
     /// <summary>
-    ///     签发日期。
+    /// 签发日期。
     /// </summary>
     public DateOnly IssueDate { get; set; }
 
     /// <summary>
-    ///     有效期至。若为null，表示长期。
+    /// 有效期至。若为null，表示长期。
     /// </summary>
     public DateOnly? Expires { get; set; }
 
     /// <summary>
-    ///     个人信息面。
+    /// 个人信息面。
     /// </summary>
     public BinaryDataInfo PersonalSide { get; set; } = null!;
 
     /// <summary>
-    ///     签发者信息面。
+    /// 签发者信息面。
     /// </summary>
     public BinaryDataInfo IssuerSide { get; set; } = null!;
 
     /// <summary>
-    ///     重写，创建RealNameAuthentication。
+    /// 重写，创建RealNameAuthentication。
     /// </summary>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>

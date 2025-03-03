@@ -5,16 +5,16 @@ using AlphaIdPlatform.Identity;
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
-///     Organization Member Manager.
+/// Organization Member Manager.
 /// </summary>
 /// <remarks>
-///     Init Organization Member Manager via Organization Member store.
+/// Init Organization Member Manager via Organization Member store.
 /// </remarks>
 /// <param name="store"></param>
 public class OrganizationMemberManager(IOrganizationMemberStore store)
 {
     /// <summary>
-    ///     Get the member.
+    /// Get the member.
     /// </summary>
     /// <param name="person"></param>
     /// <param name="organization"></param>
@@ -28,10 +28,10 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     获取可见的组织成员。
+    /// 获取可见的组织成员。
     /// </summary>
     /// <remarks>
-    ///     该方法会考虑组织成员的Visibility设置，根据visitor来决定是否在结果集合中包括这些成员。
+    /// 该方法会考虑组织成员的Visibility设置，根据visitor来决定是否在结果集合中包括这些成员。
     /// </remarks>
     /// <param name="organization">AN organization that members to get.</param>
     /// <param name="visitor">The person who access this system. null if anonymous access.</param>
@@ -57,7 +57,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     Get organization members.
+    /// Get organization members.
     /// </summary>
     /// <param name="organization">Organization</param>
     /// <returns></returns>
@@ -69,7 +69,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     以访问者visitor的视角检索指定用户的组织成员身份。
+    /// 以访问者visitor的视角检索指定用户的组织成员身份。
     /// </summary>
     /// <param name="person">要检索组织成员身份的目标用户。</param>
     /// <param name="visitor">访问者。如果传入null，代表匿名访问者。</param>
@@ -93,7 +93,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     获取个人的组织成员身份。
+    /// 获取个人的组织成员身份。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
@@ -116,7 +116,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     Take person leave out the organization.
+    /// Take person leave out the organization.
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
@@ -132,7 +132,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     移除用户成员身份，无论用户是否是组织所有者也是如此。
+    /// 移除用户成员身份，无论用户是否是组织所有者也是如此。
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
@@ -142,7 +142,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    ///     Update organization member info.
+    /// Update organization member info.
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>

@@ -28,19 +28,6 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
     }
 
     [Fact]
-    public async Task FindOrganizationsViaNameAndUsedName()
-    {
-        using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
-        var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
-        var orgA = new Organization { Name = "OrgA" };
-        await organizationManager.CreateAsync(orgA);
-        await organizationManager.RenameAsync(orgA, "OrgD", DateOnly.FromDateTime(DateTime.Now));
-        var found = organizationManager.FindByName("OrgA");
-        Assert.Contains(found, o => o.Name == "OrgD");
-        Assert.Contains(orgA.UsedNames, u => u.Name == "OrgA");
-    }
-
-    [Fact]
     public async Task RenameOrganizationToCurrentSameName()
     {
         using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();

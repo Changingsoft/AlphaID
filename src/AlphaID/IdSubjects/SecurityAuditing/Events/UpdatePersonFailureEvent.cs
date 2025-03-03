@@ -1,7 +1,7 @@
 namespace IdSubjects.SecurityAuditing.Events;
 
 /// <summary>
-///     更新自然人信息失败事件。
+/// 更新自然人信息失败事件。
 /// </summary>
 /// <remarks>
 /// </remarks>

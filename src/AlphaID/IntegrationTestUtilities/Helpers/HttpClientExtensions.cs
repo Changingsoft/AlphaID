@@ -7,12 +7,12 @@ using HttpMethod = System.Net.Http.HttpMethod;
 namespace IntegrationTestUtilities.Helpers;
 
 /// <summary>
-///     Extensions for HttpClient.
+/// Extensions for HttpClient.
 /// </summary>
 public static class HttpClientExtensions
 {
     /// <summary>
-    ///     Send Post form data.
+    /// Send Post form data.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="form"></param>
@@ -27,7 +27,7 @@ public static class HttpClientExtensions
     }
 
     /// <summary>
-    ///     Send post form data.
+    /// Send post form data.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="form"></param>
@@ -45,7 +45,7 @@ public static class HttpClientExtensions
     }
 
     /// <summary>
-    ///     Send post form data.
+    /// Send post form data.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="form"></param>

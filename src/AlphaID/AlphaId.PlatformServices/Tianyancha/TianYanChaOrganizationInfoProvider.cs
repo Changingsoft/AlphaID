@@ -1,11 +1,11 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using AlphaIdPlatform.Platform;
 using Newtonsoft.Json;
 
 namespace AlphaId.PlatformServices.Tianyancha;
 
 /// <summary>
-///     天眼查工商信息服务。
+/// 天眼查工商信息服务。
 /// </summary>
 public class TianYanChaOrganizationInfoProvider : IOrganizationInfoProvider
 {

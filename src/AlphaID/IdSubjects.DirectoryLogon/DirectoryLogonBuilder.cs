@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-///     目录管理构造器。
+/// 目录管理构造器。
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -16,7 +16,7 @@ public class DirectoryLogonBuilder(IServiceCollection services)
     public IServiceCollection Services { get; } = services;
 
     /// <summary>
-    ///     向基础结构添加目录服务存取器。
+    /// 向基础结构添加目录服务存取器。
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -27,7 +27,7 @@ public class DirectoryLogonBuilder(IServiceCollection services)
     }
 
     /// <summary>
-    ///     向基础结构添加登录账号存取器。
+    /// 向基础结构添加登录账号存取器。
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

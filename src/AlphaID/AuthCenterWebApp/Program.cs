@@ -26,6 +26,9 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
+#if WINDOWS
+using Serilog.Events;
+#endif
 
 // ReSharper disable All
 
@@ -276,7 +279,7 @@ await app.RunAsync();
 namespace AuthCenterWebApp
 {
     /// <summary>
-    ///     for Testing.
+    /// for Testing.
     /// </summary>
     public class Program
     {

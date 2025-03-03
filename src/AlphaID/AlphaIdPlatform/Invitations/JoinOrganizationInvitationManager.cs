@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 namespace AlphaIdPlatform.Invitations;
 
 /// <summary>
-///     加入组织邀请管理器。
+/// 加入组织邀请管理器。
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -24,7 +24,7 @@ public class JoinOrganizationInvitationManager(
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     获取我收到的邀请。
+    /// 获取我收到的邀请。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
@@ -36,7 +36,7 @@ public class JoinOrganizationInvitationManager(
     }
 
     /// <summary>
-    ///     获取组织发出的邀请
+    /// 获取组织发出的邀请
     /// </summary>
     /// <param name="organizationId"></param>
     /// <returns></returns>
@@ -47,7 +47,7 @@ public class JoinOrganizationInvitationManager(
     }
 
     /// <summary>
-    ///     邀请某人加入到组织。
+    /// 邀请某人加入到组织。
     /// </summary>
     /// <param name="organization">要加入的组织。</param>
     /// <param name="invitee">邀请人的用户名</param>
@@ -81,7 +81,7 @@ public class JoinOrganizationInvitationManager(
     }
 
     /// <summary>
-    ///     接受邀请并加入组织。
+    /// 接受邀请并加入组织。
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>
@@ -111,7 +111,7 @@ public class JoinOrganizationInvitationManager(
     }
 
     /// <summary>
-    ///     拒绝邀请。
+    /// 拒绝邀请。
     /// </summary>
     /// <param name="invitation"></param>
     /// <returns></returns>

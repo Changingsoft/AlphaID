@@ -334,4 +334,16 @@
   <data name="Return" xml:space="preserve">
     <value>Return</value>
   </data>
+  <data name="Birth date" xml:space="preserve">
+	  <value>Birth date</value>
+  </data>
+  <data name="Received from mobile phone short message." xml:space="preserve">
+	  <value>Received from mobile phone short message.</value>
+  </data>
+  <data name="User name, email or phone number" xml:space="preserve">
+	  <value>User name, email or phone number</value>
+  </data>
+  <data name="Delete Account" xml:space="preserve">
+	  <value>Delete Account</value>
+  </data>
 </root>

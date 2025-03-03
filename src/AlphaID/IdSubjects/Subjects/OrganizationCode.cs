@@ -1,16 +1,16 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace IdSubjects.Subjects;
 
 /// <summary>
-///     表示组织机构代码。
+/// 表示组织机构代码。
 /// </summary>
 public struct OrganizationCode
 {
     private string _code;
 
     /// <summary>
-    ///     使用组织机构代码（不含校验位）创建组织机构代码。
+    /// 使用组织机构代码（不含校验位）创建组织机构代码。
     /// </summary>
     /// <param name="code"></param>
     public OrganizationCode(string code)
@@ -25,7 +25,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     获取或设置组织机构代码本体。
+    /// 获取或设置组织机构代码本体。
     /// </summary>
     public string Code
     {
@@ -43,12 +43,12 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     获取校验码。
+    /// 获取校验码。
     /// </summary>
     public char CheckCode { get; private set; }
 
     /// <summary>
-    ///     已重写，输出组织机构代码的可读形式。
+    /// 已重写，输出组织机构代码的可读形式。
     /// </summary>
     /// <returns></returns>
     public readonly override string ToString()
@@ -57,7 +57,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     输出组织机构代码，如果指示为机读形式，则忽略中间的连字符。
+    /// 输出组织机构代码，如果指示为机读形式，则忽略中间的连字符。
     /// </summary>
     /// <param name="asMachineFormat"></param>
     /// <returns></returns>
@@ -67,7 +67,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     已重写。获取组织机构代码的HashCode.
+    /// 已重写。获取组织机构代码的HashCode.
     /// </summary>
     /// <returns></returns>
     public readonly override int GetHashCode()
@@ -76,7 +76,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     已重写，判定两个组织机构代码是否值相等。
+    /// 已重写，判定两个组织机构代码是否值相等。
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
@@ -86,7 +86,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     已重载。判定两个组织机构代码是否值相等。
+    /// 已重载。判定两个组织机构代码是否值相等。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -97,7 +97,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     已重载。判定两个组织机构代码是否值不相等。
+    /// 已重载。判定两个组织机构代码是否值不相等。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -127,7 +127,7 @@ public struct OrganizationCode
     private const string Pattern = @"^([0-9A-Z]{8})-?([0-9X])$";
 
     /// <summary>
-    ///     将给定的字符串文本匹配为组织机构代码。
+    /// 将给定的字符串文本匹配为组织机构代码。
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
@@ -147,7 +147,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     尝试将给定文本匹配为组织机构代码。
+    /// 尝试将给定文本匹配为组织机构代码。
     /// </summary>
     /// <param name="s"></param>
     /// <param name="result"></param>
@@ -175,7 +175,7 @@ public struct OrganizationCode
     }
 
     /// <summary>
-    ///     获取一个值，指示一个特定文本是否是组织机构代码。
+    /// 获取一个值，指示一个特定文本是否是组织机构代码。
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>

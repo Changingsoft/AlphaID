@@ -9,9 +9,9 @@ public class DeleteModel(OrganizationManager manager) : PageModel
 {
     public OrganizationOperationResult? Result { get; set; }
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = manager.FindByCurrentName(anchor);
+        var organization = await manager.FindByNameAsync(anchor);
         if (organization == null) return NotFound();
 
         return Page();
@@ -19,7 +19,7 @@ public class DeleteModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = manager.FindByCurrentName(anchor);
+        var organization = await manager.FindByNameAsync(anchor);
         if (organization == null) return NotFound();
 
         Result = await manager.DeleteAsync(organization);

@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AspNetWebLib.Helpers;
 
 /// <summary>
-///     适用于枚举的帮助器类。
+/// 适用于枚举的帮助器类。
 /// </summary>
 public class EnumHelper
 {
     /// <summary>
-    ///     获取特定枚举类型的选择项列表。
+    /// 获取特定枚举类型的选择项列表。
     /// </summary>
     /// <typeparam name="TEnum"></typeparam>
     /// <returns></returns>

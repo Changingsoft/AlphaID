@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model NewModel
 @{
     ViewBag.Title = L["New organization"];
@@ -9,14 +9,10 @@
     <div class="card-body">
         <form method="post">
             <div class="mb-3">
-                <label asp-for="@Model.Name" class="form-label"></label>
+                <label asp-for="@Model.Name" class="form-label required"></label>
                 <input asp-for="@Model.Name" class="form-control" autofocus/>
                 <span asp-validation-for="@Model.Name"></span>
 
-            </div>
-            <div class="form-check">
-                <input asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-input"/>
-                <label asp-for="@Model.RegisterWithSameNameAnyway" class="form-check-label"></label>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.Domicile" class="form-label"></label>
@@ -24,15 +20,16 @@
                 <span asp-validation-for="@Model.Domicile"></span>
             </div>
             <div class="mb-3">
+                <label asp-for="@Model.Representative" class="form-label"></label>
+                <input asp-for="@Model.Representative" class="form-control" />
+                <span asp-validation-for="@Model.Representative"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="@Model.Contact" class="form-label"></label>
                 <input asp-for="@Model.Contact" class="form-control"/>
                 <span asp-validation-for="@Model.Contact"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="@Model.LegalPersonName" class="form-label"></label>
-                <input asp-for="@Model.LegalPersonName" class="form-control"/>
-                <span asp-validation-for="@Model.LegalPersonName"></span>
-            </div>
+            
             <div class="mb-3">
                 <label asp-for="@Model.EstablishedAt" class="form-label"></label>
                 <input asp-for="@Model.EstablishedAt" class="form-control"/>

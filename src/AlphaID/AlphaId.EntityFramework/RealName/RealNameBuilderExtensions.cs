@@ -1,4 +1,4 @@
-﻿using IdSubjects.RealName;
+using IdSubjects.RealName;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,7 +7,7 @@ namespace AlphaId.EntityFramework.RealName;
 public static class RealNameBuilderExtensions
 {
     /// <summary>
-    ///     添加必要的实名认证相关存取器。
+    /// 添加必要的实名认证相关存取器。
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
@@ -19,7 +19,7 @@ public static class RealNameBuilderExtensions
     }
 
     /// <summary>
-    ///     向基础结构添加实名认证所需DbContext.
+    /// 向基础结构添加实名认证所需DbContext.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="optionsBuilder"></param>

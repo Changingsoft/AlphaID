@@ -23,12 +23,12 @@
                 <input type="hidden" asp-for="Input.ReturnUrl"/>
 
                 <div class="mb-3">
-                    <label asp-for="Input.Username" class="form-label"></label>
+                    <label asp-for="Input.Username" class="form-label required"></label>
                     <input asp-for="Input.Username" class="form-control" autofocus tabindex="1">
                     <span asp-validation-for="Input.Username" class="text-danger"></span>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label" asp-for="Input.Password">
+                    <label class="form-label required" asp-for="Input.Password">
                         @L["Password"]
                         <span class="form-label-description">
                             <a asp-page="ForgetPassword">@L["I forgot password"]</a>

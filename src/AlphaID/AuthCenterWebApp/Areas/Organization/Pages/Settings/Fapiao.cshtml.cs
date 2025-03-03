@@ -13,9 +13,9 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public IActionResult OnGet(string anchor)
+    public async Task<IActionResult> OnGet(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 
@@ -35,7 +35,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostSaveAsync(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 
@@ -69,7 +69,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostClearAsync(string anchor)
     {
-        var organization = organizationManager.FindByCurrentName(anchor);
+        var organization = await organizationManager.FindByNameAsync(anchor);
         if (organization == null)
             return NotFound();
 

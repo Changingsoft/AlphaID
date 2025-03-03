@@ -8,7 +8,7 @@ namespace IdSubjects;
 public static class ApplicationUserSignInResultExtensions
 {
     /// <summary>
-    ///     获取一个值，指示用户必须更改其密码。
+    /// 获取一个值，指示用户必须更改其密码。
     /// </summary>
     /// <param name="signInResult"></param>
     /// <returns></returns>

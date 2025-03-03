@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using Microsoft.Extensions.Options;
@@ -6,10 +6,10 @@ using Microsoft.Extensions.Options;
 namespace AlphaIdPlatform.Platform;
 
 /// <summary>
-///     Email Sender.
+/// Email Sender.
 /// </summary>
 /// <remarks>
-///     Initialize Email sender via options and logger.
+/// Initialize Email sender via options and logger.
 /// </remarks>
 /// <param name="options">Options to configure this mail sender.</param>
 /// <param name="logger">Logger for logging of this mail sender.</param>
@@ -18,7 +18,7 @@ public class SmtpMailSender(IOptions<SmtpMailSenderOptions> options, ILogger<Smt
     private readonly SmtpMailSenderOptions _options = options.Value;
 
     /// <summary>
-    ///     Send email to specified recipient with subject and html message body.
+    /// Send email to specified recipient with subject and html message body.
     /// </summary>
     /// <param name="email">Recipient.</param>
     /// <param name="subject">Title of this mail.</param>

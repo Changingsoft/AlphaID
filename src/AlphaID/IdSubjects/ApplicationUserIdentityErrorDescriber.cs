@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Identity;
 namespace IdSubjects;
 
 /// <summary>
-///     Error describer. 便于国际化。
+/// Error describer. 便于国际化。
 /// </summary>
 public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
 {
     /// <summary>
-    ///     Invalid phone number format.
+    /// Invalid phone number format.
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError InvalidPhoneNumberFormat()
@@ -21,7 +21,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    ///     Duplicate phone number.
+    /// Duplicate phone number.
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError DuplicatePhoneNumber()
@@ -34,7 +34,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    ///     CannotChangePersonName
+    /// CannotChangePersonName
     /// </summary>
     /// <returns></returns>
     public IdentityError CannotChangePersonName()
@@ -46,7 +46,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    ///     LessThenMinimumPasswordAge
+    /// LessThenMinimumPasswordAge
     /// </summary>
     /// <returns></returns>
     public IdentityError LessThenMinimumPasswordAge()
@@ -59,7 +59,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    ///     ReuseOldPassword
+    /// ReuseOldPassword
     /// </summary>
     /// <returns></returns>
     public IdentityError ReuseOldPassword()

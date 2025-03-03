@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
-///     银行账户。
+/// 银行账户。
 /// </summary>
 [Owned]
 [Table("OrganizationBankAccount")]
 public class OrganizationBankAccount
 {
     /// <summary>
-    ///     账号
+    /// 账号
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
@@ -20,13 +20,13 @@ public class OrganizationBankAccount
     public string AccountNumber { get; set; } = null!;
 
     /// <summary>
-    ///     户名
+    /// 户名
     /// </summary>
     [MaxLength(100)]
     public string AccountName { get; set; } = null!;
 
     /// <summary>
-    ///     开户行
+    /// 开户行
     /// </summary>
     [MaxLength(100)]
     public string? BankName { get; set; }

@@ -35,6 +35,7 @@ public class ChangePasswordModel(
             await HttpContext.AuthenticateAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
         if (result.Principal == null)
             throw new InvalidOperationException("Unable to load must change password authentication user.");
+
         string personId = result.Principal.FindFirstValue(ClaimTypes.Name) ??
                           throw new InvalidOperationException(
                               "Unable to load must change password authentication user.");
@@ -61,6 +62,7 @@ public class ChangePasswordModel(
                                    "Unable to load must change password authentication user.");
         IdentityResult identityResult =
             await naturalPersonService.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
+
         if (identityResult.Succeeded)
         {
             //Sign out MustChangePasswordScheme

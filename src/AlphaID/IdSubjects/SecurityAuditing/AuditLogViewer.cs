@@ -1,7 +1,7 @@
-﻿namespace IdSubjects.SecurityAuditing;
+namespace IdSubjects.SecurityAuditing;
 
 /// <summary>
-///     审计日志查看器。
+/// 审计日志查看器。
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -9,7 +9,7 @@
 public class AuditLogViewer(IQueryableAuditLogStore store)
 {
     /// <summary>
-    ///     获取按时间戳倒序的审计日志。
+    /// 获取按时间戳倒序的审计日志。
     /// </summary>
     public IQueryable<AuditLogEntry> Log => store.Log.OrderByDescending(l => l.TimeStamp);
 }

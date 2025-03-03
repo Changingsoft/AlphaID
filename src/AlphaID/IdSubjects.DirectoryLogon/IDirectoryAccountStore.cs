@@ -1,31 +1,31 @@
-﻿namespace IdSubjects.DirectoryLogon;
+namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-///     Provide store for LogonAccount.
+/// Provide store for LogonAccount.
 /// </summary>
 public interface IDirectoryAccountStore
 {
     /// <summary>
-    ///     Gets queryable account collection.
+    /// Gets queryable account collection.
     /// </summary>
     IQueryable<DirectoryAccount> Accounts { get; }
 
     /// <summary>
-    ///     Create
+    /// Create
     /// </summary>
     /// <param name="account"></param>
     /// <returns></returns>
     Task CreateAsync(DirectoryAccount account);
 
     /// <summary>
-    ///     Update
+    /// Update
     /// </summary>
     /// <param name="account"></param>
     /// <returns></returns>
     Task UpdateAsync(DirectoryAccount account);
 
     /// <summary>
-    ///     Delete
+    /// Delete
     /// </summary>
     /// <param name="account"></param>
     /// <returns></returns>

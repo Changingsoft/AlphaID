@@ -9,24 +9,24 @@ namespace AuthCenterWebApp.Pages;
 #pragma warning disable CA1724 // Type names should not match namespaces
 
 /// <summary>
-///     Telemetry helpers for the UI
+/// Telemetry helpers for the UI
 /// </summary>
 public static class Telemetry
 {
     private static readonly string s_serviceVersion = typeof(Telemetry).Assembly.GetName().Version!.ToString();
 
     /// <summary>
-    ///     Service name for telemetry.
+    /// Service name for telemetry.
     /// </summary>
     public static readonly string ServiceName = typeof(Telemetry).Assembly.GetName().Name!;
 
     /// <summary>
-    ///     Metrics configuration
+    /// Metrics configuration
     /// </summary>
     public static class Metrics
     {
         /// <summary>
-        ///     Meter for the IdentityServer host project
+        /// Meter for the IdentityServer host project
         /// </summary>
         private static readonly Meter s_meter = new(ServiceName, s_serviceVersion);
 
@@ -40,8 +40,8 @@ public static class Telemetry
         private static readonly Counter<long> s_userLogoutCounter = s_meter.CreateCounter<long>(Counters.UserLogout);
 
         /// <summary>
-        ///     Helper method to increase <see cref="Counters.Consent" /> counter. The scopes
-        ///     are expanded and called one by one to not cause a combinatory explosion of scopes.
+        /// Helper method to increase <see cref="Counters.Consent" /> counter. The scopes
+        /// are expanded and called one by one to not cause a combinatory explosion of scopes.
         /// </summary>
         /// <param name="clientId">Client id</param>
         /// <param name="scopes">Scope names. Each element is added on its own to the counter</param>
@@ -59,8 +59,8 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Helper method to increase <see cref="Counters.ConsentDenied" /> counter. The scopes
-        ///     are expanded and called one by one to not cause a combinatory explosion of scopes.
+        /// Helper method to increase <see cref="Counters.ConsentDenied" /> counter. The scopes
+        /// are expanded and called one by one to not cause a combinatory explosion of scopes.
         /// </summary>
         /// <param name="clientId">Client id</param>
         /// <param name="scopes">Scope names. Each element is added on its own to the counter</param>
@@ -74,7 +74,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Helper method to increase the <see cref="Counters.GrantsRevoked" /> counter.
+        /// Helper method to increase the <see cref="Counters.GrantsRevoked" /> counter.
         /// </summary>
         /// <param name="clientId">Client id to revoke for, or null for all.</param>
         public static void GrantsRevoked(string? clientId)
@@ -83,7 +83,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Helper method to increase <see cref="Counters.UserLogin" /> counter.
+        /// Helper method to increase <see cref="Counters.UserLogin" /> counter.
         /// </summary>
         /// <param name="clientId">Client Id, if available</param>
         /// <param name="idp"></param>
@@ -94,7 +94,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Helper method to increase <see cref="Counters.UserLogin" /> counter on failure.
+        /// Helper method to increase <see cref="Counters.UserLogin" /> counter on failure.
         /// </summary>
         /// <param name="clientId">Client Id, if available</param>
         /// <param name="idp"></param>
@@ -107,7 +107,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Helper method to increase the <see cref="Counters.UserLogout" /> counter.
+        /// Helper method to increase the <see cref="Counters.UserLogout" /> counter.
         /// </summary>
         /// <param name="idp">Idp/authentication scheme for external authentication, or "local" for built-in.</param>
         public static void UserLogout(string? idp)
@@ -117,7 +117,7 @@ public static class Telemetry
 #pragma warning disable 1591
 
         /// <summary>
-        ///     Name of Counters
+        /// Name of Counters
         /// </summary>
         public static class Counters
         {
@@ -128,7 +128,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Name of tags
+        /// Name of tags
         /// </summary>
         public static class Tags
         {
@@ -141,7 +141,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        ///     Values of tags
+        /// Values of tags
         /// </summary>
         public static class TagValues
         {

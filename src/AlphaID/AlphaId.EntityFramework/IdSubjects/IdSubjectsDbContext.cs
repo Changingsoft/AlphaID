@@ -12,7 +12,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = null!;
 
     /// <summary>
-    ///     Organizations.
+    /// Organizations.
     /// </summary>
     public DbSet<Organization> Organizations { get; protected set; } = null!;
 

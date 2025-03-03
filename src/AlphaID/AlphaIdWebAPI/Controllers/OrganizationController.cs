@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlphaIdWebAPI.Controllers;
 
 /// <summary>
-///     组织信息。
+/// 组织信息。
 /// </summary>
 /// <remarks>
 /// </remarks>
@@ -24,7 +24,7 @@ public class OrganizationController(
     UserManager<NaturalPerson> personManager) : ControllerBase
 {
     /// <summary>
-    ///     获取组织信息。
+    /// 获取组织信息。
     /// </summary>
     /// <param name="id">组织的SubjectId</param>
     /// <returns></returns>
@@ -36,7 +36,7 @@ public class OrganizationController(
     }
 
     /// <summary>
-    ///     获取组织的成员。
+    /// 获取组织的成员。
     /// </summary>
     /// <param name="id">组织的SubjectId</param>
     /// <returns></returns>
@@ -58,10 +58,10 @@ public class OrganizationController(
     }
 
     /// <summary>
-    ///     给定关键字查找组织。
+    /// 给定关键字查找组织。
     /// </summary>
     /// <remarks>
-    ///     支持通过登记的统一社会信用代码、组织机构代码、组织名称的一部分进行查找。
+    /// 支持通过登记的统一社会信用代码、组织机构代码、组织名称的一部分进行查找。
     /// </remarks>
     /// <param name="q">关键字</param>
     /// <returns></returns>
@@ -101,7 +101,7 @@ public class OrganizationController(
     }
 
     /// <summary>
-    ///     Organization.
+    /// Organization.
     /// </summary>
     /// <param name="SubjectId">Id</param>
     /// <param name="Name">名称。</param>

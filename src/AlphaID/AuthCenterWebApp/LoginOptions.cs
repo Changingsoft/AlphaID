@@ -1,27 +1,27 @@
 namespace AuthCenterWebApp;
 
 /// <summary>
-///     µÇÂ¼Ñ¡Ïî¡£
+/// ç™»å½•é€‰é¡¹ã€‚
 /// </summary>
 public class LoginOptions
 {
     /// <summary>
-    /// ÔÊĞí±¾µØµÇÂ¼
+    /// å…è®¸æœ¬åœ°ç™»å½•
     /// </summary>
     public bool AllowLocalLogin { get; set; } = true;
 
     /// <summary>
-    /// ÔÊĞí¼Ç×¡ÓÃ»§µÇÂ¼¡£
+    /// å…è®¸è®°ä½ç”¨æˆ·ç™»å½•ã€‚
     /// </summary>
     public bool AllowRememberLogin { get; set; } = true;
 
     /// <summary>
-    /// ¼Ç×¡ÓÃ»§µÇÂ¼×î³¤ÌìÊı¡£
+    /// è®°ä½ç”¨æˆ·ç™»å½•æœ€é•¿å¤©æ•°ã€‚
     /// </summary>
     public int RememberMeLoginDuration { get; set; } = 30;
 
     /// <summary>
-    /// ´íÎóÆ¾¾İÊ±µÄÏûÏ¢¡£
+    /// é”™è¯¯å‡­æ®æ—¶çš„æ¶ˆæ¯ã€‚
     /// </summary>
-    public string InvalidCredentialsErrorMessage { get; set; } = "ÓÃ»§Ãû»òÃÜÂëÎŞĞ§";
+    public string InvalidCredentialsErrorMessage { get; set; } = "ç”¨æˆ·åæˆ–å¯†ç æ— æ•ˆ";
 }

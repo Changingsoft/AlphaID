@@ -9,10 +9,10 @@ using Microsoft.Extensions.Logging;
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
-///     Logon Account Manager.
+/// Logon Account Manager.
 /// </summary>
 /// <remarks>
-///     Init.
+/// Init.
 /// </remarks>
 /// <param name="applicationUserManager"></param>
 /// <param name="directoryAccountStore"></param>
@@ -26,7 +26,7 @@ public class DirectoryAccountManager<T>(
 where T : ApplicationUser
 {
     /// <summary>
-    ///     Create account.
+    /// Create account.
     /// </summary>
     /// <returns></returns>
     [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
@@ -108,7 +108,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     Search from directory service.
+    /// Search from directory service.
     /// </summary>
     /// <param name="directoryServiceDescriptor"></param>
     /// <param name="filter"></param>
@@ -140,7 +140,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     绑定已有账号。
+    /// 绑定已有账号。
     /// </summary>
     /// <param name="account"></param>
     /// <param name="entryObjectGuid"></param>
@@ -200,7 +200,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     获取指定用户的账号。
+    /// 获取指定用户的账号。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>

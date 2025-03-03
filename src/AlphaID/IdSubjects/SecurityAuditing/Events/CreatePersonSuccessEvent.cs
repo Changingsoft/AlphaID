@@ -1,7 +1,7 @@
 namespace IdSubjects.SecurityAuditing.Events;
 
 /// <summary>
-///     表示一个登录成功事件。
+/// 表示一个登录成功事件。
 /// </summary>
 /// <remarks>
 /// </remarks>

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 namespace IdSubjects;
 
 /// <summary>
-///     密码历史管理器。
+/// 密码历史管理器。
 /// </summary>
 /// <param name="store">密码历史存取器。</param>
 /// <param name="passwordHasher">密码哈希器。</param>
@@ -20,7 +20,7 @@ where T : ApplicationUser
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
     /// <summary>
-    ///     命中指定用户的密码历史。
+    /// 命中指定用户的密码历史。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
@@ -29,13 +29,22 @@ where T : ApplicationUser
     {
         //取出密码历史
         IEnumerable<string> passwords = store.GetPasswords(person.Id, _options.RememberPasswordHistory);
+        foreach (var p in passwords)
+        {
+            var result = passwordHasher.VerifyHashedPassword(person, p, password);
+            if (result == PasswordVerificationResult.Success ||
+                result == PasswordVerificationResult.SuccessRehashNeeded)
+                return true;
+        }
+
+        return false;
         return passwords
             .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis, password))
             .Any(result => result.HasFlag(PasswordVerificationResult.Success));
     }
 
     /// <summary>
-    ///     将密码计入历史。
+    /// 将密码计入历史。
     /// </summary>
     /// <param name="person"></param>
     /// <param name="password"></param>
@@ -46,7 +55,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    ///     清除用户的密码历史。
+    /// 清除用户的密码历史。
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>

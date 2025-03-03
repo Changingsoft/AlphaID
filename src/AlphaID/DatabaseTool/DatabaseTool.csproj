@@ -9,13 +9,13 @@
 
 	<ItemGroup>
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.13">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.11" />
-		<PackageReference Include="MinVer" Version="5.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.13" />
+		<PackageReference Include="MinVer" Version="6.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -56,14 +56,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
 	  <ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Update="appsettings.Staging.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
 	</ItemGroup>
 
 </Project>

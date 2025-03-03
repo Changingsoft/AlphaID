@@ -1,14 +1,14 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace IdSubjects.Subjects;
 
 /// <summary>
-///     表示一个统一社会信用代码。
+/// 表示一个统一社会信用代码。
 /// </summary>
 public readonly struct UnifiedSocialCreditCode
 {
     /// <summary>
-    ///     使用指定的代码值初始化统一社会信用代码。
+    /// 使用指定的代码值初始化统一社会信用代码。
     /// </summary>
     /// <param name="code"></param>
     public UnifiedSocialCreditCode(string code)
@@ -43,7 +43,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     使用给定的组合代码初始化统一社会信用代码。
+    /// 使用给定的组合代码初始化统一社会信用代码。
     /// </summary>
     /// <param name="adminCode"></param>
     /// <param name="orgTypeCode"></param>
@@ -55,7 +55,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     使用给定的组合代码和组织机构代码初始化统一社会信用代码。
+    /// 使用给定的组合代码和组织机构代码初始化统一社会信用代码。
     /// </summary>
     /// <param name="adminCode"></param>
     /// <param name="orgTypeCode"></param>
@@ -85,37 +85,37 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     获取该统一社会信用代码的编码部分（不包括校验码）。
+    /// 获取该统一社会信用代码的编码部分（不包括校验码）。
     /// </summary>
     public string Code => AdminCode + OrganizationTypeCode + RegionCode + OrganizationCode.ToString(true);
 
     /// <summary>
-    ///     获取登记管理部门代码。
+    /// 获取登记管理部门代码。
     /// </summary>
     public string AdminCode { get; }
 
     /// <summary>
-    ///     获取组织类别代码。
+    /// 获取组织类别代码。
     /// </summary>
     public string OrganizationTypeCode { get; }
 
     /// <summary>
-    ///     获取登记机关行政区划代码。
+    /// 获取登记机关行政区划代码。
     /// </summary>
     public string RegionCode { get; }
 
     /// <summary>
-    ///     获取主体标识码（组织机构代码）
+    /// 获取主体标识码（组织机构代码）
     /// </summary>
     public OrganizationCode OrganizationCode { get; }
 
     /// <summary>
-    ///     获取校验码。
+    /// 获取校验码。
     /// </summary>
     public char CheckCode { get; }
 
     /// <summary>
-    ///     已重写，输出统一社会信用代码的字符串形式。
+    /// 已重写，输出统一社会信用代码的字符串形式。
     /// </summary>
     /// <returns></returns>
     public override string ToString()
@@ -124,7 +124,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     已重写，输出统一社会信用代码的哈希。
+    /// 已重写，输出统一社会信用代码的哈希。
     /// </summary>
     /// <returns></returns>
     public override int GetHashCode()
@@ -133,7 +133,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     已重写。比较两个统一社会信用代码是否值相等。
+    /// 已重写。比较两个统一社会信用代码是否值相等。
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
@@ -143,7 +143,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     已重载。变更相等比较为值相等比较。
+    /// 已重载。变更相等比较为值相等比较。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -158,7 +158,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     已重载。
+    /// 已重载。
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -183,12 +183,12 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     Charset with order from index 0 to 30,
+    /// Charset with order from index 0 to 30,
     /// </summary>
     private const string Charset = "0123456789ABCDEFGHJKLMNPQRTUWXY";
 
     /// <summary>
-    ///     Readonly weight for corresponding position.
+    /// Readonly weight for corresponding position.
     /// </summary>
     private static readonly int[] s_weight = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
 
@@ -215,7 +215,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     通过给定的输入尝试匹配为一个统一社会信用代码。
+    /// 通过给定的输入尝试匹配为一个统一社会信用代码。
     /// </summary>
     /// <param name="s"></param>
     /// <param name="usci"></param>
@@ -254,7 +254,7 @@ public readonly struct UnifiedSocialCreditCode
     }
 
     /// <summary>
-    ///     判定给定的输入是否是一个格式上合法的统一社会性用代码。
+    /// 判定给定的输入是否是一个格式上合法的统一社会性用代码。
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>

@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 
 namespace DatabaseTool;
 
 /// <summary>
-///     表示数据库执行器
+/// 表示数据库执行器
 /// </summary>
 internal class DatabaseExecutor(
     IEnumerable<DatabaseMigrator> migrators,

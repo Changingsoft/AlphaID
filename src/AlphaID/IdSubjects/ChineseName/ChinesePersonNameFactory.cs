@@ -1,10 +1,10 @@
-﻿namespace IdSubjects.ChineseName;
+namespace IdSubjects.ChineseName;
 
 /// <summary>
-///     Chinese Person Name Factory.
+/// Chinese Person Name Factory.
 /// </summary>
 /// <remarks>
-///     Initialize factory by using default name processor and pinyin converter.
+/// Initialize factory by using default name processor and pinyin converter.
 /// </remarks>
 public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinConverter)
 {
@@ -95,7 +95,7 @@ public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinCon
     ];
 
     /// <summary>
-    ///     初始化默认的中国人姓名工厂。
+    /// 初始化默认的中国人姓名工厂。
     /// </summary>
     public ChinesePersonNameFactory() : this(new ChinesePersonNamePinyinConverter())
     {
@@ -103,7 +103,7 @@ public class ChinesePersonNameFactory(ChinesePersonNamePinyinConverter pinyinCon
 
 
     /// <summary>
-    ///     Create chinese person name from a full name.
+    /// Create chinese person name from a full name.
     /// </summary>
     /// <param name="fullName"></param>
     /// <returns></returns>

@@ -1,42 +1,38 @@
-﻿@page
+@page
 @model ActiveSessionsModel
 @inject PersistedGrantDbContext DbContext;
 @{
     ViewBag.Title = L["Active sessions"];
 }
 
-@section PageHeader{
+@section PageHeader {
     <h1>@L["Active sessions"]</h1>
 }
 
 <div class="card">
     <table class="table card-table">
         <thead>
-        <tr>
-            <th>@L["Session ID"]</th>
-            <th>@L["Scheme"]</th>
-            <th>@L["Subject ID"]</th>
-            <th>@L["Created"]</th>
-            <th>@L["Renewed"]</th>
-            <th>@L["Expires"]</th>
-            <th>@L["Display name"]</th>
-            <th>@L["Key part"]</th>
-        </tr>
+            <tr>
+                <th>@L["Session ID"]</th>
+                <th>@L["Subject ID"]</th>
+                <th>@L["Created"]</th>
+                <th>@L["Renewed"]</th>
+                <th>@L["Expires"]</th>
+                <th>@L["Key part"]</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var a in DbContext.ServerSideSessions)
-        {
-            <tr>
-                <td>@a.SessionId</td>
-                <td>@a.Scheme</td>
-                <td>@a.SubjectId</td>
-                <td>@a.Created</td>
-                <td>@a.Renewed</td>
-                <td>@a.Expires</td>
-                <td>@a.DisplayName</td>
-                <td>@a.Key[..4]</td>
-            </tr>
-        }
+            @foreach (var a in DbContext.ServerSideSessions)
+            {
+                <tr>
+                    <td>@a.SessionId</td>
+                    <td>@a.DisplayName (@a.SubjectId)</td>
+                    <td>@a.Created</td>
+                    <td>@a.Renewed</td>
+                    <td>@a.Expires</td>
+                    <td>@a.Key[..4]</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

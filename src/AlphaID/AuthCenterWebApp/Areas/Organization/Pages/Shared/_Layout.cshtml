@@ -13,7 +13,7 @@
         var subjectId = User.SubjectId();
         if (anchor != null && subjectId != null)
         {
-            var org = OrganizationManager.FindByCurrentName(anchor);
+            var org = await OrganizationManager.FindByNameAsync(anchor);
             if (org != null)
                 isOwner = (await MemberManager.GetMembersAsync(org)).Any(m => m.PersonId == subjectId && m.IsOwner);
         }

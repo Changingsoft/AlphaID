@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +16,12 @@ public class AuditLogEntry
     public int Id { get; protected set; }
 
     /// <summary>
-    ///     来源
+    /// 来源
     /// </summary>
     public string? Source { get; protected set; }
 
     /// <summary>
-    ///     事件Id.
+    /// 事件Id.
     /// </summary>
     public int? EventId { get; protected set; }
 

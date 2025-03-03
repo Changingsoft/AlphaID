@@ -173,7 +173,7 @@ app.Run();
 namespace AlphaIdWebAPI
 {
     /// <summary>
-    ///     Definitions for Testing.
+    /// Definitions for Testing.
     /// </summary>
     public class Program;
 }

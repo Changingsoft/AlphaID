@@ -1,7 +1,7 @@
-﻿namespace AlphaIdPlatform.Platform;
+namespace AlphaIdPlatform.Platform;
 
 /// <summary>
-///     ID card recognize exception.
+/// ID card recognize exception.
 /// </summary>
 [Serializable]
 public class ChineseIdCardOcrException : Exception

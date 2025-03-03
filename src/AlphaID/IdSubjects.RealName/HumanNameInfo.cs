@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 namespace IdSubjects.RealName;
 
 /// <summary>
-///     表示个人名称。
+/// 表示个人名称。
 /// </summary>
 [Owned]
 public record HumanNameInfo
 {
     /// <summary>
-    ///     For persistence.
+    /// For persistence.
     /// </summary>
     public HumanNameInfo()
     {
     }
 
     /// <summary>
-    ///     Create a HumanNameInfo.
+    /// Create a HumanNameInfo.
     /// </summary>
     /// <param name="fullName"></param>
     /// <param name="surname"></param>

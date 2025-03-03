@@ -1,12 +1,12 @@
 namespace AspNetWebLib;
 
 /// <summary>
-///     针对日期时间的扩展方法。
+/// 针对日期时间的扩展方法。
 /// </summary>
 public static class DateTimeExtensions
 {
     /// <summary>
-    ///     以年龄的方式显示。
+    /// 以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -18,7 +18,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    ///     以年龄的方式显示。
+    /// 以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -29,7 +29,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    ///     以年龄的方式显示。
+    /// 以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -41,7 +41,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    ///     以年龄的方式显示。
+    /// 以年龄的方式显示。
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    ///     For test only.
+    /// For test only.
     /// </summary>
     /// <param name="dateOfBirth"></param>
     /// <param name="now"></param>

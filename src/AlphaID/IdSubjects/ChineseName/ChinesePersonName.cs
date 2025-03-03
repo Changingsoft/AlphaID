@@ -1,7 +1,7 @@
 namespace IdSubjects.ChineseName;
 
 /// <summary>
-///     Chinese Person Name.
+/// Chinese Person Name.
 /// </summary>
 public class ChinesePersonName
 {
@@ -12,7 +12,7 @@ public class ChinesePersonName
     }
 
     /// <summary>
-    ///     使用姓氏、名字和拼音初始化中国人名称。
+    /// 使用姓氏、名字和拼音初始化中国人名称。
     /// </summary>
     /// <param name="surname"></param>
     /// <param name="givenName"></param>
@@ -27,17 +27,17 @@ public class ChinesePersonName
     }
 
     /// <summary>
-    ///     姓氏。
+    /// 姓氏。
     /// </summary>
     public string? Surname { get; protected set; }
 
     /// <summary>
-    ///     名字（不含姓氏部分）。
+    /// 名字（不含姓氏部分）。
     /// </summary>
     public string GivenName { get; protected set; } = null!;
 
     /// <summary>
-    ///     姓名。
+    /// 姓名。
     /// </summary>
     public string FullName => $"{Surname}{GivenName}";
 
@@ -54,7 +54,7 @@ public class ChinesePersonName
     public string PhoneticName => $"{PhoneticSurname} {PhoneticGivenName}".Trim();
 
     /// <summary>
-    ///     Override. Return full name of Person.
+    /// Override. Return full name of Person.
     /// </summary>
     /// <returns></returns>
     public override string ToString()

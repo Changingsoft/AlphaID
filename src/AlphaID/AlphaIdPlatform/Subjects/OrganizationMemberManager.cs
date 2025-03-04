@@ -71,20 +71,20 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <summary>
     /// 以访问者visitor的视角检索指定用户的组织成员身份。
     /// </summary>
-    /// <param name="person">要检索组织成员身份的目标用户。</param>
-    /// <param name="visitor">访问者。如果传入null，代表匿名访问者。</param>
+    /// <param name="personId">要检索组织成员身份的目标用户。</param>
+    /// <param name="visitorId">访问者。如果传入null，代表匿名访问者。</param>
     /// <returns></returns>
-    public IEnumerable<OrganizationMember> GetVisibleMembersOf(NaturalPerson person, NaturalPerson? visitor)
+    public IQueryable<OrganizationMember> GetVisibleMembersOf(string personId, string? visitorId)
     {
         //获取目标person的所有组织身份。
-        IQueryable<OrganizationMember>? members = store.OrganizationMembers.Where(p => p.PersonId == person.Id);
+        IQueryable<OrganizationMember>? members = store.OrganizationMembers.Where(p => p.PersonId == personId);
         Debug.Assert(members != null);
 
-        if (visitor == null)
+        if (visitorId == null)
             return members.Where(m => m.Visibility == MembershipVisibility.Public);
 
         //获取访问者的所属组织Id列表。
-        List<string> visitorMemberOfOrgIds = [.. store.OrganizationMembers.Where(m => m.PersonId == visitor.Id).Select(m => m.OrganizationId)];
+        List<string> visitorMemberOfOrgIds = [.. store.OrganizationMembers.Where(m => m.PersonId == visitorId).Select(m => m.OrganizationId)];
 
         return members.Where(m =>
             m.Visibility >= MembershipVisibility.AuthenticatedUser || m.Visibility == MembershipVisibility.Private &&

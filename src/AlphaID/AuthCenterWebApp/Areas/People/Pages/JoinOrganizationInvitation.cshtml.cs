@@ -23,7 +23,7 @@ public class JoinOrganizationInvitationModel(
         NaturalPerson? person = await personManager.FindByNameAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
-        IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person);
+        IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person.Id);
         JoinOrganizationInvitation? invitation = invitations.FirstOrDefault(i => i.Id == invitationId);
         if (invitation == null) return NotFound();
 
@@ -40,7 +40,7 @@ public class JoinOrganizationInvitationModel(
         NaturalPerson? person = await personManager.FindByNameAsync(anchor);
         if (person == null) return NotFound();
         Person = person;
-        IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person);
+        IEnumerable<JoinOrganizationInvitation> invitations = invitationsManager.GetPendingInvitations(person.Id);
         JoinOrganizationInvitation? invitation = invitations.FirstOrDefault(i => i.Id == invitationId);
         if (invitation == null) return NotFound();
         Invitation = invitation;

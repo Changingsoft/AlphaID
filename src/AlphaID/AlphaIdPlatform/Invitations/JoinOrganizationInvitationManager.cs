@@ -26,13 +26,13 @@ public class JoinOrganizationInvitationManager(
     /// <summary>
     /// 获取我收到的邀请。
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="personId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(NaturalPerson person)
+    public IEnumerable<JoinOrganizationInvitation> GetPendingInvitations(string personId)
     {
         return store.Invitations.Where(i =>
-            i.InviteeId == person.Id && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
+            i.InviteeId == personId && !i.Accepted.HasValue && i.WhenExpired > TimeProvider.GetLocalNow());
     }
 
     /// <summary>

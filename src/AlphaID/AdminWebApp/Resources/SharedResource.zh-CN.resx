@@ -387,4 +387,13 @@
   <data name="Record used name" xml:space="preserve">
 	  <value>记录曾用名</value>
   </data>
+  <data name="Actions" xml:space="preserve">
+	  <value>操作</value>
+  </data>
+  <data name="Lockout end at" xml:space="preserve">
+	  <value>锁定至</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+	  <value>解锁</value>
+  </data>
 </root>

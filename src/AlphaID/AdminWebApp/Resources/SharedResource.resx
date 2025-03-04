@@ -389,4 +389,16 @@
   <data name="Record used name" xml:space="preserve">
 	  <value>Record used name</value>
   </data>
+  <data name="Actions" xml:space="preserve">
+	  <value>Actions</value>
+	  <comment>Actions</comment>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+	  <value>Unlock</value>
+	  <comment>Unlock</comment>
+  </data>
+  <data name="Lockout end at" xml:space="preserve">
+	  <value>Lockout end at</value>
+	  <comment>Lockout end at</comment>
+  </data>
 </root>

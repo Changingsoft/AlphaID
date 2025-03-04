@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -39,4 +39,7 @@
   <data name="Time" xml:space="preserve">
 			<value>时间</value>
 		</data>
+	<data name="No results." xml:space="preserve">
+		<value>没有结果。</value>
+	</data>
 </root>

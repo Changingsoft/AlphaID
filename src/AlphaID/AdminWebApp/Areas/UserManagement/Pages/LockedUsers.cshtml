@@ -1,0 +1,29 @@
+@page
+@model AdminWebApp.Areas.UserManagement.Pages.LockedUsersModel
+@{
+    ViewBag.Title = L["Locked users"];
+}
+<h1>@ViewBag.Title</h1>
+<form method="post" asp-page-handler="Unlock">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>@SL["User name"]</td>
+                <td>@SL["Name"]</td>
+                <td>@SL["Lockout end at"]</td>
+                <td>@SL["Actions"]</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Name</td>
+                    <td>@user.LockoutEnd.ToLocalTime()</td>
+                    <td><button class="btn btn-sm" type="submit" name="id" value="@user.Id">@SL["Unlock"]</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

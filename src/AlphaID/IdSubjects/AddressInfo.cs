@@ -49,7 +49,7 @@ public record AddressInfo
     /// 收件人
     /// </summary>
     [MaxLength(50)]
-    public string Receiver { get; set; } = null!;
+    public string? Recipient { get; set; }
 
     /// <summary>
     /// 收件人联系方式。
@@ -70,6 +70,6 @@ public record AddressInfo
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{Receiver} ,{Street3},{Street2},{Street1},{Locality},{Country},{PostalCode}";
+        return $"{Recipient} ,{Street3},{Street2},{Street1},{Locality},{Country},{PostalCode}";
     }
 }

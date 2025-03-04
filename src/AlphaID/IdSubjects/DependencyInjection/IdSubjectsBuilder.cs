@@ -52,7 +52,7 @@ public class IdSubjectsBuilder(IServiceCollection services, IdentityBuilder iden
 
 
     /// <summary>
-    /// 使用指定的Profile生成器。
+    /// 使用指定的Profile Url生成器。
     /// </summary>
     /// <typeparam name="TGenerator"></typeparam>
     /// <typeparam name="TUser"></typeparam>

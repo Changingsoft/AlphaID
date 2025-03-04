@@ -2,6 +2,7 @@ using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace IdSubjects;
 
@@ -44,23 +45,42 @@ public class ApplicationUserClaimsPrincipalFactory<T>(UserManager<T> userManager
         if (user.NickName != null)
             id.AddClaim(new Claim(JwtClaimTypes.NickName, user.NickName));
         if (user.Address != null)
-            //todo 考虑实现地址格式器格式化地址。
-            id.AddClaim(new Claim(JwtClaimTypes.Address,
-                $"{user.Address.Country},{user.Address.Region},{user.Address.Locality},{user.Address.PostalCode},{user.Address.Street1},{user.Address.Street2},{user.Address.Street3},{user.Address.Receiver},{user.Address.Contact}"));
+        {
+            var oidcAddress = new OidcAddress
+            {
+                Formatted = $"{user.Address.Street1},{user.Address.Street2},{user.Address.Street3},{user.Address.Locality},{user.Address.Region},{user.Address.PostalCode},{user.Address.Country}",
+                StreetAddress = $"{user.Address.Street1},{user.Address.Street2},{user.Address.Street3}",
+                Locality = user.Address.Locality,
+                Region = user.Address.Region,
+                PostalCode = user.Address.PostalCode,
+                Country = user.Address.Country
+            };
+            id.AddClaim(new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(oidcAddress, s_jsonSerializerOptions)));
+        }
         if (user.WebSite != null)
             id.AddClaim(new Claim(JwtClaimTypes.WebSite, user.WebSite));
         if (user.DateOfBirth.HasValue)
             id.AddClaim(new Claim(JwtClaimTypes.BirthDate, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
         if (user.PhoneNumber != null)
+        {
             id.AddClaim(new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber));
-        id.AddClaim(new Claim(JwtClaimTypes.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()));
+            id.AddClaim(new Claim(JwtClaimTypes.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()));
+        }
         if (user.Gender.HasValue)
             id.AddClaim(new Claim(JwtClaimTypes.Gender, user.Gender.Value.ToString().ToLower()));
         if (user.Email != null)
+        {
             id.AddClaim(new Claim(JwtClaimTypes.Email, user.Email));
-        id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
+            id.AddClaim(new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed.ToString()));
+        }
         id.AddClaim(new Claim(JwtClaimTypes.PreferredUserName, user.UserName ?? user.Email ?? string.Empty));
 
         return id;
     }
+
+    private static readonly JsonSerializerOptions s_jsonSerializerOptions = new()
+    {
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+    };
 }

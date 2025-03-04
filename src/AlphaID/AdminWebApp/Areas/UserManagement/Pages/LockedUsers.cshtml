@@ -20,7 +20,7 @@
                 <tr>
                     <td>@user.UserName</td>
                     <td>@user.Name</td>
-                    <td>@user.LockoutEnd</td>
+                    <td>@user.LockoutEnd.ToLocalTime()</td>
                     <td><button class="btn btn-sm" type="submit" name="id" value="@user.Id">@SL["Unlock"]</button></td>
                 </tr>
             }

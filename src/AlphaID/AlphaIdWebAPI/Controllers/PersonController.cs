@@ -130,7 +130,7 @@ public class PersonController(
         if (person == null)
             return new ActionResult<IEnumerable<MembershipModel>>([]);
 
-        IEnumerable<OrganizationMember> members = memberManager.GetVisibleMembersOf(person, visitor);
+        IEnumerable<OrganizationMember> members = memberManager.GetVisibleMembersOf(person.Id, visitor?.Id);
         return new ActionResult<IEnumerable<MembershipModel>>(members.Select(m => new MembershipModel(m)));
     }
 

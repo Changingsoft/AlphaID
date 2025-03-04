@@ -4,30 +4,42 @@ using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 
 public class IndexModel(UserManager<NaturalPerson> personManager, OrganizationMemberManager organizationMemberManager)
     : PageModel
 {
-    public NaturalPerson Person { get; set; } = null!;
+    public PersonModel Person { get; set; } = null!;
 
     public bool UserIsOwner { get; set; }
 
-    public IEnumerable<OrganizationMember> Members { get; set; } = [];
+    public IEnumerable<MemberModel> Members { get; set; } = [];
 
-    public async Task<IActionResult> OnGetAsync(string anchor)
+    public IActionResult OnGet(string anchor)
     {
         //Support both userAnchor and user ID.
-        NaturalPerson? person = await personManager.FindByNameAsync(anchor)
-                                ?? await personManager.FindByIdAsync(anchor);
+        PersonModel? person = (from user in personManager.Users.AsNoTracking()
+                               where user.Id == anchor || user.UserName == anchor
+                               select new PersonModel()
+                               {
+                                   Id = user.Id,
+                                   Name = user.Name,
+                                   UserName = user.UserName,
+                                   Bio = user.Bio
+                               }).FirstOrDefault();
         if (person == null)
             return NotFound();
         Person = person;
 
-        NaturalPerson? visitor = await personManager.GetUserAsync(User);
-
-        Members = organizationMemberManager.GetVisibleMembersOf(person, visitor);
+        Members = from member in organizationMemberManager.GetVisibleMembersOf(person.Id, User.SubjectId())
+                  select new MemberModel()
+                  {
+                      OrganizationName = member.Organization.Name,
+                      Title = member.Title,
+                      Department = member.Department,
+                  };
 
         if (!User.Identity!.IsAuthenticated) return Page();
 
@@ -35,5 +47,25 @@ public class IndexModel(UserManager<NaturalPerson> personManager, OrganizationMe
             UserIsOwner = true;
 
         return Page();
+    }
+
+    public class PersonModel
+    {
+        public string Id { get; set; } = null!;
+
+        public string? Name { get; set; }
+
+        public string? UserName { get; set; }
+
+        public string? Bio { get; set; }
+    }
+
+    public class MemberModel
+    {
+        public string OrganizationName { get; set; } = null!;
+
+        public string? Title { get; set; }
+
+        public string? Department { get; set; }
     }
 }

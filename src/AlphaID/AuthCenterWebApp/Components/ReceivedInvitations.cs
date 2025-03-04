@@ -1,4 +1,3 @@
-using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,9 +5,9 @@ namespace AuthCenterWebApp.Components;
 
 public class ReceivedInvitations(JoinOrganizationInvitationManager manager) : ViewComponent
 {
-    public IViewComponentResult Invoke(NaturalPerson person)
+    public IViewComponentResult Invoke(string personId)
     {
-        IEnumerable<JoinOrganizationInvitation> invitations = manager.GetPendingInvitations(person);
+        IEnumerable<JoinOrganizationInvitation> invitations = manager.GetPendingInvitations(personId);
         return View(invitations);
     }
 }

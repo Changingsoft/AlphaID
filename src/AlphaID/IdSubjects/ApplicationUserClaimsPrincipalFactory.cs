@@ -27,10 +27,8 @@ public class ApplicationUserClaimsPrincipalFactory<T>(UserManager<T> userManager
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
         string anchor = user.UserName!;
         id.AddClaim(new Claim(JwtClaimTypes.Profile, profileUrlGenerator.GenerateProfileUrl(user).ToString()));
-        if (user.ProfilePicture != null)
-            id.AddClaim(new Claim(JwtClaimTypes.Picture, profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
-        id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt,
-            ((int)(user.WhenChanged - DateTime.UnixEpoch).TotalSeconds).ToString()));
+        id.AddClaim(new Claim(JwtClaimTypes.Picture, profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
+        id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, user.WhenChanged.ToUnixTimeSeconds().ToString()));
         if (user.Locale != null)
             id.AddClaim(new Claim(JwtClaimTypes.Locale, user.Locale));
         if (user.TimeZone != null)

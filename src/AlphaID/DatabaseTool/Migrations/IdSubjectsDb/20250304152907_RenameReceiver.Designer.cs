@@ -4,6 +4,7 @@ using AlphaId.EntityFramework.IdSubjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
@@ -12,9 +13,11 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    partial class IdSubjectsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250304152907_RenameReceiver")]
+    partial class RenameReceiver
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

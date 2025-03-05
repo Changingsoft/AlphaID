@@ -408,4 +408,7 @@
   <data name="Term end" xml:space="preserve">
 	  <value>有效期至</value>
   </data>
+  <data name="Locked users" xml:space="preserve">
+	  <value>锁定的用户</value>
+  </data>
 </root>

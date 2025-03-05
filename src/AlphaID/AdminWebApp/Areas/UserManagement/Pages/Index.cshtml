@@ -1,4 +1,5 @@
 @page
+@using AdminWebApp.Components
 @model IndexModel
 @{
     ViewBag.Title = L["People"];
@@ -27,7 +28,7 @@
 
 <div class="row row-deck wor-cards">
     <div class="col-sm-6 col-lg-3">
-        <PeopleNavPanel></PeopleNavPanel>
+        <component type="typeof(PeopleNavPanel)" render-mode="Static"/>
     </div>
 </div>
 

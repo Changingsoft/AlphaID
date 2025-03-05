@@ -413,4 +413,8 @@
   <data name="Term end" xml:space="preserve">
 	  <value>Term end</value>
   </data>
+  <data name="Locked users" xml:space="preserve">
+	  <value>Locked users</value>
+	  <comment>Locked users</comment>
+  </data>
 </root>

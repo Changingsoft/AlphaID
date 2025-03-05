@@ -339,4 +339,10 @@
   <data name="Delete Account" xml:space="preserve">
 	  <value>删除账户</value>
   </data>
+  <data name="Change password" xml:space="preserve">
+	  <value>更改密码</value>
+  </data>
+  <data name="Your password has expired" xml:space="preserve">
+	  <value>您的密码已过期</value>
+  </data>
 </root>

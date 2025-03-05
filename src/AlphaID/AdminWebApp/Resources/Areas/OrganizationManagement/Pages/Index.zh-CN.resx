@@ -141,4 +141,7 @@
   <data name="USCI" xml:space="preserve">
     <value>统一社会信用代码</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+	  <value>联系方式</value>
+  </data>
 </root>

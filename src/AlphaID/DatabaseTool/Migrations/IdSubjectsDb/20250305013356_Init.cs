@@ -57,7 +57,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     Address_Street1 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Street2 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Street3 = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address_Receiver = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Recipient = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Address_Contact = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     Address_PostalCode = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
                     WebSite = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
@@ -216,7 +216,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    NaturalPersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
+                    NaturalPersonId = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -225,7 +225,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         name: "FK_NaturalPersonBankAccount_ApplicationUser_NaturalPersonId",
                         column: x => x.NaturalPersonId,
                         principalTable: "ApplicationUser",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,7 +238,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Usage = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Default = table.Column<bool>(type: "bit", nullable: false),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
+                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,7 +247,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         name: "FK_OrganizationBankAccount_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -255,7 +257,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 {
                     Type = table.Column<string>(type: "varchar(30)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
+                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -264,8 +266,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         name: "FK_OrganizationIdentifier_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -303,9 +304,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DeprecateTime = table.Column<DateOnly>(type: "date", nullable: false)
+                    DeprecateTime = table.Column<DateOnly>(type: "date", nullable: false),
+                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -314,7 +315,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         name: "FK_OrganizationUsedName_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -407,7 +409,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
             migrationBuilder.CreateIndex(
                 name: "IX_Organization_Name",
                 table: "Organization",
-                column: "Name");
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organization_WhenChanged",

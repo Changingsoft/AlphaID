@@ -646,9 +646,6 @@ namespace DatabaseTool.Migrations.ConfigurationDb
                 table: "IdentityResources",
                 column: "Name",
                 unique: true);
-
-            //Apply Init Data
-            migrationBuilder.Sql(File.ReadAllText("Migrations/ConfigurationDb/20250113075027_Init.sql", Encoding.UTF8));
         }
 
         /// <inheritdoc />

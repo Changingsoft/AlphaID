@@ -9,6 +9,7 @@ namespace AlphaIdPlatform.Identity;
 /// </summary>
 [Owned]
 [Table("NaturalPersonBankAccount")]
+[PrimaryKey(nameof(AccountNumber), nameof(NaturalPersonId))]
 public class NaturalPersonBankAccount
 {
     /// <summary>
@@ -16,7 +17,6 @@ public class NaturalPersonBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    [Key]
     public string AccountNumber { get; set; } = null!;
 
     /// <summary>
@@ -30,4 +30,9 @@ public class NaturalPersonBankAccount
     /// </summary>
     [MaxLength(100)]
     public string? BankName { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string NaturalPersonId { get; set; } = null!;
 }

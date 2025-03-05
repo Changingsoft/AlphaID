@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20250305013356_Init")]
+    [Migration("20250305083515_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -133,9 +133,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasMaxLength(100)
+                        .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTimeOffset?>("PasswordLastSet")
                         .HasColumnType("datetimeoffset");
@@ -194,6 +194,10 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email");
+
+                    b.HasIndex("Name");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -201,6 +205,12 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("SearchHint");
+
+                    b.HasIndex("UserName")
+                        .IsUnique()
+                        .HasFilter("[UserName] IS NOT NULL");
 
                     b.HasIndex("WhenChanged");
 
@@ -310,8 +320,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.HasIndex("WhenChanged");
 
@@ -550,6 +559,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(50)");
 
+                            b1.Property<string>("NaturalPersonId")
+                                .HasColumnType("varchar(50)");
+
                             b1.Property<string>("AccountName")
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
@@ -558,11 +570,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.Property<string>("NaturalPersonId")
-                                .IsRequired()
-                                .HasColumnType("varchar(50)");
-
-                            b1.HasKey("AccountNumber");
+                            b1.HasKey("AccountNumber", "NaturalPersonId");
 
                             b1.HasIndex("NaturalPersonId");
 
@@ -708,6 +716,9 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(50)");
 
+                            b1.Property<string>("OrganizationId")
+                                .HasColumnType("varchar(50)");
+
                             b1.Property<string>("AccountName")
                                 .IsRequired()
                                 .HasMaxLength(100)
@@ -720,15 +731,11 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                             b1.Property<bool>("Default")
                                 .HasColumnType("bit");
 
-                            b1.Property<string>("OrganizationId")
-                                .IsRequired()
-                                .HasColumnType("varchar(50)");
-
                             b1.Property<string>("Usage")
                                 .HasMaxLength(20)
                                 .HasColumnType("nvarchar(20)");
 
-                            b1.HasKey("AccountNumber");
+                            b1.HasKey("AccountNumber", "OrganizationId");
 
                             b1.HasIndex("OrganizationId");
 
@@ -744,13 +751,13 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasMaxLength(30)
                                 .HasColumnType("nvarchar(30)");
 
-                            b1.Property<string>("Type")
-                                .HasColumnType("varchar(30)");
-
                             b1.Property<string>("OrganizationId")
                                 .HasColumnType("varchar(50)");
 
-                            b1.HasKey("Value", "Type");
+                            b1.Property<string>("Type")
+                                .HasColumnType("varchar(30)");
+
+                            b1.HasKey("Value", "OrganizationId", "Type");
 
                             b1.HasIndex("OrganizationId");
 

@@ -9,6 +9,7 @@ namespace AlphaIdPlatform.Subjects;
 /// </summary>
 [Owned]
 [Table("OrganizationBankAccount")]
+[PrimaryKey(nameof(AccountNumber), nameof(OrganizationId))]
 public class OrganizationBankAccount
 {
     /// <summary>
@@ -16,7 +17,6 @@ public class OrganizationBankAccount
     /// </summary>
     [MaxLength(50)]
     [Unicode(false)]
-    [Key]
     public string AccountNumber { get; set; } = null!;
 
     /// <summary>
@@ -39,4 +39,6 @@ public class OrganizationBankAccount
     /// <summary>
     /// </summary>
     public bool Default { get; set; } = false;
+
+    public string OrganizationId { get; set; } = null!;
 }

@@ -10,6 +10,7 @@ namespace IdSubjects;
 /// </summary>
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
+[Index(nameof(Name))]
 public class ApplicationUser : IdentityUser
 {
     /// <summary>

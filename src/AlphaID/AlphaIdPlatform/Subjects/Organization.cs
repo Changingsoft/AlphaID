@@ -10,7 +10,7 @@ namespace AlphaIdPlatform.Subjects;
 /// 组织。
 /// </summary>
 [Table("Organization")]
-[Index(nameof(Name), IsUnique = true)]
+[Index(nameof(Name))]
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
 public class Organization

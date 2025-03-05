@@ -8,6 +8,7 @@ namespace AlphaIdPlatform.Identity;
 /// <summary>
 /// 表示一个自然人个体。
 /// </summary>
+[Index(nameof(SearchHint))]
 public class NaturalPerson : ApplicationUser
 {
     /// <summary>

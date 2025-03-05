@@ -28,7 +28,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
         {
             b.ToTable("ApplicationUser");
             b.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);
-            b.Property(p => p.PasswordHash).HasMaxLength(100).IsUnicode(false);
+            b.Property(p => p.PasswordHash).HasMaxLength(255).IsUnicode(false);
             b.Property(p => p.SecurityStamp).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.ConcurrencyStamp).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);

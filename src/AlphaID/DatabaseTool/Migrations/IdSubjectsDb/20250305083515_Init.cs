@@ -27,7 +27,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    PasswordHash = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     SecurityStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     PhoneNumber = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
@@ -214,13 +214,13 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 columns: table => new
                 {
                     AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    NaturalPersonId = table.Column<string>(type: "varchar(50)", nullable: false),
                     AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    NaturalPersonId = table.Column<string>(type: "varchar(50)", nullable: false)
+                    BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaturalPersonBankAccount", x => x.AccountNumber);
+                    table.PrimaryKey("PK_NaturalPersonBankAccount", x => new { x.AccountNumber, x.NaturalPersonId });
                     table.ForeignKey(
                         name: "FK_NaturalPersonBankAccount_ApplicationUser_NaturalPersonId",
                         column: x => x.NaturalPersonId,
@@ -234,15 +234,15 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 columns: table => new
                 {
                     AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: false),
                     AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Usage = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Default = table.Column<bool>(type: "bit", nullable: false),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Default = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrganizationBankAccount", x => x.AccountNumber);
+                    table.PrimaryKey("PK_OrganizationBankAccount", x => new { x.AccountNumber, x.OrganizationId });
                     table.ForeignKey(
                         name: "FK_OrganizationBankAccount_Organization_OrganizationId",
                         column: x => x.OrganizationId,
@@ -257,16 +257,17 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 {
                     Type = table.Column<string>(type: "varchar(30)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: true)
+                    OrganizationId = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrganizationIdentifier", x => new { x.Value, x.Type });
+                    table.PrimaryKey("PK_OrganizationIdentifier", x => new { x.Value, x.OrganizationId, x.Type });
                     table.ForeignKey(
                         name: "FK_OrganizationIdentifier_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -370,6 +371,28 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUser_Email",
+                table: "ApplicationUser",
+                column: "Email");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUser_Name",
+                table: "ApplicationUser",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUser_SearchHint",
+                table: "ApplicationUser",
+                column: "SearchHint");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUser_UserName",
+                table: "ApplicationUser",
+                column: "UserName",
+                unique: true,
+                filter: "[UserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUser_WhenChanged",
                 table: "ApplicationUser",
                 column: "WhenChanged");
@@ -409,8 +432,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
             migrationBuilder.CreateIndex(
                 name: "IX_Organization_Name",
                 table: "Organization",
-                column: "Name",
-                unique: true);
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organization_WhenChanged",

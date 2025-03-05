@@ -32,6 +32,8 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
             b.Property(p => p.SecurityStamp).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.ConcurrencyStamp).HasMaxLength(50).IsUnicode(false);
             b.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
+            b.HasIndex(p => p.UserName).IsUnique();
+            b.HasIndex(p => p.Email);
         });
         builder.Entity<IdentityUserLogin<string>>(b =>
         {

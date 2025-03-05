@@ -13,8 +13,8 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.IdSubjectsDb
 {
     [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20250305081853_PersonIndexes")]
-    partial class PersonIndexes
+    [Migration("20250305083515_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,6 +194,8 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email");
+
                     b.HasIndex("Name");
 
                     b.HasIndex("NormalizedEmail")
@@ -205,6 +207,10 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("SearchHint");
+
+                    b.HasIndex("UserName")
+                        .IsUnique()
+                        .HasFilter("[UserName] IS NOT NULL");
 
                     b.HasIndex("WhenChanged");
 
@@ -745,13 +751,13 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasMaxLength(30)
                                 .HasColumnType("nvarchar(30)");
 
-                            b1.Property<string>("Type")
-                                .HasColumnType("varchar(30)");
-
                             b1.Property<string>("OrganizationId")
                                 .HasColumnType("varchar(50)");
 
-                            b1.HasKey("Value", "Type");
+                            b1.Property<string>("Type")
+                                .HasColumnType("varchar(30)");
+
+                            b1.HasKey("Value", "OrganizationId", "Type");
 
                             b1.HasIndex("OrganizationId");
 

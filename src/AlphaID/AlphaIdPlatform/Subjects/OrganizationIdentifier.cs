@@ -8,7 +8,7 @@ namespace AlphaIdPlatform.Subjects;
 /// </summary>
 [Owned]
 [Table("OrganizationIdentifier")]
-[PrimaryKey(nameof(Value), nameof(Type))]
+[PrimaryKey(nameof(Value), nameof(OrganizationId), nameof(Type))]
 public class OrganizationIdentifier
 {
     /// <summary>
@@ -20,4 +20,9 @@ public class OrganizationIdentifier
     /// </summary>
     [MaxLength(30)]
     public string Value { get; set; } = null!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string OrganizationId { get; set; } = null!;
 }

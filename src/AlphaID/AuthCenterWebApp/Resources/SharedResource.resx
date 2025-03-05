@@ -346,4 +346,12 @@
   <data name="Delete Account" xml:space="preserve">
 	  <value>Delete Account</value>
   </data>
+  <data name="Change password" xml:space="preserve">
+	  <value>Change password</value>
+	  <comment>Change password</comment>
+  </data>
+  <data name="Your password has expired" xml:space="preserve">
+	  <value>Your password has expired</value>
+	  <comment>Your password has expired</comment>
+  </data>
 </root>

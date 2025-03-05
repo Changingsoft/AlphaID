@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -121,4 +121,8 @@
   <data name="USCI" xml:space="preserve">
 		<value>USCI</value>
 	</data>
+  <data name="Contact" xml:space="preserve">
+	  <value>Contact</value>
+	  <comment>Contact</comment>
+  </data>
 </root>

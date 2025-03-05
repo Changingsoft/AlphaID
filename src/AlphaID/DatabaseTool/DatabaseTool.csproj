@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Migrations\ConfigurationDb\20250113075027_Init.sql">
+		<None Update="InitData\IdentityServerConfiguration\20250113075027_Init.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="TestingData\AdminWebAppData\202310300137.sql">
@@ -48,6 +48,8 @@
 	<ItemGroup>
 		<Folder Include="Migrations\AdminWebAppDb\" />
 		<Folder Include="Migrations\DirectoryLogonDb\" />
+		<Folder Include="Migrations\IdSubjectsDb\" />
+		<Folder Include="Migrations\LoggingDb\" />
 		<Folder Include="Migrations\PersistedGrantDb\" />
 		<Folder Include="Migrations\RealNameDb\" />
 		<Folder Include="TestingData\AdminWebAppData\" />

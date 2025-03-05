@@ -396,4 +396,16 @@
   <data name="Unlock" xml:space="preserve">
 	  <value>解锁</value>
   </data>
+  <data name="Website" xml:space="preserve">
+	  <value>网址</value>
+  </data>
+  <data name="Established at" xml:space="preserve">
+	  <value>成立时间</value>
+  </data>
+  <data name="Term begin" xml:space="preserve">
+	  <value>经营日期</value>
+  </data>
+  <data name="Term end" xml:space="preserve">
+	  <value>有效期至</value>
+  </data>
 </root>

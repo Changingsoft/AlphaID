@@ -401,4 +401,16 @@
 	  <value>Lockout end at</value>
 	  <comment>Lockout end at</comment>
   </data>
+  <data name="Website" xml:space="preserve">
+	  <value>Website</value>
+  </data>
+  <data name="Established at" xml:space="preserve">
+	  <value>Established at</value>
+  </data>
+  <data name="Term begin" xml:space="preserve">
+	  <value>Term begin</value>
+  </data>
+  <data name="Term end" xml:space="preserve">
+	  <value>Term end</value>
+  </data>
 </root>

@@ -1,7 +1,9 @@
-﻿@page
+@page
 @model GeneralModel
 @{
+    ViewBag.Title = L["General"];
 }
+
 @Html.DisplayFor(m => m.OperationResult)
 <h2>@L["General"]</h2>
 <form method="post">

@@ -40,5 +40,8 @@ public class OrganizationBankAccount
     /// </summary>
     public bool Default { get; set; } = false;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string OrganizationId { get; set; } = null!;
 }

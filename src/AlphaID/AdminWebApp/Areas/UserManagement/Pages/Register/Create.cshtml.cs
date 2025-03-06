@@ -50,9 +50,9 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
             {
                 normalizedPhoneNumber = new MobilePhoneNumber(Mobile).ToString();
             }
-            catch (Exception e)
+            catch
             {
-                this.ModelState.AddModelError(nameof(Mobile), "Invalid phone number.");
+                ModelState.AddModelError(nameof(Mobile), "Invalid phone number.");
             }
         }
 

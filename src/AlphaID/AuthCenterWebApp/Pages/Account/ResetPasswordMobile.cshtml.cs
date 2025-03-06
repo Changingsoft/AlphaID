@@ -35,22 +35,22 @@ public class ResetPasswordMobileModel(ApplicationUserManager<NaturalPerson> user
             ModelState.AddModelError(nameof(Input.PhoneNumber), "移动电话号码无效");
         }
 
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
         var normalPhoneNumber = phone.ToString();
         var person = userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
         if (person == null || !person.PhoneNumberConfirmed)
         {
-            return this.RedirectToPage("ResetPasswordConfirmation");
+            return RedirectToPage("ResetPasswordConfirmation");
         }
 
-        var result = await userManager.ResetPasswordAsync(person, this.Input.Code, this.Input.NewPassword);
+        var result = await userManager.ResetPasswordAsync(person, Input.Code, Input.NewPassword);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
-                this.ModelState.AddModelError("", error.Description);
+                ModelState.AddModelError("", error.Description);
                 return Page();
             }
         }

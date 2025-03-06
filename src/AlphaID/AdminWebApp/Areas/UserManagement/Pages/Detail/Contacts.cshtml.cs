@@ -56,9 +56,9 @@ public class ContactsModel(UserManager<NaturalPerson> manager, NaturalPersonServ
             {
                 normalizedPhoneNumber = new MobilePhoneNumber(PhoneNumber).ToString();
             }
-            catch (Exception e)
+            catch
             {
-                this.ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
+                ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
             }
         }
 

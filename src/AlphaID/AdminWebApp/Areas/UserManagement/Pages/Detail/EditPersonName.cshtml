@@ -1,29 +1,34 @@
-﻿@page
+@page
 @model EditPersonNameModel
 @{
     ViewBag.Title = L["Edit name"];
 }
 <h2>@ViewBag.Title</h2>
 <form method="post">
-    <div class="mb-3">
-        <label asp-for="Input.Surname" class="form-label"></label>
-        <input asp-for="Input.Surname" class="form-control"/>
-        <span asp-validation-for="Input.Surname" class="text-danger"></span>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Input.Surname" class="form-label"></label>
+            <input asp-for="Input.Surname" class="form-control"/>
+            <span asp-validation-for="Input.Surname" class="text-danger"></span>
+
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Input.GivenName" class="form-label"></label>
+            <input asp-for="Input.GivenName" class="form-control"/>
+            <span asp-validation-for="Input.GivenName" class="text-danger"></span>
+        </div>
     </div>
-    <div class="mb-3">
-        <label asp-for="Input.GivenName" class="form-label"></label>
-        <input asp-for="Input.GivenName" class="form-control"/>
-        <span asp-validation-for="Input.GivenName" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.PinyinSurname" class="form-label"></label>
-        <input asp-for="Input.PinyinSurname" class="form-control"/>
-        <span asp-validation-for="Input.PinyinSurname" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.PinyinGivenName" class="form-label"></label>
-        <input asp-for="Input.PinyinGivenName" class="form-control"/>
-        <span asp-validation-for="Input.PinyinGivenName" class="text-danger"></span>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Input.PinyinSurname" class="form-label"></label>
+            <input asp-for="Input.PinyinSurname" class="form-control"/>
+            <span asp-validation-for="Input.PinyinSurname" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Input.PinyinGivenName" class="form-label"></label>
+            <input asp-for="Input.PinyinGivenName" class="form-control"/>
+            <span asp-validation-for="Input.PinyinGivenName" class="text-danger"></span>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">@L["Apply"]</button>
 </form>

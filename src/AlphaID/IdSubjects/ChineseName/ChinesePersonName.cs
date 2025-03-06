@@ -18,7 +18,7 @@ public class ChinesePersonName
     /// <param name="givenName"></param>
     /// <param name="phoneticSurname"></param>
     /// <param name="phoneticGivenName"></param>
-    public ChinesePersonName(string? surname, string givenName, string? phoneticSurname, string? phoneticGivenName)
+    public ChinesePersonName(string? surname, string? givenName, string? phoneticSurname, string? phoneticGivenName)
     {
         Surname = surname;
         GivenName = givenName;
@@ -34,7 +34,7 @@ public class ChinesePersonName
     /// <summary>
     /// 名字（不含姓氏部分）。
     /// </summary>
-    public string GivenName { get; protected set; } = null!;
+    public string? GivenName { get; protected set; }
 
     /// <summary>
     /// 姓名。
@@ -51,7 +51,7 @@ public class ChinesePersonName
 
     /// <summary>
     /// </summary>
-    public string PhoneticName => $"{PhoneticSurname} {PhoneticGivenName}".Trim();
+    public string PhoneticName => $"{PhoneticSurname}{PhoneticGivenName}".Trim();
 
     /// <summary>
     /// Override. Return full name of Person.

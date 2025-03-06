@@ -144,4 +144,7 @@
   <data name="Personal info" xml:space="preserve">
 	  <value>个人资料</value>
   </data>
+  <data name="Person name" xml:space="preserve">
+	  <value>个人名称</value>
+  </data>
 </root>

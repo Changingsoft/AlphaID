@@ -10,8 +10,18 @@ public class ContactsModel(UserManager<NaturalPerson> manager, NaturalPersonServ
 {
     public NaturalPerson Data { get; set; } = null!;
 
+    [Display(Name = "Phone number")]
+    [StringLength(11, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+    [DataType(DataType.PhoneNumber)]
     [BindProperty]
-    public InputModel Input { get; set; } = null!;
+    public string? PhoneNumber { get; set; }
+
+    [Display(Name = "Email")]
+    [StringLength(100, ErrorMessage = "Validate_StringLength")]
+    [EmailAddress]
+    [BindProperty]
+    public string? Email { get; set; }
+
 
     public IdentityResult? Result { get; set; }
 
@@ -22,11 +32,12 @@ public class ContactsModel(UserManager<NaturalPerson> manager, NaturalPersonServ
             return NotFound();
 
         Data = data;
-        Input = new InputModel
+        Email = Data.Email;
+        if (Data.PhoneNumber != null && MobilePhoneNumber.TryParse(Data.PhoneNumber, out var number))
         {
-            PhoneNumber = Data.PhoneNumber,
-            Email = Data.Email
-        };
+            PhoneNumber = number.PhoneNumber;
+        }
+
         return Page();
     }
 
@@ -37,35 +48,36 @@ public class ContactsModel(UserManager<NaturalPerson> manager, NaturalPersonServ
             return NotFound();
 
         Data = data;
-
+        string? normalizedPhoneNumber = null;
         //验证移动电话号码或电子邮件地址是否已被注册？
-        if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out MobilePhoneNumber phoneNumber))
+        if (PhoneNumber != null)
         {
-            ModelState.AddModelError("", "移动电话号码格式不正确。");
-            return Page();
+            try
+            {
+                normalizedPhoneNumber = new MobilePhoneNumber(PhoneNumber).ToString();
+            }
+            catch (Exception e)
+            {
+                this.ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
+            }
         }
 
-        if (manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == phoneNumber.ToString()))
+        if (!ModelState.IsValid)
+            return Page();
+
+        if (normalizedPhoneNumber != null && manager.Users.Any(p => p.Id != anchor && p.PhoneNumber == normalizedPhoneNumber))
             ModelState.AddModelError("", "移动电话号码已被注册。");
-        if (manager.Users.Any(p => p.Id != anchor && p.Email == Input.Email))
+        if (Email != null && manager.Users.Any(p => p.Id != anchor && p.Email == Email))
             ModelState.AddModelError("", "电子邮件地址已被注册。");
 
-        if (!ModelState.IsValid) return Page();
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        
+        Result = await naturalPersonService.SetEmailAsync(Data, Email);
+        Result = await naturalPersonService.SetPhoneNumberAsync(Data, normalizedPhoneNumber);
 
-        Result = await naturalPersonService.UpdateAsync(Data);
         return Page();
-    }
-
-    public class InputModel
-    {
-        [Display(Name = "Phone number")]
-        [StringLength(15, ErrorMessage = "Validate_StringLength")]
-        [DataType(DataType.PhoneNumber)]
-        public string? PhoneNumber { get; set; }
-
-        [Display(Name = "Email")]
-        [StringLength(100, ErrorMessage = "Validate_StringLength")]
-        [EmailAddress]
-        public string? Email { get; set; }
     }
 }

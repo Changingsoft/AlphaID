@@ -61,7 +61,7 @@ public class ChinesePersonNamePinyinConverter(
     /// 将中国人姓名转换为拼音。
     /// </summary>
     /// <returns></returns>
-    public (string phoneticSurname, string phoneticGivenName) Convert(string surname, string givenName)
+    public (string phoneticSurname, string phoneticGivenName) Convert(string? surname, string? givenName)
     {
         var context = new ChineseNamePinyinConvertContext();
 
@@ -69,8 +69,9 @@ public class ChinesePersonNamePinyinConverter(
             foreach (char surnameChar in surname)
                 context.SurnameChars.Add(Convert(surnameChar));
 
-
-        foreach (char givenNameChar in givenName) context.GivenNameChars.Add(Convert(givenNameChar));
+        if (!string.IsNullOrEmpty(givenName))
+            foreach (char givenNameChar in givenName) 
+                context.GivenNameChars.Add(Convert(givenNameChar));
 
         foreach (IChinesePersonNamePinyinInterceptor interceptor in Interceptors) interceptor.AfterConvert(context);
 

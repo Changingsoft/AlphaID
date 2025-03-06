@@ -14,12 +14,13 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     [Display(Name = "User name")]
     [PageRemote(PageHandler = "CheckUserName", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string UserName { get; set; } = null!;
 
     [BindProperty]
-    [Display(Name = "Phone number")]
+    [Display(Name = "Phone number", Description = "仅支持中国大陆手机号")]
     [PageRemote(PageHandler = "CheckMobile", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
-    [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+    [StringLength(11, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
     public string? Mobile { get; set; } = null!;
 
     [BindProperty]
@@ -39,34 +40,40 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return Page();
 
-        var person = new NaturalPerson(UserName);
+        string? normalizedPhoneNumber = null;
         if (Mobile != null)
         {
-            if (MobilePhoneNumber.TryParse(Mobile, out MobilePhoneNumber phoneNumber))
-                person.PhoneNumber = phoneNumber.ToString();
-            else
-                ModelState.AddModelError("", "移动电话号码无效。");
+            try
+            {
+                normalizedPhoneNumber = new MobilePhoneNumber(Mobile).ToString();
+            }
+            catch (Exception e)
+            {
+                this.ModelState.AddModelError(nameof(Mobile), "Invalid phone number.");
+            }
         }
 
         if (!ModelState.IsValid)
             return Page();
 
-        person.Email = Email;
-        person.FamilyName = Input.Surname;
-        person.GivenName = Input.GivenName;
-        //person.MiddleName not used.
-        person.Name = Input.DisplayName;
-        person.PhoneticSurname = Input.PhoneticSurname;
-        person.PhoneticGivenName = Input.PhoneticGivenName;
-        person.SearchHint = $"{Input.PhoneticSurname}{Input.GivenName}";
-
-        person.DateOfBirth = Input.DateOfBirth.HasValue
-            ? DateOnly.FromDateTime(Input.DateOfBirth.Value)
-            : null;
-        person.Gender = Input.Gender;
+        var person = new NaturalPerson(UserName)
+        {
+            Email = Email,
+            PhoneNumber = normalizedPhoneNumber,
+            FamilyName = Input.Surname,
+            GivenName = Input.GivenName,
+            Name = Input.DisplayName,
+            PhoneticSurname = Input.PhoneticSurname,
+            PhoneticGivenName = Input.PhoneticGivenName,
+            SearchHint = $"{Input.PhoneticSurname}{Input.GivenName}",
+            DateOfBirth = Input.DateOfBirth.HasValue
+                ? DateOnly.FromDateTime(Input.DateOfBirth.Value)
+                : null,
+            Gender = Input.Gender
+        };
 
         Result = await manager.CreateAsync(person);
 
@@ -111,13 +118,16 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     /// 获取拼音。
     /// </summary>
     /// <returns></returns>
-    public IActionResult OnGetPinyin(string surname, string givenName)
+    public IActionResult OnGetPinyin(string? surname, string? givenName)
     {
-        if (string.IsNullOrWhiteSpace(givenName))
-            return Content(string.Empty);
+
         (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
         var chinesePersonName = new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
-        return Content($"{chinesePersonName.PhoneticSurname} {chinesePersonName.PhoneticGivenName}".Trim());
+        return new JsonResult(new
+        {
+            phoneticSurname,
+            phoneticGivenName,
+        });
     }
 
     public class InputModel

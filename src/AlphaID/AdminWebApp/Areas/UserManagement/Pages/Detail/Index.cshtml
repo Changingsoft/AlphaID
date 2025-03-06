@@ -5,16 +5,18 @@
     ViewBag.Title = $"{Model.Data.Name}";
 }
 
-@section head{
-    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css"/>
+@section head {
+    <link rel="stylesheet" href="~/lib/cropperjs/dist/cropper.min.css" />
     <style>
         .label {
             cursor: pointer;
         }
+
         .progress {
             display: none;
             margin-bottom: 1rem;
         }
+
         .img-container img {
             max-width: 100%;
         }
@@ -36,13 +38,13 @@
                     <div class="datagrid-item">
                         <div class="datagrid-title">@SL["Surname"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.FamilyName @Model.Data.PhoneticSurname
+                            @Model.Data.FamilyName
                         </div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@SL["Given name"]</div>
                         <div class="datagrid-content">
-                            @Model.Data.GivenName @Model.Data.PhoneticGivenName
+                            @Model.Data.GivenName
                         </div>
                     </div>
                     <div class="datagrid-item">
@@ -52,16 +54,29 @@
                         </div>
                     </div>
                     <div class="datagrid-item">
+                        <div class="datagrid-title">@L["Phonetic surname"]</div>
+                        <div class="datagrid-content">
+                            @Model.Data.PhoneticSurname
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">@L["Phonetic given name"]</div>
+                        <div class="datagrid-content">
+                            @Model.Data.PhoneticGivenName
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title"></div>
+                        <div class="datagrid-content">
+                        </div>
+                    </div>
+                    <div class="datagrid-item">
                         <div class="datagrid-title">@SL["Gender"]</div>
                         <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Gender)</div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">@L["Date of birth (Age)"]</div>
                         <div class="datagrid-content">@(Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Website"]</div>
-                        <div class="datagrid-content">@Model.Data.WebSite</div>
                     </div>
                 </div>
             </div>
@@ -87,25 +102,59 @@
 </div>
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">@L["Contacts"]</h3>
+        <h3 class="card-title">@L["Account"]</h3>
     </div>
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Phone number"]</div>
-                <div class="datagrid-content">@Model.Data.PhoneNumber</div>
+                <div class="datagrid-title">@L["Username"]</div>
+                <div class="datagrid-content">
+                    @Model.Data.UserName
+                    <a href="#" class="btn btn-sm">@L["Change username"]</a>
+                </div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">@L["Email"]</div>
-                <div class="datagrid-content">@Model.Data.Email</div>
+                <div class="datagrid-content">
+                    <a href="mailto:@Model.Data.Email">@Model.Data.Email</a>
+                    @if (Model.Data.EmailConfirmed)
+                    {
+                        <span class="badge badge-outline text-green">@L["Confirmed"]</span>
+                    }
+                </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["QQ"]</div>
-                <div class="datagrid-content">N/A</div>
+                <div class="datagrid-title">@L["Phone number"]</div>
+                <div class="datagrid-content">
+                    @Model.Data.PhoneNumber
+                    @if (Model.Data.PhoneNumberConfirmed)
+                    {
+                        <span class="badge badge-outline text-green">@L["Confirmed"]</span>
+                    }
+                </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Address"]</div>
-                <div class="datagrid-content">@Model.Data.Address?.ToString()</div>
+                <div class="datagrid-title">@L["Person Id"]</div>
+                <div class="datagrid-content">
+                    <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
+                    <button class="btn btn-sm" onclick="copyToClipboard()">Copy</button>
+                </div>
+
+                <script>
+                    function copyToClipboard() {
+                        var input = document.querySelector('.form-control');
+                        input.select();
+                        document.execCommand('copy');
+                    }
+                </script>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Enabled"]</div>
+                <div class="datagrid-content">@Model.Data.Enabled</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["External logins"]</div>
+                <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
     </div>
@@ -144,14 +193,6 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Status"]</div>
-                <div class="datagrid-content">@Model.Data.Enabled LocalLogin? 2Fa? PhoneCheck?</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Authentication statistics"]</div>
-                <div class="datagrid-content">10 failed:2 lock:1</div>
-            </div>
-            <div class="datagrid-item">
                 <div class="datagrid-title">@L["Person Id"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
@@ -167,12 +208,17 @@
                 </script>
             </div>
             <div class="datagrid-item">
+                <div class="datagrid-title">@L["Enabled"]</div>
+                <div class="datagrid-content">@Model.Data.Enabled</div>
+            </div>
+            <div class="datagrid-item">
                 <div class="datagrid-title">@L["External logins"]</div>
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
     </div>
 </div>
+
 <h3>@L["Misc"]</h3>
 <p>@L["Created at"] : @Model.Data.WhenCreated</p>
 <p>@L["Changed at"] : @Model.Data.WhenChanged</p>
@@ -208,8 +254,8 @@
     </div>
 </div>
 
-@section Scripts{
-    <partial name="_ValidationScriptsPartial"/>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/cropperjs/dist/cropper.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -103,4 +103,12 @@
   <data name="Update" xml:space="preserve">
 		<value>Update</value>
 	</data>
+  <data name="Identifiers" xml:space="preserve">
+	  <value>Identifiers</value>
+	  <comment>Identifiers</comment>
+  </data>
+  <data name="Change user name" xml:space="preserve">
+	  <value>Change user name</value>
+	  <comment>Change user name</comment>
+  </data>
 </root>

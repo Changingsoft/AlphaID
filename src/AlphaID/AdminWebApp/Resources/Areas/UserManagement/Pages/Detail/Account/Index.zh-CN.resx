@@ -123,4 +123,10 @@
   <data name="Update" xml:space="preserve">
     <value>更新</value>
   </data>
+  <data name="Identifiers" xml:space="preserve">
+	  <value>标识</value>
+  </data>
+  <data name="Change user name" xml:space="preserve">
+	  <value>更改用户名</value>
+  </data>
 </root>

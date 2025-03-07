@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = SL["Overview"];
@@ -11,15 +11,11 @@
     </div>
 }
 
-<form method="post">
-    <div class="mb-3">
-        <label asp-for="Input.UserName" class="form-label"></label>
-        <input asp-for="Input.UserName" class="form-control"/>
-        <span asp-validation-for="Input.UserName" class="text-danger"></span>
-    </div>
-    <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">@L["Update"]</button>
-</form>
+<h3>@L["Identifiers"]</h3>
+<p>@SL["User name"]: @Model.Data.UserName <a asp-page="SetUserName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change user name"]</a></p>
+<p>@SL["Email"]: @Model.Data.Email</p>
+<p>@SL["Phone number"]: @Model.Data.PhoneNumber</p>
+
 
 <p>Local login: @Model.HasPassword</p>
 <p>Two-Factor Authentication (TOTP): @(Model.Data.TwoFactorEnabled)</p>

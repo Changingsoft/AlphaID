@@ -70,14 +70,6 @@
                         <div class="datagrid-content">
                         </div>
                     </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">@SL["Gender"]</div>
-                        <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Gender)</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">@L["Date of birth (Age)"]</div>
-                        <div class="datagrid-content">@(Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -102,63 +94,47 @@
 </div>
 <div class="card mb-3">
     <div class="card-header">
-        <h3 class="card-title">@L["Account"]</h3>
+        <h3 class="card-title">@L["Personal info"]</h3>
     </div>
     <div class="card-body">
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Username"]</div>
-                <div class="datagrid-content">
-                    @Model.Data.UserName
-                    <a href="#" class="btn btn-sm">@L["Change username"]</a>
-                </div>
+                <div class="datagrid-title">@SL["Gender"]</div>
+                <div class="datagrid-content">@Html.DisplayFor(m => m.Data.Gender)</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Email"]</div>
+                <div class="datagrid-title">@L["Date of birth (Age)"]</div>
+                <div class="datagrid-content">@(Model.Data.DateOfBirth?.ToShortDateString() ?? "N/A") (@(Model.Data.DateOfBirth.AsAge()?.ToString() ?? "N/A"))</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Bio"]</div>
+                <div class="datagrid-content">@Model.Data.Bio</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Nickname"]</div>
+                <div class="datagrid-content">@Model.Data.NickName</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Locale"]</div>
+                <div class="datagrid-content">@Model.Data.Locale</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Timezone"]</div>
+                <div class="datagrid-content">@Model.Data.TimeZone</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Website"]</div>
                 <div class="datagrid-content">
-                    <a href="mailto:@Model.Data.Email">@Model.Data.Email</a>
-                    @if (Model.Data.EmailConfirmed)
+                    @if (Model.Data.WebSite != null)
                     {
-                        <span class="badge badge-outline text-green">@L["Confirmed"]</span>
+                        <a href="@Model.Data.WebSite" rel="external" target="_blank">@Model.Data.WebSite</a>
                     }
                 </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Phone number"]</div>
-                <div class="datagrid-content">
-                    @Model.Data.PhoneNumber
-                    @if (Model.Data.PhoneNumberConfirmed)
-                    {
-                        <span class="badge badge-outline text-green">@L["Confirmed"]</span>
-                    }
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Person Id"]</div>
-                <div class="datagrid-content">
-                    <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
-                    <button class="btn btn-sm" onclick="copyToClipboard()">Copy</button>
-                </div>
-
-                <script>
-                    function copyToClipboard() {
-                        var input = document.querySelector('.form-control');
-                        input.select();
-                        document.execCommand('copy');
-                    }
-                </script>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["Enabled"]</div>
-                <div class="datagrid-content">@Model.Data.Enabled</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">@L["External logins"]</div>
-                <div class="datagrid-content">@Model.ExternalLogins.Count</div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="card mb-3">
     <div class="card-header">
         <h3 class="card-title">@L["Account"]</h3>
@@ -196,32 +172,81 @@
                 <div class="datagrid-title">@L["Person Id"]</div>
                 <div class="datagrid-content">
                     <input type="text" value="@Model.Data.Id" class="form-control form-control-sm" readonly>
-                    <button class="btn btn-sm" onclick="copyToClipboard()">Copy</button>
+                    <button class="btn btn-sm" onclick="copyToClipboard()">@SL["Copy"]</button>
                 </div>
 
                 <script>
                     function copyToClipboard() {
-                        var input = document.querySelector('.form-control');
-                        input.select();
-                        document.execCommand('copy');
+                    var input = document.querySelector('.form-control');
+                    input.select();
+                    document.execCommand('copy');
                     }
                 </script>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">@L["Enabled"]</div>
-                <div class="datagrid-content">@Model.Data.Enabled</div>
-            </div>
-            <div class="datagrid-item">
                 <div class="datagrid-title">@L["External logins"]</div>
                 <div class="datagrid-content">@Model.ExternalLogins.Count</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Managed accounts"]</div>
+                <div class="datagrid-content">...</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title">@L["Status"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="datagrid">
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Enabled"]</div>
+                <div class="datagrid-content">
+                    @Html.DisplayFor(m => m.Data.Enabled, "YesOrNo")
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Local login"]</div>
+                <div class="datagrid-content">
+                    @{
+                        bool canLocalLogin = Model.Data.PasswordHash != null;
+                    }
+                    @Html.DisplayFor(m => canLocalLogin, "YesOrNo")
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Password last set"]</div>
+                <div class="datagrid-content">
+                    @Html.DisplayFor(m => m.Data.PasswordLastSet)
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["2Fa authentication"]</div>
+                <div class="datagrid-content">
+                    @Html.DisplayFor(m => m.Data.TwoFactorEnabled, "YesOrNo")
+                </div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@L["Lockout"]</div>
+                <div class="datagrid-content">
+                    @{
+                        bool lockedOut = false;
+                        if (Model.Data.LockoutEnd.HasValue)
+                        {
+                            lockedOut = Model.Data.LockoutEnd.Value > DateTimeOffset.UtcNow;
+                        }
+                    }
+                    @Html.DisplayFor(m => lockedOut, "YesOrNo")
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <h3>@L["Misc"]</h3>
-<p>@L["Created at"] : @Model.Data.WhenCreated</p>
-<p>@L["Changed at"] : @Model.Data.WhenChanged</p>
+<p>@L["Created at"] : @Html.DisplayFor(m => m.Data.WhenCreated)</p>
+<p>@L["Changed at"] : @Html.DisplayFor(m => m.Data.WhenChanged)</p>
 
 <h3>@L["Danger zone"]</h3>
 <div class="card">

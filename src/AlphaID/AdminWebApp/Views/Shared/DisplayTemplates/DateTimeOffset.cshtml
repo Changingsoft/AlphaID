@@ -1,0 +1,10 @@
+@model DateTimeOffset?
+
+@if (Model.HasValue)
+{
+    <span>@Model.Value.LocalDateTime.ToString("G")</span>
+}
+else
+{
+    <span>@SL["N/A"]</span>
+}

@@ -1,0 +1,17 @@
+@model bool?
+
+@if (Model.HasValue)
+{
+    if (Model.Value)
+    {
+        <span>@SL["Yes"]</span>
+    }
+    else
+    {
+        <span>@SL["No"]</span>
+    }
+}
+else
+{
+    <span>@SL["N/A"]</span>
+}

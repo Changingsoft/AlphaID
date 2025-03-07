@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -189,4 +189,56 @@
   <data name="Website" xml:space="preserve">
 		<value>Website</value>
 	</data>
+  <data name="Managed accounts" xml:space="preserve">
+	  <value>Managed accounts</value>
+	  <comment>Managed accounts</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+	  <value>Enabled</value>
+	  <comment>Enabled</comment>
+  </data>
+  <data name="Local login" xml:space="preserve">
+	  <value>Local login</value>
+	  <comment>Local login</comment>
+  </data>
+  <data name="Password last set" xml:space="preserve">
+	  <value>Password last set</value>
+	  <comment>Password last set</comment>
+  </data>
+  <data name="2Fa authentication" xml:space="preserve">
+	  <value>2Fa authentication</value>
+	  <comment>2Fa authentication</comment>
+  </data>
+  <data name="Lockout" xml:space="preserve">
+	  <value>Lockout</value>
+	  <comment>Lockout</comment>
+  </data>
+  <data name="Personal info" xml:space="preserve">
+	  <value>Personal info</value>
+	  <comment>Personal info</comment>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>Phonetic surname</value>
+	  <comment>Phonetic surname</comment>
+  </data>
+  <data name="Phonetic given name" xml:space="preserve">
+	  <value>Phonetic given name</value>
+	  <comment>Phonetic given name</comment>
+  </data>
+  <data name="Bio" xml:space="preserve">
+	  <value>Bio</value>
+	  <comment>Bio</comment>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+	  <value>Nickname</value>
+	  <comment>Nickname</comment>
+  </data>
+  <data name="Locale" xml:space="preserve">
+	  <value>Locale</value>
+	  <comment>Locale</comment>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+	  <value>Timezone</value>
+	  <comment>Timezone</comment>
+  </data>
 </root>

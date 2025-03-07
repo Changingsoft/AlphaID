@@ -1,15 +1,13 @@
-﻿@page
+@page
 @model SignedOutModel
 @{
-    Layout = "Tabler/_Page_center";
+    Layout = "Tabler/_Page";
     ViewBag.Title = L["Signed out"];
 }
 
-<div class="page-body">
-    <div class="container-xl">
-        <h1>@L["Signed out"]</h1>
-        <p>
-            @L["Close the browser or re-enter in this system."] <a asp-page="/Index">@L["Enter in"]</a>
-        </p>
-    </div>
+<div class="container container-tight py-4">
+    <h1>@L["Signed out"]</h1>
+    <p>
+        @L["Close the browser or re-enter in this system."] <a asp-page="/Index">@L["Enter in"]</a>
+    </p>
 </div>

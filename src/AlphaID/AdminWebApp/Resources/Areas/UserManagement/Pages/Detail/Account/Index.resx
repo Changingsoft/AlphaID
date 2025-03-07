@@ -111,4 +111,48 @@
 	  <value>Change user name</value>
 	  <comment>Change user name</comment>
   </data>
+  <data name="Change email" xml:space="preserve">
+	  <value>Change email</value>
+	  <comment>Change email</comment>
+  </data>
+  <data name="Change phone number" xml:space="preserve">
+	  <value>Change phone number</value>
+	  <comment>Change phone number</comment>
+  </data>
+  <data name="Password and authentication" xml:space="preserve">
+	  <value>Password and authentication</value>
+	  <comment>Password and authentication</comment>
+  </data>
+  <data name="Local login" xml:space="preserve">
+	  <value>Local login</value>
+	  <comment>Local login</comment>
+  </data>
+  <data name="Reset local password" xml:space="preserve">
+	  <value>Reset local password</value>
+	  <comment>Reset local password</comment>
+  </data>
+  <data name="Remove local password" xml:space="preserve">
+	  <value>Remove local password</value>
+	  <comment>Remove local password</comment>
+  </data>
+  <data name="Password last set" xml:space="preserve">
+	  <value>Password last set</value>
+	  <comment>Password last set</comment>
+  </data>
+  <data name="Lockout enabled" xml:space="preserve">
+	  <value>Lockout enabled</value>
+	  <comment>Lockout enabled</comment>
+  </data>
+  <data name="External logins" xml:space="preserve">
+	  <value>External logins</value>
+	  <comment>External logins</comment>
+  </data>
+  <data name="Managed accounts" xml:space="preserve">
+	  <value>Managed accounts</value>
+	  <comment>Managed accounts</comment>
+  </data>
+  <data name="Lockout state" xml:space="preserve">
+	  <value>Lockout state</value>
+	  <comment>Lockout state</comment>
+  </data>
 </root>

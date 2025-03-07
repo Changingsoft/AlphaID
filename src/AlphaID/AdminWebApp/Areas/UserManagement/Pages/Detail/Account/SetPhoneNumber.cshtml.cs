@@ -1,19 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using IdSubjects;
+using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {
-    public class SetUserNameModel(NaturalPersonService personService, ApplicationUserManager<NaturalPerson> userManager) : PageModel
+    public class SetPhoneNumberModel(NaturalPersonService personService, ApplicationUserManager<NaturalPerson> userManager) : PageModel
     {
 
         [BindProperty]
-        [Display(Name = "User Name")]
+        [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string UserName { get; set; } = null!;
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+        public string? PhoneNumber { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -22,7 +23,11 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return NotFound();
             }
-            UserName = person.UserName!;
+
+            if (person.PhoneNumber != null && MobilePhoneNumber.TryParse(person.PhoneNumber, out var number))
+            {
+                PhoneNumber = number.PhoneNumber;
+            }
             return Page();
         }
 
@@ -33,18 +38,23 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return NotFound();
             }
+
+            if (!MobilePhoneNumber.TryParse(PhoneNumber, out var number))
+            {
+                ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
+            }
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            var result = await userManager.SetUserNameAsync(person, UserName);
+            var result = await userManager.SetPhoneNumberAsync(person, number.ToString());
             if (result.Succeeded)
             {
                 return RedirectToPage("Index", new { anchor });
             }
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(nameof(UserName), error.Description);
+                ModelState.AddModelError(nameof(PhoneNumber), error.Description);
             }
             return Page();
         }

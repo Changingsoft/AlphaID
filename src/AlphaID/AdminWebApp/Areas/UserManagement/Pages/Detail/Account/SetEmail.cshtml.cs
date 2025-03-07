@@ -1,19 +1,26 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Text.Encodings.Web;
+using System.Text;
+using System.Web;
+using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {
-    public class SetUserNameModel(NaturalPersonService personService, ApplicationUserManager<NaturalPerson> userManager) : PageModel
+    public class SetEmailModel(ApplicationUserManager<NaturalPerson> userManager, IEmailSender emailSender, IOptions<SystemUrlInfo> systemUrlInfoOptions, IOptions<ProductInfo> productInfoOptions) : PageModel
     {
 
         [BindProperty]
-        [Display(Name = "User Name")]
+        [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string UserName { get; set; } = null!;
+        public string? Email { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -22,7 +29,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return NotFound();
             }
-            UserName = person.UserName!;
+            Email = person.Email;
             return Page();
         }
 
@@ -37,16 +44,17 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return Page();
             }
-            var result = await userManager.SetUserNameAsync(person, UserName);
-            if (result.Succeeded)
+            var result = await userManager.SetEmailAsync(person, Email);
+            if (!result.Succeeded)
             {
-                return RedirectToPage("Index", new { anchor });
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(nameof(Email), error.Description);
+                }
+                return Page();
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(nameof(UserName), error.Description);
-            }
-            return Page();
+
+            return RedirectToPage("Index", new { anchor });
         }
     }
 }

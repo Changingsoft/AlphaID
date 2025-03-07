@@ -136,7 +136,9 @@ public class SignUpModel(
             return RedirectToPage("SignUpSuccess");
         }
 
-        foreach (IdentityError error in result.Errors) ModelState.AddModelError("", error.Description);
+        foreach (IdentityError error in result.Errors) 
+            ModelState.AddModelError("", error.Description);
+
         return Page();
     }
 

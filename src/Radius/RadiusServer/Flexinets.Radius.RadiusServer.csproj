@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net471</TargetFrameworks>
+    <Version>2.0.0</Version>
+    <PackageProjectUrl>https://github.com/vforteli/RadiusServer</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/vforteli/RadiusServer/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright 2017 Verner Fortelius</Copyright>
+    <PackageReleaseNotes>Breaking change, update core package to 2.0.0 and remove dependency on log4net. Use ILogger instead</PackageReleaseNotes>
+    <Description>Radius server library. Implement IRadiusPacketHandler and handle packets.
+For an example server implementation hosted in a windows service, see: https://github.com/vforteli/RadiusServerService/tree/Base</Description>
+    <Authors>Verner Fortelius</Authors>
+    <PackageTags>Radius Radius-Server</PackageTags>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flexinets.Net.UdpClient" Version="1.1.1" />
+    <PackageReference Include="Flexinets.Radius.Core" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>

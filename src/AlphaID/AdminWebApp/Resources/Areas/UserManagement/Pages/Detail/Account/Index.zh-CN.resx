@@ -123,4 +123,43 @@
   <data name="Update" xml:space="preserve">
     <value>更新</value>
   </data>
+  <data name="Identifiers" xml:space="preserve">
+	  <value>标识</value>
+  </data>
+  <data name="Change user name" xml:space="preserve">
+	  <value>更改用户名</value>
+  </data>
+  <data name="Change email" xml:space="preserve">
+	  <value>更改电子邮件</value>
+  </data>
+  <data name="Change phone number" xml:space="preserve">
+	  <value>更改移动电话号码</value>
+  </data>
+  <data name="External logins" xml:space="preserve">
+	  <value>外部登录</value>
+  </data>
+  <data name="Local login" xml:space="preserve">
+	  <value>本地登录</value>
+  </data>
+  <data name="Lockout enabled" xml:space="preserve">
+	  <value>启用锁定</value>
+  </data>
+  <data name="Managed accounts" xml:space="preserve">
+	  <value>托管账户</value>
+  </data>
+  <data name="Password and authentication" xml:space="preserve">
+	  <value>密码和身份验证</value>
+  </data>
+  <data name="Password last set" xml:space="preserve">
+	  <value>密码设置时间</value>
+  </data>
+  <data name="Remove local password" xml:space="preserve">
+	  <value>移除本地密码</value>
+  </data>
+  <data name="Reset local password" xml:space="preserve">
+	  <value>重置本地密码</value>
+  </data>
+  <data name="Lockout state" xml:space="preserve">
+	  <value>锁定状态</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
 public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicationUserManager) : PageModel
 {
+    [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
@@ -41,7 +42,7 @@ public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicati
         person.PhoneticGivenName = chinesePersonName.PhoneticGivenName;
         person.SearchHint = chinesePersonName.PhoneticName;
         await applicationUserManager.UpdateAsync(person);
-        return RedirectToPage("Index");
+        return RedirectToPage("Index", new { anchor });
     }
 
     public class InputModel

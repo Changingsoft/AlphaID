@@ -207,4 +207,43 @@
   <data name="Website" xml:space="preserve">
     <value>网页</value>
   </data>
+  <data name="2Fa authentication" xml:space="preserve">
+	  <value>双因子验证</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+	  <value>启用</value>
+  </data>
+  <data name="Local login" xml:space="preserve">
+	  <value>本地登录</value>
+  </data>
+  <data name="Lockout" xml:space="preserve">
+	  <value>锁定</value>
+  </data>
+  <data name="Managed accounts" xml:space="preserve">
+	  <value>托管账户</value>
+  </data>
+  <data name="Password last set" xml:space="preserve">
+	  <value>上次设置密码</value>
+  </data>
+  <data name="Personal info" xml:space="preserve">
+	  <value>个人资料</value>
+  </data>
+  <data name="Phonetic given name" xml:space="preserve">
+	  <value>名字读音</value>
+  </data>
+  <data name="Phonetic surname" xml:space="preserve">
+	  <value>姓氏读音</value>
+  </data>
+  <data name="Bio" xml:space="preserve">
+	  <value>个性签名</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+	  <value>昵称</value>
+  </data>
+  <data name="Locale" xml:space="preserve">
+	  <value>区域</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+	  <value>时区</value>
+  </data>
 </root>

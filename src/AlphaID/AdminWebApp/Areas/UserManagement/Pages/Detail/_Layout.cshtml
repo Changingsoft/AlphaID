@@ -16,16 +16,16 @@
 
 <div class="card">
     <div class="row g-0">
-        <div class="col-12 col-md-2 border-end">
+        <div class="col-12 col-md-2 border-end d-print-none">
             <div class="card-body">
                 <div class="list-group list-group-transparent">
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)!" asp-page="/Detail/Index" asp-route-anchor="@anchor">@L["Overview"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/EditPersonName" asp-page="/Detail/EditPersonName" asp-route-anchor="@anchor">@L["Person name"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/PersonalInfo" asp-page="/Detail/PersonalInfo" asp-route-anchor="@anchor">@L["Personal info"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/Contacts" asp-page="/Detail/Contacts" asp-route-anchor="@anchor">@L["Contacts"]</a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/Account" asp-page="/Detail/Account/Index" asp-route-anchor="@anchor">@L["Account"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/Membership" asp-page="/Detail/Membership/Index" asp-route-anchor="@anchor">@L["Memberships"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/Payments" asp-page="/Detail/Payments" asp-route-anchor="@anchor">@L["Payments"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/RealName" asp-page="/Detail/RealName" asp-route-anchor="@anchor">@L["Real name"]</a>
-                    <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/Account" asp-page="/Detail/Account/Index" asp-route-anchor="@anchor">@L["Account"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/ActivityLog" asp-page="/Detail/ActivityLog" asp-route-anchor="@anchor">@L["Activity log"]</a>
                     <a class="list-group-item list-group-item-action d-flex align-items-center" asp-path="/UserManagement/Detail/@(anchor)/Advanced" asp-page="/Detail/Advanced" asp-route-anchor="@anchor">@L["Advanced"]</a>
                 </div>

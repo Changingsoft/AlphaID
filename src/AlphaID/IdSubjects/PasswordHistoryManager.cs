@@ -38,9 +38,6 @@ where T : ApplicationUser
         }
 
         return false;
-        return passwords
-            .Select(passHis => passwordHasher.VerifyHashedPassword(person, passHis, password))
-            .Any(result => result.HasFlag(PasswordVerificationResult.Success));
     }
 
     /// <summary>

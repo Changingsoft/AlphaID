@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = SL["Overview"];
@@ -11,26 +11,35 @@
     </div>
 }
 
-<form method="post">
-    <div class="mb-3">
-        <label asp-for="Input.UserName" class="form-label"></label>
-        <input asp-for="Input.UserName" class="form-control"/>
-        <span asp-validation-for="Input.UserName" class="text-danger"></span>
-    </div>
-    <div asp-validation-summary="All"></div>
-    <button type="submit" class="btn btn-primary">@L["Update"]</button>
-</form>
+<h3>@L["Identifiers"]</h3>
+<p>@SL["User name"]: @Model.Data.UserName <a asp-page="SetUserName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change user name"]</a></p>
+<p>@SL["Email"]: @Model.Data.Email <a asp-page="SetEmail" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change email"]</a></p>
+<p>@SL["Phone number"]: @Model.Data.PhoneNumber <a asp-page="SetPhoneNumber" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change phone number"]</a></p>
 
-<p>Local login: @Model.HasPassword</p>
-<p>Two-Factor Authentication (TOTP): @(Model.Data.TwoFactorEnabled)</p>
-<p>Login failed counter：@Model.Data.AccessFailedCount</p>
-<p>Password last set at： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value : "Never")</p>
-@if (!Model.HasPassword)
-{
-    <p>
-        <a asp-page="SetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Add local password</a>
-    </p>
-}
+<h3>@L["Password and authentication"]</h3>
 <p>
-    <a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-primary">Reset local password</a>
+    @L["Local login"]: @Html.DisplayFor(m => m.HasPassword, "YesOrNo")
+    <a asp-page="ResetPassword" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Reset local password"]</a>
+    @if (Model.HasPassword)
+    {
+        <a asp-page="RemovePassword" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Remove local password"]</a>
+    }
 </p>
+<p>@L["Password last set"]： @(Model.Data.PasswordLastSet.HasValue ? Model.Data.PasswordLastSet.Value.LocalDateTime.ToString("G") : "Never")</p>
+<p>Two-Factor Authentication (TOTP): @Html.DisplayFor(m => m.Data.TwoFactorEnabled, "YesOrNo")</p>
+<p>@L["Lockout enabled"]: @Html.DisplayFor(m => m.Data.LockoutEnabled, "YesOrNo")</p>
+<p>
+    @L["Lockout state"]:
+    @{
+        bool lockedOut = false;
+        if (Model.Data.LockoutEnd.HasValue)
+        {
+            lockedOut = Model.Data.LockoutEnd.Value > DateTimeOffset.UtcNow;
+        }
+    }
+    @Html.DisplayFor(m => lockedOut, "YesOrNo")
+</p>
+
+<h3><a asp-page="ExternalLogins" asp-route-anchor="@Model.Data.Id" class="btn">@L["External logins"]</a></h3>
+
+<h3><a asp-page="DirectoryAccounts" asp-route-anchor="@Model.Data.Id" class="btn">@L["Managed accounts"]</a></h3>

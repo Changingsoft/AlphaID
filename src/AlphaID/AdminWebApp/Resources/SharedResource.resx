@@ -417,4 +417,20 @@
 	  <value>Locked users</value>
 	  <comment>Locked users</comment>
   </data>
+  <data name="Yes" xml:space="preserve">
+	  <value>Yes</value>
+	  <comment>Yes</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+	  <value>No</value>
+	  <comment>No</comment>
+  </data>
+  <data name="N/A" xml:space="preserve">
+	  <value>N/A</value>
+	  <comment>N/A</comment>
+  </data>
+  <data name="Copy" xml:space="preserve">
+	  <value>Copy</value>
+	  <comment>Copy</comment>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model CreateModel
 @{
     ViewBag.Title = L["Create person"];
@@ -10,38 +10,43 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="UserName" class="form-label required"></label>
-                <input asp-for="UserName" class="form-control"/>
+                <input asp-for="UserName" class="form-control" />
                 <span asp-description-for="UserName"></span>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control"/>
-                <span asp-description-for="Email"></span>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Mobile" class="form-label"></label>
-                <input asp-for="Mobile" class="form-control"/>
-                <span asp-description-for="Mobile"></span>
-                <span asp-validation-for="Mobile" class="text-danger"></span>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Mobile" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text">+86</span>
+                        <input asp-for="Mobile" class="form-control" />
+                    </div>
+                    <span asp-description-for="Mobile"></span>
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-description-for="Email"></span>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md">
                     <label asp-for="Input.Surname" class="form-label"></label>
-                    <input asp-for="Input.Surname" class="form-control"/>
+                    <input asp-for="Input.Surname" class="form-control" />
                     <span asp-description-for="Input.Surname"></span>
                     <span asp-validation-for="Input.Surname" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.GivenName" class="form-label"></label>
-                    <input asp-for="Input.GivenName" class="form-control"/>
+                    <input asp-for="Input.GivenName" class="form-control" />
                     <span asp-description-for="Input.GivenName"></span>
                     <span asp-validation-for="Input.GivenName" class="text-danger"></span>
                 </div>
                 <div class="col-md">
-                    <label asp-for="Input.DisplayName" class="form-label required"></label>
-                    <input asp-for="Input.DisplayName" class="form-control"/>
+                    <label asp-for="Input.DisplayName" class="form-label"></label>
+                    <input asp-for="Input.DisplayName" class="form-control" />
                     <span asp-description-for="Input.DisplayName"></span>
                     <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
                 </div>
@@ -49,24 +54,24 @@
             <div class="row">
                 <div class="col-md">
                     <label asp-for="Input.PhoneticSurname" class="form-label"></label>
-                    <input asp-for="Input.PhoneticSurname" class="form-control"/>
+                    <input asp-for="Input.PhoneticSurname" class="form-control" />
                     <span asp-description-for="Input.PhoneticSurname"></span>
                     <span asp-validation-for="Input.PhoneticSurname" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.PhoneticGivenName" class="form-label"></label>
-                    <input asp-for="Input.PhoneticGivenName" class="form-control"/>
+                    <input asp-for="Input.PhoneticGivenName" class="form-control" />
                     <span asp-description-for="Input.PhoneticGivenName"></span>
                     <span asp-validation-for="Input.PhoneticGivenName" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.PhoneticDisplayName" class="form-label"></label>
-                    <input asp-for="Input.PhoneticDisplayName" class="form-control"/>
+                    <input asp-for="Input.PhoneticDisplayName" class="form-control" />
                     <span asp-description-for="Input.PhoneticDisplayName"></span>
                     <span asp-validation-for="Input.PhoneticDisplayName" class="text-danger"></span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md">
                     <label asp-for="Input.Gender" class="form-label"></label>
                     <select asp-for="Input.Gender" asp-items="@EnumHelper.GetSelectListItems<Gender>()" class="form-select">
@@ -77,7 +82,7 @@
                 </div>
                 <div class="col-md">
                     <label asp-for="Input.DateOfBirth" class="form-label"></label>
-                    <input asp-for="Input.DateOfBirth" class="form-control"/>
+                    <input asp-for="Input.DateOfBirth" class="form-control" />
                     <span asp-description-for="Input.DateOfBirth"></span>
                     <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                 </div>
@@ -91,7 +96,7 @@
 
 @section Scripts
 {
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
     <script>
         $("#Input_Surname").on("blur", function () {
             updateForms();
@@ -103,7 +108,9 @@
         function updateForms() {
             $("#Input_DisplayName").val($("#Input_Surname").val() + $("#Input_GivenName").val());
             $.get("@Url.PageLink(pageHandler: "Pinyin")", { surname: $("#Input_Surname").val(), givenName: $("#Input_GivenName").val() }, function (data, status, xhr) {
-                $("#Input_PhoneticDisplayName").val(data);
+                $("#Input_PhoneticSurname").val(data.phoneticSurname);
+                $("#Input_PhoneticGivenName").val(data.phoneticGivenName);
+                $("#Input_PhoneticDisplayName").val(data.phoneticSurname + data.phoneticGivenName);
             });
         }
     </script>

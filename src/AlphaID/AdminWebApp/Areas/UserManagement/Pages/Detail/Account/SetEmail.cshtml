@@ -1,0 +1,17 @@
+@page
+@model SetEmailModel
+@{
+    ViewBag.Title = L["Set email"];
+}
+<h1>@ViewBag.Title</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label required"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-description-for="Email"></span>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <p>@L["Change email will reset confirmation state until user valid its email address."]</p>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
+</form>

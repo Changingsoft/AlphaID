@@ -32,30 +32,30 @@ public class FindPasswordByMobileModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!this.ModelState.IsValid)
-            return this.Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        if (!MobilePhoneNumber.TryParse(this.Mobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(Mobile, out var phoneNumber))
         {
-            this.ModelState.AddModelError(nameof(this.Mobile), "无效的移动电话号码");
-            return this.Page();
+            ModelState.AddModelError(nameof(Mobile), "无效的移动电话号码");
+            return Page();
         }
 
-        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), this.VerificationCode))
+        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode))
         {
-            this.ModelState.AddModelError(nameof(this.VerificationCode), "无效的验证码");
-            return this.Page();
+            ModelState.AddModelError(nameof(VerificationCode), "无效的验证码");
+            return Page();
         }
 
         var person = userManager.Users.FirstOrDefault(p => p.PhoneNumber == phoneNumber.ToString());
         if (person == null)
         {
-            this.ModelState.AddModelError(nameof(this.Mobile), "无此移动电话号码记录");
-            return this.Page();
+            ModelState.AddModelError(nameof(Mobile), "无此移动电话号码记录");
+            return Page();
         }
         var code = await userManager.GeneratePasswordResetTokenAsync(person);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        return this.RedirectToPage("ResetPasswordMobile", new { code, phone = phoneNumber.PhoneNumber });
+        return RedirectToPage("ResetPasswordMobile", new { code, phone = phoneNumber.PhoneNumber });
     }
 
     public async Task<IActionResult> OnPostSendVerificationCodeAsync(string mobile)

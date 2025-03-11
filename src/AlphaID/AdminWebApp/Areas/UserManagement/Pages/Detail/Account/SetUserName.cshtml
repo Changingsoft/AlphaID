@@ -1,0 +1,16 @@
+@page
+@model AdminWebApp.Areas.UserManagement.Pages.Detail.Account.SetUserNameModel
+@{
+    ViewBag.Title = L["Set user name"];
+}
+<h1>@ViewBag.Title</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label required"></label>
+        <input asp-for="UserName" class="form-control"/>
+        <span asp-description-for="UserName"></span>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
+</form>

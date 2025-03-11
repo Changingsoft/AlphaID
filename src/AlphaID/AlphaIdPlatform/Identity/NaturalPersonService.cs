@@ -197,4 +197,35 @@ public class NaturalPersonService(
 
         return result;
     }
+
+    /// <summary>
+    /// 设置电子邮件。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public async Task<IdentityResult> SetEmailAsync(NaturalPerson person, string? email)
+    {
+        var result = await personManager.SetEmailAsync(person, email);
+        if (!result.Succeeded)
+            return result;
+
+        //todo 更新目录账号的邮件地址。
+        return result;
+    }
+
+    /// <summary>
+    /// 设置手机号码。
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="phoneNumber"></param>
+    /// <returns></returns>
+    public async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson person, string? phoneNumber)
+    {
+        var result = await personManager.SetPhoneNumberAsync(person, phoneNumber);
+        if (!result.Succeeded)
+            return result;
+        //todo 更新目录账号的手机号码。
+        return result;
+    }
 }

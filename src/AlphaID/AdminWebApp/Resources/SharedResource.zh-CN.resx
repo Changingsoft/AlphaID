@@ -411,4 +411,16 @@
   <data name="Locked users" xml:space="preserve">
 	  <value>锁定的用户</value>
   </data>
+  <data name="N/A" xml:space="preserve">
+	  <value>不适用</value>
+  </data>
+  <data name="No" xml:space="preserve">
+	  <value>否</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+	  <value>是</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+	  <value>复制</value>
+  </data>
 </root>

@@ -117,7 +117,7 @@ public class EmailModel(
         await emailSender.SendEmailAsync(
             email,
             "确认邮件地址",
-            $"<p>您已请求更改电子邮件地址，请单击<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>这里</a>以确认您的邮件地址。</p>" +
+            $"<p>您已请求更改电子邮件地址，请单击<a href='{callbackUrl}'>这里</a>以确认您的邮件地址。</p>" +
             $"<p>{_production.Name}团队</p>");
 
         StatusMessage = "验证邮件已发送，请到您的邮箱检查邮件。";

@@ -1,0 +1,20 @@
+@page
+@model SetPhoneNumberModel
+@{
+    ViewBag.Title = L["Set phone number"];
+}
+<h1>@ViewBag.Title</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="PhoneNumber" class="form-label required"></label>
+        <div class="input-group">
+            <span class="input-group-text">+86</span>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+        <span asp-description-for="PhoneNumber"></span>
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <p>@L["Change phone number will reset confirmation state until user valid its phone number."]</p>
+    <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
+</form>

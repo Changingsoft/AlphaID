@@ -1,7 +1,7 @@
+using Duende.IdentityModel;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using IdentityModel;
 
 namespace IdSubjects.DirectoryLogon;
 

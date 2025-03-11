@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
+using BotDetect.Web.Mvc;
 using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,13 @@ public class FindPasswordByMobileModel(
     [Required(ErrorMessage = "{0}是必需的")]
     [BindProperty]
     public string VerificationCode { get; set; } = null!;
+
+    [Display(Name = "Captcha code")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
+    [BindProperty]
+    public string CaptchaCode { get; set; } = null!;
+
 
     public void OnGet()
     {

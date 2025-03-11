@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Flexinets.Radius.Core.PacketTypes;
 
 namespace Flexinets.Radius;
 
@@ -73,9 +72,8 @@ public class RadiusServer(
         {
             try
             {
-                var response = await _udpClient.ReceiveAsync().ConfigureAwait(false);
-                _ = Task.Factory.StartNew(
-                    async () => await HandlePacketAsync(response.RemoteEndPoint, response.Buffer).ConfigureAwait(false),
+                var response = await _udpClient.ReceiveAsync();
+                _ = Task.Factory.StartNew(() => HandlePacket(response.RemoteEndPoint, response.Buffer),
                     TaskCreationOptions.LongRunning);
             }
             catch (ObjectDisposedException) // This is thrown when udpclient is disposed, can be safely ignored
@@ -95,7 +93,7 @@ public class RadiusServer(
     /// <summary>
     /// Used to handle the packets asynchronously
     /// </summary>
-    private async Task HandlePacketAsync(IPEndPoint remoteEndpoint, byte[] packetBytes)
+    private async Task HandlePacket(IPEndPoint remoteEndpoint, byte[] packetBytes)
     {
         try
         {
@@ -103,27 +101,12 @@ public class RadiusServer(
 
             if (packetHandlerRepository.TryGetHandler(remoteEndpoint.Address, out var handler))
             {
-                var requestPacket = radiusPacketParser.Parse(packetBytes, handler.sharedSecret);
-
-                logger.LogInformation("Received {code} from {endpoint} Id={identifier}",
-                    requestPacket.Code, remoteEndpoint, requestPacket.Identifier);
-
-                if (logger.IsEnabled(LogLevel.Debug))
-                {
-                    logger.LogDebug(Utils.GetPacketString(requestPacket));
-                    logger.LogDebug(packetBytes.ToHexString());
-                }
-
-                var responsePacket = await GetResponsePacketAsync(handler.packetHandler, requestPacket, remoteEndpoint)
-                    .ConfigureAwait(false);
+                var responsePacket = GetResponsePacket(handler.packetHandler, handler.sharedSecret, packetBytes,
+                    remoteEndpoint);
 
                 if (responsePacket != null)
                 {
-                    await SendResponsePacketAsync(
-                        responsePacket,
-                        remoteEndpoint,
-                        handler.sharedSecret,
-                        requestPacket.Authenticator).ConfigureAwait(false);
+                    await SendResponsePacketAsync(responsePacket, remoteEndpoint);
                 }
             }
             else
@@ -154,31 +137,40 @@ public class RadiusServer(
     /// <summary>
     /// Parses a packet and gets a response packet from the handler
     /// </summary>
-    private async Task<IRadiusPacket?> GetResponsePacketAsync(
+    private IRadiusPacket? GetResponsePacket(
         IPacketHandler packetHandler,
-        IRadiusPacket requestPacket,
+        string sharedSecret,
+        byte[] packetBytes,
         IPEndPoint remoteEndpoint)
     {
-        // Handle status server requests in server outside packet handler
-        // The purpose of status server is to check the _server_ is alive and not 
-        // consider packet handlers
-        if (requestPacket is StatusServer)
+        var requestPacket = radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
+        logger.LogInformation("Received {code} from {endpoint} Id={identifier}",
+            requestPacket.Code, remoteEndpoint, requestPacket.Identifier);
+
+        if (logger.IsEnabled(LogLevel.Debug))
         {
-            IRadiusPacket statusServerResponse = serverType == RadiusServerType.Authentication
-                ? new AccessAccept(requestPacket.Identifier)
-                : new AccessReject(requestPacket.Identifier);
+            logger.LogDebug(Utils.GetPacketString(requestPacket));
+            logger.LogDebug(packetBytes.ToHexString());
+        }
+
+        // Handle status server requests in server outside packet handler
+        if (requestPacket.Code == PacketCode.StatusServer)
+        {
+            var responseCode = serverType == RadiusServerType.Authentication
+                ? PacketCode.AccessAccept
+                : PacketCode.AccountingResponse;
 
             logger.LogDebug("Sending {responseCode} for StatusServer request from {remoteEndpoint}",
-                statusServerResponse, remoteEndpoint);
+                responseCode, remoteEndpoint);
 
-            return statusServerResponse;
+            return requestPacket.CreateResponsePacket(responseCode);
         }
 
         logger.LogDebug("Handling packet for remote ip {remoteEndpoint.Address} with {packetHandler.GetType()}",
             remoteEndpoint.Address, packetHandler.GetType());
 
         var sw = Stopwatch.StartNew();
-        var responsePacket = await packetHandler.HandlePacketAsync(requestPacket).ConfigureAwait(false);
+        var responsePacket = packetHandler.HandlePacket(requestPacket);
 
         if (responsePacket == null)
         {
@@ -203,16 +195,12 @@ public class RadiusServer(
     /// <summary>
     /// Sends a packet
     /// </summary>
-    private async Task SendResponsePacketAsync(
-        IRadiusPacket responsePacket,
-        IPEndPoint remoteEndpoint,
-        byte[] sharedSecret,
-        byte[] requestAuthenticator)
+    private async Task SendResponsePacketAsync(IRadiusPacket responsePacket, IPEndPoint remoteEndpoint)
     {
         ArgumentNullException.ThrowIfNull(_udpClient);
 
-        var responseBytes = radiusPacketParser.GetBytes(responsePacket, sharedSecret, requestAuthenticator);
-        await _udpClient.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint).ConfigureAwait(false);
+        var responseBytes = radiusPacketParser.GetBytes(responsePacket);
+        await _udpClient.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);
 
         logger.LogInformation("{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}",
             responsePacket.Code, remoteEndpoint, responsePacket.Identifier);

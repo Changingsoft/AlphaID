@@ -4,6 +4,7 @@ using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
+using BotDetect.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -68,5 +69,10 @@ public class FindPasswordByEmailModel(
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = null!;
+
+        [Display(Name = "Captcha code")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
+        public string CaptchaCode { get; set; } = null!;
     }
 }

@@ -9,6 +9,9 @@
         /// <summary>
         /// Create a dictionary rfc attribute
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="code"></param>
+        /// <param name="type"></param>
         public DictionaryAttribute(string name, byte code, string type)
         {
             Code = code;

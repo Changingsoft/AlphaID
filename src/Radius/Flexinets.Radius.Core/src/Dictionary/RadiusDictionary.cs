@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,21 +7,16 @@ using System.Threading.Tasks;
 
 namespace Flexinets.Radius.Core
 {
-    public partial class RadiusDictionary : IRadiusDictionary
+    public class RadiusDictionary : IRadiusDictionary
     {
-        private readonly Dictionary<byte, DictionaryAttribute> _attributes;
-        private readonly List<DictionaryVendorAttribute> _vendorSpecificAttributes;
-        private readonly Dictionary<string, DictionaryAttribute> _attributeNames;
+        internal Dictionary<byte, DictionaryAttribute> Attributes { get; set; } =
+            new Dictionary<byte, DictionaryAttribute>();
 
-        private RadiusDictionary(
-            Dictionary<byte, DictionaryAttribute> attributes,
-            List<DictionaryVendorAttribute> vendorSpecificAttributes,
-            Dictionary<string, DictionaryAttribute> attributeNames)
-        {
-            _attributes = attributes;
-            _vendorSpecificAttributes = vendorSpecificAttributes;
-            _attributeNames = attributeNames;
-        }
+        internal List<DictionaryVendorAttribute> VendorSpecificAttributes { get; set; } =
+            new List<DictionaryVendorAttribute>();
+
+        internal Dictionary<string, DictionaryAttribute> AttributeNames { get; set; } =
+            new Dictionary<string, DictionaryAttribute>();
 
 
         /// <summary>
@@ -28,10 +24,7 @@ namespace Flexinets.Radius.Core
         /// </summary>
         public static IRadiusDictionary Parse(string dictionaryFileContent)
         {
-            var attributes = new Dictionary<byte, DictionaryAttribute>();
-            var vendorSpecificAttributes = new List<DictionaryVendorAttribute>();
-            var attributeNames = new Dictionary<string, DictionaryAttribute>();
-
+            var radiusDictionary = new RadiusDictionary();
             var lines = dictionaryFileContent
                 .Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(l => l.Trim())
@@ -43,8 +36,8 @@ namespace Flexinets.Radius.Core
                 var attributeCode = Convert.ToByte(lineParts[1]);
 
                 var attributeDefinition = new DictionaryAttribute(lineParts[2], attributeCode, lineParts[3]);
-                attributes[attributeCode] = attributeDefinition;
-                attributeNames[attributeDefinition.Name] = attributeDefinition;
+                radiusDictionary.Attributes[attributeCode] = attributeDefinition;
+                radiusDictionary.AttributeNames[attributeDefinition.Name] = attributeDefinition;
             }
 
             foreach (var line in lines.Where(l => l.StartsWith("VendorSpecificAttribute")))
@@ -56,11 +49,11 @@ namespace Flexinets.Radius.Core
                     Convert.ToUInt32(lineParts[2]),
                     lineParts[4]);
 
-                vendorSpecificAttributes.Add(vsa);
-                attributeNames[vsa.Name] = vsa;
+                radiusDictionary.VendorSpecificAttributes.Add(vsa);
+                radiusDictionary.AttributeNames[vsa.Name] = vsa;
             }
 
-            return new RadiusDictionary(attributes, vendorSpecificAttributes, attributeNames);
+            return radiusDictionary;
         }
 
 
@@ -68,16 +61,42 @@ namespace Flexinets.Radius.Core
         /// Read and parse dictionary from file in Radiator format
         /// </summary>
         public static async Task<IRadiusDictionary> LoadAsync(string dictionaryFilePath) =>
-            Parse(await File.ReadAllTextAsync(dictionaryFilePath));
+            Parse(await Task.FromResult(File.ReadAllText(dictionaryFilePath)));
 
 
-        public DictionaryVendorAttribute? GetVendorAttribute(uint vendorId, byte vendorCode) =>
-            _vendorSpecificAttributes.FirstOrDefault(o => o.VendorId == vendorId && o.VendorCode == vendorCode);
+        /// <summary>
+        /// Load the dictionary from a dictionary file
+        /// </summary>
+        [Obsolete("Use RadiusDictionary.LoadAsync instead")]
+        public RadiusDictionary(string dictionaryFilePath, ILogger<RadiusDictionary> logger)
+        {
+            // todo shouldnt be doing stuff like this in a constructor...
+            var dictionary = (RadiusDictionary)Parse(File.ReadAllText(dictionaryFilePath));
+
+            Attributes = dictionary.Attributes;
+            VendorSpecificAttributes = dictionary.VendorSpecificAttributes;
+            AttributeNames = dictionary.AttributeNames;
+
+            logger.LogInformation(
+                "Parsed {Attributes.Count} attributes and {VendorSpecificAttributes.Count} vendor attributes from file",
+                Attributes.Count, VendorSpecificAttributes.Count);
+        }
 
 
-        public DictionaryAttribute? GetAttribute(byte typecode) => _attributes.GetValueOrDefault(typecode);
+        private RadiusDictionary()
+        {
+        }
 
 
-        public DictionaryAttribute? GetAttribute(string name) => _attributeNames.GetValueOrDefault(name);
+        public DictionaryVendorAttribute GetVendorAttribute(uint vendorId, byte vendorCode) =>
+            VendorSpecificAttributes.FirstOrDefault(o => o.VendorId == vendorId && o.VendorCode == vendorCode);
+
+
+        public DictionaryAttribute GetAttribute(byte typecode) =>
+            Attributes.TryGetValue(typecode, out var attribute) ? attribute : null;
+
+
+        public DictionaryAttribute GetAttribute(string name) =>
+            AttributeNames.TryGetValue(name, out var attribute) ? attribute : null;
     }
 }

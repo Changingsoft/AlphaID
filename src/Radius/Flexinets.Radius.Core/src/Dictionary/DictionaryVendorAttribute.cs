@@ -9,8 +9,11 @@
         /// <summary>
         /// Create a dictionary vendor specific attribute
         /// </summary>
-        public DictionaryVendorAttribute(uint vendorId, string name, uint vendorCode, string type) : base(name, 26,
-            type)
+        /// <param name="vendorId"></param>
+        /// <param name="name"></param>
+        /// <param name="vendorCode"></param>        
+        /// <param name="type"></param>
+        public DictionaryVendorAttribute(uint vendorId, string name, uint vendorCode, string type) : base(name, 26, type)
         {
             VendorId = vendorId;
             VendorCode = vendorCode;

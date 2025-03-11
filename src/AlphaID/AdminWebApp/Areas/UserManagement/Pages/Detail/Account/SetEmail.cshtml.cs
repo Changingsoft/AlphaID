@@ -1,19 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Text.Encodings.Web;
-using System.Text;
-using System.Web;
-using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {
-    public class SetEmailModel(ApplicationUserManager<NaturalPerson> userManager, IEmailSender emailSender, IOptions<SystemUrlInfo> systemUrlInfoOptions, IOptions<ProductInfo> productInfoOptions) : PageModel
+    public class SetEmailModel(ApplicationUserManager<NaturalPerson> userManager) : PageModel
     {
 
         [BindProperty]

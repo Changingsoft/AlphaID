@@ -85,14 +85,13 @@ where T : ApplicationUser
     /// 通过移动电话号码查找自然人。
     /// </summary>
     /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准 E.164 格式。</param>
-    /// <param name="cancellation"></param>
     /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
-    public virtual async Task<T?> FindByMobileAsync(string mobile, CancellationToken cancellation)
+    public virtual async Task<T?> FindByMobileAsync(string mobile)
     {
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
             return null;
         string phoneNumberString = phoneNumber.ToString();
-        T? person = await Store.FindByPhoneNumberAsync(phoneNumberString, cancellation);
+        T? person = await Store.FindByPhoneNumberAsync(phoneNumberString, CancellationToken);
         return person;
     }
 

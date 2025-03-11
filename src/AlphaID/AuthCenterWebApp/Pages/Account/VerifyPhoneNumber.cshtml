@@ -1,0 +1,24 @@
+@page
+@model AuthCenterWebApp.Pages.Account.VerifyPhoneNumberModel
+@{
+    ViewBag.Title = SL["Verify phone number"];
+}
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+        @Product.Value.Name @L["Account"]
+    </a>
+</div>
+<div class="card card-md">
+    <div class="card-body">
+        <h2>@ViewBag.Title</h2>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="VerificatonCode" class="form-label required"></label>
+                <input asp-for="VerificatonCode" class="form-control" />
+                <span asp-validation-for="VerificatonCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">@SL["Verify"]</button>
+        </form>
+    </div>
+</div>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {
-    public class SetPhoneNumberModel(NaturalPersonService personService, ApplicationUserManager<NaturalPerson> userManager) : PageModel
+    public class SetPhoneNumberModel(ApplicationUserManager<NaturalPerson> userManager) : PageModel
     {
 
         [BindProperty]

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Flexinets.Net
+namespace UdpClient
 {
     public interface IUdpClientFactory
     {

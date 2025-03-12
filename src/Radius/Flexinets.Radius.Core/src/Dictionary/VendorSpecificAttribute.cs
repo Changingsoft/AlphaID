@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Dictionary
 {
     public class VendorSpecificAttribute
     {

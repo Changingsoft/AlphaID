@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flexinets.Net.UdpClient", "Flexinets.Net.UdpClient\Flexinets.Net.UdpClient.csproj", "{905D6E47-CE8D-3D8F-1EBF-5C8C14627162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpClient", "Flexinets.Net.UdpClient\UdpClient.csproj", "{905D6E47-CE8D-3D8F-1EBF-5C8C14627162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flexinets.Radius.Core", "Flexinets.Radius.Core\Flexinets.Radius.Core.csproj", "{E1D837AB-5C74-2823-B22B-B4B9C70962CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadiusCore", "Flexinets.Radius.Core\RadiusCore.csproj", "{E1D837AB-5C74-2823-B22B-B4B9C70962CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flexinets.Radius.Core.Tests", "Flexinets.Radius.Core.Tests\Flexinets.Radius.Core.Tests.csproj", "{9822AEB1-EE4A-8380-29C6-A3E6A536E455}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadiusCore.Tests", "Flexinets.Radius.Core.Tests\RadiusCore.Tests.csproj", "{9822AEB1-EE4A-8380-29C6-A3E6A536E455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flexinets.Radius.RadiusServer", "RadiusServer\Flexinets.Radius.RadiusServer.csproj", "{81C86CC3-0791-AD3A-C95F-41E1462B9BD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadiusServer", "RadiusServer\RadiusServer.csproj", "{81C86CC3-0791-AD3A-C95F-41E1462B9BD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadiusServer.Tests", "RadiusServerTests\RadiusServer.Tests.csproj", "{BABF7146-A6FD-4ECE-565C-BA03B58C6C0F}"
 EndProject

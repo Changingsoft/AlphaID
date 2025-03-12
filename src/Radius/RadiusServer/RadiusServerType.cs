@@ -1,4 +1,4 @@
-﻿namespace Flexinets.Radius
+﻿namespace RadiusServer
 {
     public enum RadiusServerType
     {

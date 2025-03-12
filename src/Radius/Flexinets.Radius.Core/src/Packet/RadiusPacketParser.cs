@@ -1,9 +1,11 @@
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using RadiusCore.Dictionary;
+using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Packet
 {
     public partial class RadiusPacketParser : IRadiusPacketParser
     {

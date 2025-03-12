@@ -1,6 +1,7 @@
 using NUnit.Framework;
+using RadiusCore.Dictionary;
 
-namespace Flexinets.Radius.Core.Tests;
+namespace RadiusCore.Tests.Tests;
 
 [TestFixture]
 public class DictionaryTests

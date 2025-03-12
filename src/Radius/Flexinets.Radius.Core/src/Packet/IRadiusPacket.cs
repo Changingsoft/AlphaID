@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Packet
 {
     public interface IRadiusPacket
     {

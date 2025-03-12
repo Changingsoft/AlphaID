@@ -41,7 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="Flexinets.Radius.Core.Tests" />
+        <InternalsVisibleTo Include="RadiusCore.Tests" />
     </ItemGroup>
 
 </Project>

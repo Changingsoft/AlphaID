@@ -1,10 +1,12 @@
 using Flexinets.Net;
-using Flexinets.Radius.Core;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using RadiusCore;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
 namespace Flexinets.Radius;
 

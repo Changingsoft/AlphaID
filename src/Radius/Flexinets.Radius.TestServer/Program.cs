@@ -1,8 +1,9 @@
 using System.Net;
 using Flexinets.Net;
 using Flexinets.Radius;
-using Flexinets.Radius.Core;
 using Microsoft.Extensions.Logging;
+using RadiusCore.Dictionary;
+using RadiusCore.Packet;
 
 var loggerFactory = LoggerFactory.Create(o =>
 {

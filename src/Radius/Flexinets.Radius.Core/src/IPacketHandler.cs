@@ -1,6 +1,7 @@
 ﻿using System;
+using RadiusCore.Packet;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore
 {
     public interface IPacketHandler : IDisposable
     {

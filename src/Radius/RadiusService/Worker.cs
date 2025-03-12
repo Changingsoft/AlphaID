@@ -1,12 +1,14 @@
-using Flexinets.Radius.Core;
 using System.Net;
-using Flexinets.Radius;
+using RadiusCore.Dictionary;
+using RadiusCore.Packet;
+using RadiusServer;
+using UdpClient;
 
 namespace RadiusService;
 
 public class Worker(ILogger<Worker> logger) : BackgroundService
 {
-        private RadiusServer _authenticationServer;
+        private RadiusServer.RadiusServer _authenticationServer;
 
         public override async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -17,8 +19,8 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
 
         repository.AddPacketHandler(IPAddress.Parse("127.0.0.1"), packetHandler, "secret");
 
-        _authenticationServer = new RadiusServer(
-            new Flexinets.Net.UdpClientFactory(),
+        _authenticationServer = new RadiusServer.RadiusServer(
+            new UdpClientFactory(),
             new IPEndPoint(IPAddress.Any, 1812),
             radiusPacketParser,
             RadiusServerType.Authentication,

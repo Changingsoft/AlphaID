@@ -1,4 +1,6 @@
-﻿using Flexinets.Radius.Core;
+﻿using RadiusCore;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
 namespace Flexinets.Radius;
 

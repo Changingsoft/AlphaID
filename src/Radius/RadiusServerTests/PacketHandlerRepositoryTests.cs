@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Net;
+using RadiusServer;
 
 namespace Flexinets.Radius.Tests
 {

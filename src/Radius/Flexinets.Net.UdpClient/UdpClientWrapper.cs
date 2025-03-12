@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Flexinets.Net
+namespace UdpClient
 {
     /// <summary>
     /// Wrapper for System.Net.UdpClient
@@ -10,7 +10,7 @@ namespace Flexinets.Net
     /// </summary>
     public class UdpClientWrapper(IPEndPoint localEndpoint) : IUdpClient
     {
-        private readonly UdpClient _client = new(localEndpoint);
+        private readonly System.Net.Sockets.UdpClient _client = new(localEndpoint);
         public Socket Client => _client.Client;
 
 

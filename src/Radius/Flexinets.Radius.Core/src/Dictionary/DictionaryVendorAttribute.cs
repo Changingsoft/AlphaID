@@ -1,4 +1,4 @@
-﻿namespace Flexinets.Radius.Core
+﻿namespace RadiusCore.Dictionary
 {
     public class DictionaryVendorAttribute : DictionaryAttribute
     {

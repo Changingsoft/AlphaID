@@ -1,12 +1,15 @@
-using Microsoft.Extensions.Logging.Abstractions;
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Microsoft.Extensions.Logging.Abstractions;
+using NUnit.Framework;
+using RadiusCore.Dictionary;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius.Core.Tests;
+namespace RadiusCore.Tests.Tests;
 
 [TestFixture]
 public class RadiusCoreTests

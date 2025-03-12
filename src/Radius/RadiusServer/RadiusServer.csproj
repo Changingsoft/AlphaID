@@ -26,8 +26,8 @@ For an example server implementation hosted in a windows service, see: https://g
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Flexinets.Net.UdpClient\Flexinets.Net.UdpClient.csproj" />
-    <ProjectReference Include="..\Flexinets.Radius.Core\Flexinets.Radius.Core.csproj" />
+    <ProjectReference Include="..\Flexinets.Net.UdpClient\UdpClient.csproj" />
+    <ProjectReference Include="..\Flexinets.Radius.Core\RadiusCore.csproj" />
   </ItemGroup>
 
 </Project>

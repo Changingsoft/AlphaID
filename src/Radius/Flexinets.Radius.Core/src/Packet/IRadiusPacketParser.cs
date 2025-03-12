@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Packet
 {
     public interface IRadiusPacketParser
     {

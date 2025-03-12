@@ -1,6 +1,6 @@
 using System;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore
 {
     public class MessageAuthenticatorException(string message) : InvalidOperationException(message);
 }

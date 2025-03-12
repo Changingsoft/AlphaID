@@ -4,6 +4,7 @@ using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
+using BotDetect.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,8 @@ public class FindPasswordByEmailModel(
         if (ModelState.IsValid)
         {
             NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
+
+            await Task.Delay(2000); // Delay to prevent brute force attack
             if (user == null || !await userManager.IsEmailConfirmedAsync(user))
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("FindPasswordByEmailConfirmation");
@@ -68,5 +71,10 @@ public class FindPasswordByEmailModel(
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = null!;
+
+        [Display(Name = "Captcha code")]
+        [Required(ErrorMessage = "Validate_Required")]
+        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
+        public string CaptchaCode { get; set; } = null!;
     }
 }

@@ -20,7 +20,7 @@ namespace RadiusServer
     /// <param name="logger"></param>
     public sealed class RadiusServer(IUdpClientFactory udpClientFactory, IPEndPoint localEndpoint, IRadiusPacketParser radiusPacketParser, RadiusServerType serverType, IPacketHandlerRepository packetHandlerRepository, ILogger<RadiusServer> logger) : IDisposable
     {
-        private IUdpClient _server;
+        private IUdpClient? _server;
         private readonly IUdpClientFactory _udpClientFactory = udpClientFactory;
         private readonly IPEndPoint _localEndpoint = localEndpoint;
         private readonly IRadiusPacketParser _radiusPacketParser = radiusPacketParser;
@@ -126,7 +126,7 @@ namespace RadiusServer
             {
                 try
                 {
-                    var response = await _server.ReceiveAsync();
+                    var response = await _server!.ReceiveAsync();
                     await Task.Factory.StartNew(() => HandlePacket(response.RemoteEndPoint, response.Buffer), TaskCreationOptions.LongRunning);
                 }
                 catch (ObjectDisposedException) { } // This is thrown when udpclient is disposed, can be safely ignored
@@ -236,7 +236,7 @@ namespace RadiusServer
         private void SendResponsePacket(IRadiusPacket responsePacket, IPEndPoint remoteEndpoint)
         {
             var responseBytes = _radiusPacketParser.GetBytes(responsePacket);
-            _server.Send(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
+            _server!.Send(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
             _logger.LogInformation($"{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}");
         }
 
@@ -262,7 +262,7 @@ namespace RadiusServer
             {
                 if (attribute.Key == "User-Password")
                 {
-                    sb.AppendLine($"{attribute.Key} length : {attribute.Value.First().ToString().Length}");
+                    sb.AppendLine($"{attribute.Key} length : {attribute.Value.First().ToString()!.Length}");
                 }
                 else
                 {

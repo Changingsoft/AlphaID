@@ -1,9 +1,10 @@
 using System.Net;
-using Flexinets.Net;
-using Flexinets.Radius;
 using Microsoft.Extensions.Logging;
+using Radius.TestServer;
+using Radius.TestServer.PacketHandler;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
+using UdpClient;
 
 var loggerFactory = LoggerFactory.Create(o =>
 {

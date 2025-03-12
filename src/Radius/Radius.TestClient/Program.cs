@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using Flexinets.Radius;
 using Microsoft.Extensions.Logging;
+using Radius.TestClient;
 using RadiusCore;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;

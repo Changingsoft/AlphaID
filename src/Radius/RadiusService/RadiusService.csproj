@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Flexinets.Radius.Core\RadiusCore.csproj" />
+		<ProjectReference Include="..\RadiusCore\RadiusCore.csproj" />
 		<ProjectReference Include="..\RadiusServer\RadiusServer.csproj" />
 	</ItemGroup>
 

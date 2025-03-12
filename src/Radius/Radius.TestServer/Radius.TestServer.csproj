@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -10,12 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Flexinets.Net.UdpClient" Version="1.1.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Flexinets.Radius.Core\RadiusCore.csproj" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+        <ProjectReference Include="..\UdpClient\UdpClient.csproj" />
+        <ProjectReference Include="..\RadiusCore\RadiusCore.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flexinets.Net.UdpClient", "Flexinets.Net.UdpClient.csproj", "{884A7EF0-FB75-44CB-864C-BD2628F6032F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdpClient", "UdpClient.csproj", "{884A7EF0-FB75-44CB-864C-BD2628F6032F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

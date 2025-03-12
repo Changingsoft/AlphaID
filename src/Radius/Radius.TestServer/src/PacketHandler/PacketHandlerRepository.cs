@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using RadiusCore;
 
-namespace Flexinets.Radius;
+namespace Radius.TestServer.PacketHandler;
 
 public class PacketHandlerRepository : IPacketHandlerRepository
 {

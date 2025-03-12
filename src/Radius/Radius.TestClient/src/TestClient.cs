@@ -1,7 +1,7 @@
+using RadiusCore.Packet;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
-using RadiusCore.Packet;
 
 namespace Radius.TestClient;
 

@@ -5,11 +5,11 @@ namespace UdpClient
 {
     public class UdpClientMock : IUdpClient
     {
-        private TaskCompletionSource<UdpReceiveResult> _receiveTaskCompletionSource;
-        private TaskCompletionSource<UdpReceiveResult> _sendTaskCompletionSource;
+        private TaskCompletionSource<UdpReceiveResult>? _receiveTaskCompletionSource;
+        private TaskCompletionSource<UdpReceiveResult>? _sendTaskCompletionSource;
 
 
-        public Socket Client => null;
+        public Socket? Client => null;
 
         public void Close()
         {
@@ -29,7 +29,7 @@ namespace UdpClient
 
         public void Send(byte[] content, int length, IPEndPoint recipient)
         {
-            _sendTaskCompletionSource.SetResult(new UdpReceiveResult(content, recipient));
+            _sendTaskCompletionSource?.SetResult(new UdpReceiveResult(content, recipient));
         }
 
         public Task<int> SendAsync(byte[] content, int length, IPEndPoint remoteEndpoint)
@@ -41,7 +41,7 @@ namespace UdpClient
         public Task<UdpReceiveResult> SendMock(UdpReceiveResult mockResult)
         {
             _sendTaskCompletionSource = new TaskCompletionSource<UdpReceiveResult>();
-            _receiveTaskCompletionSource.SetResult(mockResult);
+            _receiveTaskCompletionSource?.SetResult(mockResult);
             return _sendTaskCompletionSource.Task;
         }
     }

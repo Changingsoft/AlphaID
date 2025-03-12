@@ -1,7 +1,7 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using RadiusCore.Packet;
+﻿using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace RadiusCore
 {
@@ -36,9 +36,9 @@ namespace RadiusCore
         /// <summary>
         /// Get the mccmnc as a string from a 3GPP-User-Location-Info vendor attribute.
         /// </summary>
-        public static (LocationType locationType, string mccmnc) GetMccMncFrom3GPPLocationInfo(byte[] bytes)
+        public static (LocationType locationType, string? mccmnc) GetMccMncFrom3GPPLocationInfo(byte[] bytes)
         {
-            string mccmnc = null;
+            string? mccmnc = null;
             var type = (LocationType)bytes[0];
 
             if (type == LocationType.CGI
@@ -59,7 +59,7 @@ namespace RadiusCore
                 mccmnc = mccDigit1 + mccDigit2 + mccDigit3 + mncDigit1 + mncDigit2;
                 if (mncDigit3 != "15")
                 {
-                    mccmnc = mccmnc + mncDigit3;
+                    mccmnc += mncDigit3;
                 }
             }
 
@@ -102,7 +102,7 @@ namespace RadiusCore
         private static byte[] CalculateMessageAuthenticator(
             byte[] packetBytes,
             byte[] sharedSecret,
-            byte[] requestAuthenticator,
+            byte[]? requestAuthenticator,
             int index)
         {
             var temp = new byte[packetBytes.Length];
@@ -129,9 +129,7 @@ namespace RadiusCore
         {
             var bytes = packetBytes.Concat(sharedSecret).ToArray();
             Buffer.BlockCopy(requestAuthenticator, 0, bytes, 4, 16);
-
-            using var md5 = MD5.Create();
-            return md5.ComputeHash(bytes);
+            return MD5.HashData(bytes);
         }
 
 

@@ -26,7 +26,7 @@ namespace RadiusCore.Packet
         private static byte[] CreateKey(byte[] sharedSecret, byte[] authenticator)
         {
             using var md5 = MD5.Create();
-            return md5.ComputeHash(sharedSecret.Concat(authenticator).ToArray());
+            return md5.ComputeHash([.. sharedSecret, .. authenticator]);
         }
 
 
@@ -68,7 +68,7 @@ namespace RadiusCore.Packet
                 key = CreateKey(sharedSecret, xor);
             }
 
-            return bytes.ToArray();
+            return [.. bytes];
         }
     }
 }

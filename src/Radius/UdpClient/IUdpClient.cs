@@ -5,7 +5,7 @@ namespace UdpClient
 {
     public interface IUdpClient : IDisposable
     {
-        Socket Client { get; }
+        Socket? Client { get; }
 
         void Close();
         void Send(byte[] content, int length, IPEndPoint recipient);

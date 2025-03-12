@@ -1,15 +1,15 @@
-﻿using System.Net;
-using RadiusCore;
+﻿using RadiusCore;
+using System.Net;
 
 namespace Radius.TestServer.PacketHandler;
 
 public class PacketHandlerRepository : IPacketHandlerRepository
 {
     private readonly Dictionary<IPAddress, (IPacketHandler packetHandler, string secret)> _packetHandlerAddresses =
-        new();
+        [];
 
     private readonly Dictionary<IPNetwork, (IPacketHandler packetHandler, string secret)>
-        _packetHandlerNetworks = new();
+        _packetHandlerNetworks = [];
 
     /// <summary>
     /// Add packet handler for remote endpoint

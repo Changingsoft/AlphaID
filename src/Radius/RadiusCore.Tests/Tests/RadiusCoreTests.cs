@@ -1,9 +1,9 @@
-using System.Net;
-using System.Text;
 using Microsoft.Extensions.Logging.Abstractions;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
+using System.Net;
+using System.Text;
 using Xunit;
 
 namespace RadiusCore.Tests.Tests;

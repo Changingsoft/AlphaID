@@ -26,7 +26,7 @@ namespace RadiusCore.Packet
                     return contentBytes;
                 case "integer":
                 case "tagged-integer":
-                    return BitConverter.ToUInt32(contentBytes.Reverse().ToArray(), 0);
+                    return BitConverter.ToUInt32([.. contentBytes.Reverse()], 0);
                 case "ipaddr":
                     return new IPAddress(contentBytes);
                 default:
@@ -45,7 +45,7 @@ namespace RadiusCore.Packet
                 case string stringValue:
                     return Encoding.UTF8.GetBytes(stringValue);
                 case uint uintValue:
-                    return BitConverter.GetBytes(uintValue).Reverse().ToArray();
+                    return [.. BitConverter.GetBytes(uintValue).Reverse()];
                 case byte[] byteArray:
                     return byteArray;
                 case IPAddress ipAddress:

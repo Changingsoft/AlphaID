@@ -4,12 +4,12 @@ namespace RadiusCore.Dictionary
 {
     public class RadiusDictionary : IRadiusDictionary
     {
-        internal Dictionary<byte, DictionaryAttribute> Attributes { get; set; } = new();
+        internal Dictionary<byte, DictionaryAttribute> Attributes { get; set; } = [];
 
         internal List<DictionaryVendorAttribute> VendorSpecificAttributes { get; set; } =
             [];
 
-        internal Dictionary<string, DictionaryAttribute> AttributeNames { get; set; } = new();
+        internal Dictionary<string, DictionaryAttribute> AttributeNames { get; set; } = [];
 
 
         /// <summary>

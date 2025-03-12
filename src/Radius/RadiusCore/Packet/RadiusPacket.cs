@@ -1,7 +1,7 @@
-﻿using System.Net;
+﻿using RadiusCore.RadiusConstants;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using RadiusCore.RadiusConstants;
 
 namespace RadiusCore.Packet
 {
@@ -15,7 +15,7 @@ namespace RadiusCore.Packet
         public byte[] Authenticator { get; internal set; } = new byte[16];
         public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
         public byte[] SharedSecret { get; internal set; } = [];
-        public byte[] RequestAuthenticator { get; internal set; }
+        public byte[] RequestAuthenticator { get; internal set; } = [];
 
 
         internal RadiusPacket()
@@ -64,7 +64,7 @@ namespace RadiusCore.Packet
         /// Gets a single attribute value with name cast to type
         /// Throws an exception if multiple attributes with the same name are found
         /// </summary>
-        public T GetAttribute<T>(string name) => GetAttributes<T>(name).SingleOrDefault();
+        public T? GetAttribute<T>(string name) => GetAttributes<T>(name).SingleOrDefault();
 
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace RadiusCore.Packet
         /// </summary>
         public List<T> GetAttributes<T>(string name) =>
             Attributes.TryGetValue(name, out var attribute)
-                ? attribute.Cast<T>().ToList()
+                ? [.. attribute.Cast<T>()]
                 : [];
 
 

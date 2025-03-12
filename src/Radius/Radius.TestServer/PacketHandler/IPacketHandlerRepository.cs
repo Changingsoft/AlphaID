@@ -1,5 +1,5 @@
-﻿using System.Net;
-using RadiusCore;
+﻿using RadiusCore;
+using System.Net;
 
 namespace Radius.TestServer.PacketHandler;
 

@@ -1,5 +1,5 @@
-﻿using Flexinets.Radius.Core;
-using System.Net;
+﻿using System.Net;
+using RadiusCore;
 
 namespace Flexinets.Radius;
 

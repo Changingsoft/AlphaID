@@ -1,9 +1,9 @@
-using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Packet
 {
     public partial class RadiusPacketParser
     {

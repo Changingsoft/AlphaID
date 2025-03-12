@@ -1,7 +1,9 @@
-﻿using Flexinets.Radius.Core;
-using System;
+﻿using System;
+using RadiusCore;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius
+namespace RadiusServer
 {
     /// <summary>
     /// Demonstration of basic packet handler with a static username and password

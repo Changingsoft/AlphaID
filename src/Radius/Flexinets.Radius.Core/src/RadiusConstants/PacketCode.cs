@@ -1,4 +1,4 @@
-﻿namespace Flexinets.Radius.Core
+﻿namespace RadiusCore.RadiusConstants
 {
     public enum PacketCode
     {

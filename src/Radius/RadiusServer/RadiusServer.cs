@@ -1,7 +1,4 @@
-﻿using Flexinets.Net;
-using Flexinets.Radius.Core;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,8 +6,13 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using RadiusCore;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
+using UdpClient;
 
-namespace Flexinets.Radius
+namespace RadiusServer
 {
     public sealed class RadiusServer : IDisposable
     {

@@ -3,8 +3,9 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Packet
 {
     /// <summary>
     /// This class encapsulates a Radius packet and presents it in a more readable form

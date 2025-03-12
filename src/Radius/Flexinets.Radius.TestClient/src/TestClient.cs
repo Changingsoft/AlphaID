@@ -1,7 +1,7 @@
-using Flexinets.Radius.Core;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using RadiusCore.Packet;
 
 namespace Flexinets.Radius;
 

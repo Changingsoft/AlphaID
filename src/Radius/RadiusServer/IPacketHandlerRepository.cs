@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Flexinets.Radius.Core;
+using RadiusCore;
 
-namespace Flexinets.Radius
+namespace RadiusServer
 {
     public interface IPacketHandlerRepository
     {

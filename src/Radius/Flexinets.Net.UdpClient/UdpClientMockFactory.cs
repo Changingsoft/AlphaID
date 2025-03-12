@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Flexinets.Net
+namespace UdpClient
 {
     /// <summary>
     /// Mock IUdpClientFactory which returns a singleton mock IUdpClient

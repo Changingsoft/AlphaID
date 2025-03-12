@@ -1,7 +1,9 @@
-﻿using Flexinets.Radius.Core;
-using System;
+﻿using System;
 using System.Net;
 using System.Text;
+using RadiusCore;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
 namespace Flexinets.Radius
 {

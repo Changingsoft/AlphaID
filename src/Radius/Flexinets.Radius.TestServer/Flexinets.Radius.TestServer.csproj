@@ -10,12 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Flexinets.Net.UdpClient" Version="1.1.1"/>
+        <PackageReference Include="Flexinets.Net.UdpClient" Version="1.1.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Flexinets.Radius.Core\Flexinets.Radius.Core.csproj"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.1"/>
+        <ProjectReference Include="..\Flexinets.Radius.Core\RadiusCore.csproj" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.1" />
     </ItemGroup>
 
 </Project>

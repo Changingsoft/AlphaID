@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Packet
 {
     public class Attribute
     {

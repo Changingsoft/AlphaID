@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Flexinets.Net
+namespace UdpClient
 {
     public class UdpClientMock : IUdpClient
     {

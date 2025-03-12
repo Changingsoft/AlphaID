@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius.Core
+namespace RadiusCore
 {
     public static class Utils
     {

@@ -1,4 +1,4 @@
-namespace Flexinets.Radius.Core
+namespace RadiusCore.Dictionary
 {
     /// <summary>
     /// Contains the default dictionary found in radius.dictionary.

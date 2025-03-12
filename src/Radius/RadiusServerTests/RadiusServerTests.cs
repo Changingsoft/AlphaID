@@ -1,6 +1,4 @@
-﻿using Flexinets.Net;
-using Flexinets.Radius.Core;
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using System.IO;
 using System.Net;
@@ -8,6 +6,11 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using RadiusCore;
+using RadiusCore.Dictionary;
+using RadiusCore.Packet;
+using RadiusServer;
+using UdpClient;
 
 namespace Flexinets.Radius.Tests
 {
@@ -34,7 +37,7 @@ namespace Flexinets.Radius.Tests
             var secret = "xyzzy5461";
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             var response = rs.GetResponsePacket(new MockPacketHandler(), secret, Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813));
 
             Assert.AreEqual(expected, radiusPacketParser.GetBytes(response).ToHexString());
@@ -53,7 +56,7 @@ namespace Flexinets.Radius.Tests
             var secret = "xyzzy5461";
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             var response = rs.GetResponsePacket(new MockPacketHandler(), secret, Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813));
             Assert.AreEqual(expected, radiusPacketParser.GetBytes(response).ToHexString());
         }
@@ -71,7 +74,7 @@ namespace Flexinets.Radius.Tests
             var secret = "xyzzy5461";
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Accounting, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Accounting, NullLogger<RadiusServer.RadiusServer>.Instance);
             var response = rs.GetResponsePacket(new MockPacketHandler(), secret, Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813));
 
             Assert.AreEqual(expected, radiusPacketParser.GetBytes(response).ToHexString());
@@ -93,7 +96,7 @@ namespace Flexinets.Radius.Tests
             GetDictionary();
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             var response = rs.GetResponsePacket(new MockPacketHandler(), secret, Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813));
 
             Assert.AreEqual(expected, radiusPacketParser.GetBytes(response).ToHexString());
@@ -113,7 +116,7 @@ namespace Flexinets.Radius.Tests
             var secret = "xyzzy5461";
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(new UdpClientFactory(), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             var response = rs.GetResponsePacket(new MockPacketHandler(), secret, Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813));
 
             Assert.AreEqual(expected, radiusPacketParser.GetBytes(response).ToHexString());
@@ -182,7 +185,7 @@ namespace Flexinets.Radius.Tests
             var factory = new UdpClientMockFactory(client);
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             rs.AddPacketHandler(IPAddress.Parse("127.0.0.1"), secret, new MockPacketHandler());
             rs.Start();
             var response = await client.SendMock(new UdpReceiveResult(Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813)));
@@ -206,7 +209,7 @@ namespace Flexinets.Radius.Tests
             var factory = new UdpClientMockFactory(client);
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             rs.AddPacketHandler(IPAddress.Any, secret, new MockPacketHandler());
             rs.Start();
             var response = await client.SendMock(new UdpReceiveResult(Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813)));
@@ -230,7 +233,7 @@ namespace Flexinets.Radius.Tests
             var factory = new UdpClientMockFactory(client);
 
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-            var rs = new RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, NullLogger<RadiusServer.RadiusServer>.Instance);
             rs.AddPacketHandler(new IPNetwork(IPAddress.Parse("10.0.0.0"), 24), secret, new MockPacketHandler());
             rs.Start();
             var response = await client.SendMock(new UdpReceiveResult(Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("10.0.0.254"), 1813)));
@@ -255,7 +258,7 @@ namespace Flexinets.Radius.Tests
             var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
             var repo = new PacketHandlerRepository();
             repo.AddPacketHandler(IPAddress.Any, new MockPacketHandler(), secret);
-            var rs = new RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, repo, NullLogger<RadiusServer>.Instance);
+            var rs = new RadiusServer.RadiusServer(factory, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812), radiusPacketParser, RadiusServerType.Authentication, repo, NullLogger<RadiusServer.RadiusServer>.Instance);
             rs.Start();
             var response = await client.SendMock(new UdpReceiveResult(Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813)));
             Assert.AreEqual(expected, response.Buffer.ToHexString());

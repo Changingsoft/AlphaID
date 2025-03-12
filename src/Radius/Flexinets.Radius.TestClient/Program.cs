@@ -1,7 +1,10 @@
 ﻿using System.Net;
 using Flexinets.Radius;
-using Flexinets.Radius.Core;
 using Microsoft.Extensions.Logging;
+using RadiusCore;
+using RadiusCore.Dictionary;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
 
 var loggerFactory = LoggerFactory.Create(o =>

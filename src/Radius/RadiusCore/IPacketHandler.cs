@@ -4,6 +4,6 @@ namespace RadiusCore
 {
     public interface IPacketHandler : IDisposable
     {
-        IRadiusPacket HandlePacket(IRadiusPacket packet);
+        RadiusPacket HandlePacket(RadiusPacket packet);
     }
 }

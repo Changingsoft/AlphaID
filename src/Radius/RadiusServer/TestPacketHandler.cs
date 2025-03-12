@@ -9,7 +9,7 @@ namespace RadiusServer
     /// </summary>
     public sealed class TestPacketHandler : IPacketHandler
     {
-        public IRadiusPacket HandlePacket(IRadiusPacket packet)
+        public RadiusPacket HandlePacket(RadiusPacket packet)
         {
             // Simulate lag
             //Thread.Sleep(new Random().Next(100, 3000));

@@ -8,7 +8,7 @@ namespace RadiusCore.Packet
     /// <summary>
     /// This class encapsulates a Radius packet and presents it in a more readable form
     /// </summary>
-    public class RadiusPacket : IRadiusPacket
+    public class RadiusPacket
     {
         public PacketCode Code { get; internal set; }
         public byte Identifier { get; internal set; }
@@ -50,7 +50,7 @@ namespace RadiusCore.Packet
         /// <summary>
         /// Creates a response packet with code, authenticator, identifier and secret from the request packet.
         /// </summary>
-        public IRadiusPacket CreateResponsePacket(PacketCode responseCode) =>
+        public RadiusPacket CreateResponsePacket(PacketCode responseCode) =>
             new RadiusPacket
             {
                 Code = responseCode,

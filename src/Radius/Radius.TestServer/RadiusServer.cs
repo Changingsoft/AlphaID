@@ -140,7 +140,7 @@ public class RadiusServer(
     /// <summary>
     /// Parses a packet and gets a response packet from the handler
     /// </summary>
-    private IRadiusPacket? GetResponsePacket(
+    private RadiusPacket? GetResponsePacket(
         IPacketHandler packetHandler,
         string sharedSecret,
         byte[] packetBytes,
@@ -198,7 +198,7 @@ public class RadiusServer(
     /// <summary>
     /// Sends a packet
     /// </summary>
-    private async Task SendResponsePacketAsync(IRadiusPacket responsePacket, IPEndPoint remoteEndpoint)
+    private async Task SendResponsePacketAsync(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
     {
         ArgumentNullException.ThrowIfNull(_udpClient);
 

@@ -11,7 +11,7 @@ namespace RadiusServer.Tests
     /// </summary>
     public sealed class MockPacketHandler : IPacketHandler
     {
-        public IRadiusPacket HandlePacket(IRadiusPacket packet)
+        public RadiusPacket HandlePacket(RadiusPacket packet)
         {
             if (packet.Code == PacketCode.AccessRequest)
             {

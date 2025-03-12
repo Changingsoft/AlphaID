@@ -11,7 +11,7 @@ namespace RadiusCore.Packet
         [Obsolete("Use parse instead... this isnt async anyway")]
         public bool TryParsePacketFromStream(
             Stream stream,
-            out IRadiusPacket? packet,
+            out RadiusPacket? packet,
             byte[] sharedSecret,
             byte[]? requestAuthenticator = null)
         {

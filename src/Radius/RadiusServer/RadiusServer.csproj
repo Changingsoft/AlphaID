@@ -1,33 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <Version>2.0.0</Version>
-    <PackageProjectUrl>https://github.com/vforteli/RadiusServer</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/vforteli/RadiusServer/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright 2017 Verner Fortelius</Copyright>
-    <PackageReleaseNotes>Breaking change, update core package to 2.0.0 and remove dependency on log4net. Use ILogger instead</PackageReleaseNotes>
-    <Description>Radius server library. Implement IRadiusPacketHandler and handle packets.
-For an example server implementation hosted in a windows service, see: https://github.com/vforteli/RadiusServerService/tree/Base</Description>
-    <Authors>Verner Fortelius</Authors>
-    <PackageTags>Radius Radius-Server</PackageTags>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <ShouldCreateLogs>True</ShouldCreateLogs>
-    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
-    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
-    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
-    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-    <UpdatePackageVersion>False</UpdatePackageVersion>
-    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
-    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+		<ShouldCreateLogs>True</ShouldCreateLogs>
+		<AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+		<UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+		<UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+		<UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+		<UpdatePackageVersion>False</UpdatePackageVersion>
+		<AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+		<InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\UdpClient\UdpClient.csproj" />
-    <ProjectReference Include="..\RadiusCore\RadiusCore.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\UdpClient\UdpClient.csproj" />
+		<ProjectReference Include="..\RadiusCore\RadiusCore.csproj" />
+	</ItemGroup>
 
 </Project>

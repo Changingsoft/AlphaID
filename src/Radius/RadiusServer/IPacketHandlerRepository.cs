@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using Flexinets.Radius.Core;
-using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Flexinets.Radius
 {

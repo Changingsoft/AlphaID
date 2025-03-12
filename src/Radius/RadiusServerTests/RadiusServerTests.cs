@@ -1,6 +1,5 @@
 ﻿using Flexinets.Net;
 using Flexinets.Radius.Core;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using System;

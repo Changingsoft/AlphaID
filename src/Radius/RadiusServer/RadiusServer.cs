@@ -1,6 +1,5 @@
 ﻿using Flexinets.Net;
 using Flexinets.Radius.Core;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

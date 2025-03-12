@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net471</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <Version>2.0.0</Version>
     <PackageProjectUrl>https://github.com/vforteli/RadiusServer</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/vforteli/RadiusServer/blob/master/LICENSE</PackageLicenseUrl>
@@ -24,10 +24,6 @@ For an example server implementation hosted in a windows service, see: https://g
     <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.1.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Flexinets.Net.UdpClient\Flexinets.Net.UdpClient.csproj" />

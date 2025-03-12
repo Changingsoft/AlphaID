@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Net;
 
 namespace Flexinets.Radius.Tests

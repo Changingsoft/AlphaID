@@ -34,6 +34,8 @@ public class FindPasswordByEmailModel(
         if (ModelState.IsValid)
         {
             NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
+
+            await Task.Delay(2000); // Delay to prevent brute force attack
             if (user == null || !await userManager.IsEmailConfirmedAsync(user))
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("FindPasswordByEmailConfirmation");

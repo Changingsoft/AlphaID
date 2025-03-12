@@ -15,9 +15,9 @@ public class Worker : BackgroundService
         _logger = logger;
     }
 
-    public override Task StartAsync(CancellationToken cancellationToken)
+    public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        var dictionary = new RadiusDictionary(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary", null);
+        var dictionary = await RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary");
         var radiusPacketParser = new RadiusPacketParser(null, dictionary);
         var packetHandler = new TestPacketHandler();
         var repository = new PacketHandlerRepository();
@@ -32,7 +32,6 @@ public class Worker : BackgroundService
             repository,
             null);
         _authenticationServer.Start();
-        return Task.CompletedTask;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

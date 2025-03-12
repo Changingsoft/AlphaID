@@ -33,7 +33,7 @@ namespace Flexinets.Radius
             }
             else if (packet.Code == PacketCode.AccessRequest)
             {
-                if (packet.GetAttribute<String>("User-Name") == "user@example.com" && packet.GetAttribute<String>("User-Password") == "1234")
+                if (packet.GetAttribute<string>("User-Name") == "user@example.com" && packet.GetAttribute<string>("User-Password") == "1234")
                 {
                     var response = packet.CreateResponsePacket(PacketCode.AccessAccept);
                     response.AddAttribute("Acct-Interim-Interval", 60);

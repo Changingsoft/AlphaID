@@ -32,7 +32,7 @@ public class RadiusClient(IPEndPoint localEndpoint, IRadiusPacketParser radiusPa
     /// </summary>
     public async Task<IRadiusPacket> SendPacketAsync(IRadiusPacket packet, IPEndPoint remoteEndpoint, TimeSpan timeout)
     {
-        // Start a receive loop before sending packet if one isnt already running to ensure we can receive the response
+        // Start a receiving loop before sending packet if one isn't already running to ensure we can receive the response
         _receiveLoopTask ??= Task.Factory.StartNew(
             StartReceiveLoopAsync,
             _cancellationTokenSource.Token,

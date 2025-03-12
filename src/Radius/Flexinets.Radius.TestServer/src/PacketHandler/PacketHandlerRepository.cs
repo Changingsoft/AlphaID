@@ -35,7 +35,7 @@ public class PacketHandlerRepository : IPacketHandlerRepository
     /// <summary>
     /// Add packet handler for IP range
     /// </summary>
-    public void Add(IPNetwork remoteAddressRange, IPacketHandler packetHandler, String sharedSecret)
+    public void Add(IPNetwork remoteAddressRange, IPacketHandler packetHandler, string sharedSecret)
     {
         _packetHandlerNetworks.Add(remoteAddressRange, (packetHandler, sharedSecret));
     }

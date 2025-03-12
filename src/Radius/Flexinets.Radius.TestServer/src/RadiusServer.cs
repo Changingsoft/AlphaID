@@ -117,7 +117,7 @@ public class RadiusServer(
                 {
                     // no handler found, but dump the raw packet with some secret
                     logger.LogDebug(
-                        Utils.GetPacketString(radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes("wut"))));
+                        Utils.GetPacketString(radiusPacketParser.Parse(packetBytes, "wut"u8.ToArray())));
                 }
             }
         }

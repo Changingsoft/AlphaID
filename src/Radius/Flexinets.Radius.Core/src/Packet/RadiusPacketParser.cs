@@ -160,7 +160,7 @@ namespace Flexinets.Radius.Core
 
 
         /// <summary>
-        /// Add a request message authenticator to to the packet if applicable
+        /// Add a request message authenticator to the packet if applicable
         /// </summary>
         private static void HandleRequestMessageAuthenticator(byte[] sharedSecret, int messageAuthenticatorPosition,
             byte[] packetBytes)
@@ -203,7 +203,7 @@ namespace Flexinets.Radius.Core
                         headerBytes[7] = (byte)(2 + contentBytes.Length); // length of the vsa part
                         break;
 
-                    case DictionaryAttribute attributeType:
+                    case { } attributeType:
                         headerBytes[0] = attributeType.Code;
 
                         // Encrypt password if this is a User-Password attribute

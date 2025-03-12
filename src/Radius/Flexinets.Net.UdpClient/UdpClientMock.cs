@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -29,12 +28,12 @@ namespace Flexinets.Net
             return await _receiveTaskCompletionSource.Task;
         }
 
-        public void Send(Byte[] content, Int32 length, IPEndPoint recipient)
+        public void Send(byte[] content, int length, IPEndPoint recipient)
         {
             _sendTaskCompletionSource.SetResult(new UdpReceiveResult(content, recipient));
         }
 
-        public Task<Int32> SendAsync(Byte[] content, Int32 length, IPEndPoint remoteEndpoint)
+        public Task<int> SendAsync(byte[] content, int length, IPEndPoint remoteEndpoint)
         {
             Send(content, length, remoteEndpoint);
             return Task.FromResult(0);

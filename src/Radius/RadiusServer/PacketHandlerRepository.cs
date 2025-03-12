@@ -1,5 +1,4 @@
 ﻿using Flexinets.Radius.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,8 +7,8 @@ namespace Flexinets.Radius
 {
     public class PacketHandlerRepository : IPacketHandlerRepository
     {
-        private readonly Dictionary<IPAddress, (IPacketHandler packetHandler, String secret)> _packetHandlerAddresses = new Dictionary<IPAddress, (IPacketHandler, String)>();
-        private readonly Dictionary<IPNetwork, (IPacketHandler packetHandler, String secret)> _packetHandlerNetworks = new Dictionary<IPNetwork, (IPacketHandler, String)>();
+        private readonly Dictionary<IPAddress, (IPacketHandler packetHandler, string secret)> _packetHandlerAddresses = new();
+        private readonly Dictionary<IPNetwork, (IPacketHandler packetHandler, string secret)> _packetHandlerNetworks = new();
 
         /// <summary>
         /// Add packet handler for remote endpoint
@@ -17,7 +16,7 @@ namespace Flexinets.Radius
         /// <param name="remoteAddress"></param>
         /// <param name="packetHandler"></param>
         /// <param name="sharedSecret"></param>
-        public void AddPacketHandler(IPAddress remoteAddress, IPacketHandler packetHandler, String sharedSecret)
+        public void AddPacketHandler(IPAddress remoteAddress, IPacketHandler packetHandler, string sharedSecret)
         {
             _packetHandlerAddresses.Add(remoteAddress, (packetHandler, sharedSecret));
         }
@@ -29,7 +28,7 @@ namespace Flexinets.Radius
         /// <param name="remoteAddresses"></param>
         /// <param name="packetHandler"></param>
         /// <param name="sharedSecret"></param>
-        public void AddPacketHandler(List<IPAddress> remoteAddresses, IPacketHandler packetHandler, String sharedSecret)
+        public void AddPacketHandler(List<IPAddress> remoteAddresses, IPacketHandler packetHandler, string sharedSecret)
         {
             foreach (var remoteAddress in remoteAddresses)
             {
@@ -41,10 +40,10 @@ namespace Flexinets.Radius
         /// <summary>
         /// Add packet handler for IP range
         /// </summary>
-        /// <param name="remoteAddresses"></param>
         /// <param name="sharedSecret"></param>
+        /// <param name="remoteAddressRange"></param>
         /// <param name="packetHandler"></param>
-        public void Add(IPNetwork remoteAddressRange, IPacketHandler packetHandler, String sharedSecret)
+        public void Add(IPNetwork remoteAddressRange, IPacketHandler packetHandler, string sharedSecret)
         {
             _packetHandlerNetworks.Add(remoteAddressRange, (packetHandler, sharedSecret));
         }
@@ -54,9 +53,9 @@ namespace Flexinets.Radius
         /// Try to find a packet handler for remote address
         /// </summary>
         /// <param name="remoteAddress"></param>
-        /// <param name="packetHandler"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public Boolean TryGetHandler(IPAddress remoteAddress, out (IPacketHandler packetHandler, String sharedSecret) handler)
+        public bool TryGetHandler(IPAddress remoteAddress, out (IPacketHandler packetHandler, string sharedSecret) handler)
         {
             if (_packetHandlerAddresses.TryGetValue(remoteAddress, out handler))
             {

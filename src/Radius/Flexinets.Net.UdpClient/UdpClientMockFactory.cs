@@ -7,7 +7,7 @@ namespace Flexinets.Net
     /// </summary>
     public class UdpClientMockFactory : IUdpClientFactory
     {
-        private IUdpClient _mockClient;
+        private readonly IUdpClient _mockClient;
 
 
         /// <summary>

@@ -1,12 +1,11 @@
-using NUnit.Framework;
 using RadiusCore.Dictionary;
+using Xunit;
 
 namespace RadiusCore.Tests.Tests;
 
-[TestFixture]
 public class DictionaryTests
 {
-    [TestCase]
+    [Fact]
     public void TestLastItemPrevails()
     {
         const string dictionaryString =
@@ -24,19 +23,19 @@ public class DictionaryTests
         Assert.Multiple(() =>
         {
             var attributeByName = dictionary.GetAttribute("User-Name")!;
-            Assert.That(attributeByName.Code, Is.EqualTo(3));
-            Assert.That(attributeByName.Type, Is.EqualTo("octet"));
+            Assert.Equal(3, attributeByName.Code);
+            Assert.Equal("octet", attributeByName.Type);
 
             var attributeByCode = dictionary.GetAttribute(3);
-            Assert.That(attributeByCode!.Name, Is.EqualTo("User-Name"));
+            Assert.Equal("User-Name", attributeByCode.Name);
 
             var vendorAttributeByName = dictionary.GetAttribute("User-Name")!;
-            Assert.That(vendorAttributeByName.Code, Is.EqualTo(3));
-            Assert.That(vendorAttributeByName.Type, Is.EqualTo("octet"));
+            Assert.Equal(3, vendorAttributeByName.Code);
+            Assert.Equal("octet", vendorAttributeByName.Type);
 
             var vendorAttributeByCode = dictionary.GetVendorAttribute(5, 4)!;
-            Assert.That(vendorAttributeByCode.Name, Is.EqualTo("Acc-Input-Errors"));
-            Assert.That(vendorAttributeByCode.Type, Is.EqualTo("octet"));
+            Assert.Equal("Acc-Input-Errors", vendorAttributeByCode.Name);
+            Assert.Equal("octet", vendorAttributeByCode.Type);
         });
     }
 }

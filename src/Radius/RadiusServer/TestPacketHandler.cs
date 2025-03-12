@@ -1,5 +1,4 @@
-﻿using System;
-using RadiusCore;
+﻿using RadiusCore;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
 

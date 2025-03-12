@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace RadiusCore.Packet

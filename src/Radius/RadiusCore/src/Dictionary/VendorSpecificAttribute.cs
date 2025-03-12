@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace RadiusCore.Dictionary
+﻿namespace RadiusCore.Dictionary
 {
     public class VendorSpecificAttribute
     {

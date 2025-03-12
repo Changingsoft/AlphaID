@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;

@@ -1,5 +1,4 @@
-﻿using System;
-using RadiusCore.Packet;
+﻿using RadiusCore.Packet;
 
 namespace RadiusCore
 {

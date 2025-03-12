@@ -4,33 +4,25 @@ using RadiusCore.RadiusConstants;
 
 namespace RadiusCore.Packet
 {
-    public partial class RadiusPacketParser : IRadiusPacketParser
+    /// <summary>
+    /// RadiusPacketParser
+    /// </summary>
+    public partial class RadiusPacketParser(
+        ILogger<RadiusPacketParser> logger,
+        IRadiusDictionary radiusDictionary,
+        bool skipBlastRadiusChecks = true) : IRadiusPacketParser
     {
-        private readonly ILogger _logger;
-        private readonly IRadiusDictionary _radiusDictionary;
-        private readonly bool _skipBlastRadiusChecks;
-
-
-        /// <summary>
-        /// RadiusPacketParser
-        /// </summary>
-        public RadiusPacketParser(
-            ILogger<RadiusPacketParser> logger,
-            IRadiusDictionary radiusDictionary,
-            bool skipBlastRadiusChecks = true)
-        {
-            _logger = logger;
-            _radiusDictionary = radiusDictionary;
-            _skipBlastRadiusChecks = skipBlastRadiusChecks;
-        }
+        private readonly ILogger _logger = logger;
+        private readonly IRadiusDictionary _radiusDictionary = radiusDictionary;
+        private readonly bool _skipBlastRadiusChecks = skipBlastRadiusChecks;
 
 
         /// <summary>
         /// Parses packet bytes and returns an IRadiusPacket
         /// </summary>
-        public IRadiusPacket Parse(byte[] packetBytes, byte[] sharedSecret, byte[] requestAuthenticator = null)
+        public IRadiusPacket Parse(byte[] packetBytes, byte[] sharedSecret, byte[]? requestAuthenticator = null)
         {
-            var packetLength = BitConverter.ToUInt16(packetBytes.Skip(2).Take(2).Reverse().ToArray(), 0);
+            var packetLength = BitConverter.ToUInt16([.. packetBytes.Skip(2).Take(2).Reverse()], 0);
             if (packetBytes.Length < packetLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(packetBytes),
@@ -42,7 +34,7 @@ namespace RadiusCore.Packet
                 SharedSecret = sharedSecret,
                 Identifier = packetBytes[1],
                 Code = (PacketCode)packetBytes[0],
-                Authenticator = packetBytes.Skip(4).Take(16).ToArray(),
+                Authenticator = [.. packetBytes.Skip(4).Take(16)],
             };
 
             if ((packet.Code == PacketCode.AccountingRequest || packet.Code == PacketCode.DisconnectRequest) &&
@@ -107,20 +99,20 @@ namespace RadiusCore.Packet
                 case PacketCode.AccountingRequest:
                 case PacketCode.DisconnectRequest:
                 case PacketCode.CoaRequest:
-                {
-                    HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
-                    Buffer.BlockCopy(
-                        Utils.CalculateRequestAuthenticator(packet.SharedSecret, packetBytes),
-                        0, packetBytes, 4, 16);
-                    break;
-                }
+                    {
+                        HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
+                        Buffer.BlockCopy(
+                            Utils.CalculateRequestAuthenticator(packet.SharedSecret, packetBytes),
+                            0, packetBytes, 4, 16);
+                        break;
+                    }
                 case PacketCode.StatusServer:
                 case PacketCode.AccessRequest:
-                {
-                    Buffer.BlockCopy(packet.Authenticator, 0, packetBytes, 4, 16);
-                    HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
-                    break;
-                }
+                    {
+                        Buffer.BlockCopy(packet.Authenticator, 0, packetBytes, 4, 16);
+                        HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
+                        break;
+                    }
                 case PacketCode.AccessAccept:
                 case PacketCode.AccessReject:
                 case PacketCode.AccountingResponse:
@@ -131,27 +123,27 @@ namespace RadiusCore.Packet
                 case PacketCode.CoaAck:
                 case PacketCode.CoaNak:
                 default:
-                {
-                    if (messageAuthenticatorPosition != 0)
                     {
-                        var messageAuthenticator = Utils.CalculateResponseMessageAuthenticator(
-                            packetBytes,
+                        if (messageAuthenticatorPosition != 0)
+                        {
+                            var messageAuthenticator = Utils.CalculateResponseMessageAuthenticator(
+                                packetBytes,
+                                packet.SharedSecret,
+                                packet.RequestAuthenticator ?? throw new ArgumentNullException(),
+                                messageAuthenticatorPosition);
+
+                            Buffer.BlockCopy(messageAuthenticator, 0, packetBytes, messageAuthenticatorPosition + 2, 16);
+                        }
+
+                        var authenticator = Utils.CalculateResponseAuthenticator(
                             packet.SharedSecret,
-                            packet.RequestAuthenticator ?? throw new ArgumentNullException(),
-                            messageAuthenticatorPosition);
+                            packet.RequestAuthenticator ??
+                            throw new ArgumentNullException(nameof(packet.RequestAuthenticator)),
+                            packetBytes);
 
-                        Buffer.BlockCopy(messageAuthenticator, 0, packetBytes, messageAuthenticatorPosition + 2, 16);
+                        Buffer.BlockCopy(authenticator, 0, packetBytes, 4, 16);
+                        break;
                     }
-
-                    var authenticator = Utils.CalculateResponseAuthenticator(
-                        packet.SharedSecret,
-                        packet.RequestAuthenticator ??
-                        throw new ArgumentNullException(nameof(packet.RequestAuthenticator)),
-                        packetBytes);
-
-                    Buffer.BlockCopy(authenticator, 0, packetBytes, 4, 16);
-                    break;
-                }
             }
 
             return packetBytes;

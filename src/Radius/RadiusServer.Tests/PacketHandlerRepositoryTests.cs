@@ -1,8 +1,7 @@
 ﻿using System.Net;
-using RadiusServer;
 using Xunit;
 
-namespace Flexinets.Radius.Tests
+namespace RadiusServer.Tests
 {
     public class PacketHandlerRepositoryTests
     {

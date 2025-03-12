@@ -5,7 +5,7 @@ public class Worker(RadiusServer.RadiusServer radiusServer) : BackgroundService
 
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        
+
         await radiusServer.Start();
     }
 

@@ -1,10 +1,10 @@
-﻿using System.Net;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Radius.TestClient;
 using RadiusCore;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
+using System.Net;
 
 
 var loggerFactory = LoggerFactory.Create(o =>

@@ -1,24 +1,33 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Text;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using RadiusCore;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
+using System.Diagnostics;
+using System.Net;
+using System.Text;
 using UdpClient;
 
 namespace RadiusServer
 {
-    public sealed class RadiusServer : IDisposable
+    /// <summary>
+    /// Create a new server on endpoint with packet handler repository
+    /// </summary>
+    /// <param name="udpClientFactory"></param>
+    /// <param name="localEndpoint"></param>
+    /// <param name="radiusPacketParser"></param>
+    /// <param name="serverType"></param>
+    /// <param name="packetHandlerRepository"></param>
+    /// <param name="logger"></param>
+    public sealed class RadiusServer(IUdpClientFactory udpClientFactory, IPEndPoint localEndpoint, IRadiusPacketParser radiusPacketParser, RadiusServerType serverType, IPacketHandlerRepository packetHandlerRepository, ILogger<RadiusServer> logger) : IDisposable
     {
         private IUdpClient _server;
-        private readonly IUdpClientFactory _udpClientFactory;
-        private readonly IPEndPoint _localEndpoint;
-        private readonly IRadiusPacketParser _radiusPacketParser;
-        private readonly RadiusServerType _serverType;
+        private readonly IUdpClientFactory _udpClientFactory = udpClientFactory;
+        private readonly IPEndPoint _localEndpoint = localEndpoint;
+        private readonly IRadiusPacketParser _radiusPacketParser = radiusPacketParser;
+        private readonly RadiusServerType _serverType = serverType;
         private int _concurrentHandlerCount;
-        private readonly IPacketHandlerRepository _packetHandlerRepository;
-        private readonly ILogger _logger;
+        private readonly IPacketHandlerRepository _packetHandlerRepository = packetHandlerRepository;
+        private readonly ILogger _logger = logger;
 
         public bool Running
         {
@@ -42,26 +51,6 @@ namespace RadiusServer
 
 
         /// <summary>
-        /// Create a new server on endpoint with packet handler repository
-        /// </summary>
-        /// <param name="udpClientFactory"></param>
-        /// <param name="localEndpoint"></param>
-        /// <param name="radiusPacketParser"></param>
-        /// <param name="serverType"></param>
-        /// <param name="packetHandlerRepository"></param>
-        /// <param name="logger"></param>
-        public RadiusServer(IUdpClientFactory udpClientFactory, IPEndPoint localEndpoint, IRadiusPacketParser radiusPacketParser, RadiusServerType serverType, IPacketHandlerRepository packetHandlerRepository, ILogger<RadiusServer> logger)
-        {
-            _udpClientFactory = udpClientFactory;
-            _localEndpoint = localEndpoint;
-            _radiusPacketParser = radiusPacketParser;
-            _serverType = serverType;
-            _packetHandlerRepository = packetHandlerRepository;
-            _logger = logger;
-        }
-
-
-        /// <summary>
         /// Add packet handler for remote endpoint
         /// </summary>
         /// <param name="remoteAddress"></param>
@@ -72,19 +61,6 @@ namespace RadiusServer
         {
             _logger.LogInformation($"Adding packet handler of type {packetHandler.GetType()} for remote IP {remoteAddress} to {_serverType}Server");
             _packetHandlerRepository.AddPacketHandler(remoteAddress, packetHandler, sharedSecret);
-        }
-
-
-        /// <summary>
-        /// Add packet handler for multiple remote endpoints
-        /// </summary>
-        /// <param name="remoteAddresses"></param>
-        /// <param name="sharedSecret"></param>
-        /// <param name="packetHandler"></param>
-        [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
-        public void AddPacketHandler(List<IPAddress> remoteAddresses, string sharedSecret, IPacketHandler packetHandler)
-        {
-            _packetHandlerRepository.AddPacketHandler(remoteAddresses, packetHandler, sharedSecret);
         }
 
 

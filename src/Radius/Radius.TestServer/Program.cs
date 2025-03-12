@@ -1,9 +1,9 @@
-using System.Net;
 using Microsoft.Extensions.Logging;
 using Radius.TestServer;
 using Radius.TestServer.PacketHandler;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
+using System.Net;
 using UdpClient;
 
 var loggerFactory = LoggerFactory.Create(o =>

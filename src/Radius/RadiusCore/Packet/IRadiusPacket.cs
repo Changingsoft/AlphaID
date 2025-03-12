@@ -1,5 +1,5 @@
-﻿using System.Net;
-using RadiusCore.RadiusConstants;
+﻿using RadiusCore.RadiusConstants;
+using System.Net;
 
 namespace RadiusCore.Packet
 {
@@ -12,7 +12,7 @@ namespace RadiusCore.Packet
         byte[] RequestAuthenticator { get; }
         IRadiusPacket CreateResponsePacket(PacketCode responseCode);
 
-        T GetAttribute<T>(string name);
+        T? GetAttribute<T>(string name);
 
         List<T> GetAttributes<T>(string name);
 

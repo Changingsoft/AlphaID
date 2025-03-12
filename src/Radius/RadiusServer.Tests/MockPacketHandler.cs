@@ -1,10 +1,10 @@
-﻿using System.Net;
-using System.Text;
-using RadiusCore;
+﻿using RadiusCore;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
+using System.Net;
+using System.Text;
 
-namespace Flexinets.Radius
+namespace RadiusServer.Tests
 {
     /// <summary>
     /// Creates a response packet according to example in https://tools.ietf.org/html/rfc2865

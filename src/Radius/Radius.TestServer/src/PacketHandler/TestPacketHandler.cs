@@ -2,7 +2,7 @@
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
 
-namespace Flexinets.Radius;
+namespace Radius.TestServer.PacketHandler;
 
 /// <summary>
 /// Demonstration of basic packet handler with a static username and password

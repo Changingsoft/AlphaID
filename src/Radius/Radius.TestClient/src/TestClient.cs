@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using RadiusCore.Packet;
 
-namespace Flexinets.Radius;
+namespace Radius.TestClient;
 
 public record PendingRequest(byte Identifier, IPEndPoint RemoteEndpoint);
 

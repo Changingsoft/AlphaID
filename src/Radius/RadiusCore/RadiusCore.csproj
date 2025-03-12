@@ -8,20 +8,6 @@
         <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">true</IsAotCompatible>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <VersionPrefix>2.0.1</VersionPrefix>
-        <Title>Flexinets.Radius.Core</Title>
-        <Authors>Verner Fortelius</Authors>
-        <Description>Library for parsing and assembling radius packets. Includes a dictionary with attributes and some vendor specific attributes</Description>
-        <Copyright>Copyright 2024 Verner Fortelius</Copyright>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageLicense>https://github.com/vforteli/Flexinets.Radius.Core/blob/main/LICENSE</PackageLicense>
-        <PackageProjectUrl>https://github.com/vforteli/Flexinets.Radius.Core</PackageProjectUrl>
-        <PackageReleaseNotes>Message authenticator handling for blastradius</PackageReleaseNotes>
-        <PackageTags>Radius packet parser assembler</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
-
     <ItemGroup>
         <None Remove="Content\radius.dictionary" />
     </ItemGroup>

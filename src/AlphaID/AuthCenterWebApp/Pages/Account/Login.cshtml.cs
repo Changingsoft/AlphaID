@@ -87,7 +87,7 @@ public class LoginModel(
         {
             //登录过程。
             NaturalPerson? user = await userManager.FindByEmailAsync(Input.Username)
-                                  ?? await userManager.FindByMobileAsync(Input.Username, HttpContext.RequestAborted)
+                                  ?? await userManager.FindByMobileAsync(Input.Username)
                                   ?? await userManager.FindByNameAsync(Input.Username);
             if (user != null)
             {

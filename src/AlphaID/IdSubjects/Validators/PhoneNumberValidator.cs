@@ -27,7 +27,7 @@ where T:ApplicationUser
         if (MobilePhoneNumber.TryParse(phoneNumber, out MobilePhoneNumber number))
         {
             ApplicationUser? owner =
-                await applicationUserManager.FindByMobileAsync(number.ToString(), CancellationToken.None);
+                await applicationUserManager.FindByMobileAsync(number.ToString());
             if (owner != null && !string.Equals(user.Id, owner.Id))
                 //手机号已存在且不隶属该用户，则提示手机号重复。
                 errors.Add(applicationUserManager.ErrorDescriber.DuplicatePhoneNumber());

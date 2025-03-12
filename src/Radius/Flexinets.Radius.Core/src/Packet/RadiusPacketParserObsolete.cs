@@ -26,7 +26,7 @@ namespace Flexinets.Radius.Core
                 {
                     var packetLength = BitConverter.ToUInt16(packetHeaderBytes.Reverse().ToArray(), 0);
                     var packetContentBytes = new byte[packetLength - 4];
-                    stream.Read(packetContentBytes, 0,
+                    stream.ReadExactly(packetContentBytes, 0,
                         packetContentBytes
                             .Length); // todo stream.read should use loop in case everything is not available immediately
 

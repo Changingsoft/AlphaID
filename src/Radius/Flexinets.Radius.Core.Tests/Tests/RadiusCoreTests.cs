@@ -25,8 +25,10 @@ public class RadiusCoreTests
             "010000380f403f9473978057bd83d5cb98f4227a01066e656d6f02120dbe708d93d413ce3196e43f782a0aee0406c0a80110050600000003";
         var secret = "xyzzy5461";
 
-        var packet = new RadiusPacket(PacketCode.AccessRequest, 0, secret);
-        packet.Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a");
+        var packet = new RadiusPacket(PacketCode.AccessRequest, 0, secret)
+        {
+            Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
+        };
         packet.AddAttribute("User-Name", "nemo");
         packet.AddAttribute("User-Password", "arctangent");
         packet.AddAttribute("NAS-IP-Address", IPAddress.Parse("192.168.1.16"));
@@ -47,8 +49,10 @@ public class RadiusCoreTests
         var expected = IPAddress.IPv6Loopback;
         var secret = "xyzzy5461";
 
-        var packet = new RadiusPacket(PacketCode.AccessRequest, 0, secret);
-        packet.Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a");
+        var packet = new RadiusPacket(PacketCode.AccessRequest, 0, secret)
+        {
+            Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
+        };
         packet.AddAttribute("User-Name", "nemo");
         packet.AddAttribute("User-Password", "arctangent");
         packet.AddAttribute("NAS-IP-Address", IPAddress.Parse("192.168.1.16"));
@@ -69,8 +73,10 @@ public class RadiusCoreTests
     {
         var secret = "xyzzy5461";
 
-        var packet = new RadiusPacket(PacketCode.AccessRequest, 0, secret);
-        packet.Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a");
+        var packet = new RadiusPacket(PacketCode.AccessRequest, 0, secret)
+        {
+            Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
+        };
         packet.AddAttribute("User-Name", "nemo");
         packet.AddAttribute("hurr", "durr");
         packet.AddAttribute("User-Password", "arctangent");
@@ -109,8 +115,10 @@ public class RadiusCoreTests
         var expected = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
         var secret = "xyzzy5461";
 
-        var packet = new RadiusPacket(PacketCode.StatusServer, 218, secret);
-        packet.Authenticator = Utils.StringToByteArray("8a54f4686fb394c52866e302185d0623");
+        var packet = new RadiusPacket(PacketCode.StatusServer, 218, secret)
+        {
+            Authenticator = Utils.StringToByteArray("8a54f4686fb394c52866e302185d0623")
+        };
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
         Assert.That(radiusPacketParser.GetBytes(packet).ToHexString(), Is.EqualTo(expected));
@@ -126,8 +134,10 @@ public class RadiusCoreTests
         var expected = "0cb30026925f6b66dd5fed571fcb1db7ad3882605012e8d6eabda910875cd91fdade26367858";
         var secret = "xyzzy5461";
 
-        var packet = new RadiusPacket(PacketCode.StatusServer, 179, secret);
-        packet.Authenticator = Utils.StringToByteArray("925f6b66dd5fed571fcb1db7ad388260");
+        var packet = new RadiusPacket(PacketCode.StatusServer, 179, secret)
+        {
+            Authenticator = Utils.StringToByteArray("925f6b66dd5fed571fcb1db7ad388260")
+        };
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
         Assert.That(radiusPacketParser.GetBytes(packet).ToHexString(), Is.EqualTo(expected));
@@ -141,7 +151,7 @@ public class RadiusCoreTests
     public void TestCreateAndParseAccountingRequestPacket()
     {
         var secret = "xyzzy5461";
-        var dictionary = GetDictionary();
+        GetDictionary();
         var packet = new RadiusPacket(PacketCode.AccountingRequest, 0, secret);
         packet.AddAttribute("User-Name", "nemo");
         packet.AddAttribute("Acct-Status-Type", 2);
@@ -150,7 +160,7 @@ public class RadiusCoreTests
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
         var bytes = radiusPacketParser.GetBytes(packet);
-        var derp = radiusPacketParser.Parse(bytes, Encoding.UTF8.GetBytes(secret));
+        radiusPacketParser.Parse(bytes, Encoding.UTF8.GetBytes(secret));
     }
 
 
@@ -185,7 +195,7 @@ public class RadiusCoreTests
         var secret = "foo";
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-        var requestAuthenticator = Utils.CalculateRequestAuthenticator(
+        Utils.CalculateRequestAuthenticator(
             Encoding.UTF8.GetBytes(secret),
             Utils.StringToByteArray(packetBytes));
         Assert.That(
@@ -222,11 +232,11 @@ public class RadiusCoreTests
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
         var expected = request;
-        var secret = Encoding.UTF8.GetBytes("xyzzy5461");
+        var secret = "xyzzy5461"u8.ToArray();
 
         var stream = new MemoryStream(Utils.StringToByteArray(request));
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-        var result = radiusPacketParser.TryParsePacketFromStream(stream, out var packet, secret);
+        radiusPacketParser.TryParsePacketFromStream(stream, out var packet, secret);
         var bytes = radiusPacketParser.GetBytes(packet!);
 
         Assert.That(bytes.ToHexString(), Is.EqualTo(expected));
@@ -242,11 +252,11 @@ public class RadiusCoreTests
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3ff00ff00ff00ff";
         var expected = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var secret = Encoding.UTF8.GetBytes("xyzzy5461");
+        var secret = "xyzzy5461"u8.ToArray();
 
         var stream = new MemoryStream(Utils.StringToByteArray(request));
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-        var result = radiusPacketParser.TryParsePacketFromStream(stream, out var packet, secret);
+        radiusPacketParser.TryParsePacketFromStream(stream, out var packet, secret);
         var bytes = radiusPacketParser.GetBytes(packet!);
 
         Assert.That(bytes.ToHexString(), Is.EqualTo(expected));
@@ -279,7 +289,6 @@ public class RadiusCoreTests
     public void TestPacketParserMissingData()
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84f";
-        var expected = request;
         var secret = "xyzzy5461";
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
@@ -351,7 +360,7 @@ public class RadiusCoreTests
         var secret = "xyzzy5461";
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-        var requestPacket = radiusPacketParser.Parse(Utils.StringToByteArray(request), Encoding.UTF8.GetBytes(secret));
+        radiusPacketParser.Parse(Utils.StringToByteArray(request), Encoding.UTF8.GetBytes(secret));
     }
 
 
@@ -400,8 +409,10 @@ public class RadiusCoreTests
         var expected = "2b0000266613591d86e32fa6dbae94f13772573601066e656d6f0406c0a80110050600000003";
         var secret = "xyzzy5461";
 
-        var packet = new RadiusPacket(PacketCode.CoaRequest, 0, secret);
-        packet.Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a");
+        var packet = new RadiusPacket(PacketCode.CoaRequest, 0, secret)
+        {
+            Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
+        };
         packet.AddAttribute("User-Name", "nemo");
         packet.AddAttribute("NAS-IP-Address", IPAddress.Parse("192.168.1.16"));
         packet.AddAttribute("NAS-Port", 3);
@@ -424,8 +435,8 @@ public class RadiusCoreTests
         var secret = "xyzzy5461";
 
         var radiusPacketParser = new RadiusPacketParser(NullLogger<RadiusPacketParser>.Instance, GetDictionary());
-        var requestPacket = radiusPacketParser.Parse(request, Encoding.UTF8.GetBytes(secret));
-        Assert.That(Utils.ToHexString(request), Is.EqualTo(Utils.ToHexString(expected)));
+        radiusPacketParser.Parse(request, Encoding.UTF8.GetBytes(secret));
+        Assert.That(request.ToHexString(), Is.EqualTo(expected.ToHexString()));
     }
 
 
@@ -456,8 +467,7 @@ public class RadiusCoreTests
 
         // request authenticator from the corresponding request
         var requestAuthenticator = Utils.StringToByteArray("fb421846209424ca0982ad9326e5ccf0");
-        var expected =
-            Utils.StringToByteArray("020000261b49188b89251f7c9b8604772ca685925012b02cae7428c0e4e2301c060a5bf75bff");
+        Utils.StringToByteArray("020000261b49188b89251f7c9b8604772ca685925012b02cae7428c0e4e2301c060a5bf75bff");
 
         const string secret = "xyzzy5461";
 
@@ -476,8 +486,7 @@ public class RadiusCoreTests
 
         // request authenticator from the corresponding request
         var requestAuthenticator = Utils.StringToByteArray("fb421846209424ca0982ad9326e5ccf0");
-        var expected =
-            Utils.StringToByteArray("020000261b49188b89251f7c9b8604772ca685925012b02cae7428c0e4e2301c060a5bf75bff");
+        Utils.StringToByteArray("020000261b49188b89251f7c9b8604772ca685925012b02cae7428c0e4e2301c060a5bf75bff");
 
         const string secret = "xyzzy5461";
 

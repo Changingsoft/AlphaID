@@ -14,13 +14,13 @@ namespace Flexinets.Radius
         {
             if (packet.Code == PacketCode.AccessRequest)
             {
-                if (packet.GetAttribute<String>("User-Password") == "arctangent")
+                if (packet.GetAttribute<string>("User-Password") == "arctangent")
                 {
-                    var responsepacket = packet.CreateResponsePacket(PacketCode.AccessAccept);
-                    responsepacket.AddAttribute("Service-Type", 1);
-                    responsepacket.AddAttribute("Login-Service", 0);
-                    responsepacket.AddAttribute("Login-IP-Host", IPAddress.Parse("192.168.1.3"));
-                    return responsepacket;
+                    var responsePacket = packet.CreateResponsePacket(PacketCode.AccessAccept);
+                    responsePacket.AddAttribute("Service-Type", 1);
+                    responsePacket.AddAttribute("Login-Service", 0);
+                    responsePacket.AddAttribute("Login-IP-Host", IPAddress.Parse("192.168.1.3"));
+                    return responsePacket;
                 }
             }
 
@@ -32,7 +32,7 @@ namespace Flexinets.Radius
             }
             Console.WriteLine(sb.ToString());
             //Console.WriteLine(packet.GetAttribute<String>("3GPP-GGSN-MCC-MNC"));
-            throw new InvalidOperationException("Couldnt handle request?!");
+            throw new InvalidOperationException("Couldn't handle request?!");
         }
 
 

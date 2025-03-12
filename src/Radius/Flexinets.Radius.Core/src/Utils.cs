@@ -111,15 +111,13 @@ namespace Flexinets.Radius.Core
 
             requestAuthenticator?.CopyTo(temp, 4);
 
-            using (var md5 = new HMACMD5(sharedSecret))
-            {
-                return md5.ComputeHash(temp);
-            }
+            using var md5 = new HMACMD5(sharedSecret);
+            return md5.ComputeHash(temp);
         }
 
 
         /// <summary>
-        /// Creates a response authenticator
+        /// Creates a response authenticator.
         /// Response authenticator = MD5(Code+ID+Length+RequestAuth+Attributes+Secret)
         /// Actually this means it is the response packet with the request authenticator and secret...
         /// </summary>
@@ -132,10 +130,8 @@ namespace Flexinets.Radius.Core
             var bytes = packetBytes.Concat(sharedSecret).ToArray();
             Buffer.BlockCopy(requestAuthenticator, 0, bytes, 4, 16);
 
-            using (var md5 = MD5.Create())
-            {
-                return md5.ComputeHash(bytes);
-            }
+            using var md5 = MD5.Create();
+            return md5.ComputeHash(bytes);
         }
 
 

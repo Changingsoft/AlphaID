@@ -1,21 +1,14 @@
 using Flexinets.Radius.Core;
-using Microsoft.Extensions.Logging;
 using System.Net;
 using Flexinets.Radius;
 
 namespace RadiusService;
 
-public class Worker : BackgroundService
+public class Worker(ILogger<Worker> logger) : BackgroundService
 {
         private RadiusServer _authenticationServer;
-    private readonly ILogger<Worker> _logger;
 
-    public Worker(ILogger<Worker> logger)
-    {
-        _logger = logger;
-    }
-
-    public override async Task StartAsync(CancellationToken cancellationToken)
+        public override async Task StartAsync(CancellationToken cancellationToken)
     {
         var dictionary = await RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary");
         var radiusPacketParser = new RadiusPacketParser(null, dictionary);
@@ -34,14 +27,15 @@ public class Worker : BackgroundService
         _authenticationServer.Start();
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        return Task.CompletedTask;
     }
 
     public override Task StopAsync(CancellationToken cancellationToken)
     {
-        _authenticationServer?.Stop();
-        _authenticationServer?.Dispose(); 
+        _authenticationServer.Stop();
+        _authenticationServer.Dispose(); 
         return base.StopAsync(cancellationToken);
     }
 }

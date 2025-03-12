@@ -10,7 +10,7 @@ namespace Flexinets.Radius.Tests
         /// Test packet handler repository with matching ip
         /// </summary>      
         [TestCase]
-        public void TestPacketHandlerrepositoryIpSuccess()
+        public void TestPacketHandlerRepositoryIpSuccess()
         {
             var secret = "derp";
             var repo = new PacketHandlerRepository();
@@ -27,13 +27,13 @@ namespace Flexinets.Radius.Tests
         /// Test packet handler repository without matching ip
         /// </summary> 
         [TestCase]
-        public void TestPacketHandlerrepositoryIpFail()
+        public void TestPacketHandlerRepositoryIpFail()
         {
             var secret = "derp";
             var repo = new PacketHandlerRepository();
             repo.AddPacketHandler(IPAddress.Parse("127.0.0.1"), new MockPacketHandler(), secret);
 
-            var result = repo.TryGetHandler(IPAddress.Parse("127.0.0.100"), out var handler);
+            var result = repo.TryGetHandler(IPAddress.Parse("127.0.0.100"), out _);
 
             Assert.IsFalse(result);
         }
@@ -43,7 +43,7 @@ namespace Flexinets.Radius.Tests
         /// Test packet handler repository with matching range
         /// </summary> 
         [TestCase]
-        public void TestPacketHandlerrepositoryRangeSuccess()
+        public void TestPacketHandlerRepositoryRangeSuccess()
         {
             var secret = "derp";
             var repo = new PacketHandlerRepository();
@@ -60,13 +60,13 @@ namespace Flexinets.Radius.Tests
         /// Test packet handler repository without matching range
         /// </summary> 
         [TestCase]
-        public void TestPacketHandlerrepositoryRangeFail()
+        public void TestPacketHandlerRepositoryRangeFail()
         {
             var secret = "derp";
             var repo = new PacketHandlerRepository();
             repo.Add(new IPNetwork(IPAddress.Parse("10.0.0.0"), 24), new MockPacketHandler(), secret);
 
-            var result = repo.TryGetHandler(IPAddress.Parse("10.0.1.1"), out var handler);
+            var result = repo.TryGetHandler(IPAddress.Parse("10.0.1.1"), out _);
 
             Assert.IsFalse(result);
         }
@@ -76,7 +76,7 @@ namespace Flexinets.Radius.Tests
         /// Test packet handler repository with catch all handler
         /// </summary> 
         [TestCase]
-        public void TestPacketHandlerrepositoryCatchAll()
+        public void TestPacketHandlerRepositoryCatchAll()
         {
             var secret = "derp";
             var repo = new PacketHandlerRepository();

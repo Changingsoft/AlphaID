@@ -10,8 +10,8 @@ namespace Flexinets.Net
         Socket Client { get; }
 
         void Close();
-        void Send(Byte[] content, Int32 length, IPEndPoint recipient);
-        Task<Int32> SendAsync(Byte[] content, Int32 length, IPEndPoint remoteEndpoint);
+        void Send(byte[] content, int length, IPEndPoint recipient);
+        Task<int> SendAsync(byte[] content, int length, IPEndPoint remoteEndpoint);
         Task<UdpReceiveResult> ReceiveAsync();
     }
 }

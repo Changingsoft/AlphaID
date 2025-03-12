@@ -23,7 +23,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Content\radius.dictionary"/>
+        <None Remove="Content\radius.dictionary" />
     </ItemGroup>
 
     <ItemGroup>
@@ -37,15 +37,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="../README.md" Pack="true" PackagePath="/"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="Flexinets.Radius.Core.Tests"/>
+        <InternalsVisibleTo Include="Flexinets.Radius.Core.Tests" />
     </ItemGroup>
 
 </Project>

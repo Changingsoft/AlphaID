@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -16,7 +15,7 @@ namespace Flexinets.Radius.Core
         public byte Identifier { get; internal set; }
         public byte[] Authenticator { get; internal set; } = new byte[16];
         public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
-        public byte[] SharedSecret { get; internal set; } = Array.Empty<byte>();
+        public byte[] SharedSecret { get; internal set; } = [];
         public byte[] RequestAuthenticator { get; internal set; }
 
 
@@ -37,10 +36,8 @@ namespace Flexinets.Radius.Core
             // Generate random authenticator for access request packets
             if (Code == PacketCode.AccessRequest || Code == PacketCode.StatusServer)
             {
-                using (var csp = RandomNumberGenerator.Create())
-                {
-                    csp.GetNonZeroBytes(Authenticator);
-                }
+                using var csp = RandomNumberGenerator.Create();
+                csp.GetNonZeroBytes(Authenticator);
             }
 
             // A Message authenticator is required in status server packets, calculated last
@@ -77,7 +74,7 @@ namespace Flexinets.Radius.Core
         public List<T> GetAttributes<T>(string name) =>
             Attributes.TryGetValue(name, out var attribute)
                 ? attribute.Cast<T>().ToList()
-                : new List<T>();
+                : [];
 
 
         public void AddAttribute(string name, string value) => AddAttributeObject(name, value);
@@ -99,7 +96,7 @@ namespace Flexinets.Radius.Core
         {
             if (!Attributes.ContainsKey(name))
             {
-                Attributes.Add(name, new List<object>());
+                Attributes.Add(name, []);
             }
 
             Attributes[name].Add(value);

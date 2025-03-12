@@ -15,15 +15,15 @@ namespace Flexinets.Radius
     public sealed class RadiusServer : IDisposable
     {
         private IUdpClient _server;
-        private IUdpClientFactory _udpClientFactory;
+        private readonly IUdpClientFactory _udpClientFactory;
         private readonly IPEndPoint _localEndpoint;
         private readonly IRadiusPacketParser _radiusPacketParser;
         private readonly RadiusServerType _serverType;
-        private Int32 _concurrentHandlerCount = 0;
+        private int _concurrentHandlerCount;
         private readonly IPacketHandlerRepository _packetHandlerRepository;
         private readonly ILogger _logger;
 
-        public Boolean Running
+        public bool Running
         {
             get;
             private set;
@@ -71,7 +71,7 @@ namespace Flexinets.Radius
         /// <param name="sharedSecret"></param>
         /// <param name="packetHandler"></param>
         [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
-        public void AddPacketHandler(IPAddress remoteAddress, String sharedSecret, IPacketHandler packetHandler)
+        public void AddPacketHandler(IPAddress remoteAddress, string sharedSecret, IPacketHandler packetHandler)
         {
             _logger.LogInformation($"Adding packet handler of type {packetHandler.GetType()} for remote IP {remoteAddress} to {_serverType}Server");
             _packetHandlerRepository.AddPacketHandler(remoteAddress, packetHandler, sharedSecret);
@@ -85,7 +85,7 @@ namespace Flexinets.Radius
         /// <param name="sharedSecret"></param>
         /// <param name="packetHandler"></param>
         [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
-        public void AddPacketHandler(List<IPAddress> remoteAddresses, String sharedSecret, IPacketHandler packetHandler)
+        public void AddPacketHandler(List<IPAddress> remoteAddresses, string sharedSecret, IPacketHandler packetHandler)
         {
             _packetHandlerRepository.AddPacketHandler(remoteAddresses, packetHandler, sharedSecret);
         }
@@ -94,11 +94,11 @@ namespace Flexinets.Radius
         /// <summary>
         /// Add packet handler for network range
         /// </summary>
-        /// <param name="remoteAddresses"></param>
+        /// <param name="network"></param>
         /// <param name="sharedSecret"></param>
         /// <param name="packetHandler"></param>
         [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
-        public void AddPacketHandler(IPNetwork network, String sharedSecret, IPacketHandler packetHandler)
+        public void AddPacketHandler(IPNetwork network, string sharedSecret, IPacketHandler packetHandler)
         {
             _packetHandlerRepository.Add(network, packetHandler, sharedSecret);
         }
@@ -107,14 +107,14 @@ namespace Flexinets.Radius
         /// <summary>
         /// Start listening for requests
         /// </summary>
-        public void Start()
+        public async Task Start()
         {
             if (!Running)
             {
                 _server = _udpClientFactory.CreateClient(_localEndpoint);
                 Running = true;
                 _logger.LogInformation($"Starting Radius server on {_localEndpoint}");
-                var receiveTask = StartReceiveLoopAsync();
+                await StartReceiveLoopAsync();
                 _logger.LogInformation("Server started");
             }
             else
@@ -154,7 +154,7 @@ namespace Flexinets.Radius
                 try
                 {
                     var response = await _server.ReceiveAsync();
-                    var task = Task.Factory.StartNew(() => HandlePacket(response.RemoteEndPoint, response.Buffer), TaskCreationOptions.LongRunning);
+                    await Task.Factory.StartNew(() => HandlePacket(response.RemoteEndPoint, response.Buffer), TaskCreationOptions.LongRunning);
                 }
                 catch (ObjectDisposedException) { } // This is thrown when udpclient is disposed, can be safely ignored
                 catch (Exception ex)
@@ -170,7 +170,7 @@ namespace Flexinets.Radius
         /// </summary>
         /// <param name="remoteEndpoint"></param>
         /// <param name="packetBytes"></param>
-        private void HandlePacket(IPEndPoint remoteEndpoint, Byte[] packetBytes)
+        private void HandlePacket(IPEndPoint remoteEndpoint, byte[] packetBytes)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace Flexinets.Radius
                 else
                 {
                     _logger.LogError($"No packet handler found for remote ip {remoteEndpoint}");
-                    var packet = _radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes("wut"));
+                    var packet = _radiusPacketParser.Parse(packetBytes, "wut"u8.ToArray());
                     DumpPacket(packet);
                 }
             }
@@ -216,7 +216,7 @@ namespace Flexinets.Radius
         /// <param name="packetBytes"></param>
         /// <param name="remoteEndpoint"></param>
         /// <returns></returns>
-        internal IRadiusPacket GetResponsePacket(IPacketHandler packetHandler, String sharedSecret, Byte[] packetBytes, IPEndPoint remoteEndpoint)
+        internal IRadiusPacket GetResponsePacket(IPacketHandler packetHandler, string sharedSecret, byte[] packetBytes, IPEndPoint remoteEndpoint)
         {
             var requestPacket = _radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
             _logger.LogInformation($"Received {requestPacket.Code} from {remoteEndpoint} Id={requestPacket.Identifier}");

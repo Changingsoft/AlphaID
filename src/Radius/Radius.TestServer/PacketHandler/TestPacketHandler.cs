@@ -9,7 +9,7 @@ namespace Radius.TestServer.PacketHandler;
 /// </summary>
 public class TestPacketHandler : IPacketHandler
 {
-    public IRadiusPacket HandlePacket(IRadiusPacket packet)
+    public RadiusPacket HandlePacket(RadiusPacket packet)
     {
         if (packet.Code == PacketCode.AccountingRequest)
         {

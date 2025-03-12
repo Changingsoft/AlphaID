@@ -168,7 +168,7 @@ namespace RadiusCore
         /// <summary>
         /// Get a pretty string representation of the packet
         /// </summary>
-        public static string GetPacketString(IRadiusPacket packet)
+        public static string GetPacketString(RadiusPacket packet)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"Packet dump for {packet.Identifier}:");

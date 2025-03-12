@@ -20,7 +20,7 @@ namespace RadiusCore.Packet
         /// <summary>
         /// Parses packet bytes and returns an IRadiusPacket
         /// </summary>
-        public IRadiusPacket Parse(byte[] packetBytes, byte[] sharedSecret, byte[]? requestAuthenticator = null)
+        public RadiusPacket Parse(byte[] packetBytes, byte[] sharedSecret, byte[]? requestAuthenticator = null)
         {
             var packetLength = BitConverter.ToUInt16([.. packetBytes.Skip(2).Take(2).Reverse()], 0);
             if (packetBytes.Length < packetLength)
@@ -82,7 +82,7 @@ namespace RadiusCore.Packet
         /// <summary>
         /// Get the raw packet bytes
         /// </summary>
-        public byte[] GetBytes(IRadiusPacket packet)
+        public byte[] GetBytes(RadiusPacket packet)
         {
             var (attributeBytes, messageAuthenticatorPosition) = GetAttributesBytes(packet);
 
@@ -171,7 +171,7 @@ namespace RadiusCore.Packet
         /// <summary>
         /// Get attribute bytes and message authenticator position if found
         /// </summary>
-        private (byte[] attributeBytes, int messageAuthenticatorPosition) GetAttributesBytes(IRadiusPacket packet)
+        private (byte[] attributeBytes, int messageAuthenticatorPosition) GetAttributesBytes(RadiusPacket packet)
         {
             var messageAuthenticatorPosition = 0;
             var currentPosition = 20;

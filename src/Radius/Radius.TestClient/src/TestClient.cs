@@ -23,14 +23,14 @@ public class RadiusClient(IPEndPoint localEndpoint, IRadiusPacketParser radiusPa
     /// <summary>
     /// Send a packet with default timeout of 3 seconds
     /// </summary>
-    public async Task<IRadiusPacket> SendPacketAsync(IRadiusPacket packet, IPEndPoint remoteEndpoint) =>
+    public async Task<RadiusPacket> SendPacketAsync(RadiusPacket packet, IPEndPoint remoteEndpoint) =>
         await SendPacketAsync(packet, remoteEndpoint, TimeSpan.FromSeconds(3));
 
 
     /// <summary>
     /// Send a packet with specified timeout
     /// </summary>
-    public async Task<IRadiusPacket> SendPacketAsync(IRadiusPacket packet, IPEndPoint remoteEndpoint, TimeSpan timeout)
+    public async Task<RadiusPacket> SendPacketAsync(RadiusPacket packet, IPEndPoint remoteEndpoint, TimeSpan timeout)
     {
         // Start a receiving loop before sending packet if one isn't already running to ensure we can receive the response
         _receiveLoopTask ??= Task.Factory.StartNew(

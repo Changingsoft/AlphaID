@@ -189,7 +189,7 @@ namespace RadiusServer
         /// <param name="packetBytes"></param>
         /// <param name="remoteEndpoint"></param>
         /// <returns></returns>
-        internal IRadiusPacket GetResponsePacket(IPacketHandler packetHandler, string sharedSecret, byte[] packetBytes, IPEndPoint remoteEndpoint)
+        internal RadiusPacket GetResponsePacket(IPacketHandler packetHandler, string sharedSecret, byte[] packetBytes, IPEndPoint remoteEndpoint)
         {
             var requestPacket = _radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
             _logger.LogInformation($"Received {requestPacket.Code} from {remoteEndpoint} Id={requestPacket.Identifier}");
@@ -233,7 +233,7 @@ namespace RadiusServer
         /// </summary>
         /// <param name="responsePacket"></param>
         /// <param name="remoteEndpoint"></param>
-        private void SendResponsePacket(IRadiusPacket responsePacket, IPEndPoint remoteEndpoint)
+        private void SendResponsePacket(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
         {
             var responseBytes = _radiusPacketParser.GetBytes(responsePacket);
             _server!.Send(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
@@ -254,7 +254,7 @@ namespace RadiusServer
         /// Dump the packet attributes to the log
         /// </summary>
         /// <param name="packet"></param>
-        private void DumpPacket(IRadiusPacket packet)
+        private void DumpPacket(RadiusPacket packet)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"Packet dump for {packet.Identifier}:");

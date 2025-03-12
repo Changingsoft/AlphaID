@@ -10,17 +10,14 @@ namespace RadiusCore.Packet
     /// </summary>
     public class RadiusPacket
     {
+        public RadiusPacket() { }
+
         public PacketCode Code { get; internal set; }
         public byte Identifier { get; internal set; }
         public byte[] Authenticator { get; internal set; } = new byte[16];
         public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
         public byte[] SharedSecret { get; internal set; } = [];
         public byte[] RequestAuthenticator { get; internal set; } = [];
-
-
-        internal RadiusPacket()
-        {
-        }
 
 
         /// <summary>

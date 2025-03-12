@@ -81,15 +81,15 @@ namespace RadiusCore.Dictionary
         }
 
 
-        public DictionaryVendorAttribute GetVendorAttribute(uint vendorId, byte vendorCode) =>
+        public DictionaryVendorAttribute? GetVendorAttribute(uint vendorId, byte vendorCode) =>
             VendorSpecificAttributes.FirstOrDefault(o => o.VendorId == vendorId && o.VendorCode == vendorCode);
 
 
-        public DictionaryAttribute GetAttribute(byte typecode) =>
+        public DictionaryAttribute? GetAttribute(byte typecode) =>
             Attributes.TryGetValue(typecode, out var attribute) ? attribute : null;
 
 
-        public DictionaryAttribute GetAttribute(string name) =>
+        public DictionaryAttribute? GetAttribute(string name) =>
             AttributeNames.TryGetValue(name, out var attribute) ? attribute : null;
     }
 }

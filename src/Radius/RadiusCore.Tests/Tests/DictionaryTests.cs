@@ -27,7 +27,7 @@ public class DictionaryTests
             Assert.Equal("octet", attributeByName.Type);
 
             var attributeByCode = dictionary.GetAttribute(3);
-            Assert.Equal("User-Name", attributeByCode.Name);
+            Assert.Equal("User-Name", attributeByCode!.Name);
 
             var vendorAttributeByName = dictionary.GetAttribute("User-Name")!;
             Assert.Equal(3, vendorAttributeByName.Code);

@@ -1,12 +1,12 @@
 @page
 @model AuthCenterWebApp.Pages.Account.VerifyPhoneNumberModel
 @{
-    ViewBag.Title = SL["Verify phone number"];
+    ViewBag.Title = L["Verify phone number"];
 }
 <div class="text-center mb-4">
     <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
         <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
-        @Product.Value.Name @L["Account"]
+        @Product.Value.Name @SL["Account"]
     </a>
 </div>
 <div class="card card-md">

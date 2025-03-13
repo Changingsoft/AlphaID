@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RadiusCore.Tests
 {
@@ -12,8 +7,14 @@ namespace RadiusCore.Tests
         public ServiceProviderFixture()
         {
             var services = new ServiceCollection();
-
+            services.AddOptions();
             services.AddRadiusServer();
+
+            //将部分组件替换为测试组件
+            services.AddTransient<IUdpClientFactory, UdpClientMockFactory>(services =>
+            {
+                return new UdpClientMockFactory(new UdpClientMock());
+            });
 
             RootServiceProvider = services.BuildServiceProvider();
             ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();

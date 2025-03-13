@@ -7,12 +7,11 @@ namespace RadiusCore.Packet;
 /// <summary>
 /// RadiusPacketParser
 /// </summary>
-public partial class RadiusPacketParser(
-    ILogger<RadiusPacketParser> logger,
+public class RadiusPacketParser(
     IRadiusDictionary radiusDictionary,
+    ILogger<RadiusPacketParser>? logger = null,
     bool skipBlastRadiusChecks = true) : IRadiusPacketParser
 {
-    private readonly ILogger _logger = logger;
     private readonly IRadiusDictionary _radiusDictionary = radiusDictionary;
     private readonly bool _skipBlastRadiusChecks = skipBlastRadiusChecks;
 
@@ -60,7 +59,7 @@ public partial class RadiusPacketParser(
 
             if (messageAuthenticatorPosition != 20 && !_skipBlastRadiusChecks)
             {
-                _logger.LogWarning("Message authenticator expected to be first attribute");
+                logger?.LogWarning("Message authenticator expected to be first attribute");
             }
         }
 
@@ -251,7 +250,7 @@ public partial class RadiusPacketParser(
 
                     if (vsaType == null)
                     {
-                        _logger.LogInformation("Unknown vsa: {id}:{code}", vsa.VendorId, vsa.VendorCode);
+                        logger?.LogInformation("Unknown vsa: {id}:{code}", vsa.VendorId, vsa.VendorCode);
                     }
                     else
                     {
@@ -268,7 +267,7 @@ public partial class RadiusPacketParser(
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogError(ex, "Something went wrong with vsa {name}", vsaType.Name);
+                            logger?.LogError(ex, "Something went wrong with vsa {name}", vsaType.Name);
                         }
                     }
                 }
@@ -294,18 +293,18 @@ public partial class RadiusPacketParser(
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Something went wrong with {attributeTypeName}", attributeType.Name);
-                        _logger.LogDebug("Attribute bytes: {hex}", attributeValueBytes.ToHexString());
+                        logger?.LogError(ex, "Something went wrong with {attributeTypeName}", attributeType.Name);
+                        logger?.LogDebug("Attribute bytes: {hex}", attributeValueBytes.ToHexString());
                     }
                 }
             }
             catch (KeyNotFoundException)
             {
-                _logger.LogWarning("Attribute {typeCode} not found in dictionary", typeCode);
+                logger?.LogWarning("Attribute {typeCode} not found in dictionary", typeCode);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Something went wrong parsing attribute {typeCode}", typeCode);
+                logger?.LogError(ex, "Something went wrong parsing attribute {typeCode}", typeCode);
             }
 
             position += attributeLength;
@@ -313,4 +312,42 @@ public partial class RadiusPacketParser(
 
         return messageAuthenticatorPosition;
     }
+
+    /// <summary>
+    /// Tries to get a packet from the stream. Returns true if successful
+    /// Returns false if no packet could be parsed or stream is empty ie closing
+    /// </summary>
+    [Obsolete("Use parse instead... this isnt async anyway")]
+    public bool TryParsePacketFromStream(
+        Stream stream,
+        out RadiusPacket? packet,
+        byte[] sharedSecret,
+        byte[]? requestAuthenticator = null)
+    {
+        var packetHeaderBytes = new byte[4];
+        var i = stream.Read(packetHeaderBytes, 0, 4);
+        if (i != 0)
+        {
+            try
+            {
+                var packetLength = BitConverter.ToUInt16([.. packetHeaderBytes.Reverse()], 0);
+                var packetContentBytes = new byte[packetLength - 4];
+                stream.ReadExactly(packetContentBytes, 0,
+                    packetContentBytes
+                        .Length); // todo stream.read should use loop in case everything is not available immediately
+
+                packet = Parse([.. packetHeaderBytes, .. packetContentBytes], sharedSecret,
+                    requestAuthenticator);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger?.LogWarning(ex, "Unable to parse packet from stream");
+            }
+        }
+
+        packet = null;
+        return false;
+    }
+
 }

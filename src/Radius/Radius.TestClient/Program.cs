@@ -18,8 +18,8 @@ var logger = loggerFactory.CreateLogger(nameof(Program));
 using var client = new RadiusClient(
     new IPEndPoint(IPAddress.Any, 58733),
     new RadiusPacketParser(
-        loggerFactory.CreateLogger<RadiusPacketParser>(),
-        RadiusDictionary.Parse(DefaultDictionary.RadiusDictionary)));
+        RadiusDictionary.Parse(DefaultDictionary.RadiusDictionary),
+        loggerFactory.CreateLogger<RadiusPacketParser>()));
 
 
 var requestPacket = new RadiusPacket(PacketCode.AccessRequest, 0, "xyzzy5461");

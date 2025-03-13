@@ -1,4 +1,4 @@
-﻿namespace RadiusServer
+﻿namespace RadiusCore
 {
     public enum RadiusServerType
     {

@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\RadiusCore\RadiusCore.csproj" />
-		<ProjectReference Include="..\RadiusServer\RadiusServer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,8 @@
+using RadiusCore;
+
 namespace RadiusService;
 
-public class Worker(RadiusServer.RadiusServer radiusServer) : BackgroundService
+public class Worker(RadiusServer radiusServer) : BackgroundService
 {
 
     public override async Task StartAsync(CancellationToken cancellationToken)

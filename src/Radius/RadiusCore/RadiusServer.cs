@@ -1,12 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
-using RadiusCore;
-using RadiusCore.Packet;
-using RadiusCore.RadiusConstants;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Text;
+using Microsoft.Extensions.Logging;
+using RadiusCore.Packet;
+using RadiusCore.RadiusConstants;
 
-namespace RadiusServer
+namespace RadiusCore
 {
     /// <summary>
     /// Create a new server on endpoint with packet handler repository
@@ -20,12 +19,7 @@ namespace RadiusServer
     public sealed class RadiusServer(IUdpClientFactory udpClientFactory, IPEndPoint localEndpoint, IRadiusPacketParser radiusPacketParser, RadiusServerType serverType, IPacketHandlerRepository packetHandlerRepository, ILogger<RadiusServer> logger) : IDisposable
     {
         private IUdpClient? _server;
-        private readonly IUdpClientFactory _udpClientFactory = udpClientFactory;
-        private readonly IPEndPoint _localEndpoint = localEndpoint;
-        private readonly IRadiusPacketParser _radiusPacketParser = radiusPacketParser;
-        private readonly RadiusServerType _serverType = serverType;
         private int _concurrentHandlerCount;
-        private readonly IPacketHandlerRepository _packetHandlerRepository = packetHandlerRepository;
         private readonly ILogger _logger = logger;
 
         public bool Running
@@ -58,8 +52,8 @@ namespace RadiusServer
         [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
         public void AddPacketHandler(IPAddress remoteAddress, string sharedSecret, IPacketHandler packetHandler)
         {
-            _logger.LogInformation($"Adding packet handler of type {packetHandler.GetType()} for remote IP {remoteAddress} to {_serverType}Server");
-            _packetHandlerRepository.AddPacketHandler(remoteAddress, packetHandler, sharedSecret);
+            _logger.LogInformation($"Adding packet handler of type {packetHandler.GetType()} for remote IP {remoteAddress} to {serverType}Server");
+            packetHandlerRepository.AddPacketHandler(remoteAddress, packetHandler, sharedSecret);
         }
 
 
@@ -72,7 +66,7 @@ namespace RadiusServer
         [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
         public void AddPacketHandler(IPNetwork network, string sharedSecret, IPacketHandler packetHandler)
         {
-            _packetHandlerRepository.Add(network, packetHandler, sharedSecret);
+            packetHandlerRepository.Add(network, packetHandler, sharedSecret);
         }
 
 
@@ -83,9 +77,9 @@ namespace RadiusServer
         {
             if (!Running)
             {
-                _server = _udpClientFactory.CreateClient(_localEndpoint);
+                _server = udpClientFactory.CreateClient(localEndpoint);
                 Running = true;
-                _logger.LogInformation($"Starting Radius server on {_localEndpoint}");
+                _logger.LogInformation($"Starting Radius server on {localEndpoint}");
                 await StartReceiveLoopAsync();
                 _logger.LogInformation("Server started");
             }
@@ -148,7 +142,7 @@ namespace RadiusServer
             {
                 _logger.LogDebug($"Received packet from {remoteEndpoint}, Concurrent handlers count: {Interlocked.Increment(ref _concurrentHandlerCount)}");
 
-                if (_packetHandlerRepository.TryGetHandler(remoteEndpoint.Address, out var handler))
+                if (packetHandlerRepository.TryGetHandler(remoteEndpoint.Address, out var handler))
                 {
                     var responsePacket = GetResponsePacket(handler.packetHandler, handler.sharedSecret, packetBytes, remoteEndpoint);
                     if (responsePacket != null)
@@ -159,7 +153,7 @@ namespace RadiusServer
                 else
                 {
                     _logger.LogError($"No packet handler found for remote ip {remoteEndpoint}");
-                    var packet = _radiusPacketParser.Parse(packetBytes, "wut"u8.ToArray());
+                    var packet = radiusPacketParser.Parse(packetBytes, "wut"u8.ToArray());
                     DumpPacket(packet);
                 }
             }
@@ -190,7 +184,7 @@ namespace RadiusServer
         /// <returns></returns>
         internal RadiusPacket GetResponsePacket(IPacketHandler packetHandler, string sharedSecret, byte[] packetBytes, IPEndPoint remoteEndpoint)
         {
-            var requestPacket = _radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
+            var requestPacket = radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
             _logger.LogInformation($"Received {requestPacket.Code} from {remoteEndpoint} Id={requestPacket.Identifier}");
 
             if (_logger.IsEnabled(LogLevel.Debug))
@@ -202,7 +196,7 @@ namespace RadiusServer
             // Handle status server requests in server outside packet handler
             if (requestPacket.Code == PacketCode.StatusServer)
             {
-                var responseCode = _serverType == RadiusServerType.Authentication ? PacketCode.AccessAccept : PacketCode.AccountingResponse;
+                var responseCode = serverType == RadiusServerType.Authentication ? PacketCode.AccessAccept : PacketCode.AccountingResponse;
                 _logger.LogDebug($"Sending {responseCode} for StatusServer request from {remoteEndpoint}");
                 return requestPacket.CreateResponsePacket(responseCode);
             }
@@ -234,7 +228,7 @@ namespace RadiusServer
         /// <param name="remoteEndpoint"></param>
         private async Task SendResponsePacket(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
         {
-            var responseBytes = _radiusPacketParser.GetBytes(responsePacket);
+            var responseBytes = radiusPacketParser.GetBytes(responsePacket);
             await _server!.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
             _logger.LogInformation($"{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}");
         }

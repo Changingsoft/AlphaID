@@ -1,15 +1,13 @@
-﻿using Microsoft.Extensions.Logging.Abstractions;
-using RadiusCore;
-using RadiusCore.Dictionary;
-using RadiusCore.Packet;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
-using UdpClient;
+using Microsoft.Extensions.Logging.Abstractions;
+using RadiusCore.Dictionary;
+using RadiusCore.Packet;
 using Xunit;
 
-namespace RadiusServer.Tests
+namespace RadiusCore.Tests
 {
     public class RadiusServerTests
     {

@@ -10,12 +10,13 @@ public class UdpClientMock : IUdpClient
 {
     private TaskCompletionSource<UdpReceiveResult>? _receiveTaskCompletionSource;
     private TaskCompletionSource<UdpReceiveResult>? _sendTaskCompletionSource;
-        
+
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<UdpReceiveResult> ReceiveAsync()
+    public async ValueTask<UdpReceiveResult> ReceiveAsync(CancellationToken cancellationToken)
     {
         _receiveTaskCompletionSource = new TaskCompletionSource<UdpReceiveResult>();
         return await _receiveTaskCompletionSource.Task;

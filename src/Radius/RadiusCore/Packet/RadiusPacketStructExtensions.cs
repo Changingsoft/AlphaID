@@ -1,89 +1,88 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace RadiusCore.Packet
+namespace RadiusCore.Packet;
+
+/// <summary>
+/// Extension methods for RadiusPacketStruct
+/// </summary>
+public static class RadiusPacketStructExtensions
 {
     /// <summary>
-    /// Extension methods for RadiusPacketStruct
+    /// Convert a RadiusPacketStruct and a list of RadiusAttributes to a byte array
     /// </summary>
-    public static class RadiusPacketStructExtensions
+    /// <param name="packet"></param>
+    /// <param name="attributes"></param>
+    /// <returns></returns>
+    public static byte[] ToByteArray(this RadiusPacketStruct packet, List<RadiusAttribute> attributes)
     {
-        /// <summary>
-        /// Convert a RadiusPacketStruct and a list of RadiusAttributes to a byte array
-        /// </summary>
-        /// <param name="packet"></param>
-        /// <param name="attributes"></param>
-        /// <returns></returns>
-        public static byte[] ToByteArray(this RadiusPacketStruct packet, List<RadiusAttribute> attributes)
+        int size = Marshal.SizeOf(packet) + attributes.Count * Marshal.SizeOf(typeof(RadiusAttribute));
+        byte[] arr = new byte[size];
+        IntPtr ptr = Marshal.AllocHGlobal(size);
+
+        try
         {
-            int size = Marshal.SizeOf(packet) + attributes.Count * Marshal.SizeOf(typeof(RadiusAttribute));
-            byte[] arr = new byte[size];
-            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(packet, ptr, true);
+            Marshal.Copy(ptr, arr, 0, Marshal.SizeOf(packet));
 
-            try
+            int offset = Marshal.SizeOf(packet);
+            foreach (var attribute in attributes)
             {
-                Marshal.StructureToPtr(packet, ptr, true);
-                Marshal.Copy(ptr, arr, 0, Marshal.SizeOf(packet));
-
-                int offset = Marshal.SizeOf(packet);
-                foreach (var attribute in attributes)
-                {
-                    Marshal.StructureToPtr(attribute, ptr + offset, true);
-                    Marshal.Copy(ptr + offset, arr, offset, Marshal.SizeOf(attribute));
-                    offset += Marshal.SizeOf(attribute);
-                }
+                Marshal.StructureToPtr(attribute, ptr + offset, true);
+                Marshal.Copy(ptr + offset, arr, offset, Marshal.SizeOf(attribute));
+                offset += Marshal.SizeOf(attribute);
             }
-            finally
-            {
-                Marshal.FreeHGlobal(ptr);
-            }
-
-            return arr;
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(ptr);
         }
 
-        /// <summary>
-        /// Convert a byte array to a RadiusPacketStruct and a list of RadiusAttributes
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="attributes"></param>
-        /// <returns></returns>
-        public static RadiusPacketStruct FromByteArray(byte[] data, out List<RadiusAttribute> attributes)
+        return arr;
+    }
+
+    /// <summary>
+    /// Convert a byte array to a RadiusPacketStruct and a list of RadiusAttributes
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="attributes"></param>
+    /// <returns></returns>
+    public static RadiusPacketStruct FromByteArray(byte[] data, out List<RadiusAttribute> attributes)
+    {
+        RadiusPacketStruct packet = new RadiusPacketStruct();
+        int size = Marshal.SizeOf(packet);
+        IntPtr ptr = Marshal.AllocHGlobal(size);
+
+        try
         {
-            RadiusPacketStruct packet = new RadiusPacketStruct();
-            int size = Marshal.SizeOf(packet);
-            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.Copy(data, 0, ptr, size);
+            packet = (RadiusPacketStruct)Marshal.PtrToStructure(ptr, packet.GetType())!;
 
-            try
+            attributes = new List<RadiusAttribute>();
+            int offset = size;
+            while (offset < data.Length)
             {
-                Marshal.Copy(data, 0, ptr, size);
-                packet = (RadiusPacketStruct)Marshal.PtrToStructure(ptr, packet.GetType())!;
+                RadiusAttribute attribute = new RadiusAttribute();
+                int attrSize = Marshal.SizeOf(attribute);
+                IntPtr attrPtr = Marshal.AllocHGlobal(attrSize);
 
-                attributes = new List<RadiusAttribute>();
-                int offset = size;
-                while (offset < data.Length)
+                try
                 {
-                    RadiusAttribute attribute = new RadiusAttribute();
-                    int attrSize = Marshal.SizeOf(attribute);
-                    IntPtr attrPtr = Marshal.AllocHGlobal(attrSize);
-
-                    try
-                    {
-                        Marshal.Copy(data, offset, attrPtr, attrSize);
-                        attribute = (RadiusAttribute)Marshal.PtrToStructure(attrPtr, attribute.GetType())!;
-                        attributes.Add(attribute);
-                        offset += attribute.Length;
-                    }
-                    finally
-                    {
-                        Marshal.FreeHGlobal(attrPtr);
-                    }
+                    Marshal.Copy(data, offset, attrPtr, attrSize);
+                    attribute = (RadiusAttribute)Marshal.PtrToStructure(attrPtr, attribute.GetType())!;
+                    attributes.Add(attribute);
+                    offset += attribute.Length;
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(attrPtr);
                 }
             }
-            finally
-            {
-                Marshal.FreeHGlobal(ptr);
-            }
-
-            return packet;
         }
+        finally
+        {
+            Marshal.FreeHGlobal(ptr);
+        }
+
+        return packet;
     }
 }

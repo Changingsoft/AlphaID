@@ -1,9 +1,8 @@
 ﻿using System.Net;
 
-namespace RadiusCore
+namespace RadiusCore;
+
+public interface IUdpClientFactory
 {
-    public interface IUdpClientFactory
-    {
-        IUdpClient CreateClient(IPEndPoint localEndpoint);
-    }
+    IUdpClient CreateClient(IPEndPoint localEndpoint);
 }

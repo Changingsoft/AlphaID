@@ -1,12 +1,12 @@
-namespace RadiusCore.Dictionary
+namespace RadiusCore.Dictionary;
+
+/// <summary>
+/// Contains the default dictionary found in radius.dictionary.
+/// </summary>
+public static class DefaultDictionary
 {
-    /// <summary>
-    /// Contains the default dictionary found in radius.dictionary.
-    /// </summary>
-    public static class DefaultDictionary
-    {
-        public const string RadiusDictionary =
-            @"
+    public const string RadiusDictionary =
+        @"
         Attribute	1	User-Name	string
         Attribute	2	User-Password	octet
         Attribute	3	CHAP-Password	octet
@@ -1805,5 +1805,4 @@ namespace RadiusCore.Dictionary
         VendorSpecificAttribute	17458	0	CCA-AVPAIR	string
         VendorSpecificAttribute	17458	1	CCA-Service-Identifier	string
         ";
-    }
 }

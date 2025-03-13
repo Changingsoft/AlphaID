@@ -1,8 +1,7 @@
-﻿namespace RadiusCore
+﻿namespace RadiusCore;
+
+public enum RadiusServerType
 {
-    public enum RadiusServerType
-    {
-        Authentication,
-        Accounting
-    }
+    Authentication,
+    Accounting
 }

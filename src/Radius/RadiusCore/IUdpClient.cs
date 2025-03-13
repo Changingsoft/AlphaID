@@ -20,6 +20,7 @@ public interface IUdpClient : IDisposable
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<UdpReceiveResult> ReceiveAsync();
+    ValueTask<UdpReceiveResult> ReceiveAsync(CancellationToken cancellationToken);
 }

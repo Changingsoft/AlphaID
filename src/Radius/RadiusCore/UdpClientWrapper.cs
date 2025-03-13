@@ -26,10 +26,11 @@ public class UdpClientWrapper(IPEndPoint localEndpoint) : IUdpClient
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task<UdpReceiveResult> ReceiveAsync()
+    public ValueTask<UdpReceiveResult> ReceiveAsync(CancellationToken cancellationToken)
     {
-        return _client.ReceiveAsync();
+        return _client.ReceiveAsync(cancellationToken);
     }
 
     /// <summary>

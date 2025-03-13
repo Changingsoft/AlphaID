@@ -15,13 +15,14 @@ namespace RadiusCore;
 /// <param name="udpClientFactory"></param>
 /// <param name="radiusPacketParser"></param>
 /// <param name="packetHandlerRepository"></param>
+/// <param name="options"></param>
 /// <param name="logger"></param>
 public sealed class RadiusServer(
     IUdpClientFactory udpClientFactory,
     IRadiusPacketParser radiusPacketParser,
     IPacketHandlerRepository packetHandlerRepository,
     IOptions<RadiusServerOptions> options,
-    ILogger<RadiusServer>? logger) : IHostedService, IDisposable
+    ILogger<RadiusServer>? logger = null) : IHostedService, IDisposable
 {
     private IUdpClient? _server;
     private int _concurrentHandlerCount;

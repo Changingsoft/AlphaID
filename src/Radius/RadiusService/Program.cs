@@ -1,9 +1,9 @@
+using RadiusCore;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using RadiusServer;
 using RadiusService;
 using System.Net;
-using UdpClient;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddWindowsService(options =>

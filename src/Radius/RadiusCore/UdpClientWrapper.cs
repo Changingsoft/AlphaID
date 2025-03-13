@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace UdpClient
+namespace RadiusCore
 {
     /// <summary>
     /// Wrapper for System.Net.UdpClient
@@ -9,37 +9,35 @@ namespace UdpClient
     /// </summary>
     public class UdpClientWrapper(IPEndPoint localEndpoint) : IUdpClient
     {
-        private readonly System.Net.Sockets.UdpClient _client = new(localEndpoint);
-        public Socket Client => _client.Client;
+        private readonly UdpClient _client = new(localEndpoint);
 
-
-        public void Close()
-        {
-            _client.Close();
-        }
-
-
-        public void Send(byte[] content, int length, IPEndPoint remoteEndpoint)
-        {
-            _client.Send(content, length, remoteEndpoint);
-        }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="length"></param>
+        /// <param name="remoteEndpoint"></param>
+        /// <returns></returns>
         public Task<int> SendAsync(byte[] content, int length, IPEndPoint remoteEndpoint)
         {
             return _client.SendAsync(content, length, remoteEndpoint);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Task<UdpReceiveResult> ReceiveAsync()
         {
             return _client.ReceiveAsync();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
-            _client?.Dispose();
+            _client.Dispose();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace UdpClient
+namespace RadiusCore
 {
     public interface IUdpClientFactory
     {

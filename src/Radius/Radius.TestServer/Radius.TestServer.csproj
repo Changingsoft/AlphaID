@@ -18,7 +18,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-        <ProjectReference Include="..\UdpClient\UdpClient.csproj" />
         <ProjectReference Include="..\RadiusCore\RadiusCore.csproj" />
     </ItemGroup>
 

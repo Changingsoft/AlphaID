@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace UdpClient
+namespace RadiusCore
 {
     /// <summary>
     /// Mock IUdpClientFactory which returns a singleton mock IUdpClient
@@ -11,9 +11,6 @@ namespace UdpClient
     /// <param name="mockClient"></param>
     public class UdpClientMockFactory(IUdpClient mockClient) : IUdpClientFactory
     {
-        private readonly IUdpClient _mockClient = mockClient;
-
-
         /// <summary>
         /// Get the singleton IUdpClient
         /// </summary>
@@ -21,7 +18,7 @@ namespace UdpClient
         /// <returns></returns>
         public IUdpClient CreateClient(IPEndPoint localEndpoint)
         {
-            return _mockClient;
+            return mockClient;
         }
     }
 }

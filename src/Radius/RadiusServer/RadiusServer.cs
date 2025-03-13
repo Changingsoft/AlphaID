@@ -5,7 +5,6 @@ using RadiusCore.RadiusConstants;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
-using UdpClient;
 
 namespace RadiusServer
 {
@@ -127,7 +126,7 @@ namespace RadiusServer
                 try
                 {
                     var response = await _server!.ReceiveAsync();
-                    await Task.Factory.StartNew(() => HandlePacket(response.RemoteEndPoint, response.Buffer), TaskCreationOptions.LongRunning);
+                    await Task.Factory.StartNew(async () => await HandlePacket(response.RemoteEndPoint, response.Buffer), TaskCreationOptions.LongRunning);
                 }
                 catch (ObjectDisposedException) { } // This is thrown when udpclient is disposed, can be safely ignored
                 catch (Exception ex)
@@ -143,7 +142,7 @@ namespace RadiusServer
         /// </summary>
         /// <param name="remoteEndpoint"></param>
         /// <param name="packetBytes"></param>
-        private void HandlePacket(IPEndPoint remoteEndpoint, byte[] packetBytes)
+        private async Task HandlePacket(IPEndPoint remoteEndpoint, byte[] packetBytes)
         {
             try
             {
@@ -154,7 +153,7 @@ namespace RadiusServer
                     var responsePacket = GetResponsePacket(handler.packetHandler, handler.sharedSecret, packetBytes, remoteEndpoint);
                     if (responsePacket != null)
                     {
-                        SendResponsePacket(responsePacket, remoteEndpoint);
+                        await SendResponsePacket(responsePacket, remoteEndpoint);
                     }
                 }
                 else
@@ -233,10 +232,10 @@ namespace RadiusServer
         /// </summary>
         /// <param name="responsePacket"></param>
         /// <param name="remoteEndpoint"></param>
-        private void SendResponsePacket(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
+        private async Task SendResponsePacket(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
         {
             var responseBytes = _radiusPacketParser.GetBytes(responsePacket);
-            _server!.Send(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
+            await _server!.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
             _logger.LogInformation($"{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}");
         }
 

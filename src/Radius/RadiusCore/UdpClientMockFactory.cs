@@ -1,24 +1,23 @@
 ﻿using System.Net;
 
-namespace RadiusCore
+namespace RadiusCore;
+
+/// <summary>
+/// Mock IUdpClientFactory which returns a singleton mock IUdpClient
+/// </summary>
+/// <remarks>
+/// Create factory with specified client
+/// </remarks>
+/// <param name="mockClient"></param>
+public class UdpClientMockFactory(IUdpClient mockClient) : IUdpClientFactory
 {
     /// <summary>
-    /// Mock IUdpClientFactory which returns a singleton mock IUdpClient
+    /// Get the singleton IUdpClient
     /// </summary>
-    /// <remarks>
-    /// Create factory with specified client
-    /// </remarks>
-    /// <param name="mockClient"></param>
-    public class UdpClientMockFactory(IUdpClient mockClient) : IUdpClientFactory
+    /// <param name="localEndpoint"></param>
+    /// <returns></returns>
+    public IUdpClient CreateClient(IPEndPoint localEndpoint)
     {
-        /// <summary>
-        /// Get the singleton IUdpClient
-        /// </summary>
-        /// <param name="localEndpoint"></param>
-        /// <returns></returns>
-        public IUdpClient CreateClient(IPEndPoint localEndpoint)
-        {
-            return mockClient;
-        }
+        return mockClient;
     }
 }

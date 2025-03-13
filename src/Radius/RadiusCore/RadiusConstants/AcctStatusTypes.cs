@@ -1,11 +1,10 @@
-﻿namespace RadiusCore.RadiusConstants
+﻿namespace RadiusCore.RadiusConstants;
+
+public enum AcctStatusType : uint
 {
-    public enum AcctStatusType : uint
-    {
-        Start = 1,
-        Stop = 2,
-        InterimUpdate = 3,
-        AccountingOn = 7,
-        AccountingOff = 8
-    }
+    Start = 1,
+    Stop = 2,
+    InterimUpdate = 3,
+    AccountingOn = 7,
+    AccountingOff = 8
 }

@@ -1,22 +1,21 @@
-﻿namespace RadiusCore.Dictionary
+﻿namespace RadiusCore.Dictionary;
+
+public interface IRadiusDictionary
 {
-    public interface IRadiusDictionary
-    {
-        /// <summary>
-        /// Get a vendor specific attribute by vendorId and vendorCode
-        /// </summary>
-        DictionaryVendorAttribute? GetVendorAttribute(uint vendorId, byte vendorCode);
+    /// <summary>
+    /// Get a vendor specific attribute by vendorId and vendorCode
+    /// </summary>
+    DictionaryVendorAttribute? GetVendorAttribute(uint vendorId, byte vendorCode);
 
 
-        /// <summary>
-        /// Get an RFC attribute by code
-        /// </summary>
-        DictionaryAttribute? GetAttribute(byte code);
+    /// <summary>
+    /// Get an RFC attribute by code
+    /// </summary>
+    DictionaryAttribute? GetAttribute(byte code);
 
 
-        /// <summary>
-        /// Get an attribute or vendor attribute by name
-        /// </summary>
-        DictionaryAttribute? GetAttribute(string name);
-    }
+    /// <summary>
+    /// Get an attribute or vendor attribute by name
+    /// </summary>
+    DictionaryAttribute? GetAttribute(string name);
 }

@@ -1,44 +1,43 @@
 using Microsoft.Extensions.Logging;
 
-namespace RadiusCore.Packet
+namespace RadiusCore.Packet;
+
+public partial class RadiusPacketParser
 {
-    public partial class RadiusPacketParser
+    /// <summary>
+    /// Tries to get a packet from the stream. Returns true if successful
+    /// Returns false if no packet could be parsed or stream is empty ie closing
+    /// </summary>
+    [Obsolete("Use parse instead... this isnt async anyway")]
+    public bool TryParsePacketFromStream(
+        Stream stream,
+        out RadiusPacket? packet,
+        byte[] sharedSecret,
+        byte[]? requestAuthenticator = null)
     {
-        /// <summary>
-        /// Tries to get a packet from the stream. Returns true if successful
-        /// Returns false if no packet could be parsed or stream is empty ie closing
-        /// </summary>
-        [Obsolete("Use parse instead... this isnt async anyway")]
-        public bool TryParsePacketFromStream(
-            Stream stream,
-            out RadiusPacket? packet,
-            byte[] sharedSecret,
-            byte[]? requestAuthenticator = null)
+        var packetHeaderBytes = new byte[4];
+        var i = stream.Read(packetHeaderBytes, 0, 4);
+        if (i != 0)
         {
-            var packetHeaderBytes = new byte[4];
-            var i = stream.Read(packetHeaderBytes, 0, 4);
-            if (i != 0)
+            try
             {
-                try
-                {
-                    var packetLength = BitConverter.ToUInt16([.. packetHeaderBytes.Reverse()], 0);
-                    var packetContentBytes = new byte[packetLength - 4];
-                    stream.ReadExactly(packetContentBytes, 0,
-                        packetContentBytes
-                            .Length); // todo stream.read should use loop in case everything is not available immediately
+                var packetLength = BitConverter.ToUInt16([.. packetHeaderBytes.Reverse()], 0);
+                var packetContentBytes = new byte[packetLength - 4];
+                stream.ReadExactly(packetContentBytes, 0,
+                    packetContentBytes
+                        .Length); // todo stream.read should use loop in case everything is not available immediately
 
-                    packet = Parse([.. packetHeaderBytes, .. packetContentBytes], sharedSecret,
-                        requestAuthenticator);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogWarning(ex, "Unable to parse packet from stream");
-                }
+                packet = Parse([.. packetHeaderBytes, .. packetContentBytes], sharedSecret,
+                    requestAuthenticator);
+                return true;
             }
-
-            packet = null;
-            return false;
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Unable to parse packet from stream");
+            }
         }
+
+        packet = null;
+        return false;
     }
 }

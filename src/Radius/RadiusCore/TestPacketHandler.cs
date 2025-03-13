@@ -1,8 +1,7 @@
-﻿using RadiusCore;
-using RadiusCore.Packet;
+﻿using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
 
-namespace RadiusServer
+namespace RadiusCore
 {
     /// <summary>
     /// Demonstration of basic packet handler with a static username and password

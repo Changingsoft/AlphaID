@@ -1,7 +1,6 @@
 using RadiusCore;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
-using RadiusServer;
 using RadiusService;
 using System.Net;
 
@@ -26,18 +25,18 @@ builder.Services.AddTransient<PacketHandlerRepository>(services =>
     repository.AddPacketHandler(IPAddress.Parse("127.0.0.1"), packetHandler, "secret");
     return repository;
 });
-builder.Services.AddTransient<RadiusServer.RadiusServer>(services =>
+builder.Services.AddTransient<RadiusServer>(services =>
 {
     var udpClientFactory = services.GetRequiredService<UdpClientFactory>();
     var radiusPacketParser = services.GetRequiredService<RadiusPacketParser>();
     var repository = services.GetRequiredService<PacketHandlerRepository>();
-    return new RadiusServer.RadiusServer(
+    return new RadiusServer(
         udpClientFactory,
         new IPEndPoint(IPAddress.Any, 1812),
         radiusPacketParser,
         RadiusServerType.Authentication,
         repository,
-        services.GetRequiredService<ILogger<RadiusServer.RadiusServer>>());
+        services.GetRequiredService<ILogger<RadiusServer>>());
 });
 
 var host = builder.Build();

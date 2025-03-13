@@ -1,10 +1,9 @@
-﻿using RadiusCore;
+﻿using System.Net;
+using System.Text;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
-using System.Net;
-using System.Text;
 
-namespace RadiusServer.Tests
+namespace RadiusCore.Tests
 {
     /// <summary>
     /// Creates a response packet according to example in https://tools.ietf.org/html/rfc2865

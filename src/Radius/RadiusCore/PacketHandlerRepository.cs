@@ -1,7 +1,6 @@
-﻿using RadiusCore;
-using System.Net;
+﻿using System.Net;
 
-namespace RadiusServer
+namespace RadiusCore
 {
     public class PacketHandlerRepository : IPacketHandlerRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Xunit;
 
-namespace RadiusServer.Tests
+namespace RadiusCore.Tests
 {
     public class PacketHandlerRepositoryTests
     {

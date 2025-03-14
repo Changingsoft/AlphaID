@@ -5,6 +5,7 @@ using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 namespace RadiusCore;
@@ -12,19 +13,19 @@ namespace RadiusCore;
 /// <summary>
 /// RADIUS server.
 /// </summary>
-/// <param name="udpClientFactory"></param>
+/// <param name="udpClientFactory">Udp client factory for create a UDP client.</param>
 /// <param name="radiusPacketParser"></param>
 /// <param name="packetHandlerRepository"></param>
-/// <param name="options"></param>
-/// <param name="logger"></param>
-public sealed class RadiusServer(
+/// <param name="options">Options for RADIUS server.</param>
+/// <param name="logger">Logger for RADIUS server.</param>
+public class RadiusServer(
     IUdpClientFactory udpClientFactory,
     IRadiusPacketParser radiusPacketParser,
     IPacketHandlerRepository packetHandlerRepository,
     IOptions<RadiusServerOptions> options,
     ILogger<RadiusServer>? logger) : IHostedService, IDisposable
 {
-    private IUdpClient? _server;
+    private IUdpClient? _udpClient;
     private int _concurrentHandlerCount;
     private Task? _receiveLoopTask;
     private CancellationTokenSource? _stoppingCts;
@@ -68,9 +69,9 @@ public sealed class RadiusServer(
 
         logger?.LogInformation("Starting Radius server on {localEndpoint}", localEndpoint);
 
-        _server = udpClientFactory.CreateClient(localEndpoint);
+        _udpClient = udpClientFactory.CreateClient(localEndpoint);
 
-        _receiveLoopTask = StartReceiveLoopAsync(_stoppingCts.Token);
+        _receiveLoopTask = ReceiveLoopTask(_stoppingCts.Token);
 
         if (_receiveLoopTask.IsCompleted)
             return _receiveLoopTask;
@@ -90,7 +91,7 @@ public sealed class RadiusServer(
 
         try
         {
-            _stoppingCts!.Cancel();
+            await _stoppingCts!.CancelAsync();
         }
         finally
         {
@@ -103,16 +104,24 @@ public sealed class RadiusServer(
     /// Start the loop used for receiving packets
     /// </summary>
     /// <returns></returns>
-    private async Task StartReceiveLoopAsync(CancellationToken cancellationToken)
+    private async Task ReceiveLoopTask(CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                var response = await _server!.ReceiveAsync(cancellationToken);
-                await Task.Factory.StartNew(async () => await HandlePacket(response.RemoteEndPoint, response.Buffer), TaskCreationOptions.LongRunning);
+                UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
+                //读取报文并创建处理上下文
+                RadiusPacketStruct radiusPacketStruct =
+                    RadiusPacketStructExtensions.FromByteArray(result.Buffer, out var attributes);
+
+
+                await HandlePacket(result.RemoteEndPoint, result.Buffer);
             }
-            catch (ObjectDisposedException) { } // This is thrown when udpclient is disposed, can be safely ignored
+            catch (OperationCanceledException)
+            {
+                logger?.LogError("服务已被取消。");
+            }
             catch (Exception ex)
             {
                 logger?.LogCritical(ex, "Something went wrong receiving packet");
@@ -130,7 +139,7 @@ public sealed class RadiusServer(
     {
         try
         {
-            logger?.LogDebug("Received packet from {remoteEndpoint}, Concurrent handlers count: {Interlocked.Increment(ref _concurrentHandlerCount)}", remoteEndpoint, Interlocked.Increment(ref _concurrentHandlerCount));
+            logger?.LogDebug("Received packet from {remoteEndpoint}, Concurrent handlers count: {concurrentHandlerCount)}", remoteEndpoint, Interlocked.Increment(ref _concurrentHandlerCount));
 
             if (packetHandlerRepository.TryGetHandler(remoteEndpoint.Address, out var handler))
             {
@@ -215,7 +224,7 @@ public sealed class RadiusServer(
     private async Task SendResponsePacket(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
     {
         var responseBytes = radiusPacketParser.GetBytes(responsePacket);
-        await _server!.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
+        await _udpClient!.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
         logger?.LogInformation("{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}", responsePacket.Code, remoteEndpoint, responsePacket.Identifier);
     }
 
@@ -225,7 +234,7 @@ public sealed class RadiusServer(
     /// </summary>
     public void Dispose()
     {
-        _server?.Dispose();
+        _udpClient?.Dispose();
     }
 
 

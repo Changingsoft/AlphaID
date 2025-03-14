@@ -1,7 +1,7 @@
 using RadiusCore.Dictionary;
 using Xunit;
 
-namespace RadiusCore.Tests.Tests;
+namespace RadiusCore.Tests;
 
 public class DictionaryTests
 {

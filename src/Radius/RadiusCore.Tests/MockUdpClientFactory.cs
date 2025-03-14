@@ -9,7 +9,7 @@ namespace RadiusCore.Tests;
 /// Create factory with specified client
 /// </remarks>
 /// <param name="mockClient"></param>
-public class UdpClientMockFactory(IUdpClient mockClient) : IUdpClientFactory
+public class MockUdpClientFactory(IUdpClient mockClient) : IUdpClientFactory
 {
     /// <summary>
     /// Get the singleton IUdpClient

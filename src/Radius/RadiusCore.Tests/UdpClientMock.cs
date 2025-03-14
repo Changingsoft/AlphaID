@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace RadiusCore;
+namespace RadiusCore.Tests;
 
 /// <summary>
 /// 
@@ -22,7 +22,7 @@ public class UdpClientMock : IUdpClient
         return await _receiveTaskCompletionSource.Task;
     }
 
-    private void Send(byte[] content, int length, IPEndPoint recipient)
+    private void Send(byte[] content, IPEndPoint recipient)
     {
         _sendTaskCompletionSource?.SetResult(new UdpReceiveResult(content, recipient));
     }
@@ -36,7 +36,7 @@ public class UdpClientMock : IUdpClient
     /// <returns></returns>
     public Task<int> SendAsync(byte[] content, int length, IPEndPoint remoteEndpoint)
     {
-        Send(content, length, remoteEndpoint);
+        Send(content, remoteEndpoint);
         return Task.FromResult(0);
     }
 
@@ -52,10 +52,8 @@ public class UdpClientMock : IUdpClient
         return _sendTaskCompletionSource.Task;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
     }
 }

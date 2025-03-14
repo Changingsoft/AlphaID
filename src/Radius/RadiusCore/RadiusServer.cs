@@ -1,16 +1,16 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Text;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RadiusCore.Packet;
 using RadiusCore.RadiusConstants;
+using System.Diagnostics;
+using System.Net;
+using System.Text;
 
 namespace RadiusCore;
 
 /// <summary>
-/// Create a new server on endpoint with packet handler repository
+/// RADIUS server.
 /// </summary>
 /// <param name="udpClientFactory"></param>
 /// <param name="radiusPacketParser"></param>
@@ -22,7 +22,7 @@ public sealed class RadiusServer(
     IRadiusPacketParser radiusPacketParser,
     IPacketHandlerRepository packetHandlerRepository,
     IOptions<RadiusServerOptions> options,
-    ILogger<RadiusServer>? logger = null) : IHostedService, IDisposable
+    ILogger<RadiusServer>? logger) : IHostedService, IDisposable
 {
     private IUdpClient? _server;
     private int _concurrentHandlerCount;
@@ -130,7 +130,7 @@ public sealed class RadiusServer(
     {
         try
         {
-            logger?.LogDebug($"Received packet from {remoteEndpoint}, Concurrent handlers count: {Interlocked.Increment(ref _concurrentHandlerCount)}");
+            logger?.LogDebug("Received packet from {remoteEndpoint}, Concurrent handlers count: {Interlocked.Increment(ref _concurrentHandlerCount)}", remoteEndpoint, Interlocked.Increment(ref _concurrentHandlerCount));
 
             if (packetHandlerRepository.TryGetHandler(remoteEndpoint.Address, out var handler))
             {
@@ -139,20 +139,20 @@ public sealed class RadiusServer(
             }
             else
             {
-                logger?.LogError($"No packet handler found for remote ip {remoteEndpoint}");
+                logger?.LogError("No packet handler found for remote ip {remoteEndpoint}", remoteEndpoint);
                 var packet = radiusPacketParser.Parse(packetBytes, "wut"u8.ToArray());
                 DumpPacket(packet);
             }
         }
         catch (Exception ex) when (ex is ArgumentException || ex is OverflowException)
         {
-            logger?.LogWarning($"Ignoring malformed(?) packet received from {remoteEndpoint}", ex);
-            logger?.LogDebug(packetBytes.ToHexString());
+            logger?.LogWarning("Ignoring malformed(?) packet received from {remoteEndpoint}", ex);
+            logger?.LogDebug("Packet bytes: {PacketBytes}", packetBytes.ToHexString());
         }
         catch (Exception ex)
         {
-            logger?.LogError(ex, $"Failed to receive packet from {remoteEndpoint}");
-            logger?.LogDebug(packetBytes.ToHexString());
+            logger?.LogError(ex, "Failed to receive packet from {remoteEndpoint}", remoteEndpoint);
+            logger?.LogDebug("Packet bytes: {PacketBytes}", packetBytes.ToHexString());
         }
         finally
         {
@@ -171,31 +171,31 @@ public sealed class RadiusServer(
     internal RadiusPacket GetResponsePacket(IPacketHandler packetHandler, string sharedSecret, byte[] packetBytes, IPEndPoint remoteEndpoint)
     {
         var requestPacket = radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
-        logger?.LogInformation($"Received {requestPacket.Code} from {remoteEndpoint} Id={requestPacket.Identifier}");
+        logger?.LogInformation("Received {requestPacket.Code} from {remoteEndpoint} Id={requestPacket.Identifier}", requestPacket.Code, remoteEndpoint, requestPacket.Identifier);
 
         if (logger != null && logger.IsEnabled(LogLevel.Debug))
         {
             DumpPacket(requestPacket);
         }
-        logger?.LogDebug(packetBytes.ToHexString());
+        logger?.LogDebug("Packet bytes: {PacketBytes}", packetBytes.ToHexString());
 
         // Handle status server requests in server outside packet handler
         if (requestPacket.Code == PacketCode.StatusServer)
         {
             var responseCode = _radiusServerType == RadiusServerType.Authentication ? PacketCode.AccessAccept : PacketCode.AccountingResponse;
-            logger?.LogDebug($"Sending {responseCode} for StatusServer request from {remoteEndpoint}");
+            logger?.LogDebug("Sending {responseCode} for StatusServer request from {remoteEndpoint}", responseCode, remoteEndpoint);
             return requestPacket.CreateResponsePacket(responseCode);
         }
 
-        logger?.LogDebug($"Handling packet for remote ip {remoteEndpoint.Address} with {packetHandler.GetType()}");
+        logger?.LogDebug("Handling packet for remote ip {remoteEndpoint.Address} with {packetHandler.GetType()}", remoteEndpoint.Address, packetHandler.GetType());
 
         var sw = Stopwatch.StartNew();
         var responsePacket = packetHandler.HandlePacket(requestPacket);
         sw.Stop();
-        logger?.LogDebug($"{remoteEndpoint} Id={responsePacket.Identifier}, Received {responsePacket.Code} from handler in {sw.ElapsedMilliseconds}ms");
+        logger?.LogDebug("{remoteEndpoint} Id={responsePacket.Identifier}, Received {responsePacket.Code} from handler in {sw.ElapsedMilliseconds}ms", remoteEndpoint, responsePacket.Identifier, responsePacket.Code, sw.ElapsedMilliseconds);
         if (sw.ElapsedMilliseconds >= 5000)
         {
-            logger?.LogWarning($"Slow response for Id {responsePacket.Identifier}, check logs");
+            logger?.LogWarning("Slow response for Id {responsePacket.Identifier}, check logs", responsePacket.Identifier);
         }
 
         if (requestPacket.Attributes.ContainsKey("Proxy-State"))
@@ -216,7 +216,7 @@ public sealed class RadiusServer(
     {
         var responseBytes = radiusPacketParser.GetBytes(responsePacket);
         await _server!.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
-        logger?.LogInformation($"{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}");
+        logger?.LogInformation("{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}", responsePacket.Code, remoteEndpoint, responsePacket.Identifier);
     }
 
 
@@ -249,6 +249,6 @@ public sealed class RadiusServer(
             }
         }
 
-        logger?.LogDebug(sb.ToString());
+        logger?.LogDebug("Packet: {Packet}", sb.ToString());
     }
 }

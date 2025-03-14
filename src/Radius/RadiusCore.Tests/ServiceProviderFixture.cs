@@ -7,6 +7,9 @@ namespace RadiusCore.Tests
         public ServiceProviderFixture()
         {
             var services = new ServiceCollection();
+
+            services.AddLogging();
+
             services.AddOptions();
             services.AddRadiusServer();
 

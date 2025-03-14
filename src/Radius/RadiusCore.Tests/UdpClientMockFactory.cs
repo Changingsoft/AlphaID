@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace RadiusCore;
+namespace RadiusCore.Tests;
 
 /// <summary>
 /// Mock IUdpClientFactory which returns a singleton mock IUdpClient

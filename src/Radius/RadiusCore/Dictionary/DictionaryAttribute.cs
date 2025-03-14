@@ -8,7 +8,16 @@
 /// <param name="type"></param>
 public class DictionaryAttribute(string name, byte code, string type)
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly byte Code = code;
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly string Name = name;
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly string Type = type;
 }

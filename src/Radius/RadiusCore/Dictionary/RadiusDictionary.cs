@@ -2,12 +2,17 @@
 
 namespace RadiusCore.Dictionary;
 
+/// <summary>
+/// 
+/// </summary>
 public class RadiusDictionary : IRadiusDictionary
 {
+    /// <summary>
+    /// 
+    /// </summary>
     internal Dictionary<byte, DictionaryAttribute> Attributes { get; set; } = [];
 
-    internal List<DictionaryVendorAttribute> VendorSpecificAttributes { get; set; } =
-        [];
+    internal List<DictionaryVendorAttribute> VendorSpecificAttributes { get; set; } = [];
 
     internal Dictionary<string, DictionaryAttribute> AttributeNames { get; set; } = [];
 
@@ -80,15 +85,28 @@ public class RadiusDictionary : IRadiusDictionary
     {
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="vendorId"></param>
+    /// <param name="vendorCode"></param>
+    /// <returns></returns>
     public DictionaryVendorAttribute? GetVendorAttribute(uint vendorId, byte vendorCode) =>
         VendorSpecificAttributes.FirstOrDefault(o => o.VendorId == vendorId && o.VendorCode == vendorCode);
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="typecode"></param>
+    /// <returns></returns>
     public DictionaryAttribute? GetAttribute(byte typecode) =>
         Attributes.TryGetValue(typecode, out var attribute) ? attribute : null;
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public DictionaryAttribute? GetAttribute(string name) =>
         AttributeNames.TryGetValue(name, out var attribute) ? attribute : null;
 }

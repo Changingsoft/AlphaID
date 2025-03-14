@@ -39,5 +39,6 @@ public class UdpClientWrapper(IPEndPoint localEndpoint) : IUdpClient
     public void Dispose()
     {
         _client.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

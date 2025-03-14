@@ -1,5 +1,8 @@
 ﻿namespace RadiusCore.Dictionary;
 
+/// <summary>
+/// 
+/// </summary>
 public interface IRadiusDictionary
 {
     /// <summary>

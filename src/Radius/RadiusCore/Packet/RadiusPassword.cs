@@ -3,6 +3,9 @@ using System.Text;
 
 namespace RadiusCore.Packet;
 
+/// <summary>
+/// 
+/// </summary>
 public static class RadiusPassword
 {
     /// <summary>
@@ -25,8 +28,7 @@ public static class RadiusPassword
     /// </summary>
     private static byte[] CreateKey(byte[] sharedSecret, byte[] authenticator)
     {
-        using var md5 = MD5.Create();
-        return md5.ComputeHash([.. sharedSecret, .. authenticator]);
+        return MD5.HashData([.. sharedSecret, .. authenticator]);
     }
 
 

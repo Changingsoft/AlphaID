@@ -3,6 +3,9 @@ using System.Text;
 
 namespace RadiusCore.Packet;
 
+/// <summary>
+/// 
+/// </summary>
 public class Attribute
 {
     /// <summary>

@@ -10,13 +10,39 @@ namespace RadiusCore.Packet;
 /// </summary>
 public class RadiusPacket
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public RadiusPacket() { }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public PacketCode Code { get; internal set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public byte Identifier { get; internal set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public byte[] Authenticator { get; internal set; } = new byte[16];
+
+    /// <summary>
+    /// 
+    /// </summary>
     public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
+
+    /// <summary>
+    /// 
+    /// </summary>
     public byte[] SharedSecret { get; internal set; } = [];
+
+    /// <summary>
+    /// 
+    /// </summary>
     public byte[] RequestAuthenticator { get; internal set; } = [];
 
 
@@ -48,7 +74,7 @@ public class RadiusPacket
     /// Creates a response packet with code, authenticator, identifier and secret from the request packet.
     /// </summary>
     public RadiusPacket CreateResponsePacket(PacketCode responseCode) =>
-        new RadiusPacket
+        new()
         {
             Code = responseCode,
             SharedSecret = SharedSecret,
@@ -73,12 +99,32 @@ public class RadiusPacket
             : [];
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
     public void AddAttribute(string name, string value) => AddAttributeObject(name, value);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
     public void AddAttribute(string name, uint value) => AddAttributeObject(name, value);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
     public void AddAttribute(string name, IPAddress value) => AddAttributeObject(name, value);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
     public void AddAttribute(string name, byte[] value) => AddAttributeObject(name, value);
 
     /// <summary>

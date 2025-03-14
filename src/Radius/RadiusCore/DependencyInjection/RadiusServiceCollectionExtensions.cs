@@ -1,7 +1,7 @@
-﻿using System.Net;
-using RadiusCore;
+﻿using RadiusCore;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
+using System.Net;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -20,8 +20,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddRadiusServer(this IServiceCollection services,
             Action<RadiusServerOptions>? setAction = null)
         {
-            services.AddHostedService<RadiusServer>();
-
             services.AddTransient<IRadiusDictionary>(_ =>
             {
                 return RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary").GetAwaiter().GetResult();
@@ -37,6 +35,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 return repository;
             });
             services.AddTransient<RadiusServer>();
+
+            services.AddHostedService<RadiusServer>();
 
             if (setAction != null)
                 services.Configure(setAction);

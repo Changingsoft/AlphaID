@@ -2,6 +2,9 @@
 
 namespace RadiusCore;
 
+/// <summary>
+/// 
+/// </summary>
 public class PacketHandlerRepository : IPacketHandlerRepository
 {
     private readonly Dictionary<IPAddress, (IPacketHandler packetHandler, string secret)> _packetHandlerAddresses = [];

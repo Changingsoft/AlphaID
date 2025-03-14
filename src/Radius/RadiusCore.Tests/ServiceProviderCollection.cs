@@ -3,7 +3,7 @@
 namespace RadiusCore.Tests
 {
     [CollectionDefinition(nameof(ServiceProviderCollection))]
-    public class ServiceProviderCollection:ICollectionFixture<ServiceProviderFixture>
+    public class ServiceProviderCollection : ICollectionFixture<ServiceProviderFixture>
     {
     }
 }

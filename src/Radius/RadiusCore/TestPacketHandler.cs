@@ -8,6 +8,12 @@ namespace RadiusCore;
 /// </summary>
 public sealed class TestPacketHandler : IPacketHandler
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="packet"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public RadiusPacket HandlePacket(RadiusPacket packet)
     {
         // Simulate lag

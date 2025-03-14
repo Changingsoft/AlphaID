@@ -5,6 +5,9 @@ using System.Text;
 
 namespace RadiusCore;
 
+/// <summary>
+/// 
+/// </summary>
 public static class Utils
 {
     private static readonly byte[] AuthenticatorZeros = new byte[16];
@@ -141,7 +144,7 @@ public static class Utils
         int packetLength,
         int messageAuthenticatorPosition,
         byte[] sharedSecret,
-        byte[] requestAuthenticator)
+        byte[]? requestAuthenticator)
     {
         var messageAuthenticator = packetBytes.Skip(messageAuthenticatorPosition + 2).Take(16).ToArray();
 

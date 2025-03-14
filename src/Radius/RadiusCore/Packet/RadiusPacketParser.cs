@@ -9,13 +9,9 @@ namespace RadiusCore.Packet;
 /// </summary>
 public class RadiusPacketParser(
     IRadiusDictionary radiusDictionary,
-    ILogger<RadiusPacketParser>? logger = null,
+    ILogger<RadiusPacketParser>? logger,
     bool skipBlastRadiusChecks = true) : IRadiusPacketParser
 {
-    private readonly IRadiusDictionary _radiusDictionary = radiusDictionary;
-    private readonly bool _skipBlastRadiusChecks = skipBlastRadiusChecks;
-
-
     /// <summary>
     /// Parses packet bytes and returns an IRadiusPacket
     /// </summary>
@@ -52,12 +48,12 @@ public class RadiusPacketParser(
             || packet.Code == PacketCode.AccessReject
             || packet.Code == PacketCode.AccessRequest)
         {
-            if (messageAuthenticatorPosition == 0 && !_skipBlastRadiusChecks)
+            if (messageAuthenticatorPosition == 0 && !skipBlastRadiusChecks)
             {
                 throw new MessageAuthenticatorException("No message authenticator found in packet");
             }
 
-            if (messageAuthenticatorPosition != 20 && !_skipBlastRadiusChecks)
+            if (messageAuthenticatorPosition != 20 && !skipBlastRadiusChecks)
             {
                 logger?.LogWarning("Message authenticator expected to be first attribute");
             }
@@ -98,20 +94,20 @@ public class RadiusPacketParser(
             case PacketCode.AccountingRequest:
             case PacketCode.DisconnectRequest:
             case PacketCode.CoaRequest:
-            {
-                HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
-                Buffer.BlockCopy(
-                    Utils.CalculateRequestAuthenticator(packet.SharedSecret, packetBytes),
-                    0, packetBytes, 4, 16);
-                break;
-            }
+                {
+                    HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
+                    Buffer.BlockCopy(
+                        Utils.CalculateRequestAuthenticator(packet.SharedSecret, packetBytes),
+                        0, packetBytes, 4, 16);
+                    break;
+                }
             case PacketCode.StatusServer:
             case PacketCode.AccessRequest:
-            {
-                Buffer.BlockCopy(packet.Authenticator, 0, packetBytes, 4, 16);
-                HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
-                break;
-            }
+                {
+                    Buffer.BlockCopy(packet.Authenticator, 0, packetBytes, 4, 16);
+                    HandleRequestMessageAuthenticator(packet.SharedSecret, messageAuthenticatorPosition, packetBytes);
+                    break;
+                }
             case PacketCode.AccessAccept:
             case PacketCode.AccessReject:
             case PacketCode.AccountingResponse:
@@ -122,27 +118,27 @@ public class RadiusPacketParser(
             case PacketCode.CoaAck:
             case PacketCode.CoaNak:
             default:
-            {
-                if (messageAuthenticatorPosition != 0)
                 {
-                    var messageAuthenticator = Utils.CalculateResponseMessageAuthenticator(
-                        packetBytes,
+                    if (messageAuthenticatorPosition != 0)
+                    {
+                        var messageAuthenticator = Utils.CalculateResponseMessageAuthenticator(
+                            packetBytes,
+                            packet.SharedSecret,
+                            packet.RequestAuthenticator ?? throw new ArgumentNullException(),
+                            messageAuthenticatorPosition);
+
+                        Buffer.BlockCopy(messageAuthenticator, 0, packetBytes, messageAuthenticatorPosition + 2, 16);
+                    }
+
+                    var authenticator = Utils.CalculateResponseAuthenticator(
                         packet.SharedSecret,
-                        packet.RequestAuthenticator ?? throw new ArgumentNullException(),
-                        messageAuthenticatorPosition);
+                        packet.RequestAuthenticator ??
+                        throw new ArgumentNullException(nameof(packet.RequestAuthenticator)),
+                        packetBytes);
 
-                    Buffer.BlockCopy(messageAuthenticator, 0, packetBytes, messageAuthenticatorPosition + 2, 16);
+                    Buffer.BlockCopy(authenticator, 0, packetBytes, 4, 16);
+                    break;
                 }
-
-                var authenticator = Utils.CalculateResponseAuthenticator(
-                    packet.SharedSecret,
-                    packet.RequestAuthenticator ??
-                    throw new ArgumentNullException(nameof(packet.RequestAuthenticator)),
-                    packetBytes);
-
-                Buffer.BlockCopy(authenticator, 0, packetBytes, 4, 16);
-                break;
-            }
         }
 
         return packetBytes;
@@ -180,7 +176,7 @@ public class RadiusPacketParser(
             var contentBytes = Attribute.ToBytes(v);
             var headerBytes = new byte[2];
 
-            switch (_radiusDictionary.GetAttribute(a.Key))
+            switch (radiusDictionary.GetAttribute(a.Key))
             {
                 case DictionaryVendorAttribute vendorAttributeType:
                     headerBytes = new byte[8];
@@ -246,7 +242,7 @@ public class RadiusPacketParser(
                 if (typeCode == 26) // VSA
                 {
                     var vsa = new VendorSpecificAttribute(attributeValueBytes);
-                    var vsaType = _radiusDictionary.GetVendorAttribute(vsa.VendorId, vsa.VendorCode);
+                    var vsaType = radiusDictionary.GetVendorAttribute(vsa.VendorId, vsa.VendorCode);
 
                     if (vsaType == null)
                     {
@@ -273,7 +269,7 @@ public class RadiusPacketParser(
                 }
                 else
                 {
-                    var attributeType = _radiusDictionary.GetAttribute(typeCode) ??
+                    var attributeType = radiusDictionary.GetAttribute(typeCode) ??
                                         throw new ArgumentNullException(nameof(typeCode));
                     if (attributeType.Code == 80)
                     {

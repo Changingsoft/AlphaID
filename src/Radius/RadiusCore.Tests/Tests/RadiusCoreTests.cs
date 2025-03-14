@@ -10,7 +10,7 @@ namespace RadiusCore.Tests.Tests;
 
 public class RadiusCoreTests
 {
-    private IRadiusDictionary GetDictionary() => RadiusDictionary.Parse(DefaultDictionary.RadiusDictionary);
+    private static IRadiusDictionary GetDictionary() => RadiusDictionary.Parse(DefaultDictionary.RadiusDictionary);
 
 
     /// <summary>
@@ -218,47 +218,6 @@ public class RadiusCoreTests
 
         Assert.Equal(expected, bytes.ToHexString());
     }
-
-
-    /// <summary>
-    /// Test parsing and rebuilding a packet
-    /// </summary>
-    [Obsolete]
-    [Fact]
-    public void TestPacketParserAndAssemblerStream()
-    {
-        var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var expected = request;
-        var secret = "xyzzy5461"u8.ToArray();
-
-        var stream = new MemoryStream(Utils.StringToByteArray(request));
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
-        radiusPacketParser.TryParsePacketFromStream(stream, out var packet, secret);
-        var bytes = radiusPacketParser.GetBytes(packet!);
-
-        Assert.Equal(expected, bytes.ToHexString());
-    }
-
-
-    /// <summary>
-    /// Test parsing and rebuilding a packet
-    /// </summary>
-    [Obsolete]
-    [Fact]
-    public void TestPacketParserAndAssemblerStreamExtraDataIgnored()
-    {
-        var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3ff00ff00ff00ff";
-        var expected = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var secret = "xyzzy5461"u8.ToArray();
-
-        var stream = new MemoryStream(Utils.StringToByteArray(request));
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
-        radiusPacketParser.TryParsePacketFromStream(stream, out var packet, secret);
-        var bytes = radiusPacketParser.GetBytes(packet!);
-
-        Assert.Equal(expected, bytes.ToHexString());
-    }
-
 
     /// <summary>
     /// Test parsing and rebuilding a packet

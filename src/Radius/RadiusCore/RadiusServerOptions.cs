@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadiusCore
+﻿namespace RadiusCore
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RadiusServerOptions
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int AuthenticationServerPort { get; set; } = 1812;
     }
 }

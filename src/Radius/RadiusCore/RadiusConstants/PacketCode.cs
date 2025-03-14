@@ -37,10 +37,28 @@ public enum PacketCode : byte
     /// Status-Client (13)
     /// </summary>
     StatusClient = 13,
+    /// <summary>
+    /// 
+    /// </summary>
     DisconnectRequest = 40,
+    /// <summary>
+    /// 
+    /// </summary>
     DisconnectAck = 41,
+    /// <summary>
+    /// 
+    /// </summary>
     DisconnectNak = 42,
+    /// <summary>
+    /// 
+    /// </summary>
     CoaRequest = 43,
+    /// <summary>
+    /// 
+    /// </summary>
     CoaAck = 44,
+    /// <summary>
+    /// 
+    /// </summary>
     CoaNak = 45
 }

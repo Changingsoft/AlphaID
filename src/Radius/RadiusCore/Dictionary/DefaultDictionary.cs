@@ -5,6 +5,9 @@ namespace RadiusCore.Dictionary;
 /// </summary>
 public static class DefaultDictionary
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public const string RadiusDictionary =
         @"
         Attribute	1	User-Name	string

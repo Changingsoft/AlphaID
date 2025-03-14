@@ -9,6 +9,12 @@
 /// <param name="type"></param>
 public class DictionaryVendorAttribute(uint vendorId, string name, uint vendorCode, string type) : DictionaryAttribute(name, 26, type)
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly uint VendorId = vendorId;
+    /// <summary>
+    /// 
+    /// </summary>
     public readonly uint VendorCode = vendorCode;
 }

@@ -48,7 +48,7 @@ public static class RadiusPacketStructExtensions
     /// <returns></returns>
     public static RadiusPacketStruct FromByteArray(byte[] data, out List<RadiusAttribute> attributes)
     {
-        RadiusPacketStruct packet = new RadiusPacketStruct();
+        RadiusPacketStruct packet = new();
         int size = Marshal.SizeOf(packet);
         IntPtr ptr = Marshal.AllocHGlobal(size);
 
@@ -57,11 +57,11 @@ public static class RadiusPacketStructExtensions
             Marshal.Copy(data, 0, ptr, size);
             packet = (RadiusPacketStruct)Marshal.PtrToStructure(ptr, packet.GetType())!;
 
-            attributes = new List<RadiusAttribute>();
+            attributes = [];
             int offset = size;
             while (offset < data.Length)
             {
-                RadiusAttribute attribute = new RadiusAttribute();
+                RadiusAttribute attribute = new();
                 int attrSize = Marshal.SizeOf(attribute);
                 IntPtr attrPtr = Marshal.AllocHGlobal(attrSize);
 

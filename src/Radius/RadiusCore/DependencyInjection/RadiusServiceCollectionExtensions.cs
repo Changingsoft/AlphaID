@@ -12,13 +12,30 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class RadiusServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds Radius server services to the specified <see cref="IServiceCollection" />.
+        /// 添加RADIUS Server。
         /// </summary>
         /// <param name="services"></param>
         /// <param name="setAction"></param>
         /// <returns></returns>
         public static IServiceCollection AddRadiusServer(this IServiceCollection services,
             Action<RadiusServerOptions>? setAction = null)
+        {
+            services.AddRadiusCore();
+
+            services.AddHostedService<RadiusServer>();
+
+            if (setAction != null)
+                services.Configure(setAction);
+
+            return services;
+        }
+
+        /// <summary>
+        /// 添加RADIUS核心服务。
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddRadiusCore(this IServiceCollection services)
         {
             services.AddTransient<IRadiusDictionary>(_ =>
             {
@@ -35,12 +52,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 return repository;
             });
             services.AddTransient<RadiusServer>();
-
-            services.AddHostedService<RadiusServer>();
-
-            if (setAction != null)
-                services.Configure(setAction);
-
             return services;
         }
     }

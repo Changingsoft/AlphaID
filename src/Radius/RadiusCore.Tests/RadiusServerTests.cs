@@ -167,7 +167,7 @@ public class RadiusServerTests(ServiceProviderFixture serviceProvider)
         var secret = "xyzzy5461";
 
 
-        var client = new UdpClientMock();
+        var client = new MockUdpClient();
 
         serviceProvider.RootServiceProvider.GetRequiredService<IRadiusPacketParser>();
         var rs = serviceProvider.RootServiceProvider.GetRequiredService<RadiusServer>();
@@ -190,7 +190,7 @@ public class RadiusServerTests(ServiceProviderFixture serviceProvider)
         var secret = "xyzzy5461";
 
 
-        var client = new UdpClientMock();
+        var client = new MockUdpClient();
 
         serviceProvider.RootServiceProvider.GetRequiredService<IRadiusPacketParser>();
         var rs = serviceProvider.RootServiceProvider.GetRequiredService<RadiusServer>();
@@ -213,7 +213,7 @@ public class RadiusServerTests(ServiceProviderFixture serviceProvider)
         var secret = "xyzzy5461";
 
 
-        var client = new UdpClientMock();
+        var client = new MockUdpClient();
 
         serviceProvider.RootServiceProvider.GetRequiredService<IRadiusPacketParser>();
         var rs = serviceProvider.RootServiceProvider.GetRequiredService<RadiusServer>();
@@ -235,7 +235,7 @@ public class RadiusServerTests(ServiceProviderFixture serviceProvider)
         var expected = "02da0014ef0d552a4bf2d693ec2b6fe8b5411d66";
         var secret = "xyzzy5461";
 
-        var client = new UdpClientMock();
+        var client = new MockUdpClient();
 
         serviceProvider.RootServiceProvider.GetRequiredService<IRadiusPacketParser>();
         var repo = new PacketHandlerRepository();

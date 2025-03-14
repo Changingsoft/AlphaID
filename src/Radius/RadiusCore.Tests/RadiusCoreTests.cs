@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using Xunit;
 
-namespace RadiusCore.Tests.Tests;
+namespace RadiusCore.Tests;
 
 public class RadiusCoreTests
 {

@@ -6,7 +6,7 @@ namespace RadiusCore.Tests;
 /// <summary>
 /// 
 /// </summary>
-public class UdpClientMock : IUdpClient
+public class MockUdpClient : IUdpClient
 {
     private TaskCompletionSource<UdpReceiveResult>? _receiveTaskCompletionSource;
     private TaskCompletionSource<UdpReceiveResult>? _sendTaskCompletionSource;
@@ -22,11 +22,6 @@ public class UdpClientMock : IUdpClient
         return await _receiveTaskCompletionSource.Task;
     }
 
-    private void Send(byte[] content, IPEndPoint recipient)
-    {
-        _sendTaskCompletionSource?.SetResult(new UdpReceiveResult(content, recipient));
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -36,7 +31,7 @@ public class UdpClientMock : IUdpClient
     /// <returns></returns>
     public Task<int> SendAsync(byte[] content, int length, IPEndPoint remoteEndpoint)
     {
-        Send(content, remoteEndpoint);
+        _sendTaskCompletionSource?.SetResult(new UdpReceiveResult(content, remoteEndpoint));
         return Task.FromResult(0);
     }
 

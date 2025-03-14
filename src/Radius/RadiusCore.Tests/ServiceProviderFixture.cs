@@ -8,15 +8,14 @@ namespace RadiusCore.Tests
         {
             var services = new ServiceCollection();
 
-            services.AddLogging();
-
             services.AddOptions();
-            services.AddRadiusServer();
+            services.AddLogging();
+            services.AddRadiusCore();
 
             //将部分组件替换为测试组件
-            services.AddTransient<IUdpClientFactory, UdpClientMockFactory>(services =>
+            services.AddTransient<IUdpClientFactory, MockUdpClientFactory>(services =>
             {
-                return new UdpClientMockFactory(new UdpClientMock());
+                return new MockUdpClientFactory(new MockUdpClient());
             });
 
             RootServiceProvider = services.BuildServiceProvider();

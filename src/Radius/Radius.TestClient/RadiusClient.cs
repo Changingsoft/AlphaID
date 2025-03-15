@@ -5,14 +5,13 @@ using System.Net.Sockets;
 
 namespace Radius.TestClient;
 
-public record PendingRequest(byte Identifier, IPEndPoint RemoteEndpoint);
 
 /// <summary>
 /// Create a radius client which sends and receives responses on localEndpoint
 /// </summary>
-public class RadiusClient(IPEndPoint localEndpoint, IRadiusPacketParser radiusPacketParser) : IDisposable
+public class RadiusClient(IRadiusPacketParser radiusPacketParser) : IDisposable
 {
-    private readonly UdpClient _udpClient = new(localEndpoint);
+    private readonly UdpClient _udpClient = new(AddressFamily.InterNetwork);
     private Task? _receiveLoopTask;
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
@@ -101,4 +100,7 @@ public class RadiusClient(IPEndPoint localEndpoint, IRadiusPacketParser radiusPa
         _receiveLoopTask?.Dispose();
         _udpClient.Dispose();
     }
+
+    public record PendingRequest(byte Identifier, IPEndPoint RemoteEndpoint);
+
 }

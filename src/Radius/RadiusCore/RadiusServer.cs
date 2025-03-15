@@ -234,6 +234,7 @@ public class RadiusServer(
     /// </summary>
     public void Dispose()
     {
+        _stoppingCts?.Cancel();
         _udpClient?.Dispose();
     }
 

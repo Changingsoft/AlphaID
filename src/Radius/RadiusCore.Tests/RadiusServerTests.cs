@@ -171,7 +171,7 @@ public class RadiusServerTests(ServiceProviderFixture serviceProvider)
 
         serviceProvider.RootServiceProvider.GetRequiredService<IRadiusPacketParser>();
         var rs = serviceProvider.RootServiceProvider.GetRequiredService<RadiusServer>();
-        rs.AddPacketHandler(IPAddress.Parse("127.0.0.1"), secret, new MockPacketHandler());
+        //rs.AddPacketHandler(IPAddress.Parse("127.0.0.1"), secret, new MockPacketHandler());
         await rs.StartAsync(CancellationToken.None);
         var response = await client.SendMock(new UdpReceiveResult(Utils.StringToByteArray(request), new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1813)));
         Assert.Equal(expected, response.Buffer.ToHexString());

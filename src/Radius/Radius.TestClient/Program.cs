@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Radius.TestClient;
 using RadiusCore;
 using RadiusCore.Dictionary;
@@ -7,19 +9,19 @@ using RadiusCore.RadiusConstants;
 using System.Net;
 
 
-var loggerFactory = LoggerFactory.Create(o =>
-{
-    o.AddSimpleConsole(c => c.SingleLine = true);
-    o.SetMinimumLevel(LogLevel.Trace);
-});
+var builder = Host.CreateApplicationBuilder();
 
-var logger = loggerFactory.CreateLogger(nameof(Program));
+builder.Services.AddRadiusCore();
+builder.Services.AddTransient<RadiusClient>();
 
-using var client = new RadiusClient(
-    new IPEndPoint(IPAddress.Any, 58733),
-    new RadiusPacketParser(
-        RadiusDictionary.Parse(DefaultDictionary.RadiusDictionary),
-        loggerFactory.CreateLogger<RadiusPacketParser>()));
+var app = builder.Build();
+
+//app.Run();
+
+using var scope = app.Services.CreateScope();
+
+using var client = scope.ServiceProvider.GetRequiredService<RadiusClient>();
+
 
 
 var requestPacket = new RadiusPacket(PacketCode.AccessRequest, 0, "xyzzy5461");
@@ -27,15 +29,7 @@ requestPacket.AddMessageAuthenticator(); // Add message authenticator for blast 
 requestPacket.AddAttribute("User-Name", "nemo");
 requestPacket.AddAttribute("User-Password", "arctangent");
 
-logger.LogInformation("Sending packet...");
 
 var responsePacket = await client.SendPacketAsync(
     requestPacket,
     new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812));
-
-if (responsePacket.Code == PacketCode.AccessAccept)
-{
-    // Hooray  
-    logger.LogInformation("Access accepted \\o/");
-    logger.LogDebug(Utils.GetPacketString(responsePacket));
-}

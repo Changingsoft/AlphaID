@@ -21,6 +21,12 @@ public struct RadiusAttribute
     /// <summary>
     /// The value of the attribute
     /// </summary>
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 253)]
-    public byte[] Value;
+    public IntPtr Value;
+
+    public byte[] GetValue()
+    {
+        byte[] valueBytes = new byte[Length - 2];
+        Marshal.Copy(Value, valueBytes, 0, valueBytes.Length);
+        return valueBytes;
+    }
 }

@@ -4,17 +4,17 @@ using System.Runtime.InteropServices;
 namespace RadiusCore.Packet;
 
 /// <summary>
-/// Extension methods for RadiusPacketStruct
+/// Extension methods for RadiusPacketDataStruct
 /// </summary>
-public static class RadiusPacketStructExtensions
+public static class RadiusPacketDataStructExtensions
 {
     /// <summary>
-    /// Convert a RadiusPacketStruct and a list of RadiusAttributes to a byte array
+    /// Convert a RadiusPacketDataStruct and a list of RadiusAttributes to a byte array
     /// </summary>
     /// <param name="packet"></param>
     /// <param name="attributes"></param>
     /// <returns></returns>
-    public static byte[] ToByteArray(this RadiusPacketStruct packet, List<RadiusAttribute> attributes)
+    public static byte[] ToByteArray(this RadiusPacketDataStruct packet, List<RadiusAttributeStruct> attributes)
     {
         // Calculate the total length of the packet
         packet.Length = (ushort)(Marshal.SizeOf(packet) + attributes.Sum(attr => attr.Length));
@@ -48,21 +48,21 @@ public static class RadiusPacketStructExtensions
     }
 
     /// <summary>
-    /// Convert a byte array to a RadiusPacketStruct and a list of RadiusAttributes
+    /// Convert a byte array to a RadiusPacketDataStruct and a list of RadiusAttributes
     /// </summary>
     /// <param name="data"></param>
     /// <param name="attributes"></param>
     /// <returns></returns>
-    public static RadiusPacketStruct FromByteArray(byte[] data, out List<RadiusAttribute> attributes)
+    public static RadiusPacketDataStruct FromByteArray(byte[] data, out List<RadiusAttributeStruct> attributes)
     {
-        RadiusPacketStruct packet = new();
+        RadiusPacketDataStruct packet = new();
         int size = Marshal.SizeOf(packet);
         IntPtr ptr = Marshal.AllocHGlobal(size);
 
         try
         {
             Marshal.Copy(data, 0, ptr, size);
-            packet = (RadiusPacketStruct)Marshal.PtrToStructure(ptr, packet.GetType())!;
+            packet = (RadiusPacketDataStruct)Marshal.PtrToStructure(ptr, packet.GetType())!;
 
             // Convert Length from network byte order (big-endian) to host byte order
             packet.Length = (ushort)IPAddress.NetworkToHostOrder((short)packet.Length);
@@ -76,7 +76,7 @@ public static class RadiusPacketStructExtensions
                 byte[] attrData = new byte[attrLength];
                 Array.Copy(data, offset, attrData, 0, attrLength);
 
-                RadiusAttribute attribute = RadiusAttributeExtensions.FromByteArray(attrData);
+                RadiusAttributeStruct attribute = RadiusAttributeStructExtensions.FromByteArray(attrData);
                 attributes.Add(attribute);
                 offset += attrLength;
             }

@@ -30,6 +30,8 @@ public class RadiusServer(
     private Task? _receiveLoopTask;
     private CancellationTokenSource? _stoppingCts;
     private readonly RadiusServerType _radiusServerType = RadiusServerType.Authentication;
+    private readonly ConnectionRequestFactory connectionRequestFactory;
+    private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
 
     /// <summary>
     /// Add packet handler for remote endpoint
@@ -111,9 +113,23 @@ public class RadiusServer(
             try
             {
                 UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
+                
                 //读取报文并创建处理上下文
-                RadiusPacketStruct radiusPacketStruct =
-                    RadiusPacketStructExtensions.FromByteArray(result.Buffer, out var attributes);
+                RadiusPacketDataStruct radiusPacketStruct =
+                    RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
+
+                RadiusPacket2 radiusPacket = new RadiusPacket2(radiusPacketStruct, attributes);
+
+                RadiusContext radiusContext = new RadiusContext(radiusPacket, result.RemoteEndPoint);
+
+                //处理报文
+                var connectionRequestHandler = connectionRequestFactory.CreateHandler(radiusContext);
+                await connectionRequestHandler.HandleAsync();
+
+                var networkPolicyHandler = networkPolicyFactory.CreateHandler(radiusContext);
+                await networkPolicyHandler.HandleAsync();
+
+                //处理完毕后，发送响应报文
 
 
                 await HandlePacket(result.RemoteEndPoint, result.Buffer);

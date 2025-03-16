@@ -1,10 +1,5 @@
 ﻿using RadiusCore.Packet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace RadiusCore.Tests
@@ -14,14 +9,14 @@ namespace RadiusCore.Tests
         [Fact]
         public void ToByteArrayTest()
         {
-            var packet = new RadiusPacketStruct
+            var packet = new RadiusPacketDataStruct
             {
                 Code = 1,
                 Identifier = 2,
                 Length = 26,
                 Authenticator = new byte[16]
             };
-            List<RadiusAttribute> attributes = [new RadiusAttribute { Length = 6, Type = 5, Value = (new byte[] { 0x13, 0x25, 0x11, 0x25 }).ToPtr() }];
+            List<RadiusAttributeStruct> attributes = [new RadiusAttributeStruct { Length = 6, Type = 5, Value = (new byte[] { 0x13, 0x25, 0x11, 0x25 }).ToPtr() }];
             var bytes = packet.ToByteArray(attributes);
             Assert.Equal(1, bytes[0]);
             Assert.Equal(2, bytes[1]);
@@ -38,7 +33,7 @@ namespace RadiusCore.Tests
         {
             byte[] data = [1, 2, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 13, 25, 11, 25];
 
-            var packet = RadiusPacketStructExtensions.FromByteArray(data, out var attributes);
+            var packet = RadiusPacketDataStructExtensions.FromByteArray(data, out var attributes);
             Assert.Equal(1, packet.Code);
             Assert.Equal(2, packet.Identifier);
             Assert.Equal(26, packet.Length);

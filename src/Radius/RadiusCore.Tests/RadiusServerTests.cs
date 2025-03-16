@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Text;
 using Xunit;
 

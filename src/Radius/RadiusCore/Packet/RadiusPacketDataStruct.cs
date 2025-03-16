@@ -3,10 +3,10 @@
 namespace RadiusCore.Packet;
 
 /// <summary>
-/// This struct represents a Radius packet in memory
+/// This struct represents a Radius packet data in memory
 /// </summary>
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct RadiusPacketStruct
+public struct RadiusPacketDataStruct
 {
     /// <summary>
     /// The code of the packet

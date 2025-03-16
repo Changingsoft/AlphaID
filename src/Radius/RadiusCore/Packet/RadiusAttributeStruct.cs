@@ -3,10 +3,10 @@
 namespace RadiusCore.Packet;
 
 /// <summary>
-/// This struct represents a Radius attribute in memory
+/// This struct represents a Radius attribute data in memory
 /// </summary>
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct RadiusAttribute
+public struct RadiusAttributeStruct
 {
     /// <summary>
     /// The type of the attribute

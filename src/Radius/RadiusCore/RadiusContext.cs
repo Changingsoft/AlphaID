@@ -1,7 +1,11 @@
 ﻿using System.Net;
 
 namespace RadiusCore;
-internal class RadiusContext
+
+/// <summary>
+/// RADIUS上下文。
+/// </summary>
+public class RadiusContext
 {
     private RadiusPacket2 radiusPacket;
     private IPEndPoint remoteEndPoint;

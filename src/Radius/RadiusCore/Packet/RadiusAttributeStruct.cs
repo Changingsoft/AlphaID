@@ -21,12 +21,16 @@ public struct RadiusAttributeStruct
     /// <summary>
     /// The value of the attribute
     /// </summary>
-    public IntPtr Value;
+    public IntPtr ValuePtr;
 
-    public byte[] GetValue()
+    /// <summary>
+    /// Get the value of the attribute
+    /// </summary>
+    /// <returns></returns>
+    public readonly byte[] GetValue()
     {
         byte[] valueBytes = new byte[Length - 2];
-        Marshal.Copy(Value, valueBytes, 0, valueBytes.Length);
+        Marshal.Copy(ValuePtr, valueBytes, 0, valueBytes.Length);
         return valueBytes;
     }
 }

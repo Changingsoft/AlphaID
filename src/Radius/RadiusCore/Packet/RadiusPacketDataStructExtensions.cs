@@ -89,6 +89,11 @@ public static class RadiusPacketDataStructExtensions
         return packet;
     }
 
+    /// <summary>
+    /// Convert a byte array to a IntPtr.
+    /// </summary>
+    /// <param name="byteArray"></param>
+    /// <returns></returns>
     public static IntPtr ToPtr(this byte[] byteArray)
     {
         IntPtr ptr = Marshal.AllocHGlobal(byteArray.Length);

@@ -4,55 +4,54 @@ using RadiusCore.Packet;
 using System.Net;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection;
+
+/// <summary>
+/// Extension methods for setting up Radius services in an <see cref="IServiceCollection" />.
+/// </summary>
+public static class RadiusServiceCollectionExtensions
 {
     /// <summary>
-    /// Extension methods for setting up Radius services in an <see cref="IServiceCollection" />.
+    /// 添加RADIUS Server。
     /// </summary>
-    public static class RadiusServiceCollectionExtensions
+    /// <param name="services"></param>
+    /// <param name="setAction"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRadiusServer(this IServiceCollection services,
+        Action<RadiusServerOptions>? setAction = null)
     {
-        /// <summary>
-        /// 添加RADIUS Server。
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="setAction"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRadiusServer(this IServiceCollection services,
-            Action<RadiusServerOptions>? setAction = null)
+        services.AddRadiusCore();
+
+        services.AddHostedService<RadiusServer>();
+
+        if (setAction != null)
+            services.Configure(setAction);
+
+        return services;
+    }
+
+    /// <summary>
+    /// 添加RADIUS核心服务。
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRadiusCore(this IServiceCollection services)
+    {
+        services.AddTransient<IRadiusDictionary>(_ =>
         {
-            services.AddRadiusCore();
-
-            services.AddHostedService<RadiusServer>();
-
-            if (setAction != null)
-                services.Configure(setAction);
-
-            return services;
-        }
-
-        /// <summary>
-        /// 添加RADIUS核心服务。
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRadiusCore(this IServiceCollection services)
+            return RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary").GetAwaiter().GetResult();
+        });
+        services.AddTransient<IRadiusPacketParser, RadiusPacketParser>();
+        services.AddTransient<TestPacketHandler>();
+        services.AddTransient<IUdpClientFactory, UdpClientFactory>();
+        services.AddTransient<IPacketHandlerRepository>(services1 =>
         {
-            services.AddTransient<IRadiusDictionary>(_ =>
-            {
-                return RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary").GetAwaiter().GetResult();
-            });
-            services.AddTransient<IRadiusPacketParser, RadiusPacketParser>();
-            services.AddTransient<TestPacketHandler>();
-            services.AddTransient<IUdpClientFactory, UdpClientFactory>();
-            services.AddTransient<IPacketHandlerRepository>(services1 =>
-            {
-                var packetHandler = services1.GetRequiredService<TestPacketHandler>();
-                var repository = new PacketHandlerRepository();
-                repository.AddPacketHandler(IPAddress.Parse("127.0.0.1"), packetHandler, "secret");
-                return repository;
-            });
-            services.AddTransient<RadiusServer>();
-            return services;
-        }
+            var packetHandler = services1.GetRequiredService<TestPacketHandler>();
+            var repository = new PacketHandlerRepository();
+            repository.AddPacketHandler(IPAddress.Parse("127.0.0.1"), packetHandler, "secret");
+            return repository;
+        });
+        services.AddTransient<RadiusServer>();
+        return services;
     }
 }

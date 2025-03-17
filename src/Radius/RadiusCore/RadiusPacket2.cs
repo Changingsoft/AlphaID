@@ -2,7 +2,7 @@
 using RadiusCore.RadiusConstants;
 
 namespace RadiusCore;
-internal class RadiusPacket2
+public class RadiusPacket2
 {
     private RadiusPacketDataStruct radiusPacketStruct;
     private List<RadiusAttributeStruct> attributes;

@@ -1,13 +1,12 @@
-﻿namespace RadiusCore
+﻿namespace RadiusCore;
+
+/// <summary>
+/// 
+/// </summary>
+public class RadiusServerOptions
 {
     /// <summary>
     /// 
     /// </summary>
-    public class RadiusServerOptions
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public int AuthenticationServerPort { get; set; } = 1812;
-    }
+    public int AuthenticationServerPort { get; set; } = 1812;
 }

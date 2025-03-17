@@ -3,7 +3,7 @@ namespace RadiusCore;
 
 internal class NetworkPolicyHandler
 {
-    internal async Task HandleAsync()
+    internal Task HandleAsync()
     {
         throw new NotImplementedException();
     }

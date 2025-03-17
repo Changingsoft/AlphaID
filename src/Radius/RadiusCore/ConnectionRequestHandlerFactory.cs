@@ -1,7 +1,7 @@
 ﻿
 namespace RadiusCore;
 
-internal class ConnectionRequestFactory
+internal class ConnectionRequestHandlerFactory
 {
     internal ConnectionRequestHandler CreateHandler(RadiusContext radiusContext)
     {

@@ -30,7 +30,7 @@ public class RadiusServer(
     private Task? _receiveLoopTask;
     private CancellationTokenSource? _stoppingCts;
     private readonly RadiusServerType _radiusServerType = RadiusServerType.Authentication;
-    private readonly ConnectionRequestFactory connectionRequestFactory;
+    private readonly ConnectionRequestHandlerFactory _connectionRequestHandlerFactory;
     private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
 
     /// <summary>
@@ -118,12 +118,12 @@ public class RadiusServer(
                 RadiusPacketDataStruct radiusPacketStruct =
                     RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
 
-                RadiusPacket2 radiusPacket = new RadiusPacket2(radiusPacketStruct, attributes);
+                RadiusPacket2 radiusPacket = new(radiusPacketStruct, attributes);
 
-                RadiusContext radiusContext = new RadiusContext(radiusPacket, result.RemoteEndPoint);
+                RadiusContext radiusContext = new(radiusPacket, result.RemoteEndPoint);
 
                 //处理报文
-                var connectionRequestHandler = connectionRequestFactory.CreateHandler(radiusContext);
+                var connectionRequestHandler = _connectionRequestHandlerFactory.CreateHandler(radiusContext);
                 await connectionRequestHandler.HandleAsync();
 
                 var networkPolicyHandler = networkPolicyFactory.CreateHandler(radiusContext);
@@ -252,6 +252,7 @@ public class RadiusServer(
     {
         _stoppingCts?.Cancel();
         _udpClient?.Dispose();
+        GC.SuppressFinalize(this);
     }
 
 

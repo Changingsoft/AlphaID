@@ -9,7 +9,21 @@ namespace RadiusCore;
 /// 
 /// </remarks>
 /// <param name="radiusPacket"></param>
-/// <param name="remoteEndPoint"></param>
-public class RadiusContext(RadiusPacket2 radiusPacket, IPEndPoint remoteEndPoint)
+/// <param name="server"></param>
+public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server)
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    public RadiusRequest Request { get; } = radiusPacket;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public RadiusServer Server { get; } = server;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public RadiusResponse Response {get;} = new();
 }

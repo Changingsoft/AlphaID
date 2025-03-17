@@ -31,32 +31,6 @@ public class RadiusServer(
     private readonly ConnectionRequestHandlerFactory _connectionRequestHandlerFactory;
     private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
 
-    /// <summary>
-    /// Add packet handler for remote endpoint
-    /// </summary>
-    /// <param name="remoteAddress"></param>
-    /// <param name="sharedSecret"></param>
-    /// <param name="packetHandler"></param>
-    [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
-    public void AddPacketHandler(IPAddress remoteAddress, string sharedSecret, IPacketHandler packetHandler)
-    {
-        logger?.LogInformation("Adding packet handler of type {packetHandler} for remote IP {remoteAddress} to {serverType}Server", packetHandler.GetType(), remoteAddress, _radiusServerType);
-        packetHandlerRepository.AddPacketHandler(remoteAddress, packetHandler, sharedSecret);
-    }
-
-
-    /// <summary>
-    /// Add packet handler for network range
-    /// </summary>
-    /// <param name="network"></param>
-    /// <param name="sharedSecret"></param>
-    /// <param name="packetHandler"></param>
-    [Obsolete("Use methods on IPacketHandlerRepository implementation instead")]
-    public void AddPacketHandler(IPNetwork network, string sharedSecret, IPacketHandler packetHandler)
-    {
-        packetHandlerRepository.Add(network, packetHandler, sharedSecret);
-    }
-
 
     /// <summary>
     /// Start listening for requests
@@ -111,26 +85,36 @@ public class RadiusServer(
             try
             {
                 UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
+                logger?.LogDebug("Received packet from {result.RemoteEndPoint}", result.RemoteEndPoint);
+                await Task.Run(async () =>
+                {
+                    //读取报文并创建处理上下文
+                    RadiusPacketDataStruct radiusPacketStruct =
+                        RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
+
+                    RadiusRequest request = new(radiusPacketStruct, attributes, result.RemoteEndPoint);
+
+                    RadiusContext radiusContext = new(request, this);
+
+                    //处理报文
+                    var connectionRequestHandler = _connectionRequestHandlerFactory.CreateHandler(radiusContext);
+                    await connectionRequestHandler.HandleAsync();
+
+                    var networkPolicyHandler = networkPolicyFactory.CreateHandler(radiusContext);
+                    await networkPolicyHandler.HandleAsync();
+
+                    //处理完毕后，发送响应报文
+                    throw new NotImplementedException();
+                }, cancellationToken)
+                    .ContinueWith(task =>
+                    {
+                        if (task.IsFaulted)
+                        {
+                            logger?.LogError(task.Exception, "Error handling packet");
+                        }
+                    }, TaskContinuationOptions.OnlyOnFaulted);
                 
-                //读取报文并创建处理上下文
-                RadiusPacketDataStruct radiusPacketStruct =
-                    RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
-
-                RadiusPacket2 radiusPacket = new(radiusPacketStruct, attributes);
-
-                RadiusContext radiusContext = new(radiusPacket, result.RemoteEndPoint);
-
-                //处理报文
-                var connectionRequestHandler = _connectionRequestHandlerFactory.CreateHandler(radiusContext);
-                await connectionRequestHandler.HandleAsync();
-
-                var networkPolicyHandler = networkPolicyFactory.CreateHandler(radiusContext);
-                await networkPolicyHandler.HandleAsync();
-
-                //处理完毕后，发送响应报文
-
-
-                await HandlePacket(result.RemoteEndPoint, result.Buffer);
+                logger?.LogTrace("Server now ready for receive another packet");
             }
             catch (OperationCanceledException)
             {

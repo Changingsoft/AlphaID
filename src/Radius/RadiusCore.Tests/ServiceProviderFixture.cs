@@ -12,12 +12,6 @@ public class ServiceProviderFixture
         services.AddLogging();
         services.AddRadiusCore();
 
-        //将部分组件替换为测试组件
-        services.AddTransient<IUdpClientFactory, MockUdpClientFactory>(services =>
-        {
-            return new MockUdpClientFactory(new MockUdpClient());
-        });
-
         RootServiceProvider = services.BuildServiceProvider();
         ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();
     }

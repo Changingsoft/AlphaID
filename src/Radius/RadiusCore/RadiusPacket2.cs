@@ -2,18 +2,20 @@
 using RadiusCore.RadiusConstants;
 
 namespace RadiusCore;
-public class RadiusPacket2
+
+/// <summary>
+/// 表示一个RADIUS报文。
+/// </summary>
+public class RadiusPacket2(RadiusPacketDataStruct radiusPacketStruct, List<RadiusAttributeStruct> attributes)
 {
-    private RadiusPacketDataStruct radiusPacketStruct;
-    private List<RadiusAttributeStruct> attributes;
 
-    public RadiusPacket2(RadiusPacketDataStruct radiusPacketStruct, List<RadiusAttributeStruct> attributes)
-    {
-        this.radiusPacketStruct = radiusPacketStruct;
-        this.attributes = attributes;
-    }
+    /// <summary>
+    /// RADIUS Packet code.
+    /// </summary>
+    public PacketCode Code => (PacketCode)radiusPacketStruct.Code;
 
-    public PacketCode PacketCode => (PacketCode)radiusPacketStruct.Code;
-
+    /// <summary>
+    /// RADIUS Packet identifier.
+    /// </summary>
     public byte Identifier => radiusPacketStruct.Identifier;
 }

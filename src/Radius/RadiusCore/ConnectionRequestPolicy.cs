@@ -6,14 +6,29 @@ using System.Threading.Tasks;
 
 namespace RadiusCore
 {
+    /// <summary>
+    /// 连接请求策略。
+    /// </summary>
     public class ConnectionRequestPolicy
     {
+        /// <summary>
+        /// 策略名称。
+        /// </summary>
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// 应用顺序。
+        /// </summary>
         public int Order { get; set; }
 
+        /// <summary>
+        /// 连接方式。
+        /// </summary>
         public string? ConnectMethod { get; set; }
 
+        /// <summary>
+        /// 条件集合。
+        /// </summary>
         public virtual ICollection<RadiusCondition> Conditions { get; set; } = [];
 
         /// <summary>

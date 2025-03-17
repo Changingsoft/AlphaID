@@ -13,19 +13,17 @@ namespace RadiusCore;
 /// <summary>
 /// RADIUS server.
 /// </summary>
-/// <param name="udpClientFactory">Udp client factory for create a UDP client.</param>
 /// <param name="radiusPacketParser"></param>
 /// <param name="packetHandlerRepository"></param>
 /// <param name="options">Options for RADIUS server.</param>
 /// <param name="logger">Logger for RADIUS server.</param>
 public class RadiusServer(
-    IUdpClientFactory udpClientFactory,
     IRadiusPacketParser radiusPacketParser,
     IPacketHandlerRepository packetHandlerRepository,
     IOptions<RadiusServerOptions> options,
     ILogger<RadiusServer>? logger) : IHostedService, IDisposable
 {
-    private IUdpClient? _udpClient;
+    private UdpClient? _udpClient;
     private int _concurrentHandlerCount;
     private Task? _receiveLoopTask;
     private CancellationTokenSource? _stoppingCts;
@@ -71,7 +69,7 @@ public class RadiusServer(
 
         logger?.LogInformation("Starting Radius server on {localEndpoint}", localEndpoint);
 
-        _udpClient = udpClientFactory.CreateClient(localEndpoint);
+        _udpClient = new UdpClient(localEndpoint);
 
         _receiveLoopTask = ReceiveLoopTask(_stoppingCts.Token);
 

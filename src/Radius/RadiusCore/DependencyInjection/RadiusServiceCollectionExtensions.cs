@@ -43,7 +43,6 @@ public static class RadiusServiceCollectionExtensions
         });
         services.AddTransient<IRadiusPacketParser, RadiusPacketParser>();
         services.AddTransient<TestPacketHandler>();
-        services.AddTransient<IUdpClientFactory, UdpClientFactory>();
         services.AddTransient<IPacketHandlerRepository>(services1 =>
         {
             var packetHandler = services1.GetRequiredService<TestPacketHandler>();

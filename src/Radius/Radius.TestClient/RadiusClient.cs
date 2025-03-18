@@ -43,14 +43,13 @@ public class RadiusClient(IRadiusPacketParser radiusPacketParser) : IDisposable
 
         if (_pendingRequests.TryAdd(pendingRequest, completionSource))
         {
-            await _udpClient.SendAsync(radiusPacketParser.GetBytes(packet), remoteEndpoint);
+            //todo 创建RADIUS数据包。
+            await _udpClient.SendAsync(new byte[20], remoteEndpoint);
 
             if (await Task.WhenAny(completionSource.Task, Task.Delay(timeout)) == completionSource.Task)
             {
                 return radiusPacketParser.Parse(
-                    completionSource.Task.Result.Buffer,
-                    packet.SharedSecret,
-                    packet.Authenticator);
+                    completionSource.Task.Result.Buffer);
             }
 
             if (_pendingRequests.TryRemove(pendingRequest, out var tcs))

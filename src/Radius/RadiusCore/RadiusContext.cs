@@ -10,7 +10,7 @@ namespace RadiusCore;
 /// </remarks>
 /// <param name="radiusPacket"></param>
 /// <param name="server"></param>
-public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server)
+public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server, IServiceProvider services)
 {
     /// <summary>
     /// 
@@ -21,6 +21,11 @@ public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server)
     /// 
     /// </summary>
     public RadiusServer Server { get; } = server;
+
+    /// <summary>
+    /// Gets the service provider that scopes the lifetime of the RADIUS context.
+    /// </summary>
+    public IServiceProvider Services { get; } = services;
 
     /// <summary>
     /// 

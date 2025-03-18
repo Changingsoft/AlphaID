@@ -14,17 +14,13 @@ public class Attribute
     public static object ToObject(
         byte[] contentBytes,
         string type,
-        uint code,
-        byte[] authenticator,
-        byte[] sharedSecret)
+        byte[] authenticator)
     {
         switch (type)
         {
             case "string":
             case "tagged-string":
                 return Encoding.UTF8.GetString(contentBytes);
-            case "octet" when code == 2:
-                return RadiusPassword.Decrypt(sharedSecret, authenticator, contentBytes);
             case "octet":
                 return contentBytes;
             case "integer":

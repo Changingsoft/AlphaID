@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "ServerAndTestClient",
+    "Projects": [
+      {
+        "Path": "Radius.TestClient\\Radius.TestClient.csproj",
+        "Action": "Start",
+        "DebugTarget": "Radius.TestClient"
+      },
+      {
+        "Path": "RadiusService\\RadiusService.csproj",
+        "Action": "Start",
+        "DebugTarget": "RadiusService"
+      }
+    ]
+  }
+]

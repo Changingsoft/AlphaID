@@ -21,12 +21,13 @@ using var client = scope.ServiceProvider.GetRequiredService<RadiusClient>();
 
 
 
-var requestPacket = new RadiusPacket(PacketCode.AccessRequest, 0, "xyzzy5461");
+var requestPacket = new RadiusPacket(PacketCode.AccessRequest, 0);
 requestPacket.AddMessageAuthenticator(); // Add message authenticator for blast radius
 requestPacket.AddAttribute("User-Name", "nemo");
 requestPacket.AddAttribute("User-Password", "arctangent");
 
+Console.ReadKey();
 
 var responsePacket = await client.SendPacketAsync(
     requestPacket,
-    new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1812));
+    new IPEndPoint(IPAddress.Loopback, 1812));

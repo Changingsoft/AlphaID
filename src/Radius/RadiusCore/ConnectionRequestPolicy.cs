@@ -22,9 +22,11 @@ namespace RadiusCore
         public int Order { get; set; }
 
         /// <summary>
-        /// 连接方式。
+        /// 网络连接方法。
+        /// 选择向NPS发送连接请求的网络访问服务器类型。你可以选择网络访问服务器的类型或特定于供应商的类型，也可以不选择。
+        /// 如果你的网络访问服务器是802.1X身份验证交换机或无线访问点，请选择未指定。
         /// </summary>
-        public string? ConnectMethod { get; set; }
+        public string? ConnectionMethod { get; set; }
 
         /// <summary>
         /// 条件集合。

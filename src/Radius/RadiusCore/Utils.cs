@@ -110,8 +110,10 @@ public static class Utils
     {
         var temp = new byte[packetBytes.Length];
         packetBytes.CopyTo(temp, 0);
+        //用0填充Message-Authenticator字段
         Buffer.BlockCopy(AuthenticatorZeros, 0, temp, index + 2, AuthenticatorZeros.Length);
 
+        //将Request-Authenticator复制到Authenticator字段位置。
         requestAuthenticator?.CopyTo(temp, 4);
 
         using var md5 = new HMACMD5(sharedSecret);
@@ -143,8 +145,7 @@ public static class Utils
         byte[] packetBytes,
         int packetLength,
         int messageAuthenticatorPosition,
-        byte[] sharedSecret,
-        byte[]? requestAuthenticator)
+        byte[] sharedSecret)
     {
         var messageAuthenticator = packetBytes.Skip(messageAuthenticatorPosition + 2).Take(16).ToArray();
 
@@ -154,7 +155,7 @@ public static class Utils
         var calculatedMessageAuthenticator = CalculateMessageAuthenticator(
             tempPacket,
             sharedSecret,
-            requestAuthenticator,
+            null,
             messageAuthenticatorPosition);
 
         return calculatedMessageAuthenticator.SequenceEqual(messageAuthenticator);

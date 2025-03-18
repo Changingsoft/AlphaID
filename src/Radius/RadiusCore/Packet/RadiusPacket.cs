@@ -10,50 +10,15 @@ namespace RadiusCore.Packet;
 /// </summary>
 public class RadiusPacket
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public RadiusPacket() { }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public PacketCode Code { get; internal set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public byte Identifier { get; internal set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public byte[] Authenticator { get; internal set; } = new byte[16];
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public byte[] SharedSecret { get; internal set; } = [];
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public byte[] RequestAuthenticator { get; internal set; } = [];
-
+    private byte[] _data = new byte[20];
 
     /// <summary>
     /// Create a new packet with a random authenticator
     /// </summary>
-    public RadiusPacket(PacketCode code, byte identifier, string secret)
+    public RadiusPacket(PacketCode code, byte identifier)
     {
-        Code = code;
-        Identifier = identifier;
-        SharedSecret = Encoding.UTF8.GetBytes(secret);
+        _data[0] = (byte)code;
+        _data[1] = identifier;
 
         // Generate random authenticator for access request packets
         if (Code == PacketCode.AccessRequest || Code == PacketCode.StatusServer)
@@ -69,18 +34,54 @@ public class RadiusPacket
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public RadiusPacket() { }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public PacketCode Code
+    {
+        get
+        {
+            return (PacketCode)_data[0];
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public byte Identifier
+    {
+        get
+        {
+            return _data[1];
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public byte[] Authenticator
+    {
+        get
+        {
+            return _data[4..20];
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public IList<RadiusAttribute> Attributes { get; set; } = [];
 
     /// <summary>
     /// Creates a response packet with code, authenticator, identifier and secret from the request packet.
     /// </summary>
     public RadiusPacket CreateResponsePacket(PacketCode responseCode) =>
-        new()
-        {
-            Code = responseCode,
-            SharedSecret = SharedSecret,
-            Identifier = Identifier,
-            RequestAuthenticator = Authenticator
-        };
+        new(responseCode, Identifier);
 
 
     /// <summary>
@@ -143,4 +144,9 @@ public class RadiusPacket
 
         Attributes[name].Add(value);
     }
+}
+
+public abstract class RadiusAttribute
+{
+
 }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RadiusCore;
 
@@ -18,19 +19,20 @@ namespace RadiusCore;
 /// <param name="options">Options for RADIUS server.</param>
 /// <param name="logger">Logger for RADIUS server.</param>
 public class RadiusServer(
-    IRadiusPacketParser radiusPacketParser,
-    IPacketHandlerRepository packetHandlerRepository,
+    IServiceProvider serviceProvider,
     IOptions<RadiusServerOptions> options,
     ILogger<RadiusServer>? logger) : IHostedService, IDisposable
 {
     private UdpClient? _udpClient;
-    private int _concurrentHandlerCount;
     private Task? _receiveLoopTask;
     private CancellationTokenSource? _stoppingCts;
-    private readonly RadiusServerType _radiusServerType = RadiusServerType.Authentication;
     private readonly ConnectionRequestHandlerFactory _connectionRequestHandlerFactory;
     private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public IServiceProvider Services { get; } = serviceProvider;
 
     /// <summary>
     /// Start listening for requests
@@ -38,7 +40,7 @@ public class RadiusServer(
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _stoppingCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
+        
         var localEndpoint = new IPEndPoint(IPAddress.Any, options.Value.AuthenticationServerPort);
 
         logger?.LogInformation("Starting Radius server on {localEndpoint}", localEndpoint);
@@ -52,7 +54,6 @@ public class RadiusServer(
 
         return Task.CompletedTask;
     }
-
 
     /// <summary>
     /// Stop listening
@@ -73,7 +74,6 @@ public class RadiusServer(
         }
     }
 
-
     /// <summary>
     /// Start the loop used for receiving packets
     /// </summary>
@@ -84,17 +84,22 @@ public class RadiusServer(
         {
             try
             {
+                logger?.LogDebug("Server now ready to receive packet");
                 UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
+                if (logger != null && logger.IsEnabled(LogLevel.Trace))
+                    logger?.LogTrace("Receive data:{data}", result.Buffer);
+                
                 logger?.LogDebug("Received packet from {result.RemoteEndPoint}", result.RemoteEndPoint);
                 await Task.Run(async () =>
                 {
+                    using var scope = Services.CreateScope();
                     //读取报文并创建处理上下文
                     RadiusPacketDataStruct radiusPacketStruct =
                         RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
 
                     RadiusRequest request = new(radiusPacketStruct, attributes, result.RemoteEndPoint);
 
-                    RadiusContext radiusContext = new(request, this);
+                    RadiusContext radiusContext = new(request, this, scope.ServiceProvider);
 
                     //处理报文
                     var connectionRequestHandler = _connectionRequestHandlerFactory.CreateHandler(radiusContext);
@@ -104,7 +109,8 @@ public class RadiusServer(
                     await networkPolicyHandler.HandleAsync();
 
                     //处理完毕后，发送响应报文
-                    throw new NotImplementedException();
+                    await _udpClient.SendAsync([0x10, 0x10], 2, radiusContext.Request.Remote);
+
                 }, cancellationToken)
                     .ContinueWith(task =>
                     {
@@ -114,7 +120,6 @@ public class RadiusServer(
                         }
                     }, TaskContinuationOptions.OnlyOnFaulted);
                 
-                logger?.LogTrace("Server now ready for receive another packet");
             }
             catch (OperationCanceledException)
             {
@@ -127,106 +132,6 @@ public class RadiusServer(
         }
     }
 
-
-    /// <summary>
-    /// Used to handle the packets asynchronously
-    /// </summary>
-    /// <param name="remoteEndpoint"></param>
-    /// <param name="packetBytes"></param>
-    private async Task HandlePacket(IPEndPoint remoteEndpoint, byte[] packetBytes)
-    {
-        try
-        {
-            logger?.LogDebug("Received packet from {remoteEndpoint}, Concurrent handlers count: {concurrentHandlerCount)}", remoteEndpoint, Interlocked.Increment(ref _concurrentHandlerCount));
-
-            if (packetHandlerRepository.TryGetHandler(remoteEndpoint.Address, out var handler))
-            {
-                var responsePacket = GetResponsePacket(handler.packetHandler, handler.sharedSecret, packetBytes, remoteEndpoint);
-                await SendResponsePacket(responsePacket, remoteEndpoint);
-            }
-            else
-            {
-                logger?.LogError("No packet handler found for remote ip {remoteEndpoint}", remoteEndpoint);
-                var packet = radiusPacketParser.Parse(packetBytes, "wut"u8.ToArray());
-                DumpPacket(packet);
-            }
-        }
-        catch (Exception ex) when (ex is ArgumentException || ex is OverflowException)
-        {
-            logger?.LogWarning("Ignoring malformed(?) packet received from {remoteEndpoint}", ex);
-            logger?.LogDebug("Packet bytes: {PacketBytes}", packetBytes.ToHexString());
-        }
-        catch (Exception ex)
-        {
-            logger?.LogError(ex, "Failed to receive packet from {remoteEndpoint}", remoteEndpoint);
-            logger?.LogDebug("Packet bytes: {PacketBytes}", packetBytes.ToHexString());
-        }
-        finally
-        {
-            Interlocked.Decrement(ref _concurrentHandlerCount);
-        }
-    }
-
-    /// <summary>
-    /// Parses a packet and gets a response packet from the handler
-    /// </summary>
-    /// <param name="packetHandler"></param>
-    /// <param name="sharedSecret"></param>
-    /// <param name="packetBytes"></param>
-    /// <param name="remoteEndpoint"></param>
-    /// <returns></returns>
-    internal RadiusPacket GetResponsePacket(IPacketHandler packetHandler, string sharedSecret, byte[] packetBytes, IPEndPoint remoteEndpoint)
-    {
-        var requestPacket = radiusPacketParser.Parse(packetBytes, Encoding.UTF8.GetBytes(sharedSecret));
-        logger?.LogInformation("Received {requestPacket.Code} from {remoteEndpoint} Id={requestPacket.Identifier}", requestPacket.Code, remoteEndpoint, requestPacket.Identifier);
-
-        if (logger != null && logger.IsEnabled(LogLevel.Debug))
-        {
-            DumpPacket(requestPacket);
-        }
-        logger?.LogDebug("Packet bytes: {PacketBytes}", packetBytes.ToHexString());
-
-        // Handle status server requests in server outside packet handler
-        if (requestPacket.Code == PacketCode.StatusServer)
-        {
-            var responseCode = _radiusServerType == RadiusServerType.Authentication ? PacketCode.AccessAccept : PacketCode.AccountingResponse;
-            logger?.LogDebug("Sending {responseCode} for StatusServer request from {remoteEndpoint}", responseCode, remoteEndpoint);
-            return requestPacket.CreateResponsePacket(responseCode);
-        }
-
-        logger?.LogDebug("Handling packet for remote ip {remoteEndpoint.Address} with {packetHandler.GetType()}", remoteEndpoint.Address, packetHandler.GetType());
-
-        var sw = Stopwatch.StartNew();
-        var responsePacket = packetHandler.HandlePacket(requestPacket);
-        sw.Stop();
-        logger?.LogDebug("{remoteEndpoint} Id={responsePacket.Identifier}, Received {responsePacket.Code} from handler in {sw.ElapsedMilliseconds}ms", remoteEndpoint, responsePacket.Identifier, responsePacket.Code, sw.ElapsedMilliseconds);
-        if (sw.ElapsedMilliseconds >= 5000)
-        {
-            logger?.LogWarning("Slow response for Id {responsePacket.Identifier}, check logs", responsePacket.Identifier);
-        }
-
-        if (requestPacket.Attributes.ContainsKey("Proxy-State"))
-        {
-            responsePacket.Attributes.Add("Proxy-State", requestPacket.Attributes.SingleOrDefault(o => o.Key == "Proxy-State").Value);
-        }
-
-        return responsePacket;
-    }
-
-
-    /// <summary>
-    /// Sends a packet
-    /// </summary>
-    /// <param name="responsePacket"></param>
-    /// <param name="remoteEndpoint"></param>
-    private async Task SendResponsePacket(RadiusPacket responsePacket, IPEndPoint remoteEndpoint)
-    {
-        var responseBytes = radiusPacketParser.GetBytes(responsePacket);
-        await _udpClient!.SendAsync(responseBytes, responseBytes.Length, remoteEndpoint);   // todo thread safety... although this implementation will be implicitly thread safeish...
-        logger?.LogInformation("{responsePacket.Code} sent to {remoteEndpoint} Id={responsePacket.Identifier}", responsePacket.Code, remoteEndpoint, responsePacket.Identifier);
-    }
-
-
     /// <summary>
     /// Dispose
     /// </summary>
@@ -235,29 +140,5 @@ public class RadiusServer(
         _stoppingCts?.Cancel();
         _udpClient?.Dispose();
         GC.SuppressFinalize(this);
-    }
-
-
-    /// <summary>
-    /// Dump the packet attributes to the log
-    /// </summary>
-    /// <param name="packet"></param>
-    private void DumpPacket(RadiusPacket packet)
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine($"Packet dump for {packet.Identifier}:");
-        foreach (var attribute in packet.Attributes)
-        {
-            if (attribute.Key == "User-Password")
-            {
-                sb.AppendLine($"{attribute.Key} length : {attribute.Value.First().ToString()!.Length}");
-            }
-            else
-            {
-                attribute.Value.ForEach(o => sb.AppendLine($"{attribute.Key} : {o} [{o.GetType()}]"));
-            }
-        }
-
-        logger?.LogDebug("Packet: {Packet}", sb.ToString());
     }
 }

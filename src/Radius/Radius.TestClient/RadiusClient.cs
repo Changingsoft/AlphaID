@@ -9,7 +9,7 @@ namespace Radius.TestClient;
 /// <summary>
 /// Create a radius client which sends and receives responses on localEndpoint
 /// </summary>
-public class RadiusClient(IRadiusPacketParser radiusPacketParser) : IDisposable
+public class RadiusClient(RadiusPacketParser radiusPacketParser) : IDisposable
 {
     private readonly UdpClient _udpClient = new(AddressFamily.InterNetwork);
     private Task? _receiveLoopTask;

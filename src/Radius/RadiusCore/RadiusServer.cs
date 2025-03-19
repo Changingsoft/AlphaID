@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RadiusCore.Packet;
-using RadiusCore.RadiusConstants;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace RadiusCore;
@@ -14,11 +12,10 @@ namespace RadiusCore;
 /// <summary>
 /// RADIUS server.
 /// </summary>
-/// <param name="radiusPacketParser"></param>
-/// <param name="packetHandlerRepository"></param>
 /// <param name="options">Options for RADIUS server.</param>
 /// <param name="logger">Logger for RADIUS server.</param>
 public class RadiusServer(
+    RadiusPacketParser packetParser,
     IServiceProvider serviceProvider,
     IOptions<RadiusServerOptions> options,
     ILogger<RadiusServer>? logger) : IHostedService, IDisposable
@@ -92,8 +89,19 @@ public class RadiusServer(
                 logger?.LogDebug("Received packet from {result.RemoteEndPoint}", result.RemoteEndPoint);
                 await Task.Run(async () =>
                 {
+                    Stopwatch watch = Stopwatch.StartNew();
                     using var scope = Services.CreateScope();
                     //读取报文并创建处理上下文
+                    RadiusPacket packet;
+                    try
+                    {
+                        packet = packetParser.Parse(result.Buffer);
+                    }
+                    catch (Exception e)
+                    {
+                        logger?.LogError(e, "解析数据包时异常。将直接丢弃。");
+                        return;
+                    }
                     RadiusPacketDataStruct radiusPacketStruct =
                         RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
 
@@ -110,6 +118,8 @@ public class RadiusServer(
 
                     //处理完毕后，发送响应报文
                     await _udpClient.SendAsync([0x10, 0x10], 2, radiusContext.Request.Remote);
+                    watch.Stop();
+                    logger?.LogDebug("数据包已处理，用时{ms}毫秒。", watch.ElapsedMilliseconds);
 
                 }, cancellationToken)
                     .ContinueWith(task =>

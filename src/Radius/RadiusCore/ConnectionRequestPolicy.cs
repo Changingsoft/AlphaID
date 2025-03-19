@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadiusCore
+﻿namespace RadiusCore
 {
     /// <summary>
     /// 连接请求策略。

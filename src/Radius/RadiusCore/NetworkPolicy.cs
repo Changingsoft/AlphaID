@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RadiusCore
+﻿namespace RadiusCore
 {
+    /// <summary>
+    /// 网络策略。
+    /// </summary>
     public class NetworkPolicy
     {
         /// <summary>
@@ -16,7 +13,7 @@ namespace RadiusCore
         /// <summary>
         /// 策略名称。
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// 应用顺序。

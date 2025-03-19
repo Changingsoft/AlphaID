@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace RadiusCore;
+﻿namespace RadiusCore;
 
 /// <summary>
 /// RADIUS上下文。

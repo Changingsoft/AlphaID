@@ -1,7 +1,6 @@
 ﻿using RadiusCore.RadiusConstants;
 using System.Net;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace RadiusCore.Packet;
 
@@ -10,8 +9,9 @@ namespace RadiusCore.Packet;
 /// </summary>
 public class RadiusPacket
 {
-    private byte[] _data = new byte[20];
+    private readonly byte[] _data = new byte[20];
 
+    
     /// <summary>
     /// Create a new packet with a random authenticator
     /// </summary>
@@ -37,17 +37,22 @@ public class RadiusPacket
     /// <summary>
     /// 
     /// </summary>
-    public RadiusPacket() { }
+    /// <param name="data"></param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public RadiusPacket(byte[] data)
+    {
+        if (data.Length < 20)
+            throw new ArgumentOutOfRangeException(nameof(data), "Packet data must be at least 20 bytes long");
+        _data = data[..20];
+    }
 
     /// <summary>
     /// 
     /// </summary>
     public PacketCode Code
     {
-        get
-        {
-            return (PacketCode)_data[0];
-        }
+        get => (PacketCode)_data[0];
+        set => _data[0] = (byte)value;
     }
 
     /// <summary>
@@ -55,10 +60,8 @@ public class RadiusPacket
     /// </summary>
     public byte Identifier
     {
-        get
-        {
-            return _data[1];
-        }
+        get => _data[1];
+        set => _data[1] = value;
     }
 
     /// <summary>
@@ -66,16 +69,20 @@ public class RadiusPacket
     /// </summary>
     public byte[] Authenticator
     {
-        get
+        get => _data[4..20];
+        set
         {
-            return _data[4..20];
+            // Copy the authenticator to the packet data
+            if(value.Length != 16)
+                throw new ArgumentOutOfRangeException(nameof(value), "Authenticator must be 16 bytes long");
+            value.CopyTo(_data, 4);
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public IList<RadiusAttribute> Attributes { get; set; } = [];
+    public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
 
     /// <summary>
     /// Creates a response packet with code, authenticator, identifier and secret from the request packet.
@@ -144,9 +151,4 @@ public class RadiusPacket
 
         Attributes[name].Add(value);
     }
-}
-
-public abstract class RadiusAttribute
-{
-
 }

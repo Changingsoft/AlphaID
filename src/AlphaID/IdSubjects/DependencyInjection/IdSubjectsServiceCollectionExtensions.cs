@@ -42,6 +42,15 @@ public static class IdSubjectsServiceCollectionExtensions
                 .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<T>使用
                 .AddUserValidator<PhoneNumberValidator<TUser>>();
 
+        // 移除原有的PasswordValidator
+        var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
+        if (passwordValidatorDescriptor != null)
+        {
+            services.Remove(passwordValidatorDescriptor);
+        }
+
+        identityBuilder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
+        
         if (setupAction != null)
         {
             services.Configure(setupAction);

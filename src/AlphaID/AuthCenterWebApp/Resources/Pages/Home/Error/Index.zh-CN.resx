@@ -118,9 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="An error occurred while processing your request." xml:space="preserve">
-    <value>处理请求时发生错误。</value>
+	  <value>处理请求时发生错误。</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>错误</value>
+	  <value>错误</value>
+  </data>
+  <data name="Go home" xml:space="preserve">
+	  <value>回首页</value>
   </data>
 </root>

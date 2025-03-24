@@ -259,10 +259,10 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-app.UseExceptionHandler("/Home/Error");
 app.UseRequestLocalization();
 app.UseMarkdown();
 app.UseStaticFiles();

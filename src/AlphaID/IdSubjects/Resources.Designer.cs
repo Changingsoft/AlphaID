@@ -205,6 +205,69 @@ namespace IdSubjects {
         }
         
         /// <summary>
+        ///   查找类似 Password requires 3 of 4 types: uppercase, lowercase, digits and special characters. 的本地化字符串。
+        /// </summary>
+        public static string PasswordRequires3Of4 {
+            get {
+                return ResourceManager.GetString("PasswordRequires3Of4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password requires digit. 的本地化字符串。
+        /// </summary>
+        public static string PasswordRequiresDigit {
+            get {
+                return ResourceManager.GetString("PasswordRequiresDigit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password requires lower case charaters. 的本地化字符串。
+        /// </summary>
+        public static string PasswordRequiresLower {
+            get {
+                return ResourceManager.GetString("PasswordRequiresLower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password reqiores special charaters. 的本地化字符串。
+        /// </summary>
+        public static string PasswordRequiresNonAlphanumeric {
+            get {
+                return ResourceManager.GetString("PasswordRequiresNonAlphanumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        public static string PasswordRequiresUniqueChars {
+            get {
+                return ResourceManager.GetString("PasswordRequiresUniqueChars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password requires upper case charaters. 的本地化字符串。
+        /// </summary>
+        public static string PasswordRequiresUpper {
+            get {
+                return ResourceManager.GetString("PasswordRequiresUpper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password too short. 的本地化字符串。
+        /// </summary>
+        public static string PasswordTooShort {
+            get {
+                return ResourceManager.GetString("PasswordTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 You cannot reuse old passwords. 的本地化字符串。
         /// </summary>
         public static string ReuseOldPassword {

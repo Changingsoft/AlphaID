@@ -24,6 +24,7 @@ using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -167,6 +168,7 @@ platform.AddEntityFramework(options =>
         sql.UseNetTopologySuite();
     });
 });
+builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
 
 //DbContext for Duende IdentityServer.
 builder.Services.AddDbContext<ConfigurationDbContext>(options =>

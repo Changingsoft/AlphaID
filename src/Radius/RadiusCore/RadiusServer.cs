@@ -15,7 +15,7 @@ namespace RadiusCore;
 /// <param name="options">Options for RADIUS server.</param>
 /// <param name="logger">Logger for RADIUS server.</param>
 public class RadiusServer(
-    RadiusPacketParser packetParser,
+    RadiusRequestParser packetParser,
     IServiceProvider serviceProvider,
     IOptions<RadiusServerOptions> options,
     TimeProvider timeProvider,
@@ -86,6 +86,7 @@ public class RadiusServer(
             {
                 logger?.LogDebug("Server now ready to receive packet");
                 UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
+                
                 if (logger != null && logger.IsEnabled(LogLevel.Trace))
                     logger?.LogTrace("Receive data:{data}", result.Buffer);
                 
@@ -95,20 +96,16 @@ public class RadiusServer(
                     Stopwatch watch = Stopwatch.StartNew();
                     using var scope = Services.CreateScope();
                     //读取报文并创建处理上下文
-                    RadiusPacket packet;
+                    RadiusRequest request;
                     try
                     {
-                        packet = packetParser.Parse(result.Buffer);
+                        request = packetParser.Parse(result.Buffer);
                     }
                     catch (Exception e)
                     {
                         logger?.LogError(e, "解析数据包时异常。将直接丢弃。");
                         return;
                     }
-                    RadiusPacketDataStruct radiusPacketStruct =
-                        RadiusPacketDataStructExtensions.FromByteArray(result.Buffer, out var attributes);
-
-                    RadiusRequest request = new(radiusPacketStruct, attributes, result.RemoteEndPoint);
 
                     RadiusContext radiusContext = new(request, this, scope.ServiceProvider);
 
@@ -123,6 +120,10 @@ public class RadiusServer(
                     await _udpClient.SendAsync([0x10, 0x10], 2, radiusContext.Request.Remote);
                     watch.Stop();
                     logger?.LogDebug("数据包已处理，用时{ms}毫秒。", watch.ElapsedMilliseconds);
+                    if(watch.ElapsedMilliseconds > 3000)
+                    {
+                        logger?.LogWarning("数据包处理时间过长，用时{ms}毫秒。", watch.ElapsedMilliseconds);
+                    }
 
                 }, cancellationToken)
                     .ContinueWith(task =>
@@ -153,5 +154,10 @@ public class RadiusServer(
         _stoppingCts?.Cancel();
         _udpClient?.Dispose();
         GC.SuppressFinalize(this);
+    }
+
+    internal async Task SendAsync(RadiusResponse response)
+    {
+        await _udpClient.SendAsync(response.ToBytes(), response.Length, response.Remote);
     }
 }

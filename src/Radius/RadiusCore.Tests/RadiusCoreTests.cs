@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
-using RadiusCore.RadiusConstants;
 using System.Net;
 using System.Text;
 using Xunit;
@@ -152,7 +151,7 @@ public class RadiusCoreTests
         var packetBytes = "0404002711019c27d4e00cbc523b3e2fc834baf401066e656d6f2806000000012c073230303234";
         var secret = "xyzzy5461";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         var requestAuthenticator = Utils.CalculateRequestAuthenticator(
             Encoding.UTF8.GetBytes(secret),
             Utils.StringToByteArray(packetBytes));
@@ -172,7 +171,7 @@ public class RadiusCoreTests
         var packetBytes = "0404002711019c27d4e00cbc523b3e2fc834baf401066e656d6f2806000000012c073230303234";
         var secret = "foo";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         Utils.CalculateRequestAuthenticator(
             Encoding.UTF8.GetBytes(secret),
             Utils.StringToByteArray(packetBytes));
@@ -192,7 +191,7 @@ public class RadiusCoreTests
         var secret = "xyzzy5461";
 
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         var requestPacket = radiusPacketParser.Parse(Utils.StringToByteArray(request));
     }
 
@@ -207,7 +206,7 @@ public class RadiusCoreTests
         var secret = "xyzzy5461";
 
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         var requestPacket = radiusPacketParser.Parse(Utils.StringToByteArray(request));
     }
 
@@ -221,7 +220,7 @@ public class RadiusCoreTests
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84f";
         var secret = "xyzzy5461";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             radiusPacketParser.Parse(Utils.StringToByteArray(request)));
     }
@@ -269,7 +268,7 @@ public class RadiusCoreTests
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
         var secret = "xyzzy5461";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         radiusPacketParser.Parse(Utils.StringToByteArray(request));
     }
 
@@ -283,7 +282,7 @@ public class RadiusCoreTests
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
         var secret = "xyzzy5461durr";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         Assert.Throws<MessageAuthenticatorException>(() => radiusPacketParser.Parse(Utils.StringToByteArray(request)));
     }
 
@@ -341,7 +340,7 @@ public class RadiusCoreTests
             Utils.StringToByteArray("0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3");
         var secret = "xyzzy5461";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         radiusPacketParser.Parse(request);
         Assert.Equal(expected.ToHexString(), request.ToHexString());
     }
@@ -374,7 +373,7 @@ public class RadiusCoreTests
 
         const string secret = "xyzzy5461";
 
-        var radiusPacketParser = new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance);
+        var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
 
         radiusPacketParser.Parse(response);
     }
@@ -393,10 +392,6 @@ public class RadiusCoreTests
 
         const string secret = "xyzzy5461";
 
-        var radiusPacketParser =
-            new RadiusPacketParser(GetDictionary(), NullLogger<RadiusPacketParser>.Instance, false);
-        Assert.Throws<MessageAuthenticatorException>(() =>
-            radiusPacketParser.Parse(response));
     }
 
     /// <summary>

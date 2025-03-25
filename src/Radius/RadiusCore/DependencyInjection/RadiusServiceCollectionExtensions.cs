@@ -41,7 +41,7 @@ public static class RadiusServiceCollectionExtensions
         {
             return RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary").GetAwaiter().GetResult();
         });
-        services.AddTransient<RadiusPacketParser>();
+        services.AddTransient<RadiusRequestParser>();
         services.AddTransient<TestPacketHandler>();
         services.AddTransient<IPacketHandlerRepository>(services1 =>
         {

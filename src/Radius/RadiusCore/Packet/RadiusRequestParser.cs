@@ -4,16 +4,16 @@ using RadiusCore.Dictionary;
 namespace RadiusCore.Packet;
 
 /// <summary>
-/// RadiusPacketParser
+/// RadiusRequestParser
 /// </summary>
-public class RadiusPacketParser(
+public class RadiusRequestParser(
     IRadiusDictionary radiusDictionary,
-    ILogger<RadiusPacketParser>? logger)
+    ILogger<RadiusRequestParser>? logger)
 {
     /// <summary>
     /// Parses packet bytes and returns an IRadiusPacket
     /// </summary>
-    public RadiusPacket Parse(byte[] packetBytes)
+    public RadiusRequest Parse(byte[] packetBytes)
     {
         var packetLength = BitConverter.ToUInt16([.. packetBytes.Skip(2).Take(2).Reverse()], 0);
         if (packetBytes.Length < packetLength)
@@ -23,11 +23,7 @@ public class RadiusPacketParser(
                 $"Packet length mismatch, expected: {packetLength}, actual: {packetBytes.Length}");
         }
 
-        var packet = new RadiusPacket(packetBytes);
-
-        AddAttributesToPacket(packet, packetBytes, packetLength);
-
-        return packet;
+        throw new NotImplementedException();
     }
 
 

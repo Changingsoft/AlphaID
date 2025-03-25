@@ -1,4 +1,4 @@
-﻿namespace RadiusCore.RadiusConstants;
+﻿namespace RadiusCore;
 
 /// <summary>
 /// Packet codes for RADIUS packets.

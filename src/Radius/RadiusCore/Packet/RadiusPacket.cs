@@ -1,5 +1,4 @@
-﻿using RadiusCore.RadiusConstants;
-using System.Net;
+﻿using System.Net;
 using System.Security.Cryptography;
 
 namespace RadiusCore.Packet;

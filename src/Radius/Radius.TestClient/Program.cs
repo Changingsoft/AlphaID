@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Radius.TestClient;
+using RadiusCore;
 using RadiusCore.Packet;
-using RadiusCore.RadiusConstants;
 using System.Net;
 
 
@@ -21,13 +21,13 @@ using var client = scope.ServiceProvider.GetRequiredService<RadiusClient>();
 
 
 
-var requestPacket = new RadiusPacket(PacketCode.AccessRequest, 0);
-requestPacket.AddMessageAuthenticator(); // Add message authenticator for blast radius
-requestPacket.AddAttribute("User-Name", "nemo");
-requestPacket.AddAttribute("User-Password", "arctangent");
+var requestPacket = new RadiusRequest(PacketCode.AccessRequest, 0, new byte[16], [], new(IPAddress.Loopback, 1812));
+//requestPacket.AddMessageAuthenticator(); // Add message authenticator for blast radius
+//requestPacket.AddAttribute("User-Name", "nemo");
+//requestPacket.AddAttribute("User-Password", "arctangent");
 
 Console.ReadKey();
 
 var responsePacket = await client.SendPacketAsync(
     requestPacket,
-    new IPEndPoint(IPAddress.Loopback, 1812));
+    new IPEndPoint(IPAddress.Loopback, 1812), TimeSpan.FromSeconds(3));

@@ -1,4 +1,6 @@
-﻿namespace RadiusCore;
+﻿using RadiusCore.Models;
+
+namespace RadiusCore;
 
 /// <summary>
 /// RADIUS上下文。
@@ -29,4 +31,19 @@ public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server, ISer
     /// 
     /// </summary>
     public RadiusResponse Response {get;} = new();
+
+    /// <summary>
+    /// 当前连接请求策略。
+    /// </summary>
+    public ConnectionRequestPolicy? ConnectionRequestPolicy { get; internal set; }
+
+    /// <summary>
+    /// 当前网络策略。
+    /// </summary>
+    public NetworkPolicy? NetworkPolicy { get; internal set; }
+
+    /// <summary>
+    /// 当前客户端。
+    /// </summary>
+    public RadiusClient? Client { get; internal set; }
 }

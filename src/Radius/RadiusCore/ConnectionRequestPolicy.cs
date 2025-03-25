@@ -35,7 +35,7 @@
         /// <summary>
         /// 转发连接请求/身份验证。指示是在此服务器上对请求进行身份验证，还是将请求转发到其他服务器。
         /// </summary>
-        public string? RouteAuthentication { get; set; }
+        public RouteType RouteType { get; set; }
 
         /// <summary>
         /// 转发连接请求/记账。指示是在此服务器上记账，还是将请求转发到其他服务器。
@@ -56,6 +56,11 @@
         /// 将要发送到RADIUS客户端的供应商特定属性。
         /// </summary>
         public string? ResponseAdditionalVendorSpec { get; set; }
+
+        /// <summary>
+        /// 远程服务器组。
+        /// </summary>
+        public int? RemoteServerGroupId { get; internal set; }
 
         /// <summary>
         /// 测试策略条件是否全部满足。若策略条件集合全部满足，则返回true，否则返回false。

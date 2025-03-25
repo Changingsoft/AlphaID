@@ -18,6 +18,7 @@ public class RadiusServer(
     RadiusPacketParser packetParser,
     IServiceProvider serviceProvider,
     IOptions<RadiusServerOptions> options,
+    TimeProvider timeProvider,
     ILogger<RadiusServer>? logger) : IHostedService, IDisposable
 {
     private UdpClient? _udpClient;
@@ -25,6 +26,8 @@ public class RadiusServer(
     private CancellationTokenSource? _stoppingCts;
     private readonly ConnectionRequestHandlerFactory _connectionRequestHandlerFactory;
     private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
+
+    internal TimeProvider TimeProvider { get; set; } = timeProvider;
 
     /// <summary>
     /// 
@@ -109,12 +112,12 @@ public class RadiusServer(
 
                     RadiusContext radiusContext = new(request, this, scope.ServiceProvider);
 
-                    //处理报文
+                    //处理连接请求策略
                     var connectionRequestHandler = _connectionRequestHandlerFactory.CreateHandler(radiusContext);
-                    await connectionRequestHandler.HandleAsync();
+                    await connectionRequestHandler.HandleAsync(radiusContext);
 
                     var networkPolicyHandler = networkPolicyFactory.CreateHandler(radiusContext);
-                    await networkPolicyHandler.HandleAsync();
+                    await networkPolicyHandler.HandleAsync(radiusContext);
 
                     //处理完毕后，发送响应报文
                     await _udpClient.SendAsync([0x10, 0x10], 2, radiusContext.Request.Remote);

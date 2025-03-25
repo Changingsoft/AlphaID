@@ -56,17 +56,15 @@
         /// 将要发送到RADIUS客户端的供应商特定属性。
         /// </summary>
         public string? ResponseAdditionalVendorSpec { get; set; }
-    }
 
-    /// <summary>
-    /// 条件。
-    /// </summary>
-    public abstract class RadiusCondition
-    {
         /// <summary>
-        /// 测试条件是否为真。
+        /// 测试策略条件是否全部满足。若策略条件集合全部满足，则返回true，否则返回false。
         /// </summary>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public abstract bool TestCondition(RadiusContext context);
+        public virtual bool TestCondition(RadiusContext context)
+        {
+            return Conditions.All(condition => condition.TestCondition(context));
+        }
     }
 }

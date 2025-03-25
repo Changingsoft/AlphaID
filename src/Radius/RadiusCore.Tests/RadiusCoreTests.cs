@@ -19,9 +19,6 @@ public class RadiusCoreTests
     [Fact]
     public void CreateAccessRequestPacket()
     {
-        var expected = "010000380f403f9473978057bd83d5cb98f4227a01066e656d6f02120dbe708d93d413ce3196e43f782a0aee0406c0a80110050600000003";
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.AccessRequest, 0)
         {
             Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
@@ -41,7 +38,6 @@ public class RadiusCoreTests
     public void TestCreateAccessRequestPacketIPv6()
     {
         var expected = IPAddress.IPv6Loopback;
-        var secret = "xyzzy5461";
 
         var packet = new RadiusPacket(PacketCode.AccessRequest, 0)
         {
@@ -65,8 +61,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreateAccessRequestPacketUnknownAttribute()
     {
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.AccessRequest, 0)
         {
             Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
@@ -85,9 +79,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreateDisconnectRequestPacket()
     {
-        var expected = "2801001e2ec8a0da729620319be0140bc28e92682c0a3039303432414638";
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.DisconnectRequest, 1);
         packet.AddAttribute("Acct-Session-Id", "09042AF8");
     }
@@ -99,9 +90,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreateStatusServerRequestPacket()
     {
-        var expected = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.StatusServer, 218)
         {
             Authenticator = Utils.StringToByteArray("8a54f4686fb394c52866e302185d0623")
@@ -115,9 +103,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreateStatusServerRequestPacketAccounting()
     {
-        var expected = "0cb30026925f6b66dd5fed571fcb1db7ad3882605012e8d6eabda910875cd91fdade26367858";
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.StatusServer, 179)
         {
             Authenticator = Utils.StringToByteArray("925f6b66dd5fed571fcb1db7ad388260")
@@ -131,7 +116,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreateAndParseAccountingRequestPacket()
     {
-        var secret = "xyzzy5461";
         GetDictionary();
         var packet = new RadiusPacket(PacketCode.AccountingRequest, 0);
         packet.AddAttribute("User-Name", "nemo");
@@ -188,7 +172,6 @@ public class RadiusCoreTests
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
         var expected = request;
-        var secret = "xyzzy5461";
 
 
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
@@ -202,8 +185,6 @@ public class RadiusCoreTests
     public void TestPacketParserAndAssemblerExtraDataIgnored()
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa300ff00ff00ff";
-        var expected = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var secret = "xyzzy5461";
 
 
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
@@ -218,7 +199,6 @@ public class RadiusCoreTests
     public void TestPacketParserMissingData()
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84f";
-        var secret = "xyzzy5461";
 
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -232,8 +212,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreatingAndParsingPacket()
     {
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.AccessRequest, 1);
         packet.AddAttribute("User-Name", "test@example.com");
         packet.AddAttribute("User-Password", "test");
@@ -251,8 +229,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreatingMissingAttributes()
     {
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.AccessRequest, 1);
         packet.AddAttribute("User-Name", "test@example.com");
         packet.AddAttribute("User-Password", "test");
@@ -266,7 +242,6 @@ public class RadiusCoreTests
     public void TestMessageAuthenticatorValidationSuccess()
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var secret = "xyzzy5461";
 
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         radiusPacketParser.Parse(Utils.StringToByteArray(request));
@@ -280,7 +255,6 @@ public class RadiusCoreTests
     public void TestMessageAuthenticatorValidationFail()
     {
         var request = "0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3";
-        var secret = "xyzzy5461durr";
 
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         Assert.Throws<MessageAuthenticatorException>(() => radiusPacketParser.Parse(Utils.StringToByteArray(request)));
@@ -315,9 +289,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestCreateCoARequestPacket()
     {
-        var expected = "2b0000266613591d86e32fa6dbae94f13772573601066e656d6f0406c0a80110050600000003";
-        var secret = "xyzzy5461";
-
         var packet = new RadiusPacket(PacketCode.CoaRequest, 0)
         {
             Authenticator = Utils.StringToByteArray("0f403f9473978057bd83d5cb98f4227a")
@@ -338,7 +309,6 @@ public class RadiusCoreTests
             Utils.StringToByteArray("0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3");
         var expected =
             Utils.StringToByteArray("0cda00268a54f4686fb394c52866e302185d062350125a665e2e1e8411f3e243822097c84fa3");
-        var secret = "xyzzy5461";
 
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
         radiusPacketParser.Parse(request);
@@ -349,9 +319,6 @@ public class RadiusCoreTests
     [Fact]
     public void TestMessageAuthenticatorResponsePacket()
     {
-        var expected = "0368002c71624da25c0b5897f70539e019a81eae4f06046700045012ce70fe87a997b44de583cd19bea29321";
-        var secret = "testing123";
-
         var response = new RadiusPacket(PacketCode.AccessReject, 104)
         {
         };
@@ -371,8 +338,6 @@ public class RadiusCoreTests
         var requestAuthenticator = Utils.StringToByteArray("fb421846209424ca0982ad9326e5ccf0");
         Utils.StringToByteArray("020000261b49188b89251f7c9b8604772ca685925012b02cae7428c0e4e2301c060a5bf75bff");
 
-        const string secret = "xyzzy5461";
-
         var radiusPacketParser = new RadiusRequestParser(GetDictionary(), NullLogger<RadiusRequestParser>.Instance);
 
         radiusPacketParser.Parse(response);
@@ -389,8 +354,6 @@ public class RadiusCoreTests
         // request authenticator from the corresponding request
         var requestAuthenticator = Utils.StringToByteArray("fb421846209424ca0982ad9326e5ccf0");
         Utils.StringToByteArray("020000261b49188b89251f7c9b8604772ca685925012b02cae7428c0e4e2301c060a5bf75bff");
-
-        const string secret = "xyzzy5461";
 
     }
 

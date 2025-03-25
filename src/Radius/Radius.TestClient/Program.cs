@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using Radius.TestClient;
 using RadiusCore;
-using RadiusCore.Packet;
 using System.Net;
 
 

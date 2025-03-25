@@ -30,7 +30,7 @@ public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server, ISer
     /// <summary>
     /// 
     /// </summary>
-    public RadiusResponse Response {get;} = new();
+    public RadiusResponse Response { get; } = new();
 
     /// <summary>
     /// 当前连接请求策略。

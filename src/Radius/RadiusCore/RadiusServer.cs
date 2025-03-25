@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RadiusCore.Packet;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace RadiusCore;
 
@@ -40,7 +40,7 @@ public class RadiusServer(
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _stoppingCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        
+
         var localEndpoint = new IPEndPoint(IPAddress.Any, options.Value.AuthenticationServerPort);
 
         logger?.LogInformation("Starting Radius server on {localEndpoint}", localEndpoint);
@@ -86,10 +86,10 @@ public class RadiusServer(
             {
                 logger?.LogDebug("Server now ready to receive packet");
                 UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
-                
+
                 if (logger != null && logger.IsEnabled(LogLevel.Trace))
                     logger?.LogTrace("Receive data:{data}", result.Buffer);
-                
+
                 logger?.LogDebug("Received packet from {result.RemoteEndPoint}", result.RemoteEndPoint);
                 await Task.Run(async () =>
                 {
@@ -120,7 +120,7 @@ public class RadiusServer(
                     await _udpClient.SendAsync([0x10, 0x10], 2, radiusContext.Request.Remote);
                     watch.Stop();
                     logger?.LogDebug("数据包已处理，用时{ms}毫秒。", watch.ElapsedMilliseconds);
-                    if(watch.ElapsedMilliseconds > 3000)
+                    if (watch.ElapsedMilliseconds > 3000)
                     {
                         logger?.LogWarning("数据包处理时间过长，用时{ms}毫秒。", watch.ElapsedMilliseconds);
                     }
@@ -133,7 +133,7 @@ public class RadiusServer(
                             logger?.LogError(task.Exception, "Error handling packet");
                         }
                     }, TaskContinuationOptions.OnlyOnFaulted);
-                
+
             }
             catch (OperationCanceledException)
             {

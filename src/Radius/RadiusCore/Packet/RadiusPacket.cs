@@ -10,7 +10,7 @@ public class RadiusPacket
 {
     private readonly byte[] _data = new byte[20];
 
-    
+
     /// <summary>
     /// Create a new packet with a random authenticator
     /// </summary>
@@ -72,7 +72,7 @@ public class RadiusPacket
         set
         {
             // Copy the authenticator to the packet data
-            if(value.Length != 16)
+            if (value.Length != 16)
                 throw new ArgumentOutOfRangeException(nameof(value), "Authenticator must be 16 bytes long");
             value.CopyTo(_data, 4);
         }

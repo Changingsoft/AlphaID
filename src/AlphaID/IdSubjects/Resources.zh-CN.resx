@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -173,5 +173,29 @@
   </data>
   <data name="UnifiedSocialCreditCode" xml:space="preserve">
 	  <value>统一社会信用代码</value>
+  </data>
+  <data name="PasswordRequiresDigit" xml:space="preserve">
+	  <value>密码需要包含数字。</value>
+  </data>
+  <data name="PasswordRequiresLower" xml:space="preserve">
+	  <value>密码需要包含小写字母。</value>
+  </data>
+  <data name="PasswordRequiresUpper" xml:space="preserve">
+	  <value>密码需要包含大写字母。</value>
+  </data>
+  <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
+	  <value>密码需要包含特殊字符。</value>
+  </data>
+  <data name="Min owners in the organization" xml:space="preserve">
+	  <value>组织需要至少{0}个所有者。</value>
+  </data>
+  <data name="PasswordRequires3Of4" xml:space="preserve">
+	  <value>密码需要包含大写、小写、数字和特殊字符四种中的至少三种。</value>
+  </data>
+  <data name="PasswordTooShort" xml:space="preserve">
+	  <value>密码过短。</value>
+  </data>
+  <data name="PasswordRequiresUniqueChars" xml:space="preserve">
+	  <value>密码需要包含唯一字符。</value>
   </data>
 </root>

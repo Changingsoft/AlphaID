@@ -177,4 +177,25 @@
   <data name="UnifiedSocialCreditCode" xml:space="preserve">
     <value>Unified Social Credit Code</value>
   </data>
+  <data name="PasswordRequiresDigit" xml:space="preserve">
+	  <value>Password requires digit.</value>
+  </data>
+  <data name="PasswordRequiresLower" xml:space="preserve">
+	  <value>Password requires lower case charaters.</value>
+  </data>
+  <data name="PasswordRequiresUpper" xml:space="preserve">
+	  <value>Password requires upper case charaters.</value>
+  </data>
+  <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
+	  <value>Password requires special charaters.</value>
+  </data>
+  <data name="PasswordRequires3Of4" xml:space="preserve">
+	  <value>Password requires 3 of 4 types: uppercase, lowercase, digits and special characters.</value>
+  </data>
+  <data name="PasswordTooShort" xml:space="preserve">
+	  <value>Password too short.</value>
+  </data>
+  <data name="PasswordRequiresUniqueChars" xml:space="preserve">
+	  <value>Password requires unique chars.</value>
+  </data>
 </root>

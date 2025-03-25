@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects;
-internal class AlphaIdPasswordValidator<TUser> : PasswordValidator<TUser> where TUser : ApplicationUser
+internal class AlphaIdPasswordValidator<TUser>(ApplicationUserIdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
 {
     public override Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string? password)
     {
@@ -35,10 +35,7 @@ internal class AlphaIdPasswordValidator<TUser> : PasswordValidator<TUser> where 
         }
         if(requiredCount < 3)
         {
-            errors.Add(Describer.PasswordRequiresDigit());
-            errors.Add(Describer.PasswordRequiresLower());
-            errors.Add(Describer.PasswordRequiresUpper());
-            errors.Add(Describer.PasswordRequiresNonAlphanumeric());
+            errors.Add(errorDescriber.PasswordRequires3Of4());
         }
 
         if (options.RequiredUniqueChars >= 1 && password.Distinct().Count() < options.RequiredUniqueChars)

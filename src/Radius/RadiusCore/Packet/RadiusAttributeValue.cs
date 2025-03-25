@@ -2,63 +2,78 @@
 
 namespace RadiusCore.Packet;
 
-internal class RadiusAttributeValue : IList<object>
+public class RadiusAttributeValue : IList<byte[]>
 {
-    public IEnumerator<object> GetEnumerator()
+    List<byte[]> value = new List<byte[]>();
+
+    internal RadiusAttributeValue(byte[] data)
     {
-        throw new NotImplementedException();
+        value.Add(data);
+    }
+
+    public IEnumerator<byte[]> GetEnumerator()
+    {
+        return value.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator();
+        return ((IEnumerable)value).GetEnumerator();
     }
 
-    public void Add(object item)
+    public void Add(byte[] item)
     {
-        throw new NotImplementedException();
+        value.Add(item);
     }
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        value.Clear();
     }
 
-    public bool Contains(object item)
+    public bool Contains(byte[] item)
     {
-        throw new NotImplementedException();
+        return value.Contains(item);
     }
 
-    public void CopyTo(object[] array, int arrayIndex)
+    public void CopyTo(byte[][] array, int arrayIndex)
     {
-        throw new NotImplementedException();
+        value.CopyTo(array, arrayIndex);
     }
 
-    public bool Remove(object item)
+    public bool Remove(byte[] item)
     {
-        throw new NotImplementedException();
+        return value.Remove(item);
     }
 
-    public int Count { get; }
-    public bool IsReadOnly { get; }
-    public int IndexOf(object item)
+    public int Count => value.Count;
+    public bool IsReadOnly => false;
+    public int IndexOf(byte[] item)
     {
-        throw new NotImplementedException();
+        return value.IndexOf(item);
     }
 
-    public void Insert(int index, object item)
+    public void Insert(int index, byte[] item)
     {
-        throw new NotImplementedException();
+        value.Insert(index, item);
     }
 
     public void RemoveAt(int index)
     {
-        throw new NotImplementedException();
+        value.RemoveAt(index);
     }
 
-    public object this[int index]
+    public byte[] this[int index]
     {
-        get => throw new NotImplementedException();
-        set => throw new NotImplementedException();
+        get => value[index];
+        set
+        {
+            this.value[index] = value;
+        }
+    }
+
+    public virtual byte[]? Value
+    {
+        get { return value.Count > 0 ? value[0] : null; }
     }
 }

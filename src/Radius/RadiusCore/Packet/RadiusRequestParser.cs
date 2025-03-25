@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using RadiusCore.Dictionary;
+using System.Net;
 
 namespace RadiusCore.Packet;
 
@@ -8,6 +9,7 @@ namespace RadiusCore.Packet;
 /// </summary>
 public class RadiusRequestParser(
     IRadiusDictionary radiusDictionary,
+    AttributeParser attributeParser,
     ILogger<RadiusRequestParser>? logger)
 {
     /// <summary>
@@ -15,13 +17,15 @@ public class RadiusRequestParser(
     /// </summary>
     public RadiusRequest Parse(byte[] packetBytes)
     {
-        var packetLength = BitConverter.ToUInt16([.. packetBytes.Skip(2).Take(2).Reverse()], 0);
-        if (packetBytes.Length < packetLength)
+        ReadOnlySpan<byte> packetBytesSpan = packetBytes;
+        var indicatedLength = IPAddress.NetworkToHostOrder(BitConverter.ToUInt16(packetBytesSpan[2..4]));
+        if (packetBytesSpan.Length < indicatedLength)
         {
-            logger?.LogError("收到的数据包长度小于预期。数据包长度是{ByteArrayLength}，预期长度是{PacketLength}。", packetBytes.Length, packetLength);
+            logger?.LogError("收到的数据包长度小于预期。数据包长度是{ByteArrayLength}，预期长度是{PacketLength}。", packetBytes.Length, indicatedLength);
             throw new ArgumentOutOfRangeException(nameof(packetBytes),
-                $"Packet length mismatch, expected: {packetLength}, actual: {packetBytes.Length}");
+                $"Packet length mismatch, expected: {indicatedLength}, actual: {packetBytes.Length}");
         }
+        var attriutes = attributeParser.Parse(packetBytesSpan[20..indicatedLength]);
 
         throw new NotImplementedException();
     }

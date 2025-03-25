@@ -1,6 +1,5 @@
 ﻿using RadiusCore.Packet;
 using System.Net;
-using Xunit;
 
 namespace RadiusCore.Tests;
 

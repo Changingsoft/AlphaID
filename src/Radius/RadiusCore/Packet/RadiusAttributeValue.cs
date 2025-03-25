@@ -1,65 +1,64 @@
 ﻿using System.Collections;
 
-namespace RadiusCore.Packet
+namespace RadiusCore.Packet;
+
+internal class RadiusAttributeValue : IList<object>
 {
-    internal class RadiusAttributeValue : IList<object>
+    public IEnumerator<object> GetEnumerator()
     {
-        public IEnumerator<object> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 
-        public void Add(object item)
-        {
-            throw new NotImplementedException();
-        }
+    public void Add(object item)
+    {
+        throw new NotImplementedException();
+    }
 
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
 
-        public bool Contains(object item)
-        {
-            throw new NotImplementedException();
-        }
+    public bool Contains(object item)
+    {
+        throw new NotImplementedException();
+    }
 
-        public void CopyTo(object[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
+    public void CopyTo(object[] array, int arrayIndex)
+    {
+        throw new NotImplementedException();
+    }
 
-        public bool Remove(object item)
-        {
-            throw new NotImplementedException();
-        }
+    public bool Remove(object item)
+    {
+        throw new NotImplementedException();
+    }
 
-        public int Count { get; }
-        public bool IsReadOnly { get; }
-        public int IndexOf(object item)
-        {
-            throw new NotImplementedException();
-        }
+    public int Count { get; }
+    public bool IsReadOnly { get; }
+    public int IndexOf(object item)
+    {
+        throw new NotImplementedException();
+    }
 
-        public void Insert(int index, object item)
-        {
-            throw new NotImplementedException();
-        }
+    public void Insert(int index, object item)
+    {
+        throw new NotImplementedException();
+    }
 
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }
+    public void RemoveAt(int index)
+    {
+        throw new NotImplementedException();
+    }
 
-        public object this[int index]
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
+    public object this[int index]
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
     }
 }

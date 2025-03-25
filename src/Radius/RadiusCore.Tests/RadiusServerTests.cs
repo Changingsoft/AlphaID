@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RadiusCore.Packet;
-using Xunit;
 
 namespace RadiusCore.Tests;
 

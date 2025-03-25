@@ -1,27 +1,31 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Net;
-using Xunit;
+﻿namespace RadiusCore.Tests;
 
-namespace RadiusCore.Tests
+public class DateTimeConditionTest()
 {
-    [Collection(nameof(ServiceProviderCollection))]
-    public class DateTimeConditionTest(ServiceProviderFixture serviceProviderFixture)
+    [Fact]
+    public void TestMatrix()
     {
-        [Fact]
-        public void Test()
+        var condition = new DateTimeCondition
         {
-            var server = serviceProviderFixture.RootServiceProvider.GetRequiredService<RadiusServer>();
-            server.TimeProvider = new FrozenTimeProvider(new DateTimeOffset(2025, 1, 1, 2, 15, 06, TimeSpan.FromHours(8)));
+            // To set Wednesday and Thursday from 3:00 to 4:00 should be true.
+            Matrix = [0x00, 0x00, 0x00, 0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+        };
 
-            var context = new RadiusContext(new RadiusRequest(PacketCode.AccessRequest, 0, new byte[16], [], new(IPAddress.Loopback, 1812)), server,
-                serviceProviderFixture.RootServiceProvider);
+        //时间日期条件没有使用RadiusContext，所以传入null.
+        // Wednesday 3:00 should be true.
+        condition.TimeProvider = new FrozenTimeProvider(new(2025, 1, 1, 3, 0, 0, TimeSpan.FromHours(8)));
+        Assert.True(condition.TestCondition(default!));
 
-            var condition = new DateTimeCondition
-            {
-                Matrix = [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
-            };
+        // Thursday 4:59 should be true.
+        condition.TimeProvider = new FrozenTimeProvider(new(2025, 1, 2, 4, 59, 0, TimeSpan.FromHours(8)));
+        Assert.True(condition.TestCondition(default!));
 
-            Assert.True(condition.TestCondition(context));
-        }
+        // Thursday 2:59 should be false.
+        condition.TimeProvider = new FrozenTimeProvider(new(2025, 1, 2, 2, 59, 0, TimeSpan.FromHours(8)));
+        Assert.False(condition.TestCondition(default!));
+
+        // Wednesday 5:00 should be false.
+        condition.TimeProvider = new FrozenTimeProvider(new(2025, 1, 1, 5, 0, 0, TimeSpan.FromHours(8)));
+        Assert.False(condition.TestCondition(default!));
     }
 }

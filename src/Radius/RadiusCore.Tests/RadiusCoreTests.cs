@@ -3,7 +3,6 @@ using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using System.Net;
 using System.Text;
-using Xunit;
 
 namespace RadiusCore.Tests;
 

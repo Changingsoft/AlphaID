@@ -69,6 +69,7 @@
         <div class="mb-3">
             <label asp-for="Input.NewPassword" class="form-label required"></label>
             <input asp-for="Input.NewPassword" class="form-control"/>
+            <partial name="_PasswordComplexityRequirements" />
             <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
         </div>
         <div class="mb-3">

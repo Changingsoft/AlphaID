@@ -32,17 +32,15 @@ public class RadiusPacket
             AddMessageAuthenticator();
         }
     }
+    private IList<AttributeItem> _attributes;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public RadiusPacket(byte[] data)
+    internal RadiusPacket(byte[] data, IList<AttributeItem> attributeItems)
     {
-        if (data.Length < 20)
-            throw new ArgumentOutOfRangeException(nameof(data), "Packet data must be at least 20 bytes long");
-        _data = data[..20];
+        if (data.Length != 20)
+            throw new ArgumentException("data must be 20 bytes long.", nameof(data));
+        _data = data;
+        _attributes = attributeItems;
+        //todo: convert to...
     }
 
     /// <summary>
@@ -149,5 +147,47 @@ public class RadiusPacket
         }
 
         Attributes[name].Add(value);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public static RadiusPacket FromByteArray(ReadOnlySpan<byte> data)
+    {
+        if(data.Length < 20)
+            throw new ArgumentOutOfRangeException(nameof(data), "Packet data must be at least 20 bytes long");
+        if(data.Length > 4096)
+            throw new ArgumentOutOfRangeException(nameof(data), "Packet data is too big.");
+
+        var indicatedLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data[2..4]));
+        if(data.Length < indicatedLength)
+            throw new ArgumentOutOfRangeException(nameof(data), "Packet data length does not match indicated length");
+
+        //parse attributes
+        List<AttributeItem> attributeItems = new();
+        var attributesData = data[20..];
+        var pos = 0;
+        while (pos < attributesData.Length)
+        {
+            var length = attributesData[pos + 1];
+            AttributeItem item = new(attributesData[pos], attributesData.Slice(pos + 2, length - 2).ToArray());
+            attributeItems.Add(item);
+            pos += length;
+        }
+
+        RadiusPacket radiusPacket = new RadiusPacket(data[0..20].ToArray(), attributeItems);
+        return radiusPacket;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"Code: {Code}, Identifier: {Identifier}, Attributes: {Attributes.Count}";
     }
 }

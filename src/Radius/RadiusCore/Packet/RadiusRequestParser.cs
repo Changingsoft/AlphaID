@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using RadiusCore.Dictionary;
 using System.Net;
 
 namespace RadiusCore.Packet;
@@ -7,9 +6,7 @@ namespace RadiusCore.Packet;
 /// <summary>
 /// RadiusRequestParser
 /// </summary>
-public class RadiusRequestParser(
-    IRadiusDictionary radiusDictionary,
-    ILogger<RadiusRequestParser>? logger)
+public class RadiusRequestParser(ILogger<RadiusRequestParser>? logger)
 {
     /// <summary>
     /// Parses packet bytes and returns an IRadiusPacket

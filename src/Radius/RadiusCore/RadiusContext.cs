@@ -8,14 +8,14 @@ namespace RadiusCore;
 /// <remarks>
 /// 
 /// </remarks>
-/// <param name="radiusPacket"></param>
+/// <param name="request"></param>
 /// <param name="server"></param>
-public class RadiusContext(RadiusRequest radiusPacket, RadiusServer server, IServiceProvider services)
+public class RadiusContext(RadiusRequest request, RadiusServer server, IServiceProvider services)
 {
     /// <summary>
     /// 
     /// </summary>
-    public RadiusRequest Request { get; } = radiusPacket;
+    public RadiusRequest Request { get; } = request;
 
     /// <summary>
     /// 

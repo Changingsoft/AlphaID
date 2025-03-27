@@ -46,13 +46,6 @@ public static class RadiusServiceCollectionExtensions
         });
         services.AddTransient<RadiusRequestParser>();
         services.AddTransient<TestPacketHandler>();
-        services.AddTransient<IPacketHandlerRepository>(services1 =>
-        {
-            var packetHandler = services1.GetRequiredService<TestPacketHandler>();
-            var repository = new PacketHandlerRepository();
-            repository.AddPacketHandler(IPAddress.Parse("127.0.0.1"), packetHandler, "secret");
-            return repository;
-        });
         services.AddTransient<RadiusServer>();
         return services;
     }

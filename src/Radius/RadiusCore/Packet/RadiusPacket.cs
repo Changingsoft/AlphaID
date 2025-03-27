@@ -81,6 +81,11 @@ public class RadiusPacket
     /// </summary>
     public IList<AttributeItem> AttributeItems => _attributes;
 
+    public void AddAttribute(AttributeTypeDescriptor type, string value)
+    {
+        byte[] valueData = type.ValueToData(value);
+    }
+
     /// <summary>
     /// 
     /// </summary>

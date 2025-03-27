@@ -37,11 +37,9 @@ public class RadiusServer(
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _stoppingCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
         var localEndpoint = new IPEndPoint(IPAddress.Any, options.Value.AuthenticationServerPort);
-
         logger?.LogInformation("Starting Radius server on {localEndpoint}", localEndpoint);
-
+        
         _receiveLoopTask = ReceiveLoopTask(_stoppingCts.Token);
 
         if (_receiveLoopTask.IsCompleted)
@@ -61,11 +59,13 @@ public class RadiusServer(
 
         try
         {
+            logger?.LogInformation("Stopping Radius server...");
             await _stoppingCts!.CancelAsync();
         }
         finally
         {
             await _receiveLoopTask.WaitAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.SuppressThrowing);
+            logger?.LogInformation("Radius server stopped.");
         }
     }
 

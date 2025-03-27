@@ -8,12 +8,9 @@ namespace RadiusCore.Tests;
 
 public class RadiusCoreTests
 {
-    private static IRadiusDictionary GetDictionary() => RadiusDictionary.Parse(DefaultDictionary.RadiusDictionary);
-
-
     /// <summary>
     /// Create packet and verify bytes
-    /// Example from https://tools.ietf.org/html/rfc2865
+    /// Example from https://www.rfc-editor.org/rfc/rfc2865.html#section-7.1
     /// </summary>
     [Fact]
     public void CreateAccessRequestPacket()
@@ -106,21 +103,6 @@ public class RadiusCoreTests
         {
             Authenticator = Utils.StringToByteArray("925f6b66dd5fed571fcb1db7ad388260")
         };
-    }
-
-
-    /// <summary>
-    /// Create accounting request        
-    /// </summary>
-    [Fact]
-    public void TestCreateAndParseAccountingRequestPacket()
-    {
-        GetDictionary();
-        var packet = new RadiusPacket(PacketCode.AccountingRequest, 0);
-        packet.AddAttribute("User-Name", "nemo");
-        packet.AddAttribute("Acct-Status-Type", 2);
-        packet.AddAttribute("NAS-IP-Address", IPAddress.Parse("192.168.1.16"));
-        packet.AddAttribute("NAS-Port", 3);
     }
 
 

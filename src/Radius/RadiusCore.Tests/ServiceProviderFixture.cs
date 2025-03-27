@@ -11,6 +11,9 @@ public class ServiceProviderFixture
         services.AddOptions();
         services.AddLogging();
         services.AddRadiusCore();
+        //替换为MockUdpClient
+        services.AddSingleton<IUdpClient, MockUdpClient>();
+
 
         RootServiceProvider = services.BuildServiceProvider();
         ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();

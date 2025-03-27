@@ -18,4 +18,15 @@ public class RadiusPacketTest
 
         Assert.Equal(PacketCode.AccessRequest, packet.Code);
     }
+
+    [Fact]
+    public void OutputToByteArray()
+    {
+        var data =
+            Utils.StringToByteArray(
+                "010000380f403f9473978057bd83d5cb98f4227a01066e656d6f02120dbe708d93d413ce3196e43f782a0aee0406c0a80110050600000003");
+        RadiusPacket packet = RadiusPacket.FromByteArray(data);
+        var output = packet.ToByteArray();
+        Assert.Equal(data, output);
+    }
 }

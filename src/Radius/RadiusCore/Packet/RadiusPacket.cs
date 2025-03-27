@@ -77,6 +77,11 @@ public class RadiusPacket
     }
 
     /// <summary>
+    /// Gets the attributes in the packet
+    /// </summary>
+    public IList<AttributeItem> AttributeItems => _attributes;
+
+    /// <summary>
     /// 
     /// </summary>
     public IDictionary<string, List<object>> Attributes { get; set; } = new Dictionary<string, List<object>>();
@@ -147,6 +152,20 @@ public class RadiusPacket
         }
 
         Attributes[name].Add(value);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public byte[] ToByteArray()
+    {
+        List<byte> bytes = [.. _data];
+        foreach (var attribute in _attributes)
+        {
+            bytes.AddRange(attribute.GetBytes());
+        }
+        return bytes.ToArray();
     }
 
     /// <summary>

@@ -17,7 +17,7 @@ public class RadiusClient(RadiusRequestParser radiusPacketParser) : IDisposable
     /// <summary>
     /// Send a packet with specified timeout
     /// </summary>
-    public async Task<RadiusPacket> SendPacketAsync(RadiusRequest packet, IPEndPoint remoteEndpoint, TimeSpan timeout)
+    public Task<RadiusPacket> SendPacketAsync(RadiusRequest packet, IPEndPoint remoteEndpoint, TimeSpan timeout)
     {
         throw new NotImplementedException();
     }

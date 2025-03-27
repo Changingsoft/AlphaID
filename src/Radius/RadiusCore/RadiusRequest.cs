@@ -6,31 +6,16 @@ namespace RadiusCore;
 /// <summary>
 /// 表示一个RADIUS报文。
 /// </summary>
-public class RadiusRequest(PacketCode code, byte identifier, byte[] authenticator, List<RadiusAttributeStruct> attributes, IPEndPoint remote)
+public class RadiusRequest(RadiusPacket packet, IPEndPoint remote)
 {
-
     /// <summary>
-    /// RADIUS Packet code.
+    /// Radius packet.
     /// </summary>
-    public PacketCode Code => code;
-
-    /// <summary>
-    /// RADIUS Packet identifier.
-    /// </summary>
-    public byte Identifier => identifier;
-
-    /// <summary>
-    /// Authenticator.
-    /// </summary>
-    public byte[] Authenticator => authenticator;
+    public RadiusPacket Packet => packet;
 
     /// <summary>
     /// Remote endpoint.
     /// </summary>
     public IPEndPoint Remote => remote;
 
-    /// <summary>
-    /// Attributes.
-    /// </summary>
-    public List<RadiusAttributeStruct> Attributes => attributes;
 }

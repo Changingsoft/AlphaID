@@ -10,7 +10,7 @@ namespace RadiusCore.Tests;
 public class FrozenTimeProvider(DateTimeOffset time) : TimeProvider
 {
     /// <summary>
-    /// 从当前UTC时间创建一个冻结时间。该时间表明创建TimeProvider时的时间，并且在接下来的声明周期里不再发生变化。
+    /// 从当前UTC时间创建一个冻结时间。该时间表明创建TimeProvider时的时间，并且在接下来的生命周期里不再发生变化。
     /// </summary>
     public FrozenTimeProvider()
         : this(DateTimeOffset.UtcNow)

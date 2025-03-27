@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RadiusCore.Packet;
-internal class AttributeItem
+public class AttributeItem
 {
     public byte Type { get; set; }
     public byte Length { get; set; }

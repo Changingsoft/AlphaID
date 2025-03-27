@@ -15,19 +15,16 @@ namespace RadiusCore;
 /// <param name="options">Options for RADIUS server.</param>
 /// <param name="logger">Logger for RADIUS server.</param>
 public class RadiusServer(
+    IUdpClient udpClient,
     RadiusRequestParser packetParser,
     IServiceProvider serviceProvider,
     IOptions<RadiusServerOptions> options,
-    TimeProvider timeProvider,
     ILogger<RadiusServer>? logger) : IHostedService, IDisposable
 {
-    private UdpClient? _udpClient;
     private Task? _receiveLoopTask;
     private CancellationTokenSource? _stoppingCts;
     private readonly ConnectionRequestHandlerFactory _connectionRequestHandlerFactory;
     private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
-
-    internal TimeProvider TimeProvider { get; set; } = timeProvider;
 
     /// <summary>
     /// 
@@ -44,8 +41,6 @@ public class RadiusServer(
         var localEndpoint = new IPEndPoint(IPAddress.Any, options.Value.AuthenticationServerPort);
 
         logger?.LogInformation("Starting Radius server on {localEndpoint}", localEndpoint);
-
-        _udpClient = new UdpClient(localEndpoint);
 
         _receiveLoopTask = ReceiveLoopTask(_stoppingCts.Token);
 
@@ -85,7 +80,7 @@ public class RadiusServer(
             try
             {
                 logger?.LogDebug("Server now ready to receive packet");
-                UdpReceiveResult result = await _udpClient!.ReceiveAsync(cancellationToken);
+                UdpReceiveResult result = await udpClient.ReceiveAsync(cancellationToken);
 
                 if (logger != null && logger.IsEnabled(LogLevel.Trace))
                     logger?.LogTrace("Receive data:{data}", result.Buffer);
@@ -117,7 +112,7 @@ public class RadiusServer(
                     await networkPolicyHandler.HandleAsync(radiusContext);
 
                     //处理完毕后，发送响应报文
-                    await _udpClient.SendAsync([0x10, 0x10], 2, radiusContext.Request.Remote);
+                    await udpClient.SendAsync(new ReadOnlyMemory<byte>([0x10, 0x10]), radiusContext.Request.Remote, cancellationToken);
                     watch.Stop();
                     logger?.LogDebug("数据包已处理，用时{ms}毫秒。", watch.ElapsedMilliseconds);
                     if (watch.ElapsedMilliseconds > 3000)
@@ -152,12 +147,11 @@ public class RadiusServer(
     public void Dispose()
     {
         _stoppingCts?.Cancel();
-        _udpClient?.Dispose();
         GC.SuppressFinalize(this);
     }
 
     internal async Task SendAsync(RadiusResponse response)
     {
-        await _udpClient.SendAsync(response.ToBytes(), response.Length, response.Remote);
+        await udpClient.SendAsync(response.ToBytes(), response.Remote!, CancellationToken.None);
     }
 }

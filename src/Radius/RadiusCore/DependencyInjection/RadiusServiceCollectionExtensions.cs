@@ -2,6 +2,7 @@
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using System.Net;
+using System.Net.Sockets;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,9 @@ public static class RadiusServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddRadiusCore(this IServiceCollection services)
     {
-        services.AddTransient<IRadiusDictionary>(_ =>
+        services.AddSingleton<IUdpClient>(_ => new DefaultUdpClient(new UdpClient(1812)));
+
+        services.AddTransient(_ =>
         {
             return RadiusDictionary.LoadAsync(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\content\\radius.dictionary").GetAwaiter().GetResult();
         });

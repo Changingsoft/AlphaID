@@ -1,15 +1,17 @@
 ﻿
 using System.Net;
+using RadiusCore.Packet;
 
 namespace RadiusCore;
 
 public class RadiusResponse
 {
-    public int Length { get; internal set; }
+    public RadiusPacket Packet { get; }
+
     public IPEndPoint? Remote { get; internal set; }
 
     internal byte[] ToBytes()
     {
-        throw new NotImplementedException();
+        return Packet.ToByteArray();
     }
 }

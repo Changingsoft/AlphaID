@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging.Abstractions;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
 using System.Net;

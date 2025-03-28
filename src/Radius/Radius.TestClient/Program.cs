@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Radius.TestClient;
-using RadiusCore;
-using System.Net;
 
 
 var builder = Host.CreateApplicationBuilder();

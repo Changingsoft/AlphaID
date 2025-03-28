@@ -3,21 +3,18 @@ using System.Net.Sockets;
 
 namespace RadiusCore.Tests
 {
-    internal class MockUdpClient : IUdpClient
+    internal class RemoteUdpClient : IUdpClient
     {
-        private readonly RemoteUdpClient _remote;
         private TaskCompletionSource<UdpReceiveResult> _source = new TaskCompletionSource<UdpReceiveResult>();
+        private readonly MockUdpClient _mock;
 
-
-        public MockUdpClient(IPEndPoint localEndPoint, IPEndPoint remoteEndPoint)
+        internal RemoteUdpClient(IPEndPoint localEndPoint, MockUdpClient mock)
         {
-            LocalEndPoint = localEndPoint;
-            _remote = new RemoteUdpClient(remoteEndPoint, this);
+            LocalEndpoint = localEndPoint;
+            _mock = mock;
         }
 
-        public IPEndPoint LocalEndPoint { get; }
-
-        public IUdpClient RemoteClient => _remote;
+        public IPEndPoint LocalEndpoint { get; }
 
         public void Transmit(UdpReceiveResult result)
         {
@@ -33,10 +30,9 @@ namespace RadiusCore.Tests
 
         public ValueTask<int> SendAsync(ReadOnlyMemory<byte> datagram, IPEndPoint endPoint, CancellationToken cancellationToken)
         {
-            var receiveResult = new UdpReceiveResult(datagram.ToArray(), LocalEndPoint);
-            _remote.Transmit(receiveResult);
+            UdpReceiveResult receiveResult = new UdpReceiveResult(datagram.ToArray(), LocalEndpoint);
+            _mock.Transmit(receiveResult);
             return ValueTask.FromResult(datagram.Length);
         }
-        
     }
 }

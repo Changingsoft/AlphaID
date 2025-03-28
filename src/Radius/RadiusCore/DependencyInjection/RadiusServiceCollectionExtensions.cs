@@ -1,7 +1,6 @@
 ﻿using RadiusCore;
 using RadiusCore.Dictionary;
 using RadiusCore.Packet;
-using System.Net;
 using System.Net.Sockets;
 
 // ReSharper disable once CheckNamespace

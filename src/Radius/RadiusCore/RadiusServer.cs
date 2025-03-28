@@ -25,6 +25,7 @@ public class RadiusServer(
     private CancellationTokenSource? _stoppingCts;
     private readonly ConnectionRequestHandlerFactory _connectionRequestHandlerFactory;
     private readonly NetworkPolicyHandlerFactory networkPolicyFactory;
+    SessionCache _sessionCache = new();
 
     /// <summary>
     /// 
@@ -90,17 +91,27 @@ public class RadiusServer(
                 {
                     Stopwatch watch = Stopwatch.StartNew();
                     using var scope = Services.CreateScope();
-                    //读取报文并创建处理上下文
-                    RadiusRequest request;
+
+                    RadiusPacket packet;
                     try
                     {
-                        request = packetParser.Parse(result.Buffer);
+                        packet = RadiusPacket.FromByteArray(result.Buffer);
                     }
                     catch (Exception e)
                     {
-                        logger?.LogError(e, "解析数据包时异常。将直接丢弃。");
+                        logger?.LogError(e, "从远端{remote}收到了损坏的数据包。", result.RemoteEndPoint);
                         return;
                     }
+
+                    RadiusRequest request = new RadiusRequest(packet, result.RemoteEndPoint);
+
+                    //检查是否为重复数据包
+                    if (_sessionCache.Contains($"{result.RemoteEndPoint}/{packet.Identifier}"))
+                    {
+                        logger?.LogWarning("Duplicate packet detected from {result.RemoteEndPoint}, ignoring.", result.RemoteEndPoint);
+                        return;
+                    }
+                    _sessionCache.Set($"{result.RemoteEndPoint}/{packet.Identifier}", new object());
 
                     RadiusContext radiusContext = new(request, this, scope.ServiceProvider);
 

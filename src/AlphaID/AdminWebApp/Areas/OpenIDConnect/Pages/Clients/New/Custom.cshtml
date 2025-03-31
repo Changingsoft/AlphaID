@@ -4,7 +4,7 @@
 }
 <h3>@L["Create new client"]</h3>
 <form method="post">
-    <h4>Base</h4>
+    <h4>@L["Base"]</h4>
     <div class="mb-3">
         <label asp-for="ClientId" class="form-label required"></label>
         <input asp-for="ClientId" class="form-control"/>
@@ -57,7 +57,7 @@
         <span asp-description-for="Input.AllowRememberConsent" class="form-check-description"></span>
     </div>
 
-    <h4>Security</h4>
+    <h4>@L["Security"]</h4>
     <div class="form-check">
         <input asp-for="Input.RequirePkce" class="form-check-input"/>
         <label asp-for="Input.RequirePkce" class="form-check-label"></label>
@@ -81,17 +81,6 @@
         <label asp-for="Input.AccessTokenLifetime" class="form-label"></label>
         <input asp-for="Input.AccessTokenLifetime" class="form-control"/>
         <span asp-validation-for="Input.AccessTokenLifetime" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Input.ClientUri" class="form-label"></label>
-        <input asp-for="Input.ClientUri" class="form-control"/>
-        <span asp-validation-for="Input.ClientUri" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.LogoUri" class="form-label"></label>
-        <input asp-for="Input.LogoUri" class="form-control"/>
-        <span asp-validation-for="Input.LogoUri" class="text-danger"></span>
     </div>
 
     <div asp-validation-summary="All"></div>

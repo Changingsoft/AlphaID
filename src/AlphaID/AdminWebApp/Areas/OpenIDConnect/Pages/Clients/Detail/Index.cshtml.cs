@@ -27,8 +27,6 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
             ClientName = Client.ClientName,
             Description = Client.Description,
             Enabled = Client.Enabled,
-            ClientUri = Client.ClientUri,
-            LogoUri = Client.LogoUri,
             RequireClientSecret = Client.RequireClientSecret
         };
         return Page();
@@ -42,7 +40,7 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
         Client = data;
 
         if (Input.ClientId != Client.ClientId && dbContext.Clients.Any(p => p.ClientId == Input.ClientId))
-            ModelState.AddModelError("", "Client Anchor ÒÑ´æÔÚ¡£");
+            ModelState.AddModelError("", "Client Anchor å·²å­˜åœ¨ã€‚");
 
         if (!ModelState.IsValid)
             return Page();
@@ -51,8 +49,6 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
         Client.ClientId = Input.ClientId;
         Client.Description = Input.Description;
         Client.Enabled = Input.Enabled;
-        Client.LogoUri = Input.LogoUri;
-        Client.ClientUri = Input.ClientUri;
         Client.RequireClientSecret = Input.RequireClientSecret;
 
         dbContext.Clients.Update(Client);
@@ -93,14 +89,6 @@ public class IndexModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Enabled")]
         public bool Enabled { get; set; }
-
-        [Display(Name = "Logo URI")]
-        [DataType(DataType.Url)]
-        public string? LogoUri { get; set; }
-
-        [Display(Name = "Client URI")]
-        [DataType(DataType.Url)]
-        public string? ClientUri { get; set; }
 
         [Display(Name = "Require client secret")]
         public bool RequireClientSecret { get; set; }

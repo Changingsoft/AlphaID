@@ -53,7 +53,6 @@ public class CustomModel(ConfigurationDbContext context, ISecretGenerator secret
             BackChannelLogoutUri = Input.BackChannelLogoutUri,
             CibaLifetime = Input.CibaLifetime,
             ClientClaimsPrefix = Input.ClientClaimsPrefix,
-            ClientUri = Input.ClientUri,
             ConsentLifetime = Input.ConsentLifetime,
             CoordinateLifetimeWithUserSession = Input.CoordinateLifetimeWithUserSession,
             DeviceCodeLifetime = Input.DeviceCodeLifetime,
@@ -62,7 +61,6 @@ public class CustomModel(ConfigurationDbContext context, ISecretGenerator secret
             FrontChannelLogoutUri = Input.FrontChannelLogoutUri,
             IdentityTokenLifetime = Input.IdentityTokenLifetime,
             IncludeJwtId = Input.IncludeJwtId,
-            LogoUri = Input.LogoUri,
             PairWiseSubjectSalt = Input.PairWiseSubjectSalt,
             PollingInterval = Input.PollingInterval,
             RefreshTokenExpiration = Input.RefreshTokenExpiration,
@@ -153,7 +151,7 @@ public class CustomModel(ConfigurationDbContext context, ISecretGenerator secret
                 "The value will be display only once here, please remember it carefully. It can reset after client created.")]
         public string? ClientSecret { get; set; }
 
-        [Display(Name = "Redirect URI", Prompt = "https://example.com/signin-oidc")]
+        [Display(Name = "Sign in callback URI", Prompt = "https://example.com/signin-oidc")]
         public string? RedirectUri { get; set; }
 
         [Display(Name = "Default grant type")]
@@ -162,12 +160,6 @@ public class CustomModel(ConfigurationDbContext context, ISecretGenerator secret
 
         [Display(Name = "Description", Description = "Description for this client.")]
         public string? Description { get; set; }
-
-        [Display(Name = "Client URI", Prompt = "https://example.com")]
-        public string? ClientUri { get; set; }
-
-        [Display(Name = "Logo URI", Prompt = "https://example.com/logo.jpg")]
-        public string? LogoUri { get; set; }
 
         [Display(Name = "Require consent")]
         public bool RequireConsent { get; set; } = false;

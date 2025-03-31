@@ -433,4 +433,19 @@
 	  <value>Copy</value>
 	  <comment>Copy</comment>
   </data>
+  <data name="Sign-in callback URI" xml:space="preserve">
+	  <value>Sign-in callback URI</value>
+  </data>
+  <data name="Client secret" xml:space="preserve">
+	  <value>Client secret</value>
+  </data>
+  <data name="Friendly name for display." xml:space="preserve">
+	  <value>Friendly name for display.</value>
+  </data>
+  <data name="The value will be display only once here, please remember it carefully. It can reset after client created." xml:space="preserve">
+	  <value>The value will be display only once here, please remember it carefully. It can reset after client created.</value>
+  </data>
+  <data name="Description for this client." xml:space="preserve">
+	  <value>Description for this client.</value>
+  </data>
 </root>

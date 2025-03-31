@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AspNetWebLib.Validations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
@@ -11,13 +12,15 @@ namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 public class PublicModel(ConfigurationDbContext dbContext) : PageModel
 {
     [Display(Name = "Client Id")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string ClientId { get; set; } = null!;
 
     [Display(Name = "Client name")]
+    [Required(ErrorMessage = "Validate_Required")]
     public string ClientName { get; set; } = null!;
 
-    [Display(Name = "Sign-in callback URI")]
-    [DataType(DataType.Url, ErrorMessage = "Validate_DataType_Url")]
+    [Display(Name = "Sign-in callback URI", Prompt = "https://example.com/signin-oidc")]
+    [CustomUrl()]
     public string SigninCallbackUri { get; set; } = null!;
 
     //todo Identity resources and scope selected.
@@ -26,8 +29,8 @@ public class PublicModel(ConfigurationDbContext dbContext) : PageModel
 
     public List<SelectListItem> AllowedGrantTypes { get; set; } =
     [
-        new SelectListItem("��Ȩ��", GrantType.AuthorizationCode, true),
-        new SelectListItem("��ʽ", GrantType.Implicit, false)
+        new SelectListItem("授权码", GrantType.AuthorizationCode, true),
+        new SelectListItem("隐式", GrantType.Implicit, false)
     ];
 
     public void OnGet()

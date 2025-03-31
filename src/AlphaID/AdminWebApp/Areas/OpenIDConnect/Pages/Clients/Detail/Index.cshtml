@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = L["Overview"];
@@ -30,16 +30,6 @@
         <label asp-for="Input.Description" class="form-label"></label>
         <input asp-for="Input.Description" class="form-control"/>
         <span asp-validation-for="Input.Description" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.LogoUri" class="form-label"></label>
-        <input asp-for="Input.LogoUri" class="form-control"/>
-        <span asp-validation-for="Input.LogoUri" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.ClientUri" class="form-label"></label>
-        <input asp-for="Input.ClientUri" class="form-control"/>
-        <span asp-validation-for="Input.ClientUri" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
     <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AspNetWebLib.Validations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
@@ -24,9 +25,9 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
     [Required(ErrorMessage = "Validate_Required")]
     public string ClientSecret { get; set; } = secretGenerator.Generate();
 
-    [Display(Name = "Sign-in callback URI")]
-    [DataType(DataType.Url, ErrorMessage = "Validate_DataType_Url")]
-    public string SigninCallbackUri { get; set; } = null!;
+    [Display(Name = "Sign-in callback URI", Prompt = "https://example.com/signin-oidc")]
+    [CustomUrl]
+    public string? SigninCallbackUri { get; set; }
 
     public List<SelectListItem> ScopeItems { get; set; } = null!;
 
@@ -49,8 +50,14 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
 
     public async Task<IActionResult> OnPost()
     {
-        if (!ScopeItems.Any(s => s.Selected))
-            ModelState.AddModelError(nameof(ScopeItems), "Select at least one scope(s).");
+        if (AllowedGrantTypes.Any(s => s is { Value: GrantType.AuthorizationCode, Selected: true })
+            || AllowedGrantTypes.Any(s => s is { Value: GrantType.ResourceOwnerPassword, Selected: true }))
+        {
+            if (!ScopeItems.Any(s => s.Selected))
+                ModelState.AddModelError(nameof(ScopeItems), "Authorization code or ROPC workflow requires at least one scope(s).");
+            if(SigninCallbackUri == null)
+                ModelState.AddModelError(nameof(SigninCallbackUri), "Authorization code or ROPC workflow requires a sign-in callback URI.");
+        }
 
         if (!ModelState.IsValid)
             return Page();

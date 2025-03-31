@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model PublicModel
 @{
     ViewBag.Title = L["Create public client"];
@@ -24,7 +24,7 @@
         <span asp-description-for="SigninCallbackUri"></span>
         <span asp-validation-for="SigninCallbackUri" class="text-danger"></span>
     </div>
-    <h3>Grant types</h3>
+    <h3>@L["Grant types"]</h3>
     <ul class="list-group">
         @for (var i = 0; i < Model.AllowedGrantTypes.Count; i++)
         {
@@ -40,7 +40,7 @@
             </li>
         }
     </ul>
-    <h3>Scopes</h3>
+    <h3>@L["Scopes"]</h3>
     <ul class="list-group">
         @for (var i = 0; i < Model.ScopeItems.Count; i++)
         {

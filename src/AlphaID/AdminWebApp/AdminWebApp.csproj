@@ -32,4 +32,16 @@
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Confidential.zh-cn.resx">
+	    <DependentUpon>Confidential.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Custom.zh-cn.resx">
+	    <DependentUpon>Custom.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Public.zh-cn.resx">
+	    <DependentUpon>Public.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>

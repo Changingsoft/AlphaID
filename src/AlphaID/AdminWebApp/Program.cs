@@ -30,11 +30,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
-#if WINDOWS
-using Serilog.Events;
-#endif
 
 // ReSharper disable StringLiteralTypo
 

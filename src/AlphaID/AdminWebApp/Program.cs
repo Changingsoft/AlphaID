@@ -19,6 +19,7 @@ using AspNetWebLib.RazorPages;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
+using IdSubjects;
 using IdSubjects.ChineseName;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Authentication;
@@ -158,6 +159,9 @@ builder.Services
         };
     });
 
+
+//配置ProfileUrl
+builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
@@ -200,8 +204,6 @@ builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
 //添加邮件发送器。
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
-
-builder.Services.AddScoped<IdApiService>();
 
 //目录服务
 builder.Services.AddScoped<DirectoryServiceManager>()

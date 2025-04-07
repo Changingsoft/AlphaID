@@ -140,7 +140,7 @@ builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlB
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddSignInManager<ApplicationUserSignInManager<NaturalPerson>>()
-    .AddUserStore<ApplicationUserStore>()
+    .AddUserStore<NaturalPersonStore>()
     .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
 

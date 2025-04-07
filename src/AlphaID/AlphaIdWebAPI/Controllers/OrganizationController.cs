@@ -36,28 +36,6 @@ public class OrganizationController(
     }
 
     /// <summary>
-    /// 获取组织的成员。
-    /// </summary>
-    /// <param name="id">组织的SubjectId</param>
-    /// <returns></returns>
-    [HttpGet("{id}/Members")]
-    public async Task<IEnumerable<MemberModel>> GetMembersAsync(string id)
-    {
-        NaturalPerson? visitor = null;
-        string? visitorSubjectId = User.SubjectId();
-        if (visitorSubjectId != null)
-            visitor = await personManager.FindByIdAsync(User.SubjectId()!);
-
-        //todo 从令牌确定访问者。
-        Organization? org = await organizationStore.FindByIdAsync(id);
-        if (org == null)
-            return [];
-        IEnumerable<OrganizationMember> members = await memberManager.GetVisibleMembersAsync(org, visitor);
-
-        return from member in members select new MemberModel(member);
-    }
-
-    /// <summary>
     /// 给定关键字查找组织。
     /// </summary>
     /// <remarks>
@@ -74,30 +52,6 @@ public class OrganizationController(
 
         IQueryable<OrganizationModel> result = searchResults.Take(50).Select(p => new OrganizationModel(p));
         return result;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="Name"></param>
-    /// <param name="UserName"></param>
-    /// <param name="Title"></param>
-    /// <param name="Department"></param>
-    /// <param name="Remarks"></param>
-    public record MemberModel(
-        string? Name,
-        string UserName,
-        string? Title,
-        string? Department,
-        string? Remarks)
-    {
-        /// <summary>
-        /// </summary>
-        /// <param name="member"></param>
-        public MemberModel(OrganizationMember member)
-            : this(member.Person.Name, member.Person.UserName!, member.Title, member.Department,
-                member.Remark)
-        {
-        }
     }
 
     /// <summary>

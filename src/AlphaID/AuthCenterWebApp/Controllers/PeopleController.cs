@@ -15,9 +15,9 @@ public class PeopleController(IUserStore<NaturalPerson> store) : ControllerBase
     public ActionResult GetAvatarPicture(string anchor)
     {
         var profilePicture = (from user in QueryableUserStore.Users.AsNoTracking()
-                              where user.UserName == anchor || user.Id == anchor
+                              where user.UserName == anchor
                               select user.ProfilePicture).FirstOrDefault();
-        if(profilePicture != null)
+        if (profilePicture != null)
         {
             return File(profilePicture.Data, profilePicture.MimeType);
         }

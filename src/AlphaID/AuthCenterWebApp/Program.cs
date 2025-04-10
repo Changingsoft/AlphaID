@@ -242,7 +242,11 @@ builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrServi
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
     .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
 
-builder.Services.AddMarkdown(config => { config.AddMarkdownProcessingFolder("/_docs/"); });
+builder.Services.AddMarkdown(config =>
+{
+    config.AddMarkdownProcessingFolder("/docs/");
+});
+
 builder.Services.AddMvc();
 
 //反向代理配置

@@ -1,6 +1,5 @@
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

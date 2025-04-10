@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
@@ -8,7 +7,6 @@ using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace AuthCenterWebApp.Pages.Account;
 

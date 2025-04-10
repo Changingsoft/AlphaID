@@ -1,8 +1,8 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 
-namespace AlphaIdWebAPI.Tests.Controllers.Oidc;
+namespace AlphaIdWebAPI.Tests.Controllers.OAuth;
 
 [Collection(nameof(TestServerCollection))]
 public class ClientControllerTests(AlphaIdApiFactory factory)

@@ -1,8 +1,5 @@
-using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Security;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlphaIdWebAPI.Controllers;
@@ -13,15 +10,10 @@ namespace AlphaIdWebAPI.Controllers;
 /// <remarks>
 /// </remarks>
 /// <param name="organizationStore"></param>
-/// <param name="memberManager"></param>
-/// <param name="personManager"></param>
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class OrganizationController(
-    IOrganizationStore organizationStore,
-    OrganizationMemberManager memberManager,
-    UserManager<NaturalPerson> personManager) : ControllerBase
+public class OrganizationController(IOrganizationStore organizationStore) : ControllerBase
 {
     /// <summary>
     /// 获取组织信息。

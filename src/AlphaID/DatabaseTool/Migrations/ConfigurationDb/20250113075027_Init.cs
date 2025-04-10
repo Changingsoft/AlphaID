@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

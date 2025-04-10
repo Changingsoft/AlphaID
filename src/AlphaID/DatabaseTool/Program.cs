@@ -2,7 +2,6 @@ using DatabaseTool;
 using DatabaseTool.Migrators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
 
 IHostBuilder builder = Host.CreateDefaultBuilder(args);
 builder

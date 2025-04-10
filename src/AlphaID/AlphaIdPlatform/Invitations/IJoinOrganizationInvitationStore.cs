@@ -1,5 +1,4 @@
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 
 namespace AlphaIdPlatform.Invitations;
 

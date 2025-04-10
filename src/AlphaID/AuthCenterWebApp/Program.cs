@@ -236,7 +236,11 @@ builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrServi
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
     .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
 
-builder.Services.AddMarkdown(config => { config.AddMarkdownProcessingFolder("/_docs/"); });
+builder.Services.AddMarkdown(config =>
+{
+    config.AddMarkdownProcessingFolder("/docs/");
+});
+
 builder.Services.AddMvc();
 
 // 当Debug模式时，覆盖先前配置以解除外部依赖

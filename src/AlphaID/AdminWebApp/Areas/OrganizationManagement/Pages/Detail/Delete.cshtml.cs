@@ -6,9 +6,6 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
 public class DeleteModel(OrganizationManager organizationManager) : PageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = null!;
-
     public Organization Organization { get; set; } = null!;
 
     [BindProperty]
@@ -16,18 +13,18 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        Organization? org = await organizationManager.FindByIdAsync(Anchor);
+        Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        Organization? org = await organizationManager.FindByIdAsync(Anchor);
+        Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
@@ -44,7 +41,7 @@ public class DeleteModel(OrganizationManager organizationManager) : PageModel
         {
             OrganizationOperationResult result = await organizationManager.DeleteAsync(Organization);
             if (result.Succeeded)
-                return RedirectToPage("DeleteSuccess");
+                return RedirectToPage("DeleteSuccess", new { anchor });
             Result = result;
             return Page();
         }

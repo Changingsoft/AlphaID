@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model DeleteModel
 @{
     ViewBag.Title = L["Deleting {0}", Model.Organization.Name];
@@ -15,5 +15,5 @@
         <span asp-validation-for="@Model.Input.Name" class="text-danger"></span>
     </div>
     <div asp-validation-summary="All"></div>
-    <button class="btn btn-warning" type="submit">@SL["Delete"]</button>
+    <button class="btn btn-danger" type="submit">@SL["Delete"]</button>
 </form>

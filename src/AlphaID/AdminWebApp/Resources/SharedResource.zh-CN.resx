@@ -438,4 +438,7 @@
   <data name="Description for this client." xml:space="preserve">
 	  <value>此客户端的描述。</value>
   </data>
+  <data name="OK" xml:space="preserve">
+	  <value>好的</value>
+  </data>
 </root>

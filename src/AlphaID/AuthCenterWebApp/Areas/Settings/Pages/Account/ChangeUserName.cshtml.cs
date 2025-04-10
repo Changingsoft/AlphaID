@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using AuthCenterWebApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

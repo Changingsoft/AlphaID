@@ -3,7 +3,6 @@ using AlphaIdPlatform.Identity;
 using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {

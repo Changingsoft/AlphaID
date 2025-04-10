@@ -1,6 +1,5 @@
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 

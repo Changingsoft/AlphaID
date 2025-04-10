@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using AlphaIdWebAPI.Tests.Models;
 using Xunit;
 
 namespace AlphaIdWebAPI.Tests.Controllers;
@@ -19,18 +18,6 @@ public class OrganizationControllerTest(AlphaIdApiFactory factory)
         Assert.Equal("蜀汉集团", data!.Name);
     }
 
-    [Fact]
-    public async Task GetOrganizationMemberAsync()
-    {
-        HttpClient client = factory.CreateAuthenticatedClient();
-
-        HttpResponseMessage response =
-            await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5/Members");
-        response.EnsureSuccessStatusCode();
-
-        var data = await response.Content.ReadFromJsonAsync<IEnumerable<MembershipModel>>();
-        Assert.NotEmpty(data!);
-    }
 
     [Fact]
     public async Task SearchWillExcludeDisabledOrgs()

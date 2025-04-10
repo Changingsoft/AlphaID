@@ -1,7 +1,6 @@
 using System.Transactions;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace AlphaIdPlatform.Invitations;

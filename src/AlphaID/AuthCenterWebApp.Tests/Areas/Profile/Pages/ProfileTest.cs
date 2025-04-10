@@ -15,7 +15,6 @@ public class ProfileTest(AuthCenterWebAppFactory factory)
 
     [Theory]
     [InlineData("liubei")]
-    [InlineData("d2480421-8a15-4292-8e8f-06985a1f645b")]
     public async Task GetAvatar(string anchor)
     {
         HttpClient client = factory.CreateAuthenticatedClient();

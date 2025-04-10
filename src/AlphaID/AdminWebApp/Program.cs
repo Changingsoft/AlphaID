@@ -19,6 +19,7 @@ using AspNetWebLib.RazorPages;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
+using IdSubjects;
 using IdSubjects.ChineseName;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Authentication;
@@ -30,11 +31,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
-#if WINDOWS
-using Serilog.Events;
-#endif
 
 // ReSharper disable StringLiteralTypo
 
@@ -160,6 +159,9 @@ builder.Services
         };
     });
 
+
+//配置ProfileUrl
+builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
@@ -202,8 +204,6 @@ builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
 //添加邮件发送器。
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
-
-builder.Services.AddScoped<IdApiService>();
 
 //目录服务
 builder.Services.AddScoped<DirectoryServiceManager>()

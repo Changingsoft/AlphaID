@@ -1,5 +1,6 @@
 using AlphaIdPlatform.Identity;
 using IdSubjects.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +15,8 @@ public static class IdSubjectsBuilderExtensions
     /// <returns></returns>
     public static IdSubjectsBuilder AddDefaultStores(this IdSubjectsBuilder builder)
     {
-        builder.AddPersonStore<ApplicationUserStore, NaturalPerson>();
+        builder.Services.AddScoped<IQueryableUserStore<NaturalPerson>, NaturalPersonStore>();
+        builder.AddPersonStore<NaturalPersonStore, NaturalPerson>();
         builder.AddPasswordHistoryStore<PasswordHistoryStore>();
 
         return builder;

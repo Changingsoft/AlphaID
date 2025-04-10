@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace AlphaIdPlatform.Tests;
 public class ServiceProviderFixture
 {

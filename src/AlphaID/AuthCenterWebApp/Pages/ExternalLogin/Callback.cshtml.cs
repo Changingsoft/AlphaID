@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
-using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;

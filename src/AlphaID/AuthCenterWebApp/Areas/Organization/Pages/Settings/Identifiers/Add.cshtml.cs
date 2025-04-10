@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

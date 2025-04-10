@@ -1,5 +1,3 @@
-using IdSubjects;
-
 namespace AlphaIdPlatform.Subjects;
 
 /// <summary>

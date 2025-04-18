@@ -43,6 +43,9 @@
 	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Public.zh-cn.resx">
 	    <DependentUpon>Public.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Shared\_ActiveSessionCountPartial.zh-cn.resx">
+	    <DependentUpon>_ActiveSessionCountPartial.resx</DependentUpon>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

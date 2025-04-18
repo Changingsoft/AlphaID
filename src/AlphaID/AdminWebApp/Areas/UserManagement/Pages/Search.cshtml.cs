@@ -23,7 +23,7 @@ public class SearchModel(IUserStore<NaturalPerson> store) : PageModel
             string? personId = (from user in Store.Users
                                 where user.PhoneNumber == mobile.ToString()
                                 select user.Id).FirstOrDefault();
-            return personId != null ? RedirectToPage("Detail/Index", new { id = personId }) : Page();
+            return personId != null ? RedirectToPage("Detail/Index", new { anchor = personId }) : Page();
         }
 
         Results = from user in Store.Users

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -102,5 +102,13 @@
   </data>
   <data name="Management center" xml:space="preserve">
 	  <value>Management center</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+	  <value>Summary</value>
+	  <comment>Summary</comment>
+  </data>
+  <data name="Activities" xml:space="preserve">
+	  <value>Activities</value>
+	  <comment>Activities</comment>
   </data>
 </root>

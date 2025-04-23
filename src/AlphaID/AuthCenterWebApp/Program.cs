@@ -194,6 +194,10 @@ builder.Services.AddIdentityServer(options =>
         options.Events.RaiseFailureEvents = true;
         options.Events.RaiseSuccessEvents = true;
 
+        //unit test with WebApplicationFactory should randomly occur InvalidOperationException, becaouse remove expired session task not started on unit testing.
+        //Remove expired sessions when running on Production environment. pass unit test.
+        options.ServerSideSessions.RemoveExpiredSessions = builder.Environment.IsProduction();
+
         // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
         options.EmitStaticAudienceClaim = true;
 

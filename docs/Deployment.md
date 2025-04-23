@@ -25,6 +25,30 @@
 * Windows 体系下基于 Kerberos 或 NTLM 协议的应用无法替代，由于设计的原因，这些 Windows 体系的基础设施采用了部分私有实现，无法在标准框架下成功实施。
 * 如果您计划纳管 Active Directory，则 Alpha ID 需要部署在 Windows Server 平台上，原因是 Directory Services 组件目前仅在 Windows 平台上支持，我们正在寻求其他跨平台的替代方案。
 
+### Web代理
+
+Web代理，又称为反向代理。如果您的组织具有统一的Web代理服务，则可以利用Web代理简化负载均衡和弹性扩容，还有助于确保您的组织的全球信任证书SSL/TLS私钥得到统一保护和管理。
+
+您需要向组织提出申请，以分配合适的Web代理。申请时，应告知组织您的服务节点的计算能力，以便Web代理可以根据服务节点的负荷合理分配访问流量。
+
+#### Web代理应提供的请求头
+
+Web代理应至少发送以下请求头，以便服务能正确识别客户端和代理转换中的细节：
+
+*请求头不区分大小写*
+
+|Header|Description|
+|---|---|
+|x-forwarded-for|指示客户端来源IP地址或IP:Port|
+
+#### 在Web代理后采用HTTP通信的注意事项
+
+当客户端与反向代理采用HTTPS通信，但反向代理与本系统采用HTTP通信时，本系统需要反向代理发送以下请求头，以正确识别通信方案。
+
+|Header|Description|
+|---|---|
+|x-forwarded-proto|指示客户端与反向代理通信采用的方案，值为http或https|
+
 ## 预配置
 
 配置 appsettings.json

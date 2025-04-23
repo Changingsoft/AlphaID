@@ -26,6 +26,8 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
+using Microsoft.AspNetCore.HttpOverrides;
+
 #if WINDOWS
 using Serilog.Events;
 #endif
@@ -192,6 +194,10 @@ builder.Services.AddIdentityServer(options =>
         options.Events.RaiseFailureEvents = true;
         options.Events.RaiseSuccessEvents = true;
 
+        //unit test with WebApplicationFactory should randomly occur InvalidOperationException, becaouse remove expired session task not started on unit testing.
+        //Remove expired sessions when running on Production environment. pass unit test.
+        options.ServerSideSessions.RemoveExpiredSessions = builder.Environment.IsProduction();
+
         // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
         options.EmitStaticAudienceClaim = true;
 
@@ -239,6 +245,16 @@ builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = tru
 builder.Services.AddMarkdown(config => { config.AddMarkdownProcessingFolder("/_docs/"); });
 builder.Services.AddMvc();
 
+//反向代理配置
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    //默认只接受来自本地主机的反向代理。
+    //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 // 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
 {
@@ -250,8 +266,7 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-//IdentityModelEventSource.ShowPII = true;
-
+app.UseForwardedHeaders();
 app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {

@@ -26,6 +26,8 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
+using Microsoft.AspNetCore.HttpOverrides;
+
 #if WINDOWS
 using Serilog.Events;
 #endif
@@ -239,6 +241,17 @@ builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = tru
 builder.Services.AddMarkdown(config => { config.AddMarkdownProcessingFolder("/_docs/"); });
 builder.Services.AddMvc();
 
+//反向代理配置
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    // 如果反向代理的 IP 地址是固定的，可以将其添加到 KnownProxies 或 KnownNetworks
+    // options.KnownProxies.Add(IPAddress.Parse("反向代理的IP地址")); // 可选
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 // 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
 {
@@ -250,8 +263,7 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-//IdentityModelEventSource.ShowPII = true;
-
+app.UseForwardedHeaders();
 app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {

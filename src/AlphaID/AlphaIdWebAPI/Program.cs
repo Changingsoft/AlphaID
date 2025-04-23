@@ -6,6 +6,7 @@ using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -130,10 +131,20 @@ builder.Services.AddDbContext<ConfigurationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }).AddScoped<ConfigurationStoreOptions>();
 
+//反向代理配置
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    //默认只接受来自本地主机的反向代理。
+    //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 
 WebApplication app = builder.Build();
 
-//Configure Pipeline
+app.UseForwardedHeaders();
 app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {

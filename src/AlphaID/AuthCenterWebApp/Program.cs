@@ -245,9 +245,8 @@ builder.Services.AddMvc();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-
-    // 如果反向代理的 IP 地址是固定的，可以将其添加到 KnownProxies 或 KnownNetworks
-    // options.KnownProxies.Add(IPAddress.Parse("反向代理的IP地址")); // 可选
+    //默认只接受来自本地主机的反向代理。
+    //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
 });

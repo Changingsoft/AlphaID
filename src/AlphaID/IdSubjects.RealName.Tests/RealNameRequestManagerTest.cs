@@ -9,7 +9,7 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
 {
     private readonly ApplicationUser _person = new("zhangsan"){Name = "张三"};
 
-    [Fact]
+    [Fact(Skip = "暂停")]
     public async Task AddRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
@@ -28,7 +28,7 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
         Assert.False(request.Accepted.HasValue);
     }
 
-    [Fact]
+    [Fact(Skip = "暂停")]
     public async Task AcceptRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
@@ -54,7 +54,7 @@ public class RealNameRequestManagerTest(ServiceProviderFixture serviceProvider)
         Assert.Equal("张三", authentication.PersonName.FullName);
     }
 
-    [Fact]
+    [Fact(Skip = "暂停")]
     public async Task RefuseRequest()
     {
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();

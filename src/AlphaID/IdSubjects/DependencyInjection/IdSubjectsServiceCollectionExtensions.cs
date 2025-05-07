@@ -40,7 +40,9 @@ public static class IdSubjectsServiceCollectionExtensions
         //添加基础标识
         IdentityBuilder identityBuilder = services.AddIdentityCore<TUser>()
                 .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<T>使用
-                .AddUserValidator<PhoneNumberValidator<TUser>>();
+                .AddSignInManager<ApplicationUserSignInManager<TUser>>()
+                .AddUserValidator<PhoneNumberValidator<TUser>>()
+                .AddDefaultTokenProviders();
 
         // 移除原有的PasswordValidator
         var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
@@ -50,7 +52,7 @@ public static class IdSubjectsServiceCollectionExtensions
         }
         // 添加AlphaIdPasswordValidator
         identityBuilder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
-        
+
         if (setupAction != null)
         {
             services.Configure(setupAction);

@@ -1,5 +1,6 @@
 using IdSubjects.DependencyInjection;
 using IdSubjects.Tests;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.RealName.Tests;
@@ -15,6 +16,7 @@ public class ServiceProviderFixture
         idSubjectsBuilder.AddRealName<ApplicationUser>()
             .AddRealNameAuthenticationStore<StubRealNameAuthenticationStore>()
             .AddRealNameRequestStore<StubRealNameRequestStore>();
+        idSubjectsBuilder.IdentityBuilder.AddDefaultTokenProviders();
 
         Root = services.BuildServiceProvider();
         ScopeFactory = Root.GetRequiredService<IServiceScopeFactory>();

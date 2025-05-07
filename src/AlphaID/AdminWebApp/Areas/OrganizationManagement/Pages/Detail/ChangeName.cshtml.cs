@@ -6,38 +6,36 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
 public class ChangeNameModel(OrganizationManager manager) : PageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        Organization? org = await manager.FindByIdAsync(Anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
 
         Input = new InputModel
         {
-            CurrentName = org.Name
+            CurrentName = org.Name,
+            NewName = org.Name,
         };
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        Organization? org = await manager.FindByIdAsync(Anchor);
+        Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         OrganizationOperationResult result = await manager.RenameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName);
-        if (!result.Succeeded)
-        {
-            foreach (string error in result.Errors) ModelState.AddModelError("", error);
-            return Page();
-        }
+        if (result.Succeeded) 
+            return RedirectToPage("Index", new { anchor });
 
-        return RedirectToPage("Index", new { id = Anchor });
+        foreach (string error in result.Errors) ModelState.AddModelError("", error);
+        return Page();
+
     }
 
     public class InputModel

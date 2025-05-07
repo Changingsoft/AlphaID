@@ -448,4 +448,8 @@
   <data name="Description for this client." xml:space="preserve">
 	  <value>Description for this client.</value>
   </data>
+  <data name="OK" xml:space="preserve">
+	  <value>OK</value>
+	  <comment>OK</comment>
+  </data>
 </root>

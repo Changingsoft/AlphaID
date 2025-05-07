@@ -1,9 +1,13 @@
-﻿@page
+@page
 @model DeleteSuccessModel
 @{
     ViewBag.Title = L["Delete succeeded"];
+    Layout = "Tabler/_Page";
 }
-<h1>@ViewBag.Title</h1>
-<p>
-    <a asp-page="/Subjects/Index" class="btn btn-primary">@L["OK"]</a>
-</p>
+
+<div class="container container-tight py-4">
+    <h1>@ViewBag.Title</h1>
+    <p>
+        <a asp-page="../Index" class="btn btn-primary">@SL["OK"]</a>
+    </p>
+</div>

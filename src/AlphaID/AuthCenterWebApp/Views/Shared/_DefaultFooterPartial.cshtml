@@ -1,13 +1,14 @@
-﻿<div class="container-xl">
+<div class="container-xl">
     <div class="row text-center align-items-center flex-row-reverse">
         <div class="col-lg-auto ms-lg-auto">
             <ul class="list-inline list-inline-dots mb-0">
                 <li class="list-inline-item">
-                    @* ReSharper disable once Html.PathError *@
+                    @* ReSharper disable Html.PathError *@
                     <a href="~/.well-known/openid-configuration" class="link-secondary" target="_blank">@L["Discovery document"]</a>
+                    @* ReSharper restore Html.PathError *@
                 </li>
                 <li class="list-inline-item">
-                    <a asp-area="Developer" asp-page="/Index" class="link-secondary" target="_blank">@L["Developer center"]</a>
+                    <a href="~/docs/Developer/Start.md" class="link-secondary" target="_blank">@L["Developer center"]</a>
                 </li>
             </ul>
         </div>
@@ -17,10 +18,10 @@
                     Copyright © 2023 @(Product.Value.Copyright)
                 </li>
                 <li class="list-inline-item">
-                    <a asp-area="" asp-page="/Terms" class="link-secondary">@L["Terms of Service"]</a>
+                    <a href="~/docs/Terms.md" class="link-secondary">@L["Terms of Service"]</a>
                 </li>
                 <li class="list-inline-item">
-                    <a asp-area="" asp-page="/Privacy" class="link-secondary">@L["Privacy"]</a>
+                    <a href="~/docs/Privacy.md" class="link-secondary">@L["Privacy"]</a>
                 </li>
             </ul>
         </div>

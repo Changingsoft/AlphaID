@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace IdSubjects;
+namespace IdSubjects.Validators;
 internal class AlphaIdPasswordValidator<TUser>(ApplicationUserIdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
 {
     public override Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string? password)

@@ -14,7 +14,7 @@ public static class ApplicationUserSignInResultExtensions
     /// <returns></returns>
     public static bool MustChangePassword(this SignInResult signInResult)
     {
-        if (signInResult is not ApplicatonUserSignInResult result)
+        if (signInResult is not ApplicationUserSignInResult result)
             return false;
         return result.MustChangePassword;
     }

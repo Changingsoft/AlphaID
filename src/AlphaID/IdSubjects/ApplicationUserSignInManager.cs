@@ -57,7 +57,7 @@ public class ApplicationUserSignInManager<T>(ApplicationUserManager<T> userManag
                 await base.SignOutAsync();
                 await Context.SignInAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme,
                     principal);
-                return new ApplicatonUserSignInResult { MustChangePassword = true };
+                return new ApplicationUserSignInResult { MustChangePassword = true };
             }
 
         await userManager.AccessSuccededAsync(user, "password");

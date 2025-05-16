@@ -1,6 +1,5 @@
 using IdSubjects.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace IdSubjects.Tests;
 

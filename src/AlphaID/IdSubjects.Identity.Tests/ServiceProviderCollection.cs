@@ -1,5 +1,3 @@
-﻿using Xunit;
-
 namespace IdSubjects.Tests;
 
 [CollectionDefinition(nameof(ServiceProviderCollection))]

@@ -1,4 +1,3 @@
-using IdSubjects.DependencyInjection;
 using IdSubjects.Tests;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

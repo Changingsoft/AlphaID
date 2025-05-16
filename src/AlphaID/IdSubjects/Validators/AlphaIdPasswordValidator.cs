@@ -1,10 +1,26 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Validators;
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TUser"></typeparam>
+/// <param name="errorDescriber"></param>
 public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
 {
-    ApplicationUserIdentityErrorDescriber Describer => errorDescriber as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errorDescriber));
+    /// <summary>
+    /// 
+    /// </summary>
+    public new ApplicationUserIdentityErrorDescriber Describer => errorDescriber as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errorDescriber));
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="manager"></param>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public override Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string? password)
     {
         ArgumentNullException.ThrowIfNull(password, nameof(password));

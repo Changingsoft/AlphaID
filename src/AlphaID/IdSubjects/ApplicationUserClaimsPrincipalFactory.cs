@@ -15,7 +15,8 @@ namespace IdSubjects;
 /// <param name="profileUrlGenerator"></param>
 public class ApplicationUserClaimsPrincipalFactory<T>(UserManager<T> userManager,
                                                       IOptions<IdentityOptions> optionsAccessor,
-                                                      ProfileUrlGenerator<T> profileUrlGenerator) : UserClaimsPrincipalFactory<T>(userManager, optionsAccessor)
+                                                      ProfileUrlGenerator<T> profileUrlGenerator) 
+    : UserClaimsPrincipalFactory<T>(userManager, optionsAccessor)
     where T : ApplicationUser
 {
     /// <summary>

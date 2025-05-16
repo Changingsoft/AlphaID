@@ -1,5 +1,4 @@
 using AlphaIdPlatform.Identity;
-using IdSubjects.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

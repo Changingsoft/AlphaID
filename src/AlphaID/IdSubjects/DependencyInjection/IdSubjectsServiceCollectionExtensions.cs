@@ -1,5 +1,4 @@
 using IdSubjects;
-using IdSubjects.DependencyInjection;
 using IdSubjects.SecurityAuditing;
 using IdSubjects.Validators;
 using Microsoft.AspNetCore.Identity;

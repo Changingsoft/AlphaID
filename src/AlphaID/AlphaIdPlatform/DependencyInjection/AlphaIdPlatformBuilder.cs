@@ -1,6 +1,5 @@
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Subjects;
-using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;

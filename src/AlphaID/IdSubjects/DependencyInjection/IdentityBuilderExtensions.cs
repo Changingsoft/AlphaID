@@ -1,6 +1,5 @@
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 public static class IdentityBuilderExtensions
@@ -9,14 +8,14 @@ public static class IdentityBuilderExtensions
         where TGenerator : ProfileUrlGenerator<TUser>
         where TUser : ApplicationUser
     {
-        builder.Services.TryAddScoped<ProfileUrlGenerator<TUser>, TGenerator>();
+        builder.Services.AddScoped<ProfileUrlGenerator<TUser>, TGenerator>();
         return builder;
     }
 
     public static IdentityBuilder AddPasswordHistoryStore<T>(this IdentityBuilder builder)
         where T : class, IPasswordHistoryStore
     {
-        builder.Services.TryAddScoped<IPasswordHistoryStore, T>();
+        builder.Services.AddScoped<IPasswordHistoryStore, T>();
         return builder;
     }
 }

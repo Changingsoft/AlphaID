@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using IdSubjects;
 using IdSubjects.ChineseName;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 
-public class EditPersonNameModel(ApplicationUserManager<NaturalPerson> applicationUserManager) : PageModel
+public class EditPersonNameModel(UserManager<NaturalPerson> applicationUserManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;

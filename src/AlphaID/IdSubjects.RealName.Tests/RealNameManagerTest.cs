@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.RealName.Tests;
@@ -27,7 +28,7 @@ public class RealNameManagerTest(ServiceProviderFixture serviceProvider)
             "Test validator");
 
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
-        var personManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var personManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         await personManager.CreateAsync(_person);
 
         //Test

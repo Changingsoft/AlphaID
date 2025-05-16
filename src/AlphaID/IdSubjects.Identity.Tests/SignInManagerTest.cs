@@ -1,4 +1,5 @@
 using IdSubjects.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.Tests;
@@ -17,10 +18,10 @@ public class SignInManagerTest(ServiceProviderFixture serviceProvider)
 
         using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
 
-        var userManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         await userManager.CreateAsync(user);
 
-        var signInManager = scope.ServiceProvider.GetRequiredService<ApplicationUserSignInManager<ApplicationUser>>();
+        var signInManager = scope.ServiceProvider.GetRequiredService<SignInManager<ApplicationUser>>();
 
         var result = await signInManager.CheckPasswordSignInAsync(user, "Pass123$", false);
         Assert.False(result.Succeeded);

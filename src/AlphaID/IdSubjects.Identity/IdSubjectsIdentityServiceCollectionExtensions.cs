@@ -22,10 +22,10 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
             builder = services.AddIdentity<TUser, TRole>(setupAction);
 
         builder.AddUserManager<ApplicationUserManager<TUser>>()
-                .AddSignInManager<ApplicationUserSignInManager<TUser>>()
-                .AddClaimsPrincipalFactory<ApplicationUserClaimsPrincipalFactory<TUser>>()
-                .AddUserValidator<PhoneNumberValidator<TUser>>()
-                .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>();
+            .AddSignInManager<ApplicationUserSignInManager<TUser>>()
+            .AddClaimsPrincipalFactory<ApplicationUserClaimsPrincipalFactory<TUser>>()
+            .AddUserValidator<PhoneNumberValidator<TUser>>()
+            .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>();
 
         // 移除原有的PasswordValidator
         var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));

@@ -12,11 +12,6 @@ public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescrib
     /// <summary>
     /// 
     /// </summary>
-    public new ApplicationUserIdentityErrorDescriber Describer => errorDescriber as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errorDescriber));
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="manager"></param>
     /// <param name="user"></param>
     /// <param name="password"></param>
@@ -25,6 +20,7 @@ public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescrib
     {
         ArgumentNullException.ThrowIfNull(password, nameof(password));
         ArgumentNullException.ThrowIfNull(manager, nameof(manager));
+        var describer = Describer as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errorDescriber));
 
         var errors = new List<IdentityError>();
         var options = manager.Options.Password;
@@ -53,7 +49,7 @@ public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescrib
         }
         if(requiredCount < 3)
         {
-            errors.Add(Describer.PasswordRequires3Of4());
+            errors.Add(describer.PasswordRequires3Of4());
         }
 
         if (options.RequiredUniqueChars >= 1 && password.Distinct().Count() < options.RequiredUniqueChars)

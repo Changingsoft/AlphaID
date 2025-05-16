@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
-namespace IdSubjects;
+namespace IdSubjects.Identity;
 
 /// <summary>
 /// 

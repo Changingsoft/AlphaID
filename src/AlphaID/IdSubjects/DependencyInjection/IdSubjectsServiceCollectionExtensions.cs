@@ -21,7 +21,7 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdSubjectsBuilder AddIdSubjects<TUser>(this IServiceCollection services,
+    public static IdentityBuilder AddIdSubjects<TUser>(this IServiceCollection services,
         Action<IdentityOptions>? setupAction = null)
         where TUser : ApplicationUser
     {
@@ -29,9 +29,8 @@ public static class IdSubjectsServiceCollectionExtensions
 
         // 由IdSubjects使用的服务。
         services.TryAddScoped<ApplicationUserManager<TUser>>();
-        services.TryAddScoped<ApplicationUserIdentityErrorDescriber>();
         services.TryAddScoped<PasswordHistoryManager<TUser>>();
-
+        services.TryAddScoped<ProfileUrlGenerator<TUser>>();
 
 
         services.TryAddScoped<IEventService, DefaultEventService>();
@@ -40,8 +39,8 @@ public static class IdSubjectsServiceCollectionExtensions
         //添加基础标识
         IdentityBuilder identityBuilder = services.AddIdentityCore<TUser>()
                 .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<T>使用
-                .AddSignInManager<ApplicationUserSignInManager<TUser>>()
                 .AddUserValidator<PhoneNumberValidator<TUser>>()
+                .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>()
                 .AddDefaultTokenProviders();
 
         // 移除原有的PasswordValidator
@@ -58,7 +57,7 @@ public static class IdSubjectsServiceCollectionExtensions
             services.Configure(setupAction);
         }
 
-        return new IdSubjectsBuilder(services, identityBuilder);
+        return identityBuilder;
     }
 
     /// <summary>
@@ -69,32 +68,32 @@ public static class IdSubjectsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IdentityBuilder AddIdSubjectsIdentity<TUser, TRole>(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
-        where TUser : ApplicationUser
-        where TRole : class
-    {
-        var builder = services.AddIdentity<TUser, TRole>()
-            .AddUserManager<ApplicationUserManager<TUser>>()
-            .AddUserValidator<PhoneNumberValidator<TUser>>();
+    //public static IdentityBuilder AddIdSubjectsIdentity<TUser, TRole>(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
+    //    where TUser : ApplicationUser
+    //    where TRole : class
+    //{
+    //    var builder = services.AddIdentity<TUser, TRole>()
+    //        .AddUserManager<ApplicationUserManager<TUser>>()
+    //        .AddUserValidator<PhoneNumberValidator<TUser>>();
 
-        // 移除原有的PasswordValidator
-        var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
-        if (passwordValidatorDescriptor != null)
-        {
-            services.Remove(passwordValidatorDescriptor);
-        }
-        // 添加AlphaIdPasswordValidator
-        builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
+    //    // 移除原有的PasswordValidator
+    //    var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
+    //    if (passwordValidatorDescriptor != null)
+    //    {
+    //        services.Remove(passwordValidatorDescriptor);
+    //    }
+    //    // 添加AlphaIdPasswordValidator
+    //    builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
 
-        services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
-        {
-            o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
-            o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-        });
-        if (setupAction != null)
-        {
-            services.Configure(setupAction);
-        }
-        return builder;
-    }
+    //    services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
+    //    {
+    //        o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
+    //        o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    //    });
+    //    if (setupAction != null)
+    //    {
+    //        services.Configure(setupAction);
+    //    }
+    //    return builder;
+    //}
 }

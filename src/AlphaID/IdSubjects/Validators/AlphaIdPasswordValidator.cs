@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Validators;
-internal class AlphaIdPasswordValidator<TUser>(ApplicationUserIdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
+public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
 {
+    ApplicationUserIdentityErrorDescriber Describer => errorDescriber as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errorDescriber));
+
     public override Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string? password)
     {
         ArgumentNullException.ThrowIfNull(password, nameof(password));
@@ -35,7 +37,7 @@ internal class AlphaIdPasswordValidator<TUser>(ApplicationUserIdentityErrorDescr
         }
         if(requiredCount < 3)
         {
-            errors.Add(errorDescriber.PasswordRequires3Of4());
+            errors.Add(Describer.PasswordRequires3Of4());
         }
 
         if (options.RequiredUniqueChars >= 1 && password.Distinct().Count() < options.RequiredUniqueChars)

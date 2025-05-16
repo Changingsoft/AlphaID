@@ -1,4 +1,5 @@
 using IdSubjects.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -13,7 +14,7 @@ public static class IdSubjectsBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns>返回目录管理构造器。</returns>
-    public static DirectoryLogonBuilder AddDirectoryLogin<T>(this IdSubjectsBuilder builder)
+    public static DirectoryLogonBuilder AddDirectoryLogin<T>(this IdentityBuilder builder)
     where T : ApplicationUser
     {
         builder.Services.TryAddScoped<DirectoryServiceManager>();

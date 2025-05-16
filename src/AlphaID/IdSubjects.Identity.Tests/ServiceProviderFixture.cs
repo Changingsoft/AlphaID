@@ -1,3 +1,4 @@
+using IdSubjects.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -12,20 +13,26 @@ public class ServiceProviderFixture : IDisposable
     {
         var services = new ServiceCollection();
 
-        var builder = services.AddIdSubjects<ApplicationUser>()
+        services.AddIdSubjectsIdentity<ApplicationUser, IdentityRole>()
             .AddUserStore<StubApplicationUserStore>()
+            .AddRoleStore<StubRoleStore>()
             .AddDefaultTokenProviders();
-        services.AddDataProtection();
-        services.AddScoped<IPasswordHistoryStore, StubPasswordHistoryStore>();
-        services.AddScoped<IApplicationUserStore<ApplicationUser>, StubApplicationUserStore>();
-
+        services.AddScoped<ApplicationUserSignInManager<ApplicationUser>>();
         services.AddScoped<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
+        services.AddScoped<IApplicationUserStore<ApplicationUser>, StubApplicationUserStore>();
+        services.AddScoped<IPasswordHistoryStore, StubPasswordHistoryStore>();
+        services.AddLogging();
+
         services.Configure<PasswordLifetimeOptions>(options =>
         {
             options.EnablePassExpires = true;
             options.RememberPasswordHistory = 1;
         });
         //注入一个假的HttpContext
+        services.AddScoped<IHttpContextAccessor, MockHttpContextAccessor>();
+
+        services.AddAuthentication()
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
         RootServiceProvider = services.BuildServiceProvider();
         ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();

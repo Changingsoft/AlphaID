@@ -4,6 +4,7 @@ using IdSubjects.DependencyInjection;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -18,7 +19,7 @@ namespace AlphaIdPlatform.DependencyInjection;
 /// <param name="realNameBuilder"></param>
 /// <param name="auditLogBuilder"></param>
 public class AlphaIdPlatformBuilder(IServiceCollection services, 
-    IdSubjectsBuilder idSubjects, 
+    IdentityBuilder idSubjects, 
     DirectoryLogonBuilder directoryLogon,
     RealNameBuilder realNameBuilder,
     AuditLogBuilder auditLogBuilder)
@@ -31,7 +32,7 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     /// <summary>
     ///   获取身份主体构建器。
     /// </summary>
-    public IdSubjectsBuilder IdSubjects { get; } = idSubjects;
+    public IdentityBuilder IdSubjects { get; } = idSubjects;
 
     /// <summary>
     ///  获取目录登录构建器。

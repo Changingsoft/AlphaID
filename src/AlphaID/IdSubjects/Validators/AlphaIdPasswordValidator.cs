@@ -20,7 +20,7 @@ public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescrib
     {
         ArgumentNullException.ThrowIfNull(password, nameof(password));
         ArgumentNullException.ThrowIfNull(manager, nameof(manager));
-        var describer = Describer as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errorDescriber));
+        var describer = Describer as ApplicationUserIdentityErrorDescriber ?? throw new InvalidOperationException("没有注册ApplicationUserIdentityErrorDescriber");
 
         var errors = new List<IdentityError>();
         var options = manager.Options.Password;

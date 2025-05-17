@@ -36,10 +36,11 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
         // 添加AlphaIdPasswordValidator
         builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
 
-        services.TryAddScoped<PasswordHistoryManager<TUser>>();
-        services.TryAddScoped<IEventService, DefaultEventService>();
+        services.AddScoped<PasswordHistoryManager<TUser>>();
+        services.AddScoped<IEventService, WebAppEventService>();
         services.TryAddScoped<IEventSink, DefaultEventSink>();
         services.TryAddScoped<ProfileUrlGenerator<TUser>>();
+
         services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
         {
             o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;

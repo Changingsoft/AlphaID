@@ -27,14 +27,14 @@ public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEv
     }
 
     /// <summary>
-    /// 事件Id.
-    /// </summary>
-    public EventId EventId { get; } = eventId;
-
-    /// <summary>
     /// 任务类别。
     /// </summary>
     public string Category { get; set; } = category;
+
+    /// <summary>
+    /// 事件Id.
+    /// </summary>
+    public EventId EventId { get; } = eventId;
 
     /// <summary>
     /// </summary>
@@ -43,14 +43,6 @@ public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEv
     /// <summary>
     /// </summary>
     public string? Message { get; set; } = message;
-
-    /// <summary>
-    /// Gets or sets the per-request activity identifier.
-    /// </summary>
-    /// <value>
-    /// The activity identifier.
-    /// </value>
-    public string? ActivityId { get; set; }
 
     /// <summary>
     /// Gets or sets the time stamp when the event was raised.
@@ -67,6 +59,14 @@ public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEv
     /// The process identifier.
     /// </value>
     public int ProcessId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the per-request activity identifier.
+    /// </summary>
+    /// <value>
+    /// The activity identifier.
+    /// </value>
+    public string? ActivityId { get; set; }
 
     /// <summary>
     /// Gets or sets the local ip address of the current request.

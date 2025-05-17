@@ -11,11 +11,9 @@
 		<InternalsVisibleTo Include="IDSubjects.Tests" />
 	</ItemGroup>
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="Duende.IdentityModel" Version="7.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.13" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.13" />
 		<PackageReference Include="MinVer" Version="6.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

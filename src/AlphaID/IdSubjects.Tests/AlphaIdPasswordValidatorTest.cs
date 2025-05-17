@@ -11,6 +11,9 @@ public class AlphaIdPasswordValidatorTest(ServiceProviderFixture serviceProvider
     {
         using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        manager.Options.Tokens.PasswordResetTokenProvider = "Static";
+        manager.RegisterTokenProvider("Static", new StaticTokenProvider());
+
         var user = new ApplicationUser("TestUser");
         //Arrange
         var validator = manager.PasswordValidators.OfType<AlphaIdPasswordValidator<ApplicationUser>>().First();

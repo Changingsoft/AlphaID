@@ -15,7 +15,7 @@ public class ServiceProviderFixture
         idSubjectsBuilder.AddRealName<ApplicationUser>()
             .AddRealNameAuthenticationStore<StubRealNameAuthenticationStore>()
             .AddRealNameRequestStore<StubRealNameRequestStore>();
-        idSubjectsBuilder.AddDefaultTokenProviders();
+        //idSubjectsBuilder.AddDefaultTokenProviders();
 
         Root = services.BuildServiceProvider();
         ScopeFactory = Root.GetRequiredService<IServiceScopeFactory>();

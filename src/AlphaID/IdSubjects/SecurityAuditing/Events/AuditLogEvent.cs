@@ -5,13 +5,14 @@ using Microsoft.Extensions.Logging;
 namespace IdSubjects.SecurityAuditing.Events;
 
 /// <summary>
+/// 表示一个审计日志事件。
 /// </summary>
 /// <remarks>
 /// </remarks>
-/// <param name="category"></param>
-/// <param name="eventId"></param>
-/// <param name="type"></param>
-/// <param name="message"></param>
+/// <param name="category">类别。</param>
+/// <param name="eventId">事件Id。</param>
+/// <param name="type">事件类型。</param>
+/// <param name="message">消息。</param>
 public abstract class AuditLogEvent(string category, EventId eventId, AuditLogEventTypes type, string? message = null)
 {
     private static readonly JsonSerializerOptions s_options = new()

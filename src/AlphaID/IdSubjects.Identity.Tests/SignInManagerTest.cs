@@ -2,10 +2,10 @@ using IdSubjects.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IdSubjects.Tests;
+namespace IdSubjects.Identity.Tests;
 
-[Collection(nameof(ServiceProviderCollection))]
-public class SignInManagerTest(ServiceProviderFixture serviceProvider)
+[Collection(nameof(IdentityServiceProviderCollection))]
+public class SignInManagerTest(IdentityServiceProviderFixture serviceProvider)
 {
     [Fact]
     public async Task DisabledUserSignInShouldFail()

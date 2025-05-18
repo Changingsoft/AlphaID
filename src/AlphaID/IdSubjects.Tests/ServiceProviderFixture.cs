@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.Tests;
 
-public class ServiceProviderFixture : IDisposable
+public class ServiceProviderFixture
 {
     public ServiceProviderFixture()
     {
@@ -29,8 +29,4 @@ public class ServiceProviderFixture : IDisposable
     public IServiceProvider RootServiceProvider { get; }
 
     public IServiceScopeFactory ServiceScopeFactory { get; }
-
-    public void Dispose()
-    {
-    }
 }

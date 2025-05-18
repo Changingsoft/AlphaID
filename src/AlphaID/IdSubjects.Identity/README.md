@@ -1,0 +1,3 @@
+# IdSubjects.Identity
+
+IdSubjects.Identity是一个AspNetCore.Identity的扩展，它扩展了IdeneityUser，支持OIDC规范要求的全部字段，并且提供了密码过期强制修改等功能。

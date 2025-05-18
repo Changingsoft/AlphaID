@@ -1,16 +1,15 @@
 using IdSubjects.Identity;
-using IdSubjects.Identity.Tests;
+using IdSubjects.Tests;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IdSubjects.Tests;
+namespace IdSubjects.Identity.Tests;
 
-public class ServiceProviderFixture : IDisposable
+public class IdentityServiceProviderFixture
 {
-    public ServiceProviderFixture()
+    public IdentityServiceProviderFixture()
     {
         var services = new ServiceCollection();
 
@@ -32,9 +31,6 @@ public class ServiceProviderFixture : IDisposable
         //注入一个假的HttpContext
         services.AddScoped<IHttpContextAccessor, MockHttpContextAccessor>();
 
-        services.AddAuthentication()
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
-
         RootServiceProvider = services.BuildServiceProvider();
         ServiceScopeFactory = RootServiceProvider.GetRequiredService<IServiceScopeFactory>();
     }
@@ -43,7 +39,4 @@ public class ServiceProviderFixture : IDisposable
 
     public IServiceScopeFactory ServiceScopeFactory { get; }
 
-    public void Dispose()
-    {
-    }
 }

@@ -14,7 +14,7 @@ dotnet build
 dotnet ef migrations add $args[0] -c OperationalDbContext -o Migrations/AdminWebAppDb --no-build
 dotnet ef migrations add $args[0] -c ConfigurationDbContext -o Migrations/ConfigurationDb --no-build
 dotnet ef migrations add $args[0] -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb --no-build
-dotnet ef migrations add $args[0] -c IDSubjectsDbContext -o Migrations/IDSubjectsDb --no-build
+dotnet ef migrations add $args[0] -c IdSubjectsDbContext -o Migrations/IdSubjectsDb --no-build
 dotnet ef migrations add $args[0] -c LoggingDbContext -o Migrations/LoggingDb --no-build
 dotnet ef migrations add $args[0] -c PersistedGrantDbContext -o Migrations/PersistedGrantDb --no-build
 dotnet ef migrations add $args[0] -c RealNameDbContext -o Migrations/RealNameDb --no-build

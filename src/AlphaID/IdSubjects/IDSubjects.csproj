@@ -11,7 +11,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="IDSubjects.Tests" />
+		<InternalsVisibleTo Include="IdSubjects.Tests" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Duende.IdentityModel" Version="7.0.0" />

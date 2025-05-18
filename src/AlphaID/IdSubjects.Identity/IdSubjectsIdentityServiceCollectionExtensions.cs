@@ -13,7 +13,7 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
 {
     public static IdentityBuilder AddIdSubjectsIdentity<TUser, TRole>(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
         where TUser : ApplicationUser
-        where TRole : IdentityRole
+        where TRole : class
     {
         IdentityBuilder builder;
         if (setupAction == null)
@@ -23,7 +23,7 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
 
         builder.AddUserManager<ApplicationUserManager<TUser>>()
             .AddSignInManager<ApplicationUserSignInManager<TUser>>()
-            .AddClaimsPrincipalFactory<ApplicationUserClaimsPrincipalFactory<TUser>>()
+            .AddClaimsPrincipalFactory<ApplicationUserClaimsPrincipalFactory<TUser, TRole>>()
             .AddUserValidator<PhoneNumberValidator<TUser>>()
             .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>();
 

@@ -35,7 +35,7 @@ public static class IdSubjectsServiceCollectionExtensions
 
         //添加基础标识
         IdentityBuilder builder = services.AddIdentityCore<TUser>()
-                .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<T>使用
+                .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<TUser>使用
                 .AddUserValidator<PhoneNumberValidator<TUser>>()
                 .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>();
 

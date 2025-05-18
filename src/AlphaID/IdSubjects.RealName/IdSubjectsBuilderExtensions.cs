@@ -1,5 +1,5 @@
-using IdSubjects.DependencyInjection;
 using IdSubjects.RealName.Requesting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace IdSubjects.RealName;
@@ -14,7 +14,7 @@ public static class IdSubjectsBuilderExtensions
     /// </summary>
     /// <param name="builder"></param>
     /// <returns>返回一个实名认证构造器，见<see cref="RealNameBuilder" />。</returns>
-    public static RealNameBuilder AddRealName<T>(this IdSubjectsBuilder builder)
+    public static RealNameBuilder AddRealName<T>(this IdentityBuilder builder)
     where T : ApplicationUser
     {
         //Add services

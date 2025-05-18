@@ -15,7 +15,7 @@
 		<Compile Remove="IChineseIDCardValidationStore.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="IDSubjects.RealName.Tests" />
+		<InternalsVisibleTo Include="IdSubjects.RealName.Tests" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MinVer" Version="6.0.0">

@@ -1,12 +1,26 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Validators;
-internal class AlphaIdPasswordValidator<TUser>(ApplicationUserIdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TUser"></typeparam>
+/// <param name="errorDescriber"></param>
+public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="manager"></param>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public override Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string? password)
     {
         ArgumentNullException.ThrowIfNull(password, nameof(password));
         ArgumentNullException.ThrowIfNull(manager, nameof(manager));
+        var describer = Describer as ApplicationUserIdentityErrorDescriber ?? throw new InvalidOperationException("没有注册ApplicationUserIdentityErrorDescriber");
 
         var errors = new List<IdentityError>();
         var options = manager.Options.Password;
@@ -35,7 +49,7 @@ internal class AlphaIdPasswordValidator<TUser>(ApplicationUserIdentityErrorDescr
         }
         if(requiredCount < 3)
         {
-            errors.Add(errorDescriber.PasswordRequires3Of4());
+            errors.Add(describer.PasswordRequires3Of4());
         }
 
         if (options.RequiredUniqueChars >= 1 && password.Distinct().Count() < options.RequiredUniqueChars)

@@ -1,5 +1,4 @@
 using IdSubjects.SecurityAuditing.Events;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace IdSubjects.SecurityAuditing;
@@ -11,20 +10,14 @@ namespace IdSubjects.SecurityAuditing;
 /// Initializes a new instance of the <see cref="DefaultEventService" /> class.
 /// </remarks>
 /// <param name="options">The options.</param>
-/// <param name="context">The context.</param>
 /// <param name="sink">The sink.</param>
-public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpContextAccessor context, IEventSink sink)
+public class DefaultEventService(IOptions<AuditEventsOptions> options, IEventSink sink)
     : IEventService
 {
     /// <summary>
     /// The options
     /// </summary>
     protected AuditEventsOptions Options { get; } = options.Value;
-
-    /// <summary>
-    /// The context
-    /// </summary>
-    protected IHttpContextAccessor Context { get; } = context;
 
     /// <summary>
     /// The sink
@@ -37,7 +30,7 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     /// <param name="evt">The event.</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException">evt</exception>
-    public async Task RaiseAsync(AuditLogEvent evt)
+    public virtual async Task RaiseAsync(AuditLogEvent evt)
     {
         ArgumentNullException.ThrowIfNull(evt);
 
@@ -54,7 +47,7 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     /// <param name="evtType"></param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentOutOfRangeException"></exception>
-    public bool CanRaiseEventType(AuditLogEventTypes evtType)
+    public virtual bool CanRaiseEventType(AuditLogEventTypes evtType)
     {
         return evtType switch
         {
@@ -83,23 +76,12 @@ public class DefaultEventService(IOptions<AuditEventsOptions> options, IHttpCont
     /// </summary>
     /// <param name="evt">The evt.</param>
     /// <returns></returns>
-    protected virtual Task PrepareEventAsync(AuditLogEvent evt)
+    protected virtual async Task PrepareEventAsync(AuditLogEvent evt)
     {
-        evt.ActivityId = Context.HttpContext?.TraceIdentifier;
         evt.TimeStamp = DateTime.UtcNow;
         evt.ProcessId = Environment.ProcessId;
 
-        if (Context.HttpContext?.Connection.LocalIpAddress != null)
-            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress + ":" +
-                                 Context.HttpContext.Connection.LocalPort;
-        else
-            evt.LocalIpAddress = "unknown";
-
-        evt.RemoteIpAddress = Context.HttpContext?.Connection.RemoteIpAddress != null
-            ? Context.HttpContext.Connection.RemoteIpAddress.ToString()
-            : "unknown";
-
         // 让事件自己做准备。
-        return evt.PrepareAsync();
+        await evt.PrepareAsync();
     }
 }

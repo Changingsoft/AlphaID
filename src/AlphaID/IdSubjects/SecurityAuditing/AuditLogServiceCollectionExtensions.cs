@@ -18,7 +18,6 @@ public static class AuditLogServiceCollectionExtensions
     /// <returns></returns>
     public static AuditLogBuilder AddAuditLog(this IServiceCollection services)
     {
-        services.AddHttpContextAccessor();
         services.TryAddScoped<AuditLogViewer>();
 
         return new AuditLogBuilder(services);

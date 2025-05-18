@@ -28,13 +28,13 @@ namespace IdSubjects;
 /// <param name="passwordHistoryManager">密码历史管理器。</param>
 /// <param name="eventService">事件服务。</param>
 public class ApplicationUserManager<T>(
-    IApplicationUserStore<T> store,
+    IUserStore<T> store,
     IOptions<IdentityOptions> optionsAccessor,
     IPasswordHasher<T> passwordHasher,
     IEnumerable<IUserValidator<T>> userValidators,
     IEnumerable<IPasswordValidator<T>> passwordValidators,
     ILookupNormalizer keyNormalizer,
-    ApplicationUserIdentityErrorDescriber errors,
+    IdentityErrorDescriber errors,
     IServiceProvider services,
     ILogger<ApplicationUserManager<T>> logger,
     IOptions<PasswordLifetimeOptions> passwordLifetimeOptions,
@@ -59,12 +59,12 @@ where T : ApplicationUser
     /// <summary>
     /// 获取 IApplicationUserStore。该属性已替换原属性。
     /// </summary>
-    public new IApplicationUserStore<T> Store { get; } = store;
+    public new IApplicationUserStore<T> Store { get; } = store as IApplicationUserStore<T> ?? throw new ArgumentNullException(nameof(store));
 
     /// <summary>
-    /// 获取错误描述器。该属性已替换原属性。
+    /// 获取错误描述器。
     /// </summary>
-    public new ApplicationUserIdentityErrorDescriber ErrorDescriber { get; } = errors;
+    public ApplicationUserIdentityErrorDescriber AppErrorDescriber { get; } = errors as ApplicationUserIdentityErrorDescriber ?? throw new ArgumentNullException(nameof(errors));
 
     /// <summary>
     /// 获取或设置时间提供器以便于可测试性。
@@ -226,7 +226,7 @@ where T : ApplicationUser
             if (PasswordHistoryManager.Hit(user, password))
             {
                 await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
-                return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
+                return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
             }
 
         user.PasswordLastSet = TimeProvider.GetUtcNow();
@@ -259,7 +259,7 @@ where T : ApplicationUser
                 if (user.PasswordLastSet.Value > coldDownEnd)
                 {
                     await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "MinimumPasswordAge"));
-                    return IdentityResult.Failed(ErrorDescriber.LessThenMinimumPasswordAge());
+                    return IdentityResult.Failed(AppErrorDescriber.LessThenMinimumPasswordAge());
                 }
             }
 
@@ -268,7 +268,7 @@ where T : ApplicationUser
             if (PasswordHistoryManager.Hit(user, newPassword))
             {
                 await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
-                return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
+                return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
             }
 
         //正式进入更改密码。
@@ -306,7 +306,7 @@ where T : ApplicationUser
             if (PasswordHistoryManager.Hit(user, newPassword))
             {
                 await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
-                return IdentityResult.Failed(ErrorDescriber.ReuseOldPassword());
+                return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
             }
 
         user.PasswordLastSet = TimeProvider.GetUtcNow();

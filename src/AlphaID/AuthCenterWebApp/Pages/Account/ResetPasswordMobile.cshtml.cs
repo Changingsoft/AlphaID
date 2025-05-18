@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using AlphaIdPlatform.Identity;
-using IdSubjects;
 using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordMobileModel(ApplicationUserManager<NaturalPerson> userManager) : PageModel
+public class ResetPasswordMobileModel(UserManager<NaturalPerson> userManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;

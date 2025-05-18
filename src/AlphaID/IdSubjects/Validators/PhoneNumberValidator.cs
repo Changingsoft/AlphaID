@@ -30,11 +30,11 @@ where T:ApplicationUser
                 await applicationUserManager.FindByMobileAsync(number.ToString());
             if (owner != null && !string.Equals(user.Id, owner.Id))
                 //手机号已存在且不隶属该用户，则提示手机号重复。
-                errors.Add(applicationUserManager.ErrorDescriber.DuplicatePhoneNumber());
+                errors.Add(applicationUserManager.AppErrorDescriber.DuplicatePhoneNumber());
         }
         else
         {
-            errors.Add(applicationUserManager.ErrorDescriber.InvalidPhoneNumberFormat());
+            errors.Add(applicationUserManager.AppErrorDescriber.InvalidPhoneNumberFormat());
         }
 
         return errors.Count > 0 ? IdentityResult.Failed([.. errors]) : IdentityResult.Success;

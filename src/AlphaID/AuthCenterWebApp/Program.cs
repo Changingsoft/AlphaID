@@ -141,7 +141,6 @@ builder.Services.Configure<AuditEventsOptions>(builder.Configuration.GetSection(
 builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
-    .AddSignInManager<ApplicationUserSignInManager<NaturalPerson>>()
     .AddUserStore<NaturalPersonStore>()
     .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();

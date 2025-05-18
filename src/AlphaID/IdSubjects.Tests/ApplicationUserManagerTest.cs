@@ -86,6 +86,8 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         using var scope = serviceProvider.ServiceScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
         manager.TimeProvider = new FrozenTimeProvider();
+        manager.Options.Tokens.PasswordResetTokenProvider = "Static";
+        manager.RegisterTokenProvider("Static", new StaticTokenProvider());
 
         var user = new ApplicationUser("TestUser");
         await manager.CreateAsync(user, "Pass123$"); //1st password

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
@@ -6,22 +6,23 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Description>用于处理身份标识的库，旨在简化身份验证和授权的实现。它扩展了IdeneityUser，支持OIDC要求的全部字段，并增强了密码有效期管理。以便在应用程序中更轻松地管理用户身份。</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="IDSubjects.Tests" />
-	</ItemGroup>
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+		<InternalsVisibleTo Include="IdSubjects.Tests" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Duende.IdentityModel" Version="7.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.16" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.16" />
 		<PackageReference Include="MinVer" Version="6.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />
-		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
 		<PackageReference Include="TimeZoneConverter" Version="7.0.0" />
 	</ItemGroup>
 	<ItemGroup>
@@ -39,5 +40,11 @@
 	  <EmbeddedResource Update="Resources.zh-CN.resx">
 		  <DependentUpon>Resources.resx</DependentUpon>
 	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>

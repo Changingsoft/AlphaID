@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace IdSubjects;
+namespace IdSubjects.Identity;
 
 /// <summary>
 ///    自然人登录结果扩展。

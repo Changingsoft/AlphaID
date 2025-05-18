@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace IdSubjects.Tests;
-internal class StubRoleStore : IRoleStore<IdentityRole>
+public class StubRoleStore : IRoleStore<IdentityRole>
 {
     private readonly List<IdentityRole> _roles = [];
 

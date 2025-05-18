@@ -1,5 +1,5 @@
-using IdSubjects.DependencyInjection;
 using IdSubjects.Tests;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdSubjects.DirectoryLogon.Tests;
@@ -9,8 +9,8 @@ public class ServiceProviderFixture
     public ServiceProviderFixture()
     {
         var services = new ServiceCollection();
-        IdSubjectsBuilder idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>()
-            .AddPersonStore<StubApplicationUserStore, ApplicationUser>()
+        IdentityBuilder idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>()
+            .AddUserStore<StubApplicationUserStore>()
             .AddPasswordHistoryStore<StubPasswordHistoryStore>();
         idSubjectsBuilder.AddDirectoryLogin<ApplicationUser>()
             .AddDirectoryServiceStore<StubDirectoryServiceDescriptorStore>()

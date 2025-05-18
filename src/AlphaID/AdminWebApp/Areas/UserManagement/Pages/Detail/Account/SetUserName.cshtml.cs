@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using IdSubjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {
-    public class SetUserNameModel(ApplicationUserManager<NaturalPerson> userManager) : PageModel
+    public class SetUserNameModel(UserManager<NaturalPerson> userManager) : PageModel
     {
 
         [BindProperty]

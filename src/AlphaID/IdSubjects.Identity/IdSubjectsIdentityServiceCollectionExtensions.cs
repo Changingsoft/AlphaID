@@ -27,13 +27,8 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
             .AddUserValidator<PhoneNumberValidator<TUser>>()
             .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>();
 
-        // 移除原有的PasswordValidator
-        var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
-        if (passwordValidatorDescriptor != null)
-        {
-            services.Remove(passwordValidatorDescriptor);
-        }
-        // 添加AlphaIdPasswordValidator
+        // 移除原有的PasswordValidator，添加AlphaIdPasswordValidator
+        services.RemoveAll<IPasswordValidator<TUser>>(); // 移除所有的PasswordValidator
         builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
 
         services.AddScoped<PasswordHistoryManager<TUser>>();

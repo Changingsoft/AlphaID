@@ -34,62 +34,20 @@ public static class IdSubjectsServiceCollectionExtensions
         services.TryAddScoped<IEventSink, DefaultEventSink>();
 
         //添加基础标识
-        IdentityBuilder identityBuilder = services.AddIdentityCore<TUser>()
+        IdentityBuilder builder = services.AddIdentityCore<TUser>()
                 .AddUserManager<ApplicationUserManager<TUser>>() //当做UserManager<T>使用
                 .AddUserValidator<PhoneNumberValidator<TUser>>()
                 .AddErrorDescriber<ApplicationUserIdentityErrorDescriber>();
 
-        // 移除原有的PasswordValidator
-        var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
-        if (passwordValidatorDescriptor != null)
-        {
-            services.Remove(passwordValidatorDescriptor);
-        }
-        // 添加AlphaIdPasswordValidator
-        identityBuilder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
+        // 移除原有的PasswordValidator，添加AlphaIdPasswordValidator
+        services.RemoveAll<IPasswordValidator<TUser>>(); // 移除所有的PasswordValidator
+        builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
 
         if (setupAction != null)
         {
             services.Configure(setupAction);
         }
 
-        return identityBuilder;
+        return builder;
     }
-
-    /// <summary>
-    /// 添加IdSubjects的Identity服务，包括身份验证功能。
-    /// </summary>
-    /// <typeparam name="TUser"></typeparam>
-    /// <typeparam name="TRole"></typeparam>
-    /// <param name="services"></param>
-    /// <param name="setupAction"></param>
-    /// <returns></returns>
-    //public static IdentityBuilder AddIdSubjectsIdentity<TUser, TRole>(this IServiceCollection services, Action<IdentityOptions>? setupAction = null)
-    //    where TUser : ApplicationUser
-    //    where TRole : class
-    //{
-    //    var builder = services.AddIdentity<TUser, TRole>()
-    //        .AddUserManager<ApplicationUserManager<TUser>>()
-    //        .AddUserValidator<PhoneNumberValidator<TUser>>();
-
-    //    // 移除原有的PasswordValidator
-    //    var passwordValidatorDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IPasswordValidator<TUser>));
-    //    if (passwordValidatorDescriptor != null)
-    //    {
-    //        services.Remove(passwordValidatorDescriptor);
-    //    }
-    //    // 添加AlphaIdPasswordValidator
-    //    builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
-
-    //    services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
-    //    {
-    //        o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;
-    //        o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-    //    });
-    //    if (setupAction != null)
-    //    {
-    //        services.Configure(setupAction);
-    //    }
-    //    return builder;
-    //}
 }

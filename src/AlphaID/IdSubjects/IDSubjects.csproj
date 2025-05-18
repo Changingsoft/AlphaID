@@ -6,6 +6,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Description>用于处理身份标识的库，旨在简化身份验证和授权的实现。它扩展了IdeneityUser，支持OIDC要求的全部字段，并增强了密码有效期管理。以便在应用程序中更轻松地管理用户身份。</Description>
 	</PropertyGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="IDSubjects.Tests" />
@@ -37,5 +39,11 @@
 	  <EmbeddedResource Update="Resources.zh-CN.resx">
 		  <DependentUpon>Resources.resx</DependentUpon>
 	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>

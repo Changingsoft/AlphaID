@@ -16,7 +16,7 @@ public class PasswordLifetimeOptions
     public int PasswordExpiresDay { get; set; } = 90;
 
     /// <summary>
-    /// 记住密码历史数量。当用户重设密码时，不能设为已计入历史的密码。默认为0。意味着用户可以重设相同的密码。
+    /// 记住密码历史数量。当用户重设密码时，不能重复设为已计入历史的密码。默认为0，意味着用户可以重设相同的密码。
     /// </summary>
     public int RememberPasswordHistory { get; set; } = 0;
 

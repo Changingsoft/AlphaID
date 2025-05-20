@@ -4,7 +4,7 @@ using Xunit;
 
 namespace IdSubjects.Tests;
 [Collection(nameof(ServiceProviderCollection))]
-public class AlphaIdPasswordValidatorTest(ServiceProviderFixture serviceProvider)
+public class IdSubjectsPasswordValidatorTest(ServiceProviderFixture serviceProvider)
 {
     [Fact]
     public async Task TestPasswordComplexityRule()
@@ -16,7 +16,7 @@ public class AlphaIdPasswordValidatorTest(ServiceProviderFixture serviceProvider
 
         var user = new ApplicationUser("TestUser");
         //Arrange
-        var validator = manager.PasswordValidators.OfType<AlphaIdPasswordValidator<ApplicationUser>>().First();
+        var validator = manager.PasswordValidators.OfType<IdSubjectsPasswordValidator<ApplicationUser>>().First();
         //Assert
         Assert.False((await validator.ValidateAsync(manager, user, "ABCDEFGH")).Succeeded); //大写
         Assert.False((await validator.ValidateAsync(manager, user, "abcdefgh")).Succeeded); //小写

@@ -8,9 +8,9 @@ using System.Security.Claims;
 namespace IdSubjects.Identity;
 
 /// <summary>
-/// 
+/// 提供用户登录身份验证的管理功能。
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">用户类型。</typeparam>
 /// <param name="userManager"></param>
 /// <param name="contextAccessor"></param>
 /// <param name="claimsFactory"></param>
@@ -24,7 +24,8 @@ public class ApplicationUserSignInManager<T>(ApplicationUserManager<T> userManag
                                     IOptions<IdentityOptions> optionsAccessor,
                                     ILogger<SignInManager<T>> logger,
                                     IAuthenticationSchemeProvider schemes,
-                                    IUserConfirmation<T> confirmation) : SignInManager<T>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation) where T : ApplicationUser
+                                    IUserConfirmation<T> confirmation) 
+    : SignInManager<T>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation) where T : ApplicationUser
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 

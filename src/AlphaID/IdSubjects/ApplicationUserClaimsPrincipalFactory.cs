@@ -19,11 +19,7 @@ public class ApplicationUserClaimsPrincipalFactory<TUser>(UserManager<TUser> use
     : UserClaimsPrincipalFactory<TUser>(userManager, optionsAccessor)
     where TUser : ApplicationUser
 {
-    /// <summary>
-    ///    已重写。生成声明。
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(TUser user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
@@ -87,7 +83,7 @@ public class ApplicationUserClaimsPrincipalFactory<TUser>(UserManager<TUser> use
 }
 
 /// <summary>
-/// ///    为用户和角色生成声明的工厂。
+/// 为用户和角色生成声明的工厂。
 /// </summary>
 /// <typeparam name="TUser">User类</typeparam>
 /// <typeparam name="TRole">Role类</typeparam>
@@ -103,11 +99,7 @@ public class ApplicationUserClaimsPrincipalFactory<TUser, TRole>(UserManager<TUs
     where TUser : ApplicationUser
     where TRole : class
 {
-    /// <summary>
-    /// 已重写。生成声明。
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(TUser user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);

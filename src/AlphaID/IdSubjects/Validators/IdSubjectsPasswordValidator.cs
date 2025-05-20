@@ -3,19 +3,13 @@ using Microsoft.AspNetCore.Identity;
 namespace IdSubjects.Validators;
 
 /// <summary>
-/// 
+/// 一个密码验证器，他要求密码必须达到规定的长度，并且满足至少三种字符类型的要求。
 /// </summary>
-/// <typeparam name="TUser"></typeparam>
-/// <param name="errorDescriber"></param>
-public class AlphaIdPasswordValidator<TUser>(IdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
+/// <typeparam name="TUser">表示User的类型。</typeparam>
+/// <param name="errorDescriber">错误描述符。</param>
+public class IdSubjectsPasswordValidator<TUser>(IdentityErrorDescriber errorDescriber) : PasswordValidator<TUser>(errorDescriber) where TUser : ApplicationUser
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="manager"></param>
-    /// <param name="user"></param>
-    /// <param name="password"></param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public override Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string? password)
     {
         ArgumentNullException.ThrowIfNull(password, nameof(password));

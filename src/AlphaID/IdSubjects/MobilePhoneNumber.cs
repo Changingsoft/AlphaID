@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace IdSubjects.Subjects;
+namespace IdSubjects;
 
 /// <summary>
 /// 移动电话号码。

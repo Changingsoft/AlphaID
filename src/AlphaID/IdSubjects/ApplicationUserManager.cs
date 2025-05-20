@@ -1,7 +1,6 @@
 using System.Transactions;
 using IdSubjects.SecurityAuditing;
 using IdSubjects.SecurityAuditing.Events;
-using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

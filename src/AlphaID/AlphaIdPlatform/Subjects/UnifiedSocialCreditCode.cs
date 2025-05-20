@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
+using IdSubjects;
 
-namespace IdSubjects.Subjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 /// 表示一个统一社会信用代码。

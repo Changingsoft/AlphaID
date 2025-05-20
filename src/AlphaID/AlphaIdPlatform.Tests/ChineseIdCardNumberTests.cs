@@ -1,7 +1,7 @@
-﻿using IdSubjects.Subjects;
-using Xunit;
+using AlphaIdPlatform.Subjects;
+using IdSubjects;
 
-namespace IdSubjects.Tests;
+namespace AlphaIdPlatform.Tests;
 
 public class ChineseIdCardNumberTests
 {

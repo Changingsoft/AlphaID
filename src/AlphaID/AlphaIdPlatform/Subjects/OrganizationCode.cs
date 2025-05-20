@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace IdSubjects.Subjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 /// 表示组织机构代码。

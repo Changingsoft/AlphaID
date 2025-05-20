@@ -8,7 +8,7 @@ namespace IdSubjects;
 public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
 {
     /// <summary>
-    /// Invalid phone number format.
+    /// 无效的移动电话号码格式。
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError InvalidPhoneNumberFormat()
@@ -21,7 +21,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    /// Duplicate phone number.
+    /// 电话号码重复。
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError DuplicatePhoneNumber()
@@ -46,7 +46,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    /// LessThenMinimumPasswordAge
+    /// 低于密码最小生存期。
     /// </summary>
     /// <returns></returns>
     public IdentityError LessThenMinimumPasswordAge()
@@ -59,7 +59,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
     }
 
     /// <summary>
-    /// ReuseOldPassword
+    /// 重复使用了旧密码。
     /// </summary>
     /// <returns></returns>
     public IdentityError ReuseOldPassword()

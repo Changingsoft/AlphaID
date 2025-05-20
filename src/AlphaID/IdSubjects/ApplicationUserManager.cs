@@ -52,7 +52,7 @@ public class ApplicationUserManager<T>(
 where T : ApplicationUser
 {
     /// <summary>
-    /// 
+    /// 获取密码声明周期选项。
     /// </summary>
     public virtual PasswordLifetimeOptions PasswordLifetime => passwordLifetimeOptions.Value;
 

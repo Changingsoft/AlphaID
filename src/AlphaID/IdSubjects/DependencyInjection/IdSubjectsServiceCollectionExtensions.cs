@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class IdSubjectsServiceCollectionExtensions
 {
     /// <summary>
-    /// 向添加AlphaId自然人管理功能。
+    /// 添加IdSubjects基本组件。部包括身份验证部分。
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
@@ -41,7 +41,7 @@ public static class IdSubjectsServiceCollectionExtensions
 
         // 移除原有的PasswordValidator，添加AlphaIdPasswordValidator
         services.RemoveAll<IPasswordValidator<TUser>>(); // 移除所有的PasswordValidator
-        builder.AddPasswordValidator<AlphaIdPasswordValidator<TUser>>();
+        builder.AddPasswordValidator<IdSubjectsPasswordValidator<TUser>>();
 
         if (setupAction != null)
         {

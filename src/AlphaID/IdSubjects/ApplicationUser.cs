@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace IdSubjects;
 
 /// <summary>
-/// 表示一个自然人个体。
+/// 表示一个用户。
 /// </summary>
 [Index(nameof(WhenCreated))]
 [Index(nameof(WhenChanged))]
@@ -21,6 +21,7 @@ public class ApplicationUser : IdentityUser
     }
 
     /// <summary>
+    /// 使用用户名创建一个新的用户。
     /// </summary>
     /// <param name="userName"></param>
     public ApplicationUser(string userName) : base(userName)
@@ -133,10 +134,7 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     public virtual string? WebSite { get; set; }
 
-    /// <summary>
-    /// Override.
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc />
     public override string ToString()
     {
         return UserName!;

@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.International.Converters.PinYinConverter;
 
-namespace IdSubjects.ChineseName;
+namespace ChineseName;
 
 /// <summary>
 /// 中国人名字拼音转换器。

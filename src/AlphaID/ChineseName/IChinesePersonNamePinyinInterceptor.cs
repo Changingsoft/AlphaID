@@ -1,4 +1,4 @@
-namespace IdSubjects.ChineseName;
+namespace ChineseName;
 
 /// <summary>
 /// 中国人姓名拼音转换拦截器。

@@ -1,7 +1,4 @@
-﻿using IdSubjects.ChineseName;
-using Xunit;
-
-namespace IdSubjects.Tests;
+namespace ChineseName.Tests;
 
 public class CaseOptionsExtensionsTests
 {

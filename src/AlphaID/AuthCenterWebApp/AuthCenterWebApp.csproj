@@ -38,6 +38,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaId.PlatformServices\AlphaId.PlatformServices.csproj" />
 		<ProjectReference Include="..\AspNetWebLib\AspNetWebLib.csproj" />
+		<ProjectReference Include="..\ChineseName\ChineseName.csproj" />
 		<ProjectReference Include="..\IdSubjects.DirectoryLogon\IdSubjects.DirectoryLogon.csproj" />
 		<ProjectReference Include="..\IdSubjects.Identity\IdSubjects.Identity.csproj" />
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />

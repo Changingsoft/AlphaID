@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
-using IdSubjects.ChineseName;
+using ChineseName;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

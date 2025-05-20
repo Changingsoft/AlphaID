@@ -8,7 +8,6 @@ using ChineseName;
 using Duende.IdentityServer;
 using IdentityModel;
 using IdSubjects;
-using IdSubjects.Subjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

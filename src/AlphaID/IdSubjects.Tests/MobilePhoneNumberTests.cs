@@ -1,4 +1,3 @@
-﻿using IdSubjects.Subjects;
 using Xunit;
 
 namespace IdSubjects.Tests;

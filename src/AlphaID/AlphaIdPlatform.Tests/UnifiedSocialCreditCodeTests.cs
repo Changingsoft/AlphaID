@@ -1,7 +1,6 @@
-﻿using IdSubjects.Subjects;
-using Xunit;
+using AlphaIdPlatform.Subjects;
 
-namespace IdSubjects.Tests;
+namespace AlphaIdPlatform.Tests;
 
 public class UnifiedSocialCreditCodeTests
 {

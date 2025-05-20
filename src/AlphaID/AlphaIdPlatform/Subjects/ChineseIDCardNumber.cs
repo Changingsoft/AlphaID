@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
+using IdSubjects;
 
-namespace IdSubjects.Subjects;
+namespace AlphaIdPlatform.Subjects;
 
 /// <summary>
 /// 表示一个中华人民共和国居民身份证号。

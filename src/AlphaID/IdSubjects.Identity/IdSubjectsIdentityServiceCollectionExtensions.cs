@@ -27,11 +27,7 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
         where TUser : ApplicationUser
         where TRole : class
     {
-        IdentityBuilder builder;
-        if (setupAction == null)
-            builder = services.AddIdentity<TUser, TRole>();
-        else
-            builder = services.AddIdentity<TUser, TRole>(setupAction);
+        IdentityBuilder builder = setupAction == null ? services.AddIdentity<TUser, TRole>() : services.AddIdentity<TUser, TRole>(setupAction);
 
         builder.AddUserManager<ApplicationUserManager<TUser>>()
             .AddSignInManager<ApplicationUserSignInManager<TUser>>()
@@ -48,6 +44,7 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
         services.TryAddScoped<IEventSink, DefaultEventSink>();
         services.TryAddScoped<ProfileUrlGenerator<TUser>>();
 
+        //添加MustChangePasswordScheme方案。
         services.AddAuthentication().AddCookie(IdSubjectsIdentityDefaults.MustChangePasswordScheme, o =>
         {
             o.Cookie.Name = IdSubjectsIdentityDefaults.MustChangePasswordScheme;

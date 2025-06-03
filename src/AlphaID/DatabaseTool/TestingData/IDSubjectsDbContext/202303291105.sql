@@ -29,3 +29,18 @@ INSERT [dbo].[OrganizationMember] ([OrganizationId], [PersonId], [Department], [
 SET IDENTITY_INSERT [dbo].[OrganizationUsedName] ON 
 INSERT [dbo].[OrganizationUsedName] ([Id], [OrganizationId], [Name], [DeprecateTime]) VALUES (1, N'5288b813-e1f4-4fd3-a342-6f21a4c3fef7', N'改名前的有限公司', CAST(N'2022-06-01' AS Date))
 SET IDENTITY_INSERT [dbo].[OrganizationUsedName] OFF
+SET IDENTITY_INSERT [dbo].[UsedPassword] ON 
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (1, N'020d87bb-a337-457c-af6d-53bc2d355579', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (2, N'0f7fc2c8-34b6-417e-a4e4-604bd4cbac01', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (3, N'1ccfec51-9ad1-456c-8e1e-ce4839d2ca3d', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (4, N'2b8e184c-c6a5-45d7-8132-8aa53eaf3fd4', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (5, N'77750ac0-813b-4da9-91df-540432117d46', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (6, N'9662c73b-78d3-4bde-96ac-017c0f754b68', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (7, N'adbb8d41-2a89-42b0-a272-5e0a9a324bb5', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (8, N'bf16436b-d15f-44b7-bd61-831eacee5063', N'AQAAAAIAAYagAAAAEBo6J+rG5eTfCOYCw9mFEloJbvd3Ws42N3jhmGXX5JA80mNnXD33ViZRP62gakQDSA==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (9, N'c12c61e6-49a3-4f6d-8cea-7f039ec371a1', N'AQAAAAIAAYagAAAAEBo6J+rG5eTfCOYCw9mFEloJbvd3Ws42N3jhmGXX5JA80mNnXD33ViZRP62gakQDSA==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (10, N'c2f7cf9b-4dec-4c05-8451-da58c9b0f39f', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (11, N'cc9b802c-26ee-409b-ab7f-951f5bd26190', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (12, N'd2480421-8a15-4292-8e8f-06985a1f645b', N'AQAAAAIAAYagAAAAEBaf3e7AFeBh5Ye7MVqe8waDodfU4tuJYdRikeZfbDgzUqOfpVEXtO3XIOSGnG/rzQ==')
+INSERT [dbo].[UsedPassword] ([Id], [NaturalPersonId], [PasswordHash]) VALUES (13, N'f23eef91-e089-4164-99a7-909cdae5eac7', N'AQAAAAIAAYagAAAAELuwE7qoCVmVWyQtQCRwMKDmw+ZGO5azUW0sCI1KL9wtOUhys+loBDH05TNfaKpOMQ==')
+SET IDENTITY_INSERT [dbo].[UsedPassword] OFF

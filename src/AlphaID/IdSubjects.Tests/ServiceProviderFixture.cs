@@ -10,7 +10,6 @@ public class ServiceProviderFixture
 
         var builder = services.AddIdSubjects<ApplicationUser>()
             .AddUserStore<StubApplicationUserStore>();
-        services.AddScoped<IPasswordHistoryStore, StubPasswordHistoryStore>();
         services.AddScoped<IApplicationUserStore<ApplicationUser>, StubApplicationUserStore>();
 
         //services.AddScoped<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();

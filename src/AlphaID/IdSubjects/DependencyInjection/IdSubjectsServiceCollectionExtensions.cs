@@ -26,7 +26,6 @@ public static class IdSubjectsServiceCollectionExtensions
     {
         // 由IdSubjects使用的服务。
         services.TryAddScoped<ApplicationUserManager<TUser>>();
-        services.TryAddScoped<PasswordHistoryManager<TUser>>();
         services.TryAddScoped<ProfileUrlGenerator<TUser>>();
 
 

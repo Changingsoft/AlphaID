@@ -39,7 +39,6 @@ public static class IdSubjectsIdentityServiceCollectionExtensions
         services.RemoveAll<IPasswordValidator<TUser>>(); // 移除所有的PasswordValidator
         builder.AddPasswordValidator<IdSubjectsPasswordValidator<TUser>>();
 
-        services.AddScoped<PasswordHistoryManager<TUser>>();
         services.AddScoped<IEventService, WebAppEventService>();
         services.TryAddScoped<IEventSink, DefaultEventSink>();
         services.TryAddScoped<ProfileUrlGenerator<TUser>>();

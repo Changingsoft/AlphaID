@@ -20,7 +20,6 @@ public class IdentityServiceProviderFixture
         services.AddScoped<ApplicationUserSignInManager<ApplicationUser>>();
         services.AddScoped<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
         services.AddScoped<IApplicationUserStore<ApplicationUser>, StubApplicationUserStore>();
-        services.AddScoped<IPasswordHistoryStore, StubPasswordHistoryStore>();
         services.AddLogging();
 
         services.Configure<PasswordLifetimeOptions>(options =>

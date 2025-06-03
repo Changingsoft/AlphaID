@@ -10,8 +10,7 @@ public class ServiceProviderFixture
     {
         var services = new ServiceCollection();
         IdentityBuilder idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>()
-            .AddUserStore<StubApplicationUserStore>()
-            .AddPasswordHistoryStore<StubPasswordHistoryStore>();
+            .AddUserStore<StubApplicationUserStore>();
         idSubjectsBuilder.AddRealName<ApplicationUser>()
             .AddRealNameAuthenticationStore<StubRealNameAuthenticationStore>()
             .AddRealNameRequestStore<StubRealNameRequestStore>();

@@ -16,7 +16,6 @@ public static class IdSubjectsBuilderExtensions
     {
         builder.Services.AddScoped<IQueryableUserStore<NaturalPerson>, NaturalPersonStore>();
         builder.AddUserStore<NaturalPersonStore>();
-        builder.AddPasswordHistoryStore<PasswordHistoryStore>();
 
         return builder;
     }

@@ -23,7 +23,7 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
         if (!ModelState.IsValid)
             return Page();
 
-        var directoryService = new DirectoryServiceDescriptor
+        var directoryService = new IdSubjects.DirectoryLogon.DirectoryService
         {
             Name = Input.Name,
             ServerAddress = Input.ServerAddress,

@@ -1,25 +1,25 @@
-﻿namespace IdSubjects.DirectoryLogon.Tests;
+namespace IdSubjects.DirectoryLogon.Tests;
 
 internal class StubDirectoryServiceDescriptorStore : IDirectoryServiceDescriptorStore
 {
-    public IQueryable<DirectoryServiceDescriptor> Services => throw new NotImplementedException();
+    public IQueryable<DirectoryService> Services => throw new NotImplementedException();
 
-    public Task CreateAsync(DirectoryServiceDescriptor serviceDescriptor)
+    public Task CreateAsync(DirectoryService service)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(DirectoryServiceDescriptor serviceDescriptor)
+    public Task DeleteAsync(DirectoryService service)
     {
         throw new NotImplementedException();
     }
 
-    public Task<DirectoryServiceDescriptor?> FindByIdAsync(int id)
+    public Task<DirectoryService?> FindByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(DirectoryServiceDescriptor serviceDescriptor)
+    public Task UpdateAsync(DirectoryService service)
     {
         throw new NotImplementedException();
     }

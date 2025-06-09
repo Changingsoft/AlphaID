@@ -1,3 +1,4 @@
+using System.DirectoryServices;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
 using System.DirectoryServices.AccountManagement;
@@ -8,12 +9,12 @@ namespace AlphaIdPlatform.Identity;
 /// <summary>
 /// 自然人服务。
 /// </summary>
-/// <param name="personManager"></param>
+/// <param name="userManager"></param>
 /// <param name="serviceManager"></param>
 /// <param name="accountManager"></param>
 /// <param name="authenticationStore"></param>
 public class NaturalPersonService(
-    UserManager<NaturalPerson> personManager,
+    UserManager<NaturalPerson> userManager,
     DirectoryServiceManager? serviceManager,
     DirectoryAccountManager<NaturalPerson>? accountManager,
     IRealNameAuthenticationStore? authenticationStore)
@@ -27,7 +28,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult> ChangePasswordAsync(NaturalPerson person, string oldPassword, string newPassword)
     {
-        var result = await personManager.ChangePasswordAsync(person, oldPassword, newPassword);
+        var result = await userManager.ChangePasswordAsync(person, oldPassword, newPassword);
         if (!result.Succeeded)
         {
             return result;
@@ -37,7 +38,7 @@ public class NaturalPersonService(
             var directoryServices = accountManager.GetLogonAccounts(person);
             foreach (var account in directoryServices)
             {
-                account.SetPassword(newPassword, !person.PasswordLastSet.HasValue);
+                accountManager.SetPassword(account, newPassword, !person.PasswordLastSet.HasValue);
             }
         }
 
@@ -47,26 +48,21 @@ public class NaturalPersonService(
     /// <summary>
     /// 创建自然人。
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="user"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> CreateAsync(NaturalPerson person, string newPassword)
+    public async Task<IdentityResult> CreateAsync(NaturalPerson user, string newPassword)
     {
-        var result = await personManager.CreateAsync(person, newPassword);
+        var result = await userManager.CreateAsync(user, newPassword);
         if(!result.Succeeded)
         {
             return result;
         }
 
         // 创建目录账号
-        if (serviceManager != null && accountManager != null)
+        if (accountManager != null)
         {
-            var directoryServices = serviceManager.Services.Where(s => s.AutoCreateAccount);
-            foreach (var directoryService in directoryServices)
-            {
-                var account = new DirectoryAccount(directoryService, person.Id);
-                await accountManager.CreateAsync(account);
-            }
+            await accountManager.CreateDirectoryAccounts(user, newPassword);
         }
 
         return result;
@@ -80,7 +76,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult> AddPasswordAsync(NaturalPerson person, string newPassword)
     {
-        var result = await personManager.AddPasswordAsync(person, newPassword);
+        var result = await userManager.AddPasswordAsync(person, newPassword);
         if (!result.Succeeded)
         {
             return result;
@@ -90,7 +86,7 @@ public class NaturalPersonService(
             var directoryServices = accountManager.GetLogonAccounts(person);
             foreach (var account in directoryServices)
             {
-                account.SetPassword(newPassword, !person.PasswordLastSet.HasValue);
+                accountManager.SetPassword(account, newPassword, !person.PasswordLastSet.HasValue);
             }
         }
 
@@ -106,7 +102,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult> ResetPasswordAsync(NaturalPerson person, string inputCode, string inputPassword)
     {
-        var result = await personManager.ResetPasswordAsync(person, inputCode, inputPassword);
+        var result = await userManager.ResetPasswordAsync(person, inputCode, inputPassword);
         if (!result.Succeeded)
         {
             return result;
@@ -116,7 +112,7 @@ public class NaturalPersonService(
             var directoryServices = accountManager.GetLogonAccounts(person);
             foreach (var account in directoryServices)
             {
-                account.SetPassword(inputPassword, !person.PasswordLastSet.HasValue);
+                accountManager.SetPassword(account, inputPassword, !person.PasswordLastSet.HasValue);
             }
         }
 
@@ -130,7 +126,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult?> RemovePasswordAsync(NaturalPerson person)
     {
-        var result = await personManager.RemovePasswordAsync(person);
+        var result = await userManager.RemovePasswordAsync(person);
         if (!result.Succeeded)
         {
             return result;
@@ -140,7 +136,7 @@ public class NaturalPersonService(
             var directoryServices = accountManager.GetLogonAccounts(person);
             foreach (var account in directoryServices)
             {
-                account.SetPassword(null, !person.PasswordLastSet.HasValue);
+                accountManager.SetPassword(account, null, !person.PasswordLastSet.HasValue);
             }
         }
 
@@ -152,26 +148,16 @@ public class NaturalPersonService(
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public async Task<IdentityResult?> UpdateAsync(NaturalPerson person)
     {
-        var result = await personManager.UpdateAsync(person);
+        var result = await userManager.UpdateAsync(person);
         if (!result.Succeeded)
         {
             return result;
         }
         if (serviceManager != null && accountManager != null)
         {
-            var directoryServices = accountManager.GetLogonAccounts(person);
-            foreach (var account in directoryServices)
-            {
-                UserPrincipal? userPrincipal = account.GetUserPrincipal();
-                if (userPrincipal != null)
-                {
-                    person.ApplyTo(userPrincipal);
-                    userPrincipal.Save();
-                }
-            }
+            accountManager.ApplyUpdates(person);
         }
 
         return result;
@@ -184,7 +170,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult> DeleteAsync(NaturalPerson person)
     {
-        var result = await personManager.DeleteAsync(person);
+        var result = await userManager.DeleteAsync(person);
         if (!result.Succeeded)
         {
             return result;
@@ -206,7 +192,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult> SetEmailAsync(NaturalPerson person, string? email)
     {
-        var result = await personManager.SetEmailAsync(person, email);
+        var result = await userManager.SetEmailAsync(person, email);
         if (!result.Succeeded)
             return result;
 
@@ -222,7 +208,7 @@ public class NaturalPersonService(
     /// <returns></returns>
     public async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson person, string? phoneNumber)
     {
-        var result = await personManager.SetPhoneNumberAsync(person, phoneNumber);
+        var result = await userManager.SetPhoneNumberAsync(person, phoneNumber);
         if (!result.Succeeded)
             return result;
         //todo 更新目录账号的手机号码。

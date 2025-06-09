@@ -4,28 +4,28 @@ namespace AlphaId.EntityFramework.DirectoryAccountManagement;
 
 public class DirectoryServiceDescriptorStore(DirectoryLogonDbContext dbContext) : IDirectoryServiceDescriptorStore
 {
-    public IQueryable<DirectoryServiceDescriptor> Services => dbContext.DirectoryServices;
+    public IQueryable<DirectoryService> Services => dbContext.DirectoryServices;
 
-    public async Task CreateAsync(DirectoryServiceDescriptor serviceDescriptor)
+    public async Task CreateAsync(DirectoryService service)
     {
-        dbContext.DirectoryServices.Add(serviceDescriptor);
+        dbContext.DirectoryServices.Add(service);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(DirectoryServiceDescriptor serviceDescriptor)
+    public async Task DeleteAsync(DirectoryService service)
     {
-        dbContext.DirectoryServices.Remove(serviceDescriptor);
+        dbContext.DirectoryServices.Remove(service);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<DirectoryServiceDescriptor?> FindByIdAsync(int id)
+    public async Task<DirectoryService?> FindByIdAsync(int id)
     {
         return await dbContext.DirectoryServices.FindAsync(id);
     }
 
-    public async Task UpdateAsync(DirectoryServiceDescriptor serviceDescriptor)
+    public async Task UpdateAsync(DirectoryService service)
     {
-        dbContext.DirectoryServices.Update(serviceDescriptor);
+        dbContext.DirectoryServices.Update(service);
         await dbContext.SaveChangesAsync();
     }
 }

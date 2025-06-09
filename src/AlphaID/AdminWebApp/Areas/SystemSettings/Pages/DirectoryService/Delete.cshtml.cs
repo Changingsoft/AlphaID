@@ -7,7 +7,7 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryService;
 
 public class DeleteModel(DirectoryServiceManager directoryServiceManager) : PageModel
 {
-    public DirectoryServiceDescriptor Data { get; set; } = null!;
+    public IdSubjects.DirectoryLogon.DirectoryService Data { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Service name")]
@@ -16,7 +16,7 @@ public class DeleteModel(DirectoryServiceManager directoryServiceManager) : Page
 
     public async Task<IActionResult> OnGetAsync(int anchor)
     {
-        DirectoryServiceDescriptor? svc = await directoryServiceManager.FindByIdAsync(anchor);
+        IdSubjects.DirectoryLogon.DirectoryService? svc = await directoryServiceManager.FindByIdAsync(anchor);
         if (svc == null)
             return NotFound();
 
@@ -26,7 +26,7 @@ public class DeleteModel(DirectoryServiceManager directoryServiceManager) : Page
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
-        DirectoryServiceDescriptor? svc = await directoryServiceManager.FindByIdAsync(id);
+        IdSubjects.DirectoryLogon.DirectoryService? svc = await directoryServiceManager.FindByIdAsync(id);
         if (svc == null)
             return NotFound();
         Data = svc;

@@ -7,7 +7,7 @@ public class PersonLogonAccounts(IQueryableLogonAccountStore store) : ViewCompon
 {
     public IViewComponentResult Invoke(string personId)
     {
-        IQueryable<DirectoryAccount> result = store.LogonAccounts.Where(t => t.PersonId == personId);
+        IQueryable<DirectoryAccount> result = store.LogonAccounts.Where(t => t.UserId == personId);
         return View(result);
     }
 }

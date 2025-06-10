@@ -73,11 +73,6 @@ public class DirectoryService
     public string? SamDomainPart { get; set; } = null!;
 
     /// <summary>
-    /// 获取或设置外部登录提供器信息。
-    /// </summary>
-    public virtual ExternalLoginProviderInfo? ExternalLoginProvider { get; set; }
-
-    /// <summary>
     /// 自动创建账户。
     /// </summary>
     public bool AutoCreateAccount { get; set; } = false;

@@ -1,4 +1,4 @@
-﻿@page "{anchor}"
+@page "{anchor}"
 @model IndexModel
 @{
     ViewBag.Title = $"Detail of {Model.Data.Name}";
@@ -17,8 +17,6 @@
     <dd>@Model.Data.UpnSuffix</dd>
     <dt>SAM Domain Part</dt>
     <dd>@Model.Data.SamDomainPart</dd>
-    <dt>External Login Provider</dt>
-    <dd>@Model.Data.ExternalLoginProvider?.DisplayName (@Model.Data.ExternalLoginProvider?.Name)</dd>
 </dl>
 
 <a asp-page="Delete" asp-route-anchor="@Model.Data.Id" class="btn btn-danger">Delete service</a>

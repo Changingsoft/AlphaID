@@ -71,25 +71,6 @@
         <span asp-description-for="Input.ExternalProviderName" class="form-hint"></span>
         <span asp-validation-for="Input.ExternalProviderName" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="Input.ExternalProviderDisplayName" class="form-label"></label>
-        <input asp-for="Input.ExternalProviderDisplayName" class="form-control"/>
-        <span asp-description-for="Input.ExternalProviderDisplayName" class="form-hint"></span>
-        <span asp-validation-for="Input.ExternalProviderDisplayName" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.RegisteredClientId" class="form-label"></label>
-        <input asp-for="Input.RegisteredClientId" class="form-control"/>
-        <span asp-description-for="Input.RegisteredClientId" class="form-hint"></span>
-        <span asp-validation-for="Input.RegisteredClientId" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Input.SubjectGenerator" class="form-label"></label>
-        <input asp-for="Input.SubjectGenerator" class="form-control"/>
-        <span asp-description-for="Input.SubjectGenerator" class="form-hint"></span>
-        <span asp-validation-for="Input.SubjectGenerator" class="text-danger"></span>
-    </div>
-
     <div asp-validation-summary="All" class="text-danger"></div>
     <button type="submit" class="btn btn-primary">@SL["Create"]</button>
 </form>

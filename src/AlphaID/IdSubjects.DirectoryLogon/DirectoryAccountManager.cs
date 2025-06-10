@@ -16,13 +16,11 @@ namespace IdSubjects.DirectoryLogon;
 /// <param name="userManager"></param>
 /// <param name="store"></param>
 /// <param name="directoryServiceManager"></param>
-/// <param name="subjectGenerators"></param>
 /// <param name="logger"></param>
 public class DirectoryAccountManager<T>(
     UserManager<T> userManager,
     IDirectoryAccountStore store,
     DirectoryServiceManager directoryServiceManager,
-    IEnumerable<ISubjectGenerator> subjectGenerators,
     ILogger<DirectoryAccountManager<T>>? logger = null)
 where T : ApplicationUser
 {
@@ -71,29 +69,6 @@ where T : ApplicationUser
             ObjectId = principal.Guid.ToString()!
         };
         await store.CreateAsync(account);
-
-        //Create external login
-        if (service.ExternalLoginProvider != null)
-        {
-            ClaimsPrincipal p = new(new ClaimsIdentity(
-            [
-                new(JwtClaimTypes.Subject, $"{service.SamDomainPart}\\{principal.SamAccountName}"),
-                new(JwtClaimTypes.ClientId, service.ExternalLoginProvider.RegisteredClientId)
-            ]));
-            ISubjectGenerator generator =
-                service.ExternalLoginProvider.SubjectGenerator != null
-                    ? subjectGenerators.First(s => s.GetType().FullName == service.ExternalLoginProvider.SubjectGenerator)
-                    : subjectGenerators.First();
-            string providerKey = generator.Generate(p);
-            IdentityResult identityResult = await userManager.AddLoginAsync(user,
-                new UserLoginInfo(service.ExternalLoginProvider.Name, providerKey,
-                    service.ExternalLoginProvider.DisplayName));
-            if (!identityResult.Succeeded)
-            {
-                logger?.LogError("未能创建外部登录，错误消息：{errors}", identityResult.Errors.Select(e => e.Description));
-                throw new InvalidOperationException("未能创建外部登录。");
-            }
-        }
 
         return account;
     }
@@ -209,18 +184,6 @@ where T : ApplicationUser
     /// <returns></returns>
     public virtual async Task<IdOperationResult> UnlinkAccount(DirectoryAccount account)
     {
-        if (account.DirectoryService.ExternalLoginProvider != null)
-        {
-            T? person = userManager.Users.FirstOrDefault(p => p.Id == account.UserId);
-            if (person == null) return IdOperationResult.Failed("找不到指定的Person。");
-            //删除外部登录
-            IdentityResult identityResult = await userManager.RemoveLoginAsync(person, account.DirectoryService.ExternalLoginProvider.Name, account.ObjectId);
-            if (!identityResult.Succeeded)
-            {
-                logger?.LogError("未能删除外部登录，错误消息：{errors}", identityResult.Errors.Select(p => p.Description));
-            }
-        }
-
         //删除目录账号
         await store.DeleteAsync(account);
         return IdOperationResult.Success;

@@ -19,7 +19,7 @@ using AspNetWebLib.RazorPages;
 using ChineseName;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
-using IdentityModel;
+using Duende.IdentityModel;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Authentication;

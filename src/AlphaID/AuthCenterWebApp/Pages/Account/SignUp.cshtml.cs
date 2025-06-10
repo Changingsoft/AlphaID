@@ -6,7 +6,7 @@ using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
 using ChineseName;
 using Duende.IdentityServer;
-using IdentityModel;
+using Duende.IdentityModel;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

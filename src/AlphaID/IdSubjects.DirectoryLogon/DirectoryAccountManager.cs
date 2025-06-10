@@ -227,31 +227,7 @@ where T : ApplicationUser
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="account"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    protected virtual IdOperationResult AddExternalLogin(T user, DirectoryAccount account)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="account"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    protected virtual IdOperationResult RemoveExternalLogin(T user, DirectoryAccount account)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 
+    /// 为账户设置密码。
     /// </summary>
     /// <param name="account"></param>
     /// <param name="password"></param>
@@ -281,6 +257,20 @@ where T : ApplicationUser
             logger?.LogError(e, "设置密码时出错。");
             return IdOperationResult.Failed("设置密码时出错。");
         }
+    }
+
+    public IdOperationResult SetAllPassword(T user, string? password, bool mustChangePassword = false)
+    {
+        var accounts = GetLogonAccounts(user);
+        foreach (var account in accounts)
+        {
+            IdOperationResult result = SetPassword(account, password, mustChangePassword);
+            if (!result.Succeeded)
+            {
+                return result; // 返回第一个失败的结果
+            }
+        }
+        return IdOperationResult.Success;
     }
 
     /// <summary>

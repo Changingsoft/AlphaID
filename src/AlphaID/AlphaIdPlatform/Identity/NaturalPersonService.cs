@@ -33,13 +33,9 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (serviceManager != null && accountManager != null)
+        if (accountManager != null)
         {
-            var directoryServices = accountManager.GetLogonAccounts(person);
-            foreach (var account in directoryServices)
-            {
-                accountManager.SetPassword(account, newPassword, !person.PasswordLastSet.HasValue);
-            }
+            accountManager.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
         }
 
         return result;
@@ -54,7 +50,7 @@ public class NaturalPersonService(
     public async Task<IdentityResult> CreateAsync(NaturalPerson user, string newPassword)
     {
         var result = await userManager.CreateAsync(user, newPassword);
-        if(!result.Succeeded)
+        if (!result.Succeeded)
         {
             return result;
         }
@@ -81,13 +77,9 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (serviceManager != null && accountManager != null)
+        if (accountManager != null)
         {
-            var directoryServices = accountManager.GetLogonAccounts(person);
-            foreach (var account in directoryServices)
-            {
-                accountManager.SetPassword(account, newPassword, !person.PasswordLastSet.HasValue);
-            }
+            accountManager.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
         }
 
         return result;
@@ -107,13 +99,9 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (serviceManager != null && accountManager != null)
+        if (accountManager != null)
         {
-            var directoryServices = accountManager.GetLogonAccounts(person);
-            foreach (var account in directoryServices)
-            {
-                accountManager.SetPassword(account, inputPassword, !person.PasswordLastSet.HasValue);
-            }
+            accountManager.SetAllPassword(person, inputPassword, !person.PasswordLastSet.HasValue);
         }
 
         return result;
@@ -131,13 +119,9 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (serviceManager != null && accountManager != null)
+        if (accountManager != null)
         {
-            var directoryServices = accountManager.GetLogonAccounts(person);
-            foreach (var account in directoryServices)
-            {
-                accountManager.SetPassword(account, null, !person.PasswordLastSet.HasValue);
-            }
+            accountManager.SetAllPassword(person, null, !person.PasswordLastSet.HasValue);
         }
 
         return result;

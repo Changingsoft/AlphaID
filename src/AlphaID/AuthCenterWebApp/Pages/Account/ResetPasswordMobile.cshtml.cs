@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordMobileModel(UserManager<NaturalPerson> userManager) : PageModel
+public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService, UserManager<NaturalPerson> userManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -45,7 +45,7 @@ public class ResetPasswordMobileModel(UserManager<NaturalPerson> userManager) : 
             return RedirectToPage("ResetPasswordConfirmation");
         }
 
-        var result = await userManager.ResetPasswordAsync(person, Input.Code, Input.NewPassword);
+        var result = await naturalPersonService.ResetPasswordAsync(person, Input.Code, Input.NewPassword);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)

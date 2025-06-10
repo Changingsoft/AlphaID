@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class ResetPasswordModel(
+    NaturalPersonService naturalPersonService,
     ApplicationUserManager<NaturalPerson> userManager,
     IShortMessageService shortMessageService,
     IOptions<IdentityOptions> options) : PageModel
@@ -53,7 +54,7 @@ public class ResetPasswordModel(
         }
 
         string password = GeneratePassword();
-        IdentityResult result = await userManager.ResetPasswordAsync(Person, password, true, true);
+        IdentityResult result = await naturalPersonService.ResetPasswordAsync(Person, password, true, true);
         if (result.Succeeded)
         {
             Debug.Assert(Person.PhoneNumber != null);
@@ -73,7 +74,7 @@ public class ResetPasswordModel(
             return NotFound();
         Person = person;
 
-        IdentityResult result = await userManager.ResetPasswordAsync(Person, Input.NewPassword,
+        IdentityResult result = await naturalPersonService.ResetPasswordAsync(Person, Input.NewPassword,
             Input.UserMustChangePasswordOnNextLogin, Input.UnlockUser);
         if (!result.Succeeded)
         {

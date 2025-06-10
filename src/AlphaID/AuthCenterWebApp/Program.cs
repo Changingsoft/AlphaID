@@ -13,7 +13,7 @@ using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
 using ChineseName;
 using Duende.IdentityServer.EntityFramework.Stores;
-using IdentityModel;
+using Duende.IdentityModel;
 using IdSubjects;
 using IdSubjects.SecurityAuditing;
 using Microsoft.AspNetCore.Authorization;

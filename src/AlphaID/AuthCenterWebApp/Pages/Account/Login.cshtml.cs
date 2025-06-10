@@ -6,7 +6,7 @@ using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
-using IdentityModel;
+using Duende.IdentityModel;
 using IdSubjects;
 using IdSubjects.Identity;
 using Microsoft.AspNetCore.Authentication;

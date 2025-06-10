@@ -8,7 +8,7 @@ using Duende.IdentityServer.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using static IdentityModel.OidcConstants;
+using static Duende.IdentityModel.OidcConstants;
 
 namespace AuthCenterWebApp.Pages.Consent;
 

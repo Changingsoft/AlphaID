@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

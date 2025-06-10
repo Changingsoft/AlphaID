@@ -3,7 +3,7 @@ using AspNetWebLib.Validations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Client = Duende.IdentityServer.EntityFramework.Entities.Client;

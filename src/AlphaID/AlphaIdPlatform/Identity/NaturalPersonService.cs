@@ -33,10 +33,7 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (accountManager != null)
-        {
-            accountManager.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
-        }
+        accountManager?.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
 
         return result;
     }
@@ -77,10 +74,7 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (accountManager != null)
-        {
-            accountManager.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
-        }
+        accountManager?.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
 
         return result;
     }
@@ -99,10 +93,7 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (accountManager != null)
-        {
-            accountManager.SetAllPassword(person, inputPassword, !person.PasswordLastSet.HasValue);
-        }
+        accountManager?.SetAllPassword(person, inputPassword, !person.PasswordLastSet.HasValue);
 
         return result;
     }
@@ -119,10 +110,7 @@ public class NaturalPersonService(
         {
             return result;
         }
-        if (accountManager != null)
-        {
-            accountManager.SetAllPassword(person, null, !person.PasswordLastSet.HasValue);
-        }
+        accountManager?.SetAllPassword(person, null, !person.PasswordLastSet.HasValue);
 
         return result;
     }

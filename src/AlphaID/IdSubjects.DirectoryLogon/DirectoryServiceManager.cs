@@ -26,7 +26,6 @@ public class DirectoryServiceManager(
     /// Create a directory service.
     /// </summary>
     /// <param name="directoryService"></param>
-    [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
     public async Task<IdOperationResult> CreateAsync(DirectoryService directoryService)
     {
         if (!directoryService.DefaultUserAccountContainer.EndsWith(directoryService.RootDn))
@@ -88,7 +87,6 @@ public class DirectoryServiceManager(
     /// <param name="directoryService"></param>
     /// <param name="filter"></param>
     /// <returns></returns>
-    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<挂起>")]
     public IEnumerable<DirectorySearchItem> Search(DirectoryService directoryService, string filter)
     {
         using DirectoryEntry searchRoot = DirectoryEntryHelper.GetRootEntry(directoryService);

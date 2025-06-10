@@ -13,12 +13,10 @@ namespace IdSubjects.DirectoryLogon;
 /// <remarks>
 /// Init.
 /// </remarks>
-/// <param name="userManager"></param>
 /// <param name="store"></param>
 /// <param name="directoryServiceManager"></param>
 /// <param name="logger"></param>
 public class DirectoryAccountManager<T>(
-    UserManager<T> userManager,
     IDirectoryAccountStore store,
     DirectoryServiceManager directoryServiceManager,
     ILogger<DirectoryAccountManager<T>>? logger = null)
@@ -164,11 +162,7 @@ where T : ApplicationUser
     public async Task<DirectoryAccount> LinkExistsAccount(T user, DirectoryService service, string entryObjectGuid)
     {
         using var context = PrincipalContextHelper.GetRootContext(service);
-        UserPrincipal? userPrincipal = UserPrincipal.FindByIdentity(context, entryObjectGuid);
-        if (userPrincipal == null)
-        {
-            throw new ArgumentException("找不到指定的目录对象。", nameof(entryObjectGuid));
-        }
+        UserPrincipal? userPrincipal = UserPrincipal.FindByIdentity(context, entryObjectGuid) ?? throw new ArgumentException("找不到指定的目录对象。", nameof(entryObjectGuid));
         DirectoryAccount account = new(service, user.Id)
         {
             ObjectId = userPrincipal.Guid.ToString()!
@@ -222,6 +216,13 @@ where T : ApplicationUser
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <param name="mustChangePassword"></param>
+    /// <returns></returns>
     public IdOperationResult SetAllPassword(T user, string? password, bool mustChangePassword = false)
     {
         var accounts = GetLogonAccounts(user);

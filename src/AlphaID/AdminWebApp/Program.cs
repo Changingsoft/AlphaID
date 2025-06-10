@@ -198,7 +198,6 @@ builder.Services.AddScoped<ChinesePersonNameFactory>();
 
 builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
     .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>()
-    .AddScoped<IQueryableLogonAccountStore, QueryableLogonAccountStore>()
     .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
 
 

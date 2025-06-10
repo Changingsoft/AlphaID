@@ -38,7 +38,7 @@
 
 在开发阶段，我们使用Active Directory Lightweight Directory Service（ADLDS，或称为AD轻型目录服务）来模拟目录服务。你需要安装ADLDS组件，使用向导创建ADLDS实例，用本库中的备份文件恢复实例状态，然后执行数据库脚本以添加目录服务。
 
-详细信息请参阅[调试托管目录服务账户]()
+详细信息请参阅[调试托管目录服务账户](/docs/DebugManagedAccount.md)
 
 ## 构建
 

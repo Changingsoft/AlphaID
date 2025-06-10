@@ -134,6 +134,11 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     public virtual string? WebSite { get; set; }
 
+    /// <summary>
+    /// 密码历史记录。
+    /// </summary>
+    public virtual ICollection<UsedPassword> UsedPasswords { get; set; } = [];
+
     /// <inheritdoc />
     public override string ToString()
     {

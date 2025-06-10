@@ -27,6 +27,7 @@ public class ChangePasswordModel(
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
+    public IdentityResult? Result { get; set; }
 
     public async Task<IActionResult> OnGetAsync(bool rememberMe, string? returnUrl = null)
     {
@@ -60,42 +61,38 @@ public class ChangePasswordModel(
         NaturalPerson person = await userManager.FindByIdAsync(personId) ??
                                throw new InvalidOperationException(
                                    "Unable to load must change password authentication user.");
-        IdentityResult identityResult =
-            await naturalPersonService.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
+        Result = await naturalPersonService.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
 
-        if (identityResult.Succeeded)
+        if (!Result.Succeeded) 
+            return Page();
+
+        //Sign out MustChangePasswordScheme
+        await HttpContext.SignOutAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+
+        //Signin user without password.
+        await signInManager.SignInAsync(person, rememberMe);
+
+        AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
+
+        if (context != null)
         {
-            //Sign out MustChangePasswordScheme
-            await HttpContext.SignOutAsync(IdSubjectsIdentityDefaults.MustChangePasswordScheme);
+            if (context.IsNativeClient())
+                // The client is native, so this change in how to
+                // return the response is for better UX for the end user.
+                return this.LoadingPage(returnUrl!);
 
-            //Signin user without password.
-            await signInManager.SignInAsync(person, rememberMe);
-
-            AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
-
-            if (context != null)
-            {
-                if (context.IsNativeClient())
-                    // The client is native, so this change in how to
-                    // return the response is for better UX for the end user.
-                    return this.LoadingPage(returnUrl!);
-
-                // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                return Redirect(returnUrl!);
-            }
-
-            // request for a local page
-            if (Url.IsLocalUrl(returnUrl))
-                return Redirect(returnUrl);
-            if (string.IsNullOrEmpty(returnUrl))
-                return Redirect("~/");
-            // user might have clicked on a malicious link - should be logged
-            throw new Exception("invalid return URL");
+            // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+            return Redirect(returnUrl!);
         }
 
-        ModelState.AddModelError("", "更改密码操作无效！");
-        foreach (IdentityError error in identityResult.Errors) ModelState.AddModelError("", error.Description);
-        return Page();
+        // request for a local page
+        if (Url.IsLocalUrl(returnUrl))
+            return Redirect(returnUrl);
+        if (string.IsNullOrEmpty(returnUrl))
+            return Redirect("~/");
+        // user might have clicked on a malicious link - should be logged
+        throw new Exception("invalid return URL");
+
     }
 
     public class InputModel

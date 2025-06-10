@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IdSubjects.DirectoryLogon.DirectoryAccount>
+@model IEnumerable<IdSubjects.DirectoryLogon.DirectoryAccount>
 
 <table class="table">
     <thead>
@@ -13,9 +13,9 @@
     {
         <tr>
             <td>
-                <a asp-page="/LogonAccount/Index" asp-route-PersonId="@account.PersonId">@account.ObjectId</a>
+                <a asp-page="/LogonAccount/Index" asp-route-PersonId="@account.UserId">@account.ObjectId</a>
             </td>
-            <td>@account.DirectoryServiceDescriptor.Name</td>
+            <td>@account.DirectoryService.Name</td>
             <td></td>
         </tr>
     }

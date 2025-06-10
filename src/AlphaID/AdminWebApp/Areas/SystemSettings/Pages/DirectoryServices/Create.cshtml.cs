@@ -23,7 +23,7 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
         if (!ModelState.IsValid)
             return Page();
 
-        var directoryService = new DirectoryServiceDescriptor
+        var directoryService = new IdSubjects.DirectoryLogon.DirectoryService
         {
             Name = Input.Name,
             ServerAddress = Input.ServerAddress,
@@ -36,13 +36,6 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
             UserName = Input.UserName,
             Password = Input.Password
         };
-        if (Input.ExternalProviderName != null)
-            directoryService.ExternalLoginProvider =
-                new ExternalLoginProviderInfo(Input.ExternalProviderName, Input.RegisteredClientId!)
-                {
-                    DisplayName = Input.ExternalProviderDisplayName,
-                    SubjectGenerator = Input.SubjectGenerator
-                };
 
         IdOperationResult result = await directoryServiceManager.CreateAsync(directoryService);
         if (!result.Succeeded)

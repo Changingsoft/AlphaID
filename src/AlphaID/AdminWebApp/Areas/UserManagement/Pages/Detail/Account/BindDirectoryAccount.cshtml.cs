@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 
 public class BindDirectoryAccountModel(
-    UserManager<NaturalPerson> personManager,
+    UserManager<NaturalPerson> userManager,
     DirectoryAccountManager<NaturalPerson> directoryAccountManager,
     DirectoryServiceManager directoryServiceManager) : PageModel
 {
-    public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
+    public IEnumerable<DirectoryService> DirectoryServices => directoryServiceManager.Services;
 
     public NaturalPerson Person { get; set; } = null!;
 
@@ -18,7 +18,7 @@ public class BindDirectoryAccountModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
@@ -27,31 +27,31 @@ public class BindDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostSearchAsync(string anchor, int serviceId, string keywords)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
+        DirectoryService? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
             return Page();
 
-        SearchItems = directoryAccountManager.Search(directoryService, $"(anr={keywords})");
+        SearchItems = directoryServiceManager.Search(directoryService, $"(anr={keywords})");
         return Page();
     }
 
     public async Task<IActionResult> OnPostBindAsync(string anchor, int serviceId, Guid entryGuid)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
-        if (person == null)
+        NaturalPerson? user = await userManager.FindByIdAsync(anchor);
+        if (user == null)
             return NotFound();
-        Person = person;
+        Person = user;
 
-        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
+        DirectoryService? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
             return Page();
-        var logonAccount = new DirectoryAccount(directoryService, person.Id);
-        await directoryAccountManager.BindExistsAccount(logonAccount, entryGuid.ToString());
+        var logonAccount = new DirectoryAccount(directoryService, user.Id);
+        await directoryAccountManager.LinkExistsAccount(user, directoryService, entryGuid.ToString());
         return RedirectToPage("DirectoryAccounts", new { anchor });
     }
 }

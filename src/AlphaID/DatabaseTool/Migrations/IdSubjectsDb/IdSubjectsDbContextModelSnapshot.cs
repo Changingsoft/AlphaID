@@ -18,40 +18,10 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.13")
+                .HasAnnotation("ProductVersion", "8.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AlphaId.EntityFramework.IdSubjects.PasswordHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTimeOffset>("WhenCreated")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WhenCreated");
-
-                    b.ToTable("PasswordHistory");
-                });
 
             modelBuilder.Entity("AlphaIdPlatform.Identity.NaturalPerson", b =>
                 {
@@ -631,11 +601,38 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                                 .HasForeignKey("NaturalPersonId");
                         });
 
+                    b.OwnsMany("IdSubjects.UsedPassword", "UsedPasswords", b1 =>
+                        {
+                            b1.Property<string>("NaturalPersonId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("PasswordHash")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(255)");
+
+                            b1.HasKey("NaturalPersonId", "Id");
+
+                            b1.ToTable("UsedPassword");
+
+                            b1.WithOwner()
+                                .HasForeignKey("NaturalPersonId");
+                        });
+
                     b.Navigation("Address");
 
                     b.Navigation("BankAccounts");
 
                     b.Navigation("ProfilePicture");
+
+                    b.Navigation("UsedPasswords");
                 });
 
             modelBuilder.Entity("AlphaIdPlatform.Subjects.Organization", b =>

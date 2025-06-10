@@ -10,10 +10,9 @@ public class ServiceProviderFixture
     {
         var services = new ServiceCollection();
         IdentityBuilder idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>()
-            .AddUserStore<StubApplicationUserStore>()
-            .AddPasswordHistoryStore<StubPasswordHistoryStore>();
+            .AddUserStore<StubApplicationUserStore>();
         idSubjectsBuilder.AddDirectoryLogin<ApplicationUser>()
-            .AddDirectoryServiceStore<StubDirectoryServiceDescriptorStore>()
+            .AddDirectoryServiceStore<StubDirectoryServiceStore>()
             .AddLogonAccountStore<StubDirectoryAccountStore>();
 
         Root = services.BuildServiceProvider();

@@ -9,16 +9,16 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 public class CreateDirectoryAccountModel(
     DirectoryServiceManager directoryServiceManager,
     DirectoryAccountManager<NaturalPerson> directoryAccountManager,
-    UserManager<NaturalPerson> applicationUserManager) : PageModel
+    UserManager<NaturalPerson> userManager) : PageModel
 {
-    public IEnumerable<DirectoryServiceDescriptor> DirectoryServices => directoryServiceManager.Services;
+    public IEnumerable<DirectoryService> DirectoryServices => directoryServiceManager.Services;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
 
@@ -45,11 +45,11 @@ public class CreateDirectoryAccountModel(
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
-        if (person == null)
+        NaturalPerson? user = await userManager.FindByIdAsync(anchor);
+        if (user == null)
             return NotFound();
 
-        DirectoryServiceDescriptor? directoryService = await directoryServiceManager.FindByIdAsync(Input.ServiceId);
+        DirectoryService? directoryService = await directoryServiceManager.FindByIdAsync(Input.ServiceId);
         if (directoryService == null)
             ModelState.AddModelError("", "请选择一个目录服务");
 
@@ -58,8 +58,7 @@ public class CreateDirectoryAccountModel(
 
         try
         {
-            var logonAccount = new DirectoryAccount(directoryService!, person.Id);
-            await directoryAccountManager.CreateAsync(logonAccount);
+            var logonAccount = await directoryAccountManager.CreateDirectoryAccount(user, directoryService!);
             return RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception ex)

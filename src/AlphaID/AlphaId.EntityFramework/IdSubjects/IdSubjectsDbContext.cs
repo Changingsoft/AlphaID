@@ -9,8 +9,6 @@ namespace AlphaId.EntityFramework.IdSubjects;
 
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
 {
-    public DbSet<PasswordHistory> PasswordHistorySet { get; protected set; } = null!;
-
     /// <summary>
     /// Organizations.
     /// </summary>

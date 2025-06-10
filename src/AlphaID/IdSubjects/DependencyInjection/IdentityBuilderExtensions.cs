@@ -22,17 +22,4 @@ public static class IdentityBuilderExtensions
         builder.Services.AddScoped<ProfileUrlGenerator<TUser>, TGenerator>();
         return builder;
     }
-
-    /// <summary>
-    /// 向IdentityBuilder添加一个自定义的PasswordHistoryStore。
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    public static IdentityBuilder AddPasswordHistoryStore<T>(this IdentityBuilder builder)
-        where T : class, IPasswordHistoryStore
-    {
-        builder.Services.AddScoped<IPasswordHistoryStore, T>();
-        return builder;
-    }
 }

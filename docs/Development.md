@@ -3,7 +3,7 @@
 ## 开发环境要求
 
 * [.NET](https://dotnet.microsoft.com/)
-  * 本项目跟随 .NET LTS 策略，同时支持至少2个 LTS 版本，当前支持 6.0 和 8.0 。
+  * 本项目跟随 .NET LTS 策略，当前支持 dotnet 6.0。
 
 > 可选要求
 >
@@ -33,6 +33,12 @@
 * 不会实际执行OCR识别。
 
 在调试阶段，你可以使用[示例数据](SampleData.md)来模拟完整的应用场景。
+
+### 目录服务调试
+
+在开发阶段，我们使用Active Directory Lightweight Directory Service（ADLDS，或称为AD轻型目录服务）来模拟目录服务。你需要安装ADLDS组件，使用向导创建ADLDS实例，用本库中的备份文件恢复实例状态，然后执行数据库脚本以添加目录服务。
+
+详细信息请参阅[调试托管目录服务账户](/docs/DebugManagedAccount.md)
 
 ## 构建
 

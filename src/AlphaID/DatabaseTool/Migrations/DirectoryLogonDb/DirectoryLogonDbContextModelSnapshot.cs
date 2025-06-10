@@ -16,7 +16,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -31,7 +31,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PersonId")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -44,7 +44,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                     b.ToTable("LogonAccount");
                 });
 
-            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryServiceDescriptor", b =>
+            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryService", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,52 +106,13 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>
                 {
-                    b.HasOne("IdSubjects.DirectoryLogon.DirectoryServiceDescriptor", "DirectoryServiceDescriptor")
+                    b.HasOne("IdSubjects.DirectoryLogon.DirectoryService", "DirectoryService")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DirectoryServiceDescriptor");
-                });
-
-            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryServiceDescriptor", b =>
-                {
-                    b.OwnsOne("IdSubjects.DirectoryLogon.ExternalLoginProviderInfo", "ExternalLoginProvider", b1 =>
-                        {
-                            b1.Property<int>("DirectoryServiceDescriptorId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("DisplayName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("RegisteredClientId")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("SubjectGenerator")
-                                .HasMaxLength(255)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(255)");
-
-                            b1.HasKey("DirectoryServiceDescriptorId");
-
-                            b1.ToTable("DirectoryService");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DirectoryServiceDescriptorId");
-                        });
-
-                    b.Navigation("ExternalLoginProvider");
+                    b.Navigation("DirectoryService");
                 });
 #pragma warning restore 612, 618
         }

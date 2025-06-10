@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = "Directory Services Management";
@@ -17,7 +17,6 @@
         <th>@L["Root DN"]</th>
         <th>@L["UPN suffix"]</th>
         <th>@L["SAM Domain Part"]</th>
-        <th>@L["External login provider"]</th>
     </tr>
     </thead>
     <tbody>
@@ -31,7 +30,6 @@
             <td>@service.RootDn</td>
             <td>@service.UpnSuffix</td>
             <td>@service.SamDomainPart</td>
-            <td>@service.ExternalLoginProvider?.DisplayName (@(service.ExternalLoginProvider?.Name))</td>
         </tr>
     }
     </tbody>

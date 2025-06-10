@@ -24,7 +24,6 @@ namespace IdSubjects;
 /// <param name="services">服务提供器。</param>
 /// <param name="logger">日志记录器。</param>
 /// <param name="passwordLifetimeOptions">密码生存期选项。</param>
-/// <param name="passwordHistoryManager">密码历史管理器。</param>
 /// <param name="eventService">事件服务。</param>
 public class ApplicationUserManager<T>(
     IUserStore<T> store,
@@ -37,7 +36,6 @@ public class ApplicationUserManager<T>(
     IServiceProvider services,
     ILogger<ApplicationUserManager<T>> logger,
     IOptions<PasswordLifetimeOptions> passwordLifetimeOptions,
-    PasswordHistoryManager<T> passwordHistoryManager,
     IEventService eventService)
     : UserManager<T>(store,
         optionsAccessor,
@@ -69,11 +67,6 @@ where T : ApplicationUser
     /// 获取或设置时间提供器以便于可测试性。
     /// </summary>
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
-
-    /// <summary>
-    /// 获取用于密码历史的管理器。
-    /// </summary>
-    public PasswordHistoryManager<T> PasswordHistoryManager { get; } = passwordHistoryManager;
 
     /// <summary>
     /// 获取审计事件服务。
@@ -116,6 +109,7 @@ where T : ApplicationUser
         user.WhenCreated = utcNow;
         user.WhenChanged = utcNow;
         user.PasswordLastSet = utcNow;
+        LogUsedPassword(user, password);
         IdentityResult result = await base.CreateAsync(user, password);
         if (result.Succeeded)
             await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));
@@ -141,12 +135,12 @@ where T : ApplicationUser
         {
             user.PasswordLastSet = utcNow;
         }
+        LogUsedPassword(user, password);
         IdentityResult result = await base.CreateAsync(user, password);
         if (result.Succeeded)
             await EventService.RaiseAsync(new CreatePersonSuccessEvent(user.UserName));
         else
             await EventService.RaiseAsync(new CreatePersonFailureEvent(user.UserName, result.Errors));
-
         return result;
     }
 
@@ -221,20 +215,17 @@ where T : ApplicationUser
     public override async Task<IdentityResult> AddPasswordAsync(T user, string password)
     {
         //检查密码历史记录
-        if (PasswordLifetime.RememberPasswordHistory > 0)
-            if (PasswordHistoryManager.Hit(user, password))
-            {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
-                return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
-            }
+        if (HitUsedPassword(user, password))
+        {
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
+            return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
+        }
 
         user.PasswordLastSet = TimeProvider.GetUtcNow();
-        IdentityResult result = await base.AddPasswordAsync(user, password);
-
         //记录密码历史
-        if (PasswordLifetime.RememberPasswordHistory > 0)
-            await PasswordHistoryManager.Pass(user, password);
+        LogUsedPassword(user, password);
 
+        IdentityResult result = await base.AddPasswordAsync(user, password);
         return result;
     }
 
@@ -263,27 +254,25 @@ where T : ApplicationUser
             }
 
         //检查密码历史记录
-        if (PasswordLifetime.RememberPasswordHistory > 0)
-            if (PasswordHistoryManager.Hit(user, newPassword))
-            {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
-                return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
-            }
+        if (HitUsedPassword(user, newPassword))
+        {
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
+            return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
+        }
 
         //正式进入更改密码。
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         user.PasswordLastSet = TimeProvider.GetUtcNow();
-        IdentityResult result =
-            await base.ChangePasswordAsync(user, currentPassword, newPassword).ConfigureAwait(false);
+        //记录密码历史
+        LogUsedPassword(user, newPassword);
+
+        IdentityResult result = await base.ChangePasswordAsync(user, currentPassword, newPassword).ConfigureAwait(false);
         if (!result.Succeeded)
         {
             await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "基础设施返回了错误。"));
             return result;
         }
 
-        //记录密码历史
-        if (PasswordLifetime.RememberPasswordHistory > 0)
-            await PasswordHistoryManager.Pass(user, currentPassword);
 
         trans.Complete();
         await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户修改了密码"));
@@ -301,14 +290,16 @@ where T : ApplicationUser
     {
         //重设密码是否受密码最短寿命限制？不受最短寿命限制。
         //检查密码历史记录
-        if (PasswordLifetime.RememberPasswordHistory > 0)
-            if (PasswordHistoryManager.Hit(user, newPassword))
-            {
-                await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
-                return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
-            }
+        if (HitUsedPassword(user, newPassword))
+        {
+            await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, "HitPasswordHistory"));
+            return IdentityResult.Failed(AppErrorDescriber.ReuseOldPassword());
+        }
 
         user.PasswordLastSet = TimeProvider.GetUtcNow();
+        //记录密码历史
+        LogUsedPassword(user, newPassword);
+
         IdentityResult result = await base.ResetPasswordAsync(user, token, newPassword);
         if (!result.Succeeded)
         {
@@ -318,9 +309,6 @@ where T : ApplicationUser
             return result;
         }
 
-        //记录密码历史
-        if (PasswordLifetime.RememberPasswordHistory > 0)
-            await PasswordHistoryManager.Pass(user, newPassword);
 
         await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户重置了密码。"));
         return result;
@@ -473,5 +461,54 @@ where T : ApplicationUser
         //todo: 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
         user.PhoneNumberConfirmed = true;
         return await UpdateUserAsync(user);
+    }
+
+    /// <summary>
+    /// 检查用户是否使用了已使用的密码。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    protected virtual bool HitUsedPassword(T user, string password)
+    {
+        if (passwordLifetimeOptions.Value.RememberPasswordHistory < 1)
+            return false;
+
+        var usedPasswords = user.UsedPasswords.OrderByDescending(p => p.Id)
+            .Take(passwordLifetimeOptions.Value.RememberPasswordHistory).ToArray();
+        foreach (var usedPassword in usedPasswords)
+        {
+            var result = PasswordHasher.VerifyHashedPassword(user, usedPassword.PasswordHash, password);
+            if (result == PasswordVerificationResult.Success ||
+                result == PasswordVerificationResult.SuccessRehashNeeded)
+            {
+                Logger.LogDebug("用户{user}使用了已使用的密码。", user);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 记录用户使用的密码。
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    protected virtual void LogUsedPassword(T user, string password)
+    {
+        if (passwordLifetimeOptions.Value.RememberPasswordHistory < 1)
+            return;
+
+        //按创建日期倒排裁剪超过29条后的记录。
+        var cuts = user.UsedPasswords.OrderByDescending(p => p.Id).Skip(29).ToArray();
+        foreach (var cut in cuts)
+        {
+            user.UsedPasswords.Remove(cut);
+        }
+        user.UsedPasswords.Add(new UsedPassword()
+        {
+            PasswordHash = PasswordHasher.HashPassword(user, password),
+        });
     }
 }

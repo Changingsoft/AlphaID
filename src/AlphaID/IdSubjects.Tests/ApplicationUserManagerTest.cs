@@ -174,10 +174,6 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         IdentityResult result = await manager.ChangePasswordAsync(user, "Pass123$", "Pass1234$");
         Assert.True(result.Succeeded);
 
-        var passwordHistoryStore = scope.ServiceProvider.GetRequiredService<IPasswordHistoryStore>();
-        IEnumerable<string> passwords = passwordHistoryStore.GetPasswords(user.Id, 10);
-        Assert.Single(passwords);
-
         //change password again with same old password will fail.
         result = await manager.ChangePasswordAsync(user, "Pass1234$", "Pass123$");
         Assert.False(result.Succeeded);

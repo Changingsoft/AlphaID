@@ -11,7 +11,7 @@ public class DirectoryServiceManagerTest(ServiceProviderFixture serviceProvider)
         using IServiceScope scope = serviceProvider.ScopeFactory.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<DirectoryServiceManager>();
 
-        var directoryService = new DirectoryServiceDescriptor
+        var directoryService = new DirectoryService
         {
             ServerAddress = "localhost",
             RootDn = "DC=example,DC=com"

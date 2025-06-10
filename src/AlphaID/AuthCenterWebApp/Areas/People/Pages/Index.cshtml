@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-4">
-        <img class="img-fluid mx-auto d-block rounded" src="@User.AvatarUrl()" title="Avatar"/>
+        <img class="img-fluid mx-auto d-block rounded" src="@Url.Action("GetAvatarPicture", "People", new { anchor = Model.Person.UserName })" title="Avatar" />
         <h2>@Model.Person.Name (@(Model.Person.UserName))</h2>
         <p>@Model.Person.Bio</p>
         @* <ul class="text-secondary">
@@ -48,7 +48,7 @@
         {
             <a asp-area="Settings" asp-page="/Profile/Index" class="btn">@L["Edit profile"]</a>
         }
-        <hr/>
+        <hr />
         <h2>@L["Organizations"]</h2>
         <ul>
             @foreach (var member in Model.Members)

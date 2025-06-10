@@ -1,8 +1,8 @@
-﻿using IdSubjects.DirectoryLogon;
+using IdSubjects.DirectoryLogon;
 
 namespace AlphaId.EntityFramework.DirectoryAccountManagement;
 
-public class DirectoryServiceDescriptorStore(DirectoryLogonDbContext dbContext) : IDirectoryServiceDescriptorStore
+public class DirectoryServiceStore(DirectoryLogonDbContext dbContext) : IDirectoryServiceStore
 {
     public IQueryable<DirectoryService> Services => dbContext.DirectoryServices;
 

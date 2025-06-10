@@ -11,16 +11,16 @@ namespace IdSubjects.DirectoryLogon;
 /// <remarks>
 /// Init DirectoryServiceManager.
 /// </remarks>
-/// <param name="directoryServiceDescriptorStore"></param>
+/// <param name="directoryServiceStore"></param>
 /// <param name="logger"></param>
 public class DirectoryServiceManager(
-    IDirectoryServiceDescriptorStore directoryServiceDescriptorStore,
+    IDirectoryServiceStore directoryServiceStore,
     ILogger<DirectoryServiceManager>? logger = null)
 {
     /// <summary>
     /// Gets list of DirectoryService.
     /// </summary>
-    public IEnumerable<DirectoryService> Services => directoryServiceDescriptorStore.Services;
+    public IEnumerable<DirectoryService> Services => directoryServiceStore.Services;
 
     /// <summary>
     /// Create a directory service.
@@ -36,7 +36,7 @@ public class DirectoryServiceManager(
             using PrincipalContext context = PrincipalContextHelper.GetRootContext(directoryService);
 
             //没有异常，说明访问成功，可以持久化DirectoryService配置。
-            await directoryServiceDescriptorStore.CreateAsync(directoryService);
+            await directoryServiceStore.CreateAsync(directoryService);
             return IdOperationResult.Success;
         }
         catch (Exception)
@@ -60,7 +60,7 @@ public class DirectoryServiceManager(
             using PrincipalContext context = PrincipalContextHelper.GetRootContext(directoryService);
 
             //没有异常，说明访问成功，可以持久化DirectoryService配置。
-            await directoryServiceDescriptorStore.UpdateAsync(directoryService);
+            await directoryServiceStore.UpdateAsync(directoryService);
             return IdOperationResult.Success;
         }
         catch (Exception)
@@ -77,7 +77,7 @@ public class DirectoryServiceManager(
     /// <returns></returns>
     public async Task<IdOperationResult> DeleteAsync(DirectoryService data)
     {
-        await directoryServiceDescriptorStore.DeleteAsync(data);
+        await directoryServiceStore.DeleteAsync(data);
         return IdOperationResult.Success;
     }
 
@@ -120,6 +120,6 @@ public class DirectoryServiceManager(
     /// <returns></returns>
     public Task<DirectoryService?> FindByIdAsync(int serviceId)
     {
-        return directoryServiceDescriptorStore.FindByIdAsync(serviceId);
+        return directoryServiceStore.FindByIdAsync(serviceId);
     }
 }

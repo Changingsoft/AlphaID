@@ -20,9 +20,9 @@ public class DirectoryLogonBuilder(IServiceCollection services)
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public DirectoryLogonBuilder AddDirectoryServiceStore<T>() where T : class, IDirectoryServiceDescriptorStore
+    public DirectoryLogonBuilder AddDirectoryServiceStore<T>() where T : class, IDirectoryServiceStore
     {
-        Services.TryAddScoped<IDirectoryServiceDescriptorStore, T>();
+        Services.TryAddScoped<IDirectoryServiceStore, T>();
         return this;
     }
 

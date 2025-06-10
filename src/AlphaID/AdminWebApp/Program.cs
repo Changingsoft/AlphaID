@@ -198,7 +198,7 @@ builder.Services.AddScoped<ChinesePersonNameFactory>();
 
 builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
     .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>()
-    .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
+    .AddScoped<IDirectoryServiceStore, DirectoryServiceStore>();
 
 
 //添加邮件发送器。
@@ -207,7 +207,7 @@ builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
 
 //目录服务
 builder.Services.AddScoped<DirectoryServiceManager>()
-    .AddScoped<IDirectoryServiceDescriptorStore, DirectoryServiceDescriptorStore>();
+    .AddScoped<IDirectoryServiceStore, DirectoryServiceStore>();
 builder.Services.AddScoped<DirectoryAccountManager<NaturalPerson>>()
     .AddScoped<IDirectoryAccountStore, DirectoryAccountStore>();
 

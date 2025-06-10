@@ -2,7 +2,7 @@ namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// </summary>
-public interface IDirectoryServiceDescriptorStore
+public interface IDirectoryServiceStore
 {
     /// <summary>
     /// </summary>

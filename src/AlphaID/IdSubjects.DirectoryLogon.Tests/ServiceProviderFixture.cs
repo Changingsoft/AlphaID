@@ -12,7 +12,7 @@ public class ServiceProviderFixture
         IdentityBuilder idSubjectsBuilder = services.AddIdSubjects<ApplicationUser>()
             .AddUserStore<StubApplicationUserStore>();
         idSubjectsBuilder.AddDirectoryLogin<ApplicationUser>()
-            .AddDirectoryServiceStore<StubDirectoryServiceDescriptorStore>()
+            .AddDirectoryServiceStore<StubDirectoryServiceStore>()
             .AddLogonAccountStore<StubDirectoryAccountStore>();
 
         Root = services.BuildServiceProvider();

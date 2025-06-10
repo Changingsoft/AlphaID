@@ -1,6 +1,6 @@
 namespace IdSubjects.DirectoryLogon.Tests;
 
-internal class StubDirectoryServiceDescriptorStore : IDirectoryServiceDescriptorStore
+internal class StubDirectoryServiceStore : IDirectoryServiceStore
 {
     public IQueryable<DirectoryService> Services => throw new NotImplementedException();
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -126,5 +126,9 @@
   </data>
   <data name="Terms of service" xml:space="preserve">
     <value>Terms of service</value>
+  </data>
+  <data name="Resend" xml:space="preserve">
+	  <value>Resend</value>
+	  <comment>Resend</comment>
   </data>
 </root>

@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService, UserManager<NaturalPerson> userManager) : PageModel
+public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService, ApplicationUserManager<NaturalPerson> userManager, ILogger<ResetPasswordMobileModel>? logger) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -39,9 +39,16 @@ public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService,
             return Page();
 
         var normalPhoneNumber = phone.ToString();
-        var person = userManager.Users.FirstOrDefault(p => p.PhoneNumber == normalPhoneNumber);
-        if (person == null || !person.PhoneNumberConfirmed)
+        var person = await userManager.FindByMobileAsync(Input.PhoneNumber);
+        if (person == null)
         {
+            logger?.LogWarning("未登录用户输入手机号{PhoneNumber}，但找不到已注册的用户。", Input.PhoneNumber);
+            return RedirectToPage("ResetPasswordConfirmation");
+        }
+
+        if (!person.PhoneNumberConfirmed)
+        {
+            logger?.LogWarning("用户{User}通过手机号重置密码，但手机号未确认。", person);
             return RedirectToPage("ResetPasswordConfirmation");
         }
 

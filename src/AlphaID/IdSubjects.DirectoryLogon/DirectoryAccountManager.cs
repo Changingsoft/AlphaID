@@ -187,6 +187,7 @@ where T : ApplicationUser
         UserPrincipal? principal = UserPrincipal.FindByIdentity(context, account.ObjectId);
         if (principal == null)
         {
+            logger?.LogError("目录{DirectoryService}中找不到用户{UserId}的目录账号{ObjectId}", account.DirectoryService.Name, account.UserId, account.ObjectId);
             return IdOperationResult.Failed("找不到指定的目录账号。");
         }
         try

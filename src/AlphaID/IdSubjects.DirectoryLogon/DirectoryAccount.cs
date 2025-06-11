@@ -1,8 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.DirectoryLogon;
@@ -24,11 +21,13 @@ public class DirectoryAccount
     /// </summary>
     /// <param name="service"></param>
     /// <param name="userId"></param>
-    public DirectoryAccount(DirectoryService service, string userId)
+    /// <param name="objectId"></param>
+    public DirectoryAccount(DirectoryService service, string userId, string objectId)
     {
         DirectoryService = service;
         ServiceId = service.Id;
         UserId = userId;
+        ObjectId = objectId;
     }
 
     /// <summary>

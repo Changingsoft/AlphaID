@@ -1,9 +1,6 @@
-using Duende.IdentityModel;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using System.Security.Claims;
 
 namespace IdSubjects.DirectoryLogon;
 
@@ -62,10 +59,7 @@ where T : ApplicationUser
         }
         principal.Save();
 
-        DirectoryAccount account = new(service, user.Id)
-        {
-            ObjectId = principal.Guid.ToString()!
-        };
+        DirectoryAccount account = new(service, user.Id, principal.Guid.ToString()!);
         await store.CreateAsync(account);
 
         return account;
@@ -163,10 +157,7 @@ where T : ApplicationUser
     {
         using var context = PrincipalContextHelper.GetRootContext(service);
         UserPrincipal? userPrincipal = UserPrincipal.FindByIdentity(context, entryObjectGuid) ?? throw new ArgumentException("找不到指定的目录对象。", nameof(entryObjectGuid));
-        DirectoryAccount account = new(service, user.Id)
-        {
-            ObjectId = userPrincipal.Guid.ToString()!
-        };
+        DirectoryAccount account = new(service, user.Id, userPrincipal.Guid.ToString()!);
         await store.CreateAsync(account);
         return account;
     }

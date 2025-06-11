@@ -155,7 +155,7 @@ public class SignUpModel(
         [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = null!;
 
-        [Display(Name = "Verification code", Prompt = "Received from mobile phone short message.")]
+        [Display(Name = "Verification code", Prompt = "Received from mobile phone short message")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string VerificationCode { get; set; } = null!;
@@ -190,7 +190,7 @@ public class SignUpModel(
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Validate_StringLength")]
         public string ConfirmPassword { get; set; } = null!;
 
-        [Display(Name = "Email (Optional)", Prompt = "someone@examples.com")]
+        [Display(Name = "Email", Prompt = "someone@examples.com")]
         [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
         public string? Email { get; set; }
 

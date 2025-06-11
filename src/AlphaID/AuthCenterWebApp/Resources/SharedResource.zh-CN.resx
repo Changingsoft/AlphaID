@@ -183,9 +183,6 @@
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
   </data>
-  <data name="Email (Optional)" xml:space="preserve">
-    <value>电子邮件（可选）</value>
-  </data>
   <data name="Female" xml:space="preserve">
     <value>女</value>
   </data>
@@ -330,8 +327,8 @@
   <data name="Birth date" xml:space="preserve">
 	  <value>出生日期</value>
   </data>
-  <data name="Received from mobile phone short message." xml:space="preserve">
-	  <value>从手机短信接收。</value>
+  <data name="Received from mobile phone short message" xml:space="preserve">
+	  <value>从手机短信接收</value>
   </data>
   <data name="User name, email or phone number" xml:space="preserve">
 	  <value>用户名、电子邮件地址或移动电话号码</value>

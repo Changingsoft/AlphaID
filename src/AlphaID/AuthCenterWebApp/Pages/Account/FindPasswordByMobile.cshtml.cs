@@ -48,7 +48,7 @@ public class FindPasswordByMobileModel(
             ModelState.AddModelError(nameof(Mobile), "无此移动电话号码记录");
             return Page();
         }
-        //Send verifiation code
+        //Send verification code
         await verificationCodeService.SendAsync(phoneNumber.ToString());
 
         //Set the phone number to session

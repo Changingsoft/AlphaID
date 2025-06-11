@@ -2,6 +2,7 @@ using System.DirectoryServices;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Identity;
 using System.DirectoryServices.AccountManagement;
+using IdSubjects;
 using IdSubjects.RealName;
 
 namespace AlphaIdPlatform.Identity;
@@ -14,7 +15,7 @@ namespace AlphaIdPlatform.Identity;
 /// <param name="accountManager"></param>
 /// <param name="authenticationStore"></param>
 public class NaturalPersonService(
-    UserManager<NaturalPerson> userManager,
+    ApplicationUserManager<NaturalPerson> userManager,
     DirectoryServiceManager? serviceManager,
     DirectoryAccountManager<NaturalPerson>? accountManager,
     IRealNameAuthenticationStore? authenticationStore)
@@ -94,6 +95,26 @@ public class NaturalPersonService(
             return result;
         }
         accountManager?.SetAllPassword(person, inputPassword, !person.PasswordLastSet.HasValue);
+
+        return result;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="newPassword"></param>
+    /// <param name="mustChangePassword"></param>
+    /// <param name="unlockUser"></param>
+    /// <returns></returns>
+    public async Task<IdentityResult> ResetPasswordAsync(NaturalPerson person, string newPassword, bool mustChangePassword, bool unlockUser)
+    {
+        var result = await userManager.ResetPasswordAsync(person, newPassword, mustChangePassword, unlockUser);
+        if (!result.Succeeded)
+        {
+            return result;
+        }
+        accountManager?.SetAllPassword(person, newPassword, !person.PasswordLastSet.HasValue);
 
         return result;
     }

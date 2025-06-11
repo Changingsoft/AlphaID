@@ -50,7 +50,6 @@ public class BindDirectoryAccountModel(
         DirectoryService? directoryService = await directoryServiceManager.FindByIdAsync(serviceId);
         if (directoryService == null)
             return Page();
-        var logonAccount = new DirectoryAccount(directoryService, user.Id);
         await directoryAccountManager.LinkExistsAccount(user, directoryService, entryGuid.ToString());
         return RedirectToPage("DirectoryAccounts", new { anchor });
     }

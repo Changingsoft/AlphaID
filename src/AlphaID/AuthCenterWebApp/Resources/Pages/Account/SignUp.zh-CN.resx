@@ -147,4 +147,7 @@
   <data name="Terms of service" xml:space="preserve">
     <value>服务条款</value>
   </data>
+  <data name="Resend" xml:space="preserve">
+	  <value>重发</value>
+  </data>
 </root>

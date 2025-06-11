@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model DirectoryAccountsModel
 @{
     ViewBag.Title = L["Directory accounts"];
@@ -8,16 +8,16 @@
 <table class="table">
     <thead>
     <tr>
-        <th>@L["Logon Id"]</th>
-        <th>@L["Person Id"]</th>
+        <th>@L["Directory"]</th>
+        <th>@L["Object Id"]</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var acc in Model.LogonAccounts)
+    @foreach (var account in Model.LogonAccounts)
     {
         <tr>
-            <td>@acc.ObjectId</td>
-            <td>@acc.UserId</td>
+            <td>@account.DirectoryService.Name</td>
+            <td>@account.ObjectId</td>
         </tr>
     }
     </tbody>

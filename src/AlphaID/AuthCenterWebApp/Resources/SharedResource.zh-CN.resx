@@ -183,9 +183,6 @@
   <data name="Email" xml:space="preserve">
     <value>电子邮件</value>
   </data>
-  <data name="Email (Optional)" xml:space="preserve">
-    <value>电子邮件（可选）</value>
-  </data>
   <data name="Female" xml:space="preserve">
     <value>女</value>
   </data>

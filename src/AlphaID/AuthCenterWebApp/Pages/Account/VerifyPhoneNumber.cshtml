@@ -15,7 +15,7 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="VerificatonCode" class="form-label required"></label>
-                <input asp-for="VerificatonCode" class="form-control" />
+                <input asp-for="VerificatonCode" class="form-control" autofocus autocomplete="off" />
                 <span asp-validation-for="VerificatonCode" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">@SL["Verify"]</button>

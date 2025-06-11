@@ -185,9 +185,6 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="Email (Optional)" xml:space="preserve">
-    <value>Email (Optional)</value>
-  </data>
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>

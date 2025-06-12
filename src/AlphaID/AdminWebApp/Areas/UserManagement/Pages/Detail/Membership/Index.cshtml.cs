@@ -55,7 +55,7 @@ public class IndexModel(
             Visibility = Input.Visibility
         };
 
-        OrganizationOperationResult result = await memberManager.CreateAsync(member);
+        OrganizationOperationResult result = await memberManager.Join(member);
         if (!result.Succeeded)
         {
             foreach (string error in result.Errors) ModelState.AddModelError("", error);

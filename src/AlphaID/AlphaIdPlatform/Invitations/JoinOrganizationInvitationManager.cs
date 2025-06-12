@@ -99,7 +99,7 @@ public class JoinOrganizationInvitationManager(
         Organization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
         OrganizationOperationResult? result = null;
         if (organization != null && person != null)
-            result = await memberManager.CreateAsync(
+            result = await memberManager.Join(
                 new OrganizationMember(organization, person)
                 { Visibility = invitation.ExpectVisibility });
         invitation.Accepted = true;

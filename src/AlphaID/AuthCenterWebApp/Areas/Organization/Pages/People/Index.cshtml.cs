@@ -82,7 +82,7 @@ public class IndexModel(
             return Page();
         }
 
-        Result = await organizationMemberManager.LeaveUser(organization.Id, personId);
+        Result = await organizationMemberManager.Leave(organization.Id, personId);
         return Page();
     }
 

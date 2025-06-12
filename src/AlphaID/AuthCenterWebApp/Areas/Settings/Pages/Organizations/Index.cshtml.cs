@@ -29,7 +29,7 @@ public class IndexModel(OrganizationMemberManager memberManager, UserManager<Nat
         Debug.Assert(person != null);
         Members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == User.SubjectId());
 
-        Result = await memberManager.LeaveUser(organizationId, person.Id);
+        Result = await memberManager.Leave(organizationId, person.Id);
         return Page();
     }
 }

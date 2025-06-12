@@ -73,7 +73,7 @@ public class IndexModel(
             Visibility = Visibility
         };
 
-        OrganizationOperationResult result = await memberManager.CreateAsync(member);
+        OrganizationOperationResult result = await memberManager.Join(member);
         if (!result.Succeeded)
         {
             foreach (string error in result.Errors) ModelState.AddModelError("", error);
@@ -91,7 +91,7 @@ public class IndexModel(
         Organization = org;
         Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
-        Result = await memberManager.LeaveUser(anchor, personId);
+        Result = await memberManager.Leave(anchor, personId);
 
         if (Result.Succeeded) Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
         return Page();

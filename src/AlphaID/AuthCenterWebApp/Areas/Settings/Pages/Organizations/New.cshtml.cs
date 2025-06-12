@@ -63,7 +63,7 @@ public class NewModel(
             Remark = Input.Remark,
             IsOwner = true
         };
-        OrganizationOperationResult joinOrgResult = await memberManager.CreateAsync(member);
+        OrganizationOperationResult joinOrgResult = await memberManager.Join(member);
         if (!joinOrgResult.Succeeded)
         {
             ModelState.AddModelError("", joinOrgResult.Errors.Aggregate((x, y) => $"{x}, {y}"));

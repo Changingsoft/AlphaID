@@ -1,6 +1,4 @@
-using IdSubjects;
 using System.Diagnostics;
-using AlphaIdPlatform.Identity;
 
 namespace AlphaIdPlatform.Subjects;
 
@@ -11,7 +9,7 @@ namespace AlphaIdPlatform.Subjects;
 /// Init Organization Member Manager via Organization Member store.
 /// </remarks>
 /// <param name="store"></param>
-public class OrganizationMemberManager(IOrganizationMemberStore store)
+public class OrganizationMemberManager(IOrganizationMemberStore store, OrganizationManager organizationManager)
 {
     /// <summary>
     /// 以访问者visitor的视角检索指定用户的组织成员身份。
@@ -19,6 +17,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="personId">要检索组织成员身份的目标用户。</param>
     /// <param name="visitorId">访问者。如果传入null，代表匿名访问者。</param>
     /// <returns></returns>
+    [Obsolete]
     public IQueryable<OrganizationMember> GetVisibleMembersOf(string personId, string? visitorId)
     {
         //获取目标person的所有组织身份。
@@ -41,12 +40,36 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
-    public async Task<OrganizationOperationResult> CreateAsync(OrganizationMember member)
+    [Obsolete]
+    public async Task<OrganizationOperationResult> Join(OrganizationMember member)
     {
         if (store.OrganizationMembers.Any(p =>
                 p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
-            return OrganizationOperationResult.Failed(Resources.Membership_exists);
+            return OrganizationOperationResult.Failed(Resources.MembershipExists);
         return await store.CreateAsync(member);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="organizationId"></param>
+    /// <param name="userId"></param>
+    /// <param name="visibility"></param>
+    /// <returns></returns>
+    public async Task<OrganizationMember> Join(string organizationId, string userId, MembershipVisibility visibility)
+    {
+        if (store.OrganizationMembers.Any(p =>
+                p.OrganizationId == organizationId && p.PersonId == userId))
+            throw new InvalidOperationException(Resources.MembershipExists);
+        var organization = await organizationManager.FindByIdAsync(organizationId);
+        if (organization == null)
+            throw new ArgumentException(Resources.OrganizationNotFound, nameof(organizationId));
+
+        var member = new OrganizationMember(organization, userId, visibility);
+        var result = await store.CreateAsync(member);
+        if (!result.Succeeded)
+            throw new InvalidOperationException(Resources.MembershipCreateFailed);
+        return member;
     }
 
     /// <summary>
@@ -56,7 +79,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <param name="organizationId">要从中移除用户的组织唯一标识符。</param>
     /// <param name="userId">要从组织中移除的用户唯一标识符。</param>
     /// <returns>一个 <see cref="OrganizationOperationResult"/>，指示操作结果。如果用户已成功移除或本就不是成员，则返回 <see cref="OrganizationOperationResult.Success"/>。如果操作无法完成，则返回带有相应错误消息的 <see cref="OrganizationOperationResult.Failed"/>。</returns>
-    public async Task<OrganizationOperationResult> LeaveUser(string organizationId, string userId)
+    public async Task<OrganizationOperationResult> Leave(string organizationId, string userId)
     {
         var member =
             store.OrganizationMembers.FirstOrDefault(p => p.OrganizationId == organizationId && p.PersonId == userId);
@@ -106,7 +129,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
             //todo need log to audit log.
             return await UpdateAsync(member);
         }
-        return OrganizationOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
+        return OrganizationOperationResult.Failed(string.Format(Resources.MaxOwnersInOrganization, 5));
     }
 
     /// <summary>
@@ -125,6 +148,6 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
             //todo need log to audit log.
             return await UpdateAsync(member);
         }
-        return OrganizationOperationResult.Failed(string.Format(Resources.Max_owners_in_the_organization, 5));
+        return OrganizationOperationResult.Failed(string.Format(Resources.MaxOwnersInOrganization, 5));
     }
 }

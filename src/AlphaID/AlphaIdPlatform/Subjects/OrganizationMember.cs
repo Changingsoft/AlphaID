@@ -22,12 +22,27 @@ public class OrganizationMember
     /// </summary>
     /// <param name="organization"></param>
     /// <param name="person"></param>
+    [Obsolete("使用OrganizationMember(Organization, string)")]
     public OrganizationMember(Organization organization, NaturalPerson person)
     {
         OrganizationId = organization.Id;
         Organization = organization ?? throw new ArgumentNullException(nameof(organization));
         PersonId = person.Id;
         Person = person ?? throw new ArgumentNullException(nameof(person));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="organization"></param>
+    /// <param name="userId"></param>
+    /// <param name="visibility"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public OrganizationMember(Organization organization, string userId, MembershipVisibility visibility)
+    {
+        OrganizationId = organization.Id;
+        Organization = organization ?? throw new ArgumentNullException(nameof(organization));
+        PersonId = userId;
     }
 
     /// <summary>
@@ -48,12 +63,13 @@ public class OrganizationMember
     /// Organization.
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
-    public Organization Organization { get; protected set; } = null!;
+    public virtual Organization Organization { get; protected set; } = null!;
 
     /// <summary>
     /// Person.
     /// </summary>
     [ForeignKey(nameof(PersonId))]
+    [Obsolete("考虑解耦，计划不再使用该导航属性。")]
     public NaturalPerson Person { get; protected set; } = null!;
 
     /// <summary>
@@ -89,6 +105,6 @@ public class OrganizationMember
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{Organization.Name}|{Person.UserName}|{(IsOwner ? "Owner" : "")}|{Visibility}";
+        return $"{Organization.Name}|{PersonId}|{(IsOwner ? "Owner" : "")}|{Visibility}";
     }
 }

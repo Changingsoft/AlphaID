@@ -1,9 +1,7 @@
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.Subjects
-@using AspNetWebLib.TagHelpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject OrganizationMemberManager MemberManager
 @inject OrganizationManager OrganizationManager
+@inject IOrganizationMemberStore OrganizationMemberStore
 @{
     Layout = "Tabler/_PageWrapper";
     var isOwner = false;
@@ -15,7 +13,7 @@
         {
             var org = await OrganizationManager.FindByNameAsync(anchor);
             if (org != null)
-                isOwner = (await MemberManager.GetMembersAsync(org)).Any(m => m.PersonId == subjectId && m.IsOwner);
+                isOwner = (OrganizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == org.Id)).Any(m => m.PersonId == subjectId && m.IsOwner);
         }
     }
 }
@@ -25,7 +23,7 @@
 }
 
 @section Header {
-    <partial name="_DefaultTitleNavBarPartial"/>
+    <partial name="_DefaultTitleNavBarPartial" />
     <header class="navbar-expand-md">
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="navbar">
@@ -93,7 +91,7 @@
 @section PageFooter
 {
     @* 页脚 *@
-    <partial name="_DefaultFooterPartial"/>
+    <partial name="_DefaultFooterPartial" />
 }
 
 @section Scripts

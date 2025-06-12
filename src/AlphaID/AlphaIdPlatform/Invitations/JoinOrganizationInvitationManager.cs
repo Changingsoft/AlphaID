@@ -1,7 +1,8 @@
-using System.Transactions;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
+using System.Transactions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AlphaIdPlatform.Invitations;
 
@@ -16,6 +17,7 @@ namespace AlphaIdPlatform.Invitations;
 /// <param name="memberManager"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
+    IOrganizationMemberStore organizationMemberStore,
     UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
     OrganizationMemberManager memberManager)
@@ -57,8 +59,7 @@ public class JoinOrganizationInvitationManager(
         string inviter)
     {
         var errors = new List<string>();
-        OrganizationMember? existsMember = await memberManager.GetMemberAsync(invitee.Id, organization.Id);
-        if (existsMember != null)
+        if (organizationMemberStore.OrganizationMembers.Any(m => m.OrganizationId == organization.Id && m.PersonId == invitee.Id))
             errors.Add("Person is a member of this organization.");
 
         if (store.Invitations.Any(i =>
@@ -89,9 +90,8 @@ public class JoinOrganizationInvitationManager(
         if (invitation.Accepted.HasValue)
             return OrganizationOperationResult.Failed("Invitation has been processed.");
 
-        OrganizationMember? existedMember =
-            await memberManager.GetMemberAsync(invitation.InviteeId, invitation.OrganizationId);
-        if (existedMember != null) return OrganizationOperationResult.Failed("Person is already a member.");
+        if (organizationMemberStore.OrganizationMembers.Any(m => m.OrganizationId == invitation.OrganizationId && m.PersonId == invitation.InviteeId))
+            return OrganizationOperationResult.Failed("用户已在组织中");
 
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 

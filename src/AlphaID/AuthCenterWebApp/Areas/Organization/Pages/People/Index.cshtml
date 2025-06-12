@@ -20,7 +20,7 @@
             </span>
             <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
         </div>
-        @if (Model.UserIsOwner)
+        @if (Model.VisitorIsOwner)
         {
             <a class="btn ms-auto">@L["Export"]</a>
             <a class="btn btn-green ms-3" asp-page="Invite" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <a href="#">
-                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
+                                        <span class="avatar" style="background-image: url('@Url.Action("GetAvatarPicture", "People", new { anchor = member.PersonId })"></span>
                                     </a>
                                 </div>
                                 <div class="col-6 text-truncate">
@@ -62,11 +62,11 @@
                                     }
                                 </div>
                                 <div class="col-auto">
-                                    @if (Model.UserIsOwner && member.PersonId != User.SubjectId())
+                                    @if (Model.VisitorIsOwner && member.PersonId != User.SubjectId())
                                     {
                                         <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="Leave" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
                                     }
-                                    @if (Model.UserIsOwner)
+                                    @if (Model.VisitorIsOwner)
                                     {
                                         if (!member.IsOwner)
                                         {

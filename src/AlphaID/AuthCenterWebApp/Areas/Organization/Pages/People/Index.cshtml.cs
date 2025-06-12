@@ -8,6 +8,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class IndexModel(
     OrganizationMemberManager organizationMemberManager,
+    IOrganizationMemberStore organizationMemberStore,
     OrganizationManager organizationManager,
     UserManager<NaturalPerson> personManager) : PageModel
 {
@@ -15,7 +16,10 @@ public class IndexModel(
 
     public IEnumerable<OrganizationMember> Members { get; set; } = [];
 
-    public bool UserIsOwner { get; set; }
+    /// <summary>
+    /// 判断当前访问者是否是组织的所有者。
+    /// </summary>
+    public bool VisitorIsOwner { get; set; }
 
     public OrganizationOperationResult? Result { get; set; }
 
@@ -29,8 +33,8 @@ public class IndexModel(
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
 
-        Members = await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor);
-        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id);
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
         return Page();
     }
 
@@ -43,20 +47,20 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
-        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id);
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
 
         OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
         if (member == null)
             return Page();
 
-        if (!UserIsOwner)
+        if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
 
-        Result = await organizationMemberManager.LeaveOrganizationAsync(member);
+        Result = await organizationMemberManager.LeaveUser(organization.Id, personId);
         return Page();
     }
 
@@ -69,14 +73,14 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
-        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = (organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)).ToList();
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
 
         OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
         if (member == null)
             return Page();
 
-        if (!UserIsOwner)
+        if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
@@ -95,14 +99,14 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = (await organizationMemberManager.GetVisibleMembersAsync(Organization, visitor)).ToList();
-        UserIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = (organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)).ToList();
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
 
         OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
         if (member == null)
             return Page();
 
-        if (!UserIsOwner)
+        if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
@@ -110,5 +114,22 @@ public class IndexModel(
 
         Result = await organizationMemberManager.UnsetOwner(member);
         return Page();
+    }
+
+    public class MemberViewModel
+    {
+        public string UserName { get; set; } = null!;
+
+        public MembershipVisibility Visibility { get; set; }
+
+        public bool IsOwner { get; set; }
+
+        public string UserId { get; set; } = null!;
+
+        public string? Title { get; set; }
+
+        public string? Department { get; set; }
+
+        public string? Remark { get; set; }
     }
 }

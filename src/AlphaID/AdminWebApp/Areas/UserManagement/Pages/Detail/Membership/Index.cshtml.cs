@@ -9,11 +9,9 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 public class IndexModel(
     UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
+    IOrganizationMemberStore organizationMemberStore,
     OrganizationMemberManager memberManager) : PageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = null!;
-
     public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = null!;
@@ -23,23 +21,23 @@ public class IndexModel(
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
-        OrganizationMembers = await memberManager.GetMembersOfAsync(person);
+        OrganizationMembers = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
         return Page();
     }
 
-    public async Task<IActionResult> OnPostJoinOrganizationAsync()
+    public async Task<IActionResult> OnPostJoinOrganizationAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
-        OrganizationMembers = await memberManager.GetMembersOfAsync(person);
+        OrganizationMembers = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
 
         Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
         if (org == null)
@@ -67,14 +65,14 @@ public class IndexModel(
         return RedirectToPage();
     }
 
-    public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
+    public async Task<IActionResult> OnPostLeaveOrganizationAsync(string anchor, string organizationId)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(Person);
+        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
         OrganizationMember? member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
         if (member == null)
         {

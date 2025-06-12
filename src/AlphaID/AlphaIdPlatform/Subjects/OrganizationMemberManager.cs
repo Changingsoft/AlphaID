@@ -14,61 +14,6 @@ namespace AlphaIdPlatform.Subjects;
 public class OrganizationMemberManager(IOrganizationMemberStore store)
 {
     /// <summary>
-    /// Get the member.
-    /// </summary>
-    /// <param name="person"></param>
-    /// <param name="organization"></param>
-    /// <returns></returns>
-    public Task<OrganizationMember?> GetMemberAsync(string person, string organization)
-    {
-        OrganizationMember? result =
-            store.OrganizationMembers.FirstOrDefault(
-                p => p.PersonId == person && p.OrganizationId == organization);
-        return Task.FromResult(result);
-    }
-
-    /// <summary>
-    /// 获取可见的组织成员。
-    /// </summary>
-    /// <remarks>
-    /// 该方法会考虑组织成员的Visibility设置，根据visitor来决定是否在结果集合中包括这些成员。
-    /// </remarks>
-    /// <param name="organization">AN organization that members to get.</param>
-    /// <param name="visitor">The person who access this system. null if anonymous access.</param>
-    /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetVisibleMembersAsync(Organization organization,
-        NaturalPerson? visitor)
-    {
-        IQueryable<OrganizationMember>? members =
-            store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
-        Debug.Assert(members != null);
-        //假定可见级别为Public。
-        var visibilityLevel = MembershipVisibility.Public;
-        if (visitor != null)
-        {
-            //如果已登录，降为AuthenticatedUser
-            visibilityLevel = MembershipVisibility.AuthenticatedUser;
-            //如果访问者是该组织成员，则降为Private
-            if (members.Any(m => m.PersonId == visitor.Id))
-                visibilityLevel = MembershipVisibility.Private; //Visitor is a member of the organization.
-        }
-        // 过滤出成员可见级别大于等于访问者最低可见级别的成员。
-        return Task.FromResult(members.Where(m => m.Visibility >= visibilityLevel).AsEnumerable());
-    }
-
-    /// <summary>
-    /// Get organization members.
-    /// </summary>
-    /// <param name="organization">Organization</param>
-    /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetMembersAsync(Organization organization)
-    {
-        IQueryable<OrganizationMember> members =
-            store.OrganizationMembers.Where(p => p.OrganizationId == organization.Id);
-        return Task.FromResult(members.AsEnumerable());
-    }
-
-    /// <summary>
     /// 以访问者visitor的视角检索指定用户的组织成员身份。
     /// </summary>
     /// <param name="personId">要检索组织成员身份的目标用户。</param>
@@ -93,17 +38,6 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    /// 获取个人的组织成员身份。
-    /// </summary>
-    /// <param name="person"></param>
-    /// <returns></returns>
-    public Task<IEnumerable<OrganizationMember>> GetMembersOfAsync(NaturalPerson person)
-    {
-        IQueryable<OrganizationMember> members = store.OrganizationMembers.Where(p => p.PersonId == person.Id);
-        return Task.FromResult(members.AsEnumerable());
-    }
-
-    /// <summary>
     /// </summary>
     /// <param name="member"></param>
     /// <returns></returns>
@@ -116,16 +50,21 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     }
 
     /// <summary>
-    /// Take person leave out the organization.
+    /// 从指定组织中移除用户。
     /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
-    public async Task<OrganizationOperationResult> LeaveOrganizationAsync(OrganizationMember member)
+    /// <remarks>如果用户是组织的唯一所有者，则不能离开组织。在这种情况下，操作将失败，并且结果将包含一条错误消息，指示最后一位所有者无法离开。</remarks>
+    /// <param name="organizationId">要从中移除用户的组织唯一标识符。</param>
+    /// <param name="userId">要从组织中移除的用户唯一标识符。</param>
+    /// <returns>一个 <see cref="OrganizationOperationResult"/>，指示操作结果。如果用户已成功移除或本就不是成员，则返回 <see cref="OrganizationOperationResult.Success"/>。如果操作无法完成，则返回带有相应错误消息的 <see cref="OrganizationOperationResult.Failed"/>。</returns>
+    public async Task<OrganizationOperationResult> LeaveUser(string organizationId, string userId)
     {
-        IQueryable<OrganizationMember> members =
-            store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
+        var member =
+            store.OrganizationMembers.FirstOrDefault(p => p.OrganizationId == organizationId && p.PersonId == userId);
+        if (member == null)
+            return OrganizationOperationResult.Success;
 
-        if (member.IsOwner && members.Count(m => m.IsOwner) <= 1)
+        // 如果用户是组织所有者，并且该组织只有一个所有者，则不能离开组织。
+        if (member.IsOwner && store.OrganizationMembers.Count(m => m.OrganizationId == organizationId && m.IsOwner) <= 1)
             return OrganizationOperationResult.Failed(Resources.LastOwnerCannotLeave);
 
         return await store.DeleteAsync(member);
@@ -158,7 +97,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <returns></returns>
     public async Task<OrganizationOperationResult> SetOwner(OrganizationMember member)
     {
-        var members = await GetMembersAsync(member.Organization);
+        var members = store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
         if (members.Count(m => m.IsOwner) <= 5)
         {
             member.IsOwner = true;
@@ -175,7 +114,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <returns></returns>
     public async Task<OrganizationOperationResult> UnsetOwner(OrganizationMember member)
     {
-        var members = await GetMembersAsync(member.Organization);
+        var members = store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
         if (members.Count(m => m.IsOwner) > 1)
         {
             member.IsOwner = false;

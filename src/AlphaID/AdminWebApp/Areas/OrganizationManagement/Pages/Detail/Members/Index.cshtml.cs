@@ -9,6 +9,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 public class IndexModel(
     OrganizationManager manager,
     UserManager<NaturalPerson> personManager,
+    IOrganizationMemberStore organizationMemberStore,
     OrganizationMemberManager memberManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;
@@ -44,7 +45,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = await memberManager.GetMembersAsync(org);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
         return Page();
     }
@@ -55,7 +56,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = await memberManager.GetMembersAsync(org);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
         NaturalPerson? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
@@ -88,14 +89,11 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = await memberManager.GetMembersAsync(org);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
-        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
-        if (member == null)
-            return Page();
+        Result = await memberManager.LeaveUser(anchor, personId);
 
-        Result = await memberManager.LeaveOrganizationAsync(member);
-        if (Result.Succeeded) Members = await memberManager.GetMembersAsync(org);
+        if (Result.Succeeded) Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
         return Page();
     }
 }

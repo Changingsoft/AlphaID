@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidAdministrativeCode" xml:space="preserve">
+    <value>Administrative code invalid</value>
+  </data>
+  <data name="InvalidOrganizationType" xml:space="preserve">
+    <value>Organization type invalid</value>
+  </data>
+  <data name="InvalidRegionCode" xml:space="preserve">
+    <value>Region code invalid</value>
+  </data>
   <data name="LastOwnerCannotLeave" xml:space="preserve">
     <value>Last owner cannot leave</value>
   </data>

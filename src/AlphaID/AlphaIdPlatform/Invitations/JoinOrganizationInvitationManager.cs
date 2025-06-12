@@ -12,6 +12,7 @@ namespace AlphaIdPlatform.Invitations;
 /// <remarks>
 /// </remarks>
 /// <param name="store"></param>
+/// <param name="organizationMemberStore"></param>
 /// <param name="personManager"></param>
 /// <param name="organizationManager"></param>
 /// <param name="memberManager"></param>

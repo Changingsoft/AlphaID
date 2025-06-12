@@ -61,6 +61,33 @@ namespace AlphaIdPlatform {
         }
         
         /// <summary>
+        ///   查找类似 Administrative code invalid 的本地化字符串。
+        /// </summary>
+        internal static string InvalidAdministrativeCode {
+            get {
+                return ResourceManager.GetString("InvalidAdministrativeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Organization type invalid 的本地化字符串。
+        /// </summary>
+        internal static string InvalidOrganizationType {
+            get {
+                return ResourceManager.GetString("InvalidOrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Region code invalid 的本地化字符串。
+        /// </summary>
+        internal static string InvalidRegionCode {
+            get {
+                return ResourceManager.GetString("InvalidRegionCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Last owner cannot leave 的本地化字符串。
         /// </summary>
         internal static string LastOwnerCannotLeave {

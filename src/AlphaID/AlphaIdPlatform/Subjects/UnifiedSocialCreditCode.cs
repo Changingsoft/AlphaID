@@ -72,11 +72,11 @@ public readonly struct UnifiedSocialCreditCode
         regionCode = regionCode.Trim().ToUpper();
 
         if (!Regex.IsMatch(adminCode, @"^[0-9,A-H,J-N,P-R,T-U,W-Y]{1}$"))
-            throw new ArgumentException(Resources.Invalid_administrative_code, nameof(adminCode));
+            throw new ArgumentException(Resources.InvalidAdministrativeCode, nameof(adminCode));
         if (!Regex.IsMatch(orgTypeCode, @"^[0-9,A-H,J-N,P-R,T-U,W-Y]{1}$"))
-            throw new ArgumentException(Resources.Invlid_organization_type_, nameof(orgTypeCode));
+            throw new ArgumentException(Resources.InvalidOrganizationType, nameof(orgTypeCode));
         if (!Regex.IsMatch(regionCode, @"^\d{6}$"))
-            throw new ArgumentException(Resources.Invalid_region_code_, nameof(regionCode));
+            throw new ArgumentException(Resources.InvalidRegionCode, nameof(regionCode));
 
         AdminCode = adminCode;
         OrganizationTypeCode = orgTypeCode;

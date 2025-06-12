@@ -24,7 +24,7 @@ public readonly struct ChineseIdCardNumber
             throw new OverflowException("Version Overflow.");
         ArgumentNullException.ThrowIfNull(areaNumber);
         if (!s_areaNumberRegex.IsMatch(areaNumber))
-            throw new ArgumentException(Resources.Invalid_region_code_, nameof(areaNumber));
+            throw new ArgumentException(Resources.InvalidRegionCode, nameof(areaNumber));
         if (sequence is < 0 or > 999)
             throw new OverflowException("Sequence out of range.");
 
@@ -245,8 +245,8 @@ public readonly struct ChineseIdCardNumber
 
     private static char CalculateCheckCode(string data)
     {
-        var sum = 0;
-        for (var i = 0; i < 17; i++) sum += int.Parse(data[i].ToString()) * s_weight[i];
+        int sum = 0;
+        for (int i = 0; i < 17; i++) sum += int.Parse(data[i].ToString()) * s_weight[i];
         return CheckCodeSet[sum % 11];
     }
 

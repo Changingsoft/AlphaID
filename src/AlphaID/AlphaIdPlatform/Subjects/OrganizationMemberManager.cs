@@ -9,6 +9,7 @@ namespace AlphaIdPlatform.Subjects;
 /// Init Organization Member Manager via Organization Member store.
 /// </remarks>
 /// <param name="store"></param>
+/// <param name="organizationManager"></param>
 public class OrganizationMemberManager(IOrganizationMemberStore store, OrganizationManager organizationManager)
 {
     /// <summary>
@@ -61,10 +62,7 @@ public class OrganizationMemberManager(IOrganizationMemberStore store, Organizat
         if (store.OrganizationMembers.Any(p =>
                 p.OrganizationId == organizationId && p.PersonId == userId))
             throw new InvalidOperationException(Resources.MembershipExists);
-        var organization = await organizationManager.FindByIdAsync(organizationId);
-        if (organization == null)
-            throw new ArgumentException(Resources.OrganizationNotFound, nameof(organizationId));
-
+        var organization = await organizationManager.FindByIdAsync(organizationId) ?? throw new ArgumentException(Resources.OrganizationNotFound, nameof(organizationId));
         var member = new OrganizationMember(organization, userId, visibility);
         var result = await store.CreateAsync(member);
         if (!result.Succeeded)

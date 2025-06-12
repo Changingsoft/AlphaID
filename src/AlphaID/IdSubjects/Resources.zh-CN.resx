@@ -129,73 +129,52 @@
   <data name="Female" xml:space="preserve">
     <value>女</value>
   </data>
-  <data name="Invalid administrative code" xml:space="preserve">
-	  <value>无效的管理者代码</value>
-  </data>
-  <data name="Invalid region code." xml:space="preserve">
-	  <value>无效的行政区划代码。</value>
-  </data>
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>无效的移动电话号码。</value>
-  </data>
-  <data name="Invlid organization type." xml:space="preserve">
-	  <value>无效的组织类型。</value>
-  </data>
-  <data name="LastOwnerCannotLeave" xml:space="preserve">
-    <value>您是该组织最后一个所有者，若要离开组织，请将您的所有权转移给组织内的其他成员。</value>
   </data>
   <data name="Legal entity identifier" xml:space="preserve">
     <value>全球法人实体标识符（LEI）</value>
   </data>
   <data name="LessThenMinimumPasswordAge" xml:space="preserve">
-	  <value>当前密码小于最短使用期限。</value>
+    <value>当前密码小于最短使用期限。</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>男</value>
-  </data>
-  <data name="Max owners in the organization" xml:space="preserve">
-	  <value>组织内只能设置最多{0}个所有者。</value>
-  </data>
-  <data name="Membership exists" xml:space="preserve">
-    <value>组织成员身份已存在。</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>其他</value>
   </data>
   <data name="ReuseOldPassword" xml:space="preserve">
-	  <value>不允许使用旧密码。</value>
+    <value>不允许使用旧密码。</value>
   </data>
   <data name="Specified directory entry not found" xml:space="preserve">
-	  <value>找不到指定的目录对象。</value>
+    <value>找不到指定的目录对象。</value>
   </data>
   <data name="StringIsNullOrWhiteSpace" xml:space="preserve">
-	  <value>“{0}”不能为 Null 或空白。</value>
+    <value>“{0}”不能为 Null 或空白。</value>
   </data>
   <data name="UnifiedSocialCreditCode" xml:space="preserve">
-	  <value>统一社会信用代码</value>
+    <value>统一社会信用代码</value>
   </data>
   <data name="PasswordRequiresDigit" xml:space="preserve">
-	  <value>密码需要包含数字。</value>
+    <value>密码需要包含数字。</value>
   </data>
   <data name="PasswordRequiresLower" xml:space="preserve">
-	  <value>密码需要包含小写字母。</value>
+    <value>密码需要包含小写字母。</value>
   </data>
   <data name="PasswordRequiresUpper" xml:space="preserve">
-	  <value>密码需要包含大写字母。</value>
+    <value>密码需要包含大写字母。</value>
   </data>
   <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
-	  <value>密码需要包含特殊字符。</value>
-  </data>
-  <data name="Min owners in the organization" xml:space="preserve">
-	  <value>组织需要至少{0}个所有者。</value>
+    <value>密码需要包含特殊字符。</value>
   </data>
   <data name="PasswordRequires3Of4" xml:space="preserve">
-	  <value>密码需要包含大写、小写、数字和特殊字符四种中的至少三种。</value>
+    <value>密码需要包含大写、小写、数字和特殊字符四种中的至少三种。</value>
   </data>
   <data name="PasswordTooShort" xml:space="preserve">
-	  <value>密码过短。</value>
+    <value>密码过短。</value>
   </data>
   <data name="PasswordRequiresUniqueChars" xml:space="preserve">
-	  <value>密码需要包含唯一字符。</value>
+    <value>密码需要包含唯一字符。</value>
   </data>
 </root>

@@ -156,4 +156,7 @@
   <data name="Unset ownership of this person?" xml:space="preserve">
 	  <value>取消此人的组织所有人资格？</value>
   </data>
+  <data name="This organization has no public members." xml:space="preserve">
+	  <value>该组织没有公开成员。</value>
+  </data>
 </root>

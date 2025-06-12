@@ -93,11 +93,13 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="member"></param>
+    /// <param name="organizationId"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<OrganizationOperationResult> SetOwner(OrganizationMember member)
+    public async Task<OrganizationOperationResult> SetOwner(string organizationId, string userId)
     {
-        var members = store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
+        var members = store.OrganizationMembers.Where(m => m.OrganizationId == organizationId);
+        var member = members.First(m => m.PersonId == userId);
         if (members.Count(m => m.IsOwner) <= 5)
         {
             member.IsOwner = true;
@@ -110,11 +112,13 @@ public class OrganizationMemberManager(IOrganizationMemberStore store)
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="member"></param>
+    /// <param name="organizationId"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<OrganizationOperationResult> UnsetOwner(OrganizationMember member)
+    public async Task<OrganizationOperationResult> UnsetOwner(string organizationId, string userId)
     {
-        var members = store.OrganizationMembers.Where(m => m.OrganizationId == member.OrganizationId);
+        var members = store.OrganizationMembers.Where(m => m.OrganizationId == organizationId);
+        var member = members.First(m => m.PersonId == userId);
         if (members.Count(m => m.IsOwner) > 1)
         {
             member.IsOwner = false;

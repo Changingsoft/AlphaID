@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -140,5 +140,9 @@
   <data name="Unset owner" xml:space="preserve">
 	  <value>Unset owner</value>
 	  <comment>Unset owner</comment>
+  </data>
+  <data name="This organization has no public members." xml:space="preserve">
+	  <value>This organization has no public members.</value>
+	  <comment>This organization has no public members.</comment>
   </data>
 </root>

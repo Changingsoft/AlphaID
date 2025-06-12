@@ -14,7 +14,7 @@ public class IndexModel(
 {
     public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
 
-    public IEnumerable<OrganizationMember> Members { get; set; } = [];
+    public IEnumerable<MemberViewModel> Members { get; set; } = [];
 
     /// <summary>
     /// 判断当前访问者是否是组织的所有者。
@@ -33,8 +33,19 @@ public class IndexModel(
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
 
-        Members = organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id);
-        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
+                  select new MemberViewModel()
+                  {
+                      Department = member.Department,
+                      IsOwner = member.IsOwner,
+                      Remark = member.Remark,
+                      Title = member.Title,
+                      UserId = member.PersonId,
+                      UserName = member.Person.UserName,
+                      Visibility = member.Visibility,
+                      DisplayName = member.Person.Name,
+                  };
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         return Page();
     }
 
@@ -47,11 +58,22 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id);
-        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
+                  select new MemberViewModel()
+                  {
+                      Department = member.Department,
+                      IsOwner = member.IsOwner,
+                      Remark = member.Remark,
+                      Title = member.Title,
+                      UserId = member.PersonId,
+                      UserName = member.Person.UserName,
+                      Visibility = member.Visibility,
+                      DisplayName = member.Person.Name,
+                  };
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
-        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
-        if (member == null)
+        var your = Members.FirstOrDefault(m => m.UserId == personId);
+        if (your == null)
             return Page();
 
         if (!VisitorIsOwner)
@@ -73,11 +95,22 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = (organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)).ToList();
-        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
+                  select new MemberViewModel()
+                  {
+                      Department = member.Department,
+                      IsOwner = member.IsOwner,
+                      Remark = member.Remark,
+                      Title = member.Title,
+                      UserId = member.PersonId,
+                      UserName = member.Person.UserName,
+                      Visibility = member.Visibility,
+                      DisplayName = member.Person.Name,
+                  };
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
-        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
-        if (member == null)
+        var your = Members.FirstOrDefault(m => m.UserId == personId);
+        if (your == null)
             return Page();
 
         if (!VisitorIsOwner)
@@ -86,7 +119,7 @@ public class IndexModel(
             return Page();
         }
 
-        Result = await organizationMemberManager.SetOwner(member);
+        Result = await organizationMemberManager.SetOwner(organization.Id, personId);
         return Page();
     }
 
@@ -99,11 +132,22 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = (organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)).ToList();
-        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
+        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
+                  select new MemberViewModel()
+                  {
+                      Department = member.Department,
+                      IsOwner = member.IsOwner,
+                      Remark = member.Remark,
+                      Title = member.Title,
+                      UserId = member.PersonId,
+                      UserName = member.Person.UserName,
+                      Visibility = member.Visibility,
+                      DisplayName = member.Person.Name,
+                  };
+        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
-        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
-        if (member == null)
+        var your = Members.FirstOrDefault(m => m.UserId == personId);
+        if (your == null)
             return Page();
 
         if (!VisitorIsOwner)
@@ -112,7 +156,7 @@ public class IndexModel(
             return Page();
         }
 
-        Result = await organizationMemberManager.UnsetOwner(member);
+        Result = await organizationMemberManager.UnsetOwner(organization.Id, personId);
         return Page();
     }
 
@@ -131,5 +175,7 @@ public class IndexModel(
         public string? Department { get; set; }
 
         public string? Remark { get; set; }
+
+        public string? DisplayName { get; set; }
     }
 }

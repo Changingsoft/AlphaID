@@ -46,23 +46,35 @@ public class IndexModel(
             return Page();
         }
 
-        OrganizationMember member = new(org, Person)
-        {
-            Title = Input.Title,
-            Department = Input.Department,
-            Remark = Input.Remark,
-            IsOwner = Input.IsOwner,
-            Visibility = Input.Visibility
-        };
+        //OrganizationMember member = new(org, Person)
+        //{
+        //    Title = Input.Title,
+        //    Department = Input.Department,
+        //    Remark = Input.Remark,
+        //    IsOwner = Input.IsOwner,
+        //    Visibility = Input.Visibility
+        //};
 
-        OrganizationOperationResult result = await memberManager.Join(member);
-        if (!result.Succeeded)
+        try
         {
-            foreach (string error in result.Errors) ModelState.AddModelError("", error);
+            var m = await memberManager.Join(org.Id, person.Id, Input.Visibility);
+            m.Title = Input.Title;
+            m.Department = Input.Department;
+            m.Remark = Input.Remark;
+            m.IsOwner = Input.IsOwner;
+            var result1 = await memberManager.UpdateAsync(m);
+            if(!result1.Succeeded)
+            {
+                foreach (string error in result1.Errors) ModelState.AddModelError("", error);
+                return Page();
+            }
+            return RedirectToPage();
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
             return Page();
         }
-
-        return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostLeaveOrganizationAsync(string anchor, string organizationId)

@@ -38,19 +38,6 @@ public class OrganizationMemberManager(IOrganizationMemberStore store, Organizat
     }
 
     /// <summary>
-    /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
-    [Obsolete]
-    public async Task<OrganizationOperationResult> Join(OrganizationMember member)
-    {
-        if (store.OrganizationMembers.Any(p =>
-                p.OrganizationId == member.OrganizationId && p.PersonId == member.PersonId))
-            return OrganizationOperationResult.Failed(Resources.MembershipExists);
-        return await store.CreateAsync(member);
-    }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="organizationId"></param>

@@ -56,17 +56,23 @@ public class NewModel(
         NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
 
-        var member = new OrganizationMember(organization, person)
+        try
         {
-            Title = Input.Title,
-            Department = Input.Department,
-            Remark = Input.Remark,
-            IsOwner = true
-        };
-        OrganizationOperationResult joinOrgResult = await memberManager.Join(member);
-        if (!joinOrgResult.Succeeded)
+            var m = await memberManager.Join(organization.Id, person.Id, MembershipVisibility.Private);
+            m.Title = Input.Title;
+            m.Department = Input.Department;
+            m.Remark = Input.Remark;
+            m.IsOwner = true;
+            var joinResult = await memberManager.UpdateAsync(m);
+            if (!joinResult.Succeeded)
+            {
+                ModelState.AddModelError("", joinResult.Errors.Aggregate((x, y) => $"{x}, {y}"));
+                return Page();
+            }
+        }
+        catch (Exception ex)
         {
-            ModelState.AddModelError("", joinOrgResult.Errors.Aggregate((x, y) => $"{x}, {y}"));
+            ModelState.AddModelError("", ex.Message);
             return Page();
         }
 

@@ -6,20 +6,21 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Duende.IdentityModel" Version="7.0.0" />
 		<PackageReference Include="MinVer" Version="6.0.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="System.DirectoryServices" Version="9.0.5" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="9.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
+		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

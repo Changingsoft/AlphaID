@@ -1,11 +1,10 @@
 @page
 @using AlphaIdPlatform.Subjects
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
-@inject OrganizationMemberManager MemberManager
+@inject IOrganizationMemberStore OrganizationMemberStore
 @{
     ViewBag.Title = Model.Organization.Name;
-    var members = await MemberManager.GetMembersAsync(Model.Organization);
+    var members = OrganizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == Model.Organization.Id);
 }
 <h2>@L["Overview"]</h2>
 <div class="card mb-3">

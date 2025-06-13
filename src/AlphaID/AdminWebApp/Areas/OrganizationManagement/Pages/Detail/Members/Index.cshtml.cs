@@ -1,14 +1,16 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
     UserManager<NaturalPerson> personManager,
+    IOrganizationMemberStore organizationMemberStore,
     OrganizationMemberManager memberManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;
@@ -44,7 +46,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = await memberManager.GetMembersAsync(org);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
         return Page();
     }
@@ -55,7 +57,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = await memberManager.GetMembersAsync(org);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
         NaturalPerson? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
@@ -64,22 +66,20 @@ public class IndexModel(
             return Page();
         }
 
-        var member = new OrganizationMember(Organization, person)
+        try
         {
-            Title = Title,
-            Department = Department,
-            Remark = Remark,
-            Visibility = Visibility
-        };
-
-        OrganizationOperationResult result = await memberManager.CreateAsync(member);
-        if (!result.Succeeded)
+            var member = await memberManager.Join(anchor, person.Id, Visibility);
+            member.Title = Title;
+            member.Department = Department;
+            member.Remark = Remark;
+            await memberManager.UpdateAsync(member);
+            return RedirectToPage();
+        }
+        catch (Exception ex)
         {
-            foreach (string error in result.Errors) ModelState.AddModelError("", error);
+            ModelState.AddModelError("", ex.Message);
             return Page();
         }
-
-        return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
@@ -88,14 +88,11 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = await memberManager.GetMembersAsync(org);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
 
-        OrganizationMember? member = Members.FirstOrDefault(m => m.PersonId == personId);
-        if (member == null)
-            return Page();
+        Result = await memberManager.Leave(anchor, personId);
 
-        Result = await memberManager.LeaveOrganizationAsync(member);
-        if (Result.Succeeded) Members = await memberManager.GetMembersAsync(org);
+        if (Result.Succeeded) Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
         return Page();
     }
 }

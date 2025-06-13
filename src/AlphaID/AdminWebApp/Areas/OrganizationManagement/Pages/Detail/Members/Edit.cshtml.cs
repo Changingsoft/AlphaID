@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
-public class EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager) : PageModel
+public class EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager, IOrganizationMemberStore organizationMemberStore) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -14,7 +14,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
         Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = await memberManager.GetMembersAsync(org);
+        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
         OrganizationMember? member = members.FirstOrDefault(p => p.PersonId == personId);
         if (member == null)
             return NotFound();
@@ -35,7 +35,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
         Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = await memberManager.GetMembersAsync(org);
+        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
         OrganizationMember? member = members.FirstOrDefault(p => p.PersonId == personId);
         if (member == null)
             return NotFound();

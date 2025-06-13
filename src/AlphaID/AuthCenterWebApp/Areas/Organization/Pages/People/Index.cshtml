@@ -20,7 +20,7 @@
             </span>
             <input type="text" value="" class="form-control" placeholder="@L["Find members"]">
         </div>
-        @if (Model.UserIsOwner)
+        @if (Model.VisitorIsOwner)
         {
             <a class="btn ms-auto">@L["Export"]</a>
             <a class="btn btn-green ms-3" asp-page="Invite" asp-route-anchor="@RouteData.Values["anchor"]">@L["Invite member"]</a>
@@ -39,15 +39,15 @@
                         <div class="list-group-item">
                             <div class="row align-items-center">
                                 <div class="col-auto">
-                                    <input type="checkbox" class="form-check-input" value="@member.PersonId">
+                                    <input type="checkbox" class="form-check-input" value="@member.UserId">
                                 </div>
                                 <div class="col-auto">
                                     <a href="#">
-                                        <span class="avatar" style="background-image: url('@Url.Page("/Avatar", new { area = "People", anchor = member.PersonId })"></span>
+                                        <span class="avatar" style="background-image: url('@Url.Action("GetAvatarPicture", "People", new { anchor = member.UserName })"></span>
                                     </a>
                                 </div>
                                 <div class="col-6 text-truncate">
-                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.Person.UserName" class="text-reset d-block">@(member.Person.Name ?? member.Person.UserName!)</a>
+                                    <a asp-page="/Index" asp-area="People" asp-route-anchor="@member.UserName" class="text-reset d-block">@(member.DisplayName ?? member.UserName)</a>
                                     <div class="d-block text-secondary text-truncate mt-n1">@member.Title - @member.Department - @member.Remark</div>
                                 </div>
                                 <div class="col-2">
@@ -56,25 +56,25 @@
                                     {
                                         <span class="badge" title="@(L["You are the owner of this organization"])">@L["Owner"]</span>
                                     }
-                                    @if (member.PersonId == User.SubjectId())
+                                    @if (member.UserId == User.SubjectId())
                                     {
                                         <span class="badge" title="@(L["Yourself"])">@L["Yourself"]</span>
                                     }
                                 </div>
                                 <div class="col-auto">
-                                    @if (Model.UserIsOwner && member.PersonId != User.SubjectId())
+                                    @if (Model.VisitorIsOwner && member.UserId != User.SubjectId())
                                     {
-                                        <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="Leave" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
+                                        <button type="submit" name="personId" value="@member.UserId" asp-page-handler="Leave" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
                                     }
-                                    @if (Model.UserIsOwner)
+                                    @if (Model.VisitorIsOwner)
                                     {
                                         if (!member.IsOwner)
                                         {
-                                            <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="SetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Set this person as organization owner?"])');">@L["Set owner"]</button>
+                                            <button type="submit" name="personId" value="@member.UserId" asp-page-handler="SetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Set this person as organization owner?"])');">@L["Set owner"]</button>
                                         }
                                         else
                                         {
-                                            <button type="submit" name="personId" value="@member.PersonId" asp-page-handler="UnsetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Unset ownership of this person?"])');">@L["Unset owner"]</button>
+                                            <button type="submit" name="personId" value="@member.UserId" asp-page-handler="UnsetOwner" class="btn btn-outline-secondary list-group-item-actions" onclick="return confirm('@(L["Unset ownership of this person?"])');">@L["Unset owner"]</button>
                                         }
                                     }
                                 </div>

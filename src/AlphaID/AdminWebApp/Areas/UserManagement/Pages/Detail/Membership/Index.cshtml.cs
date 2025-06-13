@@ -9,11 +9,9 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 public class IndexModel(
     UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
+    IOrganizationMemberStore organizationMemberStore,
     OrganizationMemberManager memberManager) : PageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = null!;
-
     public NaturalPerson Person { get; set; } = null!;
 
     public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = null!;
@@ -23,23 +21,23 @@ public class IndexModel(
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
-        OrganizationMembers = await memberManager.GetMembersOfAsync(person);
+        OrganizationMembers = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
         return Page();
     }
 
-    public async Task<IActionResult> OnPostJoinOrganizationAsync()
+    public async Task<IActionResult> OnPostJoinOrganizationAsync(string anchor)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
-        OrganizationMembers = await memberManager.GetMembersOfAsync(person);
+        OrganizationMembers = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
 
         Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
         if (org == null)
@@ -48,41 +46,45 @@ public class IndexModel(
             return Page();
         }
 
-        OrganizationMember member = new(org, Person)
-        {
-            Title = Input.Title,
-            Department = Input.Department,
-            Remark = Input.Remark,
-            IsOwner = Input.IsOwner,
-            Visibility = Input.Visibility
-        };
+        //OrganizationMember member = new(org, Person)
+        //{
+        //    Title = Input.Title,
+        //    Department = Input.Department,
+        //    Remark = Input.Remark,
+        //    IsOwner = Input.IsOwner,
+        //    Visibility = Input.Visibility
+        //};
 
-        OrganizationOperationResult result = await memberManager.CreateAsync(member);
-        if (!result.Succeeded)
+        try
         {
-            foreach (string error in result.Errors) ModelState.AddModelError("", error);
+            var m = await memberManager.Join(org.Id, person.Id, Input.Visibility);
+            m.Title = Input.Title;
+            m.Department = Input.Department;
+            m.Remark = Input.Remark;
+            m.IsOwner = Input.IsOwner;
+            var result1 = await memberManager.UpdateAsync(m);
+            if(!result1.Succeeded)
+            {
+                foreach (string error in result1.Errors) ModelState.AddModelError("", error);
+                return Page();
+            }
+            return RedirectToPage();
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
             return Page();
         }
-
-        return RedirectToPage();
     }
 
-    public async Task<IActionResult> OnPostLeaveOrganizationAsync(string organizationId)
+    public async Task<IActionResult> OnPostLeaveOrganizationAsync(string anchor, string organizationId)
     {
-        NaturalPerson? person = await personManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await personManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
         Person = person;
 
-        IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(Person);
-        OrganizationMember? member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
-        if (member == null)
-        {
-            ModelState.AddModelError("", "Membership not found.");
-            return Page();
-        }
-
-        Result = await memberManager.RemoveAsync(member);
+        Result = await memberManager.Leave(organizationId, anchor, true);
         return RedirectToPage();
     }
 

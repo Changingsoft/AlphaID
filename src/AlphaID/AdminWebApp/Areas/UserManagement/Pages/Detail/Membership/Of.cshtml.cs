@@ -8,7 +8,7 @@ using AlphaIdPlatform.Subjects;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> applicationUserManager) : PageModel
+public class OfModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> applicationUserManager, IOrganizationMemberStore organizationMemberStore) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 
@@ -25,7 +25,7 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Natura
         NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(person);
+        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
         OrganizationMember? member = members.FirstOrDefault(p => p.OrganizationId == orgId);
         if (member == null)
             return NotFound();
@@ -46,7 +46,7 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Natura
         NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = await memberManager.GetMembersOfAsync(person);
+        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
         OrganizationMember? member = members.FirstOrDefault(p => p.OrganizationId == orgId);
         if (member == null)
             return NotFound();

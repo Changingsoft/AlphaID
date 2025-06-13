@@ -117,46 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Export" xml:space="preserve">
-    <value>导出</value>
+  <data name="InvalidAdministrativeCode" xml:space="preserve">
+    <value>Administrative code invalid</value>
   </data>
-  <data name="Find members" xml:space="preserve">
-    <value>查找成员</value>
+  <data name="InvalidOrganizationType" xml:space="preserve">
+    <value>Organization type invalid</value>
   </data>
-  <data name="Invite member" xml:space="preserve">
-    <value>邀请</value>
+  <data name="InvalidRegionCode" xml:space="preserve">
+    <value>Region code invalid</value>
   </data>
-  <data name="Leave" xml:space="preserve">
-    <value>离开</value>
+  <data name="LastOwnerCannotLeave" xml:space="preserve">
+    <value>Last owner cannot leave</value>
   </data>
-  <data name="Leave the person from organization?" xml:space="preserve">
-	  <value>令此人离开组织吗？</value>
+  <data name="MaxOwnersInOrganization" xml:space="preserve">
+    <value>Max owners in organization</value>
   </data>
-  <data name="Owner" xml:space="preserve">
-    <value>所有者</value>
+  <data name="MembershipCreateFailed" xml:space="preserve">
+    <value>Membership create fialde. message: {0}</value>
   </data>
-  <data name="People" xml:space="preserve">
-    <value>成员</value>
+  <data name="MembershipExists" xml:space="preserve">
+    <value>Membership exists</value>
   </data>
-  <data name="You are the owner of this organization" xml:space="preserve">
-    <value>您是该组织的所有者</value>
+  <data name="OrganizationMemberNotFound" xml:space="preserve">
+    <value>Organization member not found</value>
   </data>
-  <data name="Yourself" xml:space="preserve">
-	  <value>你自己</value>
-  </data>
-  <data name="Set owner" xml:space="preserve">
-	  <value>设为所有人</value>
-  </data>
-  <data name="Set this person as organization owner?" xml:space="preserve">
-	  <value>将此人设为组织的所有人？</value>
-  </data>
-  <data name="Unset owner" xml:space="preserve">
-	  <value>取消所有人</value>
-  </data>
-  <data name="Unset ownership of this person?" xml:space="preserve">
-	  <value>取消此人的组织所有人资格？</value>
-  </data>
-  <data name="This organization has no public members." xml:space="preserve">
-	  <value>该组织没有公开成员。</value>
+  <data name="OrganizationNotFound" xml:space="preserve">
+    <value>Organization not found</value>
   </data>
 </root>

@@ -129,20 +129,8 @@
   <data name="Female" xml:space="preserve">
     <value>Female</value>
   </data>
-  <data name="Invalid administrative code" xml:space="preserve">
-    <value>Invalid administrative code</value>
-  </data>
-  <data name="Invalid region code." xml:space="preserve">
-    <value>Invalid region code.</value>
-  </data>
   <data name="InvalidPhoneNumber" xml:space="preserve">
     <value>Phone number is invalid.</value>
-  </data>
-  <data name="Invlid organization type." xml:space="preserve">
-    <value>Invalid organization type.</value>
-  </data>
-  <data name="LastOwnerCannotLeave" xml:space="preserve">
-    <value>You are the last owner of this organization, for leaving organization, you must transfer your ownership to another member in this organization.</value>
   </data>
   <data name="Legal entity identifier" xml:space="preserve">
     <value>Legal entity identifier</value>
@@ -152,15 +140,6 @@
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
-  </data>
-  <data name="Max owners in the organization" xml:space="preserve">
-    <value>Canbe set almost {0} owners in this organization.</value>
-  </data>
-  <data name="Membership exists" xml:space="preserve">
-    <value>The membership already exists.</value>
-  </data>
-  <data name="Min owners in the organization" xml:space="preserve">
-    <value>There would be at least {0} owner(s) in this organization.</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
@@ -178,24 +157,24 @@
     <value>Unified Social Credit Code</value>
   </data>
   <data name="PasswordRequiresDigit" xml:space="preserve">
-	  <value>Password requires digit.</value>
+    <value>Password requires digit.</value>
   </data>
   <data name="PasswordRequiresLower" xml:space="preserve">
-	  <value>Password requires lower case charaters.</value>
+    <value>Password requires lower case charaters.</value>
   </data>
   <data name="PasswordRequiresUpper" xml:space="preserve">
-	  <value>Password requires upper case charaters.</value>
+    <value>Password requires upper case charaters.</value>
   </data>
   <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
-	  <value>Password requires special charaters.</value>
+    <value>Password requires special charaters.</value>
   </data>
   <data name="PasswordRequires3Of4" xml:space="preserve">
-	  <value>Password requires 3 of 4 types: uppercase, lowercase, digits and special characters.</value>
+    <value>Password requires 3 of 4 types: uppercase, lowercase, digits and special characters.</value>
   </data>
   <data name="PasswordTooShort" xml:space="preserve">
-	  <value>Password too short.</value>
+    <value>Password too short.</value>
   </data>
   <data name="PasswordRequiresUniqueChars" xml:space="preserve">
-	  <value>Password requires unique chars.</value>
+    <value>Password requires unique chars.</value>
   </data>
 </root>

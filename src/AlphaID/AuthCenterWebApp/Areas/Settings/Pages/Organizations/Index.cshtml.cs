@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Security;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
-public class IndexModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> personManager) : PageModel
+public class IndexModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> personManager, IOrganizationMemberStore organizationMemberStore) : PageModel
 {
     public IEnumerable<OrganizationMember> Members { get; set; } = null!;
 
@@ -18,7 +19,7 @@ public class IndexModel(OrganizationMemberManager memberManager, UserManager<Nat
         NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
 
-        Members = await memberManager.GetMembersOfAsync(person);
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == User.SubjectId());
         return Page();
     }
 
@@ -26,12 +27,9 @@ public class IndexModel(OrganizationMemberManager memberManager, UserManager<Nat
     {
         NaturalPerson? person = await personManager.GetUserAsync(User);
         Debug.Assert(person != null);
-        Members = await memberManager.GetMembersOfAsync(person);
-        OrganizationMember? member = Members.FirstOrDefault(m => m.OrganizationId == organizationId);
-        if (member == null)
-            return Page();
+        Members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == User.SubjectId());
 
-        Result = await memberManager.LeaveOrganizationAsync(member);
+        Result = await memberManager.Leave(organizationId, person.Id);
         return Page();
     }
 }

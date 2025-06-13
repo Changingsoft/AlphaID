@@ -84,15 +84,7 @@ public class IndexModel(
             return NotFound();
         Person = person;
 
-        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
-        OrganizationMember? member = members.FirstOrDefault(m => m.OrganizationId == organizationId);
-        if (member == null)
-        {
-            ModelState.AddModelError("", "Membership not found.");
-            return Page();
-        }
-
-        Result = await memberManager.RemoveAsync(member);
+        Result = await memberManager.Leave(organizationId, anchor, true);
         return RedirectToPage();
     }
 

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace AlphaIdPlatform.Subjects;
 
@@ -58,34 +59,29 @@ public class OrganizationMemberManager(IOrganizationMemberStore store, Organizat
     }
 
     /// <summary>
-    /// 从指定组织中移除用户。
+    /// 从指定组织中移除成员。
     /// </summary>
-    /// <remarks>如果用户是组织的唯一所有者，则不能离开组织。在这种情况下，操作将失败，并且结果将包含一条错误消息，指示最后一位所有者无法离开。</remarks>
+    /// <remarks>如果为设置force为true，当用户是组织的唯一所有者时，不能离开组织。这种情况下，操作将失败，并且结果将包含一条错误消息，指示最后一位所有者无法离开。</remarks>
     /// <param name="organizationId">要从中移除用户的组织唯一标识符。</param>
     /// <param name="userId">要从组织中移除的用户唯一标识符。</param>
+    /// <param name="force">强制离开，默认为false。如果设为true，即使该成员为组织的最后1个所有者，也将其离开组织。</param>
     /// <returns>一个 <see cref="OrganizationOperationResult"/>，指示操作结果。如果用户已成功移除或本就不是成员，则返回 <see cref="OrganizationOperationResult.Success"/>。如果操作无法完成，则返回带有相应错误消息的 <see cref="OrganizationOperationResult.Failed"/>。</returns>
-    public async Task<OrganizationOperationResult> Leave(string organizationId, string userId)
+    public async Task<OrganizationOperationResult> Leave(string organizationId, string userId, bool force = false)
     {
+        var orgMembers = store.OrganizationMembers.Where(m => m.OrganizationId == organizationId);
         var member =
-            store.OrganizationMembers.FirstOrDefault(p => p.OrganizationId == organizationId && p.PersonId == userId);
+            orgMembers.FirstOrDefault(p => p.PersonId == userId);
         if (member == null)
-            return OrganizationOperationResult.Success;
+            return OrganizationOperationResult.Failed(Resources.OrganizationMemberNotFound);
+
+        if (force)
+            return await store.DeleteAsync(member);
 
         // 如果用户是组织所有者，并且该组织只有一个所有者，则不能离开组织。
-        if (member.IsOwner && store.OrganizationMembers.Count(m => m.OrganizationId == organizationId && m.IsOwner) <= 1)
+        if (member.IsOwner && orgMembers.Count(m => m.OrganizationId == organizationId && m.IsOwner) <= 1)
             return OrganizationOperationResult.Failed(Resources.LastOwnerCannotLeave);
 
         return await store.DeleteAsync(member);
-    }
-
-    /// <summary>
-    /// 移除用户成员身份，无论用户是否是组织所有者也是如此。
-    /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
-    public Task<OrganizationOperationResult> RemoveAsync(OrganizationMember member)
-    {
-        return store.DeleteAsync(member);
     }
 
     /// <summary>
@@ -96,43 +92,5 @@ public class OrganizationMemberManager(IOrganizationMemberStore store, Organizat
     public Task<OrganizationOperationResult> UpdateAsync(OrganizationMember member)
     {
         return store.UpdateAsync(member);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="organizationId"></param>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    public async Task<OrganizationOperationResult> SetOwner(string organizationId, string userId)
-    {
-        var members = store.OrganizationMembers.Where(m => m.OrganizationId == organizationId);
-        var member = members.First(m => m.PersonId == userId);
-        if (members.Count(m => m.IsOwner) <= 5)
-        {
-            member.IsOwner = true;
-            //todo need log to audit log.
-            return await UpdateAsync(member);
-        }
-        return OrganizationOperationResult.Failed(string.Format(Resources.MaxOwnersInOrganization, 5));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="organizationId"></param>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    public async Task<OrganizationOperationResult> UnsetOwner(string organizationId, string userId)
-    {
-        var members = store.OrganizationMembers.Where(m => m.OrganizationId == organizationId);
-        var member = members.First(m => m.PersonId == userId);
-        if (members.Count(m => m.IsOwner) > 1)
-        {
-            member.IsOwner = false;
-            //todo need log to audit log.
-            return await UpdateAsync(member);
-        }
-        return OrganizationOperationResult.Failed(string.Format(Resources.MaxOwnersInOrganization, 5));
     }
 }

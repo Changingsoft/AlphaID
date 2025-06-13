@@ -138,6 +138,9 @@
   <data name="MembershipExists" xml:space="preserve">
     <value>Membership exists</value>
   </data>
+  <data name="OrganizationMemberNotFound" xml:space="preserve">
+    <value>Organization member not found</value>
+  </data>
   <data name="OrganizationNotFound" xml:space="preserve">
     <value>Organization not found</value>
   </data>

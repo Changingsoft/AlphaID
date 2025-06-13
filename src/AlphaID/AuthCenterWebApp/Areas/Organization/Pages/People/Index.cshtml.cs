@@ -41,9 +41,9 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName,
+                      UserName = member.Person.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name,
+                      DisplayName = member.Person.Name!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         return Page();
@@ -66,9 +66,9 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName,
+                      UserName = member.Person.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name,
+                      DisplayName = member.Person.Name!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
@@ -103,23 +103,21 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName,
+                      UserName = member.Person.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name,
+                      DisplayName = member.Person.Name!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
-
-        var your = Members.FirstOrDefault(m => m.UserId == personId);
-        if (your == null)
-            return Page();
-
         if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
-
-        Result = await organizationMemberManager.SetOwner(organization.Id, personId);
+        var your = organizationMemberStore.OrganizationMembers.FirstOrDefault(m => m.OrganizationId == organization.Id && m.PersonId == personId);
+        if (your == null)
+            return Page();
+        your.IsOwner = true;
+        Result = await organizationMemberManager.UpdateAsync(your);
         return Page();
     }
 
@@ -140,23 +138,21 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName,
+                      UserName = member.Person.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name,
+                      DisplayName = member.Person.Name!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
-
-        var your = Members.FirstOrDefault(m => m.UserId == personId);
-        if (your == null)
-            return Page();
-
         if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
-
-        Result = await organizationMemberManager.UnsetOwner(organization.Id, personId);
+        var your = organizationMemberStore.OrganizationMembers.FirstOrDefault(m => m.OrganizationId == organization.Id && m.PersonId == personId);
+        if (your == null)
+            return Page();
+        your.IsOwner = false;
+        Result = await organizationMemberManager.UpdateAsync(your);
         return Page();
     }
 

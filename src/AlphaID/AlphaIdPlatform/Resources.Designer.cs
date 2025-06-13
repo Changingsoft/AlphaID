@@ -124,6 +124,15 @@ namespace AlphaIdPlatform {
         }
         
         /// <summary>
+        ///   查找类似 Organization member not found 的本地化字符串。
+        /// </summary>
+        internal static string OrganizationMemberNotFound {
+            get {
+                return ResourceManager.GetString("OrganizationMemberNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Organization not found 的本地化字符串。
         /// </summary>
         internal static string OrganizationNotFound {

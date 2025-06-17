@@ -14,6 +14,7 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
     /// </summary>
     public DbSet<Organization> Organizations { get; protected set; } = null!;
 
+    [Obsolete]
     public DbSet<OrganizationMember> OrganizationMembers { get; protected set; } = null!;
 
     public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = null!;

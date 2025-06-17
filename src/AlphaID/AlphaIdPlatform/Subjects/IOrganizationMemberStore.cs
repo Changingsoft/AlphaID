@@ -3,6 +3,7 @@ namespace AlphaIdPlatform.Subjects;
 /// <summary>
 /// 提供组织成员信息的持久化能力。
 /// </summary>
+[Obsolete]
 public interface IOrganizationMemberStore
 {
     /// <summary>

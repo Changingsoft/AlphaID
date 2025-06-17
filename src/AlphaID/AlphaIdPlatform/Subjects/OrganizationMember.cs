@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AlphaIdPlatform.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaIdPlatform.Subjects;
@@ -30,6 +29,7 @@ public class OrganizationMember
         OrganizationId = organization.Id;
         Organization = organization ?? throw new ArgumentNullException(nameof(organization));
         PersonId = userId;
+        Visibility = visibility;
     }
 
     /// <summary>
@@ -50,6 +50,7 @@ public class OrganizationMember
     /// Organization.
     /// </summary>
     [ForeignKey(nameof(OrganizationId))]
+    [Obsolete("作为拥有类型不再被引用。")]
     public virtual Organization Organization { get; protected set; } = null!;
 
     /// <summary>

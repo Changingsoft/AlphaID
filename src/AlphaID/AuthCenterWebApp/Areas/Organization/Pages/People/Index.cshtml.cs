@@ -41,9 +41,9 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
+                      UserName = member.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
+                      DisplayName = member.PersonName!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         return Page();
@@ -66,9 +66,9 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
+                      UserName = member.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
+                      DisplayName = member.PersonName!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
@@ -103,9 +103,9 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
+                      UserName = member.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
+                      DisplayName = member.PersonName!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         if (!VisitorIsOwner)
@@ -138,9 +138,9 @@ public class IndexModel(
                       Remark = member.Remark,
                       Title = member.Title,
                       UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
+                      UserName = member.UserName!,
                       Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
+                      DisplayName = member.PersonName!,
                   };
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         if (!VisitorIsOwner)

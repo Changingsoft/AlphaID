@@ -19,19 +19,6 @@ public class OrganizationMember
     }
 
     /// <summary>
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <param name="person"></param>
-    [Obsolete("使用OrganizationMember(Organization, string)")]
-    public OrganizationMember(Organization organization, NaturalPerson person)
-    {
-        OrganizationId = organization.Id;
-        Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-        PersonId = person.Id;
-        Person = person ?? throw new ArgumentNullException(nameof(person));
-    }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="organization"></param>
@@ -66,11 +53,16 @@ public class OrganizationMember
     public virtual Organization Organization { get; protected set; } = null!;
 
     /// <summary>
-    /// Person.
+    /// 姓名。
     /// </summary>
-    [ForeignKey(nameof(PersonId))]
-    [Obsolete("考虑解耦，计划不再使用该导航属性。")]
-    public NaturalPerson Person { get; protected set; } = null!;
+    [MaxLength(50)]
+    public string PersonName { get; set; } = null!;
+
+    /// <summary>
+    /// 用户名。
+    /// </summary>
+    [MaxLength(50)]
+    public string UserName { get; set; } = null!;
 
     /// <summary>
     /// 部门。

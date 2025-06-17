@@ -6,7 +6,7 @@ namespace AlphaId.EntityFramework.IdSubjects;
 internal class OrganizationMemberStore(IdSubjectsDbContext dbContext) : IOrganizationMemberStore
 {
     public IQueryable<OrganizationMember> OrganizationMembers =>
-        dbContext.OrganizationMembers.Include(p => p.Organization).Include(p => p.Person);
+        dbContext.OrganizationMembers;
 
     public Task<OrganizationMember?> FindAsync(string personId, string organizationId)
     {

@@ -45,12 +45,6 @@ public class OrganizationMember
     public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
-    /// 姓名。
-    /// </summary>
-    [MaxLength(50)]
-    public string PersonName { get; set; } = null!;
-
-    /// <summary>
     /// 部门。
     /// </summary>
     [MaxLength(50)]
@@ -83,6 +77,6 @@ public class OrganizationMember
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{PersonName}|{(IsOwner ? "Owner" : "")}|{Visibility}";
+        return $"{PersonId}|{(IsOwner ? "Owner" : "")}|{Visibility}";
     }
 }

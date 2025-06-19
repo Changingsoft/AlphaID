@@ -12,7 +12,7 @@ public class IndexModel(
 {
     public Organization Organization { get; set; } = null!;
 
-    public IEnumerable<OrganizationMember> Members { get; set; } = null!;
+    public IEnumerable<OrganizationMemberViewModel> Members { get; set; } = null!;
 
 
     [BindProperty]
@@ -37,13 +37,32 @@ public class IndexModel(
 
     public OrganizationOperationResult? Result { get; set; }
 
+    private IEnumerable<OrganizationMemberViewModel> GetMembers(Organization organization)
+    {
+        var userIds = organization.Members.Select(m => m.PersonId).ToList();
+        var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new {u.Id, u.UserName, u.Name}).ToList();
+        return from member in organization.Members
+               join user in users on member.PersonId equals user.Id
+               select new OrganizationMemberViewModel
+               {
+                   UserId = user.Id,
+                   UserName = user.UserName,
+                   DisplayName = user.Name,
+                   Department = member.Department,
+                   Title = member.Title,
+                   Remark = member.Remark,
+                   Visibility = member.Visibility,
+                   IsOwner = member.IsOwner
+               };
+    }
+
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
         Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = org.Members;
+        Members = GetMembers(org);
 
         return Page();
     }
@@ -54,7 +73,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = org.Members;
+        Members = GetMembers(org);
 
         NaturalPerson? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
@@ -86,7 +105,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = org.Members;
+        Members = GetMembers(org);
 
         var member = org.Members.FirstOrDefault(m => m.PersonId == personId);
         if (member == null)
@@ -97,5 +116,17 @@ public class IndexModel(
         org.Members.Remove(member);
         await manager.UpdateAsync(org);
         return Page();
+    }
+
+    public class OrganizationMemberViewModel
+    {
+        public string UserId { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string DisplayName { get; set; } = null!;
+        public string? Department { get; set; }
+        public string? Title { get; set; }
+        public string? Remark { get; set; }
+        public MembershipVisibility Visibility { get; set; }
+        public bool IsOwner { get; set; }
     }
 }

@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @member.PersonName
+                    @member.DisplayName
                     @Html.DisplayFor(m => member.IsOwner, "Ownership")
                 </td>
                 <td>@member.Title</td>
@@ -39,8 +39,8 @@
                 <td>@member.Remark</td>
                 <td>@Html.DisplayFor(m => member.Visibility)</td>
                 <td>
-                    <a asp-page="Edit" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.PersonId" class="btn btn-sm">@L["Edit"]</a>
-                    <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.PersonId" onclick="return confirm('Are you sure remove this person?');">@L["Remove"]</button>
+                    <a asp-page="Edit" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-personId="@member.UserId" class="btn btn-sm">@L["Edit"]</a>
+                    <button type="submit" class="btn btn-sm btn-danger" name="personId" value="@member.UserId" onclick="return confirm('Are you sure remove this person?');">@L["Remove"]</button>
                 </td>
             </tr>
         }

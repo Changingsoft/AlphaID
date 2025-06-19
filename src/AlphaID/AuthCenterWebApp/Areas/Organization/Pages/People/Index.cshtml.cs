@@ -33,21 +33,9 @@ public class IndexModel(
         var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
         var filterUsers = from user in userStore.Users
                           where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName };
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in visibleMembers
-                  join user in filterUsers on member.PersonId equals user.Id
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = user.UserName,
-                      Visibility = member.Visibility,
-                      DisplayName = member.PersonName!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         return Page();
     }
@@ -63,21 +51,9 @@ public class IndexModel(
         var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
         var filterUsers = from user in userStore.Users
                           where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName };
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in visibleMembers
-                  join user in filterUsers on member.PersonId equals user.Id
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = user.UserName,
-                      Visibility = member.Visibility,
-                      DisplayName = member.PersonName!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
         var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
@@ -106,21 +82,9 @@ public class IndexModel(
         var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
         var filterUsers = from user in userStore.Users
                           where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName };
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in visibleMembers
-                  join user in filterUsers on member.PersonId equals user.Id
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = user.UserName,
-                      Visibility = member.Visibility,
-                      DisplayName = member.PersonName!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         if (!VisitorIsOwner)
         {
@@ -146,21 +110,9 @@ public class IndexModel(
         var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
         var filterUsers = from user in userStore.Users
                           where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName };
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in visibleMembers
-                  join user in filterUsers on member.PersonId equals user.Id
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = user.UserName,
-                      Visibility = member.Visibility,
-                      DisplayName = member.PersonName!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         if (!VisitorIsOwner)
         {
@@ -173,6 +125,25 @@ public class IndexModel(
         your.IsOwner = false;
         Result = await organizationManager.UpdateAsync(organization);
         return Page();
+    }
+
+    private IEnumerable<MemberViewModel> GetMembers(AlphaIdPlatform.Subjects.Organization organization, string? visitorId)
+    {
+        var userIds = organization.Members.VisibleMembers(visitorId).Select(m => m.PersonId).ToList();
+        var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new { u.Id, u.UserName, u.Name }).ToList();
+        return from member in organization.Members.VisibleMembers(visitorId)
+               join user in users on member.PersonId equals user.Id
+               select new MemberViewModel
+               {
+                   UserId = user.Id,
+                   UserName = user.UserName,
+                   DisplayName = user.Name,
+                   Department = member.Department,
+                   Title = member.Title,
+                   Remark = member.Remark,
+                   Visibility = member.Visibility,
+                   IsOwner = member.IsOwner
+               };
     }
 
     public class MemberViewModel

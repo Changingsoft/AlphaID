@@ -44,6 +44,7 @@ public static class AlphaIdPlatformServiceCollectionExtensions
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationSearcher>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
+        services.AddScoped<OrganizationMemberManager>();
         services.AddScoped<NaturalPersonService>();
 
         return new AlphaIdPlatformBuilder(services, identityBuilder, directoryLoginBuilder, realnameBuilder, auditLogBuilder);

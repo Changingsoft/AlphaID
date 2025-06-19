@@ -3,19 +3,16 @@ using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    UserManager<NaturalPerson> personManager,
-    IOrganizationMemberStore organizationMemberStore,
-    OrganizationMemberManager memberManager) : PageModel
+    UserManager<NaturalPerson> personManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;
 
-    public IEnumerable<OrganizationMember> Members { get; set; } = null!;
+    public IEnumerable<OrganizationMemberViewModel> Members { get; set; } = null!;
 
 
     [BindProperty]
@@ -40,13 +37,32 @@ public class IndexModel(
 
     public OrganizationOperationResult? Result { get; set; }
 
+    private IEnumerable<OrganizationMemberViewModel> GetMembers(Organization organization)
+    {
+        var userIds = organization.Members.Select(m => m.PersonId).ToList();
+        var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new {u.Id, u.UserName, u.Name}).ToList();
+        return from member in organization.Members
+               join user in users on member.PersonId equals user.Id
+               select new OrganizationMemberViewModel
+               {
+                   UserId = user.Id,
+                   UserName = user.UserName,
+                   DisplayName = user.Name,
+                   Department = member.Department,
+                   Title = member.Title,
+                   Remark = member.Remark,
+                   Visibility = member.Visibility,
+                   IsOwner = member.IsOwner
+               };
+    }
+
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
         Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        Members = GetMembers(org);
 
         return Page();
     }
@@ -57,7 +73,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        Members = GetMembers(org);
 
         NaturalPerson? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
@@ -65,21 +81,22 @@ public class IndexModel(
             ModelState.AddModelError(nameof(UserName), "找不到人员");
             return Page();
         }
-
-        try
+        if (org.Members.Any(m => m.PersonId == person.Id))
         {
-            var member = await memberManager.Join(anchor, person.Id, Visibility);
-            member.Title = Title;
-            member.Department = Department;
-            member.Remark = Remark;
-            await memberManager.UpdateAsync(member);
-            return RedirectToPage();
-        }
-        catch (Exception ex)
-        {
-            ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError(nameof(UserName), "该人员已是组织成员");
             return Page();
         }
+
+        var member = new OrganizationMember(person.Id, Visibility)
+        {
+            Title = Title,
+            Department = Department,
+            Remark = Remark
+        };
+        org.Members.Add(member);
+        await manager.UpdateAsync(org);
+        return RedirectToPage();
+
     }
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
@@ -88,11 +105,28 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        Members = GetMembers(org);
 
-        Result = await memberManager.Leave(anchor, personId);
-
-        if (Result.Succeeded) Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        var member = org.Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+        {
+            ModelState.AddModelError(nameof(personId), "找不到该成员");
+            return Page();
+        }
+        org.Members.Remove(member);
+        await manager.UpdateAsync(org);
         return Page();
+    }
+
+    public class OrganizationMemberViewModel
+    {
+        public string UserId { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string DisplayName { get; set; } = null!;
+        public string? Department { get; set; }
+        public string? Title { get; set; }
+        public string? Remark { get; set; }
+        public MembershipVisibility Visibility { get; set; }
+        public bool IsOwner { get; set; }
     }
 }

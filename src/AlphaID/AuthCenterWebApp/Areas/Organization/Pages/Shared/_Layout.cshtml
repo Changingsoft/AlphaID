@@ -1,7 +1,6 @@
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.Subjects
 @inject OrganizationManager OrganizationManager
-@inject IOrganizationMemberStore OrganizationMemberStore
 @{
     Layout = "Tabler/_PageWrapper";
     var isOwner = false;
@@ -13,7 +12,7 @@
         {
             var org = await OrganizationManager.FindByNameAsync(anchor);
             if (org != null)
-                isOwner = (OrganizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == org.Id)).Any(m => m.PersonId == subjectId && m.IsOwner);
+                isOwner = org.Members.Any(m => m.PersonId == subjectId && m.IsOwner);
         }
     }
 }

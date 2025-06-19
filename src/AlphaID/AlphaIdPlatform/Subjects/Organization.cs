@@ -142,6 +142,10 @@ public class Organization
     public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; set; } = [];
 
     /// <summary>
+    /// 组织的成员。
+    /// </summary>
+    public virtual ICollection<OrganizationMember> Members { get; set; } = [];
+    /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>

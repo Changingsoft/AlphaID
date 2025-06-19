@@ -9,12 +9,11 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 public class IndexModel(
     UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
-    IOrganizationMemberStore organizationMemberStore,
-    OrganizationMemberManager memberManager) : PageModel
+    OrganizationMemberManager organizationMemberManager) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
 
-    public IEnumerable<OrganizationMember> OrganizationMembers { get; set; } = null!;
+    public IEnumerable<UserMembership> OrganizationMembers { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -27,7 +26,7 @@ public class IndexModel(
         if (person == null)
             return NotFound();
         Person = person;
-        OrganizationMembers = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
+        OrganizationMembers = organizationMemberManager.GetMembersOf(anchor);
         return Page();
     }
 
@@ -37,7 +36,7 @@ public class IndexModel(
         if (person == null)
             return NotFound();
         Person = person;
-        OrganizationMembers = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
+        OrganizationMembers = organizationMemberManager.GetMembersOf(anchor);
 
         Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
         if (org == null)
@@ -46,23 +45,17 @@ public class IndexModel(
             return Page();
         }
 
-        //OrganizationMember member = new(org, Person)
-        //{
-        //    Title = Input.Title,
-        //    Department = Input.Department,
-        //    Remark = Input.Remark,
-        //    IsOwner = Input.IsOwner,
-        //    Visibility = Input.Visibility
-        //};
-
         try
         {
-            var m = await memberManager.Join(org.Id, person.Id, Input.Visibility);
-            m.Title = Input.Title;
-            m.Department = Input.Department;
-            m.Remark = Input.Remark;
-            m.IsOwner = Input.IsOwner;
-            var result1 = await memberManager.UpdateAsync(m);
+            var m = new OrganizationMember(person.Id, Input.Visibility)
+            {
+                Title = Input.Title,
+                Department = Input.Department,
+                Remark = Input.Remark,
+                IsOwner = Input.IsOwner
+            };
+            org.Members.Add(m);
+            var result1 = await organizationManager.UpdateAsync(org);
             if(!result1.Succeeded)
             {
                 foreach (string error in result1.Errors) ModelState.AddModelError("", error);
@@ -83,8 +76,21 @@ public class IndexModel(
         if (person == null)
             return NotFound();
         Person = person;
+        var organization = await organizationManager.FindByIdAsync(organizationId);
+        if (organization == null)
+        {
+            ModelState.AddModelError(nameof(organizationId), "Organization Not Found.");
+            return Page();
+        }
+        var member = organization.Members.FirstOrDefault(m => m.PersonId == person.Id);
+        if (member == null)
+        {
+            ModelState.AddModelError(nameof(organizationId), "You are not a member of this organization.");
+            return Page();
+        }
+        organization.Members.Remove(member);
 
-        Result = await memberManager.Leave(organizationId, anchor, true);
+        Result = await organizationManager.UpdateAsync(organization);
         return RedirectToPage();
     }
 

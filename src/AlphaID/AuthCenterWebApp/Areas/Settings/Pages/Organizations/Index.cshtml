@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = L["Your organizations"];
@@ -16,7 +16,7 @@
                     </div>
                     <div class="col text-truncate">
                         <h3>
-                            <a asp-area="Organization" asp-page="/Index" asp-route-anchor="@member.Organization.Name">@member.Organization.Name</a>
+                            <a asp-area="Organization" asp-page="/Index" asp-route-anchor="@member.OrganizationName">@member.OrganizationName</a>
                             @if (member.IsOwner)
                             {
                                 <span class="badge badge-pill" title="@L["You are the owner of this organization."]">@L["Owner"]</span>

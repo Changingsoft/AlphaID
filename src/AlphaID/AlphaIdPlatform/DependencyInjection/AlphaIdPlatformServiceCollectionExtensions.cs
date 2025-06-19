@@ -43,7 +43,6 @@ public static class AlphaIdPlatformServiceCollectionExtensions
         //平台服务。
         services.TryAddScoped<OrganizationManager>();
         services.TryAddScoped<OrganizationSearcher>();
-        services.TryAddScoped<OrganizationMemberManager>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
         services.AddScoped<NaturalPersonService>();
 

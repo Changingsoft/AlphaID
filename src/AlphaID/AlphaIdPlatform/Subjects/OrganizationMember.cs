@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AlphaIdPlatform.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaIdPlatform.Subjects;
@@ -9,7 +8,9 @@ namespace AlphaIdPlatform.Subjects;
 /// 组织的人员。
 /// </summary>
 [Table("OrganizationMember")]
-[PrimaryKey(nameof(PersonId), nameof(OrganizationId))]
+[PrimaryKey(nameof(OrganizationId), nameof(PersonId))]
+[Index(nameof(PersonId))]
+[Owned]
 public class OrganizationMember
 {
     /// <summary>
@@ -19,38 +20,17 @@ public class OrganizationMember
     }
 
     /// <summary>
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <param name="person"></param>
-    [Obsolete("使用OrganizationMember(Organization, string)")]
-    public OrganizationMember(Organization organization, NaturalPerson person)
-    {
-        OrganizationId = organization.Id;
-        Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-        PersonId = person.Id;
-        Person = person ?? throw new ArgumentNullException(nameof(person));
-    }
-
-    /// <summary>
     /// 
     /// </summary>
-    /// <param name="organization"></param>
     /// <param name="userId"></param>
     /// <param name="visibility"></param>
+    /// 
     /// <exception cref="ArgumentNullException"></exception>
-    public OrganizationMember(Organization organization, string userId, MembershipVisibility visibility)
+    public OrganizationMember(string userId, MembershipVisibility visibility)
     {
-        OrganizationId = organization.Id;
-        Organization = organization ?? throw new ArgumentNullException(nameof(organization));
         PersonId = userId;
+        Visibility = visibility;
     }
-
-    /// <summary>
-    /// Organization Id.
-    /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
-    public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
     /// Person Id.
@@ -60,17 +40,9 @@ public class OrganizationMember
     public string PersonId { get; protected set; } = null!;
 
     /// <summary>
-    /// Organization.
+    /// Gets the unique identifier for the organization.
     /// </summary>
-    [ForeignKey(nameof(OrganizationId))]
-    public virtual Organization Organization { get; protected set; } = null!;
-
-    /// <summary>
-    /// Person.
-    /// </summary>
-    [ForeignKey(nameof(PersonId))]
-    [Obsolete("考虑解耦，计划不再使用该导航属性。")]
-    public NaturalPerson Person { get; protected set; } = null!;
+    public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
     /// 部门。
@@ -105,6 +77,6 @@ public class OrganizationMember
     /// <returns></returns>
     public override string ToString()
     {
-        return $"{Organization.Name}|{PersonId}|{(IsOwner ? "Owner" : "")}|{Visibility}";
+        return $"{PersonId}|{(IsOwner ? "Owner" : "")}|{Visibility}";
     }
 }

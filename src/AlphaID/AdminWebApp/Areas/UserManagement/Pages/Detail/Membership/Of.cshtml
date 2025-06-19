@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model OfModel
 @{
-    ViewBag.Title = L["Membership of {0}", Model.Member.Organization.Name];
+    ViewBag.Title = L["Membership of {0}", Model.Organization.Name];
 }
 
 @Html.DisplayFor(m => m.OperationResult)

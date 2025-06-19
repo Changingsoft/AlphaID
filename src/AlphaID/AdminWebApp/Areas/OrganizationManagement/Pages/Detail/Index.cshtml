@@ -1,10 +1,10 @@
 @page
 @using AlphaIdPlatform.Subjects
 @model IndexModel
-@inject IOrganizationMemberStore OrganizationMemberStore
+@inject IOrganizationStore OrganizationStore
 @{
     ViewBag.Title = Model.Organization.Name;
-    var members = OrganizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == Model.Organization.Id);
+    var members = OrganizationStore.Organizations.First(m => m.Id == Model.Organization.Id).Members;
 }
 <h2>@L["Overview"]</h2>
 <div class="card mb-3">

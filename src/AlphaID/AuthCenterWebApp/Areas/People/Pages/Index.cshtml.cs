@@ -15,7 +15,7 @@ public class IndexModel(UserManager<NaturalPerson> personManager, OrganizationMe
 
     public bool UserIsOwner { get; set; }
 
-    public IEnumerable<MemberModel> Members { get; set; } = [];
+    public IEnumerable<UserMembership> Members { get; set; } = [];
 
     public IActionResult OnGet(string anchor)
     {
@@ -34,12 +34,7 @@ public class IndexModel(UserManager<NaturalPerson> personManager, OrganizationMe
         Person = person;
 
         Members = from member in organizationMemberManager.GetVisibleMembersOf(person.Id, User.SubjectId())
-                  select new MemberModel()
-                  {
-                      OrganizationName = member.Organization.Name,
-                      Title = member.Title,
-                      Department = member.Department,
-                  };
+                  select member;
 
         if (!User.Identity!.IsAuthenticated) return Page();
 

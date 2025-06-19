@@ -8,9 +8,11 @@ using AlphaIdPlatform.Subjects;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(OrganizationMemberManager memberManager, UserManager<NaturalPerson> applicationUserManager, IOrganizationMemberStore organizationMemberStore) : PageModel
+public class OfModel(UserManager<NaturalPerson> applicationUserManager, OrganizationManager organizationManager) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
+
+    public Organization Organization { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -25,8 +27,11 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Natura
         NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
-        OrganizationMember? member = members.FirstOrDefault(p => p.OrganizationId == orgId);
+        var org = await organizationManager.FindByIdAsync(orgId);
+        if (org == null)
+            return NotFound();
+        Organization = org;
+        OrganizationMember? member = org.Members.FirstOrDefault(m => m.PersonId == anchor);
         if (member == null)
             return NotFound();
         Member = member;
@@ -46,19 +51,21 @@ public class OfModel(OrganizationMemberManager memberManager, UserManager<Natura
         NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.PersonId == anchor);
-        OrganizationMember? member = members.FirstOrDefault(p => p.OrganizationId == orgId);
-        if (member == null)
+        var org = await organizationManager.FindByIdAsync(orgId);
+        if(org == null)
+            return NotFound();
+        Organization = org;
+        var member = org.Members.FirstOrDefault(p => p.PersonId == anchor);
+        if(member == null)
             return NotFound();
         Member = member;
+        Member.Title = Input.Title;
+        Member.Department = Input.Department;
+        Member.Remark = Input.Remark;
+        Member.IsOwner = Input.IsOwner;
+        Member.Visibility = Input.Visibility;
 
-        member.Title = Input.Title;
-        member.Department = Input.Department;
-        member.Remark = Input.Remark;
-        member.IsOwner = Input.IsOwner;
-        member.Visibility = Input.Visibility;
-
-        OperationResult = await memberManager.UpdateAsync(member);
+        OperationResult = await organizationManager.UpdateAsync(org);
 
         return Page();
     }

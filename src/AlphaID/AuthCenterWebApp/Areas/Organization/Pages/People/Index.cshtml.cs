@@ -7,10 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class IndexModel(
-    OrganizationMemberManager organizationMemberManager,
-    IOrganizationMemberStore organizationMemberStore,
     OrganizationManager organizationManager,
-    UserManager<NaturalPerson> personManager) : PageModel
+    UserManager<NaturalPerson> personManager,
+    IQueryableUserStore<NaturalPerson> userStore) : PageModel
 {
     public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
 
@@ -31,20 +30,12 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
+        var filterUsers = from user in userStore.Users
+                          where visibleMembers.Any(m => m.PersonId == user.Id)
+                          select new { user.Id, user.UserName, user.Name };
 
-
-        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
-                      Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         return Page();
     }
@@ -57,22 +48,15 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
+        var filterUsers = from user in userStore.Users
+                          where visibleMembers.Any(m => m.PersonId == user.Id)
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
-                      Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
 
-        var your = Members.FirstOrDefault(m => m.UserId == personId);
+        var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
         if (your == null)
             return Page();
 
@@ -81,8 +65,9 @@ public class IndexModel(
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
+        organization.Members.Remove(your);
 
-        Result = await organizationMemberManager.Leave(organization.Id, personId);
+        Result = await organizationManager.UpdateAsync(organization);
         return Page();
     }
 
@@ -94,30 +79,23 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
+        var filterUsers = from user in userStore.Users
+                          where visibleMembers.Any(m => m.PersonId == user.Id)
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
-                      Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
-        var your = organizationMemberStore.OrganizationMembers.FirstOrDefault(m => m.OrganizationId == organization.Id && m.PersonId == personId);
+        var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
         if (your == null)
             return Page();
         your.IsOwner = true;
-        Result = await organizationMemberManager.UpdateAsync(your);
+        Result = await organizationManager.UpdateAsync(organization);
         return Page();
     }
 
@@ -129,31 +107,43 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
+        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
+        var filterUsers = from user in userStore.Users
+                          where visibleMembers.Any(m => m.PersonId == user.Id)
+                          select new { user.Id, user.UserName, user.Name };
 
-        Members = from member in organizationMemberStore.OrganizationMembers.VisibleMembers(Organization.Id, visitor?.Id)
-                  select new MemberViewModel()
-                  {
-                      Department = member.Department,
-                      IsOwner = member.IsOwner,
-                      Remark = member.Remark,
-                      Title = member.Title,
-                      UserId = member.PersonId,
-                      UserName = member.Person.UserName!,
-                      Visibility = member.Visibility,
-                      DisplayName = member.Person.Name!,
-                  };
+        Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
         if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
-        var your = organizationMemberStore.OrganizationMembers.FirstOrDefault(m => m.OrganizationId == organization.Id && m.PersonId == personId);
+        var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
         if (your == null)
             return Page();
         your.IsOwner = false;
-        Result = await organizationMemberManager.UpdateAsync(your);
+        Result = await organizationManager.UpdateAsync(organization);
         return Page();
+    }
+
+    private IEnumerable<MemberViewModel> GetMembers(AlphaIdPlatform.Subjects.Organization organization, string? visitorId)
+    {
+        var userIds = organization.Members.VisibleMembers(visitorId).Select(m => m.PersonId).ToList();
+        var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new { u.Id, u.UserName, u.Name }).ToList();
+        return from member in organization.Members.VisibleMembers(visitorId)
+               join user in users on member.PersonId equals user.Id
+               select new MemberViewModel
+               {
+                   UserId = user.Id,
+                   UserName = user.UserName,
+                   DisplayName = user.Name,
+                   Department = member.Department,
+                   Title = member.Title,
+                   Remark = member.Remark,
+                   Visibility = member.Visibility,
+                   IsOwner = member.IsOwner
+               };
     }
 
     public class MemberViewModel

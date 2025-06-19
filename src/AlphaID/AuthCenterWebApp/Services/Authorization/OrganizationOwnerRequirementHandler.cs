@@ -10,7 +10,6 @@ namespace AuthCenterWebApp.Services.Authorization;
 /// 用于处理用户是否是组织的所有者的授权处理程序。
 /// </summary>
 public class OrganizationOwnerRequirementHandler(
-    IOrganizationMemberStore organizationMemberStore,
     OrganizationManager organizationManager,
     UserManager<NaturalPerson> personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
 {
@@ -32,7 +31,7 @@ public class OrganizationOwnerRequirementHandler(
         if (organization == null)
             return;
 
-        OrganizationMember? member = organizationMemberStore.OrganizationMembers.FirstOrDefault(m => m.OrganizationId == organization.Id && m.PersonId == person.Id);
+        OrganizationMember? member = organization.Members.FirstOrDefault(m => m.PersonId == person.Id);
         if (member == null)
             return;
 

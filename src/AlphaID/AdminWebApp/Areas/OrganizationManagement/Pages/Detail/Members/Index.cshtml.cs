@@ -3,15 +3,12 @@ using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    UserManager<NaturalPerson> personManager,
-    IOrganizationMemberStore organizationMemberStore,
-    OrganizationMemberManager memberManager) : PageModel
+    UserManager<NaturalPerson> personManager) : PageModel
 {
     public Organization Organization { get; set; } = null!;
 
@@ -46,7 +43,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        Members = org.Members;
 
         return Page();
     }
@@ -57,7 +54,7 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        Members = org.Members;
 
         NaturalPerson? person = await personManager.FindByNameAsync(UserName);
         if (person == null)
@@ -65,21 +62,22 @@ public class IndexModel(
             ModelState.AddModelError(nameof(UserName), "找不到人员");
             return Page();
         }
-
-        try
+        if (org.Members.Any(m => m.PersonId == person.Id))
         {
-            var member = await memberManager.Join(anchor, person.Id, Visibility);
-            member.Title = Title;
-            member.Department = Department;
-            member.Remark = Remark;
-            await memberManager.UpdateAsync(member);
-            return RedirectToPage();
-        }
-        catch (Exception ex)
-        {
-            ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError(nameof(UserName), "该人员已是组织成员");
             return Page();
         }
+
+        var member = new OrganizationMember(org, person.Id, Visibility)
+        {
+            Title = Title,
+            Department = Department,
+            Remark = Remark
+        };
+        org.Members.Add(member);
+        await manager.UpdateAsync(org);
+        return RedirectToPage();
+
     }
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
@@ -88,11 +86,16 @@ public class IndexModel(
         if (org == null)
             return NotFound();
         Organization = org;
-        Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        Members = org.Members;
 
-        Result = await memberManager.Leave(anchor, personId);
-
-        if (Result.Succeeded) Members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        var member = org.Members.FirstOrDefault(m => m.PersonId == personId);
+        if (member == null)
+        {
+            ModelState.AddModelError(nameof(personId), "找不到该成员");
+            return Page();
+        }
+        org.Members.Remove(member);
+        await manager.UpdateAsync(org);
         return Page();
     }
 }

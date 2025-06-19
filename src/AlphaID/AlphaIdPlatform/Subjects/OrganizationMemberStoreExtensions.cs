@@ -6,17 +6,15 @@ namespace AlphaIdPlatform.Subjects;
 public static class OrganizationMemberStoreExtensions
 {
     /// <summary>
-    /// 获取可见的组织成员。
+    /// 
     /// </summary>
     /// <param name="members"></param>
-    /// <param name="organizationId"></param>
     /// <param name="visitorId"></param>
     /// <returns></returns>
-    public static IQueryable<OrganizationMember> VisibleMembers(this IQueryable<OrganizationMember> members,
-        string organizationId,
+    public static IEnumerable<OrganizationMember> VisibleMembers(this ICollection<OrganizationMember> members,
         string? visitorId)
     {
-        var orgMembers = members.Where(p => p.OrganizationId == organizationId);
+        var orgMembers = members;
         var visibilityLevel = MembershipVisibility.Public;
         if (visitorId != null)
         {

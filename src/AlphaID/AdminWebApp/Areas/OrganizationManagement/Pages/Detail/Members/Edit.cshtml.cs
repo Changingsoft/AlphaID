@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
-public class EditModel(OrganizationMemberManager memberManager, OrganizationManager organizationManager, IOrganizationMemberStore organizationMemberStore) : PageModel
+public class EditModel(OrganizationManager organizationManager) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -14,7 +14,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
         Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        IEnumerable<OrganizationMember> members = org.Members;
         OrganizationMember? member = members.FirstOrDefault(p => p.PersonId == personId);
         if (member == null)
             return NotFound();
@@ -35,7 +35,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
         Organization? org = await organizationManager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
-        IEnumerable<OrganizationMember> members = organizationMemberStore.OrganizationMembers.Where(m => m.OrganizationId == anchor);
+        IEnumerable<OrganizationMember> members = org.Members;
         OrganizationMember? member = members.FirstOrDefault(p => p.PersonId == personId);
         if (member == null)
             return NotFound();
@@ -46,7 +46,7 @@ public class EditModel(OrganizationMemberManager memberManager, OrganizationMana
         member.IsOwner = Input.IsOwner;
         member.Visibility = Input.Visibility;
 
-        OrganizationOperationResult result = await memberManager.UpdateAsync(member);
+        OrganizationOperationResult result = await organizationManager.UpdateAsync(org);
         if (result.Succeeded) return RedirectToPage("Index", new { anchor });
 
         foreach (string error in result.Errors) ModelState.AddModelError("", error);

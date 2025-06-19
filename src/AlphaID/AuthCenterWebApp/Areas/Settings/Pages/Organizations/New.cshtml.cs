@@ -11,7 +11,6 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
 public class NewModel(
     OrganizationManager organizationManager,
-    OrganizationMemberManager memberManager,
     UserManager<NaturalPerson> personManager) : PageModel
 {
     [BindProperty]
@@ -58,12 +57,15 @@ public class NewModel(
 
         try
         {
-            var m = await memberManager.Join(organization.Id, person.Id, MembershipVisibility.Private);
-            m.Title = Input.Title;
-            m.Department = Input.Department;
-            m.Remark = Input.Remark;
-            m.IsOwner = true;
-            var joinResult = await memberManager.UpdateAsync(m);
+            var m = new OrganizationMember(organization, person.Id, MembershipVisibility.Private)
+            {
+                Title = Input.Title,
+                Department = Input.Department,
+                Remark = Input.Remark,
+                IsOwner = true
+            };
+            organization.Members.Add(m);
+            var joinResult = await organizationManager.UpdateAsync(organization);
             if (!joinResult.Succeeded)
             {
                 ModelState.AddModelError("", joinResult.Errors.Aggregate((x, y) => $"{x}, {y}"));

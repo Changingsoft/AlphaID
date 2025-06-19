@@ -22,7 +22,7 @@ namespace IdSubjects {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace IdSubjects {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IdSubjects.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace IdSubjects {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Cannot change person name. 的本地化字符串。
         /// </summary>
-        internal static string CannotChangePersonName {
+        public static string CannotChangePersonName {
             get {
                 return ResourceManager.GetString("CannotChangePersonName", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Duns number 的本地化字符串。
         /// </summary>
-        internal static string DunsNumber {
+        public static string DunsNumber {
             get {
                 return ResourceManager.GetString("DunsNumber", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Phone number is already taken. 的本地化字符串。
         /// </summary>
-        internal static string DuplicatePhoneNumber {
+        public static string DuplicatePhoneNumber {
             get {
                 return ResourceManager.GetString("DuplicatePhoneNumber", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Female 的本地化字符串。
         /// </summary>
-        internal static string Female {
+        public static string Female {
             get {
                 return ResourceManager.GetString("Female", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Phone number is invalid. 的本地化字符串。
         /// </summary>
-        internal static string InvalidPhoneNumber {
+        public static string InvalidPhoneNumber {
             get {
                 return ResourceManager.GetString("InvalidPhoneNumber", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Legal entity identifier 的本地化字符串。
         /// </summary>
-        internal static string Legal_entity_identifier {
+        public static string Legal_entity_identifier {
             get {
                 return ResourceManager.GetString("Legal entity identifier", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Current password age is less than minimum password age requirement. 的本地化字符串。
         /// </summary>
-        internal static string LessThenMinimumPasswordAge {
+        public static string LessThenMinimumPasswordAge {
             get {
                 return ResourceManager.GetString("LessThenMinimumPasswordAge", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Male 的本地化字符串。
         /// </summary>
-        internal static string Male {
+        public static string Male {
             get {
                 return ResourceManager.GetString("Male", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Other 的本地化字符串。
         /// </summary>
-        internal static string Other {
+        public static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password requires 3 of 4 types: uppercase, lowercase, digits and special characters. 的本地化字符串。
         /// </summary>
-        internal static string PasswordRequires3Of4 {
+        public static string PasswordRequires3Of4 {
             get {
                 return ResourceManager.GetString("PasswordRequires3Of4", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password requires digit. 的本地化字符串。
         /// </summary>
-        internal static string PasswordRequiresDigit {
+        public static string PasswordRequiresDigit {
             get {
                 return ResourceManager.GetString("PasswordRequiresDigit", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password requires lower case charaters. 的本地化字符串。
         /// </summary>
-        internal static string PasswordRequiresLower {
+        public static string PasswordRequiresLower {
             get {
                 return ResourceManager.GetString("PasswordRequiresLower", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password requires special charaters. 的本地化字符串。
         /// </summary>
-        internal static string PasswordRequiresNonAlphanumeric {
+        public static string PasswordRequiresNonAlphanumeric {
             get {
                 return ResourceManager.GetString("PasswordRequiresNonAlphanumeric", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password requires unique chars. 的本地化字符串。
         /// </summary>
-        internal static string PasswordRequiresUniqueChars {
+        public static string PasswordRequiresUniqueChars {
             get {
                 return ResourceManager.GetString("PasswordRequiresUniqueChars", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password requires upper case charaters. 的本地化字符串。
         /// </summary>
-        internal static string PasswordRequiresUpper {
+        public static string PasswordRequiresUpper {
             get {
                 return ResourceManager.GetString("PasswordRequiresUpper", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Password too short. 的本地化字符串。
         /// </summary>
-        internal static string PasswordTooShort {
+        public static string PasswordTooShort {
             get {
                 return ResourceManager.GetString("PasswordTooShort", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 You cannot reuse old passwords. 的本地化字符串。
         /// </summary>
-        internal static string ReuseOldPassword {
+        public static string ReuseOldPassword {
             get {
                 return ResourceManager.GetString("ReuseOldPassword", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Specified directory entry not found. 的本地化字符串。
         /// </summary>
-        internal static string Specified_directory_entry_not_found {
+        public static string Specified_directory_entry_not_found {
             get {
                 return ResourceManager.GetString("Specified directory entry not found", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 {0} can not be null or white space. 的本地化字符串。
         /// </summary>
-        internal static string StringIsNullOrWhiteSpace {
+        public static string StringIsNullOrWhiteSpace {
             get {
                 return ResourceManager.GetString("StringIsNullOrWhiteSpace", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace IdSubjects {
         /// <summary>
         ///   查找类似 Unified Social Credit Code 的本地化字符串。
         /// </summary>
-        internal static string UnifiedSocialCreditCode {
+        public static string UnifiedSocialCreditCode {
             get {
                 return ResourceManager.GetString("UnifiedSocialCreditCode", resourceCulture);
             }

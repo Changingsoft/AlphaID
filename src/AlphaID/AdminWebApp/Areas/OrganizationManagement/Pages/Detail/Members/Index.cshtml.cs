@@ -68,7 +68,7 @@ public class IndexModel(
             return Page();
         }
 
-        var member = new OrganizationMember(org, person.Id, Visibility)
+        var member = new OrganizationMember(person.Id, Visibility)
         {
             Title = Title,
             Department = Department,

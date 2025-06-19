@@ -47,7 +47,7 @@ public class IndexModel(
 
         try
         {
-            var m = new OrganizationMember(org, person.Id, Input.Visibility)
+            var m = new OrganizationMember(person.Id, Input.Visibility)
             {
                 Title = Input.Title,
                 Department = Input.Department,

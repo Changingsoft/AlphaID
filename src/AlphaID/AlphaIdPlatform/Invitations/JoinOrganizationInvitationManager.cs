@@ -99,7 +99,7 @@ public class JoinOrganizationInvitationManager(
         OrganizationOperationResult? result = null;
         if (organization != null && person != null)
         {
-            var newMember = new OrganizationMember(organization, person.Id, invitation.ExpectVisibility);
+            var newMember = new OrganizationMember(person.Id, invitation.ExpectVisibility);
             organization.Members.Add(newMember);
             await organizationManager.UpdateAsync(organization);
         }

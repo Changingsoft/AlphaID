@@ -8,6 +8,8 @@ namespace AlphaIdPlatform.Subjects;
 /// 组织的人员。
 /// </summary>
 [Table("OrganizationMember")]
+[PrimaryKey(nameof(OrganizationId), nameof(PersonId))]
+[Index(nameof(PersonId))]
 [Owned]
 public class OrganizationMember
 {
@@ -20,11 +22,11 @@ public class OrganizationMember
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="organization"></param>
     /// <param name="userId"></param>
     /// <param name="visibility"></param>
+    /// 
     /// <exception cref="ArgumentNullException"></exception>
-    public OrganizationMember(Organization organization, string userId, MembershipVisibility visibility)
+    public OrganizationMember(string userId, MembershipVisibility visibility)
     {
         PersonId = userId;
         Visibility = visibility;
@@ -36,6 +38,11 @@ public class OrganizationMember
     [MaxLength(50)]
     [Unicode(false)]
     public string PersonId { get; protected set; } = null!;
+
+    /// <summary>
+    /// Gets the unique identifier for the organization.
+    /// </summary>
+    public string OrganizationId { get; protected set; } = null!;
 
     /// <summary>
     /// 姓名。

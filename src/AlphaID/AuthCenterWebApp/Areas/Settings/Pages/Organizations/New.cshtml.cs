@@ -57,7 +57,7 @@ public class NewModel(
 
         try
         {
-            var m = new OrganizationMember(organization, person.Id, MembershipVisibility.Private)
+            var m = new OrganizationMember(person.Id, MembershipVisibility.Private)
             {
                 Title = Input.Title,
                 Department = Input.Department,

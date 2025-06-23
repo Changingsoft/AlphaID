@@ -121,7 +121,6 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     {
 
         (string phoneticSurname, string phoneticGivenName) = pinyinConverter.Convert(surname, givenName);
-        var chinesePersonName = new ChinesePersonName(surname, givenName, phoneticSurname, phoneticGivenName);
         return new JsonResult(new
         {
             phoneticSurname,

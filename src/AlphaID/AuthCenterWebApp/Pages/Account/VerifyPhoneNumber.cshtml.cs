@@ -17,33 +17,21 @@ namespace AuthCenterWebApp.Pages.Account
         [Display(Name = "Verification code")]
         [Required(ErrorMessage = "Validate_Required")]
         [MaxLength(6, ErrorMessage = "Validate_MaxLength")]
-        public string VerificatonCode { get;set; } = null!;
+        public string VerificationCode { get;set; } = null!;
 
         public IActionResult OnGet()
         {
-            var resetPasswordPhoneNumber = HttpContext.Session.GetString("ResetPasswordPhoneNumber");
-            if(resetPasswordPhoneNumber == null)
-            {
-                throw new InvalidOperationException("ResetPasswordPhoneNumber is not found in session.");
-            }
+            _ = HttpContext.Session.GetString("ResetPasswordPhoneNumber") ?? throw new InvalidOperationException("ResetPasswordPhoneNumber is not found in session.");
             return Page();
         }
 
         public async Task<IActionResult> OnPost()
         {
-            var resetPasswordPhoneNumber = HttpContext.Session.GetString("ResetPasswordPhoneNumber");
-            if (resetPasswordPhoneNumber == null)
-            {
-                throw new InvalidOperationException("ResetPasswordPhoneNumber is not found in session.");
-            }
-
-            if(await verificationCodeService.VerifyAsync(resetPasswordPhoneNumber, VerificatonCode))
+            var resetPasswordPhoneNumber = HttpContext.Session.GetString("ResetPasswordPhoneNumber") ?? throw new InvalidOperationException("ResetPasswordPhoneNumber is not found in session.");
+            if (await verificationCodeService.VerifyAsync(resetPasswordPhoneNumber, VerificationCode))
             {
                 //Generate reset password token
-                var person = await userManager.FindByMobileAsync(resetPasswordPhoneNumber);
-                if(person == null)
-                    throw new InvalidOperationException("Person is not found by mobile number.");
-
+                var person = await userManager.FindByMobileAsync(resetPasswordPhoneNumber) ?? throw new InvalidOperationException("Person is not found by mobile number.");
                 var code = await userManager.GeneratePasswordResetTokenAsync(person);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
@@ -54,7 +42,7 @@ namespace AuthCenterWebApp.Pages.Account
             }
             else
             {
-                ModelState.AddModelError(nameof(VerificatonCode), "Invalid verification code");
+                ModelState.AddModelError(nameof(VerificationCode), "Invalid verification code");
                 return Page();
             }
         }

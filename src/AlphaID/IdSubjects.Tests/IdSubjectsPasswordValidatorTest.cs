@@ -18,6 +18,7 @@ public class IdSubjectsPasswordValidatorTest(ServiceProviderFixture serviceProvi
         //Arrange
         var validator = manager.PasswordValidators.OfType<IdSubjectsPasswordValidator<ApplicationUser>>().First();
         //Assert
+        // ReSharper disable StringLiteralTypo
         Assert.False((await validator.ValidateAsync(manager, user, "ABCDEFGH")).Succeeded); //大写
         Assert.False((await validator.ValidateAsync(manager, user, "abcdefgh")).Succeeded); //小写
         Assert.False((await validator.ValidateAsync(manager, user, "12345678")).Succeeded); //数字
@@ -34,5 +35,6 @@ public class IdSubjectsPasswordValidatorTest(ServiceProviderFixture serviceProvi
         Assert.True((await validator.ValidateAsync(manager, user, "Abcdefg!")).Succeeded); //大写、小写、特殊
         Assert.True((await validator.ValidateAsync(manager, user, "ABCDEF1!")).Succeeded); //大写、数字、特殊
         Assert.True((await validator.ValidateAsync(manager, user, "abcdef1!")).Succeeded); //小写、数字、特殊
+        // ReSharper restore StringLiteralTypo
     }
 }

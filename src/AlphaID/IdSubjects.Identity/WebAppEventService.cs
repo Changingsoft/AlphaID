@@ -1,11 +1,12 @@
+using IdSubjects.SecurityAuditing;
 using IdSubjects.SecurityAuditing.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace IdSubjects.SecurityAuditing;
+namespace IdSubjects.Identity;
 
 /// <summary>
-/// 默认事件服务。
+/// WebApp事件服务。
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="DefaultEventService" /> class.

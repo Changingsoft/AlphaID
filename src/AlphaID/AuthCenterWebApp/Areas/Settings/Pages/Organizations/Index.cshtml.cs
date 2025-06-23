@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Security;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

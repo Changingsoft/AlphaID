@@ -96,7 +96,7 @@ public class Index(
         {
             ArgumentNullException.ThrowIfNull(Input.ReturnUrl, nameof(Input.ReturnUrl));
 
-            // communicate outcome of consent back to identityserver
+            // communicate outcome of consent back to identity server
             await interaction.GrantConsentAsync(request, grantedConsent);
 
             // redirect back to authorization endpoint

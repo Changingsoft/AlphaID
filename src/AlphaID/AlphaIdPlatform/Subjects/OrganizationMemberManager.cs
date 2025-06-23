@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
 
 namespace AlphaIdPlatform.Subjects;
 

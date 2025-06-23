@@ -29,8 +29,8 @@ public class PublicModel(ConfigurationDbContext dbContext) : PageModel
 
     public List<SelectListItem> AllowedGrantTypes { get; set; } =
     [
-        new SelectListItem("授权码", GrantType.AuthorizationCode, true),
-        new SelectListItem("隐式", GrantType.Implicit, false)
+        new("授权码", GrantType.AuthorizationCode, true),
+        new("隐式", GrantType.Implicit, false)
     ];
 
     public void OnGet()

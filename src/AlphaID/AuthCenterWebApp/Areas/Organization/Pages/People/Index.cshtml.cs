@@ -8,8 +8,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class IndexModel(
     OrganizationManager organizationManager,
-    UserManager<NaturalPerson> personManager,
-    IQueryableUserStore<NaturalPerson> userStore) : PageModel
+    UserManager<NaturalPerson> personManager) : PageModel
 {
     public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
 
@@ -30,10 +29,6 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
-        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
-        var filterUsers = from user in userStore.Users
-                          where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName, user.Name };
 
         Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
@@ -48,10 +43,6 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
-        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
-        var filterUsers = from user in userStore.Users
-                          where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName, user.Name };
 
         Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
@@ -79,10 +70,6 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
-        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
-        var filterUsers = from user in userStore.Users
-                          where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName, user.Name };
 
         Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
@@ -107,10 +94,6 @@ public class IndexModel(
         Organization = organization;
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
-        var visibleMembers = organization.Members.VisibleMembers(visitor?.Id).ToList();
-        var filterUsers = from user in userStore.Users
-                          where visibleMembers.Any(m => m.PersonId == user.Id)
-                          select new { user.Id, user.UserName, user.Name };
 
         Members = GetMembers(organization, visitor?.Id);
         VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);

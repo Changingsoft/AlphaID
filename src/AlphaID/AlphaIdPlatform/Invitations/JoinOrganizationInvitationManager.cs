@@ -2,7 +2,6 @@ using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using System.Transactions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AlphaIdPlatform.Invitations;
 

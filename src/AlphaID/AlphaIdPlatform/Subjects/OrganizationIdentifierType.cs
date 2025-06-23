@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using IdSubjects;
 
 namespace AlphaIdPlatform.Subjects;
 

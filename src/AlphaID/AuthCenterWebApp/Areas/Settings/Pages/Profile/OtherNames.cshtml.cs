@@ -17,10 +17,7 @@ public class OtherNamesModel(UserManager<NaturalPerson> personManager, NaturalPe
 
     public async Task OnGet()
     {
-        NaturalPerson? person = await personManager.GetUserAsync(User);
-        if (person == null)
-            throw new InvalidOperationException("Can not find user.");
-
+        NaturalPerson? person = await personManager.GetUserAsync(User) ?? throw new InvalidOperationException("Can not find user.");
         NickName = person.NickName;
     }
 
@@ -28,9 +25,7 @@ public class OtherNamesModel(UserManager<NaturalPerson> personManager, NaturalPe
     {
         if (!ModelState.IsValid)
             return Page();
-        NaturalPerson? person = await personManager.GetUserAsync(User);
-        if (person == null)
-            throw new InvalidOperationException("Can not find user.");
+        NaturalPerson? person = await personManager.GetUserAsync(User) ?? throw new InvalidOperationException("Can not find user.");
         person.NickName = NickName;
         Result = await naturalPersonService.UpdateAsync(person);
         return Page();

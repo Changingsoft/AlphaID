@@ -22,7 +22,7 @@ namespace AlphaIdPlatform {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AlphaIdPlatform {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlphaIdPlatform.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace AlphaIdPlatform {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Administrative code invalid 的本地化字符串。
         /// </summary>
-        internal static string InvalidAdministrativeCode {
+        public static string InvalidAdministrativeCode {
             get {
                 return ResourceManager.GetString("InvalidAdministrativeCode", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Organization type invalid 的本地化字符串。
         /// </summary>
-        internal static string InvalidOrganizationType {
+        public static string InvalidOrganizationType {
             get {
                 return ResourceManager.GetString("InvalidOrganizationType", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Region code invalid 的本地化字符串。
         /// </summary>
-        internal static string InvalidRegionCode {
+        public static string InvalidRegionCode {
             get {
                 return ResourceManager.GetString("InvalidRegionCode", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Last owner cannot leave 的本地化字符串。
         /// </summary>
-        internal static string LastOwnerCannotLeave {
+        public static string LastOwnerCannotLeave {
             get {
                 return ResourceManager.GetString("LastOwnerCannotLeave", resourceCulture);
             }
@@ -99,16 +99,16 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Max owners in organization 的本地化字符串。
         /// </summary>
-        internal static string MaxOwnersInOrganization {
+        public static string MaxOwnersInOrganization {
             get {
                 return ResourceManager.GetString("MaxOwnersInOrganization", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Membership create fialde. message: {0} 的本地化字符串。
+        ///   查找类似 Membership create failed. message: {0} 的本地化字符串。
         /// </summary>
-        internal static string MembershipCreateFailed {
+        public static string MembershipCreateFailed {
             get {
                 return ResourceManager.GetString("MembershipCreateFailed", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Membership exists 的本地化字符串。
         /// </summary>
-        internal static string MembershipExists {
+        public static string MembershipExists {
             get {
                 return ResourceManager.GetString("MembershipExists", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Organization member not found 的本地化字符串。
         /// </summary>
-        internal static string OrganizationMemberNotFound {
+        public static string OrganizationMemberNotFound {
             get {
                 return ResourceManager.GetString("OrganizationMemberNotFound", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace AlphaIdPlatform {
         /// <summary>
         ///   查找类似 Organization not found 的本地化字符串。
         /// </summary>
-        internal static string OrganizationNotFound {
+        public static string OrganizationNotFound {
             get {
                 return ResourceManager.GetString("OrganizationNotFound", resourceCulture);
             }

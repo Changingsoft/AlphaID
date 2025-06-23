@@ -9,7 +9,7 @@ public class OidcEvents
     public static Task IssueRoleClaims(TokenValidatedContext context)
     {
         var user = context.Principal ?? throw new InvalidOperationException("No principal.");
-        if (user.Identity != null && user.Identity.IsAuthenticated)
+        if (user.Identity is { IsAuthenticated: true })
         {
             ClaimsIdentity identity = (ClaimsIdentity)user.Identity;
             var userId = identity.FindFirst(ClaimTypes.NameIdentifier)?.Value;

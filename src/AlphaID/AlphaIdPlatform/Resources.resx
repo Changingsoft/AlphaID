@@ -133,7 +133,7 @@
     <value>Max owners in organization</value>
   </data>
   <data name="MembershipCreateFailed" xml:space="preserve">
-    <value>Membership create fialde. message: {0}</value>
+    <value>Membership create failed. message: {0}</value>
   </data>
   <data name="MembershipExists" xml:space="preserve">
     <value>Membership exists</value>

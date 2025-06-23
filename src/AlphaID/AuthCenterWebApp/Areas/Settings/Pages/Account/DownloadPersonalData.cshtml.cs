@@ -13,7 +13,7 @@ public class DownloadPersonalDataModel(
     UserManager<NaturalPerson> userManager,
     ILogger<DownloadPersonalDataModel> logger) : PageModel
 {
-    private readonly JsonSerializerOptions serializerOptions = new()
+    private readonly JsonSerializerOptions _serializerOptions = new()
     {
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
         WriteIndented = true,
@@ -47,6 +47,6 @@ public class DownloadPersonalDataModel(
             personalData.Add("Authenticator Key", authenticatorKey);
 
         Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalDataAttribute.json");
-        return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData, serializerOptions), "application/json");
+        return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData, _serializerOptions), "application/json");
     }
 }

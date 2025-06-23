@@ -3,7 +3,6 @@ using System.Text;
 using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -30,7 +29,7 @@ public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService,
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out var phone))
+        if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out _))
         {
             ModelState.AddModelError(nameof(Input.PhoneNumber), "移动电话号码无效");
         }
@@ -38,7 +37,6 @@ public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService,
         if (!ModelState.IsValid)
             return Page();
 
-        var normalPhoneNumber = phone.ToString();
         var person = await userManager.FindByMobileAsync(Input.PhoneNumber);
         if (person == null)
         {

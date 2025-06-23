@@ -16,8 +16,7 @@ namespace AspNetWebLib.Validations
                 return true; // Not required, use [Required] attribute for required fields
             }
 
-            var url = value as string;
-            return url != null && s_urlRegex.IsMatch(url);
+            return value is string url && s_urlRegex.IsMatch(url);
         }
 
         public override string FormatErrorMessage(string name)

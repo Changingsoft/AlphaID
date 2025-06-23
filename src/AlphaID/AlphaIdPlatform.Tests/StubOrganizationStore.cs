@@ -3,7 +3,7 @@ using AlphaIdPlatform.Subjects;
 namespace AlphaIdPlatform.Tests;
 internal class StubOrganizationStore : IOrganizationStore
 {
-    private readonly List<Organization> _organizations = new();
+    private readonly List<Organization> _organizations = [];
 
     public IQueryable<Organization> Organizations => _organizations.AsQueryable();
 

@@ -1,9 +1,7 @@
 @using AlphaIdPlatform.Identity
 @using AlphaIdPlatform.Security
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject UserManager<NaturalPerson> UserManager
-@inject IOptions<ProductInfo> Product
 @{
     Layout = "Tabler/_PageWrapper";
     var person = await UserManager.GetUserAsync(User);

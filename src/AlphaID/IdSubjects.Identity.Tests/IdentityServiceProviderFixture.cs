@@ -1,4 +1,3 @@
-using IdSubjects.Identity;
 using IdSubjects.Tests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;

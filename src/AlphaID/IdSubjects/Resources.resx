@@ -160,13 +160,13 @@
     <value>Password requires digit.</value>
   </data>
   <data name="PasswordRequiresLower" xml:space="preserve">
-    <value>Password requires lower case charaters.</value>
+    <value>Password requires lower case characters.</value>
   </data>
   <data name="PasswordRequiresUpper" xml:space="preserve">
-    <value>Password requires upper case charaters.</value>
+    <value>Password requires upper case characters.</value>
   </data>
   <data name="PasswordRequiresNonAlphanumeric" xml:space="preserve">
-    <value>Password requires special charaters.</value>
+    <value>Password requires special characters.</value>
   </data>
   <data name="PasswordRequires3Of4" xml:space="preserve">
     <value>Password requires 3 of 4 types: uppercase, lowercase, digits and special characters.</value>

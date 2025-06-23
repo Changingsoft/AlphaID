@@ -1,4 +1,4 @@
-﻿namespace AspNetWebLib.Tests;
+namespace AspNetWebLib.Tests;
 
 public class DateTimeExtensionsTest
 {
@@ -7,7 +7,7 @@ public class DateTimeExtensionsTest
     {
         var dateOfBirth = new DateTime(1985, 4, 20);
         var now = new DateTime(2023, 4, 20);
-        Assert.Equal<int>(37, dateOfBirth.AsAge(now));
+        Assert.Equal(37, dateOfBirth.AsAge(now));
     }
 
     [Fact]
@@ -15,6 +15,6 @@ public class DateTimeExtensionsTest
     {
         var dateOfBirth = new DateTime(1985, 4, 20);
         var now = new DateTime(2023, 4, 21);
-        Assert.Equal<int>(38, dateOfBirth.AsAge(now));
+        Assert.Equal(38, dateOfBirth.AsAge(now));
     }
 }

@@ -160,7 +160,7 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Password requires lower case charaters. 的本地化字符串。
+        ///   查找类似 Password requires lower case characters. 的本地化字符串。
         /// </summary>
         public static string PasswordRequiresLower {
             get {
@@ -169,7 +169,7 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Password requires special charaters. 的本地化字符串。
+        ///   查找类似 Password requires special characters. 的本地化字符串。
         /// </summary>
         public static string PasswordRequiresNonAlphanumeric {
             get {
@@ -187,7 +187,7 @@ namespace IdSubjects {
         }
         
         /// <summary>
-        ///   查找类似 Password requires upper case charaters. 的本地化字符串。
+        ///   查找类似 Password requires upper case characters. 的本地化字符串。
         /// </summary>
         public static string PasswordRequiresUpper {
             get {

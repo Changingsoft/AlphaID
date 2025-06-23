@@ -22,7 +22,7 @@ public class TokenEndpointTest(AuthCenterWebAppFactory factory)
         Assert.Equal("Bearer", tokenData!.TokenType);
     }
 
-    [Fact(Skip = "启用了用户必须修改密码，则测试数据密码必然过期，先跳过。")]
+    [Fact]
     public async Task GrantByPasswordOwner()
     {
         HttpClient client = factory.CreateClient();

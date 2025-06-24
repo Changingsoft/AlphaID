@@ -1,0 +1,28 @@
+@page
+@using System.Reflection
+@model AdminWebApp.Areas.SystemSettings.Pages.AboutModel
+@{
+    var assembly = Assembly.GetExecutingAssembly();
+    var version = assembly.GetName().Version;
+    var productVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+    var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+    var dotnetVersion = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+    var osDescription = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+}
+<h1>About AlphaID</h1>
+@if (productVersion != null)
+{
+    <p>Product Version: @productVersion</p>
+}
+@if (version != null)
+{
+    <p>Assembly Version: @version.ToString()</p>
+}
+@if (fileVersion != null)
+{
+    <p>File Version: @fileVersion</p>
+}
+<p>.NET Runtime Version: @dotnetVersion</p>
+<p>OS Version: @osDescription</p>
+
+<a asp-page="Index" class="btn">OK</a>

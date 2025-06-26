@@ -3,16 +3,8 @@ using DatabaseTool.Migrators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-IHostBuilder builder = Host.CreateDefaultBuilder(args);
-builder
-    .ConfigureLogging(logging =>
-    {
-        logging.ClearProviders();
-        logging.AddDebug();
-        logging.AddConsole();
-    })
-    .ConfigureServices((hostContext, services) =>
-    {
+var builder = Host.CreateApplicationBuilder(args);
+
         var platform = services.AddAlphaIdPlatform();
         platform.AddEntityFramework(options =>
         {
@@ -43,11 +35,7 @@ builder
 
 
         //数据库执行器
-        services.AddScoped<DatabaseExecutor>().Configure<DatabaseExecutorOptions>(options =>
-        {
-            options.DropDatabase = bool.Parse(hostContext.Configuration["DropDatabase"] ?? "false");
-            options.AddTestingData = bool.Parse(hostContext.Configuration["AddTestingData"] ?? "false");
-        });
+        services.AddScoped<DatabaseExecutor>().Configure<DatabaseExecutorOptions>(hostContext.Configuration.GetSection("DatabaseExecutorOptions"));
 
         //配置迁移器
         services.AddScoped<DatabaseMigrator, IdServerConfigurationDbMigrator>();
@@ -57,7 +45,6 @@ builder
         services.AddScoped<DatabaseMigrator, DirectoryLogonDbMigrator>();
         services.AddScoped<DatabaseMigrator, AdminCenterDbMigrator>();
         services.AddScoped<DatabaseMigrator, AuditLogDbMigrator>();
-    });
 
 IHost host = builder.Build();
 
@@ -69,6 +56,8 @@ Console.WriteLine(@"即将开始执行数据库工具。您将使用下列选项
 Console.WriteLine($@"- 环境: {environment.EnvironmentName}");
 Console.WriteLine($@"- 数据库连接字符串: {connectionString}");
 Console.WriteLine($@"- 删除数据库: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.DropDatabase}");
+Console.WriteLine($"- 应用迁移: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.ApplyMigrations}");
+Console.WriteLine($"- 迁移后处理: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.ExecutePostMigrations}");
 Console.WriteLine($@"- 添加测试数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.AddTestingData}");
 if (!args.Contains("NonInteractive", StringComparer.OrdinalIgnoreCase))
 {

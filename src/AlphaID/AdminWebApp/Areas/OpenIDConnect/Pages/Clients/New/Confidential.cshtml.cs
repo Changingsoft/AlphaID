@@ -82,7 +82,7 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
             [
                 new ClientSecret()
                 {
-                    Type = "Shared",
+                    Type = "SharedSecret",
                     Value = ClientSecret.ToSha256(),
                 }
             ],

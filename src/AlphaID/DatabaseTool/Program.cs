@@ -3,61 +3,48 @@ using DatabaseTool.Migrators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-IHostBuilder builder = Host.CreateDefaultBuilder(args);
-builder
-    .ConfigureLogging(logging =>
+var builder = Host.CreateApplicationBuilder(args);
+
+var platform = builder.Services.AddAlphaIdPlatform();
+platform.AddEntityFramework(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sql =>
+        {
+            sql.UseNetTopologySuite();
+            sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+        });
+});
+
+//用于IdentityServer的ConfigurationDbContext和PersistenceGrantDbContext
+builder.Services.AddIdentityServer()
+    .AddConfigurationStore(options =>
     {
-        logging.ClearProviders();
-        logging.AddDebug();
-        logging.AddConsole();
+        options.ConfigureDbContext = b =>
+            b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
     })
-    .ConfigureServices((hostContext, services) =>
+    .AddOperationalStore(options =>
     {
-        var platform = services.AddAlphaIdPlatform();
-        platform.AddEntityFramework(options =>
-        {
-            options.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnection"),
-                sql =>
-                {
-                    sql.UseNetTopologySuite();
-                    sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-                });
-        });
-
-        //用于IdentityServer的ConfigurationDbContext和PersistenceGrantDbContext
-        services.AddIdentityServer()
-            .AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = b =>
-                    b.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnection"),
-                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
-            })
-            .AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = b =>
-                    b.UseSqlServer(
-                        hostContext.Configuration.GetConnectionString("DefaultConnection"),
-                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
-            });
-
-
-
-        //数据库执行器
-        services.AddScoped<DatabaseExecutor>().Configure<DatabaseExecutorOptions>(options =>
-        {
-            options.DropDatabase = bool.Parse(hostContext.Configuration["DropDatabase"] ?? "false");
-            options.AddTestingData = bool.Parse(hostContext.Configuration["AddTestingData"] ?? "false");
-        });
-
-        //配置迁移器
-        services.AddScoped<DatabaseMigrator, IdServerConfigurationDbMigrator>();
-        services.AddScoped<DatabaseMigrator, IdServerPersistedGrantDbMigrator>();
-        services.AddScoped<DatabaseMigrator, IdSubjectsDbMigrator>();
-        services.AddScoped<DatabaseMigrator, RealNameDbMigrator>();
-        services.AddScoped<DatabaseMigrator, DirectoryLogonDbMigrator>();
-        services.AddScoped<DatabaseMigrator, AdminCenterDbMigrator>();
-        services.AddScoped<DatabaseMigrator, AuditLogDbMigrator>();
+        options.ConfigureDbContext = b =>
+            b.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
     });
+
+
+
+//数据库执行器
+builder.Services.AddScoped<DatabaseExecutor>().Configure<DatabaseExecutorOptions>(builder.Configuration.GetSection("DatabaseExecutorOptions"));
+
+//配置迁移器
+builder.Services.AddScoped<DatabaseMigrator, IdServerConfigurationDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, IdServerPersistedGrantDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, IdSubjectsDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, RealNameDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, DirectoryLogonDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, AdminCenterDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, AuditLogDbMigrator>();
 
 IHost host = builder.Build();
 
@@ -69,6 +56,8 @@ Console.WriteLine(@"即将开始执行数据库工具。您将使用下列选项
 Console.WriteLine($@"- 环境: {environment.EnvironmentName}");
 Console.WriteLine($@"- 数据库连接字符串: {connectionString}");
 Console.WriteLine($@"- 删除数据库: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.DropDatabase}");
+Console.WriteLine($@"- 应用迁移: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.ApplyMigrations}");
+Console.WriteLine($@"- 迁移后处理: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.ExecutePostMigrations}");
 Console.WriteLine($@"- 添加测试数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.AddTestingData}");
 if (!args.Contains("NonInteractive", StringComparer.OrdinalIgnoreCase))
 {

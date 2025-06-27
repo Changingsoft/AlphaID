@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 
@@ -7,6 +7,10 @@ namespace AlphaIdWebAPI.Tests.Controllers;
 [Collection(nameof(TestServerCollection))]
 public class OrganizationControllerTest(AlphaIdApiFactory factory)
 {
+    /// <summary>
+    /// 使用OrganizationId查询一个已存在的组织。
+    /// </summary>
+    /// <returns></returns>
     [Fact]
     public async Task GetExistsOrganization()
     {
@@ -18,7 +22,10 @@ public class OrganizationControllerTest(AlphaIdApiFactory factory)
         Assert.Equal("蜀汉集团", data!.Name);
     }
 
-
+    /// <summary>
+    /// 测试被禁用的组织排除在搜索结果之外。
+    /// </summary>
+    /// <returns></returns>
     [Fact]
     public async Task SearchWillExcludeDisabledOrgs()
     {
@@ -30,11 +37,21 @@ public class OrganizationControllerTest(AlphaIdApiFactory factory)
         Assert.Empty(json!);
     }
 
+    [Fact]
+    public async Task OrganizationSuggestionsRateLimitTest()
+    {
+        var client = factory.CreateClient();
+        HttpResponseMessage response = null!;
+        for (int i = 0; i < 300; i++)
+        {
+            response = await client.GetAsync("/api/Organization/Suggestions?q=测试");
+        }
+        Assert.Equal(HttpStatusCode.TooManyRequests, response.StatusCode);
+    }
+
     internal record OrganizationModel(string? Domicile, string? Contact, string? LegalPersonName, DateTime? Expires)
     {
         public string SubjectId { get; set; } = null!;
         public string Name { get; set; } = null!;
     }
-
-    internal record OrganizationSearchResult(IEnumerable<OrganizationModel> Organizations, bool More);
 }

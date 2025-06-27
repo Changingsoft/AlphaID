@@ -1,6 +1,7 @@
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace AlphaIdWebAPI.Controllers;
 
@@ -37,6 +38,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// <returns></returns>
     [HttpGet("Suggestions")]
     [AllowAnonymous]
+    [EnableRateLimiting("ip-fixed")]
     public IEnumerable<OrganizationModel> Search(string q)
     {
         IQueryable<Organization> searchResults =

@@ -91,7 +91,7 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
             Properties = [],
             RedirectUris = [],
         };
-        if (string.IsNullOrEmpty(SigninCallbackUri))
+        if (!string.IsNullOrEmpty(SigninCallbackUri))
         {
             client.RedirectUris.Add(new ClientRedirectUri()
             {

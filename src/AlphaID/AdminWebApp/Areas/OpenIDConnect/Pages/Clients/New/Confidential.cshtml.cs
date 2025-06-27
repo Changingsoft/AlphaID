@@ -25,7 +25,7 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
     [Required(ErrorMessage = "Validate_Required")]
     public string ClientSecret { get; set; } = secretGenerator.Generate();
 
-    [Display(Name = "Sign-in callback URI", Prompt = "https://example.com/signin-oidc")]
+    [Display(Name = "Sign-in callback URI", Prompt = "https://example.com/signin-oidc", Description = "Can be add or remove later.")]
     [CustomUrl]
     public string? SigninCallbackUri { get; set; }
 
@@ -55,7 +55,7 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
         {
             if (!ScopeItems.Any(s => s.Selected))
                 ModelState.AddModelError(nameof(ScopeItems), "Authorization code or ROPC workflow requires at least one scope(s).");
-            if(SigninCallbackUri == null)
+            if (SigninCallbackUri == null)
                 ModelState.AddModelError(nameof(SigninCallbackUri), "Authorization code or ROPC workflow requires a sign-in callback URI.");
         }
 
@@ -89,8 +89,16 @@ public class ConfidentialModel(ConfigurationDbContext dbContext, ISecretGenerato
             IdentityProviderRestrictions = [],
             PostLogoutRedirectUris = [],
             Properties = [],
-            RedirectUris = []
+            RedirectUris = [],
         };
+        if (string.IsNullOrEmpty(SigninCallbackUri))
+        {
+            client.RedirectUris.Add(new ClientRedirectUri()
+            {
+                RedirectUri = SigninCallbackUri,
+            });
+        }
+
         dbContext.Clients.Add(client);
         await dbContext.SaveChangesAsync();
 

@@ -21,6 +21,7 @@ public class PublicModel(ConfigurationDbContext dbContext) : PageModel
 
     [Display(Name = "Sign-in callback URI", Prompt = "https://example.com/signin-oidc")]
     [CustomUrl()]
+    [Required(ErrorMessage = "Validate_Required")]  
     public string SigninCallbackUri { get; set; } = null!;
 
     //todo Identity resources and scope selected.
@@ -71,7 +72,13 @@ public class PublicModel(ConfigurationDbContext dbContext) : PageModel
             IdentityProviderRestrictions = [],
             PostLogoutRedirectUris = [],
             Properties = [],
-            RedirectUris = []
+            RedirectUris =
+            [
+                new ClientRedirectUri()
+                {
+                    RedirectUri = SigninCallbackUri,
+                }
+            ]
         };
         dbContext.Clients.Add(client);
         await dbContext.SaveChangesAsync();

@@ -1,5 +1,6 @@
 using System.Data;
 using System.Globalization;
+using System.Threading.RateLimiting;
 using AlphaId.EntityFramework.IdSubjects;
 using AlphaId.PlatformServices.Aliyun;
 using AlphaIdPlatform;
@@ -8,6 +9,7 @@ using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using AspNetWebLib.RazorPages;
 using AuthCenterWebApp;
+using AuthCenterWebApp.Middlewares;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using BotDetect.Web;
@@ -258,6 +260,28 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
+//请求速率限制
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
+    options.AddPolicy("token-endpoint-limit", httpContext =>
+    {
+        var path = httpContext.Request.Path.Value!;
+        if (string.Equals(path, "/connect/token", StringComparison.OrdinalIgnoreCase))
+        {
+            var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10, // 每窗口允许的请求数
+                Window = TimeSpan.FromMinutes(1), // 窗口大小
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0 // 队列限制
+            });
+        }
+        return RateLimitPartition.GetNoLimiter("none");
+    });
+});
+
 // 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
 {
@@ -285,6 +309,8 @@ app.UseRequestLocalization();
 app.UseMarkdown();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseRateLimiter();
+app.UseMiddleware<TokenRateLimitMiddleware>(); //为token终结点启用速率限制。
 app.UseIdentityServer(); //内部会调用UseAuthentication。
 app.UseAuthorization();
 app.UseSession();

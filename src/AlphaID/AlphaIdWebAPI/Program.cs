@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Threading.RateLimiting;
 using AlphaIdPlatform;
 using AlphaIdWebAPI;
 using Duende.IdentityServer.EntityFramework.DbContexts;
@@ -7,6 +8,7 @@ using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -141,6 +143,21 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
+    options.AddPolicy("ip-fixed", httpContext =>
+    {
+        var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 100, // 每窗口允许的请求数
+            Window = TimeSpan.FromMinutes(1), // 窗口大小
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0 // 不排队，超出直接拒绝
+        });
+    });
+});
 
 WebApplication app = builder.Build();
 
@@ -176,6 +193,7 @@ app.UseSwaggerUI(options =>
     options.OAuthUsePkce();
 });
 app.MapRazorPages();
+app.UseRateLimiter();
 app.MapControllers();
 
 //Run

@@ -6,25 +6,25 @@
 <h2>@ViewBag.Title</h2>
 <form method="post">
     <div class="mb-3">
-        <label asp-for="ClientId"></label>
+        <label asp-for="ClientId" class="form-label required"></label>
         <input asp-for="ClientId" class="form-control" />
         <span asp-description-for="ClientId"></span>
         <span asp-validation-for="ClientId" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="ClientName"></label>
+        <label asp-for="ClientName" class="form-label required"></label>
         <input asp-for="ClientName" class="form-control" />
         <span asp-description-for="ClientName"></span>
         <span asp-validation-for="ClientName" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="ClientSecret"></label>
+        <label asp-for="ClientSecret" class="form-label"></label>
         <input asp-for="ClientSecret" class="form-control" />
         <span asp-description-for="ClientSecret"></span>
         <span asp-validation-for="ClientSecret" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="SigninCallbackUri"></label>
+        <label asp-for="SigninCallbackUri" class="form-label"></label>
         <input asp-for="SigninCallbackUri" class="form-control" />
         <span asp-description-for="SigninCallbackUri"></span>
         <span asp-validation-for="SigninCallbackUri" class="text-danger"></span>

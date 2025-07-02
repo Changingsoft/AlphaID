@@ -28,7 +28,7 @@
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.2.0" />
 		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.2.4" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.2.4" />
-		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.23.0" />
+		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.24.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(DefineConstants.Contains(`WINDOWS`))'">

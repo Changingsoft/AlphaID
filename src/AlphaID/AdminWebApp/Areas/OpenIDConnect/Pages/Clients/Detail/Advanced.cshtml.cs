@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
@@ -145,7 +145,7 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
             return NotFound();
         Data = data;
 
-        if (Data.Properties.Any(p => p.Key == AddProperty.Key)) ModelState.AddModelError("", "Ö¸¶¨µÄKeyºÍValueÒÑ´æÔÚ¡£");
+        if (Data.Properties.Any(p => p.Key == AddProperty.Key)) ModelState.AddModelError("", "æŒ‡å®šçš„Keyå’ŒValueå·²å­˜åœ¨ã€‚");
 
         if (!ModelState.IsValid)
             return Page();
@@ -180,12 +180,12 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "DPoP Validation Mode",
             Description =
-                "Enum setting to control validation for the DPoP proof token expiration. This supports both the client generated ¡®iat¡¯ value and/or the server generated ¡®nonce¡¯ value. Defaults to DPoPTokenExpirationValidationMode.Iat, which only validates the ¡®iat¡¯ value.")]
+                "Enum setting to control validation for the DPoP proof token expiration. This supports both the client generated â€˜iatâ€™ value and/or the server generated â€˜nonceâ€™ value. Defaults to DPoPTokenExpirationValidationMode.Iat, which only validates the â€˜iatâ€™ value.")]
         public DPoPTokenExpirationValidationMode DPoPValidationMode { get; set; }
 
         [Display(Name = "DPoP Clock Skew",
             Description =
-                "Clock skew used in validating the client¡¯s DPoP proof token ¡®iat¡¯ claim value. Defaults to 5 minutes.")]
+                "Clock skew used in validating the clientâ€™s DPoP proof token â€˜iatâ€™ claim value. Defaults to 5 minutes.")]
         public TimeSpan DPoPClockSkew { get; set; } = TimeSpan.FromMinutes(5);
 
         [Display(Name = "Front Channel Logout URI",
@@ -194,7 +194,7 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Front Channel Logout Session Required",
             Description =
-                "Specifies if the user¡¯s session anchor should be sent to the FrontChannelLogoutUri. Defaults to true.")]
+                "Specifies if the userâ€™s session anchor should be sent to the FrontChannelLogoutUri. Defaults to true.")]
         public bool FrontChannelLogoutSessionRequired { get; set; } = true;
 
         [Display(Name = "Back Channel Logout URI",
@@ -203,7 +203,7 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Back Channel Logout Session Required",
             Description =
-                "Specifies if the user¡¯s session anchor should be sent in the request to the BackChannelLogoutUri. Defaults to true.")]
+                "Specifies if the userâ€™s session anchor should be sent in the request to the BackChannelLogoutUri. Defaults to true.")]
         public bool BackChannelLogoutSessionRequired { get; set; } = true;
 
         [Display(Name = "Allow Offline Access",
@@ -262,7 +262,7 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Client Claims Prefix",
             Description =
-                "If set, the prefix client claim types will be prefixed with. Defaults to client_. The intent is to make sure they don¡¯t accidentally collide with user claims.")]
+                "If set, the prefix client claim types will be prefixed with. Defaults to client_. The intent is to make sure they donâ€™t accidentally collide with user claims.")]
         [Required(ErrorMessage = "Validate_Required")]
         public string ClientClaimsPrefix { get; set; } = "client_";
 
@@ -298,7 +298,7 @@ public class AdvancedModel(ConfigurationDbContext dbContext) : PageModel
 
         [Display(Name = "Coordinate Lifetime With User Session",
             Description =
-                "When enabled, the client¡¯s token lifetimes (e.g. refresh tokens) will be tied to the user¡¯s session lifetime. This means when the user logs out, any revokable tokens will be removed. If using server-side sessions, expired sessions will also remove any revokable tokens, and backchannel logout will be triggered. This client¡¯s setting overrides the global CoordinateTokensWithUserSession configuration setting.")]
+                "When enabled, the clientâ€™s token lifetimes (e.g. refresh tokens) will be tied to the userâ€™s session lifetime. This means when the user logs out, any revokable tokens will be removed. If using server-side sessions, expired sessions will also remove any revokable tokens, and backchannel logout will be triggered. This clientâ€™s setting overrides the global CoordinateTokensWithUserSession configuration setting.")]
         public bool? CoordinateLifetimeWithUserSession { get; set; }
     }
 

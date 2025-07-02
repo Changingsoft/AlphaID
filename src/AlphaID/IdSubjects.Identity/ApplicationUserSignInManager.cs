@@ -24,7 +24,7 @@ public class ApplicationUserSignInManager<T>(ApplicationUserManager<T> userManag
                                     IOptions<IdentityOptions> optionsAccessor,
                                     ILogger<SignInManager<T>> logger,
                                     IAuthenticationSchemeProvider schemes,
-                                    IUserConfirmation<T> confirmation) 
+                                    IUserConfirmation<T> confirmation)
     : SignInManager<T>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation) where T : ApplicationUser
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;

@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
@@ -34,7 +34,7 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
 
         Data = data;
 
-        if (ResourceName != Data.DisplayName) ModelState.AddModelError(nameof(ResourceName), "√˚≥∆≤ª∆•≈‰°£");
+        if (ResourceName != Data.DisplayName) ModelState.AddModelError(nameof(ResourceName), "ÂêçÁß∞‰∏çÂåπÈÖç„ÄÇ");
 
         if (!ModelState.IsValid)
             return Page();

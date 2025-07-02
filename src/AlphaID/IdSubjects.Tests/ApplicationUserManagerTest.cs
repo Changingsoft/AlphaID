@@ -138,7 +138,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         var user = new ApplicationUser("TestUser");
         await manager.CreateAsync(user, "Pass123$");
         //调用AccessFailedAsync 5次以锁定用户。
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             await manager.AccessFailedAsync(user);
         }

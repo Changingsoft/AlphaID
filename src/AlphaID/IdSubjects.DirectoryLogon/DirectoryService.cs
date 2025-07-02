@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace IdSubjects.DirectoryLogon;
 
@@ -77,5 +77,5 @@ public class DirectoryService
     /// </summary>
     public bool AutoCreateAccount { get; set; } = false;
 
-    
+
 }

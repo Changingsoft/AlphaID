@@ -1,12 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using BotDetect.Web.Mvc;
 using ChineseName;
-using Duende.IdentityServer;
 using Duende.IdentityModel;
+using Duende.IdentityServer;
 using IdSubjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
@@ -135,7 +135,7 @@ public class SignUpModel(
             return RedirectToPage("SignUpSuccess");
         }
 
-        foreach (IdentityError error in result.Errors) 
+        foreach (IdentityError error in result.Errors)
             ModelState.AddModelError("", error.Description);
 
         return Page();

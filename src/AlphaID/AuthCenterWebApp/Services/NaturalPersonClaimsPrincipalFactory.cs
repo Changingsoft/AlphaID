@@ -1,7 +1,7 @@
-using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AuthCenterWebApp.Services;
 
@@ -13,7 +13,7 @@ namespace AuthCenterWebApp.Services;
 /// <param name="profileUrlGenerator"></param>
 public class NaturalPersonClaimsPrincipalFactory(UserManager<NaturalPerson> userManager,
                                           IOptions<IdentityOptions> optionsAccessor,
-                                          ProfileUrlGenerator<NaturalPerson> profileUrlGenerator) 
+                                          ProfileUrlGenerator<NaturalPerson> profileUrlGenerator)
     : ApplicationUserClaimsPrincipalFactory<NaturalPerson>(userManager, optionsAccessor, profileUrlGenerator)
 {
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(NaturalPerson user)

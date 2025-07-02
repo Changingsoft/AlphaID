@@ -1,5 +1,5 @@
-using System.Text.RegularExpressions;
 using IdSubjects;
+using System.Text.RegularExpressions;
 
 namespace AlphaIdPlatform.Subjects;
 

@@ -1,10 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using AspNetWebLib.Helpers;
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Subjects;
+using AspNetWebLib.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using AlphaIdPlatform.Subjects;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
@@ -52,11 +52,11 @@ public class OfModel(UserManager<NaturalPerson> applicationUserManager, Organiza
         if (person == null)
             return NotFound();
         var org = await organizationManager.FindByIdAsync(orgId);
-        if(org == null)
+        if (org == null)
             return NotFound();
         Organization = org;
         var member = org.Members.FirstOrDefault(p => p.PersonId == anchor);
-        if(member == null)
+        if (member == null)
             return NotFound();
         Member = member;
         Member.Title = Input.Title;

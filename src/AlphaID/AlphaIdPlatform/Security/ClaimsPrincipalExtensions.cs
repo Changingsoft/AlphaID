@@ -1,6 +1,6 @@
+using Duende.IdentityModel;
 using System.Globalization;
 using System.Security.Claims;
-using Duende.IdentityModel;
 
 namespace AlphaIdPlatform.Security;
 

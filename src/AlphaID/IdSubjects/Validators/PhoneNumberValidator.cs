@@ -6,7 +6,7 @@ namespace IdSubjects.Validators;
 /// 移动电话号码验证器。
 /// </summary>
 public class PhoneNumberValidator<T> : IUserValidator<T>
-where T:ApplicationUser
+where T : ApplicationUser
 {
     /// <summary>
     /// 添加对移动电话号码格式和唯一性的验证。

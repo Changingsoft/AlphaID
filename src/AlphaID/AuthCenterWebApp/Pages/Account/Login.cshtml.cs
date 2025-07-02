@@ -1,12 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 using AlphaIdPlatform.Identity;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
-using Duende.IdentityModel;
 using IdSubjects;
 using IdSubjects.Identity;
 using Microsoft.AspNetCore.Authentication;
@@ -14,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AuthCenterWebApp.Pages.Account;
@@ -31,7 +31,7 @@ public class LoginModel(
 {
     public ViewModel View { get; set; } = null!;
 
-    public AuthenticateResult ExternalLoginResult { get;set; } = null!;
+    public AuthenticateResult ExternalLoginResult { get; set; } = null!;
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -48,7 +48,9 @@ public class LoginModel(
             return RedirectToPage("/ExternalLogin/Challenge",
                 new
                 {
-                    scheme = View.ExternalLoginScheme, schemeDisplayName = View.ExternalLoginDisplayName, returnUrl
+                    scheme = View.ExternalLoginScheme,
+                    schemeDisplayName = View.ExternalLoginDisplayName,
+                    returnUrl
                 });
 
         return Page();
@@ -100,7 +102,7 @@ public class LoginModel(
                         clientId: context?.Client.ClientId));
 
                     //如果外部登录有效，则为用户创建外部登录关联。
-                    if(ExternalLoginResult.Succeeded)
+                    if (ExternalLoginResult.Succeeded)
                     {
                         //为用户绑定外部登录
                         ClaimsPrincipal? externalUser = ExternalLoginResult.Principal;

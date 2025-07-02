@@ -1,7 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
+using System.Diagnostics.CodeAnalysis;
 using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace IntegrationTestUtilities.Helpers;

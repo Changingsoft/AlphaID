@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using IdSubjects;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlphaIdPlatform.Subjects;
 

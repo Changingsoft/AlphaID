@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
@@ -10,6 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace AuthCenterWebApp.Pages.Account;
 

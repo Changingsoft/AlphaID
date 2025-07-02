@@ -1,9 +1,9 @@
-using System.Diagnostics;
 using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
 

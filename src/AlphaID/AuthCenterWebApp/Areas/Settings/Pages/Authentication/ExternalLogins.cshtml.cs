@@ -1,10 +1,10 @@
-using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 

@@ -14,8 +14,8 @@ public class IdServiceController(IQueryableUserStore<NaturalPerson> userStore, I
     public IEnumerable<NaturalPersonModel> SearchPersonAsync(string term)
     {
         return from person in userStore.Users
-               where person.UserName!.StartsWith(term) 
-                     || person.Name!.StartsWith(term) 
+               where person.UserName!.StartsWith(term)
+                     || person.Name!.StartsWith(term)
                      || person.SearchHint!.StartsWith(term)
                      || person.PhoneNumber!.StartsWith(term)
                      || person.Email!.StartsWith(term)

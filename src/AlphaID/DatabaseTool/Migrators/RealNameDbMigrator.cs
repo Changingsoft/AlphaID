@@ -1,6 +1,6 @@
-using System.Text;
 using AlphaId.EntityFramework.RealName;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace DatabaseTool.Migrators;
 

@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Admin;
 using AlphaIdPlatform.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security;
 

@@ -51,7 +51,7 @@ public class IndexModel(OrganizationManager organizationManager)
         if (bankAccount == null) return Page();
 
         var oldAccount = BankAccounts.FirstOrDefault(b => b.Default);
-        if(oldAccount!=null)
+        if (oldAccount != null)
             oldAccount.Default = false;
         bankAccount.Default = true;
 

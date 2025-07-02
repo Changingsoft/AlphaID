@@ -1,7 +1,7 @@
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using Microsoft.Extensions.Options;
 
 namespace AlphaIdPlatform.Platform;
 

@@ -1,6 +1,3 @@
-using System.Data;
-using System.Globalization;
-using System.Security.Claims;
 using AdminWebApp;
 using AdminWebApp.Areas.OpenIDConnect.Pages.Clients;
 using AdminWebApp.Domain.Security;
@@ -17,9 +14,9 @@ using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using AspNetWebLib.RazorPages;
 using ChineseName;
+using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
-using Duende.IdentityModel;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Authentication;
@@ -34,6 +31,9 @@ using Newtonsoft.Json;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using System.Data;
+using System.Globalization;
+using System.Security.Claims;
 using Westwind.AspNetCore.Markdown;
 
 // ReSharper disable StringLiteralTypo

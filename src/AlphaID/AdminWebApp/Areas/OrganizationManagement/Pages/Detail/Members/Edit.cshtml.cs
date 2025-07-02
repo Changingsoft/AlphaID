@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 

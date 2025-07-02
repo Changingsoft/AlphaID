@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace AuthCenterWebApp.Services.Authorization;
 

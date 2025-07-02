@@ -1,5 +1,5 @@
-using System.Security.Claims;
 using Duende.IdentityModel;
+using System.Security.Claims;
 
 namespace AlphaIdWebAPI;
 

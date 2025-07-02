@@ -101,7 +101,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
         {
             Code = nameof(PasswordRequiresLower),
             Description = Resources.PasswordRequiresLower,
-        }; 
+        };
     }
 
     /// <inheritdoc />

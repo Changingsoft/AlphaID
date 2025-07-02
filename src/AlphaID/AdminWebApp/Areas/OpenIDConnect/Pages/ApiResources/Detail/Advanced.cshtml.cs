@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 

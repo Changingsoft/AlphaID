@@ -22,7 +22,7 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.RealName.AddDefaultStores().AddDbContext(options);
 
         //Admin
-        builder.Services.AddScoped<IUserInRoleStore,UserInRoleStore>();
+        builder.Services.AddScoped<IUserInRoleStore, UserInRoleStore>();
         builder.Services.AddDbContext<OperationalDbContext>(options);
 
         builder.AddOrganizationStore<OrganizationStore>();

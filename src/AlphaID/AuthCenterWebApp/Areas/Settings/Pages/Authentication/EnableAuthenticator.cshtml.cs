@@ -1,14 +1,14 @@
 #nullable disable
 
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text;
-using System.Text.Encodings.Web;
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Authentication;
 

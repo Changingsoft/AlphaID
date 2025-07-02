@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
+using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
-using Duende.IdentityModel;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;

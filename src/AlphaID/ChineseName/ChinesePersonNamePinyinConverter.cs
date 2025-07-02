@@ -1,5 +1,5 @@
-using System.Text;
 using Microsoft.International.Converters.PinYinConverter;
+using System.Text;
 
 namespace ChineseName;
 
@@ -70,7 +70,7 @@ public class ChinesePersonNamePinyinConverter(
                 context.SurnameChars.Add(Convert(surnameChar));
 
         if (!string.IsNullOrEmpty(givenName))
-            foreach (char givenNameChar in givenName) 
+            foreach (char givenNameChar in givenName)
                 context.GivenNameChars.Add(Convert(givenNameChar));
 
         foreach (IChinesePersonNamePinyinInterceptor interceptor in Interceptors) interceptor.AfterConvert(context);

@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AuthCenterWebApp.Pages.Account;

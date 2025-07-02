@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using ChineseName;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Register;
 

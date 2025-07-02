@@ -71,5 +71,5 @@ public class GrantTypesModel(ConfigurationDbContext dbContext) : PageModel
         return Page();
     }
 
-    
+
 }

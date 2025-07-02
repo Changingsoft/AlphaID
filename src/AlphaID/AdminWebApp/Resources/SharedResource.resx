@@ -452,4 +452,11 @@
 	  <value>OK</value>
 	  <comment>OK</comment>
   </data>
+  <data name="Confirm this phone number" xml:space="preserve">
+	  <value>Confirm this phone number</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+	  <value>Confirmed</value>
+	  <comment>Confirmed</comment>
+  </data>
 </root>

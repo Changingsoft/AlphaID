@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
 {
-    public class SetPhoneNumberModel(UserManager<NaturalPerson> userManager) : PageModel
+    public class SetPhoneNumberModel(UserManager<NaturalPerson> userManager, NaturalPersonService personService) : PageModel
     {
 
         [BindProperty]
-        [Display(Name = "Phone number")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(11, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+        [Display(Name = "Phone number", Description = "留空则删除此移动电话号码。")]
+        [StringLength(16, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string? PhoneNumber { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Confirm this phone number")]
+        public bool PhoneNumberConfirmed { get; set; }
 
         public async Task<IActionResult> OnGet(string anchor)
         {
@@ -38,7 +41,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
                 return NotFound();
             }
 
-            if (!MobilePhoneNumber.TryParse(PhoneNumber, out var number))
+            if (!string.IsNullOrEmpty(PhoneNumber) && !MobilePhoneNumber.TryParse(PhoneNumber, out _))
             {
                 ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
             }
@@ -46,7 +49,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return Page();
             }
-            var result = await userManager.SetPhoneNumberAsync(person, number.ToString());
+            var result = await personService.SetPhoneNumberAsync(person, PhoneNumber, PhoneNumberConfirmed);
             if (result.Succeeded)
             {
                 return RedirectToPage("Index", new { anchor });

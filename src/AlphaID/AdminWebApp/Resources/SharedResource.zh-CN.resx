@@ -441,4 +441,10 @@
   <data name="OK" xml:space="preserve">
 	  <value>好的</value>
   </data>
+  <data name="Confirm this phone number" xml:space="preserve">
+	  <value>确认此移动电话号码</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+	  <value>已确认</value>
+  </data>
 </root>

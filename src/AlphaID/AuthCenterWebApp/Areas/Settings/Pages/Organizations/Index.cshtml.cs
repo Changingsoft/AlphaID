@@ -1,9 +1,9 @@
-using System.Diagnostics;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 

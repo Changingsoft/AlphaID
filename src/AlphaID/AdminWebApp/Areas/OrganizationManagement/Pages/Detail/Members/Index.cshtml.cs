@@ -40,7 +40,7 @@ public class IndexModel(
     private IEnumerable<OrganizationMemberViewModel> GetMembers(Organization organization)
     {
         var userIds = organization.Members.Select(m => m.PersonId).ToList();
-        var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new {u.Id, u.UserName, u.Name}).ToList();
+        var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new { u.Id, u.UserName, u.Name }).ToList();
         return from member in organization.Members
                join user in users on member.PersonId equals user.Id
                select new OrganizationMemberViewModel

@@ -96,7 +96,7 @@ public class OrganizationManager(IOrganizationStore store)
                 DeprecateTime = changeDate ?? DateOnly.FromDateTime(TimeProvider.GetLocalNow().DateTime),
             });
         }
-        
+
         org.Name = newName;
         return await UpdateAsync(org);
     }

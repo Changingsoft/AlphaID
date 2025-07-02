@@ -19,20 +19,20 @@ public class OrganizationMemberManager(IOrganizationStore store)
     public IQueryable<UserMembership> GetMembersOf(string personId)
     {
         //获取目标person的所有组织身份。
-        IQueryable<UserMembership>? members = from org in store.Organizations
-                                              from member in org.Members
-                                              where member.PersonId == personId
-                                              select new UserMembership
-                                              {
-                                                  UserId = member.PersonId,
-                                                  OrganizationId = org.Id,
-                                                  OrganizationName = org.Name,
-                                                  Title = member.Title,
-                                                  Department = member.Department,
-                                                  Remark = member.Remark,
-                                                  IsOwner = member.IsOwner,
-                                                  Visibility = member.Visibility
-                                              };
+        IQueryable<UserMembership> members = from org in store.Organizations
+                                             from member in org.Members
+                                             where member.PersonId == personId
+                                             select new UserMembership
+                                             {
+                                                 UserId = member.PersonId,
+                                                 OrganizationId = org.Id,
+                                                 OrganizationName = org.Name,
+                                                 Title = member.Title,
+                                                 Department = member.Department,
+                                                 Remark = member.Remark,
+                                                 IsOwner = member.IsOwner,
+                                                 Visibility = member.Visibility
+                                             };
         return members;
     }
 

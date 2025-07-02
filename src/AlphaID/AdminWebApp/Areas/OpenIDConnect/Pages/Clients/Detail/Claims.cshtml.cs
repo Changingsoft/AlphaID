@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
@@ -32,7 +32,7 @@ public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
         Data = data;
 
         if (Data.Claims.Any(p => p.Type == Input.Type && p.Value == Input.Value))
-            ModelState.AddModelError("", "ÒÑ¾­´æÔÚÒ»¸ö¾ßÓĞÏàÍ¬ÀàĞÍºÍÖµµÄÉùÃ÷¡£");
+            ModelState.AddModelError("", "å·²ç»å­˜åœ¨ä¸€ä¸ªå…·æœ‰ç›¸åŒç±»å‹å’Œå€¼çš„å£°æ˜ã€‚");
 
         if (!ModelState.IsValid) return Page();
 

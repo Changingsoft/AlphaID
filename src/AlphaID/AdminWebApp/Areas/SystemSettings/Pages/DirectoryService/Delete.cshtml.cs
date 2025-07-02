@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.DirectoryService;
 
@@ -36,7 +36,7 @@ public class DeleteModel(DirectoryServiceManager directoryServiceManager) : Page
 
         if (ServiceName != Data.Name)
         {
-            ModelState.AddModelError(nameof(ServiceName), "·şÎñÃû³Æ²»ÕıÈ·");
+            ModelState.AddModelError(nameof(ServiceName), "æœåŠ¡åç§°ä¸æ­£ç¡®");
             return Page();
         }
 

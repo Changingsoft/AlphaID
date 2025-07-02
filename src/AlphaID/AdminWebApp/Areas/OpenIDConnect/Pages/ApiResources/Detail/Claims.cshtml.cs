@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.ApiResources.Detail;
 
@@ -36,7 +36,7 @@ public class ClaimsModel(ConfigurationDbContext dbContext) : PageModel
 
         Data = resource;
         if (Data.UserClaims.Any(p => p.Type == NewClaim))
-            ModelState.AddModelError(nameof(NewClaim), "指定的声明类型已存在");
+            ModelState.AddModelError(nameof(NewClaim), "鎸囧畾鐨勫０鏄庣被鍨嬪凡瀛樺湪");
 
         if (!ModelState.IsValid)
             return Page();

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.Security;
@@ -6,6 +5,7 @@ using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 

@@ -8,7 +8,6 @@ using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -100,25 +99,21 @@ builder.Services
     });
 
 //添加授权策略。
-builder.Services.AddAuthorization(options =>
-{
-    options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthorizationBuilder()
+    .SetDefaultPolicy(new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
         .RequireClaim("scope", "openid")
         .RequireClaim(JwtClaimTypes.ClientId)
-        .Build();
-
-    options.AddPolicy("EndUser", policy =>
+        .Build())
+    .AddPolicy("EndUser", policy =>
     {
         policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
         policy.RequireClaim(JwtClaimTypes.Subject);
-    });
-
-    options.AddPolicy("RealNameScopeRequired", policyBuilder =>
+    })
+    .AddPolicy("RealNameScopeRequired", policyBuilder =>
     {
         policyBuilder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
         policyBuilder.RequireClaim("scope", "realname");
     });
-});
 
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>

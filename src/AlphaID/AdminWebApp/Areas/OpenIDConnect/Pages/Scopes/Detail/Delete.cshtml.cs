@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Scopes.Detail;
 
@@ -28,12 +28,12 @@ public class DeleteModel(ConfigurationDbContext dbContext) : PageModel
         Data = result;
 
         if (ScopeName != Data.Name)
-            ModelState.AddModelError(nameof(ScopeName), "Ãû³Æ´íÎó¡£");
+            ModelState.AddModelError(nameof(ScopeName), "åç§°é”™è¯¯ã€‚");
 
 
         bool referenced = dbContext.Clients.Any(p => p.AllowedScopes.Any(s => s.Scope == Data.Name))
                           || dbContext.ApiResources.Any(p => p.Scopes.Any(s => s.Scope == Data.Name));
-        if (referenced) ModelState.AddModelError("", "ÈÔÓĞ¿Í»§¶Ë»òAPI×ÊÔ´ÒıÓÃ¸Ã·¶Î§£¬²»ÄÜÉ¾³ı¸Ã·¶Î§¡£");
+        if (referenced) ModelState.AddModelError("", "ä»æœ‰å®¢æˆ·ç«¯æˆ–APIèµ„æºå¼•ç”¨è¯¥èŒƒå›´ï¼Œä¸èƒ½åˆ é™¤è¯¥èŒƒå›´ã€‚");
 
 
         if (!ModelState.IsValid)

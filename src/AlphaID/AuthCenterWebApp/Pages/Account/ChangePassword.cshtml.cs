@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 using AlphaIdPlatform.Identity;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -9,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
@@ -63,7 +63,7 @@ public class ChangePasswordModel(
                                    "Unable to load must change password authentication user.");
         Result = await naturalPersonService.ChangePasswordAsync(person, Input.OldPassword, Input.NewPassword);
 
-        if (!Result.Succeeded) 
+        if (!Result.Succeeded)
             return Page();
 
         //Sign out MustChangePasswordScheme

@@ -30,7 +30,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
                 return Page();
 
             JoinOrganizationInvitation? invitation = await manager.FindById(invitationId);
-            if(invitation == null)
+            if (invitation == null)
                 return NotFound();
 
             Result = await manager.Revoke(invitation);

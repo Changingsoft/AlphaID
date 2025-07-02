@@ -6,14 +6,14 @@ namespace AuthCenterWebApp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrganizationController(IOrganizationStore organizationStore):ControllerBase
+public class OrganizationController(IOrganizationStore organizationStore) : ControllerBase
 {
     [HttpGet("{anchor}/Picture")]
     public ActionResult GetOrganizationProfilePicture(string anchor)
     {
         var profilePicture = (from organization in organizationStore.Organizations.AsNoTracking()
-            where organization.Name == anchor
-            select organization.ProfilePicture).FirstOrDefault();
+                              where organization.Name == anchor
+                              select organization.ProfilePicture).FirstOrDefault();
         if (profilePicture != null)
         {
             return File(profilePicture.Data, profilePicture.MimeType);

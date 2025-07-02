@@ -1,8 +1,8 @@
-using System.Net.Http.Headers;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
+using System.Net.Http.Headers;
 
 namespace IntegrationTestUtilities.Helpers;
 
@@ -36,8 +36,8 @@ public class HtmlHelpers
             void MapHeaders(HttpHeaders headers)
             {
                 foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
-                foreach (string value in header.Value)
-                    htmlResponse.Header(header.Key, value);
+                    foreach (string value in header.Value)
+                        htmlResponse.Header(header.Key, value);
             }
         }
     }

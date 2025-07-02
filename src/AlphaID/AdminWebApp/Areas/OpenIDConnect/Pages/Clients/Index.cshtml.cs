@@ -12,16 +12,16 @@ public class IndexModel(ConfigurationDbContext context) : PageModel
         Clients = from client in context.Clients.AsNoTracking()
                 .Include(p => p.AllowedGrantTypes)
                 .Include(p => p.AllowedScopes)
-            select new ClientModel()
-            {
-                Id = client.Id,
-                ClientId = client.ClientId,
-                ClientName = client.ClientName,
-                RequireClientSecret = client.RequireClientSecret,
-                RequirePkce = client.RequirePkce,
-                AllowedGrantTypes = client.AllowedGrantTypes.Select(p => p.GrantType),
-                AllowedScopes = client.AllowedScopes.Select(p => p.Scope),
-            };
+                  select new ClientModel()
+                  {
+                      Id = client.Id,
+                      ClientId = client.ClientId,
+                      ClientName = client.ClientName,
+                      RequireClientSecret = client.RequireClientSecret,
+                      RequirePkce = client.RequirePkce,
+                      AllowedGrantTypes = client.AllowedGrantTypes.Select(p => p.GrantType),
+                      AllowedScopes = client.AllowedScopes.Select(p => p.Scope),
+                  };
     }
 
     public class ClientModel

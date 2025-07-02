@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
@@ -30,7 +30,7 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
         if (org == null)
             return NotFound();
         OrganizationOperationResult result = await manager.RenameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName);
-        if (result.Succeeded) 
+        if (result.Succeeded)
             return RedirectToPage("Index", new { anchor });
 
         foreach (string error in result.Errors) ModelState.AddModelError("", error);

@@ -1,12 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Text;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Text;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account;
 

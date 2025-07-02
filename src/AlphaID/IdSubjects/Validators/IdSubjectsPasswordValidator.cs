@@ -41,7 +41,7 @@ public class IdSubjectsPasswordValidator<TUser>(IdentityErrorDescriber errorDesc
         {
             requiredCount++;
         }
-        if(requiredCount < 3)
+        if (requiredCount < 3)
         {
             errors.Add(describer.PasswordRequires3Of4());
         }

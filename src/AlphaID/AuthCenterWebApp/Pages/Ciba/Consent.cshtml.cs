@@ -69,7 +69,7 @@ public class Consent(
 
                 result = new CompleteBackchannelLoginRequest(Input.Id)
                 {
-                    ScopesValuesConsented = scopes.ToArray(),
+                    ScopesValuesConsented = [.. scopes],
                     Description = Input.Description
                 };
 

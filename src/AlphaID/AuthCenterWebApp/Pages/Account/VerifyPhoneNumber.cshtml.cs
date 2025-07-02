@@ -17,7 +17,7 @@ namespace AuthCenterWebApp.Pages.Account
         [Display(Name = "Verification code")]
         [Required(ErrorMessage = "Validate_Required")]
         [MaxLength(6, ErrorMessage = "Validate_MaxLength")]
-        public string VerificationCode { get;set; } = null!;
+        public string VerificationCode { get; set; } = null!;
 
         public IActionResult OnGet()
         {

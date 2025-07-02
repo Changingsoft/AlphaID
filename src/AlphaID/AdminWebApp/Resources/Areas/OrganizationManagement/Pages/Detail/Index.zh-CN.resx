@@ -189,4 +189,7 @@
   <data name="Website" xml:space="preserve">
     <value>网站</value>
   </data>
+  <data name="Base info" xml:space="preserve">
+	  <value>基本信息</value>
+  </data>
 </root>

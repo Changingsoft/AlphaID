@@ -1,10 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography;
+using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
-using Duende.IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 

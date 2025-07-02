@@ -17,8 +17,8 @@ namespace AlphaIdPlatform.DependencyInjection;
 /// <param name="directoryLogon"></param>
 /// <param name="realNameBuilder"></param>
 /// <param name="auditLogBuilder"></param>
-public class AlphaIdPlatformBuilder(IServiceCollection services, 
-    IdentityBuilder idSubjects, 
+public class AlphaIdPlatformBuilder(IServiceCollection services,
+    IdentityBuilder idSubjects,
     DirectoryLogonBuilder directoryLogon,
     RealNameBuilder realNameBuilder,
     AuditLogBuilder auditLogBuilder)

@@ -1,10 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using AspNetWebLib.Validations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.New;
 
@@ -21,7 +21,7 @@ public class PublicModel(ConfigurationDbContext dbContext) : PageModel
 
     [Display(Name = "Sign-in callback URI", Prompt = "https://example.com/signin-oidc")]
     [CustomUrl()]
-    [Required(ErrorMessage = "Validate_Required")]  
+    [Required(ErrorMessage = "Validate_Required")]
     public string SigninCallbackUri { get; set; } = null!;
 
     //todo Identity resources and scope selected.

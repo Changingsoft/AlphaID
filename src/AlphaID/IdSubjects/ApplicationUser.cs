@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects;
 
@@ -55,21 +55,21 @@ public class ApplicationUser : IdentityUser
     /// </summary>
     [MaxLength(50)]
     [PersonalData]
-    public string? FamilyName { get;set; }
+    public string? FamilyName { get; set; }
 
     /// <summary>
     ///    中间名。
     /// </summary>
     [MaxLength(50)]
     [PersonalData]
-    public string? MiddleName { get;set; }
+    public string? MiddleName { get; set; }
 
     /// <summary>
     ///    名。
     /// </summary>
     [MaxLength(50)]
     [PersonalData]
-    public string? GivenName { get;set; }
+    public string? GivenName { get; set; }
 
     /// <summary>
     /// 全名。

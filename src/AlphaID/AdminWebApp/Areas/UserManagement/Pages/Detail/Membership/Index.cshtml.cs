@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
@@ -56,7 +56,7 @@ public class IndexModel(
             };
             org.Members.Add(m);
             var result1 = await organizationManager.UpdateAsync(org);
-            if(!result1.Succeeded)
+            if (!result1.Succeeded)
             {
                 foreach (string error in result1.Errors) ModelState.AddModelError("", error);
                 return Page();

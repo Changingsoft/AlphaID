@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OpenIDConnect.Pages.Clients.Detail;
 
@@ -62,7 +62,7 @@ public class IdPRestrictionModel : PageModel
         Data = client;
 
         if (Data.IdentityProviderRestrictions.Any(p => p.Provider == SelectedProvider))
-            ModelState.AddModelError(nameof(SelectedProvider), "Ñ¡ÔñµÄId ProviderÒÑ¾­ÔÚÁĞ±íÖĞ¡£");
+            ModelState.AddModelError(nameof(SelectedProvider), "é€‰æ‹©çš„Id Providerå·²ç»åœ¨åˆ—è¡¨ä¸­ã€‚");
 
         if (!ModelState.IsValid)
             return Page();

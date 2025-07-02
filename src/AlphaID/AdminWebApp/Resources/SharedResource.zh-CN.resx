@@ -450,4 +450,7 @@
   <data name="Remove" xml:space="preserve">
 	  <value>移除</value>
   </data>
+  <data name="Back" xml:space="preserve">
+	  <value>后退</value>
+  </data>
 </root>

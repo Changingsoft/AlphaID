@@ -147,4 +147,7 @@
   <data name="Directory account not found." xml:space="preserve">
 	  <value>没有目录账户。</value>
   </data>
+  <data name="Delete Account" xml:space="preserve">
+	  <value>删除账户</value>
+  </data>
 </root>

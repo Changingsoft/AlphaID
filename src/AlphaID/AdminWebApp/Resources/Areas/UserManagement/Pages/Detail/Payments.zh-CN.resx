@@ -135,4 +135,7 @@
   <data name="Payments of {0}" xml:space="preserve">
     <value>{0}的付款方式</value>
   </data>
+  <data name="BankName" xml:space="preserve">
+	  <value>银行名称</value>
+  </data>
 </root>

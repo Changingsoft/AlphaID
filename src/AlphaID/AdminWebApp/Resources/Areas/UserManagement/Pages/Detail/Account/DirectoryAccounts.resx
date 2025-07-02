@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -112,4 +112,12 @@
   <data name="Person Id" xml:space="preserve">
 		<value>Person ID</value>
 	</data>
+  <data name="Directory" xml:space="preserve">
+	  <value>Directory</value>
+	  <comment>Directory</comment>
+  </data>
+  <data name="Object Id" xml:space="preserve">
+	  <value>Object Id</value>
+	  <comment>Object Id</comment>
+  </data>
 </root>

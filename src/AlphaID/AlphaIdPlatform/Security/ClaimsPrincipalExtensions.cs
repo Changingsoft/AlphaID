@@ -59,7 +59,7 @@ public static class ClaimsPrincipalExtensions
     public static string? DisplayRoles(this ClaimsPrincipal principal)
     {
         if (principal.Identity is not ClaimsIdentity claimsIdentity) return null;
-        Claim[] roleClaims = principal.Claims.Where(c => c.Type == claimsIdentity.RoleClaimType).ToArray();
+        Claim[] roleClaims = [.. principal.Claims.Where(c => c.Type == claimsIdentity.RoleClaimType)];
         if (roleClaims.Length == 0)
             return string.Empty;
         return roleClaims.Select(p => p.Value).Aggregate((x, y) => $"{x},{y}");

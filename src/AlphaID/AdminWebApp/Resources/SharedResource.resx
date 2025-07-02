@@ -459,4 +459,8 @@
 	  <value>Confirmed</value>
 	  <comment>Confirmed</comment>
   </data>
+  <data name="Remove" xml:space="preserve">
+	  <value>Remove</value>
+	  <comment>Remove</comment>
+  </data>
 </root>

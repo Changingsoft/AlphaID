@@ -132,4 +132,10 @@
   <data name="Person Id" xml:space="preserve">
     <value>个人ID</value>
   </data>
+  <data name="Object Id" xml:space="preserve">
+	  <value>对象ID</value>
+  </data>
+  <data name="Directory" xml:space="preserve">
+	  <value>目录</value>
+  </data>
 </root>

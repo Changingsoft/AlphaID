@@ -12,11 +12,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="ChineseName\**" />
-	  <EmbeddedResource Remove="ChineseName\**" />
-	  <None Remove="ChineseName\**" />
-	</ItemGroup>
-	<ItemGroup>
 		<InternalsVisibleTo Include="IdSubjects.Tests" />
 	</ItemGroup>
 	<ItemGroup>
@@ -24,27 +19,27 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.16" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.16" />
 		<PackageReference Include="MinVer" Version="6.0.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
 		<PackageReference Include="TimeZoneConverter" Version="7.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="Resources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Resources.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources.zh-CN.resx">
-		  <DependentUpon>Resources.resx</DependentUpon>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources.zh-CN.resx">
+			<DependentUpon>Resources.resx</DependentUpon>
+		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="README.md">

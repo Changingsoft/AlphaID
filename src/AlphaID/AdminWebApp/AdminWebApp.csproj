@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
@@ -12,8 +12,8 @@
 		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.2.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.16" />
 		<PackageReference Include="MinVer" Version="6.0.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
@@ -32,21 +32,6 @@
 		<ProjectReference Include="..\ChineseName\ChineseName.csproj" />
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Confidential.zh-cn.resx">
-	    <DependentUpon>Confidential.resx</DependentUpon>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Custom.zh-cn.resx">
-	    <DependentUpon>Custom.resx</DependentUpon>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Areas\OpenIDConnect\Pages\Clients\New\Public.zh-cn.resx">
-	    <DependentUpon>Public.resx</DependentUpon>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Pages\Shared\_ActiveSessionCountPartial.zh-cn.resx">
-	    <DependentUpon>_ActiveSessionCountPartial.resx</DependentUpon>
-	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

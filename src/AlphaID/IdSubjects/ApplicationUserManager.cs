@@ -458,7 +458,7 @@ where T : ApplicationUser
         if (string.IsNullOrEmpty(phoneNumber))
             return await base.SetPhoneNumberAsync(user, null);
 
-        if (!MobilePhoneNumber.TryParse(phoneNumber, out MobilePhoneNumber number))
+        if (!MobilePhoneNumber.TryParse(phoneNumber, out _))
         {
             return IdentityResult.Failed(AppErrorDescriber.InvalidPhoneNumberFormat());
         }
@@ -469,7 +469,7 @@ where T : ApplicationUser
     /// 设置指定用户的手机号，并可选地标记为已确认。
     /// </summary>
     /// <remarks>
-    /// 此方法会更新用户的手机号，并根据 <paramref name="confirmed"/> 参数设置 <see cref="PhoneNumberConfirmed"/> 属性。用户对象会被持久化到底层存储。
+    /// 此方法会更新用户的手机号，并根据 <paramref name="confirmed"/> 参数设置 PhoneNumberConfirmed 属性。用户对象会被持久化到底层存储。
     /// </remarks>
     /// <param name="user">要设置手机号的用户。不能为空。</param>
     /// <param name="phoneNumber">要设置的手机号。可以为 <see langword="null"/> 以移除手机号。</param>

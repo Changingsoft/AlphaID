@@ -61,6 +61,15 @@ namespace AlphaIdPlatform {
         }
         
         /// <summary>
+        ///   查找类似 Duns Number 的本地化字符串。
+        /// </summary>
+        public static string DunsNumber {
+            get {
+                return ResourceManager.GetString("DunsNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Administrative code invalid 的本地化字符串。
         /// </summary>
         public static string InvalidAdministrativeCode {
@@ -93,6 +102,15 @@ namespace AlphaIdPlatform {
         public static string LastOwnerCannotLeave {
             get {
                 return ResourceManager.GetString("LastOwnerCannotLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Legal Entity Identifier 的本地化字符串。
+        /// </summary>
+        public static string LegalEntityIdentifier {
+            get {
+                return ResourceManager.GetString("LegalEntityIdentifier", resourceCulture);
             }
         }
         
@@ -138,6 +156,15 @@ namespace AlphaIdPlatform {
         public static string OrganizationNotFound {
             get {
                 return ResourceManager.GetString("OrganizationNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unified Social Credit Code 的本地化字符串。
+        /// </summary>
+        public static string UnifiedSocialCreditCode {
+            get {
+                return ResourceManager.GetString("UnifiedSocialCreditCode", resourceCulture);
             }
         }
     }

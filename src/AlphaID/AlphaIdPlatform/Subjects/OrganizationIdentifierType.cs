@@ -15,7 +15,7 @@ public enum OrganizationIdentifierType
     /// <summary>
     /// 全球法人实体标识符（LEI）
     /// </summary>
-    [Display(Name = "Legal_entity_identifier", ResourceType = typeof(Resources))]
+    [Display(Name = "LegalEntityIdentifier", ResourceType = typeof(Resources))]
     LegalEntityIdentifier,
 
     /// <summary>

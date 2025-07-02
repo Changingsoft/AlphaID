@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DunsNumber" xml:space="preserve">
+    <value>Duns Number</value>
+  </data>
   <data name="InvalidAdministrativeCode" xml:space="preserve">
     <value>Administrative code invalid</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="LastOwnerCannotLeave" xml:space="preserve">
     <value>Last owner cannot leave</value>
+  </data>
+  <data name="LegalEntityIdentifier" xml:space="preserve">
+    <value>Legal Entity Identifier</value>
   </data>
   <data name="MaxOwnersInOrganization" xml:space="preserve">
     <value>Max owners in organization</value>
@@ -143,5 +149,8 @@
   </data>
   <data name="OrganizationNotFound" xml:space="preserve">
     <value>Organization not found</value>
+  </data>
+  <data name="UnifiedSocialCreditCode" xml:space="preserve">
+    <value>Unified Social Credit Code</value>
   </data>
 </root>

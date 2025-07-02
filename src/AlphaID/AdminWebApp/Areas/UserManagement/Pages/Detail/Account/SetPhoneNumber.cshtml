@@ -7,14 +7,14 @@
 
 <form method="post">
     <div class="mb-3">
-        <label asp-for="PhoneNumber" class="form-label required"></label>
-        <div class="input-group">
-            <span class="input-group-text">+86</span>
-            <input asp-for="PhoneNumber" class="form-control" />
-        </div>
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
         <span asp-description-for="PhoneNumber"></span>
         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div>
-    <p>@L["Change phone number will reset confirmation state until user valid its phone number."]</p>
+    <div class="form-check mb-3">
+        <input asp-for="PhoneNumberConfirmed" class="form-check-input" />
+        <label asp-for="PhoneNumberConfirmed" class="form-check-label"></label>
+    </div>
     <button type="submit" class="btn btn-primary">@SL["Apply changes"]</button>
 </form>

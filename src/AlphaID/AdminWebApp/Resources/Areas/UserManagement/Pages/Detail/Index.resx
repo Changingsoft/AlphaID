@@ -125,10 +125,6 @@
   <data name="Changed at" xml:space="preserve">
 		<value>Changed at</value>
 	</data>
-  <data name="Confirmed" xml:space="preserve">
-	  <value>Confirmed</value>
-	  <comment>Confirmed</comment>
-  </data>
   <data name="Contacts" xml:space="preserve">
 		<value>Contacts</value>
 	</data>

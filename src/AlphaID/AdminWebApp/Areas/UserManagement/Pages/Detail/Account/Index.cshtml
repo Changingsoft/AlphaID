@@ -13,8 +13,22 @@
 
 <h3>@L["Identifiers"]</h3>
 <p>@SL["User name"]: @Model.Data.UserName <a asp-page="SetUserName" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change user name"]</a></p>
-<p>@SL["Email"]: @Model.Data.Email <a asp-page="SetEmail" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change email"]</a></p>
-<p>@SL["Phone number"]: @Model.Data.PhoneNumber <a asp-page="SetPhoneNumber" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change phone number"]</a></p>
+<p>
+    @SL["Email"]: @Model.Data.Email
+    @if (Model.Data.EmailConfirmed)
+    {
+        <span class="badge badge-outline text-green">@SL["Confirmed"]</span>
+    }
+    <a asp-page="SetEmail" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change email"]</a>
+</p>
+<p>
+    @SL["Phone number"]: @Model.Data.PhoneNumber
+    @if (Model.Data.PhoneNumberConfirmed)
+    {
+        <span class="badge badge-outline text-green">@SL["Confirmed"]</span>
+    }
+    <a asp-page="SetPhoneNumber" asp-route-anchor="@Model.Data.Id" class="btn btn-sm">@L["Change phone number"]</a>
+</p>
 
 <h3>@L["Password and authentication"]</h3>
 <p>

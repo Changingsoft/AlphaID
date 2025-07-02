@@ -178,4 +178,35 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         result = await manager.ChangePasswordAsync(user, "Pass1234$", "Pass123$");
         Assert.False(result.Succeeded);
     }
+
+    [Fact]
+    public async Task SetPhoneNumberWithInvalidFormat()
+    {
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var user = new ApplicationUser("TestUser");
+        await manager.CreateAsync(user);
+
+        var result = await manager.SetPhoneNumberAsync(user, "1234567890");
+        Assert.False(result.Succeeded);
+    }
+
+    [Fact]
+    public async Task SetPhoneNumberAndConfirm()
+    {
+        using IServiceScope scope = serviceProvider.ServiceScopeFactory.CreateScope();
+        var manager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager<ApplicationUser>>();
+        var user = new ApplicationUser("TestUser");
+        await manager.CreateAsync(user);
+
+        var result = await manager.SetPhoneNumberAsync(user, "+8613812345678", true);
+        Assert.True(result.Succeeded);
+        Assert.Equal("+8613812345678", user.PhoneNumber);
+
+        result = await manager.SetPhoneNumberAsync(user, "", true);
+        Assert.True(result.Succeeded);
+        Assert.Null(user.PhoneNumber);
+        Assert.False(user.PhoneNumberConfirmed);
+    }
+
 }

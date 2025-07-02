@@ -455,12 +455,38 @@ where T : ApplicationUser
     /// <inheritdoc />
     public override async Task<IdentityResult> SetPhoneNumberAsync(T user, string? phoneNumber)
     {
-        IdentityResult result = await base.SetPhoneNumberAsync(user, phoneNumber);
+        if (string.IsNullOrEmpty(phoneNumber))
+            return await base.SetPhoneNumberAsync(user, null);
+
+        if (!MobilePhoneNumber.TryParse(phoneNumber, out MobilePhoneNumber number))
+        {
+            return IdentityResult.Failed(AppErrorDescriber.InvalidPhoneNumberFormat());
+        }
+        return await base.SetPhoneNumberAsync(user, phoneNumber);
+    }
+
+    /// <summary>
+    /// 设置指定用户的手机号，并可选地标记为已确认。
+    /// </summary>
+    /// <remarks>
+    /// 此方法会更新用户的手机号，并根据 <paramref name="confirmed"/> 参数设置 <see cref="PhoneNumberConfirmed"/> 属性。用户对象会被持久化到底层存储。
+    /// </remarks>
+    /// <param name="user">要设置手机号的用户。不能为空。</param>
+    /// <param name="phoneNumber">要设置的手机号。可以为 <see langword="null"/> 以移除手机号。</param>
+    /// <param name="confirmed">指示手机号是否应被标记为已确认的值。</param>
+    /// <returns>一个 <see cref="IdentityResult"/>，指示操作结果。成功时返回 <see cref="IdentityResult.Success"/>，否则返回错误结果。</returns>
+    public virtual async Task<IdentityResult> SetPhoneNumberAsync(T user, string? phoneNumber, bool confirmed)
+    {
+        IdentityResult result = await this.SetPhoneNumberAsync(user, phoneNumber);
         if (!result.Succeeded) return result;
 
-        //todo: 考虑从选项来控制是否自动将PhoneNumberConfirmed设置为true
-        user.PhoneNumberConfirmed = true;
-        return await UpdateUserAsync(user);
+        if (!string.IsNullOrEmpty(phoneNumber))
+        {
+            user.PhoneNumberConfirmed = confirmed;
+            return await UpdateUserAsync(user);
+        }
+
+        return result;
     }
 
     /// <summary>

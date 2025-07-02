@@ -196,13 +196,15 @@ public class NaturalPersonService(
     /// </summary>
     /// <param name="person"></param>
     /// <param name="phoneNumber"></param>
+    /// <param name="confirmed"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson person, string? phoneNumber)
+    public async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson person, string? phoneNumber, bool confirmed)
     {
-        var result = await userManager.SetPhoneNumberAsync(person, phoneNumber);
+        var result = await userManager.SetPhoneNumberAsync(person, phoneNumber, confirmed);
         if (!result.Succeeded)
             return result;
-        //todo 更新目录账号的手机号码。
+
+        accountManager?.ApplyUpdates(person);
         return result;
     }
 }

@@ -29,6 +29,17 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D4CAD6FDC6AFE1448521A3230E47FECE/Shortcut/@EntryValue">Localizer</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D4CAD6FDC6AFE1448521A3230E47FECE/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D4CAD6FDC6AFE1448521A3230E47FECE/Text/@EntryValue">@L["$SELECTION$"]</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Applicability/=Surround/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Description/@EntryValue">SharedLocalizer</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/IsBlessed/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Mnemonic/@EntryValue">1</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Scope/=3CDDF046BEA72B499BFB0E0D6A845C94/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Scope/=3CDDF046BEA72B499BFB0E0D6A845C94/Type/@EntryValue">InRazorFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Shortcut/@EntryValue">SharedLocalizer</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FEA42FE9A7A617498AE068FB1B0AAFCA/Text/@EntryValue">@SL["$SELECTION$"]</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=2935539492CFA742849F2D0219C77A58/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=2935539492CFA742849F2D0219C77A58/Color/@EntryValue">#FFCF9D32</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/Todo/TodoPatterns/=2935539492CFA742849F2D0219C77A58/MatchComments/@EntryValue">True</s:Boolean>

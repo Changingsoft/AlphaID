@@ -1,0 +1,37 @@
+@page
+@model AuthCenterWebApp.Areas.Organization.Pages.People.PendingRequestsModel
+@{
+    ViewBag.Title = L["Pending requests"];
+}
+<h1>@ViewBag.Title</h1>
+
+@if(!Model.PendingRequests.Any())
+{
+    <p>@L["No pending requests."]</p>
+}
+else
+{
+    <form method="post">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>@L["Person"]</th>
+                <th>@L["Actions"]</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var request in Model.PendingRequests)
+            {
+                <tr>
+                    <td>@L["{0} request join the organization at {1}", request.PersonName, request.CreatedAt]</td>
+                    <td>
+                        <button type="submit" class="btn btn-sm btn-success" asp-page-handler="Accept" asp-route-id="@request.Id" asp-route-accepted="true">@L["Accept"]</button>
+                            <button type="submit" class="btn btn-sm btn-danger" asp-page-handler="Accept" asp-route-id="@request.Id" asp-route-accepted="false">@L["Refuse"]</button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </form>
+
+}

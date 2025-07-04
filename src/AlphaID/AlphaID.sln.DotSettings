@@ -13,6 +13,8 @@
 	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchConflictResolutionMode/=TextEditor_002DCodeLens/@EntryIndexedValue">DO_NOTHING</s:String>
 	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchConflictResolutionMode/=VCS/@EntryIndexedValue">DO_NOTHING</s:String>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EPredefinedNamingRulesToUserRulesUpgrade/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/SqlDaemon/FilesAndFoldersSqlDialects/=ADD04681_002DDDFF_002D4733_002DB3F6_002DC948C1CA36F8_002Fd_003ATestingData_002Fd_003AAlphaIdData_002Ff_003ADefault_002Esql/@EntryIndexedValue">GenericSQL</s:String>
+	<s:String x:Key="/Default/Environment/SqlDaemon/SolutionSqlDialect/@EntryValue">TSQL</s:String>
 	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=human_0020readable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=Id/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=user_0020name/@EntryIndexedValue">True</s:Boolean>

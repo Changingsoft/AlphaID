@@ -1,6 +1,7 @@
 using AlphaIdPlatform.DependencyInjection;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
+using AlphaIdPlatform.JoinOrgRequesting;
 using AlphaIdPlatform.Subjects;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
@@ -46,6 +47,7 @@ public static class AlphaIdPlatformServiceCollectionExtensions
         services.TryAddScoped<JoinOrganizationInvitationManager>();
         services.AddScoped<OrganizationMemberManager>();
         services.AddScoped<NaturalPersonService>();
+        services.AddScoped<JoinOrganizationManager>();
 
         return new AlphaIdPlatformBuilder(services, identityBuilder, directoryLoginBuilder, realnameBuilder, auditLogBuilder);
     }

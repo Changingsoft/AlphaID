@@ -30,6 +30,9 @@
                 @if (isOwner)
                 {
                     <div class="list-group-item">
+                        <a asp-page="PendingRequests" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Join requests"]</a>
+                    </div>
+                    <div class="list-group-item">
                         <a asp-page="Invitations" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]">@L["Invitations"]</a>
                     </div>
                 }

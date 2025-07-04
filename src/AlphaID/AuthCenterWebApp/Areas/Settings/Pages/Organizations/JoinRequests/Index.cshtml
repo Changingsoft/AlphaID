@@ -1,0 +1,34 @@
+@page
+@model AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests.IndexModel
+@{
+    ViewBag.Title = L["Join organization requests"];
+}
+<h1>@ViewBag.Title</h1>
+
+@if (Model.HasItem)
+{
+    <form method="post">
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var request in Model.PendingRequests)
+            {
+                <tr>
+                    <td>@L["You request join {0} at {1}.", request.OrganizationName, request.WhenCreated]</td>
+                    <td><button type="submit" class="btn btn-sm btn-danger" asp-page-handler="CancelRequest" asp-route-id="@request.Id" onclick="return confirm('@L["Cancel the request?"]');">@SL["Cancel"]</button></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </form>
+}
+else
+{
+    <p>@L["No requests to join the organization yet."]</p>
+}
+<p><a asp-page="Request" class="btn">@L["New request"]</a></p>

@@ -1,4 +1,4 @@
-﻿# Requires -Encoding UTF8
+# Requires -Encoding UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::InputEncoding = [System.Text.Encoding]::UTF8
 
@@ -18,3 +18,4 @@ dotnet ef migrations add $args[0] -c IdSubjectsDbContext -o Migrations/IdSubject
 dotnet ef migrations add $args[0] -c LoggingDbContext -o Migrations/LoggingDb --no-build
 dotnet ef migrations add $args[0] -c PersistedGrantDbContext -o Migrations/PersistedGrantDb --no-build
 dotnet ef migrations add $args[0] -c RealNameDbContext -o Migrations/RealNameDb --no-build
+dotnet ef migrations add $args[0] -c AlphaIdDbContext -o Migrations/AlphaIdDb --no-build

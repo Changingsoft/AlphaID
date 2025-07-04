@@ -5,7 +5,7 @@ namespace AlphaId.EntityFramework.IdSubjects;
 
 internal class OrganizationStore(IdSubjectsDbContext dbContext) : IOrganizationStore
 {
-    public IQueryable<Organization> Organizations => dbContext.Organizations.AsNoTracking();
+    public IQueryable<Organization> Organizations => dbContext.Organizations;
 
     public async Task<OrganizationOperationResult> CreateAsync(Organization organization)
     {

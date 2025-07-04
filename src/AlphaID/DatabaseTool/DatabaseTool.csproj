@@ -28,6 +28,9 @@
 		<None Update="TestingData\AdminWebAppData\202310300137.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+		<None Update="TestingData\AlphaIdData\Default.sql">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="TestingData\ConfigurationDbContext\202303281102.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

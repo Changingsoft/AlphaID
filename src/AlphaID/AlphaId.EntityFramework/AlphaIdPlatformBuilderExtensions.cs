@@ -1,3 +1,4 @@
+using AlphaId.EntityFramework;
 using AlphaId.EntityFramework.Admin;
 using AlphaId.EntityFramework.DirectoryAccountManagement;
 using AlphaId.EntityFramework.IdSubjects;
@@ -5,6 +6,7 @@ using AlphaId.EntityFramework.RealName;
 using AlphaId.EntityFramework.SecurityAuditing;
 using AlphaIdPlatform.Admin;
 using AlphaIdPlatform.DependencyInjection;
+using AlphaIdPlatform.JoinOrgRequesting;
 using Microsoft.EntityFrameworkCore;
 
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
@@ -28,6 +30,9 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.AddOrganizationStore<OrganizationStore>();
         builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
 
+        builder.Services.AddScoped<IJoinOrganizationRequestStore, JoinOrganizationRequestStore>();
+
+        builder.Services.AddDbContext<AlphaIdDbContext>(options);
         return builder;
     }
 }

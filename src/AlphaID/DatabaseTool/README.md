@@ -87,6 +87,7 @@ dotnet ef migrations add <Migration Title> -c IdSubjectsDbContext -o Migrations/
 dotnet ef migrations add <Migration Title> -c LoggingDbContext -o Migrations/LoggingDb
 dotnet ef migrations add <Migration Title> -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
 dotnet ef migrations add <Migration Title> -c RealNameDbContext -o Migrations/RealNameDb
+dotnet ef migrations add <Migration Title> -c AlphaIdDbContext -o Migrations/AlphaIdDb
 ```
 
 ### 迁移期间初始化数据

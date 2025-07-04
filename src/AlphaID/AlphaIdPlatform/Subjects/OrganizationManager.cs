@@ -30,7 +30,7 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    /// 通过名称查找组织。
+    /// 通过名称查找组织。该方法仅考虑组织的当前名称，不考虑曾用名。
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>

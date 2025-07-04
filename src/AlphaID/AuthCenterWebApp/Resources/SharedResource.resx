@@ -351,4 +351,8 @@
 	  <value>Your password has expired</value>
 	  <comment>Your password has expired</comment>
   </data>
+  <data name="Cancel" xml:space="preserve">
+	  <value>Cancel</value>
+	  <comment>Cancel</comment>
+  </data>
 </root>

@@ -134,17 +134,17 @@ public class Organization
     /// <summary>
     ///    银行账号。
     /// </summary>
-    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
+    public virtual ICollection<OrganizationBankAccount> BankAccounts { get; protected set; } = [];
 
     /// <summary>
     /// 组织标识。
     /// </summary>
-    public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; set; } = [];
+    public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = [];
 
     /// <summary>
     /// 组织的成员。
     /// </summary>
-    public virtual ICollection<OrganizationMember> Members { get; set; } = [];
+    public virtual ICollection<OrganizationMember> Members { get; protected set; } = [];
     /// <summary>
     /// 
     /// </summary>

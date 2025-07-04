@@ -33,5 +33,9 @@
 
 </form>
 <hr/>
+@if (Model.PendingJoinRequestCount > 0)
+{
+    <p>@L["You have {0} join organization request(s).", Model.PendingJoinRequestCount] <a asp-page="JoinRequests/Index">@L["More"]</a></p>
+}
 <a asp-page="JoinRequests/Request" class="btn">@L["Request join organization"]</a>
 <a asp-page="New" class="btn">@L["New organization"]</a>

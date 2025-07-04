@@ -98,10 +98,6 @@ public class JoinOrganizationManager(
     public async Task Cancel(JoinOrganizationRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
-        if (!request.IsAccepted.HasValue)
-        {
-            return;
-        }
         await store.DeleteAsync(request);
     }
 }

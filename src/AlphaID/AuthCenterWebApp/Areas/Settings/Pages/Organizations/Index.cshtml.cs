@@ -20,7 +20,7 @@ public class IndexModel(
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public IActionResult OnGet()
     {
         Members = memberManager.GetVisibleMembersOf(User.SubjectId()!, User.SubjectId());
         PendingJoinRequestCount = joinRequestStore.Requests.Pending().Count(r => r.UserId == User.SubjectId()!);

@@ -44,5 +44,5 @@ public class DocumentedRealNameAuthentication : RealNameAuthentication
     /// 指示一个身份证明文件。
     /// </summary>
     [ForeignKey(nameof(DocumentId))]
-    public IdentityDocument Document { get; protected set; } = null!;
+    public virtual IdentityDocument Document { get; protected set; } = null!;
 }

@@ -1,4 +1,4 @@
-﻿using IdSubjects.DirectoryLogon;
+using IdSubjects.DirectoryLogon;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.DirectoryAccountManagement;
@@ -8,4 +8,10 @@ public class DirectoryLogonDbContext(DbContextOptions<DirectoryLogonDbContext> o
     public DbSet<DirectoryService> DirectoryServices { get; protected set; } = null!;
 
     public DbSet<DirectoryAccount> LogonAccounts { get; protected set; } = null!;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+        base.OnConfiguring(optionsBuilder);
+    }
 }

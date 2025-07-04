@@ -3,7 +3,7 @@ using AlphaIdPlatform.Subjects;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-public class JoinOrganizationInvitationStore(IdSubjectsDbContext dbContext) : IJoinOrganizationInvitationStore
+public class JoinOrganizationInvitationStore(AlphaIdDbContext dbContext) : IJoinOrganizationInvitationStore
 {
     public IQueryable<JoinOrganizationInvitation> Invitations => dbContext.JoinOrganizationInvitations;
 

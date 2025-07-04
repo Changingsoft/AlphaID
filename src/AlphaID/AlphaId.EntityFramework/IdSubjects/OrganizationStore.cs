@@ -1,9 +1,8 @@
 using AlphaIdPlatform.Subjects;
-using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-internal class OrganizationStore(IdSubjectsDbContext dbContext) : IOrganizationStore
+internal class OrganizationStore(AlphaIdDbContext dbContext) : IOrganizationStore
 {
     public IQueryable<Organization> Organizations => dbContext.Organizations;
 

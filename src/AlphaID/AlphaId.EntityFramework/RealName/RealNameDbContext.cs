@@ -1,4 +1,4 @@
-﻿using IdSubjects.RealName;
+using IdSubjects.RealName;
 using IdSubjects.RealName.Requesting;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,5 +23,11 @@ public class RealNameDbContext(DbContextOptions<RealNameDbContext> options) : Db
         modelBuilder.Entity<IdentityDocument>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
         modelBuilder.Entity<RealNameAuthentication>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
         modelBuilder.Entity<RealNameRequest>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+        base.OnConfiguring(optionsBuilder);
     }
 }

@@ -1,6 +1,4 @@
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,13 +7,6 @@ namespace AlphaId.EntityFramework.IdSubjects;
 
 public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
 {
-    /// <summary>
-    /// Organizations.
-    /// </summary>
-    public DbSet<Organization> Organizations { get; protected set; } = null!;
-
-    public DbSet<JoinOrganizationInvitation> JoinOrganizationInvitations { get; protected set; } = null!;
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

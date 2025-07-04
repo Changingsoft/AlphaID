@@ -11,4 +11,10 @@ public class OperationalDbContext(DbContextOptions<OperationalDbContext> options
     {
         modelBuilder.Entity<UserInRole>().HasKey(p => new { p.UserId, p.RoleName });
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+        base.OnConfiguring(optionsBuilder);
+    }
 }

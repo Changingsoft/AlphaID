@@ -11,6 +11,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests
     {
         [BindProperty]
         [Display(Name = "Organization name")]
+        [Required(ErrorMessage = "Validate_Required")]
         public string OrganizationName { get; set; } = null!;
 
         public void OnGet()

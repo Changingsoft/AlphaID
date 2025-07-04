@@ -51,6 +51,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Organizations\JoinRequests\Index.zh-cn.resx">
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Organizations\JoinRequests\Request.zh-cn.resx">
+	    <DependentUpon>Request.resx</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="BotDetectSounds\Pronunciation_Mandarin_CN.bdsp">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

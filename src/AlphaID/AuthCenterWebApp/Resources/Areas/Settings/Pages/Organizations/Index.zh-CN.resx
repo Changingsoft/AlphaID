@@ -118,4 +118,13 @@
   <data name="New organization" xml:space="preserve">
 	  <value>创建新的组织</value>
   </data>
+  <data name="More" xml:space="preserve">
+	  <value>更多</value>
+  </data>
+  <data name="Request join organization" xml:space="preserve">
+	  <value>请求加入组织</value>
+  </data>
+  <data name="You have {0} join organization request(s)." xml:space="preserve">
+	  <value>您有{0}个加入组织的请求。</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -118,5 +118,17 @@
   <data name="New organization" xml:space="preserve">
 	  <value>New organization</value>
 	  <comment>New organization</comment>
+  </data>
+  <data name="You have {0} join organization request(s)." xml:space="preserve">
+	  <value>You have {0} join organization request(s).</value>
+	  <comment>You have {0} join organization request(s).</comment>
+  </data>
+  <data name="More" xml:space="preserve">
+	  <value>More</value>
+	  <comment>More</comment>
+  </data>
+  <data name="Request join organization" xml:space="preserve">
+	  <value>Request join organization</value>
+	  <comment>Request join organization</comment>
   </data>
 </root>

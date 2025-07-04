@@ -355,4 +355,7 @@
 	  <value>Cancel</value>
 	  <comment>Cancel</comment>
   </data>
+  <data name="Organization name" xml:space="preserve">
+	  <value>Organization name</value>
+  </data>
 </root>

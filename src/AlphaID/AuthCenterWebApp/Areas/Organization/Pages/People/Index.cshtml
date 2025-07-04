@@ -64,7 +64,7 @@
                                 <div class="col-auto">
                                     @if (Model.VisitorIsOwner && member.UserId != User.SubjectId())
                                     {
-                                        <button type="submit" name="personId" value="@member.UserId" asp-page-handler="Leave" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
+                                        <button type="submit" asp-page-handler="Leave" asp-route-personId="@member.UserId" class="btn btn-outline-danger list-group-item-actions" onclick="return confirm('@(L["Leave the person from organization?"])');">@L["Leave"]</button>
                                     }
                                     @if (Model.VisitorIsOwner)
                                     {

@@ -44,21 +44,21 @@ public class IndexModel(
 
         NaturalPerson? visitor = await personManager.GetUserAsync(User);
 
-        Members = GetMembers(organization, visitor?.Id);
-        VisitorIsOwner = visitor != null && Members.Any(m => m.IsOwner && m.UserId == visitor.Id);
-
-        var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
-        if (your == null)
-            return Page();
-
+        VisitorIsOwner = visitor != null && organization.Members.Any(m => m.IsOwner && m.PersonId == visitor.Id);
         if (!VisitorIsOwner)
         {
             ModelState.AddModelError("", "不是企业的所有者不能执行此操作。");
             return Page();
         }
+
+        var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
+        if (your == null)
+            return Page();
+        
         organization.Members.Remove(your);
 
         Result = await organizationManager.UpdateAsync(organization);
+        Members = GetMembers(organization, visitor?.Id);
         return Page();
     }
 

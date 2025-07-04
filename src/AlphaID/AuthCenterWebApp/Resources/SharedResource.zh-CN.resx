@@ -342,4 +342,7 @@
   <data name="Your password has expired" xml:space="preserve">
 	  <value>您的密码已过期</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+	  <value>取消</value>
+  </data>
 </root>

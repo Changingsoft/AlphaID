@@ -45,6 +45,7 @@ builder.Services.AddScoped<DatabaseMigrator, RealNameDbMigrator>();
 builder.Services.AddScoped<DatabaseMigrator, DirectoryLogonDbMigrator>();
 builder.Services.AddScoped<DatabaseMigrator, AdminCenterDbMigrator>();
 builder.Services.AddScoped<DatabaseMigrator, AuditLogDbMigrator>();
+builder.Services.AddScoped<DatabaseMigrator, AlphaIdDbMigrator>();
 
 IHost host = builder.Build();
 

@@ -24,11 +24,6 @@ public class JoinOrganizationManager(
     public async Task Create(JoinOrganizationRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
-        if (store.Requests.Any(r => r.UserId == request.UserId && r.OrganizationId == request.OrganizationId))
-        {
-            //todo 考虑返回错误提示
-            return;
-        }
         await store.CreateAsync(request);
     }
 

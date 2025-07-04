@@ -18,7 +18,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
     {
         public IEnumerable<JoinOrgRequestViewModel> PendingRequests { get; set; } = [];
 
-        async Task InitPendingRequests(string orgName)
+        private void InitPendingRequests(string orgName)
         {
             var orgId = (from org in organizationStore.Organizations
                          where org.Name == orgName
@@ -46,14 +46,14 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
                               };
         }
 
-        public async Task OnGet(string anchor)
+        public void OnGet(string anchor)
         {
-            await InitPendingRequests(anchor);
+            InitPendingRequests(anchor);
         }
 
         public async Task<IActionResult> OnPostAccept(string anchor, int id, bool accepted)
         {
-            await InitPendingRequests(anchor);
+            InitPendingRequests(anchor);
             var request = await joinOrganizationRequestStore.Requests
                 .FirstOrDefaultAsync(r => r.Id == id);
             if (request == null)

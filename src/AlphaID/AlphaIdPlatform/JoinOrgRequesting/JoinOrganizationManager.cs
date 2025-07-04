@@ -21,10 +21,15 @@ public class JoinOrganizationManager(
     /// </summary>
     /// <param name="request">The request containing the details of the organization to join. Cannot be <see langword="null"/>.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public Task Create(JoinOrganizationRequest request)
+    public async Task Create(JoinOrganizationRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
-        return store.CreateAsync(request);
+        if (store.Requests.Any(r => r.UserId == request.UserId && r.OrganizationId == request.OrganizationId))
+        {
+            //todo 考虑返回错误提示
+            return;
+        }
+        await store.CreateAsync(request);
     }
 
     /// <summary>

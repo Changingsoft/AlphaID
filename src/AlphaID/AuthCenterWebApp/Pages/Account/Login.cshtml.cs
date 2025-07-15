@@ -29,7 +29,7 @@ public class LoginModel(
     SignInManager<NaturalPerson> signInManager,
     IOptions<LoginOptions> loginOptions) : PageModel
 {
-    public ViewModel View { get; set; } = null!;
+    public LoginOptionsModel Model { get; set; } = null!;
 
     public AuthenticateResult ExternalLoginResult { get; set; } = null!;
 
@@ -43,13 +43,13 @@ public class LoginModel(
         //尝试验证外部登录。
         ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
-        if (View.IsExternalLoginOnly)
+        if (Model.IsExternalLoginOnly)
             // we only have one option for logging in and it's an external provider
             return RedirectToPage("/ExternalLogin/Challenge",
                 new
                 {
-                    scheme = View.ExternalLoginScheme,
-                    schemeDisplayName = View.ExternalLoginDisplayName,
+                    scheme = Model.ExternalLoginScheme,
+                    schemeDisplayName = Model.ExternalLoginDisplayName,
                     returnUrl
                 });
 
@@ -178,73 +178,82 @@ public class LoginModel(
             ReturnUrl = returnUrl
         };
 
-        //获取授权上下文。
+        //根据returnUrl，获取IdentityServer的授权上下文。
         AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
-        //在授权上下文中指定了IdP，因此跳过本地登录而直接转到指定的IdP。
-        if (context?.IdP != null && await schemeProvider.GetSchemeAsync(context.IdP) != null)
+        //如果授权上下文中指定了IdP，则跳过本地登录，向指定的IdP发起外部登录。
+        if (context?.IdP != null)
         {
-            bool local = context.IdP == IdentityServerConstants.LocalIdentityProvider;
             AuthenticationScheme? scheme = await schemeProvider.GetSchemeAsync(context.IdP);
-            // this is meant to short circuit the UI and only trigger the one external IdP
-            View = new ViewModel
+            if (scheme != null)
             {
-                EnableLocalLogin = local
-            };
+                bool isLocalIdP = context.IdP == IdentityServerConstants.LocalIdentityProvider;
+                // this is meant to short circuit the UI and only trigger the one external IdP
+                Model = new LoginOptionsModel
+                {
+                    EnableLocalLogin = isLocalIdP
+                };
 
-            Input.Username = context.LoginHint ?? "";
+                Input.Username = context.LoginHint ?? "";
 
-            if (!local)
-                View.ExternalProviders =
-                [
-                    new ExternalProvider
-                    {
-                        AuthenticationScheme = context.IdP,
-                        DisplayName = scheme!.DisplayName!
-                    }
-                ];
+                if (!isLocalIdP)
+                    Model.ExternalProviders =
+                    [
+                        new ExternalLoginProvider
+                        {
+                            AuthenticationScheme = context.IdP,
+                            DisplayName = scheme.DisplayName!
+                        }
+                    ];
 
-            return;
+                return;
+            }
+
         }
 
-        // 载入所有身份验证方案。
+        List<ExternalLoginProvider> externalProviders = [];
+        // 载入所有静态登记的身份验证方案。
         IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
 
-        List<ExternalProvider> providers = schemes
+        externalProviders.AddRange(schemes
             .Where(x => x.DisplayName != null)
-            .Select(x => new ExternalProvider
+            .Select(x => new ExternalLoginProvider
             {
                 DisplayName = x.DisplayName ?? x.Name,
                 AuthenticationScheme = x.Name
-            }).ToList();
+            }));
 
-        //从存储加载验证方案。
-        IEnumerable<ExternalProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
+        //从IdentityServer存储加载验证方案。
+        IEnumerable<ExternalLoginProvider> dynamicSchemes = (await identityProviderStore.GetAllSchemeNamesAsync())
             .Where(x => x.Enabled)
-            .Select(x => new ExternalProvider
+            .Select(x => new ExternalLoginProvider
             {
                 AuthenticationScheme = x.Scheme,
                 DisplayName = x.DisplayName ?? ""
             });
-        providers.AddRange(dynamicSchemes);
+
+        externalProviders.AddRange(dynamicSchemes);
 
 
         var allowLocal = true;
         Client? client = context?.Client;
+        List<ExternalLoginProvider> allowExternalProviders = [];
         if (client != null)
         {
             allowLocal = client.EnableLocalLogin; //客户端是否允许本地登录
             if (client.IdentityProviderRestrictions.Count != 0)
+            {
                 //过滤只有客户端允许的登录提供器。
-                providers = providers.Where(provider =>
-                    client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+                allowExternalProviders = externalProviders.Where(p =>
+                    client.IdentityProviderRestrictions.Contains(p.AuthenticationScheme)).ToList();
+            }
         }
 
-        View = new ViewModel
+        Model = new LoginOptionsModel
         {
             AllowRememberLogin = loginOptions.Value.AllowRememberLogin,
             EnableLocalLogin = allowLocal && loginOptions.Value.AllowLocalLogin,
-            ExternalProviders = [.. providers]
+            ExternalProviders = [.. allowExternalProviders]
         };
     }
 
@@ -285,7 +294,7 @@ public class LoginModel(
         public string Button { get; set; } = null!;
     }
 
-    public class ViewModel
+    public class LoginOptionsModel
     {
         /// <summary>
         /// 获取或设置是否允许记住登录。
@@ -300,12 +309,12 @@ public class LoginModel(
         /// <summary>
         /// 获取所有外部登录提供器。
         /// </summary>
-        public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = [];
+        public IEnumerable<ExternalLoginProvider> ExternalProviders { get; set; } = [];
 
         /// <summary>
         /// 获取可见的外部登录提供器。
         /// </summary>
-        public IEnumerable<ExternalProvider> VisibleExternalProviders =>
+        public IEnumerable<ExternalLoginProvider> VisibleExternalProviders =>
             ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
         /// <summary>
@@ -320,7 +329,7 @@ public class LoginModel(
             IsExternalLoginOnly ? ExternalProviders.SingleOrDefault()?.DisplayName : null;
     }
 
-    public class ExternalProvider
+    public class ExternalLoginProvider
     {
         public string DisplayName { get; set; } = null!;
         public string AuthenticationScheme { get; set; } = null!;

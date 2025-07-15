@@ -12,7 +12,7 @@
 </div>
 <div class="card card-md">
     <div class="card-body">
-        @if (Model.View.EnableLocalLogin)
+        @if (Model.Model.EnableLocalLogin)
         {
             <h2 class="h2 text-center mb-4">@L["Login to your account"]</h2>
             @if(Model.ExternalLoginResult.Succeeded)
@@ -38,7 +38,7 @@
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="mb-2">
-                    @if (Model.View.AllowRememberLogin)
+                    @if (Model.Model.AllowRememberLogin)
                     {
                         <label asp-for="Input.RememberLogin" class="form-check">
                             <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">
@@ -60,12 +60,12 @@
             </form>
         }
     </div>
-    @if (Model.View.VisibleExternalProviders.Any())
+    @if (Model.Model.VisibleExternalProviders.Any())
     {
         <div class="hr-text">@L["or"]</div>
         <div class="card-body">
             <div class="row">
-                @foreach (var provider in Model.View.VisibleExternalProviders)
+                @foreach (var provider in Model.Model.VisibleExternalProviders)
                 {
                     <div class="col">
                         <a class="btn"
@@ -86,7 +86,7 @@
 </div>
 
 
-@if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
+@if (!Model.Model.EnableLocalLogin && !Model.Model.VisibleExternalProviders.Any())
 {
     <div class="alert alert-warning">
         <strong>@L["Invalid login scheme"]</strong>

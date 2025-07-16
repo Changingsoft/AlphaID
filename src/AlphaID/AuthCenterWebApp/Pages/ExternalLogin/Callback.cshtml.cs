@@ -27,7 +27,7 @@ public class Callback(
     {
         //从外部登录认证
         AuthenticateResult result =
-            await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
         if (result.Succeeded != true) throw new Exception("外部登录错误。");
 
         ClaimsPrincipal? externalUser = result.Principal;

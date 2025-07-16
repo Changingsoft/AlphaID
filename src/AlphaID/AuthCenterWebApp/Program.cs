@@ -29,6 +29,8 @@ using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
 using Microsoft.AspNetCore.HttpOverrides;
+using Duende.IdentityServer;
+
 
 #if WINDOWS
 using Serilog.Events;
@@ -161,6 +163,8 @@ if (weixinLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddWeixin("signin-weixin", "微信", options =>
     {
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.CallbackPath = "/signin-weixin";
         options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
@@ -172,6 +176,8 @@ if (workWeixinLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddWorkWeixin("signin-workweixin", "企业微信", options =>
     {
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.CallbackPath = "/signin-workweixin";
         options.ClientId = workWeixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = workWeixinLoginSection.GetValue("ClientSecret", string.Empty)!;
@@ -183,6 +189,8 @@ if (qqLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddQQ("/signin-qq", "QQ", options =>
     {
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.CallbackPath = "signin-qq";
         options.ClientId = qqLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = qqLoginSection.GetValue("ClientSecret", string.Empty)!;

@@ -1,6 +1,8 @@
+using Duende.IdentityServer.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,11 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
         base.ConfigureWebHost(builder);
         builder.ConfigureTestServices(services =>
         {
+            services.Configure<IdentityServerOptions>(options =>
+            {
+                //hack: 修正自动测试阶段返回地址参数名选项为null的问题。
+                options.UserInteraction.LoginReturnUrlParameter = "returnUrl";
+            });
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = "TestScheme";

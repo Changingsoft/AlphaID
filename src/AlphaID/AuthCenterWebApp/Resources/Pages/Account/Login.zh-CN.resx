@@ -153,4 +153,7 @@
   <data name="Sign up" xml:space="preserve">
     <value>创建账户</value>
   </data>
+  <data name="Sign in with phone and verification code." xml:space="preserve">
+	  <value>使用手机验证码登录。</value>
+  </data>
 </root>

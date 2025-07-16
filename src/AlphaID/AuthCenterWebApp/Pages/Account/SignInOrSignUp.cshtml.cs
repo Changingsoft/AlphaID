@@ -68,6 +68,12 @@ namespace AuthCenterWebApp.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl)
         {
+            if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber number))
+            {
+                ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
+                return Page();
+            }
+
             //先尝试验证外部登录。
             ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
@@ -99,11 +105,11 @@ namespace AuthCenterWebApp.Pages.Account
             if (ModelState.IsValid)
             {
                 //登录过程。
-                NaturalPerson? user = await userManager.FindByMobileAsync(PhoneNumber);
+                NaturalPerson? user = await userManager.FindByMobileAsync(number.ToString());
                 if (user != null)
                 {
                     bool verificationCodeValid =
-                        await verificationCodeService.VerifyAsync(PhoneNumber, VerificationCode);
+                        await verificationCodeService.VerifyAsync(number.ToString(), VerificationCode);
 
                     if (!verificationCodeValid)
                     {
@@ -161,18 +167,16 @@ namespace AuthCenterWebApp.Pages.Account
 
                     // user might have clicked on a malicious link - should be logged
                     throw new ArgumentException("invalid return URL");
-
-
                 }
                 else
                 {
                     //没有找到用户。尝试注册用户，先登录到PreSignUp Scheme，然后跳转到PostSignUp页面。
-                    List<Claim> claims = [];
-                    claims.Add(new Claim(JwtClaimTypes.PhoneNumber, PhoneNumber));
-                    if (ExternalLoginResult.Succeeded)
-                    {
-                        claims.AddRange(ExternalLoginResult.Principal.Claims);
-                    }
+                    List<Claim> claims =
+                    [
+                        new(JwtClaimTypes.PhoneNumber, number.ToString()),
+                        new("remember-login", Input.RememberLogin.ToString())
+                    ];
+
                     await HttpContext.SignInAsync(AuthenticationDefaults.PreSignUpScheme, new ClaimsPrincipal(new ClaimsIdentity(claims, AuthenticationDefaults.PreSignUpScheme)));
                     return RedirectToPage("PostSignUp", new { returnUrl });
                 }
@@ -218,7 +222,7 @@ namespace AuthCenterWebApp.Pages.Account
                         EnableLocalLogin = isLocalIdP
                     };
 
-                    PhoneNumber = context.LoginHint ?? "";
+                    //PhoneNumber = context.LoginHint ?? "";
 
                     if (!isLocalIdP)
                         Model.ExternalProviders =

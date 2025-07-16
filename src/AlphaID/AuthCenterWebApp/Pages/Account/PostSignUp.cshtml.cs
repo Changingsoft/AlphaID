@@ -70,6 +70,7 @@ namespace AuthCenterWebApp.Pages.Account
             user.Name = DisplayName;
             user.DateOfBirth = DateOfBirth;
             user.PhoneNumber = phoneNumber;
+            user.PhoneNumberConfirmed = true; // Phone number is confirmed by the pre-sign-up process
 
             var result = await userManager.CreateAsync(user);
             if (!result.Succeeded)
@@ -78,6 +79,7 @@ namespace AuthCenterWebApp.Pages.Account
                 ModelState.AddModelError(string.Empty, "创建用户时出错。请稍后再试。");
                 return Page();
             }
+            
 
             ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
             //如果有外部登录信息，则将其绑定到外部登录

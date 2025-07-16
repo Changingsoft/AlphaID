@@ -163,6 +163,7 @@ if (weixinLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddWeixin("signin-weixin", "微信", options =>
     {
+        //替换默认的SignInScheme，以便在回调时正确验证。
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
         options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.CallbackPath = "/signin-weixin";

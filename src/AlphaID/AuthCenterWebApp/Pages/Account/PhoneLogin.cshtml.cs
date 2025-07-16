@@ -120,7 +120,7 @@ public class PhoneLoginModel(
                 var verificationResult = await verificationCodeService.VerifyAsync(Mobile, VerificationCode);
                 if (verificationResult)
                 {
-                    await signInManager.PasswordSignInAsync(user, VerificationCode, Input.RememberLogin, true);
+                    await signInManager.SignInAsync(user, Input.RememberLogin);
                     await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName,
                         clientId: context?.Client.ClientId));
 

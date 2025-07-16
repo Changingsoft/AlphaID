@@ -153,4 +153,7 @@
   <data name="Sign up" xml:space="preserve">
     <value>创建账户</value>
   </data>
+  <data name="Send code" xml:space="preserve">
+	  <value>发送代码</value>
+  </data>
 </root>

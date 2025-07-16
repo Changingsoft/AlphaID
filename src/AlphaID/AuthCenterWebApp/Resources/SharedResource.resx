@@ -358,4 +358,20 @@
   <data name="Organization name" xml:space="preserve">
 	  <value>Organization name</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+	  <value>Continue</value>
+	  <comment>Continue</comment>
+  </data>
+  <data name="Date of birth cannot be changed after sign up." xml:space="preserve">
+	  <value>Date of birth cannot be changed after sign up.</value>
+  </data>
+  <data name="Display name" xml:space="preserve">
+	  <value>Display name</value>
+  </data>
+  <data name="Your fully person name, include family name and given name." xml:space="preserve">
+	  <value>Your fully person name, include family name and given name.</value>
+  </data>
+  <data name="Send code" xml:space="preserve">
+	  <value>Send code</value>
+  </data>
 </root>

@@ -57,6 +57,12 @@
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Organizations\JoinRequests\Request.zh-cn.resx">
 	    <DependentUpon>Request.resx</DependentUpon>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Account\PostSignUp.zh-cn.resx">
+	    <DependentUpon>PostSignUp.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Pages\Account\SignInOrSignUp.zh-cn.resx">
+	    <DependentUpon>SignInOrSignUp.resx</DependentUpon>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

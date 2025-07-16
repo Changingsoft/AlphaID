@@ -149,6 +149,12 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, Iden
 
 //配置外部登录。
 var authBuilder = builder.Services.AddAuthentication();
+//添加PreSignUp方案。
+authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+});
+
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))
@@ -206,6 +212,9 @@ builder.Services.AddIdentityServer(options =>
         options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
 
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
+
+        //配置使得跳转到SignInOrSignUp页面。
+        options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
     })
     .AddConfigurationStore(options =>
     {

@@ -7,7 +7,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:49726"
+      "applicationUrl": "https://localhost:49726;http://localhost:7182"
     }
   }
 }

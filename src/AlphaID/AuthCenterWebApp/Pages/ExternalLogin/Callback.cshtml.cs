@@ -56,7 +56,7 @@ public class Callback(
         if (user == null)
         {
             if (loginOptions.Value.AllowLocalLogin)
-                return RedirectToPage("/Account/Login", new { returnUrl });
+                return RedirectToPage("/Account/SignInOrSignUp", new { returnUrl });
             else
                 return RedirectToPage("/Account/LoginFailed");
         }

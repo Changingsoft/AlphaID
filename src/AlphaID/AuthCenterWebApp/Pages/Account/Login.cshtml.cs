@@ -237,7 +237,7 @@ public class LoginModel(
 
         var allowLocal = true;
         Client? client = context?.Client;
-        List<ExternalLoginProvider> allowExternalProviders = [];
+        List<ExternalLoginProvider> allowExternalProviders = externalProviders;
         if (client != null)
         {
             allowLocal = client.EnableLocalLogin; //客户端是否允许本地登录

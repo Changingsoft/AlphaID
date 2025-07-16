@@ -161,7 +161,7 @@ if (weixinLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddWeixin("signin-weixin", "微信", options =>
     {
-        options.CallbackPath = "signin-weixin";
+        options.CallbackPath = "/signin-weixin";
         options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
@@ -172,7 +172,7 @@ if (workWeixinLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddWorkWeixin("signin-workweixin", "企业微信", options =>
     {
-        options.CallbackPath = "signin-workweixin";
+        options.CallbackPath = "/signin-workweixin";
         options.ClientId = workWeixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = workWeixinLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
@@ -181,7 +181,7 @@ if (workWeixinLoginSection.GetValue("Enabled", false))
 var qqLoginSection = externalLoginsSection.GetSection("QQ");
 if (qqLoginSection.GetValue("Enabled", false))
 {
-    authBuilder.AddQQ("signin-qq", "QQ", options =>
+    authBuilder.AddQQ("/signin-qq", "QQ", options =>
     {
         options.CallbackPath = "signin-qq";
         options.ClientId = qqLoginSection.GetValue("ClientId", string.Empty)!;

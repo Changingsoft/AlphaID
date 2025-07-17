@@ -167,6 +167,7 @@ if (weixinLoginSection.GetValue("Enabled", false))
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
         options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.CallbackPath = "/signin-weixin";
+        options.AuthorizationEndpoint = "https://open.weixin.qq.com/connect/oauth2/authorize";
         options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
     });

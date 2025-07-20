@@ -40,7 +40,7 @@ public class WechatMpOAuthHandler : OAuthHandler<WechatMpAuthOptions>
 
     protected override bool ValidateCorrelationId(AuthenticationProperties properties)
     {
-        return true;
+        //return true;
         return base.ValidateCorrelationId(properties);
     }
 
@@ -83,7 +83,7 @@ public class WechatMpOAuthHandler : OAuthHandler<WechatMpAuthOptions>
     {
         var baseTicket = await base.CreateTicketAsync(identity, properties, tokens);
         // 1. 获取 openid
-        var openId = tokens.Response.RootElement.TryGetProperty("openid", out var openIdElement)
+        var openId = tokens.Response!.RootElement.TryGetProperty("openid", out var openIdElement)
             ? openIdElement.GetString()
             : null;
 
@@ -102,22 +102,22 @@ public class WechatMpOAuthHandler : OAuthHandler<WechatMpAuthOptions>
     // 简单的服务端存储（生产建议用分布式缓存）
     public static class StateStore
     {
-        private static readonly Dictionary<string, AuthenticationProperties> _store = new();
+        private static readonly Dictionary<string, AuthenticationProperties> s_store = new();
 
         public static void Save(string key, AuthenticationProperties props)
         {
-            _store[key] = props;
+            s_store[key] = props;
         }
 
         public static AuthenticationProperties? Get(string key)
         {
-            _store.TryGetValue(key, out var props);
+            s_store.TryGetValue(key, out var props);
             return props;
         }
 
         public static void Remove(string key)
         {
-            _store.Remove(key);
+            s_store.Remove(key);
         }
     }
 }

@@ -30,8 +30,10 @@ public class ShortIdStateDataFormat : ISecureDataFormat<AuthenticationProperties
         throw new NotImplementedException();
     }
 
-    public AuthenticationProperties? Unprotect(string protectedText)
+    public AuthenticationProperties? Unprotect(string? protectedText)
     {
+        if (protectedText == null)
+            return null;
         return WechatMpOAuthHandler.StateStore.Get(protectedText);
     }
 

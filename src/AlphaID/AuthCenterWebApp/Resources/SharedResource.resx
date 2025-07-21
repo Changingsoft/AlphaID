@@ -332,49 +332,52 @@
     <value>Return</value>
   </data>
   <data name="Birth date" xml:space="preserve">
-	  <value>Birth date</value>
+    <value>Birth date</value>
   </data>
   <data name="Received from mobile phone short message" xml:space="preserve">
-	  <value>Received from mobile phone short message</value>
+    <value>Received from mobile phone short message</value>
   </data>
   <data name="User name, email or phone number" xml:space="preserve">
-	  <value>User name, email or phone number</value>
+    <value>User name, email or phone number</value>
   </data>
   <data name="Delete Account" xml:space="preserve">
-	  <value>Delete Account</value>
+    <value>Delete Account</value>
   </data>
   <data name="Change password" xml:space="preserve">
-	  <value>Change password</value>
-	  <comment>Change password</comment>
+    <value>Change password</value>
+    <comment>Change password</comment>
   </data>
   <data name="Your password has expired" xml:space="preserve">
-	  <value>Your password has expired</value>
-	  <comment>Your password has expired</comment>
+    <value>Your password has expired</value>
+    <comment>Your password has expired</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
-	  <value>Cancel</value>
-	  <comment>Cancel</comment>
+    <value>Cancel</value>
+    <comment>Cancel</comment>
   </data>
   <data name="Organization name" xml:space="preserve">
-	  <value>Organization name</value>
+    <value>Organization name</value>
   </data>
   <data name="Continue" xml:space="preserve">
-	  <value>Continue</value>
-	  <comment>Continue</comment>
+    <value>Continue</value>
+    <comment>Continue</comment>
   </data>
   <data name="Date of birth cannot be changed after sign up." xml:space="preserve">
-	  <value>Date of birth cannot be changed after sign up.</value>
+    <value>Date of birth cannot be changed after sign up.</value>
   </data>
   <data name="Display name" xml:space="preserve">
-	  <value>Display name</value>
+    <value>Display name</value>
   </data>
   <data name="Your fully person name, include family name and given name." xml:space="preserve">
-	  <value>Your fully person name, include family name and given name.</value>
+    <value>Your fully person name, include family name and given name.</value>
   </data>
   <data name="Send code" xml:space="preserve">
-	  <value>Send code</value>
+    <value>Send code</value>
   </data>
   <data name="Family name" xml:space="preserve">
-	  <value>Family name</value>
+    <value>Family name</value>
+  </data>
+  <data name="PhoneNumberInvalid" xml:space="preserve">
+    <value>Phone number invalid.</value>
   </data>
 </root>

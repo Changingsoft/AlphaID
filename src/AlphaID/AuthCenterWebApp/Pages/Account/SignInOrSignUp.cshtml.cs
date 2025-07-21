@@ -131,6 +131,12 @@ namespace AuthCenterWebApp.Pages.Account
                 return Page();
             }
 
+            var captchaInstance = Captcha.Load("LoginCaptcha");
+            if (!captchaInstance.Validate(CaptchaCode))
+            {
+                ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+            }
+
             //先尝试验证外部登录。
             ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
@@ -228,9 +234,9 @@ namespace AuthCenterWebApp.Pages.Account
             var captchaResult = BotDetect.Web.Captcha.Validate("LoginCaptcha", CaptchaCode, instanceId);
             if (!captchaResult)
             {
-                return new JsonResult("Invalid captcha.");
+                return new JsonResult(Resources.SharedResource.Captcha_Invalid);
             }
-            if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+            if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult(Resources.SharedResource.PhoneNumberInvalid);
             await verificationCodeService.SendAsync(phoneNumber.ToString());
             return new JsonResult(true);
         }

@@ -234,7 +234,7 @@ namespace AuthCenterWebApp.Pages.Account
 
         public async Task<IActionResult> OnPostSendVerificationCode(string instanceId)
         {
-            var captchaResult = BotDetect.Web.Captcha.Validate("LoginCaptcha", CaptchaCode, instanceId);
+            var captchaResult = BotDetect.Web.Captcha.AjaxValidate("LoginCaptcha", CaptchaCode, instanceId);
             if (!captchaResult)
             {
                 return new JsonResult(Resources.SharedResource.Captcha_Invalid);

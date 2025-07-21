@@ -39,6 +39,8 @@
                     <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("东吴集团")}"))">东吴集团</a>
                 </li>
             </ul>
+            <h2>Locale</h2>
+            <p>Locale: @System.Globalization.CultureInfo.CurrentCulture.Name (@System.Globalization.CultureInfo.CurrentUICulture.Name)</p>
             <h2>Browser</h2>
             <h3>User-Agent</h3>
             <p>@Context.Request.Headers.UserAgent</p>

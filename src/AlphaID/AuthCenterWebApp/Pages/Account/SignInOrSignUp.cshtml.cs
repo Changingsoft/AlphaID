@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using AlphaIdPlatform.Platform;
+using BotDetect.Web;
+using BotDetect.Web.Mvc;
 
 namespace AuthCenterWebApp.Pages.Account
 {
@@ -42,9 +44,13 @@ namespace AuthCenterWebApp.Pages.Account
 
         [BindProperty]
         [Required(ErrorMessage = "Validate_Required")]
+        [Display(Name = "Captcha code")]
+        public string CaptchaCode { get; set; } = null!;
+
+        [BindProperty]
         [Display(Name = "Verification code")]
         [DataType(DataType.Password)]
-        public string VerificationCode { get; set; } = null!;
+        public string? VerificationCode { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string? returnUrl)
         {
@@ -94,15 +100,6 @@ namespace AuthCenterWebApp.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl)
         {
-            if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber number))
-            {
-                ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
-                return Page();
-            }
-
-            //先尝试验证外部登录。
-            ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-
             //检查我们是否在授权请求的上下文中
             AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
@@ -128,6 +125,15 @@ namespace AuthCenterWebApp.Pages.Account
                 return Redirect("~/");
             }
 
+            if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber number))
+            {
+                ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
+                return Page();
+            }
+
+            //先尝试验证外部登录。
+            ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+
             if (ModelState.IsValid)
             {
                 //登录过程。
@@ -135,7 +141,7 @@ namespace AuthCenterWebApp.Pages.Account
                 if (user != null)
                 {
                     bool verificationCodeValid =
-                        await verificationCodeService.VerifyAsync(number.ToString(), VerificationCode);
+                        await verificationCodeService.VerifyAsync(number.ToString(), VerificationCode!);
 
                     if (!verificationCodeValid)
                     {
@@ -217,9 +223,14 @@ namespace AuthCenterWebApp.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
+        public async Task<IActionResult> OnPostSendVerificationCode(string instanceId)
         {
-            if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+            var captchaResult = BotDetect.Web.Captcha.Validate("LoginCaptcha", CaptchaCode, instanceId);
+            if (!captchaResult)
+            {
+                return new JsonResult("Invalid captcha.");
+            }
+            if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
             await verificationCodeService.SendAsync(phoneNumber.ToString());
             return new JsonResult(true);
         }
@@ -341,7 +352,7 @@ namespace AuthCenterWebApp.Pages.Account
 
             public string? ReturnUrl { get; set; }
 
-            public string Button { get; set; } = null!;
+            public string? Button { get; set; }
         }
 
         public class LoginOptionsModel

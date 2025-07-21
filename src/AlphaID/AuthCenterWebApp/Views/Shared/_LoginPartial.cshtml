@@ -1,7 +1,7 @@
 @using AlphaIdPlatform.Security
 @inject SignInManager<NaturalPerson> SignInManager
 
-@if (SignInManager.IsSignedIn(User))
+@if (User.Identity!.IsAuthenticated)
 {
     <div class="nav-item dropdown">
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
@@ -26,12 +26,9 @@ else
 {
     <div class="nav-item">
         <div class="btn-list">
-            <a asp-page="/Account/Login" asp-route-returnUrl="@Context.Request.Path" class="btn">
+            <a asp-page="/Account/SignInOrSignUp" asp-route-returnUrl="@Context.Request.Path" class="btn">
                 <span class="avatar avatar-sm">?</span>
-                @L["Sign in"]
-            </a>
-            <a asp-page="/Account/SignUp" class="btn">
-                @L["Sign up"]
+                @L["Sign in / Sign up"]
             </a>
         </div>
 

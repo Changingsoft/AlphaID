@@ -50,9 +50,6 @@ namespace AuthCenterWebApp.Pages.Account
         {
             await BuildModelAsync(returnUrl);
 
-            //尝试验证外部登录。
-            ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-
             if (Model.IsExternalLoginOnly)
                 // we only have one option for logging in and it's an external provider
                 return RedirectToPage("/ExternalLogin/Challenge",
@@ -62,6 +59,35 @@ namespace AuthCenterWebApp.Pages.Account
                         schemeDisplayName = Model.ExternalLoginDisplayName,
                         returnUrl
                     });
+
+            //尝试验证外部登录。
+            ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+
+            if (ExternalLoginResult.None)
+            {
+                //如果配置了微信，且当前在微信浏览器中，则尝试使用微信外部登录。
+                var userAgent = Request.Headers.UserAgent;
+                if (userAgent.Any(ua => ua!.Contains("MicroMessenger", StringComparison.OrdinalIgnoreCase)))
+                {
+                    //如果微信登录配置了，则尝试使用微信登录。
+                    AuthenticationScheme? wechatScheme = await schemeProvider.GetSchemeAsync("wechat-mp");
+                    if (wechatScheme != null)
+                    {
+                        return RedirectToPage("/ExternalLogin/Challenge",
+                            new
+                            {
+                                scheme = wechatScheme.Name,
+                                schemeDisplayName = wechatScheme.DisplayName,
+                                returnUrl
+                            });
+                    }
+                }
+            }
+
+            if (ExternalLoginResult.Succeeded)
+            {
+                //如果有成功的外部登录，则清空可见外部登录提供器。
+            }
 
             return Page();
         }
@@ -277,6 +303,10 @@ namespace AuthCenterWebApp.Pages.Account
                 }
             }
 
+            //如果已存在成功的外部登录，则清空外部登录提供器。
+            var externalLogin = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            if (externalLogin.Succeeded)
+                allowExternalProviders.Clear();
             Model = new LoginOptionsModel
             {
                 AllowRememberLogin = loginOptions.Value.AllowRememberLogin,
@@ -313,7 +343,7 @@ namespace AuthCenterWebApp.Pages.Account
 
             public string Button { get; set; } = null!;
         }
-        
+
         public class LoginOptionsModel
         {
             /// <summary>

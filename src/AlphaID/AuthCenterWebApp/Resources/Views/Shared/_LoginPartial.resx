@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -129,5 +129,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="Sign in / Sign up" xml:space="preserve">
+	  <value>Sign in / Sign up</value>
+	  <comment>Sign in / Sign up</comment>
   </data>
 </root>

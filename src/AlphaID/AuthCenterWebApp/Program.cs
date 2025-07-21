@@ -163,7 +163,7 @@ var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))
 {
-    authBuilder.AddWechatMp("signin-weixin", "微信", options =>
+    authBuilder.AddWechatMp("wechat-mp", "微信", options =>
     {
         //替换默认的SignInScheme，以便在回调时正确验证。
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;

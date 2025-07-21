@@ -17,4 +17,7 @@
 	<data name="or" xml:space="preserve">
 		<value>或</value>
 	</data>
+	<data name="You have signed in from {0}." xml:space="preserve">
+		<value>您已登录到{0}。</value>
+	</data>
 </root>

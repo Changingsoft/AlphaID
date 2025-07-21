@@ -106,4 +106,8 @@
 		<value>or</value>
 		<comment>or</comment>
 	</data>
+	<data name="You have signed in from {0}." xml:space="preserve">
+		<value>You have signed in from {0}.</value>
+		<comment>You have signed in from {0}.</comment>
+	</data>
 </root>

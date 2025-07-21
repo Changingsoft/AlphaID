@@ -21,7 +21,7 @@
             <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
             @if (Model.ExternalLoginResult.Succeeded)
             {
-                <p>You have signed in from an external login. login to your local account to bind your external login.</p>
+                <p class="alert alert-success">@L["You have signed in from {0}.", Model.ExternalLoginResult.Properties.Items["schemeDisplayName"]!]</p>
             }
             <form method="post">
                 <input type="hidden" asp-for="Input.ReturnUrl" />

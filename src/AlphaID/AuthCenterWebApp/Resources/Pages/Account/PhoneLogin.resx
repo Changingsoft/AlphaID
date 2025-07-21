@@ -97,20 +97,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Create your" xml:space="preserve">
-    <value>Create your</value>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
   </data>
-  <data name="Create your {0}" xml:space="preserve">
-	  <value>Create your {0}</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="My profile" xml:space="preserve">
-    <value>My profile</value>
+  <data name="Don't have account yet?" xml:space="preserve">
+    <value>Don't have account yet?</value>
+  </data>
+  <data name="I forgot password" xml:space="preserve">
+    <value>I forgot password</value>
+  </data>
+  <data name="Invalid login scheme" xml:space="preserve">
+    <value>Invalid login scheme</value>
+  </data>
+  <data name="Login to your account" xml:space="preserve">
+    <value>Login to your account</value>
+  </data>
+  <data name="No schemes set for this request" xml:space="preserve">
+    <value>No schemes set for this request</value>
+  </data>
+  <data name="or" xml:space="preserve">
+	  <value>or</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Remember me on this device" xml:space="preserve">
+    <value>Remember me on this device</value>
   </data>
   <data name="Sign in" xml:space="preserve">
     <value>Sign in</value>
   </data>
-  <data name="Sign in / Sign up" xml:space="preserve">
-	  <value>Sign in / Sign up</value>
-	  <comment>Sign in / Sign up</comment>
+  <data name="Sign up" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="Send code" xml:space="preserve">
+	  <value>Send code</value>
+	  <comment>Send code</comment>
   </data>
 </root>

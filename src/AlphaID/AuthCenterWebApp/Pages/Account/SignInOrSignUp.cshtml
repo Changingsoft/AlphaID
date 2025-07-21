@@ -1,0 +1,150 @@
+@page
+@using BotDetect.Web
+@model AuthCenterWebApp.Pages.Account.SignInOrSignUpModel
+@{
+    ViewBag.Title = L["Sign in or sign up"];
+}
+@section head
+{
+    <link href="@CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+}
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+        @Product.Value.Name @SL["Account"]
+    </a>
+</div>
+<div class="card card-md">
+    <div class="card-body">
+        @if (Model.Model.EnableLocalLogin)
+        {
+            <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
+            @if (Model.ExternalLoginResult.Succeeded)
+            {
+                <p class="alert alert-success">@L["You have signed in from {0}.", Model.ExternalLoginResult.Properties.Items["schemeDisplayName"]!]</p>
+            }
+            <form method="post">
+                <input type="hidden" asp-for="Input.ReturnUrl" />
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label required"></label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+86</span>
+                        <input asp-for="PhoneNumber" class="form-control" autofocus tabindex="1">
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label required" asp-for="VerificationCode"></label>
+                    <div class="input-group mb-2">
+                        <input asp-for="VerificationCode" class="form-control" tabindex="2" autocomplete="off">
+                        <button type="button" class="btn" onclick="SendVerificationCode(this);">@SL["Send code"]</button>
+                    </div>
+                    <span asp-validation-for="VerificationCode" class="text-danger"></span>
+                </div>
+                <div class="mb-2">
+                    @if (Model.Model.AllowRememberLogin)
+                    {
+                        <label asp-for="Input.RememberLogin" class="form-check">
+                            <input asp-for="Input.RememberLogin" type="checkbox" class="form-check-input">
+                            <span class="form-check-label">@SL["Remember me on this device"]</span>
+                        </label>
+                    }
+                </div>
+                <partial name="_ValidationSummary" />
+                <div class="form-footer">
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@SL["Continue"]</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@SL["Cancel"]</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+    @if (Model.Model.VisibleExternalProviders.Any())
+    {
+        <div class="hr-text">@L["or"]</div>
+        <div class="card-body">
+            <div class="row">
+                @foreach (var provider in Model.Model.VisibleExternalProviders)
+                {
+                    <div class="col">
+                        <a class="btn"
+                           asp-page="/ExternalLogin/Challenge"
+                           asp-route-scheme="@provider.AuthenticationScheme"
+                           asp-route-schemeDisplayName="@provider.DisplayName"
+                           asp-route-returnUrl="@Model.Input.ReturnUrl">
+                            @provider.DisplayName
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Model.EnableLocalLogin && !Model.Model.VisibleExternalProviders.Any())
+{
+    <div class="alert alert-warning">
+        <strong>@L["Invalid login scheme"]</strong>
+        @L["No schemes set for this request"]
+    </div>
+}
+
+@section Scripts
+{
+    <script src="~/js/captcha.validate.js"></script>
+    <script>
+        var countdown = 60;
+        function SendVerificationCode(obj) {
+            var mobile = $("#PhoneNumber").val();
+            var mobilereg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+            //var sendVcodeSuccess = $('#send_vcode_success');
+            //var sendVcodeFail = $('#send_vcode_fail');
+            //var mobileInputInvalid = $('#mobile_input_invalid');
+            if (!mobilereg.test(mobile)) {
+                //mobileInputInvalid.fadeIn(200);
+            } else {
+                settime(obj);
+                $.ajax({
+                    method: 'POST',
+                    url: "?handler=SendVerificationCode",
+                    headers: {
+                        RequestVerificationToken:
+                            $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    data: { mobile: mobile },
+                    success: function (data) {
+                        //sendVcodeSuccess.fadeIn(200);
+                    },
+                    error: function (error) {
+                        //sendVcodeFail.fadeIn(200);
+                    }
+                })
+            }
+        }
+        function settime(obj) {
+
+            var code = $(obj);
+            if (countdown == 0) {
+                code.removeAttr('disabled');
+                code.text("发送验证码");
+                countdown = 60;
+                return;
+            } else {
+                code.text("重新发送 (" + countdown + ")");
+                code.attr('disabled', true);
+                countdown--;
+            }
+            setTimeout(function () {
+                settime(obj)
+            }, 1000);
+
+        }
+    </script>
+
+}

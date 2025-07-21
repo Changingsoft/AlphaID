@@ -1,4 +1,6 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Platform;
+using BotDetect.Web.Mvc;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -6,7 +8,6 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using IdSubjects;
-using IdSubjects.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,16 +15,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AuthCenterWebApp.Pages.Account;
 
-[SecurityHeaders]
 [AllowAnonymous]
-public class LoginModel(
+public class PhoneLoginModel(
     IIdentityServerInteractionService interaction,
     IAuthenticationSchemeProvider schemeProvider,
     IIdentityProviderStore identityProviderStore,
+    IVerificationCodeService verificationCodeService,
     IEventService events,
     ApplicationUserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
@@ -35,6 +35,24 @@ public class LoginModel(
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
+
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Phone number")]
+    public string Mobile { get; set; } = null!;
+
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Verification code")]
+    public string VerificationCode { get; set; } = null!;
+
+
+    [Display(Name = "Captcha code")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
+    [BindProperty]
+    public string CaptchaCode { get; set; } = null!;
+
 
     public async Task<IActionResult> OnGetAsync(string? returnUrl)
     {
@@ -54,6 +72,13 @@ public class LoginModel(
                 });
 
         return Page();
+    }
+
+    public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
+    {
+        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+        await verificationCodeService.SendAsync(phoneNumber.ToString());
+        return new JsonResult(true);
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -89,15 +114,13 @@ public class LoginModel(
         if (ModelState.IsValid)
         {
             //登录过程。
-            NaturalPerson? user = await userManager.FindByEmailAsync(Input.Username)
-                                  ?? await userManager.FindByMobileAsync(Input.Username)
-                                  ?? await userManager.FindByNameAsync(Input.Username);
+            NaturalPerson? user = await userManager.FindByMobileAsync(Mobile);
             if (user != null)
             {
-                SignInResult result =
-                    await signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberLogin, true);
-                if (result.Succeeded)
+                var verificationResult = await verificationCodeService.VerifyAsync(Mobile, VerificationCode);
+                if (verificationResult)
                 {
+                    await signInManager.SignInAsync(user, Input.RememberLogin);
                     await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName,
                         clientId: context?.Client.ClientId));
 
@@ -148,20 +171,9 @@ public class LoginModel(
                     // user might have clicked on a malicious link - should be logged
                     throw new ArgumentException("invalid return URL");
                 }
-
-                if (result.MustChangePassword())
-                    return RedirectToPage("ChangePassword", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
-
-                if (result.RequiresTwoFactor)
-                    return RedirectToPage("./LoginWith2fa", new { Input.ReturnUrl, RememberMe = Input.RememberLogin });
-
-                if (result.IsLockedOut)
-                    //_logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
             }
 
-
-            await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
+            await events.RaiseAsync(new UserLoginFailureEvent(Mobile, "invalid credentials",
                 clientId: context?.Client.ClientId));
             ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
         }
@@ -194,7 +206,7 @@ public class LoginModel(
                     EnableLocalLogin = isLocalIdP
                 };
 
-                Input.Username = context.LoginHint ?? "";
+                Mobile = context.LoginHint ?? "";
 
                 if (!isLocalIdP)
                     Model.ExternalProviders =
@@ -277,14 +289,6 @@ public class LoginModel(
 
     public class InputModel
     {
-        [Required(ErrorMessage = "Validate_Required")]
-        [Display(Name = "Account", Prompt = "User name, email or phone number")]
-        public string Username { get; set; } = null!;
-
-        [Required(ErrorMessage = "Validate_Required")]
-        [Display(Name = "Password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = null!;
 
         [Display(Name = "Remember me on this device")]
         public bool RememberLogin { get; set; }

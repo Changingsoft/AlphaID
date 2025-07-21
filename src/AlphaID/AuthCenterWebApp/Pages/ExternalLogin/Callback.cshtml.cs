@@ -27,8 +27,9 @@ public class Callback(
     {
         //从外部登录认证
         AuthenticateResult result =
-            await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
-        if (result.Succeeded != true) throw new Exception("外部登录错误。");
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        if (result.Succeeded != true) 
+            throw new Exception("外部登录错误。");
 
         ClaimsPrincipal? externalUser = result.Principal;
 
@@ -56,7 +57,7 @@ public class Callback(
         if (user == null)
         {
             if (loginOptions.Value.AllowLocalLogin)
-                return RedirectToPage("/Account/Login", new { returnUrl });
+                return RedirectToPage("/Account/SignInOrSignUp", new { returnUrl });
             else
                 return RedirectToPage("/Account/LoginFailed");
         }

@@ -29,6 +29,10 @@ using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
 using Microsoft.AspNetCore.HttpOverrides;
+using Duende.IdentityServer;
+using AuthCenterWebApp.Services.WechatMp;
+
+
 
 #if WINDOWS
 using Serilog.Events;
@@ -149,13 +153,22 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, Iden
 
 //配置外部登录。
 var authBuilder = builder.Services.AddAuthentication();
+//添加PreSignUp方案。
+authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+});
+
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))
 {
-    authBuilder.AddWeixin("signin-weixin", "微信", options =>
+    authBuilder.AddWechatMp("wechat-mp", "微信", options =>
     {
-        options.CallbackPath = "signin-weixin";
+        //替换默认的SignInScheme，以便在回调时正确验证。
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+        //options.CallbackPath = "/signin-weixin";
         options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
@@ -166,7 +179,9 @@ if (workWeixinLoginSection.GetValue("Enabled", false))
 {
     authBuilder.AddWorkWeixin("signin-workweixin", "企业微信", options =>
     {
-        options.CallbackPath = "signin-workweixin";
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+        options.CallbackPath = "/signin-workweixin";
         options.ClientId = workWeixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = workWeixinLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
@@ -175,8 +190,10 @@ if (workWeixinLoginSection.GetValue("Enabled", false))
 var qqLoginSection = externalLoginsSection.GetSection("QQ");
 if (qqLoginSection.GetValue("Enabled", false))
 {
-    authBuilder.AddQQ("signin-qq", "QQ", options =>
+    authBuilder.AddQQ("/signin-qq", "QQ", options =>
     {
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.CallbackPath = "signin-qq";
         options.ClientId = qqLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = qqLoginSection.GetValue("ClientSecret", string.Empty)!;
@@ -206,6 +223,9 @@ builder.Services.AddIdentityServer(options =>
         options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
 
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
+
+        //配置使得跳转到SignInOrSignUp页面。
+        options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
     })
     .AddConfigurationStore(options =>
     {

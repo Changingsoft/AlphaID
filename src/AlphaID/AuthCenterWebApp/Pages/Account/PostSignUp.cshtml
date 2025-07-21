@@ -1,0 +1,47 @@
+@page
+@model AuthCenterWebApp.Pages.Account.PostSignUpModel
+@{
+    ViewBag.Title = L["Complete your profile"];
+}
+<div class="text-center mb-4">
+    <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
+        <img src="/logo.png" width="32" height="32" alt="Tabler" class="navbar-brand-image">
+        @Product.Value.Name @SL["Account"]
+    </a>
+</div>
+<div class="card card-md">
+    <div class="card-body">
+        <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="FamilyName" class="form-label required"></label>
+                <input asp-for="FamilyName" class="form-control" autofocus tabindex="1">
+                <span asp-description-for="FamilyName"></span>
+                <span asp-validation-for="FamilyName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GivenName" class="form-label required"></label>
+                <input asp-for="GivenName" class="form-control">
+                <span asp-description-for="GivenName"></span>
+                <span asp-validation-for="GivenName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DateOfBirth" class="form-label required"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-description-for="DateOfBirth"></span>
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <partial name="_ValidationSummary" />
+            <div class="form-footer">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary w-100" name="Input.Button" value="login">@SL["Continue"]</button>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-secondary w-100" name="Input.Button" value="cancel">@SL["Cancel"]</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

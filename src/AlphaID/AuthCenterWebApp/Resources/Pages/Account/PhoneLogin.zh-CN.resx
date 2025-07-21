@@ -117,19 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Create your" xml:space="preserve">
-    <value>创建您的</value>
+  <data name="Account" xml:space="preserve">
+    <value>账户</value>
   </data>
-  <data name="Create your {0}" xml:space="preserve">
-    <value>创建您的{0}</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
   </data>
-  <data name="My profile" xml:space="preserve">
-    <value>个人中心</value>
+  <data name="Don't have account yet?" xml:space="preserve">
+    <value>还没有账户吗？</value>
+  </data>
+  <data name="I forgot password" xml:space="preserve">
+    <value>忘记密码</value>
+  </data>
+  <data name="Invalid login scheme" xml:space="preserve">
+	  <value>无效的登录方案</value>
+  </data>
+  <data name="Login to your account" xml:space="preserve">
+    <value>登录到您的账户</value>
+  </data>
+  <data name="No schemes set for this request" xml:space="preserve">
+	  <value>没有针对此请求的方案集</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>或</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Remember me on this device" xml:space="preserve">
+    <value>在这个设备上记住我</value>
   </data>
   <data name="Sign in" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="Sign in / Sign up" xml:space="preserve">
-	  <value>登录/注册</value>
+  <data name="Sign up" xml:space="preserve">
+    <value>创建账户</value>
+  </data>
+  <data name="Send code" xml:space="preserve">
+	  <value>发送代码</value>
   </data>
 </root>

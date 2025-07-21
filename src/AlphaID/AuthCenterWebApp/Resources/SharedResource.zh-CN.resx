@@ -348,4 +348,22 @@
   <data name="Organization name" xml:space="preserve">
 	  <value>组织名称</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+	  <value>继续</value>
+  </data>
+  <data name="Date of birth cannot be changed after sign up." xml:space="preserve">
+	  <value>注册后不能更改生日。</value>
+  </data>
+  <data name="Display name" xml:space="preserve">
+	  <value>显示名称</value>
+  </data>
+  <data name="Your fully person name, include family name and given name." xml:space="preserve">
+	  <value>你的完整姓名，包括姓氏和名字。</value>
+  </data>
+  <data name="Send code" xml:space="preserve">
+	  <value>发送代码</value>
+  </data>
+  <data name="Family name" xml:space="preserve">
+	  <value>姓氏</value>
+  </data>
 </root>

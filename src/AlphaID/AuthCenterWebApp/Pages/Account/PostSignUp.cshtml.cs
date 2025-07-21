@@ -43,6 +43,8 @@ namespace AuthCenterWebApp.Pages.Account
 
         public AuthenticateResult ExternalLoginResult { get; set; } = null!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? ReturnUrl { get; set; }
 
         public async Task<IActionResult> OnGet(string? returnUrl)
         {

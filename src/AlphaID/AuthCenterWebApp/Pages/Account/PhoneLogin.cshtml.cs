@@ -33,6 +33,9 @@ public class PhoneLoginModel(
 
     public AuthenticateResult ExternalLoginResult { get; set; } = null!;
 
+    [BindProperty(SupportsGet = true)]
+    public string? ReturnUrl { get; set; }
+
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
@@ -54,133 +57,141 @@ public class PhoneLoginModel(
     public string CaptchaCode { get; set; } = null!;
 
 
-    public async Task<IActionResult> OnGetAsync(string? returnUrl)
+    public IActionResult OnGet(string? returnUrl)
     {
-        await BuildModelAsync(returnUrl);
+        //总是重定向到SignInOrSignUp页面。
+        return RedirectToPage("SignInOrSignUp", new { returnUrl });
 
-        //尝试验证外部登录。
-        ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        //await BuildModelAsync(returnUrl);
 
-        if (Model.IsExternalLoginOnly)
-            // we only have one option for logging in and it's an external provider
-            return RedirectToPage("/ExternalLogin/Challenge",
-                new
-                {
-                    scheme = Model.ExternalLoginScheme,
-                    schemeDisplayName = Model.ExternalLoginDisplayName,
-                    returnUrl
-                });
+        ////尝试验证外部登录。
+        //ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
-        return Page();
+        //if (Model.IsExternalLoginOnly)
+        //    // we only have one option for logging in and it's an external provider
+        //    return RedirectToPage("/ExternalLogin/Challenge",
+        //        new
+        //        {
+        //            scheme = Model.ExternalLoginScheme,
+        //            schemeDisplayName = Model.ExternalLoginDisplayName,
+        //            returnUrl
+        //        });
+
+        //return Page();
     }
 
-    public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
+    public IActionResult OnPostSendVerificationCode(string mobile)
     {
-        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
-        await verificationCodeService.SendAsync(phoneNumber.ToString());
-        return new JsonResult(true);
+        return new JsonResult("Do not use this method directly.");
+
+        //if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+        //await verificationCodeService.SendAsync(phoneNumber.ToString());
+        //return new JsonResult(true);
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public IActionResult OnPost()
     {
-        //先尝试验证外部登录。
-        ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        //总是重定向到SignInOrSignUp页面。
+        return RedirectToPage("SignInOrSignUp", new { returnUrl = ReturnUrl });
 
-        //检查我们是否在授权请求的上下文中
-        AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
+        ////先尝试验证外部登录。
+        //ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
-        //用户点击了“取消”按钮
-        if (Input.Button != "login")
-        {
-            if (context != null)
-            {
-                // 将用户的取消发送回 IdentityServer，以便它能拒绝 consent（即便客户端不需要consent）。
-                // 这将会把访问被拒绝的响应发送回客户端。
-                await interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
+        ////检查我们是否在授权请求的上下文中
+        //AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
-                // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                if (context.IsNativeClient())
-                    // The client is native, so this change in how to
-                    // return the response is for better UX for the end user.
-                    return this.LoadingPage(Input.ReturnUrl!);
+        ////用户点击了“取消”按钮
+        //if (Input.Button != "login")
+        //{
+        //    if (context != null)
+        //    {
+        //        // 将用户的取消发送回 IdentityServer，以便它能拒绝 consent（即便客户端不需要consent）。
+        //        // 这将会把访问被拒绝的响应发送回客户端。
+        //        await interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
 
-                return Redirect(Input.ReturnUrl!);
-            }
+        //        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+        //        if (context.IsNativeClient())
+        //            // The client is native, so this change in how to
+        //            // return the response is for better UX for the end user.
+        //            return this.LoadingPage(Input.ReturnUrl!);
 
-            //由于我们没有有效的上下文，那么我们只需返回主页
-            return Redirect("~/");
-        }
+        //        return Redirect(Input.ReturnUrl!);
+        //    }
 
-        if (ModelState.IsValid)
-        {
-            //登录过程。
-            NaturalPerson? user = await userManager.FindByMobileAsync(Mobile);
-            if (user != null)
-            {
-                var verificationResult = await verificationCodeService.VerifyAsync(Mobile, VerificationCode);
-                if (verificationResult)
-                {
-                    await signInManager.SignInAsync(user, Input.RememberLogin);
-                    await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName,
-                        clientId: context?.Client.ClientId));
+        //    //由于我们没有有效的上下文，那么我们只需返回主页
+        //    return Redirect("~/");
+        //}
 
-                    //如果外部登录有效，则为用户创建外部登录关联。
-                    if (ExternalLoginResult.Succeeded)
-                    {
-                        //为用户绑定外部登录
-                        ClaimsPrincipal? externalUser = ExternalLoginResult.Principal;
-                        Claim userIdClaim = externalUser.FindFirst(JwtClaimTypes.Subject) ??
-                                            externalUser.FindFirst(ClaimTypes.NameIdentifier) ??
-                                            throw new Exception("Unknown userid");
+        //if (ModelState.IsValid)
+        //{
+        //    //登录过程。
+        //    NaturalPerson? user = await userManager.FindByMobileAsync(Mobile);
+        //    if (user != null)
+        //    {
+        //        var verificationResult = await verificationCodeService.VerifyAsync(Mobile, VerificationCode);
+        //        if (verificationResult)
+        //        {
+        //            await signInManager.SignInAsync(user, Input.RememberLogin);
+        //            await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName,
+        //                clientId: context?.Client.ClientId));
 
-                        string? provider = ExternalLoginResult.Properties.Items[".AuthScheme"];
-                        string? providerDisplayName = ExternalLoginResult.Properties.Items["schemeDisplayName"];
-                        string providerUserId = userIdClaim.Value;
-                        await userManager.AddLoginAsync(user,
-                            new UserLoginInfo(provider!, providerUserId, providerDisplayName));
+        //            //如果外部登录有效，则为用户创建外部登录关联。
+        //            if (ExternalLoginResult.Succeeded)
+        //            {
+        //                //为用户绑定外部登录
+        //                ClaimsPrincipal? externalUser = ExternalLoginResult.Principal;
+        //                Claim userIdClaim = externalUser.FindFirst(JwtClaimTypes.Subject) ??
+        //                                    externalUser.FindFirst(ClaimTypes.NameIdentifier) ??
+        //                                    throw new Exception("Unknown userid");
 
-                        // this allows us to collect any additional claims or properties
-                        // for the specific protocols used and store them in the local auth cookie.
-                        // this is typically used to store data needed for sign out from those protocols.
-                        var additionalLocalClaims = new List<Claim>();
-                        var localSignInProps = new AuthenticationProperties();
-                        CaptureExternalLoginContext(ExternalLoginResult, additionalLocalClaims, localSignInProps);
+        //                string? provider = ExternalLoginResult.Properties.Items[".AuthScheme"];
+        //                string? providerDisplayName = ExternalLoginResult.Properties.Items["schemeDisplayName"];
+        //                string providerUserId = userIdClaim.Value;
+        //                await userManager.AddLoginAsync(user,
+        //                    new UserLoginInfo(provider!, providerUserId, providerDisplayName));
 
-                        await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
+        //                // this allows us to collect any additional claims or properties
+        //                // for the specific protocols used and store them in the local auth cookie.
+        //                // this is typically used to store data needed for sign out from those protocols.
+        //                var additionalLocalClaims = new List<Claim>();
+        //                var localSignInProps = new AuthenticationProperties();
+        //                CaptureExternalLoginContext(ExternalLoginResult, additionalLocalClaims, localSignInProps);
 
-                        // delete temporary cookie used during external authentication
-                        await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-                    }
+        //                await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
-                    if (context != null)
-                    {
-                        if (context.IsNativeClient())
-                            // The client is native, so this change in how to
-                            // return the response is for better UX for the end user.
-                            return this.LoadingPage(Input.ReturnUrl!);
+        //                // delete temporary cookie used during external authentication
+        //                await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        //            }
 
-                        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        return Redirect(Input.ReturnUrl!);
-                    }
+        //            if (context != null)
+        //            {
+        //                if (context.IsNativeClient())
+        //                    // The client is native, so this change in how to
+        //                    // return the response is for better UX for the end user.
+        //                    return this.LoadingPage(Input.ReturnUrl!);
 
-                    // request for a local page
-                    if (Url.IsLocalUrl(Input.ReturnUrl)) return Redirect(Input.ReturnUrl);
+        //                // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+        //                return Redirect(Input.ReturnUrl!);
+        //            }
 
-                    if (string.IsNullOrEmpty(Input.ReturnUrl)) return Redirect("~/");
+        //            // request for a local page
+        //            if (Url.IsLocalUrl(Input.ReturnUrl)) return Redirect(Input.ReturnUrl);
 
-                    // user might have clicked on a malicious link - should be logged
-                    throw new ArgumentException("invalid return URL");
-                }
-            }
+        //            if (string.IsNullOrEmpty(Input.ReturnUrl)) return Redirect("~/");
 
-            await events.RaiseAsync(new UserLoginFailureEvent(Mobile, "invalid credentials",
-                clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
-        }
+        //            // user might have clicked on a malicious link - should be logged
+        //            throw new ArgumentException("invalid return URL");
+        //        }
+        //    }
 
-        // something went wrong, show form with error
-        await BuildModelAsync(Input.ReturnUrl);
-        return Page();
+        //    await events.RaiseAsync(new UserLoginFailureEvent(Mobile, "invalid credentials",
+        //        clientId: context?.Client.ClientId));
+        //    ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
+        //}
+
+        //// something went wrong, show form with error
+        //await BuildModelAsync(Input.ReturnUrl);
+        //return Page();
     }
 
     private async Task BuildModelAsync(string? returnUrl)

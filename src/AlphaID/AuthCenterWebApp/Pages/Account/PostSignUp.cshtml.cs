@@ -24,10 +24,16 @@ namespace AuthCenterWebApp.Pages.Account
         public string? UserName { get; set; }
 
         [BindProperty]
-        [Display(Name = "Display name", Description = "Your fully person name, include family name and given name.")]
+        [Display(Name = "Family name")]
         [Required]
         [StringLength(10)]
-        public string DisplayName { get; set; } = null!;
+        public string FamilyName { get; set; } = null!;
+
+        [BindProperty]
+        [Display(Name = "Given name")]
+        [Required]
+        [StringLength(10)]
+        public string GivenName { get; set; } = null!;
 
         [BindProperty]
         [Display(Name = "Date of birth", Description = "Date of birth cannot be changed after sign up.")]
@@ -60,17 +66,21 @@ namespace AuthCenterWebApp.Pages.Account
             AuthorizationRequest? context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
 
-            var userNameSeed = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - 0;
+            var userNameSeed = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - 1700000000000;
             var userName = $"u-{userNameSeed}";
             var phoneNumber = preSignUpAuthResult.Principal.FindFirstValue(JwtClaimTypes.PhoneNumber);
             bool isRememberLoginParsed = bool.TryParse(preSignUpAuthResult.Principal.FindFirstValue("remember-login") ?? "false", out bool rememberLogin);
-            
+
             // Create the user in the database
-            var user = new NaturalPerson(userName);
-            user.Name = DisplayName;
-            user.DateOfBirth = DateOfBirth;
-            user.PhoneNumber = phoneNumber;
-            user.PhoneNumberConfirmed = true; // Phone number is confirmed by the pre-sign-up process
+            var user = new NaturalPerson(userName)
+            {
+                FamilyName = FamilyName,
+                GivenName = GivenName,
+                Name = FamilyName + GivenName,
+                DateOfBirth = DateOfBirth,
+                PhoneNumber = phoneNumber,
+                PhoneNumberConfirmed = true // Phone number is confirmed by the pre-sign-up process
+            };
 
             var result = await userManager.CreateAsync(user);
             if (!result.Succeeded)

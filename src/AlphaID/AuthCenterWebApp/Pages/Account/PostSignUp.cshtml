@@ -14,10 +14,16 @@
         <h2 class="h2 text-center mb-4">@ViewBag.Title</h2>
         <form method="post">
             <div class="mb-3">
-                <label asp-for="DisplayName" class="form-label required"></label>
-                <input asp-for="DisplayName" class="form-control" autofocus tabindex="1">
-                <span asp-description-for="DisplayName"></span>
-                <span asp-validation-for="DisplayName" class="text-danger"></span>
+                <label asp-for="FamilyName" class="form-label required"></label>
+                <input asp-for="FamilyName" class="form-control" autofocus tabindex="1">
+                <span asp-description-for="FamilyName"></span>
+                <span asp-validation-for="FamilyName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GivenName" class="form-label required"></label>
+                <input asp-for="GivenName" class="form-control">
+                <span asp-description-for="GivenName"></span>
+                <span asp-validation-for="GivenName" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="DateOfBirth" class="form-label required"></label>

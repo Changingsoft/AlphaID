@@ -363,4 +363,7 @@
   <data name="Send code" xml:space="preserve">
 	  <value>发送代码</value>
   </data>
+  <data name="Family name" xml:space="preserve">
+	  <value>姓氏</value>
+  </data>
 </root>

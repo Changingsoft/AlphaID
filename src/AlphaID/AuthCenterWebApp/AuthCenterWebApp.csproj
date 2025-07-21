@@ -75,6 +75,9 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_ValidationSummary.zh-cn.resx">
+	    <DependentUpon>_ValidationSummary.resx</DependentUpon>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

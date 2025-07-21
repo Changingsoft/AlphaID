@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </form>
+            <p class="text-center mt-3"><a asp-page="Login" asp-route-returnUrl="@Model.ReturnUrl">使用密码登录</a></p>
         }
     </div>
     @if (Model.Model.VisibleExternalProviders.Any())

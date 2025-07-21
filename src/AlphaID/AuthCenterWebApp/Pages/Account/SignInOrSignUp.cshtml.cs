@@ -34,6 +34,9 @@ namespace AuthCenterWebApp.Pages.Account
 
         public AuthenticateResult ExternalLoginResult { get; set; } = null!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? ReturnUrl { get; set; }
+
         [BindProperty]
         public InputModel Input { get; set; } = null!;
 

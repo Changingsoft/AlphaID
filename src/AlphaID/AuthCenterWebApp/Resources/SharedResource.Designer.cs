@@ -61,11 +61,668 @@ namespace AuthCenterWebApp.Resources {
         }
         
         /// <summary>
+        ///   查找类似 2 to 10 characters. Leave blank to remove it. 的本地化字符串。
+        /// </summary>
+        internal static string _2_to_10_characters__Leave_blank_to_remove_it_ {
+            get {
+                return ResourceManager.GetString("2 to 10 characters. Leave blank to remove it.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Account 的本地化字符串。
+        /// </summary>
+        internal static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Account name 的本地化字符串。
+        /// </summary>
+        internal static string Account_name {
+            get {
+                return ResourceManager.GetString("Account name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Account number 的本地化字符串。
+        /// </summary>
+        internal static string Account_number {
+            get {
+                return ResourceManager.GetString("Account number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Address 的本地化字符串。
+        /// </summary>
+        internal static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Agree the 的本地化字符串。
+        /// </summary>
+        internal static string Agree_the {
+            get {
+                return ResourceManager.GetString("Agree the", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Apply changes 的本地化字符串。
+        /// </summary>
+        internal static string Apply_changes {
+            get {
+                return ResourceManager.GetString("Apply changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Bank 的本地化字符串。
+        /// </summary>
+        internal static string Bank {
+            get {
+                return ResourceManager.GetString("Bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Bank name 的本地化字符串。
+        /// </summary>
+        internal static string Bank_name {
+            get {
+                return ResourceManager.GetString("Bank name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Bio 的本地化字符串。
+        /// </summary>
+        internal static string Bio {
+            get {
+                return ResourceManager.GetString("Bio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Birth date 的本地化字符串。
+        /// </summary>
+        internal static string Birth_date {
+            get {
+                return ResourceManager.GetString("Birth date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Cancel 的本地化字符串。
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Captcha code 的本地化字符串。
+        /// </summary>
+        internal static string Captcha_code {
+            get {
+                return ResourceManager.GetString("Captcha code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Captcha code is invalid. 的本地化字符串。
         /// </summary>
         internal static string Captcha_Invalid {
             get {
                 return ResourceManager.GetString("Captcha_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Change password 的本地化字符串。
+        /// </summary>
+        internal static string Change_password {
+            get {
+                return ResourceManager.GetString("Change password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Confirm password 的本地化字符串。
+        /// </summary>
+        internal static string Confirm_password {
+            get {
+                return ResourceManager.GetString("Confirm password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Contact 的本地化字符串。
+        /// </summary>
+        internal static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Continue 的本地化字符串。
+        /// </summary>
+        internal static string Continue {
+            get {
+                return ResourceManager.GetString("Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Current password 的本地化字符串。
+        /// </summary>
+        internal static string Current_password {
+            get {
+                return ResourceManager.GetString("Current password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Current user name 的本地化字符串。
+        /// </summary>
+        internal static string Current_user_name {
+            get {
+                return ResourceManager.GetString("Current user name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Date of birth 的本地化字符串。
+        /// </summary>
+        internal static string Date_of_birth {
+            get {
+                return ResourceManager.GetString("Date of birth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Date of birth cannot be changed after sign up. 的本地化字符串。
+        /// </summary>
+        internal static string Date_of_birth_cannot_be_changed_after_sign_up_ {
+            get {
+                return ResourceManager.GetString("Date of birth cannot be changed after sign up.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete 的本地化字符串。
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete Account 的本地化字符串。
+        /// </summary>
+        internal static string Delete_Account {
+            get {
+                return ResourceManager.GetString("Delete Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Department 的本地化字符串。
+        /// </summary>
+        internal static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Description 的本地化字符串。
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Display name 的本地化字符串。
+        /// </summary>
+        internal static string Display_name {
+            get {
+                return ResourceManager.GetString("Display name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Domicile 的本地化字符串。
+        /// </summary>
+        internal static string Domicile {
+            get {
+                return ResourceManager.GetString("Domicile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Email 的本地化字符串。
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Family name 的本地化字符串。
+        /// </summary>
+        internal static string Family_name {
+            get {
+                return ResourceManager.GetString("Family name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Female 的本地化字符串。
+        /// </summary>
+        internal static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Full name 的本地化字符串。
+        /// </summary>
+        internal static string Full_name {
+            get {
+                return ResourceManager.GetString("Full name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Full name of organization. 的本地化字符串。
+        /// </summary>
+        internal static string Full_name_of_organization_ {
+            get {
+                return ResourceManager.GetString("Full name of organization.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Gender 的本地化字符串。
+        /// </summary>
+        internal static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Given name 的本地化字符串。
+        /// </summary>
+        internal static string Given_name {
+            get {
+                return ResourceManager.GetString("Given name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Identifier type 的本地化字符串。
+        /// </summary>
+        internal static string Identifier_type {
+            get {
+                return ResourceManager.GetString("Identifier type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Identifier value 的本地化字符串。
+        /// </summary>
+        internal static string Identifier_value {
+            get {
+                return ResourceManager.GetString("Identifier value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Legal entity identifier 的本地化字符串。
+        /// </summary>
+        internal static string Legal_entity_identifier {
+            get {
+                return ResourceManager.GetString("Legal entity identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Male 的本地化字符串。
+        /// </summary>
+        internal static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Middle name 的本地化字符串。
+        /// </summary>
+        internal static string Middle_name {
+            get {
+                return ResourceManager.GetString("Middle name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Mobile phone number 的本地化字符串。
+        /// </summary>
+        internal static string Mobile_phone_number {
+            get {
+                return ResourceManager.GetString("Mobile phone number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Name 的本地化字符串。
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New email 的本地化字符串。
+        /// </summary>
+        internal static string New_email {
+            get {
+                return ResourceManager.GetString("New email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New mobile phone number 的本地化字符串。
+        /// </summary>
+        internal static string New_mobile_phone_number {
+            get {
+                return ResourceManager.GetString("New mobile phone number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New password 的本地化字符串。
+        /// </summary>
+        internal static string New_password {
+            get {
+                return ResourceManager.GetString("New password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New user name 的本地化字符串。
+        /// </summary>
+        internal static string New_user_name {
+            get {
+                return ResourceManager.GetString("New user name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Nickname 的本地化字符串。
+        /// </summary>
+        internal static string Nick_name {
+            get {
+                return ResourceManager.GetString("Nick name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Organization name 的本地化字符串。
+        /// </summary>
+        internal static string Organization_name {
+            get {
+                return ResourceManager.GetString("Organization name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password 的本地化字符串。
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Phone number 的本地化字符串。
+        /// </summary>
+        internal static string Phone_number {
+            get {
+                return ResourceManager.GetString("Phone number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Phone number invalid. 的本地化字符串。
+        /// </summary>
+        internal static string PhoneNumberInvalid {
+            get {
+                return ResourceManager.GetString("PhoneNumberInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Phonetic given name 的本地化字符串。
+        /// </summary>
+        internal static string Phonetic_given_name {
+            get {
+                return ResourceManager.GetString("Phonetic given name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Phonetic surname 的本地化字符串。
+        /// </summary>
+        internal static string Phonetic_surname {
+            get {
+                return ResourceManager.GetString("Phonetic surname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Privacy 的本地化字符串。
+        /// </summary>
+        internal static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Received from mobile phone short message 的本地化字符串。
+        /// </summary>
+        internal static string Received_from_mobile_phone_short_message {
+            get {
+                return ResourceManager.GetString("Received from mobile phone short message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Recovery code 的本地化字符串。
+        /// </summary>
+        internal static string Recovery_code {
+            get {
+                return ResourceManager.GetString("Recovery code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Remark 的本地化字符串。
+        /// </summary>
+        internal static string Remark {
+            get {
+                return ResourceManager.GetString("Remark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Remember me on this device 的本地化字符串。
+        /// </summary>
+        internal static string Remember_me_on_this_device {
+            get {
+                return ResourceManager.GetString("Remember me on this device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Remember my decision 的本地化字符串。
+        /// </summary>
+        internal static string Remember_my_decision {
+            get {
+                return ResourceManager.GetString("Remember my decision", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Remember this device 的本地化字符串。
+        /// </summary>
+        internal static string Remember_this_device {
+            get {
+                return ResourceManager.GetString("Remember this device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Representative 的本地化字符串。
+        /// </summary>
+        internal static string Representative {
+            get {
+                return ResourceManager.GetString("Representative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Reset password 的本地化字符串。
+        /// </summary>
+        internal static string Reset_password {
+            get {
+                return ResourceManager.GetString("Reset password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Return 的本地化字符串。
+        /// </summary>
+        internal static string Return {
+            get {
+                return ResourceManager.GetString("Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Send code 的本地化字符串。
+        /// </summary>
+        internal static string Send_code {
+            get {
+                return ResourceManager.GetString("Send code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Short description about yourself. 的本地化字符串。
+        /// </summary>
+        internal static string Short_description_about_yourself_ {
+            get {
+                return ResourceManager.GetString("Short description about yourself.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Surname 的本地化字符串。
+        /// </summary>
+        internal static string Surname {
+            get {
+                return ResourceManager.GetString("Surname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Taxpayer ID 的本地化字符串。
+        /// </summary>
+        internal static string Taxpayer_ID {
+            get {
+                return ResourceManager.GetString("Taxpayer ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Title 的本地化字符串。
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Two-factor code 的本地化字符串。
+        /// </summary>
+        internal static string Two_factor_code {
+            get {
+                return ResourceManager.GetString("Two-factor code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unified social credit code 的本地化字符串。
+        /// </summary>
+        internal static string Unified_social_credit_code {
+            get {
+                return ResourceManager.GetString("Unified social credit code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Update 的本地化字符串。
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Usage 的本地化字符串。
+        /// </summary>
+        internal static string Usage {
+            get {
+                return ResourceManager.GetString("Usage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 User name 的本地化字符串。
+        /// </summary>
+        internal static string User_name {
+            get {
+                return ResourceManager.GetString("User name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 User name, email or phone number 的本地化字符串。
+        /// </summary>
+        internal static string User_name__email_or_phone_number {
+            get {
+                return ResourceManager.GetString("User name, email or phone number", resourceCulture);
             }
         }
         
@@ -102,6 +759,60 @@ namespace AuthCenterWebApp.Resources {
         internal static string Validate_StringLength {
             get {
                 return ResourceManager.GetString("Validate_StringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Verification code 的本地化字符串。
+        /// </summary>
+        internal static string Verification_code {
+            get {
+                return ResourceManager.GetString("Verification code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Verify 的本地化字符串。
+        /// </summary>
+        internal static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Website 的本地化字符串。
+        /// </summary>
+        internal static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Your fully person name, include family name and given name. 的本地化字符串。
+        /// </summary>
+        internal static string Your_fully_person_name__include_family_name_and_given_name_ {
+            get {
+                return ResourceManager.GetString("Your fully person name, include family name and given name.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Your password has expired 的本地化字符串。
+        /// </summary>
+        internal static string Your_password_has_expired {
+            get {
+                return ResourceManager.GetString("Your password has expired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Your personal website. 的本地化字符串。
+        /// </summary>
+        internal static string Your_personal_website_ {
+            get {
+                return ResourceManager.GetString("Your personal website.", resourceCulture);
             }
         }
     }

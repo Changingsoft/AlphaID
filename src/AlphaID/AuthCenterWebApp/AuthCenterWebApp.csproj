@@ -51,6 +51,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Resources\SharedResource.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SharedResource.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Organizations\JoinRequests\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>
@@ -62,6 +70,13 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Pages\Account\SignInOrSignUp.zh-cn.resx">
 	    <DependentUpon>SignInOrSignUp.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\SharedResource.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Views\Shared\_ValidationSummary.zh-cn.resx">
+	    <DependentUpon>_ValidationSummary.resx</DependentUpon>
 	  </EmbeddedResource>
 	</ItemGroup>
 

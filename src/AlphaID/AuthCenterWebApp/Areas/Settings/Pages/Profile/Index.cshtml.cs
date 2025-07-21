@@ -25,7 +25,7 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, Sig
         {
             Bio = person.Bio,
             Website = person.WebSite,
-            Gender = person.Gender,
+            Gender = person.Gender ?? Gender.Other,
             DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue)
         };
         return Page();
@@ -43,7 +43,6 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, Sig
         person.Bio = Input.Bio;
         person.WebSite = Input.Website;
         person.Gender = Input.Gender;
-        person.DateOfBirth = Input.DateOfBirth.HasValue ? DateOnly.FromDateTime(Input.DateOfBirth.Value) : null;
 
         Result = await naturalPersonService.UpdateAsync(person);
         return Page();

@@ -1,7 +1,7 @@
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web.Mvc;
+using BotDetect.Web;
 using ChineseName;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
@@ -43,6 +43,20 @@ public class SignUpModel(
     [BindProperty(SupportsGet = true)]
     public string? ReturnUrl { get; set; }
 
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Phone number")]
+    public string PhoneNumber { get; set; } = null!;
+
+    [BindProperty]
+    [Display(Name = "Verification code")]
+    [DataType(DataType.Password)]
+    public string? VerificationCode { get; set; }
+
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Captcha code")]
+    public string CaptchaCode { get; set; } = null!;
     public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
 
     public async Task<IActionResult> OnGet()
@@ -67,7 +81,7 @@ public class SignUpModel(
         string? mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
                          ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
         if (MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
-            Input.Mobile = phoneNumber.PhoneNumber;
+            PhoneNumber = phoneNumber.PhoneNumber;
         if (Enum.TryParse(
                 externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ??
                 externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result)) Input.Sex = result;
@@ -87,15 +101,21 @@ public class SignUpModel(
             return Page();
         }
 
-        if (!MobilePhoneNumber.TryParse(Input.Mobile, out MobilePhoneNumber phoneNumber))
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
             ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
+        
         if (!ModelState.IsValid)
             return Page();
 
+        var captchaInstance = Captcha.Load("LoginCaptcha");
+        if (!captchaInstance.Validate(CaptchaCode))
+        {
+            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+        }
         var phoneNumberConfirmed = false;
         if (VerificationCodeService is not null)
         {
-            if (!await VerificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
+            if (!await VerificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode!))
             {
                 ModelState.AddModelError("Input.VerificationCode", "验证码无效");
             }
@@ -158,26 +178,20 @@ public class SignUpModel(
         return Page();
     }
 
-    public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
+    public async Task<IActionResult> OnPostSendVerificationCode(string instanceId)
     {
-        if (VerificationCodeService is null)
-            return new JsonResult("Not support.");
-        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
-        await VerificationCodeService.SendAsync(phoneNumber.ToString());
+        var captchaResult = Captcha.AjaxValidate("LoginCaptcha", CaptchaCode, instanceId);
+        if (!captchaResult)
+        {
+            return new JsonResult(Resources.SharedResource.Captcha_Invalid);
+        }
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult(Resources.SharedResource.PhoneNumberInvalid);
+        await VerificationCodeService!.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }
 
     public class InputModel
     {
-        [Display(Name = "Phone number")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-        public string Mobile { get; set; } = null!;
-
-        [Display(Name = "Verification code", Prompt = "Received from mobile phone short message")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string VerificationCode { get; set; } = null!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "Validate_Required")]
@@ -212,11 +226,6 @@ public class SignUpModel(
         [Display(Name = "Email", Prompt = "someone@examples.com")]
         [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
         public string? Email { get; set; }
-
-        [Display(Name = "Captcha code")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
-        public string CaptchaCode { get; set; } = null!;
 
         [Display(Name = "Agree the")]
         public bool Agree { get; set; }

@@ -43,120 +43,112 @@ public class SignUpModel(
     [BindProperty(SupportsGet = true)]
     public string? ReturnUrl { get; set; }
 
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGet()
     {
-        // 总是重定向到SignInOrSignUp页面。
-        return RedirectToPage("SignInOrSignUp", new { returnUrl = ReturnUrl });
+        AuthenticateResult externalAuthResult =
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        if (!externalAuthResult.Succeeded) return Page();
 
-        //AuthenticateResult externalAuthResult =
-        //    await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-        //if (!externalAuthResult.Succeeded) return Page();
+        ClaimsPrincipal? externalPrincipal = externalAuthResult.Principal;
 
-        //ClaimsPrincipal? externalPrincipal = externalAuthResult.Principal;
-
-        //UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
-        //Input = new InputModel
-        //{
-        //    Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ??
-        //            externalPrincipal.FindFirstValue(ClaimTypes.Email) ??
-        //            externalPrincipal.FindFirstValue(ClaimTypes.Upn),
-        //    GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ??
-        //                externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
-        //    Surname = externalPrincipal.FindFirstValue(JwtClaimTypes.FamilyName) ??
-        //              externalPrincipal.FindFirstValue(ClaimTypes.Surname) ?? ""
-        //};
-        //string? mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
-        //                 ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
-        //if (MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
-        //    Input.Mobile = phoneNumber.PhoneNumber;
-        //if (Enum.TryParse(
-        //        externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ??
-        //        externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result)) Input.Sex = result;
-        //if (DateOnly.TryParse(
-        //        externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ??
-        //        externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out DateOnly dateOfBirth))
-        //    Input.DateOfBirth = dateOfBirth;
-        //ExternalLoginMessage = $"您正在从外部登录并创建{_production.Name}，请补全相关内容以创建{_production.Name}。";
-        //return Page();
+        UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
+        Input = new InputModel
+        {
+            Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ??
+                    externalPrincipal.FindFirstValue(ClaimTypes.Email) ??
+                    externalPrincipal.FindFirstValue(ClaimTypes.Upn),
+            GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ??
+                        externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
+            Surname = externalPrincipal.FindFirstValue(JwtClaimTypes.FamilyName) ??
+                      externalPrincipal.FindFirstValue(ClaimTypes.Surname) ?? ""
+        };
+        string? mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
+                         ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
+        if (MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
+            Input.Mobile = phoneNumber.PhoneNumber;
+        if (Enum.TryParse(
+                externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ??
+                externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result)) Input.Sex = result;
+        if (DateOnly.TryParse(
+                externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ??
+                externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out DateOnly dateOfBirth))
+            Input.DateOfBirth = dateOfBirth;
+        ExternalLoginMessage = $"您正在从外部登录并创建{_production.Name}，请补全相关内容以创建{_production.Name}。";
+        return Page();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
-        //总是重定向到SignInOrSignUp页面。
-        return RedirectToPage("SignInOrSignUp", new { returnUrl = ReturnUrl });
+        if (!Input.Agree)
+        {
+            ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
+            return Page();
+        }
 
-        //if (!Input.Agree)
-        //{
-        //    ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
-        //    return Page();
-        //}
+        if (!MobilePhoneNumber.TryParse(Input.Mobile, out MobilePhoneNumber phoneNumber))
+            ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
+        if (!ModelState.IsValid)
+            return Page();
 
-        //if (!MobilePhoneNumber.TryParse(Input.Mobile, out MobilePhoneNumber phoneNumber))
-        //    ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
-        //if (!ModelState.IsValid)
-        //    return Page();
+        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
+            ModelState.AddModelError("Input.VerificationCode", "验证码无效");
+        if (!ModelState.IsValid)
+            return Page();
 
-        //if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
-        //    ModelState.AddModelError("Input.VerificationCode", "验证码无效");
-        //if (!ModelState.IsValid)
-        //    return Page();
-
-        ////如果来自外埠登录？
-        //AuthenticateResult externalLoginResult =
-        //    await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        //如果来自外埠登录？
+        AuthenticateResult externalLoginResult =
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
 
-        //(string pinyinSurname, string pinyinGivenName) =
-        //    chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
-        //var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
-        //string userName = Input.Email ?? phoneNumber.PhoneNumber;
+        (string pinyinSurname, string pinyinGivenName) =
+            chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
+        var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
+        string userName = Input.Email ?? phoneNumber.PhoneNumber;
 
-        //var person = new NaturalPerson(userName)
-        //{
-        //    Email = Input.Email,
-        //    PhoneNumber = phoneNumber.ToString(),
-        //    FamilyName = chinesePersonName.Surname,
-        //    GivenName = chinesePersonName.GivenName,
-        //    Name = chinesePersonName.FullName,
-        //    PhoneticSurname = chinesePersonName.PhoneticSurname,
-        //    PhoneticGivenName = chinesePersonName.PhoneticGivenName,
-        //    SearchHint = chinesePersonName.PhoneticName,
-        //    DateOfBirth = Input.DateOfBirth,
-        //    Gender = Input.Sex
-        //};
+        var person = new NaturalPerson(userName)
+        {
+            Email = Input.Email,
+            PhoneNumber = phoneNumber.ToString(),
+            FamilyName = chinesePersonName.Surname,
+            GivenName = chinesePersonName.GivenName,
+            Name = chinesePersonName.FullName,
+            PhoneticSurname = chinesePersonName.PhoneticSurname,
+            PhoneticGivenName = chinesePersonName.PhoneticGivenName,
+            SearchHint = chinesePersonName.PhoneticName,
+            DateOfBirth = Input.DateOfBirth,
+            Gender = Input.Sex
+        };
 
-        //IdentityResult result = await naturalPersonService.CreateAsync(person, Input.NewPassword);
-        //if (result.Succeeded)
-        //{
-        //    if (externalLoginResult.Succeeded)
-        //    {
-        //        //Create external login for user.
-        //        Claim userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
-        //                            externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
-        //                            throw new Exception("Unknown userid");
-        //        await applicationUserManager.AddLoginAsync(person,
-        //            new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value,
-        //                externalLoginResult.Properties.Items["schemeDisplayName"]));
-        //    }
+        IdentityResult result = await naturalPersonService.CreateAsync(person, Input.NewPassword);
+        if (result.Succeeded)
+        {
+            if (externalLoginResult.Succeeded)
+            {
+                //Create external login for user.
+                Claim userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
+                                    externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
+                                    throw new Exception("Unknown userid");
+                await applicationUserManager.AddLoginAsync(person,
+                    new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value,
+                        externalLoginResult.Properties.Items["schemeDisplayName"]));
+            }
 
-        //    //login user. redirect to user profile center.
-        //    await signInManager.SignInAsync(person, false);
-        //    return RedirectToPage("SignUpSuccess");
-        //}
+            //login user. redirect to user profile center.
+            await signInManager.SignInAsync(person, false);
+            return RedirectToPage("SignUpSuccess");
+        }
 
-        //foreach (IdentityError error in result.Errors)
-        //    ModelState.AddModelError("", error.Description);
+        foreach (IdentityError error in result.Errors)
+            ModelState.AddModelError("", error.Description);
 
-        //return Page();
+        return Page();
     }
 
-    public IActionResult OnPostSendVerificationCode(string mobile)
+    public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
     {
-        return new JsonResult("Do not use this method directly.");
-
-        //if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
-        //await verificationCodeService.SendAsync(phoneNumber.ToString());
-        //return new JsonResult(true);
+        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+        await verificationCodeService.SendAsync(phoneNumber.ToString());
+        return new JsonResult(true);
     }
 
     public class InputModel

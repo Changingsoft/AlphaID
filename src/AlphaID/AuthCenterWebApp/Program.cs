@@ -31,7 +31,8 @@ using IEventSink = Duende.IdentityServer.Services.IEventSink;
 using Microsoft.AspNetCore.HttpOverrides;
 using Duende.IdentityServer;
 using AuthCenterWebApp.Services.WechatMp;
-
+using Duende.IdentityServer.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 #if WINDOWS
@@ -224,8 +225,8 @@ builder.Services.AddIdentityServer(options =>
 
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
 
-        //配置使得跳转到SignInOrSignUp页面。
-        options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
+        //当需要身份验证时显示的登录界面。
+        options.UserInteraction.LoginUrl = "/Account/Login";
     })
     .AddConfigurationStore(options =>
     {
@@ -310,6 +311,10 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IVerificationCodeService, NopVerificationCodeService>();
     builder.Services.AddScoped<IChineseIdCardOcrService, DebugChineseIdCardOcrService>();
 }
+
+//配置后阶段
+builder.Services.AddSingleton<IPostConfigureOptions<IdentityServerOptions>, PostConfigIdentityServerOptions>();
+builder.Services.AddSingleton<IPostConfigureOptions<CookieAuthenticationOptions>, PostConfigIdentityServerOptions>();
 
 var app = builder.Build();
 

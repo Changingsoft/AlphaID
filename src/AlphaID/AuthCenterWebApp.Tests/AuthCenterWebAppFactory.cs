@@ -28,6 +28,7 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
                     options.DefaultScheme = "TestScheme";
                     options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 })
+                .AddCookie()
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", _ => { });
         });
     }

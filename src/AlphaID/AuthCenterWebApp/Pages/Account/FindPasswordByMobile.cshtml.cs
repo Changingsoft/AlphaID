@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByMobileModel(
     ApplicationUserManager<NaturalPerson> userManager,
-    IVerificationCodeService verificationCodeService) : PageModel
+    IServiceProvider serviceProvider) : PageModel
 {
     [Display(Name = "Phone number")]
     [Required(ErrorMessage = "Validate_Required")]
@@ -25,9 +25,15 @@ public class FindPasswordByMobileModel(
     [BindProperty]
     public string CaptchaCode { get; set; } = null!;
 
-
-    public void OnGet()
+    public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
+    public IActionResult OnGet()
     {
+        if (VerificationCodeService == null)
+        {
+            throw new InvalidOperationException("没有为系统配置短信验证码服务。");
+        }
+
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -49,7 +55,7 @@ public class FindPasswordByMobileModel(
             return Page();
         }
         //Send verification code
-        await verificationCodeService.SendAsync(phoneNumber.ToString());
+        await VerificationCodeService!.SendAsync(phoneNumber.ToString());
 
         //Set the phone number to session
         HttpContext.Session.SetString("ResetPasswordPhoneNumber", phoneNumber.ToString());

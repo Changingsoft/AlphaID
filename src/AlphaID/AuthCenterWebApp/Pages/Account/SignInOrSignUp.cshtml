@@ -108,6 +108,8 @@
     @* <script src="~/js/captcha.validate.js"></script> *@
     <partial name="_ValidationScriptsPartial" />
     <script>
+        var sendCodeText = "@L["Send code"]";
+        var resendCodeText = "@L["Resend"]";
         var countdown = 60;
 
         function SendVerificationCode(obj) {
@@ -157,11 +159,11 @@
             var code = $(obj);
             if (countdown == 0) {
                 code.removeAttr('disabled');
-                code.text("发送验证码");
+                code.text(sendCodeText);
                 countdown = 60;
                 return;
             } else {
-                code.text("重新发送 (" + countdown + ")");
+                code.text("resendCodeText (" + countdown + ")");
                 code.attr('disabled', true);
                 countdown--;
             }

@@ -8,7 +8,6 @@
         <h1 class="display-5">
             <img src="~/logo.png"/>
         </h1>
-        <p>One account, serving anywhere.</p>
         @if (User.Identity!.IsAuthenticated)
         {
             <p>
@@ -18,7 +17,7 @@
         else
         {
             <p>
-                <a class="btn btn-primary" asp-page="Account/SignInOrSignUp">@L["Sign in / Sign up"]</a>
+                <a class="btn btn-primary" asp-page="/Profile/Index" asp-area="Settings">@L["Sign in / Sign up"]</a>
             </p>
         }
 

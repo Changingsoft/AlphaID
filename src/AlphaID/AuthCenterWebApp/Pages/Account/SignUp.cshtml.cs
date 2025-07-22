@@ -1,7 +1,7 @@
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web.Mvc;
+using BotDetect.Web;
 using ChineseName;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
@@ -22,7 +22,7 @@ namespace AuthCenterWebApp.Pages.Account;
 public class SignUpModel(
     NaturalPersonService naturalPersonService,
     UserManager<NaturalPerson> applicationUserManager,
-    IVerificationCodeService verificationCodeService,
+    IServiceProvider serviceProvider,
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,
     SignInManager<NaturalPerson> signInManager,
@@ -43,133 +43,155 @@ public class SignUpModel(
     [BindProperty(SupportsGet = true)]
     public string? ReturnUrl { get; set; }
 
-    public IActionResult OnGet()
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Phone number")]
+    public string PhoneNumber { get; set; } = null!;
+
+    [BindProperty]
+    [Display(Name = "Verification code")]
+    [DataType(DataType.Password)]
+    public string? VerificationCode { get; set; }
+
+    [BindProperty]
+    [Required(ErrorMessage = "Validate_Required")]
+    [Display(Name = "Captcha code")]
+    public string CaptchaCode { get; set; } = null!;
+    public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
+
+    public async Task<IActionResult> OnGet()
     {
-        // 总是重定向到SignInOrSignUp页面。
-        return RedirectToPage("SignInOrSignUp", new { returnUrl = ReturnUrl });
+        AuthenticateResult externalAuthResult =
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        if (!externalAuthResult.Succeeded) return Page();
 
-        //AuthenticateResult externalAuthResult =
-        //    await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-        //if (!externalAuthResult.Succeeded) return Page();
+        ClaimsPrincipal? externalPrincipal = externalAuthResult.Principal;
 
-        //ClaimsPrincipal? externalPrincipal = externalAuthResult.Principal;
-
-        //UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
-        //Input = new InputModel
-        //{
-        //    Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ??
-        //            externalPrincipal.FindFirstValue(ClaimTypes.Email) ??
-        //            externalPrincipal.FindFirstValue(ClaimTypes.Upn),
-        //    GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ??
-        //                externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
-        //    Surname = externalPrincipal.FindFirstValue(JwtClaimTypes.FamilyName) ??
-        //              externalPrincipal.FindFirstValue(ClaimTypes.Surname) ?? ""
-        //};
-        //string? mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
-        //                 ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
-        //if (MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
-        //    Input.Mobile = phoneNumber.PhoneNumber;
-        //if (Enum.TryParse(
-        //        externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ??
-        //        externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result)) Input.Sex = result;
-        //if (DateOnly.TryParse(
-        //        externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ??
-        //        externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out DateOnly dateOfBirth))
-        //    Input.DateOfBirth = dateOfBirth;
-        //ExternalLoginMessage = $"您正在从外部登录并创建{_production.Name}，请补全相关内容以创建{_production.Name}。";
-        //return Page();
+        UserName = externalPrincipal.FindFirstValue(JwtClaimTypes.PreferredUserName);
+        Input = new InputModel
+        {
+            Email = externalPrincipal.FindFirstValue(JwtClaimTypes.Email) ??
+                    externalPrincipal.FindFirstValue(ClaimTypes.Email) ??
+                    externalPrincipal.FindFirstValue(ClaimTypes.Upn),
+            GivenName = externalPrincipal.FindFirstValue(JwtClaimTypes.GivenName) ??
+                        externalPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? "",
+            Surname = externalPrincipal.FindFirstValue(JwtClaimTypes.FamilyName) ??
+                      externalPrincipal.FindFirstValue(ClaimTypes.Surname) ?? ""
+        };
+        string? mobile = externalPrincipal.FindFirstValue(ClaimTypes.MobilePhone)
+                         ?? externalPrincipal.FindFirstValue(JwtClaimTypes.PhoneNumber);
+        if (MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber))
+            PhoneNumber = phoneNumber.PhoneNumber;
+        if (Enum.TryParse(
+                externalPrincipal.FindFirstValue(JwtClaimTypes.Gender) ??
+                externalPrincipal.FindFirstValue(ClaimTypes.Gender), out Gender result)) Input.Sex = result;
+        if (DateOnly.TryParse(
+                externalPrincipal.FindFirstValue(JwtClaimTypes.BirthDate) ??
+                externalPrincipal.FindFirstValue(ClaimTypes.DateOfBirth), out DateOnly dateOfBirth))
+            Input.DateOfBirth = dateOfBirth;
+        ExternalLoginMessage = $"您正在从外部登录并创建{_production.Name}，请补全相关内容以创建{_production.Name}。";
+        return Page();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
-        //总是重定向到SignInOrSignUp页面。
-        return RedirectToPage("SignInOrSignUp", new { returnUrl = ReturnUrl });
+        if (!Input.Agree)
+        {
+            ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
+            return Page();
+        }
 
-        //if (!Input.Agree)
-        //{
-        //    ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
-        //    return Page();
-        //}
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
+            ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
+        
+        if (!ModelState.IsValid)
+            return Page();
 
-        //if (!MobilePhoneNumber.TryParse(Input.Mobile, out MobilePhoneNumber phoneNumber))
-        //    ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
-        //if (!ModelState.IsValid)
-        //    return Page();
+        var captchaInstance = Captcha.Load("LoginCaptcha");
+        if (!captchaInstance.Validate(CaptchaCode))
+        {
+            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+        }
+        var phoneNumberConfirmed = false;
+        if (VerificationCodeService is not null)
+        {
+            if (!await VerificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode!))
+            {
+                ModelState.AddModelError("Input.VerificationCode", "验证码无效");
+            }
+            else
+            {
+                phoneNumberConfirmed = true;
+            }
+        }
 
-        //if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
-        //    ModelState.AddModelError("Input.VerificationCode", "验证码无效");
-        //if (!ModelState.IsValid)
-        //    return Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        ////如果来自外埠登录？
-        //AuthenticateResult externalLoginResult =
-        //    await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+        //如果来自外埠登录？
+        AuthenticateResult externalLoginResult =
+            await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
 
-        //(string pinyinSurname, string pinyinGivenName) =
-        //    chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
-        //var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
-        //string userName = Input.Email ?? phoneNumber.PhoneNumber;
+        (string pinyinSurname, string pinyinGivenName) =
+            chinesePersonNamePinyinConverter.Convert(Input.Surname, Input.GivenName);
+        var chinesePersonName = new ChinesePersonName(Input.Surname, Input.GivenName, pinyinSurname, pinyinGivenName);
+        string userName = Input.Email ?? phoneNumber.PhoneNumber;
 
-        //var person = new NaturalPerson(userName)
-        //{
-        //    Email = Input.Email,
-        //    PhoneNumber = phoneNumber.ToString(),
-        //    FamilyName = chinesePersonName.Surname,
-        //    GivenName = chinesePersonName.GivenName,
-        //    Name = chinesePersonName.FullName,
-        //    PhoneticSurname = chinesePersonName.PhoneticSurname,
-        //    PhoneticGivenName = chinesePersonName.PhoneticGivenName,
-        //    SearchHint = chinesePersonName.PhoneticName,
-        //    DateOfBirth = Input.DateOfBirth,
-        //    Gender = Input.Sex
-        //};
+        var person = new NaturalPerson(userName)
+        {
+            Email = Input.Email,
+            PhoneNumber = phoneNumber.ToString(),
+            PhoneNumberConfirmed = phoneNumberConfirmed,
+            FamilyName = chinesePersonName.Surname,
+            GivenName = chinesePersonName.GivenName,
+            Name = chinesePersonName.FullName,
+            PhoneticSurname = chinesePersonName.PhoneticSurname,
+            PhoneticGivenName = chinesePersonName.PhoneticGivenName,
+            SearchHint = chinesePersonName.PhoneticName,
+            DateOfBirth = Input.DateOfBirth,
+            Gender = Input.Sex
+        };
 
-        //IdentityResult result = await naturalPersonService.CreateAsync(person, Input.NewPassword);
-        //if (result.Succeeded)
-        //{
-        //    if (externalLoginResult.Succeeded)
-        //    {
-        //        //Create external login for user.
-        //        Claim userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
-        //                            externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
-        //                            throw new Exception("Unknown userid");
-        //        await applicationUserManager.AddLoginAsync(person,
-        //            new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value,
-        //                externalLoginResult.Properties.Items["schemeDisplayName"]));
-        //    }
+        IdentityResult result = await naturalPersonService.CreateAsync(person, Input.NewPassword);
+        if (result.Succeeded)
+        {
+            if (externalLoginResult.Succeeded)
+            {
+                //Create external login for user.
+                Claim userIdClaim = externalLoginResult.Principal.FindFirst(JwtClaimTypes.Subject) ??
+                                    externalLoginResult.Principal.FindFirst(ClaimTypes.NameIdentifier) ??
+                                    throw new Exception("Unknown userid");
+                await applicationUserManager.AddLoginAsync(person,
+                    new UserLoginInfo(externalLoginResult.Properties.Items[".AuthScheme"]!, userIdClaim.Value,
+                        externalLoginResult.Properties.Items["schemeDisplayName"]));
+            }
 
-        //    //login user. redirect to user profile center.
-        //    await signInManager.SignInAsync(person, false);
-        //    return RedirectToPage("SignUpSuccess");
-        //}
+            //login user. redirect to user profile center.
+            await signInManager.SignInAsync(person, false);
+            return RedirectToPage("SignUpSuccess");
+        }
 
-        //foreach (IdentityError error in result.Errors)
-        //    ModelState.AddModelError("", error.Description);
+        foreach (IdentityError error in result.Errors)
+            ModelState.AddModelError("", error.Description);
 
-        //return Page();
+        return Page();
     }
 
-    public IActionResult OnPostSendVerificationCode(string mobile)
+    public async Task<IActionResult> OnPostSendVerificationCode(string instanceId)
     {
-        return new JsonResult("Do not use this method directly.");
-
-        //if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
-        //await verificationCodeService.SendAsync(phoneNumber.ToString());
-        //return new JsonResult(true);
+        var captchaResult = Captcha.AjaxValidate("LoginCaptcha", CaptchaCode, instanceId);
+        if (!captchaResult)
+        {
+            return new JsonResult(Resources.SharedResource.Captcha_Invalid);
+        }
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult(Resources.SharedResource.PhoneNumberInvalid);
+        await VerificationCodeService!.SendAsync(phoneNumber.ToString());
+        return new JsonResult(true);
     }
 
     public class InputModel
     {
-        [Display(Name = "Phone number")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
-        public string Mobile { get; set; } = null!;
-
-        [Display(Name = "Verification code", Prompt = "Received from mobile phone short message")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [StringLength(8, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-        public string VerificationCode { get; set; } = null!;
 
         [Display(Name = "Surname", Prompt = "Surname")]
         [Required(ErrorMessage = "Validate_Required")]
@@ -204,11 +226,6 @@ public class SignUpModel(
         [Display(Name = "Email", Prompt = "someone@examples.com")]
         [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
         public string? Email { get; set; }
-
-        [Display(Name = "Captcha code")]
-        [Required(ErrorMessage = "Validate_Required")]
-        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
-        public string CaptchaCode { get; set; } = null!;
 
         [Display(Name = "Agree the")]
         public bool Agree { get; set; }

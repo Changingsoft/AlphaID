@@ -11,7 +11,7 @@ using System.Text;
 namespace AuthCenterWebApp.Pages.Account
 {
     [AllowAnonymous]
-    public class VerifyPhoneNumberModel(ApplicationUserManager<NaturalPerson> userManager, IVerificationCodeService verificationCodeService) : PageModel
+    public class VerifyPhoneNumberModel(ApplicationUserManager<NaturalPerson> userManager, IServiceProvider serviceProvider) : PageModel
     {
         [BindProperty]
         [Display(Name = "Verification code")]
@@ -19,8 +19,12 @@ namespace AuthCenterWebApp.Pages.Account
         [MaxLength(6, ErrorMessage = "Validate_MaxLength")]
         public string VerificationCode { get; set; } = null!;
 
+        public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
+
         public IActionResult OnGet()
         {
+            if (VerificationCodeService is null)
+                throw new InvalidOperationException("没有为系统配置短信验证码服务。");
             _ = HttpContext.Session.GetString("ResetPasswordPhoneNumber") ?? throw new InvalidOperationException("ResetPasswordPhoneNumber is not found in session.");
             return Page();
         }
@@ -28,7 +32,7 @@ namespace AuthCenterWebApp.Pages.Account
         public async Task<IActionResult> OnPost()
         {
             var resetPasswordPhoneNumber = HttpContext.Session.GetString("ResetPasswordPhoneNumber") ?? throw new InvalidOperationException("ResetPasswordPhoneNumber is not found in session.");
-            if (await verificationCodeService.VerifyAsync(resetPasswordPhoneNumber, VerificationCode))
+            if (await VerificationCodeService!.VerifyAsync(resetPasswordPhoneNumber, VerificationCode))
             {
                 //Generate reset password token
                 var person = await userManager.FindByMobileAsync(resetPasswordPhoneNumber) ?? throw new InvalidOperationException("Person is not found by mobile number.");

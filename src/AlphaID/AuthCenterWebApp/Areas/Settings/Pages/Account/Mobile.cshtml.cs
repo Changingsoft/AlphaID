@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
-public class MobileModel(UserManager<NaturalPerson> userManager, IVerificationCodeService verificationCodeService) : PageModel
+public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvider serviceProvider) : PageModel
 {
     [Display(Name = "PhoneNumber phone number")]
     public string Mobile { get; set; } = null!;
@@ -30,9 +30,11 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IVerificationCo
 
     public string? OperationMessage { get; set; }
 
+    public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
+
     public async Task<IActionResult> OnGetAsync()
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(User.GetSubjectId());
+        NaturalPerson? person = await userManager.GetUserAsync(User);
         if (person == null)
             return BadRequest("无法处理用户Id.");
 
@@ -55,32 +57,51 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IVerificationCo
             return Page();
         }
 
-        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode))
+        bool phoneNumberConfirmed = false;
+        if (VerificationCodeService is not null)
         {
-            ModelState.AddModelError(nameof(VerificationCode), "验证码无效。");
+            if (!await VerificationCodeService.VerifyAsync(phoneNumber.ToString(), VerificationCode))
+            {
+                ModelState.AddModelError(nameof(VerificationCode), "验证码无效。");
+                return Page();
+            }
+            else
+            {
+                phoneNumberConfirmed = true;
+            }
+        }
+
+        IdentityResult result = await userManager.SetPhoneNumberAsync(person, phoneNumber.ToString());
+        if (!result.Succeeded)
+        {
+            OperationMessage = "无法变更移动电话号码。";
+            return Page();
+        }
+        person.PhoneNumberConfirmed = phoneNumberConfirmed;
+        result = await userManager.UpdateAsync(person);
+        if (!result.Succeeded)
+        {
+            OperationMessage = "无法确认移动电话号码。";
             return Page();
         }
 
-        IdentityResult result = await userManager.SetPhoneNumberAsync(person, NewMobile);
-        if (result.Succeeded)
-        {
-            OperationMessage = "移动电话号码已变更。";
-            return Page();
-        }
-
-        OperationMessage = "无法变更移动电话号码。";
+        OperationMessage = "移动电话号码已变更。";
         return Page();
     }
 
     public async Task<IActionResult> OnPostSendVerificationCode()
     {
+        if (VerificationCodeService is null)
+        {
+            throw new InvalidOperationException("没有为系统配置短信验证码服务。");
+        }
         if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
             ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
             return Page();
         }
 
-        await verificationCodeService.SendAsync(phoneNumber.ToString());
+        await VerificationCodeService.SendAsync(phoneNumber.ToString());
 
         VerificationCodeSent = true;
         return Page();

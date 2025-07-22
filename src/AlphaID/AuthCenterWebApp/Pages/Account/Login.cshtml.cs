@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using AlphaIdPlatform.Platform;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AuthCenterWebApp.Pages.Account;
@@ -27,6 +28,7 @@ public class LoginModel(
     IEventService events,
     ApplicationUserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
+    IServiceProvider serviceProvider,
     IOptions<LoginOptions> loginOptions) : PageModel
 {
     public LoginOptionsModel Model { get; set; } = null!;
@@ -38,6 +40,8 @@ public class LoginModel(
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
+
+    public bool SupportVerificationCodeService => serviceProvider.GetService<IVerificationCodeService>() is not null;
 
     public async Task<IActionResult> OnGetAsync(string? returnUrl)
     {

@@ -31,7 +31,8 @@ using IEventSink = Duende.IdentityServer.Services.IEventSink;
 using Microsoft.AspNetCore.HttpOverrides;
 using Duende.IdentityServer;
 using AuthCenterWebApp.Services.WechatMp;
-
+using Duende.IdentityServer.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 #if WINDOWS
@@ -160,17 +161,32 @@ authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
 });
 
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
+
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))
 {
-    authBuilder.AddWechatMp("wechat-mp", "微信", options =>
+    authBuilder.AddWeixin("wechat", "微信", options =>
+    {
+        //替换默认的SignInScheme，以便在回调时正确验证。
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+        options.CallbackPath = "/signin-weixin";
+        options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
+        options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
+    });
+}
+
+var weixinMpLoginSection = externalLoginsSection.GetSection("WeixinMP");
+if (weixinMpLoginSection.GetValue("Enabled", false))
+{
+    authBuilder.AddWechatMp("wechat-mp", options =>
     {
         //替换默认的SignInScheme，以便在回调时正确验证。
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
         options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         //options.CallbackPath = "/signin-weixin";
-        options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
-        options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
+        options.ClientId = weixinMpLoginSection.GetValue("ClientId", string.Empty)!;
+        options.ClientSecret = weixinMpLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
 }
 
@@ -224,8 +240,8 @@ builder.Services.AddIdentityServer(options =>
 
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
 
-        //配置使得跳转到SignInOrSignUp页面。
-        options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
+        //当需要身份验证时显示的登录界面。
+        options.UserInteraction.LoginUrl = "/Account/Login";
     })
     .AddConfigurationStore(options =>
     {
@@ -310,6 +326,10 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IVerificationCodeService, NopVerificationCodeService>();
     builder.Services.AddScoped<IChineseIdCardOcrService, DebugChineseIdCardOcrService>();
 }
+
+//配置后阶段
+builder.Services.AddSingleton<IPostConfigureOptions<IdentityServerOptions>, PostConfigIdentityServerOptions>();
+builder.Services.AddSingleton<IPostConfigureOptions<CookieAuthenticationOptions>, PostConfigIdentityServerOptions>();
 
 var app = builder.Build();
 

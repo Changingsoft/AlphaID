@@ -15,7 +15,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using AlphaIdPlatform.Platform;
 using BotDetect.Web;
-using BotDetect.Web.Mvc;
 
 namespace AuthCenterWebApp.Pages.Account
 {
@@ -24,7 +23,7 @@ namespace AuthCenterWebApp.Pages.Account
         IIdentityServerInteractionService interaction,
         IAuthenticationSchemeProvider schemeProvider,
         IIdentityProviderStore identityProviderStore,
-        IVerificationCodeService verificationCodeService,
+        IServiceProvider serviceProvider,
         IEventService events,
         ApplicationUserManager<NaturalPerson> userManager,
         SignInManager<NaturalPerson> signInManager,
@@ -55,8 +54,13 @@ namespace AuthCenterWebApp.Pages.Account
         [DataType(DataType.Password)]
         public string? VerificationCode { get; set; }
 
+        public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
+
         public async Task<IActionResult> OnGetAsync(string? returnUrl)
         {
+            if (VerificationCodeService is null)
+                throw new InvalidOperationException("没有为系统配置短信验证码服务。");
+
             await BuildModelAsync(returnUrl);
 
             if (Model.IsExternalLoginOnly)
@@ -150,7 +154,7 @@ namespace AuthCenterWebApp.Pages.Account
                 if (user != null)
                 {
                     bool verificationCodeValid =
-                        await verificationCodeService.VerifyAsync(number.ToString(), VerificationCode!);
+                        await VerificationCodeService!.VerifyAsync(number.ToString(), VerificationCode!);
 
                     if (!verificationCodeValid)
                     {
@@ -234,13 +238,13 @@ namespace AuthCenterWebApp.Pages.Account
 
         public async Task<IActionResult> OnPostSendVerificationCode(string instanceId)
         {
-            var captchaResult = BotDetect.Web.Captcha.AjaxValidate("LoginCaptcha", CaptchaCode, instanceId);
+            var captchaResult = Captcha.AjaxValidate("LoginCaptcha", CaptchaCode, instanceId);
             if (!captchaResult)
             {
                 return new JsonResult(Resources.SharedResource.Captcha_Invalid);
             }
             if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult(Resources.SharedResource.PhoneNumberInvalid);
-            await verificationCodeService.SendAsync(phoneNumber.ToString());
+            await VerificationCodeService!.SendAsync(phoneNumber.ToString());
             return new JsonResult(true);
         }
 

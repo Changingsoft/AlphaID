@@ -23,7 +23,7 @@ public class PhoneLoginModel(
     IIdentityServerInteractionService interaction,
     IAuthenticationSchemeProvider schemeProvider,
     IIdentityProviderStore identityProviderStore,
-    IVerificationCodeService verificationCodeService,
+    IServiceProvider serviceProvider,
     IEventService events,
     ApplicationUserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
@@ -56,9 +56,12 @@ public class PhoneLoginModel(
     [BindProperty]
     public string CaptchaCode { get; set; } = null!;
 
+    public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
 
     public async Task<IActionResult> OnGet(string? returnUrl)
     {
+        if(VerificationCodeService is null)
+            throw new InvalidOperationException("没有为系统配置短信验证码服务。");
 
         await BuildModelAsync(returnUrl);
 
@@ -82,7 +85,7 @@ public class PhoneLoginModel(
     {
 
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
-        await verificationCodeService.SendAsync(phoneNumber.ToString());
+        await VerificationCodeService!.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }
 
@@ -123,7 +126,7 @@ public class PhoneLoginModel(
             NaturalPerson? user = await userManager.FindByMobileAsync(Mobile);
             if (user != null)
             {
-                var verificationResult = await verificationCodeService.VerifyAsync(Mobile, VerificationCode);
+                var verificationResult = await VerificationCodeService!.VerifyAsync(Mobile, VerificationCode);
                 if (verificationResult)
                 {
                     await signInManager.SignInAsync(user, Input.RememberLogin);

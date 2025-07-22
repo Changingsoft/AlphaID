@@ -55,18 +55,20 @@
         </div>
         <div class="mb-3">
             <label asp-for="Input.Mobile" class="form-label required"></label>
-            <div class="input-group mb-2">
-                <input asp-for="Input.Mobile" class="form-control" />
-                <button type="button" class="btn" onclick="SendVerificationCode(this);">@L["Send code"]</button>
-            </div>
+            <input asp-for="Input.Mobile" class="form-control" />
             <span asp-validation-for="Input.Mobile" class="text-danger"></span>
         </div>
-        <div class="mb-3">
-            <label asp-for="Input.VerificationCode" class="form-label required"></label>
-            <input asp-for="Input.VerificationCode" class="form-control" autocomplete="off" />
-            <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
-        </div>
-
+        @if (Model.VerificationCodeService is not null)
+        {
+            <div class="mb-3">
+                <label asp-for="Input.VerificationCode" class="form-label required"></label>
+                <div class="input-group mb-2">
+                    <input asp-for="Input.VerificationCode" class="form-control" autocomplete="off" />
+                    <button type="button" class="btn" onclick="SendVerificationCode(this);">@L["Send code"]</button>
+                </div>
+                <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
+            </div>
+        }
         <div class="mb-3">
             <label asp-for="Input.NewPassword" class="form-label required"></label>
             <input asp-for="Input.NewPassword" class="form-control" />

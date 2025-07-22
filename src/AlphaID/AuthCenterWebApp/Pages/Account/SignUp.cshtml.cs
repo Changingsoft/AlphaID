@@ -22,7 +22,7 @@ namespace AuthCenterWebApp.Pages.Account;
 public class SignUpModel(
     NaturalPersonService naturalPersonService,
     UserManager<NaturalPerson> applicationUserManager,
-    IVerificationCodeService verificationCodeService,
+    IServiceProvider serviceProvider,
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,
     SignInManager<NaturalPerson> signInManager,
@@ -42,6 +42,8 @@ public class SignUpModel(
 
     [BindProperty(SupportsGet = true)]
     public string? ReturnUrl { get; set; }
+
+    public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();
 
     public async Task<IActionResult> OnGet()
     {
@@ -90,8 +92,19 @@ public class SignUpModel(
         if (!ModelState.IsValid)
             return Page();
 
-        if (!await verificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
-            ModelState.AddModelError("Input.VerificationCode", "验证码无效");
+        var phoneNumberConfirmed = false;
+        if (VerificationCodeService is not null)
+        {
+            if (!await VerificationCodeService.VerifyAsync(phoneNumber.ToString(), Input.VerificationCode))
+            {
+                ModelState.AddModelError("Input.VerificationCode", "验证码无效");
+            }
+            else
+            {
+                phoneNumberConfirmed = true;
+            }
+        }
+
         if (!ModelState.IsValid)
             return Page();
 
@@ -109,6 +122,7 @@ public class SignUpModel(
         {
             Email = Input.Email,
             PhoneNumber = phoneNumber.ToString(),
+            PhoneNumberConfirmed = phoneNumberConfirmed,
             FamilyName = chinesePersonName.Surname,
             GivenName = chinesePersonName.GivenName,
             Name = chinesePersonName.FullName,
@@ -146,8 +160,10 @@ public class SignUpModel(
 
     public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
     {
+        if (VerificationCodeService is null)
+            return new JsonResult("Not support.");
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
-        await verificationCodeService.SendAsync(phoneNumber.ToString());
+        await VerificationCodeService.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }
 

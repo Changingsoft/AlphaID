@@ -58,8 +58,7 @@ public class AuthorizeEndpointTest
 
     private static string GenerateCodeChallenge(string codeVerifier)
     {
-        using var sha256 = SHA256.Create();
-        var bytes = sha256.ComputeHash(Encoding.ASCII.GetBytes(codeVerifier));
+        var bytes = SHA256.HashData(Encoding.ASCII.GetBytes(codeVerifier));
         return Base64UrlEncode(bytes);
     }
 

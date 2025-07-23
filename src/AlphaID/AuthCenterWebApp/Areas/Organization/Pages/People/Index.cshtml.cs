@@ -54,7 +54,7 @@ public class IndexModel(
         var your = organization.Members.FirstOrDefault(m => m.PersonId == personId);
         if (your == null)
             return Page();
-        
+
         organization.Members.Remove(your);
 
         Result = await organizationManager.UpdateAsync(organization);

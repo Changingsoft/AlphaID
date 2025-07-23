@@ -1,4 +1,6 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Platform;
+using BotDetect.Web;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -13,8 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using AlphaIdPlatform.Platform;
-using BotDetect.Web;
 
 namespace AuthCenterWebApp.Pages.Account
 {

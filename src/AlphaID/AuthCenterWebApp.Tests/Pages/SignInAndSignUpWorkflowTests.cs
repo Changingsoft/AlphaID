@@ -1,5 +1,5 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
+using System.Net;
 
 namespace AuthCenterWebApp.Tests.Pages;
 public class SignInAndSignUpWorkflowTests

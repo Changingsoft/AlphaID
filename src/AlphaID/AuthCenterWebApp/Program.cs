@@ -12,13 +12,18 @@ using AuthCenterWebApp;
 using AuthCenterWebApp.Middlewares;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
+using AuthCenterWebApp.Services.WechatMp;
 using BotDetect.Web;
 using ChineseName;
-using Duende.IdentityServer.EntityFramework.Stores;
 using Duende.IdentityModel;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.EntityFramework.Stores;
 using IdSubjects;
 using IdSubjects.SecurityAuditing;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -28,11 +33,6 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
-using Microsoft.AspNetCore.HttpOverrides;
-using Duende.IdentityServer;
-using AuthCenterWebApp.Services.WechatMp;
-using Duende.IdentityServer.Configuration;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 #if WINDOWS

@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using AlphaIdPlatform.JoinOrgRequesting;
 using AlphaIdPlatform.Security;
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests
 {
@@ -21,7 +21,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests
         public async Task<IActionResult> OnPost()
         {
             var org = await organizationManager.FindByNameAsync(OrganizationName);
-            if(org == null)
+            if (org == null)
                 ModelState.AddModelError(nameof(OrganizationName), "Organization not found.");
 
             if (!ModelState.IsValid)

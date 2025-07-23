@@ -4,12 +4,12 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AuthCenterWebApp.Pages.Account
 {
@@ -91,7 +91,7 @@ namespace AuthCenterWebApp.Pages.Account
                 ModelState.AddModelError(string.Empty, "创建用户时出错。请稍后再试。");
                 return Page();
             }
-            
+
 
             ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
             //如果有外部登录信息，则将其绑定到外部登录

@@ -103,7 +103,7 @@ public class SignUpModel(
 
         if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
             ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
-        
+
         if (!ModelState.IsValid)
             return Page();
 

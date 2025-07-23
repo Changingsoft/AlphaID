@@ -19,7 +19,7 @@ public class PostConfigIdentityServerOptions(IServiceProvider provider, ILogger<
             //如果验证码服务不为空，则优先采用登录注册一体流程。
             options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
         }
-        
+
     }
 
     public void PostConfigure(string? name, CookieAuthenticationOptions options)

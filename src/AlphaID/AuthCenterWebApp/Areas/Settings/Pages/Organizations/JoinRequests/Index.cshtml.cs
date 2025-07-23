@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using AlphaIdPlatform.JoinOrgRequesting;
 using AlphaIdPlatform.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests
 {

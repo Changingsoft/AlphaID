@@ -40,8 +40,8 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return NotFound();
             }
-
-            if (!string.IsNullOrEmpty(PhoneNumber) && !MobilePhoneNumber.TryParse(PhoneNumber, out _))
+            MobilePhoneNumber e164Number = new MobilePhoneNumber("+86", "1");
+            if (!string.IsNullOrEmpty(PhoneNumber) && !MobilePhoneNumber.TryParse(PhoneNumber, out e164Number))
             {
                 ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
             }
@@ -49,7 +49,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
             {
                 return Page();
             }
-            var result = await personService.SetPhoneNumberAsync(person, PhoneNumber, PhoneNumberConfirmed);
+            var result = await personService.SetPhoneNumberAsync(person, e164Number, PhoneNumberConfirmed);
             if (result.Succeeded)
             {
                 return RedirectToPage("Index", new { anchor });

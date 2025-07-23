@@ -8,7 +8,10 @@
 <form method="post">
     <div class="mb-3">
         <label asp-for="PhoneNumber" class="form-label"></label>
-        <input asp-for="PhoneNumber" class="form-control" />
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1">+86</span>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
         <span asp-description-for="PhoneNumber"></span>
         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div>

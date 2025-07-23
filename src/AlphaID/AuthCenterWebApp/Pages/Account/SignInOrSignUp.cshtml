@@ -135,8 +135,8 @@
                 headers: {
                     RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
                 },
-                data: { 
-                    PhoneNumber: mobile, 
+                data: {
+                    PhoneNumber: mobile,
                     CaptchaCode: $("#CaptchaCode").val(),
                     InstanceId: $("#BDC_VCID_LoginCaptcha").val()
                 },
@@ -163,7 +163,7 @@
                 countdown = 60;
                 return;
             } else {
-                code.text("resendCodeText (" + countdown + ")");
+                code.text(resendCodeText + " (" + countdown + ")");
                 code.attr('disabled', true);
                 countdown--;
             }

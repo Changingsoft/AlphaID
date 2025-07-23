@@ -14,8 +14,8 @@ public class ChineseNamePinyinConvertContext
     internal ChineseNamePinyinConvertContext(IEnumerable<PhoneticChineseChar> surnameChars,
         IEnumerable<PhoneticChineseChar> givenNameChars)
     {
-        SurnameChars = new List<PhoneticChineseChar>(surnameChars);
-        GivenNameChars = new List<PhoneticChineseChar>(givenNameChars);
+        SurnameChars = [.. surnameChars];
+        GivenNameChars = [.. givenNameChars];
     }
 
     /// <summary>

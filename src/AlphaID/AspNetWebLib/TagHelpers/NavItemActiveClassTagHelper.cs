@@ -34,7 +34,7 @@ public class NavItemActiveClassTagHelper : TagHelper
             return;
         bool restrictMatch = false;
         string targetPath = Path;
-        if (Path.EndsWith("!"))
+        if (Path.EndsWith('!'))
         {
             restrictMatch = true;
             targetPath = targetPath[..^1];

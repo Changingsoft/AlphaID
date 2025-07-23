@@ -19,7 +19,7 @@ public class EnumHelperTest
     public void GetListItems()
     {
         IEnumerable<SelectListItem> items = EnumHelper.GetSelectListItems<TestEnum>();
-        SelectListItem[] array = items.ToArray();
+        SelectListItem[] array = [.. items];
         Assert.Equal("None", array[0].Text);
         Assert.Equal("None", array[0].Value);
         Assert.Equal("Base line", array[1].Text);

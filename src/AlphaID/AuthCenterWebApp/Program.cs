@@ -12,13 +12,18 @@ using AuthCenterWebApp;
 using AuthCenterWebApp.Middlewares;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
+using AuthCenterWebApp.Services.WechatMp;
 using BotDetect.Web;
 using ChineseName;
-using Duende.IdentityServer.EntityFramework.Stores;
 using Duende.IdentityModel;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.EntityFramework.Stores;
 using IdSubjects;
 using IdSubjects.SecurityAuditing;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -28,11 +33,6 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
-using Microsoft.AspNetCore.HttpOverrides;
-using Duende.IdentityServer;
-using AuthCenterWebApp.Services.WechatMp;
-using Duende.IdentityServer.Configuration;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 #if WINDOWS
@@ -152,7 +152,6 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, Iden
     .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
 
-//配置外部登录。
 var authBuilder = builder.Services.AddAuthentication();
 //添加PreSignUp方案。
 authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
@@ -160,8 +159,8 @@ authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 });
 
+#region 配置可选外部登录
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
-
 var weixinLoginSection = externalLoginsSection.GetSection("Weixin");
 if (weixinLoginSection.GetValue("Enabled", false))
 {
@@ -173,20 +172,6 @@ if (weixinLoginSection.GetValue("Enabled", false))
         options.CallbackPath = "/signin-weixin";
         options.ClientId = weixinLoginSection.GetValue("ClientId", string.Empty)!;
         options.ClientSecret = weixinLoginSection.GetValue("ClientSecret", string.Empty)!;
-    });
-}
-
-var weixinMpLoginSection = externalLoginsSection.GetSection("WeixinMP");
-if (weixinMpLoginSection.GetValue("Enabled", false))
-{
-    authBuilder.AddWechatMp("wechat-mp", options =>
-    {
-        //替换默认的SignInScheme，以便在回调时正确验证。
-        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
-        //options.CallbackPath = "/signin-weixin";
-        options.ClientId = weixinMpLoginSection.GetValue("ClientId", string.Empty)!;
-        options.ClientSecret = weixinMpLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
 }
 
@@ -215,6 +200,26 @@ if (qqLoginSection.GetValue("Enabled", false))
         options.ClientSecret = qqLoginSection.GetValue("ClientSecret", string.Empty)!;
     });
 }
+#endregion
+
+#region 配置微信公众平台移动端网页授权
+builder.Services.Configure<WeixinMpSettings>(builder.Configuration.GetSection("WeixinMpSettings"));
+var weixinMpSettings = new WeixinMpSettings();
+builder.Configuration.GetSection("WeixinMpSettings").Bind(weixinMpSettings);
+if (weixinMpSettings.Enabled)
+{
+    authBuilder.AddWechatMp(weixinMpSettings.MpName, options =>
+    {
+        //替换默认的SignInScheme，以便在回调时正确验证。
+        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+        //options.CallbackPath = "/signin-weixin";
+        options.ClientId = weixinMpSettings.AppId;
+        options.ClientSecret = weixinMpSettings.AppSecret;
+    });
+}
+#endregion
+
 
 //添加邮件发送器。
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
@@ -252,7 +257,10 @@ builder.Services.AddIdentityServer(options =>
     })
     .AddOperationalStore(options =>
     {
-        options.EnableTokenCleanup = true;
+        //当调试模式时，不要启用令牌清理任务。
+        //否则单元测试期间会随机导致InvalidOperationException, Not started. Call Start first.
+        options.EnableTokenCleanup = !builder.Environment.IsDevelopment();
+        
         options.ConfigureDbContext = b =>
         {
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

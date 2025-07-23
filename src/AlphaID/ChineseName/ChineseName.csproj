@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
+		<NeutralLanguage>en-US</NeutralLanguage>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="PinYinConverterCore" Version="1.0.2" />

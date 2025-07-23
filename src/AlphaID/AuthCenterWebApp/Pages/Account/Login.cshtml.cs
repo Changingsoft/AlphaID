@@ -1,4 +1,5 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Platform;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -14,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using AlphaIdPlatform.Platform;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AuthCenterWebApp.Pages.Account;

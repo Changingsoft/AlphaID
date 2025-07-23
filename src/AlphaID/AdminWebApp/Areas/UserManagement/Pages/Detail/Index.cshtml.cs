@@ -46,7 +46,7 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> userManager) : Pag
 
         await using Stream stream = file.OpenReadStream();
         var data = new byte[stream.Length];
-        await stream.ReadAsync(data);
+        var bytesToRead = await stream.ReadAsync(data);
         IdentityResult result = await userManager.SetProfilePictureAsync(person, file.ContentType, data);
         if (result.Succeeded)
             return new JsonResult(true);

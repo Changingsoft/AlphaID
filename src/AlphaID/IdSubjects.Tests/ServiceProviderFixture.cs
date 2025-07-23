@@ -8,7 +8,7 @@ public class ServiceProviderFixture
     {
         var services = new ServiceCollection();
 
-        var builder = services.AddIdSubjects<ApplicationUser>()
+        services.AddIdSubjects<ApplicationUser>()
             .AddUserStore<StubApplicationUserStore>();
         services.AddScoped<IApplicationUserStore<ApplicationUser>, StubApplicationUserStore>();
 

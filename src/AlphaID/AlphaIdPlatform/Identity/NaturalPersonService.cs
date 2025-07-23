@@ -198,9 +198,9 @@ public class NaturalPersonService(
     /// <param name="phoneNumber"></param>
     /// <param name="confirmed"></param>
     /// <returns></returns>
-    public async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson person, string? phoneNumber, bool confirmed)
+    public async Task<IdentityResult> SetPhoneNumberAsync(NaturalPerson person, MobilePhoneNumber phoneNumber, bool confirmed)
     {
-        var result = await userManager.SetPhoneNumberAsync(person, phoneNumber, confirmed);
+        var result = await userManager.SetPhoneNumberAsync(person, phoneNumber.ToString(), confirmed);
         if (!result.Succeeded)
             return result;
 

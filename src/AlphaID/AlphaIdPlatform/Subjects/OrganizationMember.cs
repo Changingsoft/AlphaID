@@ -70,7 +70,7 @@ public class OrganizationMember
     /// <summary>
     /// Membership visibility.
     /// </summary>
-    public virtual MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
+    public MembershipVisibility Visibility { get; set; } = MembershipVisibility.Private;
 
     /// <summary>
     /// </summary>

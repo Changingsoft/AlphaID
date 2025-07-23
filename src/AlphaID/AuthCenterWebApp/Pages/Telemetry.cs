@@ -59,7 +59,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        /// Helper method to increase <see cref="Counters.ConsentDenied" /> counter. The scopes
+        /// Helper method to increase ConsentDenied counter. The scopes
         /// are expanded and called one by one to not cause a combinatory explosion of scopes.
         /// </summary>
         /// <param name="clientId">Client id</param>

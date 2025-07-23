@@ -60,7 +60,7 @@ public class PhoneLoginModel(
 
     public async Task<IActionResult> OnGet(string? returnUrl)
     {
-        if(VerificationCodeService is null)
+        if (VerificationCodeService is null)
             throw new InvalidOperationException("没有为系统配置短信验证码服务。");
 
         await BuildModelAsync(returnUrl);

@@ -1,4 +1,6 @@
 using AlphaIdPlatform.Identity;
+using AlphaIdPlatform.Platform;
+using BotDetect.Web;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -13,8 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using AlphaIdPlatform.Platform;
-using BotDetect.Web;
 
 namespace AuthCenterWebApp.Pages.Account
 {
@@ -27,6 +27,7 @@ namespace AuthCenterWebApp.Pages.Account
         IEventService events,
         ApplicationUserManager<NaturalPerson> userManager,
         SignInManager<NaturalPerson> signInManager,
+        IOptions<WeixinMpSettings> weixinMpSettings,
         IOptions<LoginOptions> loginOptions) : PageModel
     {
         public LoginOptionsModel Model { get; set; } = null!;
@@ -75,24 +76,28 @@ namespace AuthCenterWebApp.Pages.Account
 
             //尝试验证外部登录。
             ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-
+            
+            //没有外部登录结果。
             if (ExternalLoginResult.None)
             {
                 //如果配置了微信，且当前在微信浏览器中，则尝试使用微信外部登录。
                 var userAgent = Request.Headers.UserAgent;
                 if (userAgent.Any(ua => ua!.Contains("MicroMessenger", StringComparison.OrdinalIgnoreCase)))
                 {
-                    //如果微信登录配置了，则尝试使用微信登录。
-                    AuthenticationScheme? wechatScheme = await schemeProvider.GetSchemeAsync("wechat-mp");
-                    if (wechatScheme != null)
+                    if (weixinMpSettings.Value.Enabled)
                     {
-                        return RedirectToPage("/ExternalLogin/Challenge",
-                            new
-                            {
-                                scheme = wechatScheme.Name,
-                                schemeDisplayName = wechatScheme.DisplayName,
-                                returnUrl
-                            });
+                        //如果微信登录配置了，则尝试使用微信登录。
+                        AuthenticationScheme? wechatScheme = await schemeProvider.GetSchemeAsync(weixinMpSettings.Value.MpName);
+                        if (wechatScheme != null)
+                        {
+                            return RedirectToPage("/ExternalLogin/Challenge",
+                                new
+                                {
+                                    scheme = wechatScheme.Name,
+                                    schemeDisplayName = wechatScheme.DisplayName,
+                                    returnUrl
+                                });
+                        }
                     }
                 }
             }

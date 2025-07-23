@@ -23,7 +23,7 @@ public class ApplicationUserClaimsPrincipalFactory<TUser>(UserManager<TUser> use
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(TUser user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
-        string anchor = user.UserName!;
+        //string anchor = user.UserName!;
         id.AddClaim(new Claim(JwtClaimTypes.Profile, profileUrlGenerator.GenerateProfileUrl(user).ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.Picture, profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, user.WhenChanged.ToUnixTimeSeconds().ToString()));
@@ -103,7 +103,7 @@ public class ApplicationUserClaimsPrincipalFactory<TUser, TRole>(UserManager<TUs
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(TUser user)
     {
         ClaimsIdentity id = await base.GenerateClaimsAsync(user);
-        string anchor = user.UserName!;
+        //string anchor = user.UserName!;
         id.AddClaim(new Claim(JwtClaimTypes.Profile, profileUrlGenerator.GenerateProfileUrl(user).ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.Picture, profileUrlGenerator.GenerateProfilePictureUrl(user).ToString()));
         id.AddClaim(new Claim(JwtClaimTypes.UpdatedAt, user.WhenChanged.ToUnixTimeSeconds().ToString()));

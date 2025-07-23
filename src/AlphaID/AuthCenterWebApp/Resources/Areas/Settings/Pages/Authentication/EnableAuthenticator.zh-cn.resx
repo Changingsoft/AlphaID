@@ -14,4 +14,7 @@
 	<data name="Configure authenticator app" xml:space="preserve">
 		<value>配置验证器App</value>
 	</data>
+	<data name="To use an authenticator app go through the following steps:" xml:space="preserve">
+		<value>请按以下步骤使用验证器App：</value>
+	</data>
 </root>

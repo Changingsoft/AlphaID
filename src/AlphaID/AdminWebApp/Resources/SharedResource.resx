@@ -467,4 +467,8 @@
 	  <value>Back</value>
 	  <comment>Back</comment>
   </data>
+  <data name="Cancel" xml:space="preserve">
+	  <value>Cancel</value>
+	  <comment>Cancel</comment>
+  </data>
 </root>

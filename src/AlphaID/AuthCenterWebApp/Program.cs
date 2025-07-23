@@ -257,7 +257,10 @@ builder.Services.AddIdentityServer(options =>
     })
     .AddOperationalStore(options =>
     {
-        options.EnableTokenCleanup = true;
+        //当调试模式时，不要启用令牌清理任务。
+        //否则单元测试期间会随机导致InvalidOperationException, Not started. Call Start first.
+        options.EnableTokenCleanup = !builder.Environment.IsDevelopment();
+        
         options.ConfigureDbContext = b =>
         {
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

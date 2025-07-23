@@ -55,7 +55,7 @@ where T : ApplicationUser
         if (provider == null) return result;
 
         IEnumerable<IRealNameRequestAuditor> auditors = provider.GetAuditors();
-        var accept = true;
+        bool accept = true;
         foreach (IRealNameRequestAuditor auditor in auditors)
             if (!await auditor.ValidateAsync(request))
                 accept = false;

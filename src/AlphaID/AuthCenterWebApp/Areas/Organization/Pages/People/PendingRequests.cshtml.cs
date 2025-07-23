@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.JoinOrgRequesting;
 using AlphaIdPlatform.Security;

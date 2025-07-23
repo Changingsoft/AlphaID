@@ -49,7 +49,7 @@ where T : ApplicationUser
         person.Name = authentication.PersonName.FullName;
         IdentityResult identityResult = await applicationUserManager.UpdateAsync(person);
         if (!identityResult.Succeeded)
-            return IdOperationResult.Failed(identityResult.Errors.Select(e => e.Description).ToArray());
+            return IdOperationResult.Failed([.. identityResult.Errors.Select(e => e.Description)]);
 
         return IdOperationResult.Success;
     }

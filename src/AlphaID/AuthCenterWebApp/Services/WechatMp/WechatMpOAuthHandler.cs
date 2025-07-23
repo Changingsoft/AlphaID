@@ -38,12 +38,6 @@ public class WechatMpOAuthHandler : OAuthHandler<WechatMpAuthOptions>
         return url;
     }
 
-    protected override bool ValidateCorrelationId(AuthenticationProperties properties)
-    {
-        //return true;
-        return base.ValidateCorrelationId(properties);
-    }
-
     protected override async Task<OAuthTokenResponse> ExchangeCodeAsync(OAuthCodeExchangeContext context)
     {
 

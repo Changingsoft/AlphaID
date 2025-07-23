@@ -5,7 +5,7 @@ namespace AspNetWebLib.Validations
 {
     public class CustomUrlAttribute : ValidationAttribute
     {
-        private static readonly Regex s_urlRegex = new Regex(
+        private static readonly Regex s_urlRegex = new(
             @"^(http|https)://([\w-]+(\.[\w-]+)+|localhost)(:\d+)?(/[\w- ./?%&=]*)?$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

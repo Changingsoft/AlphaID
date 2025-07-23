@@ -1,7 +1,6 @@
 using AlphaIdPlatform.Platform;
 using Duende.IdentityServer.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 
 namespace AuthCenterWebApp.Services;
 

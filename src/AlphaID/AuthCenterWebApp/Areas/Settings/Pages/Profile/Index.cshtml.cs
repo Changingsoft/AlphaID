@@ -59,7 +59,7 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, Sig
             return BadRequest();
         await using Stream stream = file.OpenReadStream();
         var data = new byte[stream.Length];
-        await stream.ReadAsync(data);
+        var bytesToRead = await stream.ReadAsync(data);
         IdentityResult result = await personManager.SetProfilePictureAsync(person, file.ContentType, data);
         if (result.Succeeded)
         {

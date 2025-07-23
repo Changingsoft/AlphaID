@@ -17,4 +17,7 @@
 	<data name="Invitations" xml:space="preserve">
 		<value>邀请</value>
 	</data>
+	<data name="Join requests" xml:space="preserve">
+		<value>加入申请</value>
+	</data>
 </root>

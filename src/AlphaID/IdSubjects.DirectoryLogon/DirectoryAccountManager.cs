@@ -156,7 +156,7 @@ where T : ApplicationUser
     public async Task<DirectoryAccount> LinkExistsAccount(T user, DirectoryService service, string entryObjectGuid)
     {
         using var context = PrincipalContextHelper.GetRootContext(service);
-        UserPrincipal? userPrincipal = UserPrincipal.FindByIdentity(context, entryObjectGuid) ?? throw new ArgumentException("找不到指定的目录对象。", nameof(entryObjectGuid));
+        UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(context, entryObjectGuid) ?? throw new ArgumentException("找不到指定的目录对象。", nameof(entryObjectGuid));
         DirectoryAccount account = new(service, user.Id, userPrincipal.Guid.ToString()!);
         await store.CreateAsync(account);
         return account;

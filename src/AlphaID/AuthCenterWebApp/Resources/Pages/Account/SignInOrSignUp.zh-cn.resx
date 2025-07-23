@@ -20,4 +20,16 @@
 	<data name="You have signed in from {0}." xml:space="preserve">
 		<value>您已登录到{0}。</value>
 	</data>
+	<data name="Invalid login scheme" xml:space="preserve">
+		<value>登录方案无效</value>
+	</data>
+	<data name="No schemes set for this request" xml:space="preserve">
+		<value>没有为这次请求的方案集</value>
+	</data>
+	<data name="Resend" xml:space="preserve">
+		<value>重发</value>
+	</data>
+	<data name="Send code" xml:space="preserve">
+		<value>发送代码</value>
+	</data>
 </root>

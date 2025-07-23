@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
 	<!-- 
 		Microsoft ResX Schema
@@ -101,5 +101,9 @@
 	<data name="Configure authenticator app" xml:space="preserve">
 		<value>Configure authenticator app</value>
 		<comment>Configure authenticator app</comment>
+	</data>
+	<data name="To use an authenticator app go through the following steps:" xml:space="preserve">
+		<value>To use an authenticator app go through the following steps:</value>
+		<comment>To use an authenticator app go through the following steps:</comment>
 	</data>
 </root>

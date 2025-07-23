@@ -58,7 +58,7 @@ public class CreateDirectoryAccountModel(
 
         try
         {
-            var logonAccount = await directoryAccountManager.CreateDirectoryAccount(user, directoryService!);
+            await directoryAccountManager.CreateDirectoryAccount(user, directoryService!);
             return RedirectToPage("DirectoryAccounts", new { anchor });
         }
         catch (Exception ex)

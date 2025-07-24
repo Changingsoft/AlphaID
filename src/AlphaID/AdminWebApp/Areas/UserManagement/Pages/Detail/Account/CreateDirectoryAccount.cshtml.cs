@@ -105,6 +105,7 @@ public class CreateDirectoryAccountModel(
         public string Mobile { get; set; } = null!;
 
         [Display(Name = "Email Address")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
         public string? Email { get; set; }
 
         [Display(Name = "Password")]

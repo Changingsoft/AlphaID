@@ -68,7 +68,8 @@ public class FindPasswordByEmailModel(
     public class InputModel
     {
         [Required(ErrorMessage = "Validate_Required")]
-        [EmailAddress]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
         [Display(Name = "Email")]
         public string Email { get; set; } = null!;
 

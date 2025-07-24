@@ -224,7 +224,8 @@ public class SignUpModel(
         public string ConfirmPassword { get; set; } = null!;
 
         [Display(Name = "Email", Prompt = "someone@examples.com")]
-        [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
         public string? Email { get; set; }
 
         [Display(Name = "Agree the")]

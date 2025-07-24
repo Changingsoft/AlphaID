@@ -471,4 +471,7 @@
 	  <value>Cancel</value>
 	  <comment>Cancel</comment>
   </data>
+  <data name="Validate_EmailFormat" xml:space="preserve">
+	  <value>Invalid email address format.</value>
+  </data>
 </root>

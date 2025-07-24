@@ -453,4 +453,10 @@
   <data name="Back" xml:space="preserve">
 	  <value>后退</value>
   </data>
+  <data name="Validate_EmailFormat" xml:space="preserve">
+	  <value>电子邮件地址格式无效。</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+	  <value>取消</value>
+  </data>
 </root>

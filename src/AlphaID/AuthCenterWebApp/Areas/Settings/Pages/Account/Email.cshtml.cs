@@ -19,6 +19,8 @@ public class EmailModel(
     private readonly ProductInfo _production = production.Value;
 
     [Display(Name = "Email")]
+    [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+    [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
     public string? Email { get; set; }
 
     public bool IsEmailConfirmed { get; set; }

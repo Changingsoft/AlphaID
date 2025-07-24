@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
 	<!-- 
 		Microsoft ResX Schema
@@ -98,4 +98,12 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="Create from Chinese ID Card" xml:space="preserve">
+		<value>Create from Chinese ID Card</value>
+		<comment>Create from Chinese ID Card</comment>
+	</data>
+	<data name="Create manually" xml:space="preserve">
+		<value>Create manually</value>
+		<comment>Create manually</comment>
+	</data>
 </root>

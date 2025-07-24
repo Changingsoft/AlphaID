@@ -253,7 +253,7 @@
     <value>自然人</value>
   </data>
   <data name="Phone number" xml:space="preserve">
-    <value>移动电话号码</value>
+    <value>手机号</value>
   </data>
   <data name="Phonetic display name" xml:space="preserve">
     <value>读音全名</value>
@@ -442,7 +442,7 @@
 	  <value>好的</value>
   </data>
   <data name="Confirm this phone number" xml:space="preserve">
-	  <value>确认此移动电话号码</value>
+	  <value>确认此手机号</value>
   </data>
   <data name="Confirmed" xml:space="preserve">
 	  <value>已确认</value>

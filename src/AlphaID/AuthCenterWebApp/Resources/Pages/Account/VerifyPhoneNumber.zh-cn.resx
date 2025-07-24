@@ -1,4 +1,4 @@
-﻿<root>
+<root>
 	<resheader name="resmimetype">
 		<value>text/microsoft-resx</value>
 	</resheader>
@@ -12,6 +12,6 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="Verify phone number" xml:space="preserve">
-		<value>验证移动电话号码</value>
+		<value>验证手机号</value>
 	</data>
 </root>

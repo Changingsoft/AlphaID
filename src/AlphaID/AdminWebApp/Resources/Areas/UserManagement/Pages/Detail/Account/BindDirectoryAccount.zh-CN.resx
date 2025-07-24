@@ -130,7 +130,7 @@
     <value>显示名称</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>移动电话号码</value>
+    <value>手机号</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>

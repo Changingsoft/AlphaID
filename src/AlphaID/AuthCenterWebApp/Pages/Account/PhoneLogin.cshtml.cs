@@ -85,7 +85,7 @@ public class PhoneLoginModel(
     public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
     {
 
-        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("手机号无效。");
         await VerificationCodeService!.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }

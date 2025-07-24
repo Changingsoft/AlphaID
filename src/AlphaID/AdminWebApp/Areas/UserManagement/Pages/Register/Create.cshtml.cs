@@ -94,7 +94,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
             return new JsonResult(true);
 
         if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber mobilePhoneNumber))
-            return new JsonResult("移动电话号码无效");
+            return new JsonResult("手机号无效");
 
         if (!manager.Users.Any(p => p.PhoneNumber == mobilePhoneNumber.ToString())) return new JsonResult(true);
         return new JsonResult("此移动电话已注册");

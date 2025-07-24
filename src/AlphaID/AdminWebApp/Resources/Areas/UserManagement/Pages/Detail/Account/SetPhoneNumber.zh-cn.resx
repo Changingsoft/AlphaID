@@ -12,9 +12,9 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="Change phone number will reset confirmation state until user valid its phone number." xml:space="preserve">
-		<value>更改移动电话号码将重置确认状态，直到用户完成移动电话号码验证。</value>
+		<value>更改手机号将重置确认状态，直到用户完成手机号验证。</value>
 	</data>
 	<data name="Set phone number" xml:space="preserve">
-		<value>设置移动电话号码</value>
+		<value>设置手机号</value>
 	</data>
 </root>

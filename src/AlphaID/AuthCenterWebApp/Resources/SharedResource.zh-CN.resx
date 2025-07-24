@@ -214,7 +214,7 @@
     <value>中间名</value>
   </data>
   <data name="Mobile phone number" xml:space="preserve">
-    <value>移动电话号码</value>
+    <value>手机号</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>
@@ -223,7 +223,7 @@
     <value>新电子邮件</value>
   </data>
   <data name="New mobile phone number" xml:space="preserve">
-    <value>新移动电话号码</value>
+    <value>新手机号</value>
   </data>
   <data name="New password" xml:space="preserve">
     <value>新密码</value>
@@ -235,7 +235,7 @@
     <value>密码</value>
   </data>
   <data name="Phone number" xml:space="preserve">
-    <value>移动电话号码</value>
+    <value>手机号</value>
   </data>
   <data name="Phonetic given name" xml:space="preserve">
     <value>注音名</value>
@@ -331,7 +331,7 @@
     <value>从手机短信接收</value>
   </data>
   <data name="User name, email or phone number" xml:space="preserve">
-    <value>用户名、电子邮件地址或移动电话号码</value>
+    <value>用户名、电子邮件地址或手机号</value>
   </data>
   <data name="Delete Account" xml:space="preserve">
     <value>删除账户</value>
@@ -367,6 +367,6 @@
     <value>姓氏</value>
   </data>
   <data name="PhoneNumberInvalid" xml:space="preserve">
-    <value>移动电话号码无效。</value>
+    <value>手机号无效。</value>
   </data>
 </root>

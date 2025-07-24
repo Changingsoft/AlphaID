@@ -3,12 +3,12 @@ using System.Text.RegularExpressions;
 namespace IdSubjects;
 
 /// <summary>
-/// 移动电话号码。
+/// 手机号。
 /// </summary>
 public struct MobilePhoneNumber
 {
     /// <summary>
-    /// 使用国家代码和移动电话号码初始化。
+    /// 使用国家代码和手机号初始化。
     /// </summary>
     /// <param name="countryCode">国家代码。</param>
     /// <param name="phoneNumber">电话号码。</param>
@@ -35,7 +35,7 @@ public struct MobilePhoneNumber
     }
 
     /// <summary>
-    /// 使用号码初始化移动电话号码。默认国家代码为86
+    /// 使用号码初始化手机号。默认国家代码为86
     /// </summary>
     /// <param name="phoneNumber">电话号码。</param>
     public MobilePhoneNumber(string phoneNumber) : this(DefaultCountryCode, phoneNumber)
@@ -53,7 +53,7 @@ public struct MobilePhoneNumber
     public string PhoneNumber { get; set; }
 
     /// <summary>
-    /// 已重写。按 E.164 格式输出移动电话号码。
+    /// 已重写。按 E.164 格式输出手机号。
     /// </summary>
     /// <returns></returns>
     public readonly override string ToString()
@@ -62,13 +62,13 @@ public struct MobilePhoneNumber
     }
 
     /// <summary>
-    /// 尝试将给定字符串匹配为移动电话号码。
+    /// 尝试将给定字符串匹配为手机号。
     /// </summary>
     /// <remarks>
-    /// 此方法只支持中国（国家代码+86）的移动电话号码的匹配。
+    /// 此方法只支持中国（国家代码+86）的手机号的匹配。
     /// </remarks>
     /// <param name="s">要进行匹配的字符串。</param>
-    /// <param name="number">若匹配成功，则返回移动电话号码。</param>
+    /// <param name="number">若匹配成功，则返回手机号。</param>
     /// <returns>若匹配成功，返回true，否则返回false。</returns>
     public static bool TryParse(string? s, out MobilePhoneNumber number)
     {
@@ -86,10 +86,10 @@ public struct MobilePhoneNumber
     }
 
     /// <summary>
-    /// 匹配给定的字符串为移动电话号码。
+    /// 匹配给定的字符串为手机号。
     /// </summary>
     /// <param name="s"></param>
-    /// <returns>匹配成功的移动电话号码。</returns>
+    /// <returns>匹配成功的手机号。</returns>
     /// <exception cref="FormatException">电话号码格式不正确。</exception>
     /// <exception cref="ArgumentException">字符串为空或null。</exception>
     public static MobilePhoneNumber Parse(string s)
@@ -97,7 +97,7 @@ public struct MobilePhoneNumber
         return string.IsNullOrWhiteSpace(s)
             ? throw new ArgumentException(string.Format(Resources.StringIsNullOrWhiteSpace, nameof(s)), nameof(s))
             : !TryParse(s, out MobilePhoneNumber number)
-                ? throw new FormatException("不正确的移动电话号码。")
+                ? throw new FormatException("不正确的手机号。")
                 : number;
     }
 

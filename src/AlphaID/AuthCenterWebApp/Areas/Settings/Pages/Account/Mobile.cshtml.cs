@@ -54,7 +54,7 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvide
 
         if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
-            ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
+            ModelState.AddModelError(nameof(NewMobile), "手机号无效。");
             return Page();
         }
 
@@ -75,18 +75,18 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvide
         IdentityResult result = await userManager.SetPhoneNumberAsync(person, phoneNumber.ToString());
         if (!result.Succeeded)
         {
-            OperationMessage = "无法变更移动电话号码。";
+            OperationMessage = "无法变更手机号。";
             return Page();
         }
         person.PhoneNumberConfirmed = phoneNumberConfirmed;
         result = await userManager.UpdateAsync(person);
         if (!result.Succeeded)
         {
-            OperationMessage = "无法确认移动电话号码。";
+            OperationMessage = "无法确认手机号。";
             return Page();
         }
 
-        OperationMessage = "移动电话号码已变更。";
+        OperationMessage = "手机号已变更。";
         return Page();
     }
 
@@ -98,7 +98,7 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvide
         }
         if (!MobilePhoneNumber.TryParse(NewMobile, out MobilePhoneNumber phoneNumber))
         {
-            ModelState.AddModelError(nameof(NewMobile), "移动电话号码无效。");
+            ModelState.AddModelError(nameof(NewMobile), "手机号无效。");
             return Page();
         }
 

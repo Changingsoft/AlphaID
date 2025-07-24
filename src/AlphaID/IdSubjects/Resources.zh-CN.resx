@@ -124,13 +124,13 @@
     <value>邓白氏码</value>
   </data>
   <data name="DuplicatePhoneNumber" xml:space="preserve">
-    <value>移动电话号码已被注册。</value>
+    <value>手机号已被注册。</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>女</value>
   </data>
   <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>无效的移动电话号码。</value>
+    <value>无效的手机号。</value>
   </data>
   <data name="Legal entity identifier" xml:space="preserve">
     <value>全球法人实体标识符（LEI）</value>

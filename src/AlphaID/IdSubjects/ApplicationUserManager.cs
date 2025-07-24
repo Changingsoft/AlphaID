@@ -74,9 +74,9 @@ where T : ApplicationUser
     protected IEventService EventService { get; } = eventService;
 
     /// <summary>
-    /// 通过移动电话号码查找自然人。
+    /// 通过手机号查找自然人。
     /// </summary>
-    /// <param name="mobile">移动电话号码，支持不带国际区号的11位号码格式或标准 E.164 格式。</param>
+    /// <param name="mobile">手机号，支持不带国际区号的11位号码格式或标准 E.164 格式。</param>
     /// <returns>返回找到的自然人。如果没有找到，则返回null。</returns>
     public virtual async Task<T?> FindByMobileAsync(string mobile)
     {

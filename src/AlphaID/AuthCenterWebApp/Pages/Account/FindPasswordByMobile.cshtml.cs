@@ -44,7 +44,7 @@ public class FindPasswordByMobileModel(
 
         if (!MobilePhoneNumber.TryParse(PhoneNumber, out var phoneNumber))
         {
-            ModelState.AddModelError(nameof(PhoneNumber), "无效的移动电话号码");
+            ModelState.AddModelError(nameof(PhoneNumber), "无效的手机号");
             return Page();
         }
 
@@ -52,7 +52,7 @@ public class FindPasswordByMobileModel(
         var person = await userManager.FindByMobileAsync(phoneNumber.ToString());
         if (person == null)
         {
-            ModelState.AddModelError(nameof(PhoneNumber), "无此移动电话号码记录");
+            ModelState.AddModelError(nameof(PhoneNumber), "无此手机号记录");
             return Page();
         }
         //Send verification code

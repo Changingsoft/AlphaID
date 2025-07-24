@@ -60,28 +60,28 @@
                         <input id="personSearch" name="personSearch" class="form-control" placeholder="@L["Name, Display name, phonetic name, etc..."]"/>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.UserName" class="form-label"></label>
-                        <input asp-for="@Model.UserName" class="form-control" readonly/>
-                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                        <label asp-for="UserName" class="form-label"></label>
+                        <input asp-for="UserName" class="form-control" readonly/>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Visibility" class="form-label"></label>
                         <select asp-for="Visibility" class="form-select" asp-items="@EnumHelper.GetSelectListItems<MembershipVisibility>()"></select>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.Department" class="form-label"></label>
-                        <input asp-for="@Model.Department" class="form-control"/>
-                        <span asp-validation-for="@Model.Department" class="text-danger"></span>
+                        <label asp-for="Department" class="form-label"></label>
+                        <input asp-for="Department" class="form-control"/>
+                        <span asp-validation-for="Department" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.Title" class="form-label"></label>
-                        <input asp-for="@Model.Title" class="form-control"/>
-                        <span asp-validation-for="@Model.Title" class="text-danger"></span>
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control"/>
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="@Model.Remark" class="form-label"></label>
-                        <input asp-for="@Model.Remark" class="form-control"/>
-                        <span asp-validation-for="@Model.Remark" class="text-danger"></span>
+                        <label asp-for="Remark" class="form-label"></label>
+                        <input asp-for="Remark" class="form-control"/>
+                        <span asp-validation-for="Remark" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">@L["Add"]</button>
                 </form>

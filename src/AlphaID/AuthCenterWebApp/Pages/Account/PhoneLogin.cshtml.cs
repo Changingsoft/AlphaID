@@ -40,8 +40,9 @@ public class PhoneLoginModel(
     public InputModel Input { get; set; } = null!;
 
     [BindProperty]
-    [Required(ErrorMessage = "Validate_Required")]
     [Display(Name = "Phone number")]
+    [Required(ErrorMessage = "Validate_Required")]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
     public string Mobile { get; set; } = null!;
 
     [BindProperty]

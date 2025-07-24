@@ -100,8 +100,9 @@ public class CreateDirectoryAccountModel(
 
         public string? PinyinDisplayName { get; set; }
 
-        [Display(Name = "PhoneNumber Phone Number")]
+        [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
         public string Mobile { get; set; } = null!;
 
         [Display(Name = "Email Address")]

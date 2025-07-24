@@ -14,9 +14,10 @@ public class FindPasswordByMobileModel(
     ApplicationUserManager<NaturalPerson> userManager,
     IServiceProvider serviceProvider) : PageModel
 {
+    [BindProperty]
     [Display(Name = "Phone number")]
     [Required(ErrorMessage = "Validate_Required")]
-    [BindProperty]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
     public string Mobile { get; set; } = null!;
 
     [Display(Name = "Captcha code")]

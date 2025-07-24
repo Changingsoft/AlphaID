@@ -11,8 +11,9 @@ public class RegisterByChineseIdCardModel : PageModel
     [BindProperty]
     public string IdCardBackBase64 { get; set; } = null!;
 
-    [Display(Name = "PhoneNumber phone number")]
     [BindProperty]
+    [Display(Name = "Phone number")]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
     public string Mobile { get; set; } = null!;
 
     [BindProperty]

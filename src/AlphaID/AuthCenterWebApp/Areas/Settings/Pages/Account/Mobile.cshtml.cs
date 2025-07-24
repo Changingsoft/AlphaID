@@ -11,7 +11,8 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Account;
 
 public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvider serviceProvider) : PageModel
 {
-    [Display(Name = "PhoneNumber phone number")]
+    [Display(Name = "Phone number")]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
     public string Mobile { get; set; } = null!;
 
     public bool MobileValid { get; set; }

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model             RegisterByChineseIdCardModel
 @{
 }
@@ -32,9 +32,9 @@
         <input id="idcard_front" type="hidden" asp-for="@Model.IdCardFrontBase64"/>
         <input id="idcard_back" type="hidden" asp-for="@Model.IdCardBackBase64"/>
         <div class="mb-3">
-            <label asp-for="Mobile"></label>
-            <input asp-for="Mobile" class="form-control"/>
-            <span asp-validation-for="Mobile" class="text-danger"></span>
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control"/>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Email"></label>

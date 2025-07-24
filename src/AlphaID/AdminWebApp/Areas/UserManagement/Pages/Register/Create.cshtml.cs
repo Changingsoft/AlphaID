@@ -20,7 +20,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     [Display(Name = "Phone number", Description = "仅支持中国大陆手机号")]
     [PageRemote(PageHandler = "CheckMobile", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-    public string? Mobile { get; set; } = null!;
+    public string? PhoneNumber { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Email")]
@@ -44,15 +44,15 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
             return Page();
 
         string? normalizedPhoneNumber = null;
-        if (Mobile != null)
+        if (PhoneNumber != null)
         {
             try
             {
-                normalizedPhoneNumber = new MobilePhoneNumber(Mobile).ToString();
+                normalizedPhoneNumber = new MobilePhoneNumber(PhoneNumber).ToString();
             }
             catch
             {
-                ModelState.AddModelError(nameof(Mobile), "Invalid phone number.");
+                ModelState.AddModelError(nameof(PhoneNumber), "Invalid phone number.");
             }
         }
 

@@ -37,7 +37,7 @@ public class CreateDirectoryAccountModel(
             PinyinSurname = person.PhoneticSurname,
             PinyinGivenName = person.PhoneticGivenName,
             PinyinDisplayName = person.PhoneticSurname + person.PhoneticGivenName,
-            Mobile = person.PhoneNumber!,
+            PhoneNumber = person.PhoneNumber!,
             Email = person.Email
         };
         return Page();
@@ -103,7 +103,7 @@ public class CreateDirectoryAccountModel(
         [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-        public string Mobile { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
 
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]

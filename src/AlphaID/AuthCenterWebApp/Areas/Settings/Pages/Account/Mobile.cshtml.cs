@@ -13,7 +13,7 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvide
 {
     [Display(Name = "Phone number")]
     [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
-    public string Mobile { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
 
     public bool MobileValid { get; set; }
 
@@ -40,7 +40,7 @@ public class MobileModel(UserManager<NaturalPerson> userManager, IServiceProvide
             return BadRequest("无法处理用户Id.");
 
         MobileValid = person.PhoneNumberConfirmed;
-        Mobile = person.PhoneNumber ?? "";
+        PhoneNumber = person.PhoneNumber ?? "";
         NewMobile = person.PhoneNumber ?? "";
 
         return Page();

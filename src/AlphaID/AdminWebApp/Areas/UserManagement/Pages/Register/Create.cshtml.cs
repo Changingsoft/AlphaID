@@ -19,13 +19,14 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
     [BindProperty]
     [Display(Name = "Phone number", Description = "仅支持中国大陆手机号")]
     [PageRemote(PageHandler = "CheckMobile", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
-    [StringLength(11, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
     public string? Mobile { get; set; } = null!;
 
     [BindProperty]
     [Display(Name = "Email")]
+    [DataType(DataType.EmailAddress, ErrorMessage="Validate_EmailFormat")]
     [PageRemote(PageHandler = "CheckEmail", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
-    [StringLength(14, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
+    [StringLength(50, ErrorMessage = "Validate_StringLength")]
     public string? Email { get; set; } = null!;
 
     [BindProperty]
@@ -130,6 +131,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
 
     public class InputModel
     {
+        [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Surname")]
         [StringLength(10, ErrorMessage = "Validate_StringLength")]
         public string Surname { get; set; } = null!;
@@ -143,9 +145,11 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
         [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
         public string DisplayName { get; set; } = null!;
 
+        [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Phonetic surname")]
         public string PhoneticSurname { get; set; } = null!;
 
+        [Required(ErrorMessage = "Validate_Required")]
         [Display(Name = "Phonetic given name")]
         public string PhoneticGivenName { get; set; } = null!;
 

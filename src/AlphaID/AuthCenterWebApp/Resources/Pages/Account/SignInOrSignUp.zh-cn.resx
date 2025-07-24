@@ -27,9 +27,9 @@
 		<value>没有为这次请求的方案集</value>
 	</data>
 	<data name="Resend" xml:space="preserve">
-		<value>重发</value>
+		<value>重发短信验证码</value>
 	</data>
 	<data name="Send code" xml:space="preserve">
-		<value>发送代码</value>
+		<value>发送短信验证码</value>
 	</data>
 </root>

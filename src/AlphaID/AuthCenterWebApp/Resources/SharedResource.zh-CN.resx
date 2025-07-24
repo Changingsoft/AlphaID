@@ -361,7 +361,7 @@
     <value>你的完整姓名，包括姓氏和名字。</value>
   </data>
   <data name="Send code" xml:space="preserve">
-    <value>发送代码</value>
+    <value>发送短信验证码</value>
   </data>
   <data name="Family name" xml:space="preserve">
     <value>姓氏</value>

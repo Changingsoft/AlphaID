@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -154,6 +154,6 @@
     <value>创建账户</value>
   </data>
   <data name="Send code" xml:space="preserve">
-	  <value>发送代码</value>
+	  <value>发送短信验证码</value>
   </data>
 </root>

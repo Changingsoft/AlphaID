@@ -14,10 +14,11 @@ public class FindPasswordByMobileModel(
     ApplicationUserManager<NaturalPerson> userManager,
     IServiceProvider serviceProvider) : PageModel
 {
+    [BindProperty]
     [Display(Name = "Phone number")]
     [Required(ErrorMessage = "Validate_Required")]
-    [BindProperty]
-    public string Mobile { get; set; } = null!;
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
+    public string PhoneNumber { get; set; } = null!;
 
     [Display(Name = "Captcha code")]
     [Required(ErrorMessage = "Validate_Required")]
@@ -41,9 +42,9 @@ public class FindPasswordByMobileModel(
         if (!ModelState.IsValid)
             return Page();
 
-        if (!MobilePhoneNumber.TryParse(Mobile, out var phoneNumber))
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out var phoneNumber))
         {
-            ModelState.AddModelError(nameof(Mobile), "无效的移动电话号码");
+            ModelState.AddModelError(nameof(PhoneNumber), "无效的手机号");
             return Page();
         }
 
@@ -51,7 +52,7 @@ public class FindPasswordByMobileModel(
         var person = await userManager.FindByMobileAsync(phoneNumber.ToString());
         if (person == null)
         {
-            ModelState.AddModelError(nameof(Mobile), "无此移动电话号码记录");
+            ModelState.AddModelError(nameof(PhoneNumber), "无此手机号记录");
             return Page();
         }
         //Send verification code

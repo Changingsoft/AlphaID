@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 namespace IdSubjects.Validators;
 
 /// <summary>
-/// 移动电话号码验证器。
+/// 手机号验证器。
 /// </summary>
 public class PhoneNumberValidator<T> : IUserValidator<T>
 where T : ApplicationUser
 {
     /// <summary>
-    /// 添加对移动电话号码格式和唯一性的验证。
+    /// 添加对手机号格式和唯一性的验证。
     /// </summary>
     /// <param name="manager"></param>
     /// <param name="user"></param>

@@ -9,7 +9,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
     {
 
         [BindProperty]
-        [Display(Name = "User Name")]
+        [Display(Name = "User name")]
         [Required(ErrorMessage = "Validate_Required")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string UserName { get; set; } = null!;

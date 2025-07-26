@@ -47,7 +47,8 @@ public class ResetPasswordModel(NaturalPersonService naturalPersonService, UserM
     {
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
-        [EmailAddress(ErrorMessage = "{0}的格式错误")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
         public string Email { get; set; } = null!;
 
         [Display(Name = "New password")]

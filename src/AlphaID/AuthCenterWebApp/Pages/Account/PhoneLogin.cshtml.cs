@@ -40,9 +40,10 @@ public class PhoneLoginModel(
     public InputModel Input { get; set; } = null!;
 
     [BindProperty]
-    [Required(ErrorMessage = "Validate_Required")]
     [Display(Name = "Phone number")]
-    public string Mobile { get; set; } = null!;
+    [Required(ErrorMessage = "Validate_Required")]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
+    public string PhoneNumber { get; set; } = null!;
 
     [BindProperty]
     [Required(ErrorMessage = "Validate_Required")]
@@ -84,7 +85,7 @@ public class PhoneLoginModel(
     public async Task<IActionResult> OnPostSendVerificationCode(string mobile)
     {
 
-        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("移动电话号码无效。");
+        if (!MobilePhoneNumber.TryParse(mobile, out MobilePhoneNumber phoneNumber)) return new JsonResult("手机号无效。");
         await VerificationCodeService!.SendAsync(phoneNumber.ToString());
         return new JsonResult(true);
     }
@@ -123,10 +124,10 @@ public class PhoneLoginModel(
         if (ModelState.IsValid)
         {
             //登录过程。
-            NaturalPerson? user = await userManager.FindByMobileAsync(Mobile);
+            NaturalPerson? user = await userManager.FindByMobileAsync(PhoneNumber);
             if (user != null)
             {
-                var verificationResult = await VerificationCodeService!.VerifyAsync(Mobile, VerificationCode);
+                var verificationResult = await VerificationCodeService!.VerifyAsync(PhoneNumber, VerificationCode);
                 if (verificationResult)
                 {
                     await signInManager.SignInAsync(user, Input.RememberLogin);
@@ -182,7 +183,7 @@ public class PhoneLoginModel(
                 }
             }
 
-            await events.RaiseAsync(new UserLoginFailureEvent(Mobile, "invalid credentials",
+            await events.RaiseAsync(new UserLoginFailureEvent(PhoneNumber, "invalid credentials",
                 clientId: context?.Client.ClientId));
             ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
         }
@@ -215,7 +216,7 @@ public class PhoneLoginModel(
                     EnableLocalLogin = isLocalIdP
                 };
 
-                Mobile = context.LoginHint ?? "";
+                PhoneNumber = context.LoginHint ?? "";
 
                 if (!isLocalIdP)
                     Model.ExternalProviders =

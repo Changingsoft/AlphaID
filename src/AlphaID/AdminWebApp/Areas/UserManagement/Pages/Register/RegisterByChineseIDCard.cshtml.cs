@@ -11,13 +11,15 @@ public class RegisterByChineseIdCardModel : PageModel
     [BindProperty]
     public string IdCardBackBase64 { get; set; } = null!;
 
-    [Display(Name = "PhoneNumber phone number")]
     [BindProperty]
-    public string Mobile { get; set; } = null!;
+    [Display(Name = "Phone number")]
+    [StringLength(14, MinimumLength = 8, ErrorMessage = "Validate_StringLength")]
+    public string PhoneNumber { get; set; } = null!;
 
-    [Display(Name = "Email")]
-    [EmailAddress]
     [BindProperty]
+    [Display(Name = "Email")]
+    [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
+    [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
     public string? Email { get; set; }
 
     public void OnGet()

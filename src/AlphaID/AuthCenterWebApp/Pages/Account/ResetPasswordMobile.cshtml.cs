@@ -31,7 +31,7 @@ public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService,
     {
         if (!MobilePhoneNumber.TryParse(Input.PhoneNumber, out _))
         {
-            ModelState.AddModelError(nameof(Input.PhoneNumber), "移动电话号码无效");
+            ModelState.AddModelError(nameof(Input.PhoneNumber), "手机号无效");
         }
 
         if (!ModelState.IsValid)
@@ -68,18 +68,18 @@ public class ResetPasswordMobileModel(NaturalPersonService naturalPersonService,
         public string Code { get; set; } = null!;
 
         [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "移动电话号码")]
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; } = null!;
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "{0}是必需的")]
-        [Display(Name = "新密码")]
+        [Display(Name = "New password")]
         public string NewPassword { get; set; } = null!;
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "{0}是必需的")]
         [Compare(nameof(NewPassword))]
-        [Display(Name = "确认密码")]
+        [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; } = null!;
     }
 }

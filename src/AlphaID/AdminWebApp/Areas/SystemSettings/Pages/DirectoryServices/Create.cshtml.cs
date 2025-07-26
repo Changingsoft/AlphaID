@@ -63,8 +63,7 @@ public class CreateModel(DirectoryServiceManager directoryServiceManager) : Page
         public LdapType LdapType { get; set; }
 
         [Display(Name = "User name")]
-        [StringLength(50, ErrorMessage = "Validate_StringLength")]
-        [DataType(DataType.Password)]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string? UserName { get; set; }
 
         [Display(Name = "Password")]

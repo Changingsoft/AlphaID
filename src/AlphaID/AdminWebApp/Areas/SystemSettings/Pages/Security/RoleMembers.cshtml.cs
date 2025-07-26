@@ -42,7 +42,9 @@ public class RoleMembersModel(UserInRoleManager userInRoleManager, UserManager<N
 
     public class InputModel
     {
+        [Display(Name = "User name")]
         [Required(ErrorMessage = "Validate_Required")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string UserName { get; set; } = null!;
 
         public string PhoneticSearchHint { get; set; } = null!;

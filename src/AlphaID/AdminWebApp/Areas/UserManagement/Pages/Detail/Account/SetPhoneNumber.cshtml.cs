@@ -10,7 +10,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
     {
 
         [BindProperty]
-        [Display(Name = "Phone number", Description = "留空则删除此移动电话号码。")]
+        [Display(Name = "Phone number", Description = "留空则删除此手机号。")]
         [StringLength(16, MinimumLength = 11, ErrorMessage = "Validate_StringLength")]
         public string? PhoneNumber { get; set; }
 

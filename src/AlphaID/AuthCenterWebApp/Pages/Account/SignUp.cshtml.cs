@@ -35,7 +35,7 @@ public class SignUpModel(
 
     [BindProperty]
     [Display(Name = "User name")]
-    [StringLength(20, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+    [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
     public string? UserName { get; set; }
 
     public string? ExternalLoginMessage { get; set; }
@@ -224,7 +224,8 @@ public class SignUpModel(
         public string ConfirmPassword { get; set; } = null!;
 
         [Display(Name = "Email", Prompt = "someone@examples.com")]
-        [EmailAddress(ErrorMessage = "Validate_EmailAddress")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
         public string? Email { get; set; }
 
         [Display(Name = "Agree the")]

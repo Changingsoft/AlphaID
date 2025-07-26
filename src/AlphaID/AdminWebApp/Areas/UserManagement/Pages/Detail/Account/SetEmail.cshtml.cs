@@ -11,6 +11,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Account
         [BindProperty]
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Validate_Required")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
         public string? Email { get; set; }
 

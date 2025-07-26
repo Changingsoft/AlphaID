@@ -49,7 +49,7 @@ public class ResetPasswordModel(
 
         if (!Person.PhoneNumberConfirmed)
         {
-            OperationResult = "无法通过短信重置密码。因为用户没有移动电话号码，或电话号码未经验证。";
+            OperationResult = "无法通过短信重置密码。因为用户没有手机号，或电话号码未经验证。";
             return Page();
         }
 

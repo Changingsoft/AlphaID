@@ -8,7 +8,7 @@ namespace IdSubjects;
 public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
 {
     /// <summary>
-    /// 无效的移动电话号码格式。
+    /// 无效的手机号格式。
     /// </summary>
     /// <returns></returns>
     public virtual IdentityError InvalidPhoneNumberFormat()

@@ -29,6 +29,7 @@ public class IndexModel(
 
     [Required(ErrorMessage = "Validate_Required")]
     [BindProperty]
+    [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
     public string UserName { get; set; } = null!;
 
     [BindProperty]

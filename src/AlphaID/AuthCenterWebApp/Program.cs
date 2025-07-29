@@ -33,6 +33,10 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
+using Microsoft.OpenApi.Models;
+
+using System.Reflection;
+
 
 
 #if WINDOWS
@@ -326,6 +330,34 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
+builder.Services.AddSwaggerGen(options =>
+{
+    var info = builder.Configuration.GetSection("OpenApiInfo").Get<OpenApiInfo>();
+    options.SwaggerDoc("v1", info);
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+    options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri(builder.Configuration["SwaggerOauthOptions:AuthorizationEndpoint"]!),
+                TokenUrl = new Uri(builder.Configuration["SwaggerOauthOptions:TokenEndpoint"]!),
+                Scopes = new Dictionary<string, string>
+                {
+                    { "openid", "获取用户Id标识" },
+                    { "profile", "获取用户基本信息" },
+                    { "realname", "获取自然人的实名信息" }
+                }
+            }
+        }
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
+
 // 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
 {
@@ -361,6 +393,17 @@ app.UseRateLimiter();
 app.UseMiddleware<TokenRateLimitMiddleware>(); //为token终结点启用速率限制。
 app.UseIdentityServer(); //内部会调用UseAuthentication。
 app.UseAuthorization();
+app.UseSwagger(options => { options.RouteTemplate = "docs/{documentName}/docs.json"; });
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/docs/v1/docs.json",
+        $"{app.Configuration["OpenApiInfo:Title"]} {app.Configuration["OpenApiInfo:Version"]}");
+    options.DocumentTitle = app.Configuration["OpenApiInfo:Title"];
+    options.RoutePrefix = "docs";
+    options.InjectStylesheet("/swagger-ui/custom.css");
+    options.OAuthScopes("openid", "profile");
+    options.OAuthUsePkce();
+});
 app.UseSession();
 app.UseCaptcha(app.Configuration);
 app.MapRazorPages();

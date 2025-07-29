@@ -15,11 +15,8 @@ namespace AuthCenterWebApp.Controllers.OAuth;
 public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
 {
     /// <summary>
-    /// 通过 client-id 获取客户端信息。
+    /// 通过client-id获取客户端名称等信息。
     /// </summary>
-    /// <remarks>
-    /// 任何已经身份验证的依赖方，可通过此接口获取指定client-id的客户端的信息。
-    /// </remarks>
     /// <param name="clientId">Client ID</param>
     /// <returns></returns>
     /// <response code="200">如果找到了客户端，则返回其信息。</response>

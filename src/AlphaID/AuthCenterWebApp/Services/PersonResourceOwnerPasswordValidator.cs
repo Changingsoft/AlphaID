@@ -16,6 +16,8 @@ namespace AuthCenterWebApp.Services;
 /// <param name="userManager"></param>
 /// <param name="signInManager"></param>
 /// <param name="logger"></param>
+/// <param name="options"></param>
+/// <param name="timeProvider"></param>
 public class PersonResourceOwnerPasswordValidator(
     UserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,

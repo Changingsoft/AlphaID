@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AuthCenterWebApp.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class OrganizationController(IOrganizationStore organizationStore) : ControllerBase
 {
     /// <summary>
@@ -18,7 +18,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// <returns>An <see cref="ActionResult"/> containing the organization's profile picture if found; otherwise, a default
     /// image.</returns>
     [AllowAnonymous]
-    [HttpGet("{anchor}/Picture")]
+    [HttpGet("/Organization/{anchor}/Picture")]
     public ActionResult GetOrganizationProfilePicture(string anchor)
     {
         var profilePicture = (from organization in organizationStore.Organizations.AsNoTracking()

@@ -393,13 +393,13 @@ app.UseRateLimiter();
 app.UseMiddleware<TokenRateLimitMiddleware>(); //为token终结点启用速率限制。
 app.UseIdentityServer(); //内部会调用UseAuthentication。
 app.UseAuthorization();
-app.UseSwagger(options => { options.RouteTemplate = "docs/{documentName}/docs.json"; });
+app.UseSwagger(options => { options.RouteTemplate = "api-docs/{documentName}/docs.json"; });
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint("/docs/v1/docs.json",
+    options.SwaggerEndpoint("/api-docs/v1/docs.json",
         $"{app.Configuration["OpenApiInfo:Title"]} {app.Configuration["OpenApiInfo:Version"]}");
     options.DocumentTitle = app.Configuration["OpenApiInfo:Title"];
-    options.RoutePrefix = "docs";
+    options.RoutePrefix = "api-docs";
     options.InjectStylesheet("/swagger-ui/custom.css");
     options.OAuthScopes("openid", "profile");
     options.OAuthUsePkce();

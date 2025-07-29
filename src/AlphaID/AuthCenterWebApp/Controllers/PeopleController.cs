@@ -1,16 +1,23 @@
 using AlphaIdPlatform.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthCenterWebApp.Controllers;
 
+[AllowAnonymous]
 [Route("[controller]")]
 [ApiController]
 public class PeopleController(IUserStore<NaturalPerson> store) : ControllerBase
 {
     public IQueryableUserStore<NaturalPerson> QueryableUserStore { get; set; } = store as IQueryableUserStore<NaturalPerson> ?? throw new NotSupportedException("不支持查询用户。");
 
+    /// <summary>
+    /// Get user's avatar picture.
+    /// </summary>
+    /// <param name="anchor">Anchor of user, always be user name.</param>
+    /// <returns>image of user. if not exists, always return no-picture-avatar.png</returns>
     [HttpGet("{anchor}/Avatar")]
     public ActionResult GetAvatarPicture(string anchor)
     {

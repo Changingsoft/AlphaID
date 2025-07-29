@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthCenterWebApp.Controllers;
 
-[AllowAnonymous]
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class PeopleController(IUserStore<NaturalPerson> store) : ControllerBase
 {
@@ -18,7 +17,8 @@ public class PeopleController(IUserStore<NaturalPerson> store) : ControllerBase
     /// </summary>
     /// <param name="anchor">Anchor of user, always be user name.</param>
     /// <returns>image of user. if not exists, always return no-picture-avatar.png</returns>
-    [HttpGet("{anchor}/Avatar")]
+    [AllowAnonymous]
+    [HttpGet("/People/{anchor}/Avatar")]
     public ActionResult GetAvatarPicture(string anchor)
     {
         var profilePicture = (from user in QueryableUserStore.Users.AsNoTracking()

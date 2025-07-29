@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<NoWarn>$(NoWarn);NETSDK1206</NoWarn>
+		<NoWarn>$(NoWarn);NETSDK1206;CS1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>

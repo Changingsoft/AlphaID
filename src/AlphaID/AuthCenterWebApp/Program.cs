@@ -252,6 +252,7 @@ builder.Services.AddIdentityServer(options =>
         //配置IdP标识
         options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
 
+        //设置用户显示名称的声明类型。
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
 
         //当需要身份验证时显示的登录界面。
@@ -269,7 +270,6 @@ builder.Services.AddIdentityServer(options =>
         //当调试模式时，不要启用令牌清理任务。
         //否则单元测试期间会随机导致InvalidOperationException, Not started. Call Start first.
         options.EnableTokenCleanup = !builder.Environment.IsDevelopment();
-        
         options.ConfigureDbContext = b =>
         {
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

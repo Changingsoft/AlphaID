@@ -1,6 +1,5 @@
 @using Microsoft.AspNetCore.Authentication
 @inject IHostEnvironment Env
-@inject IOptions<SystemUrlInfo> SystemUrl
 @if (Env.IsDevelopment())
 {
     <!-- 以下部分是调试面板，在本地开发调试期间显示。 -->
@@ -14,29 +13,29 @@
             <ul class="list-inline">
                 @* ReSharper disable StringLiteralTypo *@
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("liubei")}"))">刘备</a>
+                    <a href="@($"/People/{WebUtility.UrlEncode("liubei")}")">刘备</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("guanyu")}"))">关羽</a>
+                    <a href="@($"/People/{WebUtility.UrlEncode("guanyu")}")">关羽</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhangfei")}"))">张飞</a>
+                    <a href="@($"/People/{WebUtility.UrlEncode("zhangfei")}")">张飞</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/People/{WebUtility.UrlEncode("zhugeliang")}"))">诸葛亮</a>
+                    <a href="@($"/People/{WebUtility.UrlEncode("zhugeliang")}")">诸葛亮</a>
                 </li>
                 @* ReSharper restateStore StringLiteralTypo *@
             </ul>
 
             <ul class="list-inline">
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("蜀汉集团")}"))">蜀汉集团</a>
+                    <a href="@($"/Organization/{WebUtility.UrlEncode("蜀汉集团")}")">蜀汉集团</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("北魏集团")}"))">北魏集团</a>
+                    <a href="@($"/Organization/{WebUtility.UrlEncode("北魏集团")}")">北魏集团</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="@(new Uri(SystemUrl.Value.AuthCenterUrl, $"/Organization/{WebUtility.UrlEncode("东吴集团")}"))">东吴集团</a>
+                    <a href="@($"/Organization/{WebUtility.UrlEncode("东吴集团")}")">东吴集团</a>
                 </li>
             </ul>
             <h2>Locale</h2>

@@ -1,4 +1,5 @@
 using AlphaIdPlatform.Subjects;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -8,7 +9,7 @@ namespace AuthCenterWebApp.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class OrganizationController(IOrganizationStore organizationStore) : ControllerBase
 {
     /// <summary>

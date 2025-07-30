@@ -13,7 +13,7 @@ public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
     [Fact]
     public async Task GetExistsOrganization()
     {
-        HttpClient client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateBearerTokenClient();
 
         HttpResponseMessage response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5");
         response.EnsureSuccessStatusCode();

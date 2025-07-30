@@ -1,22 +1,26 @@
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using System.Diagnostics.CodeAnalysis;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace AuthCenterWebApp.Tests;
-
-internal class TestAuthHandler(
+internal class BearerTestAuthenticationHandler(
     IOptionsMonitor<AuthenticationSchemeOptions> options,
     ILoggerFactory logger,
-    UrlEncoder encoder)
-    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
+    UrlEncoder encoder) : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+
+
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (Request.Headers.Authorization.Contains("Cookies"))
+        if (Request.Headers.Authorization.Contains("Bearer", StringComparer.OrdinalIgnoreCase))
         {
             var claims = new List<Claim>
             {
@@ -54,7 +58,6 @@ internal class TestAuthHandler(
             var ticket = new AuthenticationTicket(principal, "TestScheme");
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
-
         return Task.FromResult(AuthenticateResult.NoResult());
     }
 }

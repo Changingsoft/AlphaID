@@ -31,6 +31,7 @@
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.2.4" />
 		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.24.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" NoWarn="NU1605" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(DefineConstants.Contains(`WINDOWS`))'">

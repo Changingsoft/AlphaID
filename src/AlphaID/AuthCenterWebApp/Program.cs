@@ -116,12 +116,13 @@ builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("Produc
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
 #endregion
 
-//授权策略
+#region 配置授权策略
 builder.Services.AddAuthorizationBuilder()
           .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); });
-
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
+#endregion
 
+#region 配置Razor Pages
 builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AuthorizeFolder("/");
@@ -137,6 +138,7 @@ builder.Services.AddRazorPages(options =>
     {
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
+#endregion
 
 #region Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
@@ -159,12 +161,19 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, Iden
     .AddUserStore<NaturalPersonStore>()
     .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
+#endregion
 
+#region 配置身份认证Authentication
 var authBuilder = builder.Services.AddAuthentication();
 //添加PreSignUp方案。
 authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+});
+authBuilder.AddJwtBearer(options =>
+{
+    options.Authority = null;
+    options.TokenValidationParameters.ValidateAudience = false; //不验证Audience
 });
 #endregion
 

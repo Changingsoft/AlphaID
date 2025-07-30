@@ -48,6 +48,7 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region 日志
 builder.Host.UseSerilog((ctx, configuration) =>
 {
     configuration
@@ -91,11 +92,11 @@ builder.Host.UseSerilog((ctx, configuration) =>
 #endif
 
 });
+#endregion
 
+#region 区域和本地化
 //程序资源
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-//区域和本地化
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
@@ -108,9 +109,12 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
+#endregion
 
+#region 产品配置
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
+#endregion
 
 //授权策略
 builder.Services.AddAuthorizationBuilder()
@@ -134,7 +138,7 @@ builder.Services.AddRazorPages(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 
-//Add AlphaIdPlatform.
+#region Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
@@ -147,9 +151,9 @@ platform.AddEntityFramework(options =>
 builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
 builder.Services.Configure<PasswordLifetimeOptions>(builder.Configuration.GetSection("PasswordLifetimeOptions"));
 builder.Services.Configure<AuditEventsOptions>(builder.Configuration.GetSection("AuditEventsOptions"));
+#endregion
 
-//配置ProfileUrl
-//builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
+#region IdSubjects Identity配置
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddUserStore<NaturalPersonStore>()
@@ -162,6 +166,7 @@ authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 });
+#endregion
 
 #region 配置可选外部登录
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
@@ -229,7 +234,7 @@ if (weixinMpSettings.Enabled)
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
 
-//添加IdentityServer
+#region 添加Duende.IdentityServer
 builder.Services.AddIdentityServer(options =>
     {
         options.Events.RaiseErrorEvents = true;
@@ -274,6 +279,7 @@ builder.Services.AddIdentityServer(options =>
     .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<IEventSink, AuditLogEventSink>();
+#endregion
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
@@ -309,7 +315,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     
 });
 
-//请求速率限制
+#region 请求速率限制
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
@@ -341,7 +347,9 @@ builder.Services.AddRateLimiter(options =>
         });
     });
 });
+#endregion
 
+#region Swagger配置
 builder.Services.AddSwaggerGen(options =>
 {
     var info = builder.Configuration.GetSection("OpenApiInfo").Get<OpenApiInfo>();
@@ -368,7 +376,7 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-
+#endregion
 
 // 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())

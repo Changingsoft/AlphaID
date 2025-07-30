@@ -1,4 +1,4 @@
-namespace IdSubjects;
+namespace AlphaIdPlatform.Identity;
 
 /// <summary>
 ///    OIDC个人资料URL选项。

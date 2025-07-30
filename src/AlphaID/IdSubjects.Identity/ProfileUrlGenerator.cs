@@ -8,15 +8,9 @@ namespace IdSubjects.Identity;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="accessor"></param>
-/// <param name="options"></param>
-public class ProfileUrlGenerator<T>(IHttpContextAccessor accessor, IOptions<OidcProfileUrlOptions> options)
+public class ProfileUrlGenerator<T>(IHttpContextAccessor accessor)
     where T : ApplicationUser
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    protected OidcProfileUrlOptions Options { get; } = options.Value;
-
     /// <summary>
     /// Gets the current HTTP context for the request.
     /// </summary>
@@ -29,7 +23,7 @@ public class ProfileUrlGenerator<T>(IHttpContextAccessor accessor, IOptions<Oidc
     /// <returns></returns>
     public virtual Uri GenerateProfileUrl(T user)
     {
-        var baseUrl = options.Value.ProfileUrlBase ?? new Uri($"{Context.Request.Scheme}://{Context.Request.Host}");
+        var baseUrl = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}");
         return new Uri(baseUrl, $"/User/{user.UserName}");
     }
 
@@ -40,7 +34,7 @@ public class ProfileUrlGenerator<T>(IHttpContextAccessor accessor, IOptions<Oidc
     /// <returns></returns>
     public virtual Uri GenerateProfilePictureUrl(T user)
     {
-        var baseUrl = options.Value.ProfileUrlBase ?? new Uri($"{Context.Request.Scheme}://{Context.Request.Host}");
+        var baseUrl = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}");
         return new Uri(baseUrl, $"/User/ProfilePicture/{user.UserName}");
     }
 }

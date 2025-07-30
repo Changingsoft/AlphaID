@@ -329,6 +329,17 @@ builder.Services.AddRateLimiter(options =>
         }
         return RateLimitPartition.GetNoLimiter("none");
     });
+    options.AddPolicy("ip-fixed", httpContext =>
+    {
+        var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 100, // 每窗口允许的请求数
+            Window = TimeSpan.FromMinutes(1), // 窗口大小
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0 // 不排队，超出直接拒绝
+        });
+    });
 });
 
 builder.Services.AddSwaggerGen(options =>

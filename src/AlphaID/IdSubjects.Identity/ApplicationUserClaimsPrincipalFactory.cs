@@ -1,10 +1,10 @@
+using System.Security.Claims;
+using System.Text.Json;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
-using System.Text.Json;
 
-namespace IdSubjects;
+namespace IdSubjects.Identity;
 
 /// <summary>
 ///    为用户生成声明的工厂。

@@ -162,7 +162,7 @@ builder.Services
 
 
 //配置ProfileUrl
-builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
+//builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {

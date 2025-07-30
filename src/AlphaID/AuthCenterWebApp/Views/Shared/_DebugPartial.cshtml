@@ -41,9 +41,33 @@
             </ul>
             <h2>Locale</h2>
             <p>Locale: @System.Globalization.CultureInfo.CurrentCulture.Name (@System.Globalization.CultureInfo.CurrentUICulture.Name)</p>
-            <h2>Browser</h2>
-            <h3>User-Agent</h3>
-            <p>@Context.Request.Headers.UserAgent</p>
+            <h2>Connection</h2>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Remote Address</td>
+                    <td>@(Context.Connection.RemoteIpAddress),@(Context.Connection.RemotePort)</td>
+                </tr>
+                <tr>
+                    <td>User Agent</td>
+                    <td>@Context.Request.Headers.UserAgent</td>
+                </tr>
+                <tr>
+                    <td>Host</td>
+                    <td>@Context.Request.Host</td>
+                </tr>
+                <tr>
+                    <td>Scheme</td>
+                    <td>@Context.Request.Scheme</td>
+                </tr>
+                </tbody>
+            </table>
             <h2>Route Data</h2>
             <ul class="list-inline">
                 @foreach (var routeValue in ViewContext.RouteData.Values)
@@ -113,6 +137,25 @@
             {
                 <p>Tokens not found.</p>
             }
+
+            <h2>HTTP Headers</h2>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Header</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var header in Context.Request.Headers)
+                    {
+                        <tr>
+                            <td>@header.Key</td>
+                            <td>@header.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 }

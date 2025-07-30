@@ -149,7 +149,7 @@ builder.Services.Configure<PasswordLifetimeOptions>(builder.Configuration.GetSec
 builder.Services.Configure<AuditEventsOptions>(builder.Configuration.GetSection("AuditEventsOptions"));
 
 //配置ProfileUrl
-builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
+//builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddUserStore<NaturalPersonStore>()
@@ -301,11 +301,12 @@ builder.Services.AddMvc();
 //反向代理配置
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
     //默认只接受来自本地主机的反向代理。
     //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
+    
 });
 
 //请求速率限制

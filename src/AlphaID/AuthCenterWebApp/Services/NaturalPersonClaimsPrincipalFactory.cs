@@ -2,6 +2,7 @@ using AlphaIdPlatform.Identity;
 using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using IdSubjects.Identity;
 
 namespace AuthCenterWebApp.Services;
 

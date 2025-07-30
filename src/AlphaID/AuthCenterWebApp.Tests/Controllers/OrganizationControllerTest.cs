@@ -1,11 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
-using Xunit;
 
-namespace AlphaIdWebAPI.Tests.Controllers;
+namespace AuthCenterWebApp.Tests.Controllers;
 
 [Collection(nameof(TestServerCollection))]
-public class OrganizationControllerTest(AlphaIdApiFactory factory)
+public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
 {
     /// <summary>
     /// 使用OrganizationId查询一个已存在的组织。

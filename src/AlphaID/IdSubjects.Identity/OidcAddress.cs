@@ -1,4 +1,4 @@
-namespace IdSubjects
+namespace IdSubjects.Identity
 {
     internal class OidcAddress
     {

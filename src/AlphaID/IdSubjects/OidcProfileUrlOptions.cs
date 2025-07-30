@@ -8,5 +8,5 @@ public class OidcProfileUrlOptions
     /// <summary>
     ///   个人资料URL基地址。
     /// </summary>
-    public Uri ProfileUrlBase { get; set; } = new("https://localhost");
+    public Uri? ProfileUrlBase { get; set; }
 }

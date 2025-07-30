@@ -1,6 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Subjects;
-using IdSubjects;
+using IdSubjects.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

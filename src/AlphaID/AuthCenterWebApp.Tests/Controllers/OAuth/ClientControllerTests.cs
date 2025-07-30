@@ -1,11 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
-using Xunit;
 
-namespace AlphaIdWebAPI.Tests.Controllers.OAuth;
+namespace AuthCenterWebApp.Tests.Controllers.OAuth;
 
 [Collection(nameof(TestServerCollection))]
-public class ClientControllerTests(AlphaIdApiFactory factory)
+public class ClientControllerTests(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task GetClientName()

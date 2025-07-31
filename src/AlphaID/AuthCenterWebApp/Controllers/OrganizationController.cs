@@ -18,10 +18,24 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// <param name="id">组织的SubjectId</param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<OrganizationModel>> GetAsync(string id)
+    public ActionResult<OrganizationInfoModel> GetAsync(string id)
     {
-        Organization? org = await organizationStore.FindByIdAsync(id);
-        return org == null ? NotFound() : new OrganizationModel(org);
+        var orgs = from organization in organizationStore.Organizations
+            where organization.Id == id && organization.Enabled
+            select new OrganizationInfoModel()
+            {
+                Name = organization.Name,
+                Domicile = organization.Domicile,
+                Representative = organization.Representative,
+                ProfileUrl = Url.Page("/Index", new{area = "Organization", anchor = organization.Name}),
+                LocationWkt = organization.Location.AsText(),
+                UpdateAt = organization.WhenChanged.ToUnixTimeSeconds(),
+            };
+        var org = orgs.FirstOrDefault();
+        if (org == null)
+            return NotFound();
+
+        return Ok(org);
     }
 
     /// <summary>
@@ -35,13 +49,18 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     [HttpGet("Suggestions")]
     [AllowAnonymous]
     [EnableRateLimiting("ip-fixed")]
-    public IEnumerable<OrganizationModel> Search(string q)
+    public IEnumerable<OrganizationSearchModel> Search(string q)
     {
-        IQueryable<Organization> searchResults =
-            organizationStore.Organizations.Where(p => p.Name.Contains(q) && p.Enabled);
+        IQueryable<OrganizationSearchModel> searchResults = from organization in organizationStore.Organizations
+            where organization.Name.Contains(q) && organization.Enabled
+            select new OrganizationSearchModel()
+            {
+                Name = organization.Name,
+                Domicile = organization.Domicile,
+                Representative = organization.Representative
+            };
 
-        IQueryable<OrganizationModel> result = searchResults.Take(50).Select(p => new OrganizationModel(p));
-        return result;
+        return searchResults.Take(20);
     }
 
     /// <summary>
@@ -54,6 +73,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// image.</returns>
     [AllowAnonymous]
     [HttpGet("/Organization/{anchor}/Picture")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public ActionResult GetOrganizationProfilePicture(string anchor)
     {
         var profilePicture = (from organization in organizationStore.Organizations.AsNoTracking()
@@ -66,31 +86,27 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
         return File("~/img/org-no-logo.png", "image/png");
     }
 
-    /// <summary>
-    /// Organization.
-    /// </summary>
-    /// <param name="SubjectId">Id</param>
-    /// <param name="Name">名称。</param>
-    /// <param name="Domicile">住所。</param>
-    /// <param name="Contact">联系方式。</param>
-    /// <param name="LegalPersonName">组织的负责人或代表人名称。</param>
-    public record OrganizationModel(
-        string SubjectId,
-        string Name,
-        string? Domicile,
-        string? Contact,
-        string? LegalPersonName)
+    public class OrganizationInfoModel
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="organization"></param>
-        public OrganizationModel(Organization organization)
-            : this(organization.Id,
-                organization.Name,
-                organization.Domicile,
-                organization.Contact,
-                organization.Representative)
-        {
-        }
+        public string Name { get; set; } = null!;
+
+        public string? Domicile { get; set; }
+
+        public string? Representative { get; set; }
+
+        public string? ProfileUrl { get; set; }
+
+        public string? LocationWkt { get; set; }
+
+        public long UpdateAt { get; set; }
+    }
+
+    public class OrganizationSearchModel
+    {
+        public string Name { get; set; } = null!;
+
+        public string? Domicile { get; set; }
+
+        public string? Representative { get; set; }
     }
 }

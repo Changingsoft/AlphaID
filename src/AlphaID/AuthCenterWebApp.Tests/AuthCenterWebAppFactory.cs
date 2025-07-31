@@ -23,25 +23,38 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
                 options.UserInteraction.LoginReturnUrlParameter = "returnUrl";
             });
 
-            services.AddAuthentication(options =>
+            services.AddAuthentication()
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(CookieAuthenticationDefaults.AuthenticationScheme, null);
+            //.AddScheme<AuthenticationSchemeOptions, BearerTestAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, null);
+            services.PostConfigure<Microsoft.AspNetCore.Authentication.AuthenticationOptions>(options =>
             {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                var bearerScheme = options.Schemes.FirstOrDefault(s => s.Name == JwtBearerDefaults.AuthenticationScheme);
+                if (bearerScheme != null)
+                {
+                    bearerScheme.HandlerType = typeof(BearerTestAuthenticationHandler);
+                }
             });
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //});
             //    .AddCookie()
             //    .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", _ => { })
             //    .AddScheme<AuthenticationSchemeOptions, BearerTestAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, null);
-            services.AddSingleton<IAuthenticationHandlerProvider, TestServerAuthenticationHandlerProvider>();
-            services.AddSingleton<TestAuthHandler>();
-            services.AddSingleton<BearerTestAuthenticationHandler>();
+            //services.AddSingleton<IAuthenticationHandlerProvider, TestServerAuthenticationHandlerProvider>();
+            //services.AddSingleton<TestAuthHandler>();
+            //services.AddSingleton<BearerTestAuthenticationHandler>();
         });
     }
 
     public virtual HttpClient CreateAuthenticatedClient(WebApplicationFactoryClientOptions? options = null)
     {
         HttpClient client = options != null ? CreateClient(options) : CreateClient();
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue(CookieAuthenticationDefaults.AuthenticationScheme, "<Cookie Token>");
         return client;
     }
     public virtual HttpClient CreateBearerTokenClient(WebApplicationFactoryClientOptions? options = null)

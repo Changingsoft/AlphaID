@@ -3,8 +3,7 @@ using System.Net.Http.Json;
 
 namespace AuthCenterWebApp.Tests.Controllers;
 
-[Collection(nameof(TestServerCollection))]
-public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
+public class OrganizationControllerTest
 {
     /// <summary>
     /// 使用OrganizationId查询一个已存在的组织。
@@ -13,8 +12,8 @@ public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
     [Fact]
     public async Task GetExistsOrganization()
     {
-        HttpClient client = factory.CreateBearerTokenClient();
-
+        var webFactory = new AuthCenterWebAppFactory();
+        HttpClient client = webFactory.CreateBearerTokenClient();
         HttpResponseMessage response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5");
         response.EnsureSuccessStatusCode();
         var data = await response.Content.ReadFromJsonAsync<OrganizationModel>();
@@ -28,7 +27,8 @@ public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
     [Fact]
     public async Task SearchWillExcludeDisabledOrgs()
     {
-        HttpClient client = factory.CreateAuthenticatedClient();
+        var webFactory = new AuthCenterWebAppFactory();
+        HttpClient client = webFactory.CreateBearerTokenClient();
         HttpResponseMessage response =
             await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("改名后的有限公司")}");
         response.EnsureSuccessStatusCode();
@@ -39,7 +39,8 @@ public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
     [Fact]
     public async Task OrganizationSuggestionsRateLimitTest()
     {
-        var client = factory.CreateClient();
+        var webFactory = new AuthCenterWebAppFactory();
+        var client = webFactory.CreateClient();
         HttpResponseMessage response = null!;
         for (int i = 0; i < 300; i++)
         {

@@ -34,9 +34,8 @@ using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
 using Microsoft.OpenApi.Models;
-
 using System.Reflection;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 #if WINDOWS
@@ -118,7 +117,13 @@ builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("Syst
 
 #region 配置授权策略
 builder.Services.AddAuthorizationBuilder()
-          .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); });
+    .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); })
+    .AddPolicy("RequireMembershipScope", policy =>
+    {
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "membership");
+    });
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
 #endregion
 
@@ -139,6 +144,8 @@ builder.Services.AddRazorPages(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 #endregion
+
+builder.Services.AddControllers();
 
 #region Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
@@ -163,7 +170,7 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, Iden
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
 #endregion
 
-#region 配置身份认证Authentication
+#region 配置身份验证 Authentication
 var authBuilder = builder.Services.AddAuthentication();
 //添加PreSignUp方案。
 authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
@@ -172,8 +179,10 @@ authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
 });
 authBuilder.AddJwtBearer(options =>
 {
-    options.Authority = null;
+    options.ClaimsIssuer = builder.Configuration["IdpConfig:IssuerUri"];
     options.TokenValidationParameters.ValidateAudience = false; //不验证Audience
+    if (builder.Environment.IsDevelopment())
+        options.TokenValidationParameters.ValidateIssuer = false; //验证Issuer
 });
 #endregion
 
@@ -321,7 +330,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
-    
+
 });
 
 #region 请求速率限制
@@ -432,6 +441,8 @@ app.UseSwaggerUI(options =>
     options.InjectStylesheet("/swagger-ui/custom.css");
     options.OAuthScopes("openid", "profile");
     options.OAuthUsePkce();
+    options.OAuthClientId(app.Configuration["SwaggerOauthOptions:ClientId"]!);
+    options.OAuthClientSecret(app.Configuration["SwaggerOauthOptions:ClientSecret"]!);
 });
 app.UseSession();
 app.UseCaptcha(app.Configuration);

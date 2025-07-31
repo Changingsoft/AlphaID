@@ -19,6 +19,7 @@ public class PeopleController(IUserStore<NaturalPerson> store) : ControllerBase
     /// <returns>image of user. if not exists, always return no-picture-avatar.png</returns>
     [AllowAnonymous]
     [HttpGet("/People/{anchor}/Avatar")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public ActionResult GetAvatarPicture(string anchor)
     {
         var profilePicture = (from user in QueryableUserStore.Users.AsNoTracking()

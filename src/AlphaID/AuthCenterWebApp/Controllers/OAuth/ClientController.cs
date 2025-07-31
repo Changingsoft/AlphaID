@@ -1,5 +1,6 @@
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +12,7 @@ namespace AuthCenterWebApp.Controllers.OAuth;
 /// <param name="dbContext"></param>
 [ApiController]
 [Route("api/OAuth/Client")]
-[Authorize]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
 {
     /// <summary>

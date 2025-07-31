@@ -6,7 +6,7 @@ public class ProfileTest(AuthCenterWebAppFactory factory)
     [Fact]
     public async Task GetDefaultAvatarWhenPersonNotFoundOrProfilePictureNotSet()
     {
-        HttpClient client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateClient();
 
         HttpResponseMessage response = await client.GetAsync("People/unknown-user/Avatar");
         response.EnsureSuccessStatusCode();
@@ -17,7 +17,7 @@ public class ProfileTest(AuthCenterWebAppFactory factory)
     [InlineData("liubei")]
     public async Task GetAvatar(string anchor)
     {
-        HttpClient client = factory.CreateAuthenticatedClient();
+        HttpClient client = factory.CreateClient();
         HttpResponseMessage response = await client.GetAsync($"People/{anchor}/Avatar");
         response.EnsureSuccessStatusCode();
         Assert.Equal("image/jpeg", response.Content.Headers.ContentType?.ToString());

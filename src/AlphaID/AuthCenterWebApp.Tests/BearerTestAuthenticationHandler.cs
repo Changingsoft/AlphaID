@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 
 namespace AuthCenterWebApp.Tests;
@@ -20,7 +21,8 @@ internal class BearerTestAuthenticationHandler(
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (Request.Headers.Authorization.Contains("Bearer", StringComparer.OrdinalIgnoreCase))
+        var authHeader = Request.Headers.Authorization.ToString();
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))
         {
             var claims = new List<Claim>
             {
@@ -55,7 +57,7 @@ internal class BearerTestAuthenticationHandler(
             };
             var identity = new ClaimsIdentity(claims, "AuthenticationTypes.Federation");
             var principal = new ClaimsPrincipal(identity);
-            var ticket = new AuthenticationTicket(principal, "TestScheme");
+            var ticket = new AuthenticationTicket(principal, JwtBearerDefaults.AuthenticationScheme);
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
         return Task.FromResult(AuthenticateResult.NoResult());

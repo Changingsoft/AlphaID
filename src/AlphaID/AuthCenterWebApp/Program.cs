@@ -35,6 +35,7 @@ using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
@@ -123,7 +124,7 @@ builder.Services.AddAuthorizationBuilder()
         policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("scope", "membership");
-        policy.RequireClaim(JwtClaimTypes.Subject);
+        policy.RequireClaim(ClaimTypes.NameIdentifier);
     });
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
 #endregion
@@ -180,7 +181,8 @@ authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
 });
 authBuilder.AddJwtBearer(options =>
 {
-    options.ClaimsIssuer = builder.Configuration["IdpConfig:IssuerUri"];
+    //options.ClaimsIssuer = builder.Configuration["IdpConfig:Issuer"];
+    options.Authority = builder.Configuration["IdpConfig:Authority"] ?? throw new InvalidOperationException("必须设置签发机构URL");
     options.TokenValidationParameters.ValidateAudience = false; //不验证Audience
     if (builder.Environment.IsDevelopment())
         options.TokenValidationParameters.ValidateIssuer = false; //开发环境下不验证Issuer。
@@ -269,7 +271,7 @@ builder.Services.AddIdentityServer(options =>
         options.EmitStaticAudienceClaim = true;
 
         //配置IdP标识
-        options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"] ?? throw new InvalidOperationException("必须设置IssuerUri。");
+        options.IssuerUri = builder.Configuration["IdPConfig:Issuer"];
 
         //设置用户显示名称的声明类型。
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
@@ -388,7 +390,8 @@ builder.Services.AddSwaggerGen(options =>
                 {
                     { "openid", "获取用户Id标识" },
                     { "profile", "获取用户基本信息" },
-                    { "realname", "获取自然人的实名信息" }
+                    { "realname", "获取自然人的实名信息" },
+                    { "membership", "用户的组织成员身份" }
                 }
             }
         }
@@ -440,7 +443,7 @@ app.UseSwaggerUI(options =>
     options.DocumentTitle = app.Configuration["OpenApiInfo:Title"];
     options.RoutePrefix = "api-docs";
     options.InjectStylesheet("/swagger-ui/custom.css");
-    options.OAuthScopes("openid", "profile");
+    options.OAuthScopes("openid", "profile", "membership");
     options.OAuthUsePkce();
     options.OAuthClientId(app.Configuration["SwaggerOauthOptions:ClientId"]!);
     options.OAuthClientSecret(app.Configuration["SwaggerOauthOptions:ClientSecret"]!);

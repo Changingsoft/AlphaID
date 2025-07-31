@@ -23,6 +23,9 @@ public static class IdentityBuilderExtensions
         where TGenerator : ProfileUrlGenerator<TUser>
         where TUser : ApplicationUser
     {
+        // 添加必要的服务
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<ProfileUrlGenerator<TUser>, TGenerator>();
         return builder;
     }

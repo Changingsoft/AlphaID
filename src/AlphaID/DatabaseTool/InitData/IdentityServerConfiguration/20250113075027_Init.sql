@@ -59,7 +59,8 @@ SET IDENTITY_INSERT [dbo].[ClientPostLogoutRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientRedirectUris] ON 
 INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (1, N'https://localhost:49728/signin-oidc', 4)
 INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (2, N'https://localhost:49727/docs/oauth2-redirect.html', 4)
-INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (3, N'https://localhost:49726/api-docs/oauth2-redirect.html', 4)
+INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (3, N'https://localhost:49726/api-docs/oauth2-redirect.html', 5)
+INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (4, N'https://oauth.pstmn.io/v1/callback', 5)
 SET IDENTITY_INSERT [dbo].[ClientRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientScopes] ON 
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (1, N'openid', 4)

@@ -22,6 +22,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// <param name="id">组织的SubjectId</param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [Obsolete("使用AuthCenter的接口")]
     public async Task<ActionResult<OrganizationModel>> GetAsync(string id)
     {
         Organization? org = await organizationStore.FindByIdAsync(id);
@@ -39,6 +40,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     [HttpGet("Suggestions")]
     [AllowAnonymous]
     [EnableRateLimiting("ip-fixed")]
+    [Obsolete("使用AuthCenter的接口")]
     public IEnumerable<OrganizationModel> Search(string q)
     {
         IQueryable<Organization> searchResults =

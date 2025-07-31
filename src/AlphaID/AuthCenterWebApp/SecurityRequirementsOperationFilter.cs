@@ -30,7 +30,9 @@ internal class SecurityRequirementsOperationFilter : IOperationFilter
 
             List<string> scopes =
             [
-                "openid"
+                "openid",
+                "profile",
+                "membership"
             ];
 
             if (authAttributes.Any(p => p.Policy == "RealNameScopeRequired"))

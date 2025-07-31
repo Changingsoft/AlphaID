@@ -25,6 +25,7 @@ public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
     /// <response code="200">如果找到了客户端，则返回其信息。</response>
     /// <response code="404">没有找到客户端。</response>
     [HttpGet("{clientId}")]
+    [Obsolete("使用AuthCenter的接口")]
     public ActionResult<ClientInfo> GetClientInfo(string clientId)
     {
         Client? client = dbContext.Clients.FirstOrDefault(p => p.ClientId == clientId);

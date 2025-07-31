@@ -28,7 +28,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
                 Domicile = organization.Domicile,
                 Representative = organization.Representative,
                 ProfileUrl = Url.Page("/Index", new{area = "Organization", anchor = organization.Name}),
-                LocationWkt = organization.Location.AsText(),
+                LocationWkt = organization.Location!.AsText(),
                 UpdateAt = organization.WhenChanged.ToUnixTimeSeconds(),
             };
         var org = orgs.FirstOrDefault();

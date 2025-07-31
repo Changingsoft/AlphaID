@@ -15,7 +15,7 @@ public class ClientControllerTests(AuthCenterWebAppFactory factory)
         response.EnsureSuccessStatusCode();
 
         var result = await response.Content.ReadFromJsonAsync<ClientModel>();
-        Assert.Equal("Alpha ID Management Center", result!.Name);
+        Assert.Equal("AlphaID Management Center", result!.Name);
     }
 
     [Fact]

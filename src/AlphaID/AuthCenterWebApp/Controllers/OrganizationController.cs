@@ -21,16 +21,16 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     public ActionResult<OrganizationInfoModel> GetAsync(string id)
     {
         var orgs = from organization in organizationStore.Organizations
-            where organization.Id == id && organization.Enabled
-            select new OrganizationInfoModel()
-            {
-                Name = organization.Name,
-                Domicile = organization.Domicile,
-                Representative = organization.Representative,
-                ProfileUrl = Url.Page("/Index", new{area = "Organization", anchor = organization.Name}),
-                LocationWkt = organization.Location!.AsText(),
-                UpdateAt = organization.WhenChanged.ToUnixTimeSeconds(),
-            };
+                   where organization.Id == id && organization.Enabled
+                   select new OrganizationInfoModel()
+                   {
+                       Name = organization.Name,
+                       Domicile = organization.Domicile,
+                       Representative = organization.Representative,
+                       ProfileUrl = $"{Request.Scheme}://{Request.Host}{Url.Page("/Index", new { area = "Organization", anchor = organization.Name })}",
+                       LocationWkt = organization.Location!.AsText(),
+                       UpdateAt = organization.WhenChanged.ToUnixTimeSeconds(),
+                   };
         var org = orgs.FirstOrDefault();
         if (org == null)
             return NotFound();
@@ -52,13 +52,13 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     public IEnumerable<OrganizationSearchModel> Search(string q)
     {
         IQueryable<OrganizationSearchModel> searchResults = from organization in organizationStore.Organizations
-            where organization.Name.Contains(q) && organization.Enabled
-            select new OrganizationSearchModel()
-            {
-                Name = organization.Name,
-                Domicile = organization.Domicile,
-                Representative = organization.Representative
-            };
+                                                            where organization.Name.Contains(q) && organization.Enabled
+                                                            select new OrganizationSearchModel()
+                                                            {
+                                                                Name = organization.Name,
+                                                                Domicile = organization.Domicile,
+                                                                Representative = organization.Representative
+                                                            };
 
         return searchResults.Take(20);
     }

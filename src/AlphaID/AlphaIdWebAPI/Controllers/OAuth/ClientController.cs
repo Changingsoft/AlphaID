@@ -18,6 +18,7 @@ public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
     /// 通过 client-id 获取客户端信息。
     /// </summary>
     /// <remarks>
+    /// <b>该接口已不再建议，请从AuthCenter调用接口。</b>
     /// 任何已经身份验证的依赖方，可通过此接口获取指定client-id的客户端的信息。
     /// </remarks>
     /// <param name="clientId">Client ID</param>

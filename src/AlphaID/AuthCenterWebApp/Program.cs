@@ -342,10 +342,10 @@ builder.Services.AddRateLimiter(options =>
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
     options.AddPolicy("token-endpoint-limit", httpContext =>
     {
-        var path = httpContext.Request.Path.Value!;
+        string path = httpContext.Request.Path.Value!;
         if (string.Equals(path, "/connect/token", StringComparison.OrdinalIgnoreCase))
         {
-            var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            string ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
             return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 10, // 每窗口允许的请求数
@@ -358,7 +358,7 @@ builder.Services.AddRateLimiter(options =>
     });
     options.AddPolicy("ip-fixed", httpContext =>
     {
-        var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        string ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
         return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
         {
             PermitLimit = 100, // 每窗口允许的请求数
@@ -375,7 +375,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     var info = builder.Configuration.GetSection("OpenApiInfo").Get<OpenApiInfo>();
     options.SwaggerDoc("v1", info);
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
     options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
     {

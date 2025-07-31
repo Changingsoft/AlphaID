@@ -53,7 +53,7 @@ builder.Host.UseSerilog((context, configuration) =>
                 {
                     if (log.Properties.TryGetValue("SourceContext", out LogEventPropertyValue? pv))
                     {
-                        var source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                        string? source = JsonConvert.DeserializeObject<string>(pv.ToString());
                         if (source == "Duende.IdentityServer.Events.DefaultEventService" ||
                             source == "IdSubjects.SecurityAuditing.DefaultEventService") return true;
                     }

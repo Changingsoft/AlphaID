@@ -19,6 +19,9 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// <summary>
     /// 获取组织信息。
     /// </summary>
+    /// <remarks>
+    /// <b>该接口已不再建议，请从AuthCenter调用接口。</b>
+    /// </remarks>
     /// <param name="id">组织的SubjectId</param>
     /// <returns></returns>
     [HttpGet("{id}")]
@@ -33,6 +36,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// 给定关键字查找组织。
     /// </summary>
     /// <remarks>
+    /// <b>该接口已不再建议，请从AuthCenter调用接口。</b>
     /// 支持通过登记的统一社会信用代码、组织机构代码、组织名称的一部分进行查找。
     /// </remarks>
     /// <param name="q">关键字</param>

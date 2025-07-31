@@ -33,7 +33,8 @@ internal class BearerTestAuthenticationHandler(
                 new("zoneinfo", "Asia/Shanghai"),
                 new("amr", "pwd"),
                 new("idp", "local"),
-                new("auth_time", "1697725253")
+                new("auth_time", "1697725253"),
+                new("scope", "membership")
             };
             var identity = new ClaimsIdentity(claims, "AuthenticationTypes.Federation");
             var principal = new ClaimsPrincipal(identity);

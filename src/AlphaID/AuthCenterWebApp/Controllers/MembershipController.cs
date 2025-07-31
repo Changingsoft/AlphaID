@@ -1,6 +1,5 @@
 using AlphaIdPlatform.Security;
 using AlphaIdPlatform.Subjects;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -123,6 +123,7 @@ builder.Services.AddAuthorizationBuilder()
         policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("scope", "membership");
+        policy.RequireClaim(JwtClaimTypes.Subject);
     });
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
 #endregion
@@ -182,7 +183,7 @@ authBuilder.AddJwtBearer(options =>
     options.ClaimsIssuer = builder.Configuration["IdpConfig:IssuerUri"];
     options.TokenValidationParameters.ValidateAudience = false; //不验证Audience
     if (builder.Environment.IsDevelopment())
-        options.TokenValidationParameters.ValidateIssuer = false; //验证Issuer
+        options.TokenValidationParameters.ValidateIssuer = false; //开发环境下不验证Issuer。
 });
 #endregion
 
@@ -252,7 +253,7 @@ if (weixinMpSettings.Enabled)
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
 
-#region 添加Duende.IdentityServer
+#region 配置Duende.IdentityServer
 builder.Services.AddIdentityServer(options =>
     {
         options.Events.RaiseErrorEvents = true;
@@ -268,7 +269,7 @@ builder.Services.AddIdentityServer(options =>
         options.EmitStaticAudienceClaim = true;
 
         //配置IdP标识
-        options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
+        options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"] ?? throw new InvalidOperationException("必须设置IssuerUri。");
 
         //设置用户显示名称的声明类型。
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;

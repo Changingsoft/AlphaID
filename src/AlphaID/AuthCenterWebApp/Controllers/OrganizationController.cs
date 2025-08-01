@@ -30,6 +30,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
                        ProfileUrl = $"{Request.Scheme}://{Request.Host}{Url.Page("/Index", new { area = "Organization", anchor = organization.Name })}",
                        LocationWkt = organization.Location!.AsText(),
                        UpdateAt = organization.WhenChanged.ToUnixTimeSeconds(),
+                       ProfilePictureUrl = $"{Request.Scheme}://{Request.Host}{Url.Action("GetOrganizationProfilePicture", "Organization", new { anchor = organization.Name })}",
                    };
         var org = orgs.FirstOrDefault();
         if (org == null)
@@ -55,9 +56,11 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
                                                             where organization.Name.Contains(q) && organization.Enabled
                                                             select new OrganizationSearchModel()
                                                             {
+                                                                Subject = organization.Id,
                                                                 Name = organization.Name,
                                                                 Domicile = organization.Domicile,
-                                                                Representative = organization.Representative
+                                                                Representative = organization.Representative,
+                                                                ProfilePictureUrl = $"{Request.Scheme}://{Request.Host}{Url.Action("GetOrganizationProfilePicture", "Organization", new { anchor = organization.Name })}",
                                                             };
 
         return searchResults.Take(20);
@@ -96,6 +99,8 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
 
         public string? ProfileUrl { get; set; }
 
+        public string? ProfilePictureUrl { get; set; }
+
         public string? LocationWkt { get; set; }
 
         public long UpdateAt { get; set; }
@@ -103,10 +108,14 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
 
     public class OrganizationSearchModel
     {
+        public string Subject { get; set; } = null!;
+
         public string Name { get; set; } = null!;
 
         public string? Domicile { get; set; }
 
         public string? Representative { get; set; }
+
+        public string? ProfilePictureUrl { get; set; }
     }
 }

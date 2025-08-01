@@ -18,5 +18,20 @@
         "DebugTarget": "https"
       }
     ]
+  },
+  {
+    "Name": "启动WebApp",
+    "Projects": [
+      {
+        "Path": "AdminWebApp\\AdminWebApp.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "AuthCenterWebApp\\AuthCenterWebApp.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
   }
 ]

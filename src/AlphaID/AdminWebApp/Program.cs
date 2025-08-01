@@ -17,7 +17,6 @@ using ChineseName;
 using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Options;
-using IdSubjects;
 using IdSubjects.DirectoryLogon;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -54,7 +53,7 @@ builder.Host.UseSerilog((context, configuration) =>
                 {
                     if (log.Properties.TryGetValue("SourceContext", out LogEventPropertyValue? pv))
                     {
-                        var source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                        string? source = JsonConvert.DeserializeObject<string>(pv.ToString());
                         if (source == "Duende.IdentityServer.Events.DefaultEventService" ||
                             source == "IdSubjects.SecurityAuditing.DefaultEventService") return true;
                     }
@@ -162,7 +161,7 @@ builder.Services
 
 
 //配置ProfileUrl
-builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
+//builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
@@ -223,7 +222,7 @@ builder.Services.AddMarkdown();
 //反向代理配置
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
     //默认只接受来自本地主机的反向代理。
     //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
     options.KnownNetworks.Clear();

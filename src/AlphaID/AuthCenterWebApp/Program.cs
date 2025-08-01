@@ -33,6 +33,10 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Westwind.AspNetCore.Markdown;
 using IEventSink = Duende.IdentityServer.Services.IEventSink;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 #if WINDOWS
@@ -44,6 +48,7 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region 日志
 builder.Host.UseSerilog((ctx, configuration) =>
 {
     configuration
@@ -87,11 +92,11 @@ builder.Host.UseSerilog((ctx, configuration) =>
 #endif
 
 });
+#endregion
 
+#region 区域和本地化
 //程序资源
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-//区域和本地化
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
@@ -104,16 +109,27 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
+#endregion
 
+#region 产品配置
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
 builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("SystemUrl"));
+#endregion
 
-//授权策略
+#region 配置授权策略
 builder.Services.AddAuthorizationBuilder()
-          .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); });
-
+    .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); })
+    .AddPolicy("RequireMembershipScope", policy =>
+    {
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "membership");
+        policy.RequireClaim(ClaimTypes.NameIdentifier);
+    });
 builder.Services.AddScoped<IAuthorizationHandler, OrganizationOwnerRequirementHandler>();
+#endregion
 
+#region 配置Razor Pages
 builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AuthorizeFolder("/");
@@ -129,8 +145,11 @@ builder.Services.AddRazorPages(options =>
     {
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
+#endregion
 
-//Add AlphaIdPlatform.
+builder.Services.AddControllers();
+
+#region Add AlphaIdPlatform.
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
@@ -143,21 +162,32 @@ platform.AddEntityFramework(options =>
 builder.Services.Configure<IdentityOptions>(builder.Configuration.GetSection("IdentityOptions"));
 builder.Services.Configure<PasswordLifetimeOptions>(builder.Configuration.GetSection("PasswordLifetimeOptions"));
 builder.Services.Configure<AuditEventsOptions>(builder.Configuration.GetSection("AuditEventsOptions"));
+#endregion
 
-//配置ProfileUrl
-builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
+#region IdSubjects Identity配置
 var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddUserStore<NaturalPersonStore>()
     .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
     .AddEntityFrameworkStores<IdSubjectsDbContext>();
+#endregion
 
+#region 配置身份验证 Authentication
 var authBuilder = builder.Services.AddAuthentication();
 //添加PreSignUp方案。
 authBuilder.AddCookie(AuthenticationDefaults.PreSignUpScheme, options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 });
+authBuilder.AddJwtBearer(options =>
+{
+    //options.ClaimsIssuer = builder.Configuration["IdpConfig:Issuer"];
+    options.Authority = builder.Configuration["IdpConfig:Authority"] ?? throw new InvalidOperationException("必须设置签发机构URL");
+    options.TokenValidationParameters.ValidateAudience = false; //不验证Audience
+    if (builder.Environment.IsDevelopment())
+        options.TokenValidationParameters.ValidateIssuer = false; //开发环境下不验证Issuer。
+});
+#endregion
 
 #region 配置可选外部登录
 var externalLoginsSection = builder.Configuration.GetSection("ExternalLogins");
@@ -225,7 +255,7 @@ if (weixinMpSettings.Enabled)
 builder.Services.AddScoped<IEmailSender, SmtpMailSender>()
     .Configure<SmtpMailSenderOptions>(builder.Configuration.GetSection("SmtpMailSenderOptions"));
 
-//添加IdentityServer
+#region 配置Duende.IdentityServer
 builder.Services.AddIdentityServer(options =>
     {
         options.Events.RaiseErrorEvents = true;
@@ -241,8 +271,9 @@ builder.Services.AddIdentityServer(options =>
         options.EmitStaticAudienceClaim = true;
 
         //配置IdP标识
-        options.IssuerUri = builder.Configuration["IdPConfig:IssuerUri"];
+        options.IssuerUri = builder.Configuration["IdPConfig:Issuer"];
 
+        //设置用户显示名称的声明类型。
         options.ServerSideSessions.UserDisplayNameClaimType = JwtClaimTypes.Name;
 
         //当需要身份验证时显示的登录界面。
@@ -260,7 +291,6 @@ builder.Services.AddIdentityServer(options =>
         //当调试模式时，不要启用令牌清理任务。
         //否则单元测试期间会随机导致InvalidOperationException, Not started. Call Start first.
         options.EnableTokenCleanup = !builder.Environment.IsDevelopment();
-        
         options.ConfigureDbContext = b =>
         {
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -270,6 +300,7 @@ builder.Services.AddIdentityServer(options =>
     .AddResourceOwnerValidator<PersonResourceOwnerPasswordValidator>()
     .AddServerSideSessions<ServerSideSessionStore>()
     .Services.AddTransient<IEventSink, AuditLogEventSink>();
+#endregion
 
 builder.Services.AddScoped<ChinesePersonNamePinyinConverter>();
 builder.Services.AddScoped<ChinesePersonNameFactory>();
@@ -297,23 +328,24 @@ builder.Services.AddMvc();
 //反向代理配置
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
     //默认只接受来自本地主机的反向代理。
     //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
+
 });
 
-//请求速率限制
+#region 请求速率限制
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
     options.AddPolicy("token-endpoint-limit", httpContext =>
     {
-        var path = httpContext.Request.Path.Value!;
+        string path = httpContext.Request.Path.Value!;
         if (string.Equals(path, "/connect/token", StringComparison.OrdinalIgnoreCase))
         {
-            var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            string ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
             return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 10, // 每窗口允许的请求数
@@ -324,7 +356,49 @@ builder.Services.AddRateLimiter(options =>
         }
         return RateLimitPartition.GetNoLimiter("none");
     });
+    options.AddPolicy("ip-fixed", httpContext =>
+    {
+        string ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 100, // 每窗口允许的请求数
+            Window = TimeSpan.FromMinutes(1), // 窗口大小
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0 // 不排队，超出直接拒绝
+        });
+    });
 });
+#endregion
+
+#region Swagger配置
+builder.Services.AddSwaggerGen(options =>
+{
+    var info = builder.Configuration.GetSection("OpenApiInfo").Get<OpenApiInfo>();
+    options.SwaggerDoc("v1", info);
+    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+    options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri(builder.Configuration["SwaggerOauthOptions:AuthorizationEndpoint"]!),
+                TokenUrl = new Uri(builder.Configuration["SwaggerOauthOptions:TokenEndpoint"]!),
+                Scopes = new Dictionary<string, string>
+                {
+                    { "openid", "获取用户Id标识" },
+                    { "profile", "获取用户基本信息" },
+                    { "realname", "获取自然人的实名信息" },
+                    { "membership", "用户的组织成员身份" }
+                }
+            }
+        }
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+#endregion
 
 // 当Debug模式时，覆盖先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())
@@ -361,6 +435,19 @@ app.UseRateLimiter();
 app.UseMiddleware<TokenRateLimitMiddleware>(); //为token终结点启用速率限制。
 app.UseIdentityServer(); //内部会调用UseAuthentication。
 app.UseAuthorization();
+app.UseSwagger(options => { options.RouteTemplate = "api-docs/{documentName}/docs.json"; });
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/api-docs/v1/docs.json",
+        $"{app.Configuration["OpenApiInfo:Title"]} {app.Configuration["OpenApiInfo:Version"]}");
+    options.DocumentTitle = app.Configuration["OpenApiInfo:Title"];
+    options.RoutePrefix = "api-docs";
+    options.InjectStylesheet("/swagger-ui/custom.css");
+    options.OAuthScopes("openid", "profile", "membership");
+    options.OAuthUsePkce();
+    options.OAuthClientId(app.Configuration["SwaggerOauthOptions:ClientId"]!);
+    options.OAuthClientSecret(app.Configuration["SwaggerOauthOptions:ClientSecret"]!);
+});
 app.UseSession();
 app.UseCaptcha(app.Configuration);
 app.MapRazorPages();

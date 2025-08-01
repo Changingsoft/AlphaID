@@ -1,4 +1,5 @@
 using IdSubjects;
+using IdSubjects.Identity;
 using Microsoft.AspNetCore.Identity;
 
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
@@ -22,6 +23,9 @@ public static class IdentityBuilderExtensions
         where TGenerator : ProfileUrlGenerator<TUser>
         where TUser : ApplicationUser
     {
+        // 添加必要的服务
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<ProfileUrlGenerator<TUser>, TGenerator>();
         return builder;
     }

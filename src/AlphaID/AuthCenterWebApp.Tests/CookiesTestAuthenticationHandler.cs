@@ -7,7 +7,7 @@ using System.Text.Encodings.Web;
 
 namespace AuthCenterWebApp.Tests;
 
-internal class TestAuthHandler(
+internal class CookiesTestAuthenticationHandler(
     IOptionsMonitor<AuthenticationSchemeOptions> options,
     ILoggerFactory logger,
     UrlEncoder encoder)
@@ -51,7 +51,7 @@ internal class TestAuthHandler(
             };
             var identity = new ClaimsIdentity(claims, "AuthenticationTypes.Federation");
             var principal = new ClaimsPrincipal(identity);
-            var ticket = new AuthenticationTicket(principal, "TestScheme");
+            var ticket = new AuthenticationTicket(principal, "Cookies");
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
 

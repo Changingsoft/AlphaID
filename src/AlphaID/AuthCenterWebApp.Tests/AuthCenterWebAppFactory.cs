@@ -25,7 +25,7 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
 
             //添加Cookies认证方案
             services.AddAuthentication()
-                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(CookieAuthenticationDefaults.AuthenticationScheme, null);
+                .AddScheme<AuthenticationSchemeOptions, CookiesTestAuthenticationHandler>(CookieAuthenticationDefaults.AuthenticationScheme, null);
 
             //替换JwtBearer默认处理器
             services.PostConfigure<Microsoft.AspNetCore.Authentication.AuthenticationOptions>(options =>

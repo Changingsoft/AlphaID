@@ -23,9 +23,11 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
                 options.UserInteraction.LoginReturnUrlParameter = "returnUrl";
             });
 
+            //添加Cookies认证方案
             services.AddAuthentication()
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(CookieAuthenticationDefaults.AuthenticationScheme, null);
-            //.AddScheme<AuthenticationSchemeOptions, BearerTestAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, null);
+
+            //替换JwtBearer默认处理器
             services.PostConfigure<Microsoft.AspNetCore.Authentication.AuthenticationOptions>(options =>
             {
                 var bearerScheme = options.Schemes.FirstOrDefault(s => s.Name == JwtBearerDefaults.AuthenticationScheme);
@@ -34,19 +36,6 @@ public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
                     bearerScheme.HandlerType = typeof(BearerTestAuthenticationHandler);
                 }
             });
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //});
-            //    .AddCookie()
-            //    .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", _ => { })
-            //    .AddScheme<AuthenticationSchemeOptions, BearerTestAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, null);
-            //services.AddSingleton<IAuthenticationHandlerProvider, TestServerAuthenticationHandlerProvider>();
-            //services.AddSingleton<TestAuthHandler>();
-            //services.AddSingleton<BearerTestAuthenticationHandler>();
         });
     }
 

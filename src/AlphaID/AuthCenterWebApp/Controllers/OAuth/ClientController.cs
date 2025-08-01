@@ -1,5 +1,4 @@
 using Duende.IdentityServer.EntityFramework.DbContexts;
-using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +24,32 @@ public class ClientController(ConfigurationDbContext dbContext) : ControllerBase
     [HttpGet("{clientId}")]
     public ActionResult<ClientInfo> GetClientInfo(string clientId)
     {
-        Client? client = dbContext.Clients.FirstOrDefault(p => p.ClientId == clientId);
-        return client == null ? NotFound() : new ClientInfo(client.ClientName);
+        var clients = from client in dbContext.Clients
+                      where client.ClientId == clientId
+                      select new ClientInfo
+                      {
+                          Name = client.ClientName,
+                          UpdatedAt = client.Updated.HasValue ? client.Updated.Value.ToUniversalTime() : client.Created.ToUniversalTime(),
+                      };
+        var clientInfo = clients.FirstOrDefault();
+        if (clientInfo == null)
+            return NotFound();
+        return clientInfo;
     }
 
     /// <summary>
     /// 客户端信息
     /// </summary>
-    /// <param name="Name">客户端名称</param>
-    public record ClientInfo(string Name);
+    public class ClientInfo
+    {
+        /// <summary>
+        /// 客户端名称。
+        /// </summary>
+        public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// 更新时间。
+        /// </summary>
+        public DateTime UpdatedAt { get; set; }
+    };
 }

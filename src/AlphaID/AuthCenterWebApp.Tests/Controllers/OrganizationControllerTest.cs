@@ -88,7 +88,7 @@ public class OrganizationControllerTest
 
         public string? LocationWkt { get; set; }
 
-        public long UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 
     internal class OrganizationSearchModel

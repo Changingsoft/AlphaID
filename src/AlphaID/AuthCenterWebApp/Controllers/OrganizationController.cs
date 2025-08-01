@@ -29,7 +29,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
                        Representative = organization.Representative,
                        ProfileUrl = $"{Request.Scheme}://{Request.Host}{Url.Page("/Index", new { area = "Organization", anchor = organization.Name })}",
                        LocationWkt = organization.Location!.AsText(),
-                       UpdateAt = organization.WhenChanged.ToUnixTimeSeconds(),
+                       UpdatedAt = organization.WhenChanged.UtcDateTime,
                        ProfilePictureUrl = $"{Request.Scheme}://{Request.Host}{Url.Action("GetOrganizationProfilePicture", "Organization", new { anchor = organization.Name })}",
                    };
         var org = orgs.FirstOrDefault();
@@ -103,7 +103,7 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
 
         public string? LocationWkt { get; set; }
 
-        public long UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 
     public class OrganizationSearchModel

@@ -11,11 +11,11 @@ public class ClientControllerTests(AuthCenterWebAppFactory factory)
     {
         HttpClient client = factory.CreateBearerTokenClient();
 
-        HttpResponseMessage response = await client.GetAsync("api/OAuth/Client/d70700eb-c4d8-4742-a79a-6ecf2064b27c");
+        HttpResponseMessage response = await client.GetAsync("api/OAuth/Client/43670b09-b161-46ca-b59a-c0fbde526394");
         response.EnsureSuccessStatusCode();
 
         var result = await response.Content.ReadFromJsonAsync<ClientModel>();
-        Assert.Equal("AlphaID Management Center", result!.Name);
+        Assert.Equal("AlphaID AuthCenter Swagger UI", result!.Name);
     }
 
     [Fact]
@@ -27,5 +27,10 @@ public class ClientControllerTests(AuthCenterWebAppFactory factory)
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
-    public record ClientModel(string Name);
+    public class ClientModel
+    {
+        public string Name { get; set; } = null!;
+
+        public DateTime UpdatedAt { get; set; }
+    };
 }

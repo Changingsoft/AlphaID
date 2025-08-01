@@ -114,20 +114,19 @@ builder.Services.AddRazorPages(options =>
     .AddDataAnnotationsLocalization(options =>
     {
         options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(SharedResource));
-    })
-    .AddSessionStateTempDataProvider();
+    });
 
 //启用API Controller
 builder.Services.AddControllers();
-builder.Services.AddServerSideBlazor();
+//builder.Services.AddServerSideBlazor();
 
 //配置授权策略。
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("RequireAdminRole", policy => { policy.RequireRole(RoleConstants.AdministratorsRole.Name); });
 
 //启用服务器Session
-builder.Services.AddSession();
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddSession();
+//builder.Services.AddHttpContextAccessor();
 
 //配置身份验证。
 builder.Services
@@ -271,10 +270,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseSession();
+//app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
-app.MapBlazorHub();
+//app.MapBlazorHub();
 
 app.Run();
 

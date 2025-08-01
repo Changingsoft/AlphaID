@@ -15,14 +15,10 @@
     {
         <title>@Product.Value.Name @L["Management Center"]</title>
     }
-    <base href="~/"/>
-    <component type="typeof(Microsoft.AspNetCore.Components.Web.HeadOutlet)" 
-               render-mode="ServerPrerendered" />
     @await RenderSectionAsync("head", false)
 </head>
 <body>
     @RenderBody()
-    <script src="_framework/blazor.server.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

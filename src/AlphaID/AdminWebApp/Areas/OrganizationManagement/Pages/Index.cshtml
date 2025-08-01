@@ -37,6 +37,7 @@
             <th>@L["Domicile"]</th>
             <th>@L["Representative"]</th>
             <th>@L["Contact"]</th>
+            <th>@L["Updated at"]</th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +50,7 @@
                 <td>@org.Domicile</td>
                 <td>@org.Representative</td>
                 <td>@org.Contact</td>
+                <td>@Html.DisplayFor(m => org.UpdatedAt)</td>
             </tr>
         }
     </tbody>

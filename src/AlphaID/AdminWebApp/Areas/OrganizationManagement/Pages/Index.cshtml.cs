@@ -5,7 +5,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 
 public class IndexModel(IOrganizationStore organizationStore) : PageModel
 {
-    public IEnumerable<OrganizationModel> Last10Orgs { get; set; } = null!;
+    public IEnumerable<OrganizationModel> Last10Orgs { get; set; } = [];
 
     public int OrgCount { get; set; }
 
@@ -19,8 +19,10 @@ public class IndexModel(IOrganizationStore organizationStore) : PageModel
                           Name = org.Name,
                           Domicile = org.Domicile,
                           Contact = org.Contact,
-                          Representative = org.Representative
-                      }).Take(10).ToList();
+                          Representative = org.Representative,
+                          UpdatedAt = org.WhenChanged,
+                      }).Take(10);
+
         OrgCount = organizationStore.Organizations.Count();
     }
 
@@ -34,5 +36,7 @@ public class IndexModel(IOrganizationStore organizationStore) : PageModel
 
         public string? Contact { get; set; }
         public string? Representative { get; set; }
+
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }

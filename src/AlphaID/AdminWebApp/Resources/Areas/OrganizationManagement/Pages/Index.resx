@@ -118,11 +118,12 @@
   <data name="Representative" xml:space="preserve">
 		<value>Representative</value>
 	</data>
-  <data name="USCI" xml:space="preserve">
-		<value>USCI</value>
-	</data>
   <data name="Contact" xml:space="preserve">
 	  <value>Contact</value>
 	  <comment>Contact</comment>
+  </data>
+  <data name="Updated at" xml:space="preserve">
+	  <value>Updated at</value>
+	  <comment>Updated at</comment>
   </data>
 </root>

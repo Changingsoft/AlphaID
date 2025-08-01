@@ -9,28 +9,20 @@ public class NewModel(OrganizationManager manager) : PageModel
 {
     [Display(Name = "Name")]
     [Required(ErrorMessage = "Validate_Required")]
+    [StringLength(100, ErrorMessage = "Validate_StringLength")]
     public string Name { get; set; } = null!;
 
     [Display(Name = "Domicile")]
+    [StringLength(100, ErrorMessage = "Validate_StringLength")]
     public string? Domicile { get; set; }
 
     [Display(Name = "Contact")]
+    [StringLength(50, ErrorMessage = "Validate_StringLength")]
     public string? Contact { get; set; }
 
     [Display(Name = "Representative")]
+    [StringLength(20, ErrorMessage = "Validate_StringLength")]
     public string? Representative { get; set; }
-
-    [Display(Name = "Established at")]
-    [DataType(DataType.Date)]
-    public DateOnly? EstablishedAt { get; set; }
-
-    [Display(Name = "Term begin")]
-    [DataType(DataType.Date)]
-    public DateOnly? TermBegin { get; set; }
-
-    [Display(Name = "Term end")]
-    [DataType(DataType.Date)]
-    public DateOnly? TermEnd { get; set; }
 
     public OrganizationOperationResult? OperationResult { get; set; }
 
@@ -43,13 +35,10 @@ public class NewModel(OrganizationManager manager) : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        Organization org = new Organization(Name)
+        var org = new Organization(Name)
         {
             Domicile = Domicile,
             Representative = Representative,
-            EstablishedAt = EstablishedAt,
-            TermBegin = TermBegin,
-            TermEnd = TermEnd
         };
 
         if (!ModelState.IsValid) return Page();

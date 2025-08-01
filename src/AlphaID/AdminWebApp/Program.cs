@@ -39,6 +39,7 @@ using Westwind.AspNetCore.Markdown;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+#region 日志
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration)
@@ -53,7 +54,7 @@ builder.Host.UseSerilog((context, configuration) =>
                 {
                     if (log.Properties.TryGetValue("SourceContext", out LogEventPropertyValue? pv))
                     {
-                        string? source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                        var source = JsonConvert.DeserializeObject<string>(pv.ToString());
                         if (source == "Duende.IdentityServer.Events.DefaultEventService" ||
                             source == "IdSubjects.SecurityAuditing.DefaultEventService") return true;
                     }
@@ -78,6 +79,7 @@ builder.Host.UseSerilog((context, configuration) =>
 #endif
 
 });
+#endregion
 
 //产品和系统URL信息。
 builder.Services.Configure<ProductInfo>(builder.Configuration.GetSection("ProductInfo"));
@@ -101,7 +103,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 
-//配置RazorPages.
+#region 配置RazorPages.
 builder.Services.AddRazorPages(options =>
     {
         options.Conventions.AuthorizeFolder("/", "RequireAdminRole");
@@ -115,20 +117,16 @@ builder.Services.AddRazorPages(options =>
     {
         options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(SharedResource));
     });
+#endregion
 
 //启用API Controller
 builder.Services.AddControllers();
-//builder.Services.AddServerSideBlazor();
 
 //配置授权策略。
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("RequireAdminRole", policy => { policy.RequireRole(RoleConstants.AdministratorsRole.Name); });
 
-//启用服务器Session
-//builder.Services.AddSession();
-//builder.Services.AddHttpContextAccessor();
-
-//配置身份验证。
+#region 配置身份验证。
 builder.Services
     .AddAuthentication(options =>
     {
@@ -138,10 +136,11 @@ builder.Services
     .AddCookie()
     .AddOpenIdConnect(options =>
     {
-        options.MetadataAddress = builder.Configuration["OidcClient:MetadataAddress"];
+        options.Authority = builder.Configuration["OidcClient:Authority"];
         options.ClientId = builder.Configuration["OidcClient:ClientId"];
         options.ClientSecret = builder.Configuration["OidcClient:ClientSecret"];
         options.ResponseType = OpenIdConnectResponseType.Code;
+        //options.Scope.Add("membership"); //已默认包括openid和profile。
         options.SaveTokens = true;
         options.GetClaimsFromUserInfoEndpoint = true; //从UserInfoEndPoint取得更多用户信息。
 
@@ -157,10 +156,9 @@ builder.Services
             OnTokenValidated = OidcEvents.IssueRoleClaims
         };
     });
+#endregion
 
-
-//配置ProfileUrl
-//builder.Services.Configure<OidcProfileUrlOptions>(options => options.ProfileUrlBase = new Uri(builder.Configuration["SystemUrl:AuthCenterUrl"]!));
+#region 配置AlphaID平台服务。
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
@@ -185,7 +183,7 @@ builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(OperationalDbContext)));
 });
-
+#endregion
 
 //身份证OCR识别
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
@@ -218,7 +216,7 @@ builder.Services.AddScoped<ISecretGenerator, DefaultSecretGenerator>();
 
 builder.Services.AddMarkdown();
 
-//反向代理配置
+#region 反向代理配置
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
@@ -227,7 +225,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
 });
-
+#endregion
 
 //当Debug模式时，覆盖注册先前配置以解除外部依赖
 if (builder.Environment.IsDevelopment())

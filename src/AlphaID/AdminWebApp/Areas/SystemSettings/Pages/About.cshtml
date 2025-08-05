@@ -9,20 +9,33 @@
     var dotnetVersion = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
     var osDescription = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 }
-<h1>About AlphaID</h1>
-@if (productVersion != null)
+@section Breadcrumb
 {
-    <p>Product Version: @productVersion</p>
+    <li class="breadcrumb-item">
+        <a asp-page="/About">About</a>
+    </li>
 }
-@if (version != null)
+@section PageHeader
 {
-    <p>Assembly Version: @version.ToString()</p>
+    <h1>About AlphaID</h1>
 }
-@if (fileVersion != null)
-{
-    <p>File Version: @fileVersion</p>
-}
-<p>.NET Runtime Version: @dotnetVersion</p>
-<p>OS Version: @osDescription</p>
+<div class="card">
+    <div class="card-body">
+        @if (productVersion != null)
+        {
+            <p>Product Version: @productVersion</p>
+        }
+        @if (version != null)
+        {
+            <p>Assembly Version: @version.ToString()</p>
+        }
+        @if (fileVersion != null)
+        {
+            <p>File Version: @fileVersion</p>
+        }
+        <p>.NET Runtime Version: @dotnetVersion</p>
+        <p>OS Version: @osDescription</p>
 
-<a asp-page="Index" class="btn">OK</a>
+        <a asp-page="Index" class="btn">OK</a>
+    </div>
+</div>

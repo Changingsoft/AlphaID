@@ -474,4 +474,8 @@
   <data name="Validate_EmailFormat" xml:space="preserve">
 	  <value>Invalid email address format.</value>
   </data>
+  <data name="Roles" xml:space="preserve">
+	  <value>Roles</value>
+	  <comment>Roles</comment>
+  </data>
 </root>

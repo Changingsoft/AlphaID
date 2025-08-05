@@ -1,0 +1,13 @@
+@page
+@model AdminWebApp.Areas.SystemSettings.Pages.Security.Roles.Detail.AddModel
+@{
+}
+<h1>Add member</h1>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="UserId" class="form-label"></label>
+        <input asp-for="UserId" class="form-control"/>
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>

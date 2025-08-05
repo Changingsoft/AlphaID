@@ -1,0 +1,36 @@
+@page
+@model AdminWebApp.Areas.SystemSettings.Pages.Security.Roles.Detail.IndexModel
+@{
+}
+
+@if (Model.ResultMessage != null)
+{
+    <div class="alert alert-success">
+        @Model.ResultMessage
+    </div>
+}
+
+<h1>@Model.Role.DisplayName</h1>
+<p>Name: @Model.Role.Name</p>
+
+<h2>Members</h2>
+<a asp-page="Add" asp-route-name="@Model.Role.Name" class="btn">Add member</a>
+<form method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var uir in Model.UserInrRoles)
+        {
+            <tr>
+                <td>@uir.UserId</td>
+                <td><button type="submit" asp-page-handler="Remove" asp-route-userId="@uir.UserId" asp-route-name="@uir.RoleName" onclick="return confirm('Remove user?');" class="btn btn-sm btn-danger">@SL["Remove"]</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>

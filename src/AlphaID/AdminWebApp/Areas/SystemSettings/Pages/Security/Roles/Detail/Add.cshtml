@@ -2,12 +2,67 @@
 @model AdminWebApp.Areas.SystemSettings.Pages.Security.Roles.Detail.AddModel
 @{
 }
-<h1>Add member</h1>
-<form method="post">
-    <div class="mb-3">
-        <label asp-for="UserId" class="form-label"></label>
-        <input asp-for="UserId" class="form-control"/>
-        <span asp-validation-for="UserId" class="text-danger"></span>
+@section head {
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.css" />
+}
+@section PageHeader
+{
+    <h1>Add member</h1>
+}
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="UserId" class="form-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-</form>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/jquery-ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("[name='UserId']").autocomplete({
+                source: "@Url.Action("SearchPerson", "IdService")",
+                minLength: 2,
+                appendTo: "#memberEditor",
+                select: function (event, ui) {
+                    $(this).val(ui.item.name);
+                    $("[name='UserId']").val(ui.item.userId);
+                    //$("[name='Input.UserName']").val(ui.item.name);
+                    //$("[name='Input.PhoneticSearchHint']").val(ui.item.phoneticSearchHint);
+
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    var div = $("<div>").attr("class", "row")
+                        .append(
+                            $("<div>").attr("class", "col-auto")
+                                .append(
+                                    $("<img>").attr("src", item.avatarUrl).attr("class", "avatar")
+                                )
+                        )
+                        .append(
+                            $("<div>").attr("class", "col text-truncate")
+                                .append(
+                                    $("<p>").append(item.name)
+                                )
+                                .append(
+                                    $("<p>").attr("class", "text-secondary")
+                                        .append(item.userName)
+                                )
+                        );
+                    var li = $("<li>").append(div);
+                    return li.appendTo(ul);
+                };
+        });
+
+    </script>
+}

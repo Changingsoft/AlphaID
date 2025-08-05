@@ -10,6 +10,13 @@ namespace AlphaIdPlatform.Admin;
 public class UserInRoleManager(IUserInRoleStore store)
 {
     /// <summary>
+    /// Gets a queryable collection of user-role associations.
+    /// </summary>
+    /// <remarks>This property provides access to the underlying data store's user-role relationships,
+    /// allowing for LINQ queries to filter, sort, or project the data as needed.</remarks>
+    public IQueryable<UserInRole> UserInRoles => store.UserInRoles;
+
+    /// <summary>
     /// Gets roles of user.
     /// </summary>
     /// <param name="userId"></param>

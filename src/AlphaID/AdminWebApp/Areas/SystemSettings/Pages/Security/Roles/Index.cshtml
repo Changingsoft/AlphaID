@@ -19,6 +19,7 @@
             <th>@SL["Name"]</th>
             <th>@SL["Display name"]</th>
             <th>@SL["Description"]</th>
+            <th>@L["Member count"]</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +28,8 @@
             <tr>
                 <td><a asp-page="Detail/Index" asp-route-name="@role.Name">@role.Name</a></td>
                 <td>@role.DisplayName</td>
-                <td></td>
+                <td>@role.Description</td>
+                <td>@role.MemberCount</td>
             </tr>
         }
     </tbody>

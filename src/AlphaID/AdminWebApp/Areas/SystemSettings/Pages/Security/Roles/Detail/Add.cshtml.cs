@@ -1,11 +1,13 @@
 using AdminWebApp.Domain.Security;
 using AlphaIdPlatform.Admin;
+using AlphaIdPlatform.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminWebApp.Areas.SystemSettings.Pages.Security.Roles.Detail
 {
-    public class AddModel(UserInRoleManager manager) : PageModel
+    public class AddModel(UserInRoleManager manager, IQueryableUserStore<NaturalPerson> userStore) : PageModel
     {
         public Role Role { get; set; } = null!;
 
@@ -31,6 +33,11 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.Security.Roles.Detail
                 return NotFound();
             }
             Role = role;
+
+            if(!userStore.Users.Any(u => u.Id == UserId))
+            {
+                ModelState.AddModelError(nameof(UserId), "User not found.");
+            }
 
             if (!ModelState.IsValid)
                 return Page();

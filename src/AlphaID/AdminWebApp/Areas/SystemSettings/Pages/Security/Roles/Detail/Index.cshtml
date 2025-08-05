@@ -19,7 +19,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th>User ID</th>
+            <th>User</th>
+            <th>Display name</th>
+            <th>Email</th>
+            <th>Phone number</th>
             <th></th>
         </tr>
         </thead>
@@ -27,7 +30,10 @@
         @foreach (var uir in Model.UserInrRoles)
         {
             <tr>
-                <td>@uir.UserId</td>
+                <td>@uir.UserName</td>
+                <td>@uir.DisplayName</td>
+                <td>@uir.Email</td>
+                <td>@uir.PhoneNumber</td>
                 <td><button type="submit" asp-page-handler="Remove" asp-route-userId="@uir.UserId" asp-route-name="@uir.RoleName" onclick="return confirm('Remove user?');" class="btn btn-sm btn-danger">@SL["Remove"]</button></td>
             </tr>
         }

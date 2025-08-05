@@ -1,5 +1,5 @@
 SET IDENTITY_INSERT [dbo].[ApiScopes] ON 
-INSERT [dbo].[ApiScopes] ([Id], [Enabled], [Name], [DisplayName], [Description], [Required], [Emphasize], [ShowInDiscoveryDocument], [Created], [Updated], [LastAccessed], [NonEditable]) VALUES (1, 1, N'user_impersonation', N'模拟个人身份', N'为应用程序请求使用已登录用户的身份访问资源的权限。', 0, 0, 1, CAST(N'2023-02-10T13:22:00.0000000' AS DateTime2), CAST(N'2023-02-10T13:22:00.0000000' AS DateTime2), NULL, 1)
+INSERT [dbo].[ApiScopes] ([Id], [Enabled], [Name], [DisplayName], [Description], [Required], [Emphasize], [ShowInDiscoveryDocument], [Created], [Updated], [LastAccessed], [NonEditable]) VALUES (1, 1, N'public', N'公共API', N'可访问受保护的公共API', 0, 0, 1, CAST(N'2023-02-10T13:22:00.0000000' AS DateTime2), CAST(N'2023-02-10T13:22:00.0000000' AS DateTime2), NULL, 1)
 INSERT [dbo].[ApiScopes] ([Id], [Enabled], [Name], [DisplayName], [Description], [Required], [Emphasize], [ShowInDiscoveryDocument], [Created], [Updated], [LastAccessed], [NonEditable]) VALUES (2, 1, N'realname', N'实名信息', N'获取自然人的实名制信息，如身份证号码', 0, 1, 1, CAST(N'2023-02-08T14:32:00.0000000' AS DateTime2), CAST(N'2023-02-08T14:32:00.0000000' AS DateTime2), NULL, 1)
 INSERT [dbo].[ApiScopes] ([Id], [Enabled], [Name], [DisplayName], [Description], [Required], [Emphasize], [ShowInDiscoveryDocument], [Created], [Updated], [LastAccessed], [NonEditable]) VALUES (3, 1, N'membership', N'组织成员', N'获取用户的组织成员身份', 0, 1, 1, CAST(N'2023-02-08T14:32:00.0000000' AS DateTime2), CAST(N'2023-02-08T14:32:00.0000000' AS DateTime2), NULL, 1)
 SET IDENTITY_INSERT [dbo].[ApiScopes] OFF
@@ -58,14 +58,13 @@ INSERT [dbo].[ClientPostLogoutRedirectUris] ([Id], [PostLogoutRedirectUri], [Cli
 SET IDENTITY_INSERT [dbo].[ClientPostLogoutRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientRedirectUris] ON 
 INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (1, N'https://localhost:49728/signin-oidc', 4)
-INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (2, N'https://localhost:49727/docs/oauth2-redirect.html', 4)
 INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (3, N'https://localhost:49726/api-docs/oauth2-redirect.html', 5)
 INSERT [dbo].[ClientRedirectUris] ([Id], [RedirectUri], [ClientId]) VALUES (4, N'https://oauth.pstmn.io/v1/callback', 5)
 SET IDENTITY_INSERT [dbo].[ClientRedirectUris] OFF
 SET IDENTITY_INSERT [dbo].[ClientScopes] ON 
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (1, N'openid', 4)
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (3, N'profile', 4)
-INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (4, N'user_impersonation', 4)
+INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (4, N'public', 4)
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (5, N'openid', 5)
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (6, N'profile', 5)
 INSERT [dbo].[ClientScopes] ([Id], [Scope], [ClientId]) VALUES (7, N'membership', 5)
@@ -75,7 +74,6 @@ INSERT [dbo].[ClientSecrets] ([Id], [ClientId], [Description], [Value], [Expirat
 INSERT [dbo].[ClientSecrets] ([Id], [ClientId], [Description], [Value], [Expiration], [Type], [Created]) VALUES (2, 5, NULL, N'illTewgHf1df4qb1JsQtd5u7BhPvOkG+PSpPcJIf7aY=', NULL, N'SharedSecret', CAST(N'2022-12-23T20:39:00.0000000' AS DateTime2))
 SET IDENTITY_INSERT [dbo].[ClientSecrets] OFF
 SET IDENTITY_INSERT [dbo].[ClientCorsOrigins] ON
-INSERT [dbo].[ClientCorsOrigins] ([Id], [Origin], [ClientId]) VALUES (1, N'https://localhost:49727', 4)
 SET IDENTITY_INSERT [dbo].[ClientCorsOrigins] OFF
 SET IDENTITY_INSERT [dbo].[ClientIdPRestrictions] ON
 SET IDENTITY_INSERT [dbo].[ClientIdPRestrictions] OFF

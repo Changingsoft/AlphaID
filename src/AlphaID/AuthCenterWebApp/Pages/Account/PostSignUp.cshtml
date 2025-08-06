@@ -15,7 +15,7 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="FamilyName" class="form-label required"></label>
-                <input asp-for="FamilyName" class="form-control" autofocus tabindex="1">
+                <input asp-for="FamilyName" class="form-control" autofocus>
                 <span asp-description-for="FamilyName"></span>
                 <span asp-validation-for="FamilyName" class="text-danger"></span>
             </div>
@@ -45,3 +45,7 @@
         </form>
     </div>
 </div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using ChineseName;
 
 namespace AuthCenterWebApp.Pages.Account
 {
@@ -19,6 +20,8 @@ namespace AuthCenterWebApp.Pages.Account
         SignInManager<NaturalPerson> signInManager,
         IIdentityServerInteractionService interaction) : PageModel
     {
+        private ChinesePersonNamePinyinConverter pinyinConverter = new();
+
         [BindProperty]
         [Display(Name = "User name")]
         public string? UserName { get; set; }
@@ -73,15 +76,22 @@ namespace AuthCenterWebApp.Pages.Account
             var phoneNumber = preSignUpAuthResult.Principal.FindFirstValue(JwtClaimTypes.PhoneNumber);
             bool isRememberLoginParsed = bool.TryParse(preSignUpAuthResult.Principal.FindFirstValue("remember-login") ?? "false", out bool rememberLogin);
 
+            // 补全读音和搜索提示
+            var (phoneticSurname, phoneticGivenName) = pinyinConverter.Convert(FamilyName, GivenName);
+            ChinesePersonName personName = new(FamilyName, GivenName, phoneticSurname, phoneticGivenName);
+
             // Create the user in the database
             var user = new NaturalPerson(userName)
             {
                 FamilyName = FamilyName,
                 GivenName = GivenName,
-                Name = FamilyName + GivenName,
+                Name = personName.FullName,
                 DateOfBirth = DateOfBirth,
                 PhoneNumber = phoneNumber,
-                PhoneNumberConfirmed = true // Phone number is confirmed by the pre-sign-up process
+                PhoneNumberConfirmed = true, // Phone number is confirmed by the pre-sign-up process
+                PhoneticSurname = personName.PhoneticSurname,
+                PhoneticGivenName = personName.PhoneticGivenName,
+                SearchHint = personName.PhoneticName.ToUpper(),
             };
 
             var result = await userManager.CreateAsync(user);
@@ -115,7 +125,7 @@ namespace AuthCenterWebApp.Pages.Account
                 var additionalLocalClaims = new List<Claim>();
                 var localSignInProps = new AuthenticationProperties();
                 CaptureExternalLoginContext(ExternalLoginResult, additionalLocalClaims, localSignInProps);
-
+                localSignInProps.IsPersistent = isRememberLoginParsed;
                 await signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
 
                 // delete temporary cookie used during external authentication

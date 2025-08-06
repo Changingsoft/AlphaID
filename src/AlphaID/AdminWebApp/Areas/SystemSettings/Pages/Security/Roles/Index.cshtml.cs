@@ -17,7 +17,7 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.Security.Roles
                     {
                         Name = role.Name,
                         DisplayName = role.DisplayName,
-                        Description = "",
+                        Description = role.Description,
                         MemberCount = userRoles.Count()
                     };
         }

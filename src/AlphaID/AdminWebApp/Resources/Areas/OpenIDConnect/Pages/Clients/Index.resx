@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -112,5 +112,9 @@
   <data name="Clients" xml:space="preserve">
 	  <value>Clients</value>
 	  <comment>Clients</comment>
+  </data>
+  <data name="{0} Clients." xml:space="preserve">
+	  <value>{0} Clients.</value>
+	  <comment>{0} Clients.</comment>
   </data>
 </root>

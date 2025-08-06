@@ -21,6 +21,7 @@ public class IdServiceController(IQueryableUserStore<NaturalPerson> userStore, I
                      || person.Email!.StartsWith(term)
                select new NaturalPersonModel
                {
+                   UserId = person.Id,
                    Name = person.Name,
                    UserName = person.UserName!,
                    AvatarUrl = generator.GenerateProfilePictureUrl(person).ToString(),
@@ -55,6 +56,7 @@ public class IdServiceController(IQueryableUserStore<NaturalPerson> userStore, I
 
     public class NaturalPersonModel
     {
+        public string UserId { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public string? Name { get; set; }
         public string? AvatarUrl { get; init; }

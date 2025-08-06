@@ -132,4 +132,7 @@
   <data name="Clients" xml:space="preserve">
 	  <value>客户端</value>
   </data>
+  <data name="{0} Clients." xml:space="preserve">
+	  <value>{0}个客户端。</value>
+  </data>
 </root>

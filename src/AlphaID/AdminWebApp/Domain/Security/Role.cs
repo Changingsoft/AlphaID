@@ -14,4 +14,9 @@ public class Role
     /// Display Name.
     /// </summary>
     public string DisplayName { get; set; } = null!;
+
+    /// <summary>
+    /// Description.
+    /// </summary>
+    public string? Description { get; set; }
 }

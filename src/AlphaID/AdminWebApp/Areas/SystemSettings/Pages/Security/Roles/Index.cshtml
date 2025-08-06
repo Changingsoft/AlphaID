@@ -1,0 +1,36 @@
+@page
+@model IndexModel
+@{
+}
+@section Breadcrumb
+{
+    <li class="breadcrumb-item">
+        <a asp-page="/Security/Roles/Index">@SL["Roles"]</a>
+    </li>
+}
+@section PageHeader
+{
+    <h1>@SL["Roles"]</h1>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@SL["Name"]</th>
+            <th>@SL["Display name"]</th>
+            <th>@SL["Description"]</th>
+            <th>@L["Member count"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model.Roles)
+        {
+            <tr>
+                <td><a asp-page="Detail/Index" asp-route-name="@role.Name">@role.Name</a></td>
+                <td>@role.DisplayName</td>
+                <td>@role.Description</td>
+                <td>@role.MemberCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

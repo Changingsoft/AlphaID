@@ -1,31 +1,43 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = L["Security Auditing"];
 }
-<h2>@L["Security Auditing"]</h2>
-
-<p>@L["{0} results.", Model.Count]</p>
-<table class="table table-responsive text-nowrap text-truncate">
-    <thead>
-    <tr>
-        <th>@L["Source"]</th>
-        <th>@L["Event Id"]</th>
-        <th>@L["Time"]</th>
-        <th>@L["Level"]</th>
-        <th>@L["Message"]</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var entry in Model.Log)
-    {
-        <tr>
-            <td>@entry.Source</td>
-            <td>@entry.EventId</td>
-            <td>@entry.TimeStamp</td>
-            <td>@entry.Level</td>
-            <td class="text-truncate">@entry.Message?.Substring(0, 30)</td>
-        </tr>
-    }
-    </tbody>
-</table>
+@section Breadcrumb
+{
+    <li class="breadcrumb-item">
+        <a asp-page="/Auditing/Index">Auditing log</a>
+    </li>
+}
+@section PageHeader
+{
+    <h1>@L["Security Auditing"]</h1>
+}
+<div class="card">
+    <div class="card-body">
+        <p>@L["{0} results.", Model.Count]</p>
+        <table class="table table-responsive text-nowrap text-truncate">
+            <thead>
+            <tr>
+                <th>@L["Source"]</th>
+                <th>@L["Event Id"]</th>
+                <th>@L["Time"]</th>
+                <th>@L["Level"]</th>
+                <th>@L["Message"]</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var entry in Model.Log)
+            {
+                <tr>
+                    <td>@entry.Source</td>
+                    <td>@entry.EventId</td>
+                    <td>@entry.TimeStamp</td>
+                    <td>@entry.Level</td>
+                    <td class="text-truncate">@entry.Message?.Substring(0, 30)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

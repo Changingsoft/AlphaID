@@ -136,12 +136,12 @@
     <value>概览</value>
   </data>
   <data name="Representative" xml:space="preserve">
-    <value>代表人</value>
-  </data>
-  <data name="USCI" xml:space="preserve">
-    <value>统一社会信用代码</value>
+	  <value>负责人</value>
   </data>
   <data name="Contact" xml:space="preserve">
 	  <value>联系方式</value>
+  </data>
+  <data name="Updated at" xml:space="preserve">
+	  <value>更新于</value>
   </data>
 </root>

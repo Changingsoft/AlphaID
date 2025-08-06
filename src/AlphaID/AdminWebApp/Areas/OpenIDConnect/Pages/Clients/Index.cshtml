@@ -4,7 +4,7 @@
     ViewBag.Title = L["Clients"];
 }
 
-@section PageHeader{
+@section PageHeader {
     <div class="row">
         <div class="col">
             <h2>@ViewBag.Title</h2>
@@ -19,47 +19,61 @@
 }
 
 <div class="card">
-    <table class="table table-vcenter card-table">
-        <thead>
-        <tr>
-            <th>@L["Name"]</th>
-            <th>@L["Grant types"]</th>
-            <th>@L["Scopes"]</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var client in Model.Clients)
-        {
-            <tr>
-                <td>
-                    <div class="d-flex py-1 align-items-center">
-                        <div class="flex-fill">
-                            <div class="font-weight-medium">
-                                <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
-                                @if (client.RequireClientSecret)
-                                {
-                                    <span class="badge bg-pink text-pink-fg">Credentials</span>
-                                }
+    <div class="card-body">
+        <form method="get">
+            <div class="row">
+                <div class="col">
+                    <input asp-for="Keywords" class="form-control" />
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn">Apply</button>
+                    <a asp-page="" class="btn">Clear</a>
+                </div>
+            </div>
+        </form>
+        <p>@L["{0} Clients.", Model.ClientCount]</p>
+        <table class="table table-vcenter">
+            <thead>
+                <tr>
+                    <th>@L["Name"]</th>
+                    <th>@L["Grant types"]</th>
+                    <th>@L["Scopes"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var client in Model.Clients)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex py-1 align-items-center">
+                                <div class="flex-fill">
+                                    <div class="font-weight-medium">
+                                        <a asp-page="Detail/Index" asp-route-anchor="@client.Id">@(client.ClientName)</a>
+                                        @if (client.RequireClientSecret)
+                                        {
+                                            <span class="badge bg-pink text-pink-fg">Credentials</span>
+                                        }
 
-                                @if (client.RequirePkce)
-                                {
-                                    <span class="badge bg-azure text-azure-fg">PKCE</span>
-                                }
+                                        @if (client.RequirePkce)
+                                        {
+                                            <span class="badge bg-azure text-azure-fg">PKCE</span>
+                                        }
+                                    </div>
+                                    <div class="text-secondary">
+                                        @client.ClientId
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-secondary">
-                                @client.ClientId
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    @Html.Raw(client.AllowedGrantTypes.Aggregate((x, y) => $"{x}, {y}"))
-                </td>
-                <td>
-                    @Html.Raw(client.AllowedScopes.Aggregate((x, y) => $"{x}, {y}"))
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+                        </td>
+                        <td>
+                            @Html.Raw(client.AllowedGrantTypes.Aggregate((x, y) => $"{x}, {y}"))
+                        </td>
+                        <td>
+                            @Html.Raw(client.AllowedScopes.Aggregate((x, y) => $"{x}, {y}"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

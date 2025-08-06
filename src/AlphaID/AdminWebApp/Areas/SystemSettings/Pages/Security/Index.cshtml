@@ -1,6 +1,9 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewBag.Title = L["Security"];
 }
 <h1>@L["Security Overview"]</h1>
+
+<p><a asp-page="Roles/Index">Manage roles...</a></p>
+<p><a asp-page="Auditing/Index">Auditing log...</a></p>

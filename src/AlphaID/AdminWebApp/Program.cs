@@ -74,9 +74,10 @@ builder.Host.UseSerilog((context, configuration) =>
                     }
                 );
         });
-#if WINDOWS
-    configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
-#endif
+    if (OperatingSystem.IsWindows())
+    {
+        configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
+    }
 
 });
 #endregion

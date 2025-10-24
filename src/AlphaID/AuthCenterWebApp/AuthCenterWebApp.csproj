@@ -32,9 +32,6 @@
 		<PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.24.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" NoWarn="NU1605" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(DefineConstants.Contains(`WINDOWS`))'">
 		<PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
 	</ItemGroup>
 

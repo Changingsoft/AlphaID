@@ -3,7 +3,6 @@
         <MinVerSkip Condition="'$(Configuration)' == 'Debug'">true</MinVerSkip>
         <Product>AlphaID</Product>
         <Company>Changingsoft</Company>
-        <DefineConstants>WINDOWS</DefineConstants>
         <NoWarn>CA1416</NoWarn>
     </PropertyGroup>
 </Project>

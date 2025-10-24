@@ -37,11 +37,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
-
-#if WINDOWS
 using Serilog.Events;
-#endif
 
 // ReSharper disable All
 
@@ -87,10 +83,10 @@ builder.Host.UseSerilog((ctx, configuration) =>
                     }
                 );
         });
-#if WINDOWS
-    configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
-#endif
-
+    if (OperatingSystem.IsWindows())
+    {
+        configuration.WriteTo.EventLog(".NET Runtime", restrictedToMinimumLevel: LogEventLevel.Information);
+    }
 });
 #endregion
 

@@ -1,8 +1,8 @@
 using AlphaIdPlatform.JoinOrgRequesting;
 using AlphaIdPlatform.Security;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests

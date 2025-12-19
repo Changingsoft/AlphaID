@@ -1,6 +1,7 @@
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;

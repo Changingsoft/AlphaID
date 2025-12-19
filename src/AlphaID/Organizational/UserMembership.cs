@@ -1,4 +1,4 @@
-namespace AlphaIdPlatform.Subjects;
+namespace Organizational;
 
 /// <summary>
 /// 表示用户的成员身份。

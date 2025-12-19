@@ -1,5 +1,5 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.EntityFrameworkCore;
+using Organizational;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 

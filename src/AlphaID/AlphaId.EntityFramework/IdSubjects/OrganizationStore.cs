@@ -1,4 +1,4 @@
-using AlphaIdPlatform.Subjects;
+using Organizational;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 

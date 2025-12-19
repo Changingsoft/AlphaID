@@ -1,7 +1,7 @@
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {

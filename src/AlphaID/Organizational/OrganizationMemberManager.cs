@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace AlphaIdPlatform.Subjects;
+namespace Organizational;
 
 /// <summary>
 /// Organization Member Manager.

@@ -1,7 +1,7 @@
 using AlphaIdPlatform.Invitations;
 using AlphaIdPlatform.JoinOrgRequesting;
-using AlphaIdPlatform.Subjects;
 using Microsoft.EntityFrameworkCore;
+using Organizational;
 
 namespace AlphaId.EntityFramework;
 public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbContext(options)

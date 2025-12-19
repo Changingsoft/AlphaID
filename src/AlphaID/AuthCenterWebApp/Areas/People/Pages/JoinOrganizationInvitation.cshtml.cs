@@ -1,9 +1,9 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 

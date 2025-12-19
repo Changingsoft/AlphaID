@@ -1,7 +1,7 @@
-using AlphaIdPlatform.Subjects;
 using IntegrationTestUtilities;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace AlphaIdPlatform.Tests;
+namespace Organizational.Tests;
 public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixture) : IClassFixture<ServiceProviderFixture>
 {
     [Fact]

@@ -22,6 +22,7 @@
 		<ProjectReference Include="..\IdSubjects.DirectoryLogon\IdSubjects.DirectoryLogon.csproj" />
 		<ProjectReference Include="..\IdSubjects.Identity\IdSubjects.Identity.csproj" />
 		<ProjectReference Include="..\IdSubjects.RealName\IdSubjects.RealName.csproj" />
+		<ProjectReference Include="..\Organizational\Organizational.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Resources.Designer.cs">

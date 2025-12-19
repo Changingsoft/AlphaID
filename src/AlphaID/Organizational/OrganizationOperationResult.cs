@@ -1,4 +1,4 @@
-namespace AlphaIdPlatform.Subjects;
+namespace Organizational;
 
 /// <summary>
 ///    表示组织操作结果。

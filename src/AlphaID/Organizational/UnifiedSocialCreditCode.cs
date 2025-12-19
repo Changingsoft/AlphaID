@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace AlphaIdPlatform.Subjects;
+namespace Organizational;
 
 /// <summary>
 /// 表示一个统一社会信用代码。
@@ -19,10 +19,10 @@ public readonly struct UnifiedSocialCreditCode
         if (code.Length != 17)
             throw new ArgumentException("编码长度不符。");
 
-        string adminCode = code[..1];
-        string orgTypeCode = code.Substring(1, 1);
-        string regionCode = code.Substring(2, 6);
-        string organizationCode = code.Substring(8, 9);
+        var adminCode = code[..1];
+        var orgTypeCode = code.Substring(1, 1);
+        var regionCode = code.Substring(2, 6);
+        var organizationCode = code.Substring(8, 9);
 
         adminCode = adminCode.Trim().ToUpper();
         orgTypeCode = orgTypeCode.Trim().ToUpper();
@@ -173,7 +173,7 @@ public readonly struct UnifiedSocialCreditCode
         var sum = 0;
         for (var i = 0; i < 17; i++)
         {
-            int charIndex = Charset.IndexOf(value[i]);
+            var charIndex = Charset.IndexOf(value[i]);
             if (charIndex < 0)
                 throw new ArgumentException("无效字符");
             sum += charIndex * s_weight[i];
@@ -207,8 +207,8 @@ public readonly struct UnifiedSocialCreditCode
         if (s.Length != 18)
             throw new ArgumentException("Length incorrect.");
 
-        string codePart = s[..17];
-        char checkCode = s[17];
+        var codePart = s[..17];
+        var checkCode = s[17];
 
         UnifiedSocialCreditCode newUsci = new(codePart);
         return newUsci.CheckCode != checkCode ? throw new ArgumentException("Checksum incorrect.") : newUsci;
@@ -231,16 +231,16 @@ public readonly struct UnifiedSocialCreditCode
             return false;
 
         //Check if contained any invalid char.
-        foreach (char c in s)
+        foreach (var c in s)
             if (Charset.IndexOf(c) < 0)
                 return false;
 
-        string codePart = s[..17];
-        string adminCode = codePart[..1];
-        string orgTypeCode = codePart.Substring(1, 1);
-        string regionCode = codePart.Substring(2, 6);
-        string organizationCode = codePart.Substring(8, 9);
-        char checkCode = s[17];
+        var codePart = s[..17];
+        var adminCode = codePart[..1];
+        var orgTypeCode = codePart.Substring(1, 1);
+        var regionCode = codePart.Substring(2, 6);
+        var organizationCode = codePart.Substring(8, 9);
+        var checkCode = s[17];
 
         if (!OrganizationCode.TryParse(organizationCode, out OrganizationCode orgCode))
             return false;

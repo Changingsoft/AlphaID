@@ -1,5 +1,5 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
+using Organizational;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;

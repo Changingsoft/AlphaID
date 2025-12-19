@@ -1,5 +1,5 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.EntityFrameworkCore;
+using Organizational;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

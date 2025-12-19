@@ -1,12 +1,12 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
 public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
-    public AlphaIdPlatform.Subjects.Organization Data { get; set; } = null!;
+    public Organizational.Organization Data { get; set; } = null!;
 
     public ICollection<OrganizationBankAccount> BankAccounts { get; set; } = [];
 
@@ -41,7 +41,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
-        AlphaIdPlatform.Subjects.Organization? data = await organizationManager.FindByIdAsync(anchor);
+        Organizational.Organization? data = await organizationManager.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;

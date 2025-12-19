@@ -1,10 +1,10 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Security;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.People.Pages;
 

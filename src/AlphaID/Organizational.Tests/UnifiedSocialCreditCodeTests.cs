@@ -1,6 +1,4 @@
-using AlphaIdPlatform.Subjects;
-
-namespace AlphaIdPlatform.Tests;
+namespace Organizational.Tests;
 
 public class UnifiedSocialCreditCodeTests
 {
@@ -26,7 +24,7 @@ public class UnifiedSocialCreditCodeTests
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse("91530300"));
         Assert.ThrowsAny<Exception>(() => UnifiedSocialCreditCode.Parse("91530300217222042a"));
 
-        UnifiedSocialCreditCode code = UnifiedSocialCreditCode.Parse("91530300217222042j"); //支持对小写的转换。
+        var code = UnifiedSocialCreditCode.Parse("91530300217222042j"); //支持对小写的转换。
         Assert.Equal("91530300217222042", code.Code);
         Assert.Equal('J', code.CheckCode);
     }
@@ -45,9 +43,9 @@ public class UnifiedSocialCreditCodeTests
     [Fact]
     public void UsccEquality()
     {
-        UnifiedSocialCreditCode a = UnifiedSocialCreditCode.Parse("91530300217222042j");
-        UnifiedSocialCreditCode b = UnifiedSocialCreditCode.Parse("91530300217222042J");
-        UnifiedSocialCreditCode c = UnifiedSocialCreditCode.Parse("91530300592049026D");
+        var a = UnifiedSocialCreditCode.Parse("91530300217222042j");
+        var b = UnifiedSocialCreditCode.Parse("91530300217222042J");
+        var c = UnifiedSocialCreditCode.Parse("91530300592049026D");
 
         Assert.Equal(a, b);
         Assert.NotEqual(a, c);

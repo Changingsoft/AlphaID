@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AlphaIdPlatform.Subjects;
+namespace Organizational;
 
 /// <summary>
 /// </summary>

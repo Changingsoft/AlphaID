@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace AlphaIdPlatform.Subjects;
+namespace Organizational;
 
 /// <summary>
 /// 表示组织机构代码。
@@ -17,7 +17,7 @@ public struct OrganizationCode
     {
         if (string.IsNullOrWhiteSpace(code))
             throw new ArgumentException("Code is empty or null.");
-        string trimmedCode = code.Trim().ToUpper();
+        var trimmedCode = code.Trim().ToUpper();
         if (trimmedCode.Length != 8)
             throw new ArgumentException("Code length error.");
         _code = trimmedCode;
@@ -34,7 +34,7 @@ public struct OrganizationCode
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Code is empty or null.");
-            string trimmedCode = value.Trim().ToUpper();
+            var trimmedCode = value.Trim().ToUpper();
             if (trimmedCode.Length != 8)
                 throw new ArgumentException("Code length error.");
             _code = trimmedCode;
@@ -112,7 +112,7 @@ public struct OrganizationCode
         var sum = 0;
         for (var i = 0; i < 8; i++)
         {
-            int charIndex = Charset.IndexOf(code[i]);
+            var charIndex = Charset.IndexOf(code[i]);
             if (charIndex < 0)
                 throw new ArgumentException("无效字符");
             sum += charIndex * s_weight[i];
@@ -135,14 +135,14 @@ public struct OrganizationCode
     {
         if (string.IsNullOrWhiteSpace(s))
             throw new ArgumentException("Input is null or empty");
-        string trimmedStr = s.Trim().ToUpper();
+        var trimmedStr = s.Trim().ToUpper();
 
         Match match = Regex.Match(trimmedStr, Pattern);
         if (!match.Success)
             throw new ArgumentException("Invalid input value format.");
 
         OrganizationCode newCode = new(match.Groups[1].Value);
-        char inputCheckCode = char.Parse(match.Groups[2].Value);
+        var inputCheckCode = char.Parse(match.Groups[2].Value);
         return inputCheckCode != newCode.CheckCode ? throw new ArgumentException("Invalid Checksum.") : newCode;
     }
 
@@ -157,7 +157,7 @@ public struct OrganizationCode
         result = new OrganizationCode();
         if (string.IsNullOrWhiteSpace(s))
             return false;
-        string trimmedStr = s.Trim().ToUpper();
+        var trimmedStr = s.Trim().ToUpper();
 
         Match match = Regex.Match(trimmedStr, Pattern);
         if (!match.Success)
@@ -165,7 +165,7 @@ public struct OrganizationCode
 
         OrganizationCode newCode = new(match.Groups[1].Value);
 
-        if (!char.TryParse(match.Groups[2].Value, out char inputCheckCode))
+        if (!char.TryParse(match.Groups[2].Value, out var inputCheckCode))
             return false;
         if (inputCheckCode != newCode.CheckCode)
             return false;

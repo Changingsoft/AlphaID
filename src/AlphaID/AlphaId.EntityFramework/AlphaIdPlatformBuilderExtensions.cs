@@ -27,7 +27,7 @@ public static class AlphaIdPlatformBuilderExtensions
         builder.Services.AddScoped<IUserInRoleStore, UserInRoleStore>();
         builder.Services.AddDbContext<OperationalDbContext>(options);
 
-        builder.AddOrganizationStore<OrganizationStore>();
+        builder.Organizational.AddOrganizationStore<OrganizationStore>();
         builder.AddJoinOrganizationInvitationStore<JoinOrganizationInvitationStore>();
 
         builder.Services.AddScoped<IJoinOrganizationRequestStore, JoinOrganizationRequestStore>();

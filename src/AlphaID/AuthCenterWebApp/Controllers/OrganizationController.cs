@@ -1,9 +1,9 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Organizational;
 
 namespace AuthCenterWebApp.Controllers;
 

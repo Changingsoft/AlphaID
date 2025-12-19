@@ -1,9 +1,9 @@
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Subjects;
 using AspNetWebLib.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Organizational;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;

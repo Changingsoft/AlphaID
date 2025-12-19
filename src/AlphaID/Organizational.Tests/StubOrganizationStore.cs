@@ -1,6 +1,4 @@
-using AlphaIdPlatform.Subjects;
-
-namespace AlphaIdPlatform.Tests;
+namespace Organizational.Tests;
 internal class StubOrganizationStore : IOrganizationStore
 {
     private readonly List<Organization> _organizations = [];

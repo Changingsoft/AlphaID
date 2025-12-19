@@ -7,6 +7,7 @@ using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Organizational;
 
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 // ReSharper disable CheckNamespace
@@ -42,13 +43,13 @@ public static class AlphaIdPlatformServiceCollectionExtensions
         var auditLogBuilder = services.AddAuditLog();
 
         //平台服务。
-        services.TryAddScoped<OrganizationManager>();
+        var organizationalServiceBuilder = services.AddOrganizational();
+
         services.TryAddScoped<OrganizationSearcher>();
         services.TryAddScoped<JoinOrganizationInvitationManager>();
-        services.AddScoped<OrganizationMemberManager>();
         services.AddScoped<NaturalPersonService>();
         services.AddScoped<JoinOrganizationManager>();
 
-        return new AlphaIdPlatformBuilder(services, identityBuilder, directoryLoginBuilder, realnameBuilder, auditLogBuilder);
+        return new AlphaIdPlatformBuilder(services, identityBuilder, directoryLoginBuilder, realnameBuilder, auditLogBuilder, organizationalServiceBuilder);
     }
 }

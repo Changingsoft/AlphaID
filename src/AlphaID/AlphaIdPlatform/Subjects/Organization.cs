@@ -69,6 +69,21 @@ public class Organization
     public virtual string? Representative { get; set; }
 
     /// <summary>
+    /// 统一社会信用代码。
+    /// </summary>
+    public string? USCC { get; set; }
+
+    /// <summary>
+    /// 邓白氏码。
+    /// </summary>
+    public string? DUNS { get; set; }
+
+    /// <summary>
+    /// 法人实体标识码。
+    /// </summary>
+    public string? LEI { get; set; }
+
+    /// <summary>
     /// 组织的头像。
     /// </summary>
     public virtual BinaryDataInfo? ProfilePicture { get; set; }

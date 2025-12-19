@@ -57,28 +57,62 @@ public class OrganizationController(IOrganizationStore organizationStore) : Cont
     /// <summary>
     /// Organization.
     /// </summary>
-    /// <param name="SubjectId">Id</param>
-    /// <param name="Name">名称。</param>
-    /// <param name="Domicile">住所。</param>
-    /// <param name="Contact">联系方式。</param>
-    /// <param name="LegalPersonName">组织的负责人或代表人名称。</param>
-    public record OrganizationModel(
-        string SubjectId,
-        string Name,
-        string? Domicile,
-        string? Contact,
-        string? LegalPersonName)
+    public class OrganizationModel
     {
         /// <summary>
         /// </summary>
         /// <param name="organization"></param>
         public OrganizationModel(Organization organization)
-            : this(organization.Id,
-                organization.Name,
-                organization.Domicile,
-                organization.Contact,
-                organization.Representative)
         {
+            SubjectId = organization.Id;
+            Name = organization.Name;
+            Domicile = organization.Domicile;
+            Contact = organization.Contact;
+            LegalPersonName = organization.Representative;
+            USCC = organization.USCC;
+            DUNS = organization.DUNS;
+            LEI = organization.LEI;
         }
+
+        /// <summary>
+        /// Id
+        /// </summary>
+        public string SubjectId { get; set; }
+
+        /// <summary>
+        /// 名称。
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 住所。
+        /// </summary>
+        public string? Domicile { get; set; }
+
+        /// <summary>
+        /// 联系方式。
+        /// </summary>
+        public string? Contact { get; set; }
+
+        /// <summary>
+        /// 组织的负责人或代表人名称。
+        /// </summary>
+        public string? LegalPersonName { get; set; }
+
+        /// <summary>
+        /// USCC
+        /// </summary>
+        public string? USCC { get; set; }
+
+        /// <summary>
+        /// DUNS
+        /// </summary>
+        public string? DUNS { get; set; }
+
+
+        /// <summary>
+        /// LEI
+        /// </summary>
+        public string? LEI { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.RealNameDb
 {
     [DbContext(typeof(RealNameDbContext))]
-    [Migration("20250120091045_Init")]
+    [Migration("20251219043946_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,10 @@ namespace DatabaseTool.Migrations.RealNameDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.16")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

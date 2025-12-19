@@ -54,6 +54,18 @@
                 <div class="datagrid-content">@Model.Organization.Enabled</div>
             </div>
             <div class="datagrid-item">
+                <div class="datagrid-title">@SL["USCC"]</div>
+                <div class="datagrid-content">@Model.Organization.USCC</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@SL["DUNS"]</div>
+                <div class="datagrid-content">@Model.Organization.DUNS</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">@SL["LEI"]</div>
+                <div class="datagrid-content">@Model.Organization.LEI</div>
+            </div>
+            <div class="datagrid-item">
                 <div class="datagrid-title">@L["Website"]</div>
                 <div class="datagrid-content">
                     <a href="@Model.Organization.Website">@Model.Organization.Website</a>

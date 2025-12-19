@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.DirectoryLogonDb
 {
     [DbContext(typeof(DirectoryLogonDbContext))]
-    [Migration("20250609013412_ChangeCol0609")]
-    partial class ChangeCol0609
+    [Migration("20251219043928_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,9 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.16")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -116,45 +119,6 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                         .IsRequired();
 
                     b.Navigation("DirectoryService");
-                });
-
-            modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryService", b =>
-                {
-                    b.OwnsOne("IdSubjects.DirectoryLogon.ExternalLoginProviderInfo", "ExternalLoginProvider", b1 =>
-                        {
-                            b1.Property<int>("DirectoryServiceId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("DisplayName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("RegisteredClientId")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<string>("SubjectGenerator")
-                                .HasMaxLength(255)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(255)");
-
-                            b1.HasKey("DirectoryServiceId");
-
-                            b1.ToTable("DirectoryService");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DirectoryServiceId");
-                        });
-
-                    b.Navigation("ExternalLoginProvider");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,21 @@ public class GeneralModel(OrganizationManager manager) : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
+    [BindProperty]
+    [Display(Name = "USCC")]
+    [StringLength(18, MinimumLength = 18, ErrorMessage = "Validate_StringLength")]
+    public string? USCC { get; set; }
+
+    [BindProperty]
+    [Display(Name = "DUNS")]
+    [StringLength(9, ErrorMessage = "Validate_StringLength")]
+    public string? DUNS { get; set; }
+
+    [BindProperty]
+    [Display(Name = "LEI")]
+    [StringLength(20, ErrorMessage = "Validate_StringLength")]
+    public string? LEI { get; set; }
+
     public OrganizationOperationResult? OperationResult { get; set; }
 
     public async Task<IActionResult> OnGetAsync(string anchor)
@@ -28,6 +43,9 @@ public class GeneralModel(OrganizationManager manager) : PageModel
             TermBegin = org.TermBegin?.ToDateTime(TimeOnly.MinValue),
             TermEnd = org.TermEnd?.ToDateTime(TimeOnly.MinValue)
         };
+        USCC = org.USCC;
+        DUNS = org.DUNS;
+        LEI = org.LEI;
         return Page();
     }
 
@@ -36,6 +54,11 @@ public class GeneralModel(OrganizationManager manager) : PageModel
         Organization? org = await manager.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
+        UnifiedSocialCreditCode usci = default;
+        if (USCC != null && !UnifiedSocialCreditCode.TryParse(USCC, out usci))
+        {
+            ModelState.AddModelError(nameof(USCC), "Validate_Organization_USCC_Invalid");
+        }
 
         if (!ModelState.IsValid)
             return Page();
@@ -47,6 +70,9 @@ public class GeneralModel(OrganizationManager manager) : PageModel
         org.EstablishedAt = Input.EstablishedAt.HasValue ? DateOnly.FromDateTime(Input.EstablishedAt.Value) : null;
         org.TermBegin = Input.TermBegin.HasValue ? DateOnly.FromDateTime(Input.TermBegin.Value) : null;
         org.TermEnd = Input.TermEnd.HasValue ? DateOnly.FromDateTime(Input.TermEnd.Value) : null;
+        org.USCC = usci.ToString();
+        org.DUNS = DUNS;
+        org.LEI = LEI;
 
         await manager.UpdateAsync(org);
         OperationResult = OrganizationOperationResult.Success;

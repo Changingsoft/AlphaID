@@ -25,10 +25,6 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                     Password = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     UpnSuffix = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false),
                     SamDomainPart = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
-                    ExternalLoginProvider_Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    ExternalLoginProvider_DisplayName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ExternalLoginProvider_RegisteredClientId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    ExternalLoginProvider_SubjectGenerator = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
                     AutoCreateAccount = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +38,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
                 {
                     ObjectId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     ServiceId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
+                    UserId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

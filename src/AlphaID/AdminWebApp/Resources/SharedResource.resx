@@ -478,4 +478,16 @@
 	  <value>Roles</value>
 	  <comment>Roles</comment>
   </data>
+  <data name="USCC" xml:space="preserve">
+	  <value>USCC</value>
+	  <comment>USCC</comment>
+  </data>
+  <data name="DUNS" xml:space="preserve">
+	  <value>DUNS</value>
+	  <comment>DUNS</comment>
+  </data>
+  <data name="LEI" xml:space="preserve">
+	  <value>LEI</value>
+	  <comment>LEI</comment>
+  </data>
 </root>

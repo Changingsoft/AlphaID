@@ -462,4 +462,13 @@
   <data name="Roles" xml:space="preserve">
 	  <value>角色</value>
   </data>
+  <data name="DUNS" xml:space="preserve">
+	  <value>邓白氏码（DUNS）</value>
+  </data>
+  <data name="LEI" xml:space="preserve">
+	  <value>全球法人实体标识（LEI）</value>
+  </data>
+  <data name="USCC" xml:space="preserve">
+	  <value>统一社会信用代码</value>
+  </data>
 </root>

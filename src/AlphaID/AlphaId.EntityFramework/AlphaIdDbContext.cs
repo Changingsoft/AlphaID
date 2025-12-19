@@ -15,6 +15,17 @@ public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbCo
 
     public DbSet<JoinOrganizationRequest> JoinOrganizationRequests { get; protected set; } = null!;
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Organization>(e =>
+        {
+            e.Property(p => p.USCC).HasMaxLength(18).IsUnicode(false);
+            e.Property(p => p.DUNS).HasMaxLength(9).IsUnicode(false);
+            e.Property(p => p.LEI).HasMaxLength(20).IsUnicode(false);
+        });
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLazyLoadingProxies();

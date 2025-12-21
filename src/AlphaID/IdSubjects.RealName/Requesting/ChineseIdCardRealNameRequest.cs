@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace IdSubjects.RealName.Requesting;
 
@@ -60,7 +58,6 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     /// 姓名。
     /// </summary>
-    [MaxLength(20)]
     public string Name { get; set; } = null!;
 
     /// <summary>
@@ -71,7 +68,6 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     /// 民族。
     /// </summary>
-    [MaxLength(20)]
     public string Ethnicity { get; set; } = null!;
 
     /// <summary>
@@ -82,20 +78,16 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     /// 住址。
     /// </summary>
-    [MaxLength(150)]
     public string Address { get; set; } = null!;
 
     /// <summary>
     /// 身份证号码。
     /// </summary>
-    [MaxLength(18)]
-    [Unicode(false)]
     public string CardNumber { get; set; } = null!;
 
     /// <summary>
     /// 签发机关。
     /// </summary>
-    [MaxLength(20)]
     public string Issuer { get; set; } = null!;
 
     /// <summary>

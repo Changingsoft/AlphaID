@@ -1,14 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlphaIdPlatform.JoinOrgRequesting;
 
 /// <summary>
 /// 加入组织请求实体。
 /// </summary>
-[Table("JoinOrganizationRequest")]
-[Index(nameof(WhenCreated))]
 public class JoinOrganizationRequest
 {
     /// <summary>
@@ -39,19 +34,16 @@ public class JoinOrganizationRequest
     /// <summary>
     /// 获取或设置用户的唯一标识符。
     /// </summary>
-    [MaxLength(50), Unicode(false)]
     public string UserId { get; set; } = null!;
 
     /// <summary>
     /// 获取或设置组织名称。
     /// </summary>
-    [MaxLength(50)]
     public string OrganizationName { get; set; } = null!;
 
     /// <summary>
     /// 获取或设置组织的唯一标识符。
     /// </summary>
-    [MaxLength(50), Unicode(false)]
     public string OrganizationId { get; set; } = null!;
 
     /// <summary>
@@ -67,7 +59,6 @@ public class JoinOrganizationRequest
     /// <summary>
     /// 获取或设置负责审核该实体的用户或系统名称。
     /// </summary>
-    [MaxLength(50)]
     public string? AuditBy { get; set; }
 
     /// <summary>

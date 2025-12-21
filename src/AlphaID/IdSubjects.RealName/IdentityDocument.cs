@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.RealName;
 
@@ -15,14 +12,11 @@ namespace IdSubjects.RealName;
 /// 每一个身份证明文件均包含有一个或多个文档附件，通过<see cref="Attachments" />检索。
 /// </para>
 /// </remarks>
-[Table("IdentityDocument")]
 public abstract class IdentityDocument
 {
     /// <summary>
     /// Id.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>

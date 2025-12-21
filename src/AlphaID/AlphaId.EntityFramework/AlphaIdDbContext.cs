@@ -85,6 +85,23 @@ public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbCo
             e.HasIndex(p => p.WhenCreated);
             e.HasIndex(p => p.WhenChanged);
         });
+        modelBuilder.Entity<JoinOrganizationInvitation>(e =>
+        {
+            e.ToTable("JoinOrganizationInvitation");
+            e.HasKey(p => p.Id);
+            e.Property(p => p.InviteeId).HasMaxLength(50);
+            e.Property(p => p.OrganizationId).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.Inviter).HasMaxLength(50);
+        });
+        modelBuilder.Entity<JoinOrganizationRequest>(e => { 
+        e.ToTable("JoinOrganizationRequest");
+            e.HasKey(p => p.Id);
+            e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.OrganizationName).HasMaxLength(50);
+            e.Property(p => p.OrganizationId).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.AuditBy).HasMaxLength(50);
+            e.HasIndex(p => p.WhenCreated);
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

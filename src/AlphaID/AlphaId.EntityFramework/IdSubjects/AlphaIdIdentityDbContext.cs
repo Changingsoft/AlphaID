@@ -26,6 +26,7 @@ public class AlphaIdIdentityDbContext(DbContextOptions<AlphaIdIdentityDbContext>
                 ba.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
                 ba.Property(p => p.BankName).HasMaxLength(100);
             });
+            e.HasIndex(p => p.SearchHint);
         });
     }
 }

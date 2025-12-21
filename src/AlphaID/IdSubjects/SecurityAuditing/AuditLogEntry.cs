@@ -1,18 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.SecurityAuditing;
 
 /// <summary>
 /// </summary>
-[Table("AuditLog")]
-[Index(nameof(TimeStamp))]
 public class AuditLogEntry
 {
     /// <summary>
     /// </summary>
-    [Key]
     public int Id { get; protected set; }
 
     /// <summary>
@@ -36,7 +30,6 @@ public class AuditLogEntry
 
     /// <summary>
     /// </summary>
-    [MaxLength(128)]
     public string? Level { get; protected set; }
 
     /// <summary>

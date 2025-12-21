@@ -29,7 +29,7 @@ public static class IdSubjectsBuilderExtensions
     public static IdentityBuilder AddDbContext(this IdentityBuilder builder,
         Action<DbContextOptionsBuilder> options)
     {
-        builder.Services.AddDbContext<IdSubjectsDbContext>(options);
+        builder.Services.AddDbContext<AlphaIdIdentityDbContext>(options);
         return builder;
     }
 }

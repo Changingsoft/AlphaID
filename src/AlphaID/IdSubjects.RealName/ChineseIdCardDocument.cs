@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,19 +21,16 @@ public class ChineseIdCardDocument : IdentityDocument
     /// <summary>
     /// 姓名。
     /// </summary>
-    [MaxLength(50)]
     public string Name { get; set; } = null!;
 
     /// <summary>
     /// 性别。
     /// </summary>
-    [Column(TypeName = "varchar(7)")]
     public Sex Sex { get; set; }
 
     /// <summary>
     /// 民族。
     /// </summary>
-    [MaxLength(50)]
     public string Ethnicity { get; set; } = null!;
 
     /// <summary>
@@ -45,20 +41,16 @@ public class ChineseIdCardDocument : IdentityDocument
     /// <summary>
     /// 住址。
     /// </summary>
-    [MaxLength(100)]
     public string Address { get; set; } = null!;
 
     /// <summary>
     /// 身份证号码。
     /// </summary>
-    [MaxLength(18)]
-    [Unicode(false)]
     public string CardNumber { get; set; } = null!;
 
     /// <summary>
     /// 签发机关。
     /// </summary>
-    [MaxLength(50)]
     public string Issuer { get; set; } = null!;
 
     /// <summary>

@@ -1,12 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace IdSubjects;
 
 /// <summary>
 /// 表示存储的二进制数据信息。
 /// </summary>
-[Owned]
 public record BinaryDataInfo
 {
     /// <summary>
@@ -29,8 +26,6 @@ public record BinaryDataInfo
     /// <summary>
     /// MIME类型
     /// </summary>
-    [MaxLength(100)]
-    [Unicode(false)]
     public string MimeType { get; set; } = null!;
 
     /// <summary>

@@ -1,7 +1,7 @@
 using AlphaIdPlatform.Security;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Organizational;
 
 namespace AuthCenterWebApp.Controllers;
 

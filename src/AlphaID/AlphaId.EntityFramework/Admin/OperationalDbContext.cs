@@ -9,7 +9,13 @@ public class OperationalDbContext(DbContextOptions<OperationalDbContext> options
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserInRole>().HasKey(p => new { p.UserId, p.RoleName });
+        modelBuilder.Entity<UserInRole>(e =>
+        {
+            e.ToTable("AppUserInRole");
+            e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.RoleName).HasMaxLength(50).IsUnicode(false);
+            e.HasKey(p => new { p.UserId, p.RoleName });
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

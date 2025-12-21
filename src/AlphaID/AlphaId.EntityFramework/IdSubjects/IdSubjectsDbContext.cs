@@ -1,17 +1,19 @@
 using AlphaIdPlatform.Identity;
+using IdSubjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 
-public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) : IdentityDbContext<NaturalPerson>(options)
+public class IdSubjectsDbContext<T>(DbContextOptions options) : IdentityDbContext<T>(options)
+    where T : ApplicationUser
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         //Rename table name.
-        builder.Entity<NaturalPerson>(b =>
+        builder.Entity<T>(b =>
         {
             b.ToTable("ApplicationUser");
             b.Property(p => p.Id).HasMaxLength(50).IsUnicode(false);
@@ -21,6 +23,36 @@ public class IdSubjectsDbContext(DbContextOptions<IdSubjectsDbContext> options) 
             b.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
             b.HasIndex(p => p.UserName).IsUnique();
             b.HasIndex(p => p.Email);
+            b.HasIndex(p => p.WhenChanged);
+            b.HasIndex(p => p.WhenChanged);
+            b.HasIndex(p => p.Name);
+            b.Property(p => p.Gender).HasColumnType("varchar(6)").HasComment("性别");
+            b.Property(p => p.NickName).HasMaxLength(20);
+            b.Property(p => p.Name).HasMaxLength(50);
+            b.Property(p => p.MiddleName).HasMaxLength(50);
+            b.Property(p => p.FamilyName).HasMaxLength(50);
+            b.Property(p => p.GivenName).HasMaxLength(50);
+            b.Property(p => p.Locale).HasMaxLength(10).IsUnicode(false);
+            b.Property(p => p.TimeZone).HasMaxLength(50).IsUnicode(false);
+            b.Property(p => p.WebSite).HasMaxLength(256);
+
+            var picture = b.OwnsOne(a => a.ProfilePicture);
+            picture.Property(p => p.MimeType).HasMaxLength(100).IsUnicode(false);
+
+            var owned = b.OwnsOne(a => a.Address);
+            owned.Property(p => p.Country).HasMaxLength(50);
+            owned.Property(p => p.Region).HasMaxLength(50);
+            owned.Property(p => p.Locality).HasMaxLength(50);
+            owned.Property(p => p.Street1).HasMaxLength(50);
+            owned.Property(p => p.Street2).HasMaxLength(50);
+            owned.Property(p => p.Street3).HasMaxLength(50);
+            owned.Property(p => p.Recipient).HasMaxLength(50);
+            owned.Property(p => p.Contact).HasMaxLength(20).IsUnicode(false);
+            owned.Property(p => p.PostalCode).HasMaxLength(20).IsUnicode(false);
+
+            var usedPasswords = b.OwnsMany(a => a.UsedPasswords);
+            usedPasswords.ToTable("UsedPassword");
+            usedPasswords.Property(p => p.PasswordHash).HasMaxLength(255).IsUnicode(false);
         });
         builder.Entity<IdentityUserLogin<string>>(b =>
         {

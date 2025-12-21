@@ -1,6 +1,7 @@
 using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using Organizational;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages;
 

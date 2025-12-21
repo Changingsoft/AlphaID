@@ -1,11 +1,11 @@
 using AlphaIdPlatform.Invitations;
-using AlphaIdPlatform.Subjects;
 using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using IdSubjects.SecurityAuditing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Organizational;
 
 namespace AlphaIdPlatform.DependencyInjection;
 
@@ -17,11 +17,13 @@ namespace AlphaIdPlatform.DependencyInjection;
 /// <param name="directoryLogon"></param>
 /// <param name="realNameBuilder"></param>
 /// <param name="auditLogBuilder"></param>
+/// <param name="organizationalServiceBuilder"></param>
 public class AlphaIdPlatformBuilder(IServiceCollection services,
     IdentityBuilder idSubjects,
     DirectoryLogonBuilder directoryLogon,
     RealNameBuilder realNameBuilder,
-    AuditLogBuilder auditLogBuilder)
+    AuditLogBuilder auditLogBuilder,
+    OrganizationalServiceBuilder organizationalServiceBuilder)
 {
     /// <summary>
     ///    获取服务集合。
@@ -49,16 +51,9 @@ public class AlphaIdPlatformBuilder(IServiceCollection services,
     public AuditLogBuilder AuditLog { get; } = auditLogBuilder;
 
     /// <summary>
-    /// Add generic organization store implementation into the system.
+    /// 组织管理。
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public AlphaIdPlatformBuilder AddOrganizationStore<T>() where T : class, IOrganizationStore
-    {
-        Services.TryAddScoped<IOrganizationStore, T>();
-        return this;
-    }
-
+    public OrganizationalServiceBuilder Organizational { get; } = organizationalServiceBuilder;
     /// <summary>
     /// </summary>
     /// <typeparam name="T"></typeparam>

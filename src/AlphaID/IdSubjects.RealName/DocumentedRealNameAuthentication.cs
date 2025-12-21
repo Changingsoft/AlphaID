@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.RealName;
 
@@ -36,13 +33,10 @@ public class DocumentedRealNameAuthentication : RealNameAuthentication
     /// <summary>
     /// 指示一份身份证明文件的Id.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string DocumentId { get; protected set; } = null!;
 
     /// <summary>
     /// 指示一个身份证明文件。
     /// </summary>
-    [ForeignKey(nameof(DocumentId))]
     public virtual IdentityDocument Document { get; protected set; } = null!;
 }

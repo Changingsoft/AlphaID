@@ -1,13 +1,9 @@
-using AlphaIdPlatform.Subjects;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Organizational;
 
 namespace AlphaIdPlatform.Invitations;
 
 /// <summary>
 /// </summary>
-[Table("JoinOrganizationInvitation")]
 public class JoinOrganizationInvitation
 {
     /// <summary>
@@ -18,14 +14,11 @@ public class JoinOrganizationInvitation
     /// <summary>
     /// 被邀请人Id.
     /// </summary>
-    [MaxLength(50)]
     public string InviteeId { get; set; } = null!;
 
     /// <summary>
     /// 组织Id.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string OrganizationId { get; set; } = null!;
 
     /// <summary>
@@ -41,7 +34,6 @@ public class JoinOrganizationInvitation
     /// <summary>
     /// 发出邀请的人
     /// </summary>
-    [MaxLength(50)]
     public string Inviter { get; set; } = null!;
 
     /// <summary>

@@ -3,6 +3,7 @@ using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
@@ -10,7 +11,7 @@ public class IndexModel(
     OrganizationManager organizationManager,
     UserManager<NaturalPerson> personManager) : PageModel
 {
-    public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
+    public Organizational.Organization Organization { get; set; } = null!;
 
     public IEnumerable<MemberViewModel> Members { get; set; } = [];
 
@@ -110,7 +111,7 @@ public class IndexModel(
         return Page();
     }
 
-    private IEnumerable<MemberViewModel> GetMembers(AlphaIdPlatform.Subjects.Organization organization, string? visitorId)
+    private IEnumerable<MemberViewModel> GetMembers(Organizational.Organization organization, string? visitorId)
     {
         var userIds = organization.Members.VisibleMembers(visitorId).Select(m => m.PersonId).ToList();
         var users = personManager.Users.Where(u => userIds.Contains(u.Id)).Select(u => new { u.Id, u.UserName, u.Name }).ToList();

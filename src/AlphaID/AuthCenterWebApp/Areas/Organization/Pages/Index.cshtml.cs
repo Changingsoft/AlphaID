@@ -1,12 +1,12 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages;
 
 public class IndexModel(OrganizationManager organizationManager) : PageModel
 {
-    public AlphaIdPlatform.Subjects.Organization Organization { get; set; } = null!;
+    public Organizational.Organization Organization { get; set; } = null!;
 
     public async Task<IActionResult> OnGet(string anchor)
     {

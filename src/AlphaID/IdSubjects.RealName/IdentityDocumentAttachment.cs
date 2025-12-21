@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.RealName;
 
 /// <summary>
 /// 表示一个附件。
 /// </summary>
-[PrimaryKey(nameof(DocumentId), nameof(Name))]
 public class IdentityDocumentAttachment
 {
     /// <summary>
@@ -33,20 +29,16 @@ public class IdentityDocumentAttachment
     /// <summary>
     /// 该附件指向的证明材料Id.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string DocumentId { get; set; } = null!;
 
     /// <summary>
     /// 此附件所属的证明材料。
     /// </summary>
-    [ForeignKey(nameof(DocumentId))]
     public virtual IdentityDocument Document { get; set; } = null!;
 
     /// <summary>
     /// 附件的名称。
     /// </summary>
-    [MaxLength(50)]
     public string Name { get; set; } = null!;
 
     /// <summary>
@@ -57,7 +49,5 @@ public class IdentityDocumentAttachment
     /// <summary>
     /// 此附件数据的MIME类型。
     /// </summary>
-    [MaxLength(100)]
-    [Unicode(false)]
     public string ContentType { get; set; } = null!;
 }

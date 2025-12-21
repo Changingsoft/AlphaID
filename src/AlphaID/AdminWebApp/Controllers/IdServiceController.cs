@@ -1,8 +1,8 @@
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Subjects;
 using IdSubjects.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Organizational;
 
 namespace AdminWebApp.Controllers;
 

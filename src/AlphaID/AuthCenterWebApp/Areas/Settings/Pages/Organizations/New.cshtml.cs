@@ -1,8 +1,8 @@
 using AlphaIdPlatform.Identity;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Organizational;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Transactions;
@@ -38,7 +38,7 @@ public class NewModel(
         if (!ModelState.IsValid)
             return Page();
 
-        var organization = new AlphaIdPlatform.Subjects.Organization(Name)
+        var organization = new Organizational.Organization(Name)
         {
             Domicile = Input.Domicile,
             Representative = Input.Representative

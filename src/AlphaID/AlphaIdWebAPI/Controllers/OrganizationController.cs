@@ -1,7 +1,7 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Organizational;
 
 namespace AlphaIdWebAPI.Controllers;
 

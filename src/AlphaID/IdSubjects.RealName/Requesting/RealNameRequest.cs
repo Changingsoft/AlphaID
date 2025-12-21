@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.RealName.Requesting;
 
 /// <summary>
 /// 表示一个实名验证请求
 /// </summary>
-[Table("RealNameRequest")]
 public abstract class RealNameRequest
 {
     /// <summary>
@@ -29,14 +25,11 @@ public abstract class RealNameRequest
     /// <summary>
     /// Id。
     /// </summary>
-    [Key]
     public int Id { get; protected internal set; }
 
     /// <summary>
     /// 与该请求关联的自然人 Id。
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
@@ -52,7 +45,6 @@ public abstract class RealNameRequest
     /// <summary>
     /// 审核人。
     /// </summary>
-    [MaxLength(30)]
     public string? Auditor { get; protected set; }
 
     /// <summary>

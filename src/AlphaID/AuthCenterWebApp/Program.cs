@@ -165,7 +165,7 @@ var identityBuilder = builder.Services.AddIdSubjectsIdentity<NaturalPerson, Iden
     .AddDefaultTokenProviders()
     .AddUserStore<NaturalPersonStore>()
     .AddClaimsPrincipalFactory<NaturalPersonClaimsPrincipalFactory>()
-    .AddEntityFrameworkStores<IdSubjectsDbContext>();
+    .AddEntityFrameworkStores<AlphaIdIdentityDbContext>();
 #endregion
 
 #region 配置身份验证 Authentication

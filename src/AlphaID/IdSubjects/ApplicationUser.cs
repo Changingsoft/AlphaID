@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects;
 
 /// <summary>
 /// 表示一个用户。
 /// </summary>
-[Index(nameof(WhenCreated))]
-[Index(nameof(WhenChanged))]
-[Index(nameof(Name))]
 public class ApplicationUser : IdentityUser
 {
     /// <summary>
@@ -53,28 +47,24 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     ///    姓。
     /// </summary>
-    [MaxLength(50)]
     [PersonalData]
     public string? FamilyName { get; set; }
 
     /// <summary>
     ///    中间名。
     /// </summary>
-    [MaxLength(50)]
     [PersonalData]
     public string? MiddleName { get; set; }
 
     /// <summary>
     ///    名。
     /// </summary>
-    [MaxLength(50)]
     [PersonalData]
     public string? GivenName { get; set; }
 
     /// <summary>
     /// 全名。
     /// </summary>
-    [MaxLength(50)]
     [PersonalData]
     public string? Name { get; set; }
 
@@ -82,14 +72,11 @@ public class ApplicationUser : IdentityUser
     /// 昵称。
     /// </summary>
     [PersonalData]
-    [MaxLength(20)]
     public virtual string? NickName { get; set; }
 
     /// <summary>
     /// 性别。
     /// </summary>
-    [Column(TypeName = "varchar(6)")]
-    [Comment("性别")]
     [PersonalData]
     public virtual Gender? Gender { get; set; }
 
@@ -108,16 +95,12 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     /// 区域和语言选项
     /// </summary>
-    [MaxLength(10)]
-    [Unicode(false)]
     [PersonalData]
     public virtual string? Locale { get; protected internal set; }
 
     /// <summary>
     /// 用户所选择的时区。存储为IANA Time zone database名称。
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     [PersonalData]
     public virtual string? TimeZone { get; protected internal set; }
 
@@ -130,7 +113,6 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     /// 个人主页。
     /// </summary>
-    [MaxLength(256)]
     [PersonalData]
     public virtual string? WebSite { get; set; }
 

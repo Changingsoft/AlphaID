@@ -1,14 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.DirectoryLogon;
 
 /// <summary>
 /// Logon Account
 /// </summary>
-[Table("LogonAccount")]
-[PrimaryKey(nameof(ObjectId), nameof(ServiceId))]
 public class DirectoryAccount
 {
     /// <summary>
@@ -33,15 +28,11 @@ public class DirectoryAccount
     /// <summary>
     /// UserId.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string UserId { get; protected internal set; } = null!;
 
     /// <summary>
     /// 目录对象的objectGUID。
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string ObjectId { get; protected internal set; } = null!;
 
     /// <summary>
@@ -52,6 +43,5 @@ public class DirectoryAccount
     /// <summary>
     /// 目录服务。
     /// </summary>
-    [ForeignKey(nameof(ServiceId))]
     public virtual DirectoryService DirectoryService { get; protected set; } = null!;
 }

@@ -1,13 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdSubjects.RealName;
 
 /// <summary>
 /// 表示一个实名认证。
 /// </summary>
-[Table("RealNameAuthentication")]
 public abstract class RealNameAuthentication
 {
     /// <summary>
@@ -32,16 +28,11 @@ public abstract class RealNameAuthentication
     /// <summary>
     /// Id。
     /// </summary>
-    [Key]
-    [MaxLength(50)]
-    [Unicode(false)]
     public string Id { get; protected set; } = Guid.NewGuid().ToString().ToLower();
 
     /// <summary>
     /// 所属的自然人Id.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string PersonId { get; protected internal set; } = null!;
 
     /// <summary>
@@ -57,7 +48,6 @@ public abstract class RealNameAuthentication
     /// <summary>
     /// 认证执行者。
     /// </summary>
-    [MaxLength(30)]
     public string ValidatedBy { get; protected set; } = null!;
 
     /// <summary>
@@ -68,7 +58,6 @@ public abstract class RealNameAuthentication
     /// <summary>
     /// 备注和其他信息
     /// </summary>
-    [MaxLength(200)]
     public string? Remarks { get; set; }
 
     /// <summary>

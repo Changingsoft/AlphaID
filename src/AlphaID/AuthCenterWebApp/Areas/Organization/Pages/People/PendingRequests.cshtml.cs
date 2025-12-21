@@ -1,11 +1,11 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.JoinOrgRequesting;
 using AlphaIdPlatform.Security;
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {

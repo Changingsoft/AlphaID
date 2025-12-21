@@ -83,7 +83,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet ef migrations add <Migration Title> -c OperationalDbContext -o Migrations/AdminWebAppDb
 dotnet ef migrations add <Migration Title> -c ConfigurationDbContext -o Migrations/ConfigurationDb
 dotnet ef migrations add <Migration Title> -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
-dotnet ef migrations add <Migration Title> -c IdSubjectsDbContext -o Migrations/IdSubjectsDb
+dotnet ef migrations add <Migration Title> -c AlphaIdIdentityDbContext -o Migrations/AlphaIdIdentityDb
 dotnet ef migrations add <Migration Title> -c LoggingDbContext -o Migrations/LoggingDb
 dotnet ef migrations add <Migration Title> -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
 dotnet ef migrations add <Migration Title> -c RealNameDbContext -o Migrations/RealNameDb

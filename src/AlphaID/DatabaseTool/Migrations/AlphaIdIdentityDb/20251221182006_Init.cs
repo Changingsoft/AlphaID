@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.IdSubjectsDb
+namespace DatabaseTool.Migrations.AlphaIdIdentityDb
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -147,12 +147,12 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 {
                     AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     NaturalPersonId = table.Column<string>(type: "varchar(50)", nullable: false),
-                    AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaturalPersonBankAccount", x => new { x.AccountNumber, x.NaturalPersonId });
+                    table.PrimaryKey("PK_NaturalPersonBankAccount", x => new { x.NaturalPersonId, x.AccountNumber });
                     table.ForeignKey(
                         name: "FK_NaturalPersonBankAccount_ApplicationUser_NaturalPersonId",
                         column: x => x.NaturalPersonId,
@@ -259,11 +259,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 column: "WhenChanged");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUser_WhenCreated",
-                table: "ApplicationUser",
-                column: "WhenCreated");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "ApplicationUser",
                 column: "NormalizedUserName",
@@ -284,11 +279,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 name: "IX_ApplicationUserLogin_UserId",
                 table: "ApplicationUserLogin",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NaturalPersonBankAccount_NaturalPersonId",
-                table: "NaturalPersonBankAccount",
-                column: "NaturalPersonId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",

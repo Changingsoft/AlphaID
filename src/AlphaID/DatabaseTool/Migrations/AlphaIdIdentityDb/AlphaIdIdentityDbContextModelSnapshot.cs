@@ -4,19 +4,16 @@ using AlphaId.EntityFramework.IdSubjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.IdSubjectsDb
+namespace DatabaseTool.Migrations.AlphaIdIdentityDb
 {
-    [DbContext(typeof(IdSubjectsDbContext))]
-    [Migration("20251219043932_Init")]
-    partial class Init
+    [DbContext(typeof(AlphaIdIdentityDbContext))]
+    partial class AlphaIdIdentityDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,8 +179,6 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                         .HasFilter("[UserName] IS NOT NULL");
 
                     b.HasIndex("WhenChanged");
-
-                    b.HasIndex("WhenCreated");
 
                     b.ToTable("ApplicationUser", (string)null);
                 });
@@ -353,27 +348,24 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
                 {
                     b.OwnsMany("AlphaIdPlatform.Identity.NaturalPersonBankAccount", "BankAccounts", b1 =>
                         {
+                            b1.Property<string>("NaturalPersonId")
+                                .HasColumnType("varchar(50)");
+
                             b1.Property<string>("AccountNumber")
                                 .HasMaxLength(50)
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(50)");
 
-                            b1.Property<string>("NaturalPersonId")
-                                .HasColumnType("varchar(50)");
-
                             b1.Property<string>("AccountName")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("BankName")
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.HasKey("AccountNumber", "NaturalPersonId");
+                            b1.HasKey("NaturalPersonId", "AccountNumber");
 
-                            b1.HasIndex("NaturalPersonId");
-
-                            b1.ToTable("NaturalPersonBankAccount");
+                            b1.ToTable("NaturalPersonBankAccount", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("NaturalPersonId");
@@ -475,7 +467,7 @@ namespace DatabaseTool.Migrations.IdSubjectsDb
 
                             b1.HasKey("NaturalPersonId", "Id");
 
-                            b1.ToTable("UsedPassword");
+                            b1.ToTable("UsedPassword", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("NaturalPersonId");

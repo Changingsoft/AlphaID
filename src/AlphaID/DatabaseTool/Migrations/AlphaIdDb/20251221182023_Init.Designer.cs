@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace DatabaseTool.Migrations.AlphaIdDb
 {
     [DbContext(typeof(AlphaIdDbContext))]
-    [Migration("20251219043952_Init")]
+    [Migration("20251221182023_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -115,7 +115,7 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                     b.ToTable("JoinOrganizationRequest");
                 });
 
-            modelBuilder.Entity("AlphaIdPlatform.Subjects.Organization", b =>
+            modelBuilder.Entity("Organizational.Organization", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -192,49 +192,33 @@ namespace DatabaseTool.Migrations.AlphaIdDb
 
                     b.HasIndex("Name");
 
+                    b.HasIndex("USCC")
+                        .IsUnique()
+                        .HasFilter("[USCC] IS NOT NULL");
+
                     b.HasIndex("WhenChanged");
 
                     b.HasIndex("WhenCreated");
 
-                    b.ToTable("Organization");
+                    b.ToTable("Organization", (string)null);
                 });
 
-            modelBuilder.Entity("AlphaIdPlatform.Subjects.Organization", b =>
+            modelBuilder.Entity("Organizational.Organization", b =>
                 {
-                    b.OwnsOne("AlphaIdPlatform.Subjects.FapiaoInfo", "Fapiao", b1 =>
+                    b.OwnsOne("Organizational.BinaryDataInfo", "ProfilePicture", b1 =>
                         {
                             b1.Property<string>("OrganizationId")
                                 .HasColumnType("varchar(50)");
 
-                            b1.Property<string>("Account")
+                            b1.Property<byte[]>("Data")
                                 .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
+                                .HasColumnType("varbinary(max)");
 
-                            b1.Property<string>("Address")
+                            b1.Property<string>("MimeType")
                                 .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Bank")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Contact")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("TaxPayerId")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
+                                .HasMaxLength(100)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(100)");
 
                             b1.HasKey("OrganizationId");
 
@@ -244,14 +228,59 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                                 .HasForeignKey("OrganizationId");
                         });
 
-                    b.OwnsMany("AlphaIdPlatform.Subjects.OrganizationBankAccount", "BankAccounts", b1 =>
+                    b.OwnsOne("Organizational.FapiaoInfo", "Fapiao", b1 =>
                         {
-                            b1.Property<string>("AccountNumber")
+                            b1.Property<string>("OrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("Account")
+                                .IsRequired()
                                 .HasMaxLength(50)
                                 .IsUnicode(false)
                                 .HasColumnType("varchar(50)");
 
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.Property<string>("Bank")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("Contact")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("TaxPayerId")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(20)");
+
+                            b1.HasKey("OrganizationId");
+
+                            b1.ToTable("Organization");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrganizationId");
+                        });
+
+                    b.OwnsMany("Organizational.OrganizationBankAccount", "BankAccounts", b1 =>
+                        {
                             b1.Property<string>("OrganizationId")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("AccountNumber")
+                                .HasMaxLength(50)
+                                .IsUnicode(false)
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("AccountName")
@@ -270,39 +299,38 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                                 .HasMaxLength(20)
                                 .HasColumnType("nvarchar(20)");
 
-                            b1.HasKey("AccountNumber", "OrganizationId");
+                            b1.HasKey("OrganizationId", "AccountNumber");
 
-                            b1.HasIndex("OrganizationId");
-
-                            b1.ToTable("OrganizationBankAccount");
+                            b1.ToTable("OrganizationBankAccount", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrganizationId");
                         });
 
-                    b.OwnsMany("AlphaIdPlatform.Subjects.OrganizationIdentifier", "OrganizationIdentifiers", b1 =>
+                    b.OwnsMany("Organizational.OrganizationIdentifier", "OrganizationIdentifiers", b1 =>
                         {
                             b1.Property<string>("Value")
                                 .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
+                                .IsUnicode(false)
+                                .HasColumnType("varchar(30)");
 
                             b1.Property<string>("OrganizationId")
                                 .HasColumnType("varchar(50)");
 
-                            b1.Property<string>("Type")
-                                .HasColumnType("varchar(30)");
+                            b1.Property<int>("Type")
+                                .HasColumnType("int");
 
                             b1.HasKey("Value", "OrganizationId", "Type");
 
                             b1.HasIndex("OrganizationId");
 
-                            b1.ToTable("OrganizationIdentifier");
+                            b1.ToTable("OrganizationIdentifier", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrganizationId");
                         });
 
-                    b.OwnsMany("AlphaIdPlatform.Subjects.OrganizationMember", "Members", b1 =>
+                    b.OwnsMany("Organizational.OrganizationMember", "Members", b1 =>
                         {
                             b1.Property<string>("OrganizationId")
                                 .HasColumnType("varchar(50)");
@@ -334,13 +362,13 @@ namespace DatabaseTool.Migrations.AlphaIdDb
 
                             b1.HasIndex("PersonId");
 
-                            b1.ToTable("OrganizationMember");
+                            b1.ToTable("OrganizationMember", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrganizationId");
                         });
 
-                    b.OwnsMany("AlphaIdPlatform.Subjects.OrganizationUsedName", "UsedNames", b1 =>
+                    b.OwnsMany("Organizational.OrganizationUsedName", "UsedNames", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -364,30 +392,7 @@ namespace DatabaseTool.Migrations.AlphaIdDb
 
                             b1.HasIndex("OrganizationId");
 
-                            b1.ToTable("OrganizationUsedName");
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrganizationId");
-                        });
-
-                    b.OwnsOne("IdSubjects.BinaryDataInfo", "ProfilePicture", b1 =>
-                        {
-                            b1.Property<string>("OrganizationId")
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<byte[]>("Data")
-                                .IsRequired()
-                                .HasColumnType("varbinary(max)");
-
-                            b1.Property<string>("MimeType")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(100)");
-
-                            b1.HasKey("OrganizationId");
-
-                            b1.ToTable("Organization");
+                            b1.ToTable("OrganizationUsedName", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrganizationId");

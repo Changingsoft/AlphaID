@@ -74,12 +74,12 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                     Location = table.Column<Geometry>(type: "geography", nullable: true),
                     Website = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    Fapiao_Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Fapiao_TaxPayerId = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Fapiao_Address = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Fapiao_Contact = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Fapiao_Bank = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Fapiao_Account = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                    Fapiao_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Fapiao_TaxPayerId = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    Fapiao_Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Fapiao_Contact = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Fapiao_Bank = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Fapiao_Account = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,7 +99,7 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrganizationBankAccount", x => new { x.AccountNumber, x.OrganizationId });
+                    table.PrimaryKey("PK_OrganizationBankAccount", x => new { x.OrganizationId, x.AccountNumber });
                     table.ForeignKey(
                         name: "FK_OrganizationBankAccount_Organization_OrganizationId",
                         column: x => x.OrganizationId,
@@ -112,8 +112,8 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                 name: "OrganizationIdentifier",
                 columns: table => new
                 {
-                    Type = table.Column<string>(type: "varchar(30)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: false),
                     OrganizationId = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
@@ -182,6 +182,13 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                 column: "Name");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Organization_USCC",
+                table: "Organization",
+                column: "USCC",
+                unique: true,
+                filter: "[USCC] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Organization_WhenChanged",
                 table: "Organization",
                 column: "WhenChanged");
@@ -190,11 +197,6 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                 name: "IX_Organization_WhenCreated",
                 table: "Organization",
                 column: "WhenCreated");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrganizationBankAccount_OrganizationId",
-                table: "OrganizationBankAccount",
-                column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationIdentifier_OrganizationId",

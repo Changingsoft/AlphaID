@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.LoggingDb
 {
     [DbContext(typeof(LoggingDbContext))]
-    [Migration("20251219043937_Init")]
+    [Migration("20251221182010_Init")]
     partial class Init
     {
         /// <inheritdoc />

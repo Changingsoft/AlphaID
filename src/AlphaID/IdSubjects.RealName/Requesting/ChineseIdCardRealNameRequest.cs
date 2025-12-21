@@ -111,12 +111,12 @@ public class ChineseIdCardRealNameRequest : RealNameRequest
     /// <summary>
     /// 个人信息面。
     /// </summary>
-    public BinaryDataInfo PersonalSide { get; set; } = null!;
+    public virtual BinaryDataInfo PersonalSide { get; set; } = null!;
 
     /// <summary>
     /// 签发者信息面。
     /// </summary>
-    public BinaryDataInfo IssuerSide { get; set; } = null!;
+    public virtual BinaryDataInfo IssuerSide { get; set; } = null!;
 
     /// <summary>
     /// 重写，创建RealNameAuthentication。

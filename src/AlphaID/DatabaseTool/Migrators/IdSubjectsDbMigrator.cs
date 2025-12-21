@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DatabaseTool.Migrators;
 
-internal class IdSubjectsDbMigrator(IdSubjectsDbContext db) : DatabaseMigrator(db)
+internal class IdSubjectsDbMigrator(AlphaIdIdentityDbContext db) : DatabaseMigrator(db)
 {
     public override async Task AddTestingDataAsync()
     {

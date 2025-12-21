@@ -7,8 +7,6 @@ namespace IdSubjects;
 /// <summary>
 /// 表示一个已使用的密码记录。
 /// </summary>
-[Owned]
-[Table("UsedPassword")]
 public class UsedPassword
 {
     /// <summary>
@@ -19,6 +17,5 @@ public class UsedPassword
     /// <summary>
     /// 已使用的密码哈希值。
     /// </summary>
-    [MaxLength(255), Unicode(false)]
     public string PasswordHash { get; set; } = null!;
 }

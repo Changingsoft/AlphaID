@@ -20,9 +20,21 @@ public class RealNameDbContext(DbContextOptions<RealNameDbContext> options) : Db
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<IdentityDocument>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
         modelBuilder.Entity<RealNameAuthentication>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
         modelBuilder.Entity<RealNameRequest>().Property("Discriminator").HasMaxLength(100).IsUnicode(false);
+        modelBuilder.Entity<ChineseIdCardRealNameRequest>(e =>
+        {
+            e.OwnsOne(p => p.PersonalSide, ps =>
+            {
+                ps.Property(p => p.MimeType).HasMaxLength(100).IsUnicode(false);
+            });
+            e.OwnsOne(p => p.IssuerSide, ps =>
+            {
+                ps.Property(p => p.MimeType).HasMaxLength(100).IsUnicode(false);
+            });
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

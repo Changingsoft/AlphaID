@@ -242,7 +242,7 @@ builder.Services.AddAuditLog()
     .AddDefaultStore()
     .AddDbContext(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(IdSubjectsDbContext)));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
 WebApplication app = builder.Build();

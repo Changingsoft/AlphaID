@@ -1,16 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Organizational;
 
 /// <summary>
 /// 组织的人员。
 /// </summary>
-[Table("OrganizationMember")]
-[PrimaryKey(nameof(OrganizationId), nameof(PersonId))]
-[Index(nameof(PersonId))]
-[Owned]
 public class OrganizationMember
 {
     /// <summary>
@@ -35,8 +27,6 @@ public class OrganizationMember
     /// <summary>
     /// Person Id.
     /// </summary>
-    [MaxLength(50)]
-    [Unicode(false)]
     public string PersonId { get; protected set; } = null!;
 
     /// <summary>
@@ -47,19 +37,16 @@ public class OrganizationMember
     /// <summary>
     /// 部门。
     /// </summary>
-    [MaxLength(50)]
     public string? Department { get; set; } = null!;
 
     /// <summary>
     /// 职务。
     /// </summary>
-    [MaxLength(50)]
     public string? Title { get; set; } = null!;
 
     /// <summary>
     /// 备注。
     /// </summary>
-    [MaxLength(50)]
     public string? Remark { get; set; } = null!;
 
     /// <summary>

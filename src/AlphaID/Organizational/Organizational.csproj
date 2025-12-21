@@ -9,7 +9,6 @@
 		<InternalsVisibleTo Include="Organizational.Tests" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.16" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
 		<PackageReference Include="NetTopologySuite" Version="2.6.0" />
 	</ItemGroup>

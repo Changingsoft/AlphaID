@@ -1,17 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Organizational;
 
 /// <summary>
 /// 组织。
 /// </summary>
-[Table("Organization")]
-[Index(nameof(Name))]
-[Index(nameof(WhenCreated))]
-[Index(nameof(WhenChanged))]
 public class Organization
 {
     /// <summary>
@@ -31,40 +24,31 @@ public class Organization
     /// <summary>
     /// Id。
     /// </summary>
-    [Key]
-    [MaxLength(50)]
-    [Unicode(false)]
     public string Id { get; protected internal set; } = Guid.NewGuid().ToString().ToLower();
 
     /// <summary>
     /// Name.
     /// </summary>
-    [MaxLength(100)]
     public string Name { get; protected internal set; } = null!;
 
     /// <summary>
     /// 住所。
     /// </summary>
-    [MaxLength(100)]
     public virtual string? Domicile { get; set; }
 
     /// <summary>
     /// 联系方式。
     /// </summary>
-    [MaxLength(50)]
     public virtual string? Contact { get; set; }
 
     /// <summary>
     /// 公开电子邮件。
     /// </summary>
-    [MaxLength(100)]
-    [Unicode(false)]
     public string? Email { get; set; }
 
     /// <summary>
     /// 组织的代表人。
     /// </summary>
-    [MaxLength(20)]
     public virtual string? Representative { get; set; }
 
     /// <summary>
@@ -120,19 +104,16 @@ public class Organization
     /// <summary>
     /// 标示该组织的地理位置。
     /// </summary>
-    [Column(TypeName = "geography")]
     public virtual Geometry? Location { get; set; }
 
     /// <summary>
     /// 组织的网站。
     /// </summary>
-    [MaxLength(256)]
     public virtual string? Website { get; set; }
 
     /// <summary>
     /// Description of organization.
     /// </summary>
-    [MaxLength(200)]
     public virtual string? Description { get; set; }
 
     /// <summary>

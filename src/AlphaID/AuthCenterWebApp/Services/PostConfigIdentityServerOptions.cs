@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace AuthCenterWebApp.Services;
 
-public class PostConfigIdentityServerOptions(IServiceProvider provider, ILogger<PostConfigIdentityServerOptions> logger) : IPostConfigureOptions<IdentityServerOptions>, IPostConfigureOptions<CookieAuthenticationOptions>
+public class PostConfigIdentityServerOptions(IOptions<LoginOptions> loginOptions, IServiceProvider provider, ILogger<PostConfigIdentityServerOptions> logger) : IPostConfigureOptions<IdentityServerOptions>, IPostConfigureOptions<CookieAuthenticationOptions>
 {
     public void PostConfigure(string? name, IdentityServerOptions options)
     {
@@ -16,8 +16,11 @@ public class PostConfigIdentityServerOptions(IServiceProvider provider, ILogger<
         }
         else
         {
-            //如果验证码服务不为空，则优先采用登录注册一体流程。
-            options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
+            //如果验证码服务不为空，且允许快速注册，则优先采用登录注册一体流程。
+            if (loginOptions.Value.EnableQuickSignUp)
+            {
+                options.UserInteraction.LoginUrl = "/Account/SignInOrSignUp";
+            }
         }
 
     }
@@ -32,8 +35,11 @@ public class PostConfigIdentityServerOptions(IServiceProvider provider, ILogger<
         }
         else
         {
-            //如果验证码服务不为空，则优先采用登录注册一体流程。
-            options.LoginPath = "/Account/SignInOrSignUp";
+            //如果验证码服务不为空，且允许快速注册，则优先采用登录注册一体流程。
+            if (loginOptions.Value.EnableQuickSignUp)
+            {
+                options.LoginPath = "/Account/SignInOrSignUp";
+            }
         }
     }
 }

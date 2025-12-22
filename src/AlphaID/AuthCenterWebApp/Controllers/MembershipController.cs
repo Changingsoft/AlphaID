@@ -7,7 +7,7 @@ namespace AuthCenterWebApp.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(policy: "RequireMembershipScope")]
+[Authorize(policy: AuthorizationConstants.RequireMembershipScope)]
 public class MembershipController(IOrganizationStore store) : ControllerBase
 {
     /// <summary>

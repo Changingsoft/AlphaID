@@ -114,8 +114,8 @@ builder.Services.Configure<SystemUrlInfo>(builder.Configuration.GetSection("Syst
 
 #region 配置授权策略
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("RequireOrganizationOwner", policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); })
-    .AddPolicy("RequireMembershipScope", policy =>
+    .AddPolicy(AuthorizationConstants.RequireOrganizationOwner, policy => { policy.Requirements.Add(new OrganizationOwnerRequirement()); })
+    .AddPolicy(AuthorizationConstants.RequireMembershipScope, policy =>
     {
         policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
         policy.RequireAuthenticatedUser();
@@ -131,7 +131,7 @@ builder.Services.AddRazorPages(options =>
         options.Conventions.AuthorizeFolder("/");
         options.Conventions.AuthorizeAreaFolder("Profile", "/");
         options.Conventions.AuthorizeAreaFolder("Settings", "/");
-        options.Conventions.AuthorizeAreaFolder("Organization", "/Settings", "RequireOrganizationOwner");
+        options.Conventions.AuthorizeAreaFolder("Organization", "/Settings", AuthorizationConstants.RequireOrganizationOwner);
 
         options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "People"));
         options.Conventions.Add(new SubjectAnchorRouteModelConvention("/", "Organization"));

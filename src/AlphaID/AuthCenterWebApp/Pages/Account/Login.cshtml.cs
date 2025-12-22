@@ -170,7 +170,7 @@ public class LoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
+            ModelState.AddModelError(string.Empty, Resources.SharedResource.Invalid_Credentials);
         }
 
         // something went wrong, show form with error

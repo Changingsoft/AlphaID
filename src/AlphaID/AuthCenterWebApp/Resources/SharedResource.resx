@@ -380,4 +380,7 @@
   <data name="PhoneNumberInvalid" xml:space="preserve">
     <value>Phone number invalid.</value>
   </data>
+  <data name="Invalid_Credentials" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
 </root>

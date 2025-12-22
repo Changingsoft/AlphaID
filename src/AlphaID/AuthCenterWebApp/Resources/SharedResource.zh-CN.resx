@@ -369,4 +369,7 @@
   <data name="PhoneNumberInvalid" xml:space="preserve">
     <value>手机号无效。</value>
   </data>
+  <data name="Invalid_Credentials" xml:space="preserve">
+    <value>无效的登录</value>
+  </data>
 </root>

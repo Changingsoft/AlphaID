@@ -394,6 +394,15 @@ namespace AuthCenterWebApp.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Invalid credentials 的本地化字符串。
+        /// </summary>
+        internal static string Invalid_Credentials {
+            get {
+                return ResourceManager.GetString("Invalid_Credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Legal entity identifier 的本地化字符串。
         /// </summary>
         internal static string Legal_entity_identifier {

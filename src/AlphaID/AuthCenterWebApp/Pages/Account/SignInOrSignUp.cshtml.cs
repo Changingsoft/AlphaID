@@ -52,7 +52,6 @@ namespace AuthCenterWebApp.Pages.Account
 
         [BindProperty]
         [Display(Name = "Verification code")]
-        [DataType(DataType.Password)]
         public string? VerificationCode { get; set; }
 
         public IVerificationCodeService? VerificationCodeService => serviceProvider.GetService<IVerificationCodeService>();

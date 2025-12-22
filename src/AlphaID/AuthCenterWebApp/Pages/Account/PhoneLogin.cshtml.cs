@@ -185,7 +185,7 @@ public class PhoneLoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(PhoneNumber, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, loginOptions.Value.InvalidCredentialsErrorMessage);
+            ModelState.AddModelError(string.Empty, Resources.SharedResource.Invalid_Credentials);
         }
 
         // something went wrong, show form with error

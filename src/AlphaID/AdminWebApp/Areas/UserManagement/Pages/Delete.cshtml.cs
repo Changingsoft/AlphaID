@@ -3,37 +3,37 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
+namespace AdminWebApp.Areas.UserManagement.Pages;
 
 public class DeleteModel(UserManager<NaturalPerson> userManager, NaturalPersonService naturalPersonService) : PageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public string Anchor { get; set; } = null!;
-
     public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty]
-    public DeletePersonForm Input { get; set; } = null!;
+    [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
+    [Required(ErrorMessage = "Validate_Required")]
+    public string DisplayName { get; set; } = null!;
 
-    public async Task<IActionResult> OnGetAsync()
+
+    public async Task<IActionResult> OnGetAsync(string id)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(id);
         if (person == null)
             return NotFound();
         Person = person;
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(string id)
     {
-        NaturalPerson? person = await userManager.FindByIdAsync(Anchor);
+        NaturalPerson? person = await userManager.FindByIdAsync(id);
         if (person == null)
             return NotFound();
         Person = person;
 
 
-        if (Input.DisplayName != Person.UserName)
-            ModelState.AddModelError(nameof(Input.DisplayName), "名称不一致");
+        if (DisplayName != Person.UserName)
+            ModelState.AddModelError(nameof(DisplayName), "名称不一致");
 
         if (!ModelState.IsValid)
             return Page();
@@ -54,12 +54,5 @@ public class DeleteModel(UserManager<NaturalPerson> userManager, NaturalPersonSe
             ModelState.TryAddModelException("", ex);
             return Page();
         }
-    }
-
-    public class DeletePersonForm
-    {
-        [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
-        [Required(ErrorMessage = "Validate_Required")]
-        public string DisplayName { get; set; } = null!;
     }
 }

@@ -1,4 +1,4 @@
-namespace AdminWebApp.Areas.UserManagement.Pages.Detail;
+namespace AdminWebApp.Areas.UserManagement.Pages;
 
 public class DeleteSuccessModel : PageModel
 {

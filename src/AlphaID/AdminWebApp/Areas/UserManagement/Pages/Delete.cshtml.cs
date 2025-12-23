@@ -10,9 +10,10 @@ public class DeleteModel(UserManager<NaturalPerson> userManager, NaturalPersonSe
     public NaturalPerson Person { get; set; } = null!;
 
     [BindProperty]
-    [Display(Name = "Display name", Description = "A friendly name that appears on the user interface.")]
+    [Display(Name = "User name")]
     [Required(ErrorMessage = "Validate_Required")]
-    public string DisplayName { get; set; } = null!;
+    [StringLength(50, ErrorMessage = "Validate_StringLength")]
+    public string UserName { get; set; } = null!;
 
 
     public async Task<IActionResult> OnGetAsync(string id)
@@ -32,8 +33,8 @@ public class DeleteModel(UserManager<NaturalPerson> userManager, NaturalPersonSe
         Person = person;
 
 
-        if (DisplayName != Person.UserName)
-            ModelState.AddModelError(nameof(DisplayName), "名称不一致");
+        if (UserName != Person.UserName)
+            ModelState.AddModelError(nameof(UserName), "名称不一致");
 
         if (!ModelState.IsValid)
             return Page();

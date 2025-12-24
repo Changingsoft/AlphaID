@@ -134,6 +134,7 @@ public class Organization
     /// <summary>
     /// 组织标识。
     /// </summary>
+    [Obsolete("不再考虑使用。")]
     public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = [];
 
     /// <summary>

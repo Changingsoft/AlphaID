@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "Shared/_Layout";
     var anchor = ViewContext.RouteData.Values["anchor"]!;
 }
@@ -10,7 +10,6 @@
                 <div class="card-body">
                     <div class="list-group list-group-transparent">
                         <a asp-path="/Organization/@(anchor)/Settings!" asp-page="/Settings/Index" asp-route-anchor="@anchor" class="list-group-item list-group-item-action d-flex align-items-center">@L["General"]</a>
-                        <a asp-path="/Organization/@(anchor)/Settings/Identifiers" asp-page="/Settings/Identifiers/Index" asp-route-anchor="@anchor" class="list-group-item list-group-item-action d-flex align-items-center">@L["Identifiers"]</a>
                         <a asp-path="/Organization/@(anchor)/Settings/Financial" asp-page="/Settings/Financial/Index" asp-route-anchor="@anchor" class="list-group-item list-group-item-action d-flex align-items-center">@L["Financial"]</a>
                         <a asp-path="/Organization/@(anchor)/Settings/Fapiao" asp-page="/Settings/Fapiao" asp-route-anchor="@anchor" class="list-group-item list-group-item-action d-flex align-items-center">@L["Fapiao info"]</a>
                         <a asp-path="/Organization/@(anchor)/Settings/Advanced" asp-page="/Settings/Advanced/Index" asp-route-anchor="@anchor" class="list-group-item list-group-item-action d-flex align-items-center">@L["Advanced"]</a>

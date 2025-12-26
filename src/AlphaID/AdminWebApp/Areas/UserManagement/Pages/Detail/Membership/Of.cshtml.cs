@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(UserManager<NaturalPerson> applicationUserManager, OrganizationManager organizationManager) : PageModel
+public class OfModel(UserManager<NaturalPerson> applicationUserManager, OrganizationManager organizationManager, IOrganizationStore store) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 
@@ -27,7 +27,7 @@ public class OfModel(UserManager<NaturalPerson> applicationUserManager, Organiza
         NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
-        var org = await organizationManager.FindByIdAsync(orgId);
+        var org = await store.FindByIdAsync(orgId);
         if (org == null)
             return NotFound();
         Organization = org;
@@ -51,7 +51,7 @@ public class OfModel(UserManager<NaturalPerson> applicationUserManager, Organiza
         NaturalPerson? person = await applicationUserManager.FindByIdAsync(anchor);
         if (person == null)
             return NotFound();
-        var org = await organizationManager.FindByIdAsync(orgId);
+        var org = await store.FindByIdAsync(orgId);
         if (org == null)
             return NotFound();
         Organization = org;

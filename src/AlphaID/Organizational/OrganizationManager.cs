@@ -41,26 +41,6 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    /// Delete Organization.
-    /// </summary>
-    /// <param name="organization"></param>
-    /// <returns></returns>
-    public Task<OrganizationOperationResult> DeleteAsync(Organization organization)
-    {
-        return store.DeleteAsync(organization);
-    }
-
-    /// <summary>
-    /// 通过组织 Id 查找组织。
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public Task<Organization?> FindByIdAsync(string id)
-    {
-        return store.FindByIdAsync(id);
-    }
-
-    /// <summary>
     /// Update organization information.
     /// </summary>
     /// <param name="org"></param>

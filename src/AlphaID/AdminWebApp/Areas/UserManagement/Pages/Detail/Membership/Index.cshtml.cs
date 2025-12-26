@@ -9,7 +9,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 public class IndexModel(
     UserManager<NaturalPerson> personManager,
     OrganizationManager organizationManager,
-    OrganizationMemberManager organizationMemberManager) : PageModel
+    OrganizationMemberManager organizationMemberManager, IOrganizationStore store) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
 
@@ -38,7 +38,7 @@ public class IndexModel(
         Person = person;
         OrganizationMembers = organizationMemberManager.GetMembersOf(anchor);
 
-        Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
+        Organization? org = await store.FindByIdAsync(Input.OrganizationId);
         if (org == null)
         {
             ModelState.AddModelError(nameof(Input.OrganizationId), "Organization Not Found.");
@@ -76,7 +76,7 @@ public class IndexModel(
         if (person == null)
             return NotFound();
         Person = person;
-        var organization = await organizationManager.FindByIdAsync(organizationId);
+        var organization = await store.FindByIdAsync(organizationId);
         if (organization == null)
         {
             ModelState.AddModelError(nameof(organizationId), "Organization Not Found.");

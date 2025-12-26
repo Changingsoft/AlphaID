@@ -11,10 +11,11 @@ namespace AlphaIdPlatform.JoinOrgRequesting;
 /// <param name="store"></param>
 /// <param name="logger"></param>
 /// <param name="organizationManager"></param>
+/// <param name="organizationStore"></param>
 public class JoinOrganizationManager(
     IJoinOrganizationRequestStore store,
     ILogger<JoinOrganizationManager>? logger,
-    OrganizationManager organizationManager)
+    OrganizationManager organizationManager, IOrganizationStore organizationStore)
 {
     /// <summary>
     /// Creates a new organization join request asynchronously.
@@ -68,7 +69,7 @@ public class JoinOrganizationManager(
             return;
         }
 
-        var org = await organizationManager.FindByIdAsync(request.OrganizationId);
+        var org = await organizationStore.FindByIdAsync(request.OrganizationId);
         if (org == null)
         {
             logger?.LogWarning("{organization} not found in join request. May be it would been deleted before audit.", request.OrganizationName);

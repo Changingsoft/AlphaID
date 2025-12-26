@@ -8,7 +8,7 @@ namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
 public class IndexModel(
     OrganizationManager manager,
-    UserManager<NaturalPerson> personManager) : PageModel
+    UserManager<NaturalPerson> personManager, IOrganizationStore store) : PageModel
 {
     public Organization Organization { get; set; } = null!;
 
@@ -59,7 +59,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        Organization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
@@ -70,7 +70,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostAddMemberAsync(string anchor)
     {
-        Organization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;
@@ -102,7 +102,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostRemoveMemberAsync(string anchor, string personId)
     {
-        Organization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         Organization = org;

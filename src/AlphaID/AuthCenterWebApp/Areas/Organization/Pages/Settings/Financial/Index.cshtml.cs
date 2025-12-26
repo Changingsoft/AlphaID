@@ -4,7 +4,7 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
-public class IndexModel(OrganizationManager organizationManager) : PageModel
+public class IndexModel(OrganizationManager organizationManager, IOrganizationStore store) : PageModel
 {
     public Organizational.Organization Data { get; set; } = null!;
 
@@ -41,7 +41,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
-        Organizational.Organization? data = await organizationManager.FindByIdAsync(anchor);
+        Organizational.Organization? data = await store.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;

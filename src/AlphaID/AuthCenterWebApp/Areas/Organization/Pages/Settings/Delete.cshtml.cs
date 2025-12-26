@@ -4,7 +4,7 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class DeleteModel(OrganizationManager manager) : PageModel
+public class DeleteModel(OrganizationManager manager, IOrganizationStore store) : PageModel
 {
     public OrganizationOperationResult? Result { get; set; }
 
@@ -21,7 +21,7 @@ public class DeleteModel(OrganizationManager manager) : PageModel
         var organization = await manager.FindByNameAsync(anchor);
         if (organization == null) return NotFound();
 
-        Result = await manager.DeleteAsync(organization);
+        Result = await store.DeleteAsync(organization);
         if (!Result.Succeeded) return Page();
 
         return RedirectToPage("/Index", new { area = "" });

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.AlphaIdIdentityDb
 {
     [DbContext(typeof(AlphaIdIdentityDbContext))]
-    [Migration("20251221182006_Init")]
+    [Migration("20251228172149_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -182,6 +182,8 @@ namespace DatabaseTool.Migrations.AlphaIdIdentityDb
                         .HasFilter("[UserName] IS NOT NULL");
 
                     b.HasIndex("WhenChanged");
+
+                    b.HasIndex("WhenCreated");
 
                     b.ToTable("ApplicationUser", (string)null);
                 });
@@ -360,7 +362,8 @@ namespace DatabaseTool.Migrations.AlphaIdIdentityDb
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("AccountName")
-                                .HasColumnType("nvarchar(max)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<string>("BankName")
                                 .HasMaxLength(100)

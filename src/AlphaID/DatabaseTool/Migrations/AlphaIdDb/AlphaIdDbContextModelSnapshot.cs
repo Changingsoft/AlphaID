@@ -64,7 +64,7 @@ namespace DatabaseTool.Migrations.AlphaIdDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("JoinOrganizationInvitation");
+                    b.ToTable("JoinOrganizationInvitation", (string)null);
                 });
 
             modelBuilder.Entity("AlphaIdPlatform.JoinOrgRequesting.JoinOrganizationRequest", b =>
@@ -109,7 +109,7 @@ namespace DatabaseTool.Migrations.AlphaIdDb
 
                     b.HasIndex("WhenCreated");
 
-                    b.ToTable("JoinOrganizationRequest");
+                    b.ToTable("JoinOrganizationRequest", (string)null);
                 });
 
             modelBuilder.Entity("Organizational.Organization", b =>
@@ -304,29 +304,6 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                                 .HasForeignKey("OrganizationId");
                         });
 
-                    b.OwnsMany("Organizational.OrganizationIdentifier", "OrganizationIdentifiers", b1 =>
-                        {
-                            b1.Property<string>("Value")
-                                .HasMaxLength(30)
-                                .IsUnicode(false)
-                                .HasColumnType("varchar(30)");
-
-                            b1.Property<string>("OrganizationId")
-                                .HasColumnType("varchar(50)");
-
-                            b1.Property<int>("Type")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Value", "OrganizationId", "Type");
-
-                            b1.HasIndex("OrganizationId");
-
-                            b1.ToTable("OrganizationIdentifier", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrganizationId");
-                        });
-
                     b.OwnsMany("Organizational.OrganizationMember", "Members", b1 =>
                         {
                             b1.Property<string>("OrganizationId")
@@ -400,8 +377,6 @@ namespace DatabaseTool.Migrations.AlphaIdDb
                     b.Navigation("Fapiao");
 
                     b.Navigation("Members");
-
-                    b.Navigation("OrganizationIdentifiers");
 
                     b.Navigation("ProfilePicture");
 

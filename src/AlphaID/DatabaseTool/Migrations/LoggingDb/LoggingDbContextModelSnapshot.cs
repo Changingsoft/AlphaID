@@ -62,7 +62,7 @@ namespace DatabaseTool.Migrations.LoggingDb
 
                     b.HasIndex("TimeStamp");
 
-                    b.ToTable("AuditLog");
+                    b.ToTable("AuditLog", (string)null);
                 });
 #pragma warning restore 612, 618
         }

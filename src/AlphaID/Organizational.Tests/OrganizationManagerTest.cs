@@ -10,7 +10,7 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
         using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
         organizationManager.TimeProvider = new FrozenTimeProvider();
-        var organization = new Organization { Name = "Test Organization" };
+        var organization = new Organization("Test Organization");
         var result = await organizationManager.CreateAsync(organization);
         Assert.True(result.Succeeded);
         Assert.Equal(organizationManager.TimeProvider.GetUtcNow(), organization.WhenCreated);
@@ -22,8 +22,8 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
     {
         using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
-        await organizationManager.CreateAsync(new Organization { Name = "Test Organization" });
-        var result = await organizationManager.CreateAsync(new Organization { Name = "Test Organization" });
+        await organizationManager.CreateAsync(new Organization ("Test Organization"));
+        var result = await organizationManager.CreateAsync(new Organization ("Test Organization"));
         Assert.False(result.Succeeded);
     }
 
@@ -32,10 +32,10 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
     {
         using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
-        var orgA = new Organization { Name = "OrgA" };
+        var orgA = new Organization ("OrgA");
         await organizationManager.CreateAsync(orgA);
-        await organizationManager.CreateAsync(new Organization { Name = "OrgB" });
-        var result = await organizationManager.RenameAsync(orgA, "OrgB");
+        await organizationManager.CreateAsync(new Organization ("OrgB"));
+        var result = await organizationManager.ChangeName(orgA.Id, "OrgB");
         Assert.False(result.Succeeded);
     }
 
@@ -46,7 +46,7 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
         var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
         //Set time frozen to min value.
         organizationManager.TimeProvider = new FrozenTimeProvider(DateTimeOffset.MinValue);
-        var organization = new Organization { Name = "Test Organization" };
+        var organization = new Organization ("Test Organization");
         await organizationManager.CreateAsync(organization);
 
         //Set time frozen to now.

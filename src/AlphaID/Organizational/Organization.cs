@@ -29,7 +29,7 @@ public class Organization
     /// <summary>
     /// Name.
     /// </summary>
-    public string Name { get; protected internal set; } = null!;
+    public string Name { get; protected set; } = null!;
 
     /// <summary>
     /// 住所。
@@ -148,5 +148,14 @@ public class Organization
     public override string ToString()
     {
         return Name;
+    }
+
+    internal void SetName(string newName, bool recordUsedName, DateOnly changeDate)
+    {
+        if(recordUsedName)
+        {
+            UsedNames.Add(new OrganizationUsedName() { Name = this.Name, DeprecateTime = changeDate});
+        }
+        Name = newName;
     }
 }

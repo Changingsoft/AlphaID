@@ -1,3 +1,5 @@
+using System.Transactions;
+
 namespace Organizational;
 
 /// <summary>
@@ -61,23 +63,27 @@ public class OrganizationManager(IOrganizationStore store)
     /// <param name="changeDate">更改时间。</param>
     /// <param name="recordUsedName">是否将原名称记入曾用名。默认为true。</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<OrganizationOperationResult> RenameAsync(Organization org, string newName, DateOnly? changeDate = null, bool recordUsedName = true)
+    public async Task<OrganizationOperationResult> ChangeName(string orgId, string newName, DateOnly? changeDate = null, bool recordUsedName = true)
     {
+        using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        var org = await store.FindByIdAsync(orgId);
+        if (org == null)
+            return OrganizationOperationResult.Failed("未找到指定的组织。");
+
         if (newName == org.Name)
             return OrganizationOperationResult.Failed("新名称与原名称相同。");
 
-        if (recordUsedName)
-        {
-            org.UsedNames.Add(new OrganizationUsedName
-            {
-                Name = org.Name,
-                //使用本地时间以避免早上8点前日期被减一天。
-                DeprecateTime = changeDate ?? DateOnly.FromDateTime(TimeProvider.GetLocalNow().DateTime),
-            });
-        }
+        if(store.Organizations.Any(o => o.Name == newName))
+            return OrganizationOperationResult.Failed("名称已被使用。");
 
-        org.Name = newName;
-        return await UpdateAsync(org);
+        //使用本地时间以避免早上8点前日期被减一天。
+        var deprecateTime = changeDate ?? DateOnly.FromDateTime(TimeProvider.GetLocalNow().DateTime);
+
+        org.SetName(newName, recordUsedName, deprecateTime);
+        
+        var result = await store.UpdateAsync(org);
+        
+        trans.Complete();
+        return result;
     }
 }

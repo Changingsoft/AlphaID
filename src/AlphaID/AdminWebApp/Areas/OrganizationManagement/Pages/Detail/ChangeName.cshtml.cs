@@ -29,7 +29,7 @@ public class ChangeNameModel(OrganizationManager manager, IOrganizationStore sto
         Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
-        OrganizationOperationResult result = await manager.RenameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName);
+        OrganizationOperationResult result = await manager.ChangeName(org.Id, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName);
         if (result.Succeeded)
             return RedirectToPage("Index", new { anchor });
 

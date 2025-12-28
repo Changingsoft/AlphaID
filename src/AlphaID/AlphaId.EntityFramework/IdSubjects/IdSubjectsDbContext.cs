@@ -22,7 +22,7 @@ public class IdSubjectsDbContext<T>(DbContextOptions options) : IdentityDbContex
             b.Property(p => p.PhoneNumber).HasMaxLength(20).IsUnicode(false);
             b.HasIndex(p => p.UserName).IsUnique();
             b.HasIndex(p => p.Email);
-            b.HasIndex(p => p.WhenChanged);
+            b.HasIndex(p => p.WhenCreated);
             b.HasIndex(p => p.WhenChanged);
             b.HasIndex(p => p.Name);
             b.Property(p => p.Gender).HasColumnType("varchar(6)").HasComment("性别");

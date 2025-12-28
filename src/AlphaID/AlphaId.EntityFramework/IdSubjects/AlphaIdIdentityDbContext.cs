@@ -20,6 +20,7 @@ public class AlphaIdIdentityDbContext(DbContextOptions<AlphaIdIdentityDbContext>
                 ba.WithOwner().HasForeignKey(p => p.NaturalPersonId);
                 ba.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
                 ba.Property(p => p.BankName).HasMaxLength(100);
+                ba.Property(p => p.AccountName).HasMaxLength(100);
             });
             e.HasIndex(p => p.SearchHint);
         });

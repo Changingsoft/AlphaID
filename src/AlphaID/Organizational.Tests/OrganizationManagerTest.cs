@@ -38,23 +38,4 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
         var result = await organizationManager.ChangeName(orgA.Id, "OrgB");
         Assert.False(result.Succeeded);
     }
-
-    [Fact]
-    public async Task UpdateOrganization()
-    {
-        using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
-        var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
-        //Set time frozen to min value.
-        organizationManager.TimeProvider = new FrozenTimeProvider(DateTimeOffset.MinValue);
-        var organization = new Organization ("Test Organization");
-        await organizationManager.CreateAsync(organization);
-
-        //Set time frozen to now.
-        organizationManager.TimeProvider = new FrozenTimeProvider();
-        organization.Domicile = "Test Domicile";
-        var result = await organizationManager.UpdateAsync(organization);
-        Assert.True(result.Succeeded);
-        Assert.Equal(DateTimeOffset.MinValue, organization.WhenCreated);
-        Assert.Equal(organizationManager.TimeProvider.GetUtcNow(), organization.WhenChanged);
-    }
 }

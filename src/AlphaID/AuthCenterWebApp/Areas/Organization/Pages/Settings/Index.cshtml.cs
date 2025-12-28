@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class IndexModel(OrganizationManager manager) : PageModel
+public class IndexModel(OrganizationManager manager,IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -43,7 +43,7 @@ public class IndexModel(OrganizationManager manager) : PageModel
         organization.Contact = Input.Contact;
         organization.Representative = Input.Representative;
 
-        await manager.UpdateAsync(organization);
+        await store.UpdateAsync(organization);
         OperationResult = OrganizationOperationResult.Success;
         return Page();
     }

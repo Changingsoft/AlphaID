@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class FapiaoModel(OrganizationManager organizationManager) : PageModel
+public class FapiaoModel(OrganizationManager organizationManager, IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -62,7 +62,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
             organization.Fapiao.Account = Input.Account;
         }
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 
@@ -73,7 +73,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
             return NotFound();
 
         organization.Fapiao = null;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         Input = null!;
         return Page();
     }

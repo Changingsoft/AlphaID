@@ -8,7 +8,6 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class IndexModel(
     UserManager<NaturalPerson> personManager,
-    OrganizationManager organizationManager,
     OrganizationMemberManager organizationMemberManager, IOrganizationStore store) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
@@ -55,7 +54,7 @@ public class IndexModel(
                 IsOwner = Input.IsOwner
             };
             org.Members.Add(m);
-            var result1 = await organizationManager.UpdateAsync(org);
+            var result1 = await store.UpdateAsync(org);
             if (!result1.Succeeded)
             {
                 foreach (string error in result1.Errors) ModelState.AddModelError("", error);
@@ -90,7 +89,7 @@ public class IndexModel(
         }
         organization.Members.Remove(member);
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return RedirectToPage();
     }
 

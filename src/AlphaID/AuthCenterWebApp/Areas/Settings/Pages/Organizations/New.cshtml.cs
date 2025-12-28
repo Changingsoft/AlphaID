@@ -10,7 +10,7 @@ using System.Transactions;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
 public class NewModel(
-    OrganizationManager organizationManager,
+    OrganizationManager organizationManager,IOrganizationStore store,
     UserManager<NaturalPerson> personManager) : PageModel
 {
     [BindProperty]
@@ -65,7 +65,7 @@ public class NewModel(
                 IsOwner = true
             };
             organization.Members.Add(m);
-            var joinResult = await organizationManager.UpdateAsync(organization);
+            var joinResult = await store.UpdateAsync(organization);
             if (!joinResult.Succeeded)
             {
                 ModelState.AddModelError("", joinResult.Errors.Aggregate((x, y) => $"{x}, {y}"));

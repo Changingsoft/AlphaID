@@ -6,9 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
-public class IndexModel(
-    OrganizationManager manager,
-    UserManager<NaturalPerson> personManager, IOrganizationStore store) : PageModel
+public class IndexModel(UserManager<NaturalPerson> personManager, IOrganizationStore store) : PageModel
 {
     public Organization Organization { get; set; } = null!;
 
@@ -95,7 +93,7 @@ public class IndexModel(
             Remark = Remark
         };
         org.Members.Add(member);
-        await manager.UpdateAsync(org);
+        await store.UpdateAsync(org);
         return RedirectToPage();
 
     }
@@ -115,7 +113,7 @@ public class IndexModel(
             return Page();
         }
         org.Members.Remove(member);
-        await manager.UpdateAsync(org);
+        await store.UpdateAsync(org);
         return Page();
     }
 

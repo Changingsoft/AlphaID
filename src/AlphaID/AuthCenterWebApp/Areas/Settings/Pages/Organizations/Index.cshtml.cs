@@ -9,7 +9,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 public class IndexModel(
     OrganizationMemberManager memberManager,
     IJoinOrganizationRequestStore joinRequestStore,
-    OrganizationManager organizationManager, IOrganizationStore store) : PageModel
+    IOrganizationStore store) : PageModel
 {
     public IEnumerable<UserMembership> Members { get; set; } = [];
 
@@ -40,7 +40,7 @@ public class IndexModel(
             return Page();
         }
         org.Members.Remove(member);
-        Result = await organizationManager.UpdateAsync(org);
+        Result = await store.UpdateAsync(org);
         return Page();
     }
 }

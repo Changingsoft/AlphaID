@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
-public class GeneralModel(OrganizationManager manager, IOrganizationStore store) : PageModel
+public class GeneralModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -74,7 +74,7 @@ public class GeneralModel(OrganizationManager manager, IOrganizationStore store)
         org.DUNS = DUNS;
         org.LEI = LEI;
 
-        await manager.UpdateAsync(org);
+        await store.UpdateAsync(org);
         OperationResult = OrganizationOperationResult.Success;
         return Page();
     }

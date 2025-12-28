@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
-public class NewBankAccountModel(OrganizationManager organizationManager) : PageModel
+public class NewBankAccountModel(OrganizationManager organizationManager,IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -40,7 +40,7 @@ public class NewBankAccountModel(OrganizationManager organizationManager) : Page
         });
         //todo 没有使用Input.SetDefault
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
 
         if (!Result.Succeeded)
             return Page();

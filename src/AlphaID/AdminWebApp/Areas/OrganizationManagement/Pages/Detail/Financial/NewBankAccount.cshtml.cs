@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Financial;
 
-public class NewBankAccountModel(OrganizationManager organizationManager, IOrganizationStore store) : PageModel
+public class NewBankAccountModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -38,7 +38,7 @@ public class NewBankAccountModel(OrganizationManager organizationManager, IOrgan
         });
         //todo 没有使用Input.SetDefault
 
-        Result = await organizationManager.UpdateAsync(org);
+        Result = await store.UpdateAsync(org);
 
         if (!Result.Succeeded)
             return Page();

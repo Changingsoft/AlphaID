@@ -12,12 +12,11 @@ namespace AlphaIdPlatform.Invitations;
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="personManager"></param>
-/// <param name="organizationManager"></param>
 /// <param name="organizationStore"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
     UserManager<NaturalPerson> personManager,
-    OrganizationManager organizationManager, IOrganizationStore organizationStore)
+    IOrganizationStore organizationStore)
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
@@ -101,7 +100,7 @@ public class JoinOrganizationInvitationManager(
         {
             var newMember = new OrganizationMember(person.Id, invitation.ExpectVisibility);
             organization.Members.Add(newMember);
-            await organizationManager.UpdateAsync(organization);
+            await organizationStore.UpdateAsync(organization);
         }
 
         invitation.Accepted = true;

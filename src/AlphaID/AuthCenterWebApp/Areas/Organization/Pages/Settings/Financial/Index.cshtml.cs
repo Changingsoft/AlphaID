@@ -35,7 +35,7 @@ public class IndexModel(OrganizationManager organizationManager, IOrganizationSt
 
         BankAccounts.Remove(bankAccount);
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 
@@ -55,7 +55,7 @@ public class IndexModel(OrganizationManager organizationManager, IOrganizationSt
             oldAccount.Default = false;
         bankAccount.Default = true;
 
-        Result = await organizationManager.UpdateAsync(data);
+        Result = await store.UpdateAsync(data);
         return Page();
     }
 }

@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
-public class OfModel(UserManager<NaturalPerson> applicationUserManager, OrganizationManager organizationManager, IOrganizationStore store) : PageModel
+public class OfModel(UserManager<NaturalPerson> applicationUserManager, IOrganizationStore store) : PageModel
 {
     public OrganizationMember Member { get; set; } = null!;
 
@@ -65,7 +65,7 @@ public class OfModel(UserManager<NaturalPerson> applicationUserManager, Organiza
         Member.IsOwner = Input.IsOwner;
         Member.Visibility = Input.Visibility;
 
-        OperationResult = await organizationManager.UpdateAsync(org);
+        OperationResult = await store.UpdateAsync(org);
 
         return Page();
     }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
-public class EditModel(OrganizationManager organizationManager, IOrganizationStore store) : PageModel
+public class EditModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -46,7 +46,7 @@ public class EditModel(OrganizationManager organizationManager, IOrganizationSto
         member.IsOwner = Input.IsOwner;
         member.Visibility = Input.Visibility;
 
-        OrganizationOperationResult result = await organizationManager.UpdateAsync(org);
+        OrganizationOperationResult result = await store.UpdateAsync(org);
         if (result.Succeeded) return RedirectToPage("Index", new { anchor });
 
         foreach (string error in result.Errors) ModelState.AddModelError("", error);

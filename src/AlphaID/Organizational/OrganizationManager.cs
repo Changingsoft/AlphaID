@@ -43,19 +43,6 @@ public class OrganizationManager(IOrganizationStore store)
     }
 
     /// <summary>
-    /// Update organization information.
-    /// </summary>
-    /// <param name="org"></param>
-    /// <returns></returns>
-    public async Task<OrganizationOperationResult> UpdateAsync(Organization org)
-    {
-        if (Organizations.Any(p => p.Name == org.Name && p.Id != org.Id))
-            return OrganizationOperationResult.Failed("名称重复");
-        org.WhenChanged = TimeProvider.GetUtcNow();
-        return await store.UpdateAsync(org);
-    }
-
-    /// <summary>
     /// 更改组织的名称。
     /// </summary>
     /// <param name="org">要更改名称的组织。</param>

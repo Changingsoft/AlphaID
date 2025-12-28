@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
-public class FapiaoModel(OrganizationManager organizationManager, IOrganizationStore store) : PageModel
+public class FapiaoModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -61,7 +61,7 @@ public class FapiaoModel(OrganizationManager organizationManager, IOrganizationS
             organization.Fapiao.Account = Input.Account;
         }
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 
@@ -72,7 +72,7 @@ public class FapiaoModel(OrganizationManager organizationManager, IOrganizationS
             return NotFound();
 
         organization.Fapiao = null;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 

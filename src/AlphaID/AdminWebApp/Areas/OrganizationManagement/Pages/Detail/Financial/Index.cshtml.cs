@@ -3,7 +3,7 @@ using Organizational;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Financial;
 
-public class IndexModel(OrganizationManager organizationManager, IOrganizationStore store)
+public class IndexModel(IOrganizationStore store)
     : PageModel
 {
     public Organization Data { get; set; } = null!;
@@ -35,7 +35,7 @@ public class IndexModel(OrganizationManager organizationManager, IOrganizationSt
 
         BankAccounts.Remove(bankAccount);
 
-        Result = await organizationManager.UpdateAsync(data);
+        Result = await store.UpdateAsync(data);
         return Page();
     }
 
@@ -55,7 +55,7 @@ public class IndexModel(OrganizationManager organizationManager, IOrganizationSt
             oldAccount.Default = false;
         bankAccount.Default = true;
 
-        await organizationManager.UpdateAsync(data);
+        await store.UpdateAsync(data);
         return Page();
     }
 }

@@ -8,7 +8,7 @@ using Organizational;
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
 public class IndexModel(
-    OrganizationManager organizationManager,
+    OrganizationManager organizationManager, IOrganizationStore organizationStore,
     UserManager<NaturalPerson> personManager) : PageModel
 {
     public Organizational.Organization Organization { get; set; } = null!;
@@ -58,7 +58,7 @@ public class IndexModel(
 
         organization.Members.Remove(your);
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await organizationStore.UpdateAsync(organization);
         Members = GetMembers(organization, visitor?.Id);
         return Page();
     }
@@ -83,7 +83,7 @@ public class IndexModel(
         if (your == null)
             return Page();
         your.IsOwner = true;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await organizationStore.UpdateAsync(organization);
         return Page();
     }
 
@@ -107,7 +107,7 @@ public class IndexModel(
         if (your == null)
             return Page();
         your.IsOwner = false;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await organizationStore.UpdateAsync(organization);
         return Page();
     }
 

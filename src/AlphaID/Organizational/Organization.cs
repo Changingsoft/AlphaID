@@ -79,7 +79,7 @@ public class Organization
     /// <summary>
     /// 记录修改的时间。
     /// </summary>
-    public virtual DateTimeOffset WhenChanged { get; protected internal set; }
+    public virtual DateTimeOffset WhenChanged { get; set; }
 
     /// <summary>
     /// 是否有效。

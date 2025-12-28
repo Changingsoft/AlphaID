@@ -44,7 +44,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("LogonAccount");
+                    b.ToTable("LogonAccount", (string)null);
                 });
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryService", b =>
@@ -104,7 +104,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("DirectoryService");
+                    b.ToTable("DirectoryService", (string)null);
                 });
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>

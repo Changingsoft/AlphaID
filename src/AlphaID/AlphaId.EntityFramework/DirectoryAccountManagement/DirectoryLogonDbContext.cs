@@ -15,8 +15,8 @@ public class DirectoryLogonDbContext(DbContextOptions<DirectoryLogonDbContext> o
         modelBuilder.Entity<DirectoryService>(e =>
         {
             e.ToTable("DirectoryService");
-            e.Property(ds => ds.Name).HasMaxLength(50).IsUnicode(false);
-            e.Property(ds => ds.Type).HasColumnType("varchar(10)");
+            e.Property(p => p.Name).HasMaxLength(50);
+            e.Property(p => p.Type).HasColumnType("varchar(10)");
             e.Property(p => p.ServerAddress).HasMaxLength(50);
             e.Property(p => p.RootDn).HasMaxLength(150);
             e.Property(p => p.DefaultUserAccountContainer).HasMaxLength(150);

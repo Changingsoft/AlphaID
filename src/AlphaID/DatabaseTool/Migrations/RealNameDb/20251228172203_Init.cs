@@ -1,3 +1,4 @@
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -44,13 +45,13 @@ namespace DatabaseTool.Migrations.RealNameDb
                     Auditor = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     AuditTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Discriminator = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Sex = table.Column<int>(type: "int", nullable: true),
-                    Ethnicity = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Ethnicity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     CardNumber = table.Column<string>(type: "varchar(18)", unicode: false, maxLength: 18, nullable: true),
-                    Issuer = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Issuer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     IssueDate = table.Column<DateOnly>(type: "date", nullable: true),
                     Expires = table.Column<DateOnly>(type: "date", nullable: true),
                     PersonalSide_MimeType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
@@ -67,7 +68,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                 name: "IdentityDocumentAttachment",
                 columns: table => new
                 {
-                    DocumentId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    DocumentId = table.Column<string>(type: "varchar(50)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     ContentType = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false)
@@ -98,7 +99,7 @@ namespace DatabaseTool.Migrations.RealNameDb
                     ExpiresAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Remarks = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Discriminator = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    DocumentId = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
+                    DocumentId = table.Column<string>(type: "varchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {

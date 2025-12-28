@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.DirectoryLogonDb
 {
     [DbContext(typeof(DirectoryLogonDbContext))]
-    [Migration("20251221182001_Init")]
+    [Migration("20251228172144_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("LogonAccount");
+                    b.ToTable("LogonAccount", (string)null);
                 });
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryService", b =>
@@ -107,7 +107,7 @@ namespace DatabaseTool.Migrations.DirectoryLogonDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("DirectoryService");
+                    b.ToTable("DirectoryService", (string)null);
                 });
 
             modelBuilder.Entity("IdSubjects.DirectoryLogon.DirectoryAccount", b =>

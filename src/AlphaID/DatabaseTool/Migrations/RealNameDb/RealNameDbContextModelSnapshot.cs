@@ -43,7 +43,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityDocument");
+                    b.ToTable("IdentityDocument", (string)null);
 
                     b.HasDiscriminator().HasValue("IdentityDocument");
 
@@ -53,8 +53,6 @@ namespace DatabaseTool.Migrations.RealNameDb
             modelBuilder.Entity("IdSubjects.RealName.IdentityDocumentAttachment", b =>
                 {
                     b.Property<string>("DocumentId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Name")
@@ -73,7 +71,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.HasKey("DocumentId", "Name");
 
-                    b.ToTable("IdentityDocumentAttachment");
+                    b.ToTable("IdentityDocumentAttachment", (string)null);
                 });
 
             modelBuilder.Entity("IdSubjects.RealName.RealNameAuthentication", b =>
@@ -112,7 +110,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("RealNameAuthentication");
+                    b.ToTable("RealNameAuthentication", (string)null);
 
                     b.HasDiscriminator().HasValue("RealNameAuthentication");
 
@@ -154,7 +152,7 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("RealNameRequest");
+                    b.ToTable("RealNameRequest", (string)null);
 
                     b.HasDiscriminator().HasValue("RealNameRequest");
 
@@ -204,8 +202,6 @@ namespace DatabaseTool.Migrations.RealNameDb
                         .IsRequired()
                         .HasColumnType("varchar(7)");
 
-                    b.ToTable("IdentityDocument");
-
                     b.HasDiscriminator().HasValue("ChineseIdCardDocument");
                 });
 
@@ -215,13 +211,9 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.Property<string>("DocumentId")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.HasIndex("DocumentId");
-
-                    b.ToTable("RealNameAuthentication");
 
                     b.HasDiscriminator().HasValue("DocumentedRealNameAuthentication");
                 });
@@ -246,8 +238,8 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.Property<string>("Ethnicity")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateOnly?>("Expires")
                         .HasColumnType("date");
@@ -257,18 +249,16 @@ namespace DatabaseTool.Migrations.RealNameDb
 
                     b.Property<string>("Issuer")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Sex")
                         .HasColumnType("int");
-
-                    b.ToTable("RealNameRequest");
 
                     b.HasDiscriminator().HasValue("ChineseIdCardRealNameRequest");
                 });

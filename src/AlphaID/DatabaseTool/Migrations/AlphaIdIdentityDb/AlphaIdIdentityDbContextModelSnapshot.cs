@@ -180,6 +180,8 @@ namespace DatabaseTool.Migrations.AlphaIdIdentityDb
 
                     b.HasIndex("WhenChanged");
 
+                    b.HasIndex("WhenCreated");
+
                     b.ToTable("ApplicationUser", (string)null);
                 });
 
@@ -357,7 +359,8 @@ namespace DatabaseTool.Migrations.AlphaIdIdentityDb
                                 .HasColumnType("varchar(50)");
 
                             b1.Property<string>("AccountName")
-                                .HasColumnType("nvarchar(max)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<string>("BankName")
                                 .HasMaxLength(100)

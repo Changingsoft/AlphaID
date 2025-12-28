@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.LoggingDb
 {
     [DbContext(typeof(LoggingDbContext))]
-    [Migration("20251221182010_Init")]
+    [Migration("20251228172154_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace DatabaseTool.Migrations.LoggingDb
 
                     b.HasIndex("TimeStamp");
 
-                    b.ToTable("AuditLog");
+                    b.ToTable("AuditLog", (string)null);
                 });
 #pragma warning restore 612, 618
         }

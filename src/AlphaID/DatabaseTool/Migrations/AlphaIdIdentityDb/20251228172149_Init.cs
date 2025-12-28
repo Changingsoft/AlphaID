@@ -1,3 +1,4 @@
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -146,7 +147,7 @@ namespace DatabaseTool.Migrations.AlphaIdIdentityDb
                 {
                     AccountNumber = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     NaturalPersonId = table.Column<string>(type: "varchar(50)", nullable: false),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
@@ -256,6 +257,11 @@ namespace DatabaseTool.Migrations.AlphaIdIdentityDb
                 name: "IX_ApplicationUser_WhenChanged",
                 table: "ApplicationUser",
                 column: "WhenChanged");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUser_WhenCreated",
+                table: "ApplicationUser",
+                column: "WhenCreated");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

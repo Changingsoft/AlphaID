@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTool.Migrations.AdminWebAppDb
 {
     [DbContext(typeof(OperationalDbContext))]
-    [Migration("20251221181952_Init")]
+    [Migration("20251228172135_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace DatabaseTool.Migrations.AdminWebAppDb
 
                     b.HasKey("UserId", "RoleName");
 
-                    b.ToTable("AppUserInRole");
+                    b.ToTable("AppUserInRole", (string)null);
                 });
 #pragma warning restore 612, 618
         }

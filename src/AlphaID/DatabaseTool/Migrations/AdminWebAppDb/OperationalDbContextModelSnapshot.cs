@@ -38,7 +38,7 @@ namespace DatabaseTool.Migrations.AdminWebAppDb
 
                     b.HasKey("UserId", "RoleName");
 
-                    b.ToTable("AppUserInRole");
+                    b.ToTable("AppUserInRole", (string)null);
                 });
 #pragma warning restore 612, 618
         }

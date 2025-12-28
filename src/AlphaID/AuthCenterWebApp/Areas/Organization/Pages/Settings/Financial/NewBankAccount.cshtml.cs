@@ -1,4 +1,3 @@
-using AlphaIdPlatform.Subjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Organizational;
@@ -6,16 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
-public class NewBankAccountModel(OrganizationManager organizationManager) : PageModel
+public class NewBankAccountModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
@@ -24,7 +23,7 @@ public class NewBankAccountModel(OrganizationManager organizationManager) : Page
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
@@ -40,7 +39,7 @@ public class NewBankAccountModel(OrganizationManager organizationManager) : Page
         });
         //todo 没有使用Input.SetDefault
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
 
         if (!Result.Succeeded)
             return Page();

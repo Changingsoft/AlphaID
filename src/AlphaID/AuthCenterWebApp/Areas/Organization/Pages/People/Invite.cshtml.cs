@@ -12,7 +12,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 public class InviteModel(
     UserManager<NaturalPerson> applicationUserManager,
     JoinOrganizationInvitationManager joinOrganizationInvitationManager,
-    OrganizationManager organizationManager) : PageModel
+    IOrganizationStore organizationStore) : PageModel
 {
     [BindProperty]
     [Display(Name = "Invitee")]
@@ -20,9 +20,9 @@ public class InviteModel(
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         return Page();
@@ -30,7 +30,7 @@ public class InviteModel(
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         NaturalPerson? person = await applicationUserManager.FindByNameAsync(Invitee);

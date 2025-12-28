@@ -7,7 +7,6 @@ using IdSubjects.DirectoryLogon;
 using IdSubjects.RealName;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Organizational;
 
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 // ReSharper disable CheckNamespace

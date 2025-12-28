@@ -22,15 +22,15 @@ public class MembershipController(IOrganizationStore store) : ControllerBase
             return Forbid();
 
         var memberships = from organization in store.Organizations
-            from member in organization.Members
-            where member.PersonId == userId
-            select new MembershipModel()
-            {
-                Department = member.Department,
-                Title = member.Title,
-                OrganizationName = organization.Name,
-                OrganizationId = organization.Id
-            };
+                          from member in organization.Members
+                          where member.PersonId == userId
+                          select new MembershipModel()
+                          {
+                              Department = member.Department,
+                              Title = member.Title,
+                              OrganizationName = organization.Name,
+                              OrganizationId = organization.Id
+                          };
         return Ok(memberships);
     }
 

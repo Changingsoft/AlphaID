@@ -9,7 +9,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 public class IndexModel(
     OrganizationMemberManager memberManager,
     IJoinOrganizationRequestStore joinRequestStore,
-    OrganizationManager organizationManager) : PageModel
+    IOrganizationStore store) : PageModel
 {
     public IEnumerable<UserMembership> Members { get; set; } = [];
 
@@ -27,7 +27,7 @@ public class IndexModel(
     public async Task<IActionResult> OnPostLeaveAsync(string organizationId)
     {
         Members = memberManager.GetVisibleMembersOf(User.SubjectId()!, User.SubjectId());
-        var org = await organizationManager.FindByIdAsync(organizationId);
+        var org = await store.FindByIdAsync(organizationId);
         if (org == null)
         {
             ModelState.AddModelError(nameof(organizationId), "Organization not found.");
@@ -40,7 +40,7 @@ public class IndexModel(
             return Page();
         }
         org.Members.Remove(member);
-        Result = await organizationManager.UpdateAsync(org);
+        Result = await store.UpdateAsync(org);
         return Page();
     }
 }

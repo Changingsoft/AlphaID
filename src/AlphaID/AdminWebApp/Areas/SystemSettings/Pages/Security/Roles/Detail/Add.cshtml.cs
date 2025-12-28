@@ -33,7 +33,7 @@ namespace AdminWebApp.Areas.SystemSettings.Pages.Security.Roles.Detail
             }
             Role = role;
 
-            if(!userStore.Users.Any(u => u.Id == UserId))
+            if (!userStore.Users.Any(u => u.Id == UserId))
             {
                 ModelState.AddModelError(nameof(UserId), "User not found.");
             }

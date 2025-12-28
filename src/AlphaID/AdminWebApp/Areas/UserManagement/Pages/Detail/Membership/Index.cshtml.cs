@@ -8,8 +8,7 @@ namespace AdminWebApp.Areas.UserManagement.Pages.Detail.Membership;
 
 public class IndexModel(
     UserManager<NaturalPerson> personManager,
-    OrganizationManager organizationManager,
-    OrganizationMemberManager organizationMemberManager) : PageModel
+    OrganizationMemberManager organizationMemberManager, IOrganizationStore store) : PageModel
 {
     public NaturalPerson Person { get; set; } = null!;
 
@@ -38,7 +37,7 @@ public class IndexModel(
         Person = person;
         OrganizationMembers = organizationMemberManager.GetMembersOf(anchor);
 
-        Organization? org = await organizationManager.FindByIdAsync(Input.OrganizationId);
+        Organization? org = await store.FindByIdAsync(Input.OrganizationId);
         if (org == null)
         {
             ModelState.AddModelError(nameof(Input.OrganizationId), "Organization Not Found.");
@@ -55,7 +54,7 @@ public class IndexModel(
                 IsOwner = Input.IsOwner
             };
             org.Members.Add(m);
-            var result1 = await organizationManager.UpdateAsync(org);
+            var result1 = await store.UpdateAsync(org);
             if (!result1.Succeeded)
             {
                 foreach (string error in result1.Errors) ModelState.AddModelError("", error);
@@ -76,7 +75,7 @@ public class IndexModel(
         if (person == null)
             return NotFound();
         Person = person;
-        var organization = await organizationManager.FindByIdAsync(organizationId);
+        var organization = await store.FindByIdAsync(organizationId);
         if (organization == null)
         {
             ModelState.AddModelError(nameof(organizationId), "Organization Not Found.");
@@ -90,7 +89,7 @@ public class IndexModel(
         }
         organization.Members.Remove(member);
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return RedirectToPage();
     }
 

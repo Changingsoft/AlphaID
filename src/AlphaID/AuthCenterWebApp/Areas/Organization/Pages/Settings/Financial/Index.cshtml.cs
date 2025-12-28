@@ -4,7 +4,7 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings.Financial;
 
-public class IndexModel(OrganizationManager organizationManager) : PageModel
+public class IndexModel(IOrganizationStore store) : PageModel
 {
     public Organizational.Organization Data { get; set; } = null!;
 
@@ -12,9 +12,9 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Data = organization;
@@ -24,7 +24,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Data = organization;
@@ -35,13 +35,13 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
         BankAccounts.Remove(bankAccount);
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
-        Organizational.Organization? data = await organizationManager.FindByIdAsync(anchor);
+        Organizational.Organization? data = await store.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;
@@ -55,7 +55,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
             oldAccount.Default = false;
         bankAccount.Default = true;
 
-        Result = await organizationManager.UpdateAsync(data);
+        Result = await store.UpdateAsync(data);
         return Page();
     }
 }

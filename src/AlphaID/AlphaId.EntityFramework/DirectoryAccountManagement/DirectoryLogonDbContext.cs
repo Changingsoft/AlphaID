@@ -12,7 +12,8 @@ public class DirectoryLogonDbContext(DbContextOptions<DirectoryLogonDbContext> o
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<DirectoryService>(e => {
+        modelBuilder.Entity<DirectoryService>(e =>
+        {
             e.ToTable("DirectoryService");
             e.Property(ds => ds.Name).HasMaxLength(50).IsUnicode(false);
             e.Property(ds => ds.Type).HasColumnType("varchar(10)");

@@ -12,11 +12,11 @@ namespace AlphaIdPlatform.Invitations;
 /// </remarks>
 /// <param name="store"></param>
 /// <param name="personManager"></param>
-/// <param name="organizationManager"></param>
+/// <param name="organizationStore"></param>
 public class JoinOrganizationInvitationManager(
     IJoinOrganizationInvitationStore store,
     UserManager<NaturalPerson> personManager,
-    OrganizationManager organizationManager)
+    IOrganizationStore organizationStore)
 {
     internal TimeProvider TimeProvider { get; set; } = TimeProvider.System;
 
@@ -85,7 +85,7 @@ public class JoinOrganizationInvitationManager(
     {
         if (invitation.Accepted.HasValue)
             return OrganizationOperationResult.Failed("Invitation has been processed.");
-        var org = await organizationManager.FindByIdAsync(invitation.OrganizationId);
+        var org = await organizationStore.FindByIdAsync(invitation.OrganizationId);
         if (org == null)
             return OrganizationOperationResult.Failed("Organization not found.");
         if (org.Members.Any(m => m.PersonId == invitation.InviteeId))
@@ -94,13 +94,13 @@ public class JoinOrganizationInvitationManager(
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
         NaturalPerson? person = await personManager.FindByIdAsync(invitation.InviteeId);
-        Organization? organization = await organizationManager.FindByIdAsync(invitation.OrganizationId);
+        Organization? organization = await organizationStore.FindByIdAsync(invitation.OrganizationId);
         OrganizationOperationResult? result = null;
         if (organization != null && person != null)
         {
             var newMember = new OrganizationMember(person.Id, invitation.ExpectVisibility);
             organization.Members.Add(newMember);
-            await organizationManager.UpdateAsync(organization);
+            await organizationStore.UpdateAsync(organization);
         }
 
         invitation.Accepted = true;

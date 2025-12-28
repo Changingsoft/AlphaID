@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
-public class FapiaoModel(OrganizationManager organizationManager) : PageModel
+public class FapiaoModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -13,7 +13,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        Organization? organization = await organizationManager.FindByIdAsync(anchor);
+        Organization? organization = await store.FindByIdAsync(anchor);
         if (organization == null)
             return NotFound();
 
@@ -33,7 +33,7 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostSaveAsync(string anchor)
     {
-        Organization? organization = await organizationManager.FindByIdAsync(anchor);
+        Organization? organization = await store.FindByIdAsync(anchor);
         if (organization == null)
             return NotFound();
 
@@ -61,18 +61,18 @@ public class FapiaoModel(OrganizationManager organizationManager) : PageModel
             organization.Fapiao.Account = Input.Account;
         }
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 
     public async Task<IActionResult> OnPostClearAsync(string anchor)
     {
-        Organization? organization = await organizationManager.FindByIdAsync(anchor);
+        Organization? organization = await store.FindByIdAsync(anchor);
         if (organization == null)
             return NotFound();
 
         organization.Fapiao = null;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await store.UpdateAsync(organization);
         return Page();
     }
 

@@ -3,6 +3,7 @@ namespace Organizational;
 
 /// <summary>
 /// </summary>
+[Obsolete("不再考虑使用此类型。")]
 public class OrganizationIdentifier
 {
     /// <summary>

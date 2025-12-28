@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
-public class ChangeNameModel(OrganizationManager manager) : PageModel
+public class ChangeNameModel(OrganizationManager manager, IOrganizationStore store) : PageModel
 {
 
     [BindProperty]
@@ -12,7 +12,7 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        Organization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
 
@@ -26,10 +26,10 @@ public class ChangeNameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        Organization? org = await manager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
-        OrganizationOperationResult result = await manager.RenameAsync(org, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName);
+        OrganizationOperationResult result = await manager.ChangeName(org.Id, Input.NewName, DateOnly.FromDateTime(Input.ChangeDate), Input.RecordUsedName);
         if (result.Succeeded)
             return RedirectToPage("Index", new { anchor });
 

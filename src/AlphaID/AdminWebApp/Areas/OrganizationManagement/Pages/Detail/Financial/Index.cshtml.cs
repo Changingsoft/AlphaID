@@ -3,7 +3,7 @@ using Organizational;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Financial;
 
-public class IndexModel(OrganizationManager organizationManager)
+public class IndexModel(IOrganizationStore store)
     : PageModel
 {
     public Organization Data { get; set; } = null!;
@@ -14,7 +14,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        Organization? data = await organizationManager.FindByIdAsync(anchor);
+        Organization? data = await store.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;
@@ -24,7 +24,7 @@ public class IndexModel(OrganizationManager organizationManager)
 
     public async Task<IActionResult> OnPostRemoveAsync(string anchor, string accountNumber)
     {
-        Organization? data = await organizationManager.FindByIdAsync(anchor);
+        Organization? data = await store.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;
@@ -35,13 +35,13 @@ public class IndexModel(OrganizationManager organizationManager)
 
         BankAccounts.Remove(bankAccount);
 
-        Result = await organizationManager.UpdateAsync(data);
+        Result = await store.UpdateAsync(data);
         return Page();
     }
 
     public async Task<IActionResult> OnPostSetDefaultAsync(string anchor, string accountNumber)
     {
-        Organization? data = await organizationManager.FindByIdAsync(anchor);
+        Organization? data = await store.FindByIdAsync(anchor);
         if (data == null)
             return NotFound();
         Data = data;
@@ -55,7 +55,7 @@ public class IndexModel(OrganizationManager organizationManager)
             oldAccount.Default = false;
         bankAccount.Default = true;
 
-        await organizationManager.UpdateAsync(data);
+        await store.UpdateAsync(data);
         return Page();
     }
 }

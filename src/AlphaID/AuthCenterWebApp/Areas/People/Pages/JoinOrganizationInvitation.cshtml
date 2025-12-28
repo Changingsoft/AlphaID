@@ -2,10 +2,10 @@
 @using AlphaIdPlatform.Subjects
 @using AspNetWebLib.Helpers
 @using Organizational
-@inject OrganizationManager OrganizationManager
+@inject IOrganizationStore Store
 @model JoinOrganizationInvitationModel
 @{
-    Organization? organization = await OrganizationManager.FindByIdAsync(Model.Invitation.OrganizationId);
+    Organization? organization = await Store.FindByIdAsync(Model.Invitation.OrganizationId);
 }
 <h2>@L["Join organization"]</h2>
 <p>@L["{0} invite you join in {1}", Model.Invitation.Inviter, organization!]</p>

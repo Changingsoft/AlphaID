@@ -1,10 +1,5 @@
 using AlphaIdPlatform.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlphaId.EntityFramework.IdSubjects;
 public class AlphaIdIdentityDbContext(DbContextOptions<AlphaIdIdentityDbContext> options) : IdSubjectsDbContext<NaturalPerson>(options)
@@ -21,7 +16,7 @@ public class AlphaIdIdentityDbContext(DbContextOptions<AlphaIdIdentityDbContext>
             e.OwnsMany(p => p.BankAccounts, ba =>
             {
                 ba.ToTable("NaturalPersonBankAccount");
-                ba.HasKey(p => new {p.NaturalPersonId, p.AccountNumber });
+                ba.HasKey(p => new { p.NaturalPersonId, p.AccountNumber });
                 ba.WithOwner().HasForeignKey(p => p.NaturalPersonId);
                 ba.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
                 ba.Property(p => p.BankName).HasMaxLength(100);

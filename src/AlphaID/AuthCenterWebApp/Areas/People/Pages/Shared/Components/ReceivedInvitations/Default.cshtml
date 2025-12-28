@@ -1,7 +1,7 @@
 @using AlphaIdPlatform.Subjects
 @using Organizational
 @model IEnumerable<AlphaIdPlatform.Invitations.JoinOrganizationInvitation>
-@inject OrganizationManager OrganizationManager
+@inject IOrganizationStore Store
 @if (Model.Any())
 {
     <div class="card">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col text-truncate">
                             @{
-                                Organization? organization = await OrganizationManager.FindByIdAsync(invitation.OrganizationId);
+                                Organization? organization = await Store.FindByIdAsync(invitation.OrganizationId);
                             }
                             <a asp-page="/JoinOrganizationInvitation" asp-route-anchor="@ViewContext.RouteData.Values["anchor"]" asp-route-invitationId="@invitation.Id">@L["{0} invite you join {1}", invitation.Inviter, organization!]</a>
                         </div>

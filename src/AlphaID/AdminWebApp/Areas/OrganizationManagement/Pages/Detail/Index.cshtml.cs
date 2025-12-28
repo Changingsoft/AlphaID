@@ -3,7 +3,7 @@ using Organizational;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail;
 
-public class IndexModel(OrganizationManager organizationManager) : PageModel
+public class IndexModel(IOrganizationStore store) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Anchor { get; set; } = null!;
@@ -12,7 +12,7 @@ public class IndexModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        Organization? org = await organizationManager.FindByIdAsync(Anchor);
+        Organization? org = await store.FindByIdAsync(Anchor);
         if (org == null)
             return NotFound();
         Organization = org;

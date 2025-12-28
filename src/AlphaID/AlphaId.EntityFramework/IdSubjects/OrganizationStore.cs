@@ -27,6 +27,7 @@ internal class OrganizationStore(AlphaIdDbContext dbContext) : IOrganizationStor
 
     public async Task<OrganizationOperationResult> UpdateAsync(Organization organization)
     {
+        organization.WhenChanged = DateTimeOffset.UtcNow;
         dbContext.Organizations.Update(organization);
         await dbContext.SaveChangesAsync();
         return OrganizationOperationResult.Success;

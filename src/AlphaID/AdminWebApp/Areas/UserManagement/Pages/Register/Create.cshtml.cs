@@ -24,7 +24,7 @@ public class CreateModel(ChinesePersonNamePinyinConverter pinyinConverter, UserM
 
     [BindProperty]
     [Display(Name = "Email")]
-    [DataType(DataType.EmailAddress, ErrorMessage="Validate_EmailFormat")]
+    [DataType(DataType.EmailAddress, ErrorMessage = "Validate_EmailFormat")]
     [PageRemote(PageHandler = "CheckEmail", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
     [StringLength(50, ErrorMessage = "Validate_StringLength")]
     public string? Email { get; set; } = null!;

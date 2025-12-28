@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdminWebApp.Areas.OrganizationManagement.Pages.Detail.Members;
 
-public class EditModel(OrganizationManager organizationManager) : PageModel
+public class EditModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(string anchor, string personId)
     {
-        Organization? org = await organizationManager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = org.Members;
@@ -32,7 +32,7 @@ public class EditModel(OrganizationManager organizationManager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor, string personId)
     {
-        Organization? org = await organizationManager.FindByIdAsync(anchor);
+        Organization? org = await store.FindByIdAsync(anchor);
         if (org == null)
             return NotFound();
         IEnumerable<OrganizationMember> members = org.Members;
@@ -46,7 +46,7 @@ public class EditModel(OrganizationManager organizationManager) : PageModel
         member.IsOwner = Input.IsOwner;
         member.Visibility = Input.Visibility;
 
-        OrganizationOperationResult result = await organizationManager.UpdateAsync(org);
+        OrganizationOperationResult result = await store.UpdateAsync(org);
         if (result.Succeeded) return RedirectToPage("Index", new { anchor });
 
         foreach (string error in result.Errors) ModelState.AddModelError("", error);

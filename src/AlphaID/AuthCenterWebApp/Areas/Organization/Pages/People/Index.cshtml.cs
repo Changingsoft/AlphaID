@@ -7,8 +7,7 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
-public class IndexModel(
-    OrganizationManager organizationManager,
+public class IndexModel(IOrganizationStore organizationStore,
     UserManager<NaturalPerson> personManager) : PageModel
 {
     public Organizational.Organization Organization { get; set; } = null!;
@@ -24,7 +23,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -38,7 +37,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -58,14 +57,14 @@ public class IndexModel(
 
         organization.Members.Remove(your);
 
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await organizationStore.UpdateAsync(organization);
         Members = GetMembers(organization, visitor?.Id);
         return Page();
     }
 
     public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -83,13 +82,13 @@ public class IndexModel(
         if (your == null)
             return Page();
         your.IsOwner = true;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await organizationStore.UpdateAsync(organization);
         return Page();
     }
 
     public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -107,7 +106,7 @@ public class IndexModel(
         if (your == null)
             return Page();
         your.IsOwner = false;
-        Result = await organizationManager.UpdateAsync(organization);
+        Result = await organizationStore.UpdateAsync(organization);
         return Page();
     }
 

@@ -29,7 +29,7 @@ public class Organization
     /// <summary>
     /// Name.
     /// </summary>
-    public string Name { get; protected internal set; } = null!;
+    public string Name { get; protected set; } = null!;
 
     /// <summary>
     /// 住所。
@@ -79,7 +79,7 @@ public class Organization
     /// <summary>
     /// 记录修改的时间。
     /// </summary>
-    public virtual DateTimeOffset WhenChanged { get; protected internal set; }
+    public virtual DateTimeOffset WhenChanged { get; set; }
 
     /// <summary>
     /// 是否有效。
@@ -134,6 +134,7 @@ public class Organization
     /// <summary>
     /// 组织标识。
     /// </summary>
+    [Obsolete("不再考虑使用。")]
     public virtual ICollection<OrganizationIdentifier> OrganizationIdentifiers { get; protected set; } = [];
 
     /// <summary>
@@ -147,5 +148,14 @@ public class Organization
     public override string ToString()
     {
         return Name;
+    }
+
+    internal void SetName(string newName, bool recordUsedName, DateOnly changeDate)
+    {
+        if (recordUsedName)
+        {
+            UsedNames.Add(new OrganizationUsedName() { Name = this.Name, DeprecateTime = changeDate });
+        }
+        Name = newName;
     }
 }

@@ -1,7 +1,7 @@
 @using AlphaIdPlatform.Security
 @using AlphaIdPlatform.Subjects
 @using Organizational
-@inject OrganizationManager OrganizationManager
+@inject IOrganizationStore Store
 @{
     Layout = "Shared/_Layout";
     var isOwner = false;
@@ -11,7 +11,7 @@
         var subjectId = User.SubjectId();
         if (anchor != null && subjectId != null)
         {
-            var org = await OrganizationManager.FindByNameAsync(anchor);
+            var org = Store.Organizations.FirstOrDefault(o => o.Name == anchor);
             if (org != null)
                 isOwner = org.Members.Any(m => m.PersonId == subjectId && m.IsOwner);
         }

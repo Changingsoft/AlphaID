@@ -10,7 +10,7 @@ namespace AuthCenterWebApp.Services.Authorization;
 /// 用于处理用户是否是组织的所有者的授权处理程序。
 /// </summary>
 public class OrganizationOwnerRequirementHandler(
-    OrganizationManager organizationManager,
+    IOrganizationStore store,
     UserManager<NaturalPerson> personManager) : AuthorizationHandler<OrganizationOwnerRequirement>
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
@@ -27,7 +27,7 @@ public class OrganizationOwnerRequirementHandler(
         if (anchor == null)
             return;
 
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return;
 

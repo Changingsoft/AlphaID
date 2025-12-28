@@ -5,16 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class FapiaoModel(OrganizationManager organizationManager, IOrganizationStore store) : PageModel
+public class FapiaoModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
@@ -34,7 +34,7 @@ public class FapiaoModel(OrganizationManager organizationManager, IOrganizationS
 
     public async Task<IActionResult> OnPostSaveAsync(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
@@ -68,7 +68,7 @@ public class FapiaoModel(OrganizationManager organizationManager, IOrganizationS
 
     public async Task<IActionResult> OnPostClearAsync(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 

@@ -4,13 +4,13 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages;
 
-public class IndexModel(OrganizationManager organizationManager) : PageModel
+public class IndexModel(IOrganizationStore store) : PageModel
 {
     public Organizational.Organization Organization { get; set; } = null!;
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 

@@ -152,9 +152,9 @@ public class Organization
 
     internal void SetName(string newName, bool recordUsedName, DateOnly changeDate)
     {
-        if(recordUsedName)
+        if (recordUsedName)
         {
-            UsedNames.Add(new OrganizationUsedName() { Name = this.Name, DeprecateTime = changeDate});
+            UsedNames.Add(new OrganizationUsedName() { Name = this.Name, DeprecateTime = changeDate });
         }
         Name = newName;
     }

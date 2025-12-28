@@ -7,8 +7,7 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People;
 
-public class IndexModel(
-    OrganizationManager organizationManager, IOrganizationStore organizationStore,
+public class IndexModel(IOrganizationStore organizationStore,
     UserManager<NaturalPerson> personManager) : PageModel
 {
     public Organizational.Organization Organization { get; set; } = null!;
@@ -24,7 +23,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnGetAsync(string anchor)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -38,7 +37,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostLeaveAsync(string anchor, string personId)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -65,7 +64,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostSetOwner(string anchor, string personId)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;
@@ -89,7 +88,7 @@ public class IndexModel(
 
     public async Task<IActionResult> OnPostUnsetOwner(string anchor, string personId)
     {
-        var organization = await organizationManager.FindByNameAsync(anchor);
+        var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
         Organization = organization;

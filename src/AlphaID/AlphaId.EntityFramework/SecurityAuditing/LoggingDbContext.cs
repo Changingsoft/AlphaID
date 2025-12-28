@@ -10,7 +10,8 @@ public class LoggingDbContext(DbContextOptions<LoggingDbContext> options) : DbCo
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<AuditLogEntry>(e => {
+        modelBuilder.Entity<AuditLogEntry>(e =>
+        {
             e.ToTable("AuditLog");
             e.HasIndex(a => a.TimeStamp);
             e.Property(a => a.Level).HasMaxLength(128);

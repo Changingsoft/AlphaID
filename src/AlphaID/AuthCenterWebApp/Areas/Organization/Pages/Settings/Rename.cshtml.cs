@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class RenameModel(OrganizationManager manager) : PageModel
+public class RenameModel(OrganizationManager manager, IOrganizationStore store) : PageModel
 {
     [BindProperty]
     [Display(Name = "Name")]
@@ -14,9 +14,9 @@ public class RenameModel(OrganizationManager manager) : PageModel
 
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await manager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
@@ -25,11 +25,11 @@ public class RenameModel(OrganizationManager manager) : PageModel
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = await manager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
-        if (manager.Organizations.Any(o => o.Name == Name))
+        if (store.Organizations.Any(o => o.Name == Name))
             ModelState.AddModelError(nameof(Name), "The name is in use.");
 
         if (!ModelState.IsValid)

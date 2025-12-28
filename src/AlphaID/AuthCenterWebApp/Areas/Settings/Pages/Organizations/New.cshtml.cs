@@ -10,7 +10,7 @@ using System.Transactions;
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations;
 
 public class NewModel(
-    OrganizationManager organizationManager,IOrganizationStore store,
+    OrganizationManager organizationManager, IOrganizationStore store,
     UserManager<NaturalPerson> personManager) : PageModel
 {
     [BindProperty]
@@ -32,7 +32,7 @@ public class NewModel(
     {
         Name = Name.Trim().Trim('\r', '\n').Replace(" ", string.Empty);
         using var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        if (organizationManager.Organizations.Any(p => p.Name == Name))
+        if (store.Organizations.Any(p => p.Name == Name))
             ModelState.AddModelError(nameof(Name), "Organization already exists.");
 
         if (!ModelState.IsValid)
@@ -85,7 +85,7 @@ public class NewModel(
 
     public IActionResult OnPostCheckName(string name)
     {
-        return organizationManager.Organizations.Any(o => o.Name == name)
+        return store.Organizations.Any(o => o.Name == name)
             ? new JsonResult("Organization name exists.")
             : new JsonResult(true);
     }

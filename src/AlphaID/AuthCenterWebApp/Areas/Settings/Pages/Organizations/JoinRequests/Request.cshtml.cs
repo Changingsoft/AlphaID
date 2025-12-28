@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests
 {
-    public class RequestModel(JoinOrganizationManager joinOrganizationManager, OrganizationManager organizationManager) : PageModel
+    public class RequestModel(JoinOrganizationManager joinOrganizationManager, IOrganizationStore store) : PageModel
     {
         [BindProperty]
         [Display(Name = "Organization name")]
@@ -20,7 +20,7 @@ namespace AuthCenterWebApp.Areas.Settings.Pages.Organizations.JoinRequests
 
         public async Task<IActionResult> OnPost()
         {
-            var org = await organizationManager.FindByNameAsync(OrganizationName);
+            var org = store.Organizations.FirstOrDefault(o => o.Name == OrganizationName);
             if (org == null)
                 ModelState.AddModelError(nameof(OrganizationName), "Organization not found.");
 

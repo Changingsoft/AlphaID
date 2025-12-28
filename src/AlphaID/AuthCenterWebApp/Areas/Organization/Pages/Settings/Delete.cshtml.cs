@@ -4,13 +4,13 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class DeleteModel(OrganizationManager manager, IOrganizationStore store) : PageModel
+public class DeleteModel(IOrganizationStore store) : PageModel
 {
     public OrganizationOperationResult? Result { get; set; }
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await manager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null) return NotFound();
 
         return Page();
@@ -18,7 +18,7 @@ public class DeleteModel(OrganizationManager manager, IOrganizationStore store) 
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = await manager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null) return NotFound();
 
         Result = await store.DeleteAsync(organization);

@@ -22,8 +22,8 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
     {
         using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
-        await organizationManager.CreateAsync(new Organization ("Test Organization"));
-        var result = await organizationManager.CreateAsync(new Organization ("Test Organization"));
+        await organizationManager.CreateAsync(new Organization("Test Organization"));
+        var result = await organizationManager.CreateAsync(new Organization("Test Organization"));
         Assert.False(result.Succeeded);
     }
 
@@ -32,9 +32,9 @@ public class OrganizationManagerTest(ServiceProviderFixture serviceProviderFixtu
     {
         using var scope = serviceProviderFixture.ServiceScopeFactory.CreateScope();
         var organizationManager = scope.ServiceProvider.GetRequiredService<OrganizationManager>();
-        var orgA = new Organization ("OrgA");
+        var orgA = new Organization("OrgA");
         await organizationManager.CreateAsync(orgA);
-        await organizationManager.CreateAsync(new Organization ("OrgB"));
+        await organizationManager.CreateAsync(new Organization("OrgB"));
         var result = await organizationManager.ChangeName(orgA.Id, "OrgB");
         Assert.False(result.Succeeded);
     }

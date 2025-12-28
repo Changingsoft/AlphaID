@@ -75,7 +75,7 @@ namespace AuthCenterWebApp.Pages.Account
 
             //尝试验证外部登录。
             ExternalLoginResult = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-            
+
             //没有外部登录结果。
             if (ExternalLoginResult.None)
             {

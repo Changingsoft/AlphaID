@@ -5,15 +5,15 @@ using Organizational;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.People
 {
-    public class InvitationsModel(JoinOrganizationInvitationManager manager, OrganizationManager organizationManager) : PageModel
+    public class InvitationsModel(JoinOrganizationInvitationManager manager, IOrganizationStore organizationStore) : PageModel
     {
         public IEnumerable<JoinOrganizationInvitation> Invitations { get; set; } = [];
 
         public OrganizationOperationResult? Result { get; set; }
 
-        public async Task<IActionResult> OnGet(string anchor)
+        public IActionResult OnGet(string anchor)
         {
-            var organization = await organizationManager.FindByNameAsync(anchor);
+            var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
             if (organization == null)
                 return NotFound();
             Invitations = manager.GetIssuedInvitations(organization.Id);
@@ -22,7 +22,7 @@ namespace AuthCenterWebApp.Areas.Organization.Pages.People
 
         public async Task<IActionResult> OnPostRevoke(string anchor, int invitationId)
         {
-            var organization = await organizationManager.FindByNameAsync(anchor);
+            var organization = organizationStore.Organizations.FirstOrDefault(o => o.Name == anchor);
             if (organization == null)
                 return NotFound();
 

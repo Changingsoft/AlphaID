@@ -5,16 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Areas.Organization.Pages.Settings;
 
-public class IndexModel(OrganizationManager manager,IOrganizationStore store) : PageModel
+public class IndexModel(IOrganizationStore store) : PageModel
 {
     [BindProperty]
     public InputModel Input { get; set; } = null!;
 
     public OrganizationOperationResult OperationResult { get; set; } = null!;
 
-    public async Task<IActionResult> OnGet(string anchor)
+    public IActionResult OnGet(string anchor)
     {
-        var organization = await manager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 
@@ -31,7 +31,7 @@ public class IndexModel(OrganizationManager manager,IOrganizationStore store) : 
 
     public async Task<IActionResult> OnPostAsync(string anchor)
     {
-        var organization = await manager.FindByNameAsync(anchor);
+        var organization = store.Organizations.FirstOrDefault(o => o.Name == anchor);
         if (organization == null)
             return NotFound();
 

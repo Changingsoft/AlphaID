@@ -38,7 +38,8 @@ public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbCo
             e.Property(p => p.Location).HasColumnType("geography");
             e.Property(p => p.Website).HasMaxLength(256);
             e.Property(p => p.Description).HasMaxLength(200);
-            e.OwnsOne(p => p.Fapiao, f => { 
+            e.OwnsOne(p => p.Fapiao, f =>
+            {
                 f.Property(p => p.Name).HasMaxLength(100);
                 f.Property(p => p.TaxPayerId).HasMaxLength(20).IsUnicode(false);
                 f.Property(p => p.Address).HasMaxLength(200);
@@ -93,8 +94,9 @@ public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbCo
             e.Property(p => p.OrganizationId).HasMaxLength(50).IsUnicode(false);
             e.Property(p => p.Inviter).HasMaxLength(50);
         });
-        modelBuilder.Entity<JoinOrganizationRequest>(e => { 
-        e.ToTable("JoinOrganizationRequest");
+        modelBuilder.Entity<JoinOrganizationRequest>(e =>
+        {
+            e.ToTable("JoinOrganizationRequest");
             e.HasKey(p => p.Id);
             e.Property(p => p.UserId).HasMaxLength(50).IsUnicode(false);
             e.Property(p => p.OrganizationName).HasMaxLength(50);

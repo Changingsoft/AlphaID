@@ -74,13 +74,6 @@ public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbCo
                 m.Property(p => p.Title).HasMaxLength(50);
                 m.Property(p => p.Remark).HasMaxLength(50);
             });
-            e.OwnsMany(p => p.OrganizationIdentifiers, oi =>
-            {
-                oi.ToTable("OrganizationIdentifier");
-                oi.WithOwner().HasForeignKey(p => p.OrganizationId);
-                oi.HasKey(p => new { p.Value, p.OrganizationId, p.Type });
-                oi.Property(p => p.Value).HasMaxLength(30).IsUnicode(false);
-            });
             e.HasIndex(p => p.Name);
             e.HasIndex(p => p.USCC).IsUnique();
             e.HasIndex(p => p.WhenCreated);

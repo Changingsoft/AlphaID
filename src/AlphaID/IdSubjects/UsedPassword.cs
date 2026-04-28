@@ -12,6 +12,11 @@ public class UsedPassword
     public int Id { get; set; }
 
     /// <summary>
+    /// 
+    /// </summary>
+    public string NaturalPersonId { get; protected set; } = null!;
+
+    /// <summary>
     /// 已使用的密码哈希值。
     /// </summary>
     public string PasswordHash { get; set; } = null!;

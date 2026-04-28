@@ -119,7 +119,7 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     /// 密码历史记录。
     /// </summary>
-    public virtual ICollection<UsedPassword> UsedPasswords { get; set; } = [];
+    public virtual ICollection<UsedPassword> UsedPasswords { get; protected set; } = [];
 
     /// <inheritdoc />
     public override string ToString()

@@ -12,6 +12,15 @@ using System.Security.Claims;
 
 namespace AuthCenterWebApp.Pages.Account;
 
+/// <summary>
+/// 强制更改密码。此页用于用户在通过身份验证前，必须强制要求修改密码的场景。
+/// 用户在登录时，如果满足强制更改密码的条件（例如密码过期），将被重定向到此页，要求他们输入当前密码和新密码以完成密码更改过程。
+/// 一旦成功更改密码，用户将被重定向回原始请求的页面或主页。
+/// </summary>
+/// <param name="naturalPersonService"></param>
+/// <param name="userManager"></param>
+/// <param name="signInManager"></param>
+/// <param name="interaction"></param>
 [SecurityHeaders]
 [AllowAnonymous]
 public class ChangePasswordModel(

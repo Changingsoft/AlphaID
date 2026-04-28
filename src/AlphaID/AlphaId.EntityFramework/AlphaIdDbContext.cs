@@ -47,38 +47,42 @@ public class AlphaIdDbContext(DbContextOptions<AlphaIdDbContext> options) : DbCo
                 f.Property(p => p.Bank).HasMaxLength(100);
                 f.Property(p => p.Account).HasMaxLength(50).IsUnicode(false);
             });
-            e.OwnsMany(p => p.UsedNames, un =>
-            {
-                un.ToTable("OrganizationUsedName");
-                un.HasKey(n => n.Id);
-                un.Property(n => n.Name).HasMaxLength(100);
-            });
-            e.OwnsMany(p => p.BankAccounts, ba =>
-            {
-                ba.ToTable("OrganizationBankAccount");
-                ba.WithOwner().HasForeignKey(p => p.OrganizationId);
-                ba.HasKey(p => new { p.OrganizationId, p.AccountNumber });
-                ba.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
-                ba.Property(p => p.AccountName).HasMaxLength(100);
-                ba.Property(p => p.BankName).HasMaxLength(100);
-                ba.Property(p => p.Usage).HasMaxLength(20);
-            });
-            e.OwnsMany(p => p.Members, m =>
-            {
-                m.ToTable("OrganizationMember");
-                m.WithOwner().HasForeignKey(p => p.OrganizationId);
-                m.HasKey(p => new { p.OrganizationId, p.PersonId });
-                m.HasIndex(p => p.PersonId);
-                m.Property(p => p.PersonId).HasMaxLength(50).IsUnicode(false);
-                m.Property(p => p.Department).HasMaxLength(50);
-                m.Property(p => p.Title).HasMaxLength(50);
-                m.Property(p => p.Remark).HasMaxLength(50);
-            });
+            e.HasMany(p => p.UsedNames).WithOne().HasForeignKey(p => p.OrganizationId);
+            e.HasMany(p => p.BankAccounts).WithOne().HasForeignKey(p => p.OrganizationId);
+            e.HasMany(p => p.Members).WithOne().HasForeignKey(p => p.OrganizationId);
+            
             e.HasIndex(p => p.Name);
             e.HasIndex(p => p.USCC).IsUnique();
             e.HasIndex(p => p.WhenCreated);
             e.HasIndex(p => p.WhenChanged);
         });
+
+        modelBuilder.Entity<OrganizationUsedName>(e =>
+        {
+            e.ToTable("OrganizationUsedName");
+            e.HasKey(p => p.Id);
+            e.Property(p => p.Name).HasMaxLength(100);
+        });
+        modelBuilder.Entity<OrganizationBankAccount>(e =>
+        {
+            e.ToTable("OrganizationBankAccount");
+            e.HasKey(p => new { p.OrganizationId, p.AccountNumber });
+            e.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.AccountName).HasMaxLength(100);
+            e.Property(p => p.BankName).HasMaxLength(100);
+            e.Property(p => p.Usage).HasMaxLength(20);
+        });
+        modelBuilder.Entity<OrganizationMember>(e =>
+        {
+            e.ToTable("OrganizationMember");
+            e.HasKey(p => new { p.OrganizationId, p.PersonId });
+            e.Property(p => p.PersonId).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.Department).HasMaxLength(50);
+            e.Property(p => p.Title).HasMaxLength(50);
+            e.Property(p => p.Remark).HasMaxLength(50);
+            e.HasIndex(p => p.PersonId);
+        });
+
         modelBuilder.Entity<JoinOrganizationInvitation>(e =>
         {
             e.ToTable("JoinOrganizationInvitation");

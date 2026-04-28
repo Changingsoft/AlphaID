@@ -56,5 +56,5 @@ public class NaturalPerson : ApplicationUser
     /// <summary>
     /// 银行账户。
     /// </summary>
-    public virtual ICollection<NaturalPersonBankAccount> BankAccounts { get; set; } = [];
+    public virtual ICollection<NaturalPersonBankAccount> BankAccounts { get; protected set; } = [];
 }

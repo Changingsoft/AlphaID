@@ -49,9 +49,7 @@ public class IdSubjectsDbContext<T>(DbContextOptions options) : IdentityDbContex
             owned.Property(p => p.Contact).HasMaxLength(20).IsUnicode(false);
             owned.Property(p => p.PostalCode).HasMaxLength(20).IsUnicode(false);
 
-            var usedPasswords = b.OwnsMany(a => a.UsedPasswords);
-            usedPasswords.ToTable("UsedPassword");
-            usedPasswords.Property(p => p.PasswordHash).HasMaxLength(255).IsUnicode(false);
+            b.HasMany(p => p.UsedPasswords).WithOne().HasForeignKey(p => p.NaturalPersonId);
         });
         builder.Entity<IdentityUserLogin<string>>(b =>
         {
@@ -95,5 +93,12 @@ public class IdSubjectsDbContext<T>(DbContextOptions options) : IdentityDbContex
             b.Property(p => p.ClaimValue).HasMaxLength(50);
         });
 
+        builder.Entity<UsedPassword>(e =>
+        {
+            e.ToTable("UsedPassword");
+            e.HasKey(p => new { p.NaturalPersonId, p.Id });
+            e.Property(p => p.Id).ValueGeneratedOnAdd();
+            e.Property(p => p.PasswordHash).HasMaxLength(255).IsUnicode(false);
+        });
     }
 }

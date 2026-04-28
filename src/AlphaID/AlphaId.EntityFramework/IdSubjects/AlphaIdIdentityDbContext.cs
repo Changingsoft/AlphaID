@@ -13,16 +13,16 @@ public class AlphaIdIdentityDbContext(DbContextOptions<AlphaIdIdentityDbContext>
             e.Property(p => p.PhoneticSurname).HasMaxLength(20).IsUnicode(false);
             e.Property(p => p.PhoneticGivenName).HasMaxLength(40).IsUnicode(false);
             e.Property(p => p.SearchHint).HasMaxLength(60);
-            e.OwnsMany(p => p.BankAccounts, ba =>
-            {
-                ba.ToTable("NaturalPersonBankAccount");
-                ba.HasKey(p => new { p.NaturalPersonId, p.AccountNumber });
-                ba.WithOwner().HasForeignKey(p => p.NaturalPersonId);
-                ba.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
-                ba.Property(p => p.BankName).HasMaxLength(100);
-                ba.Property(p => p.AccountName).HasMaxLength(100);
-            });
+            e.HasMany(p => p.BankAccounts).WithOne().HasForeignKey(p => p.NaturalPersonId);
             e.HasIndex(p => p.SearchHint);
+        });
+        builder.Entity<NaturalPersonBankAccount>(e =>
+        {
+            e.ToTable("NaturalPersonBankAccount");
+            e.HasKey(p => new { p.NaturalPersonId, p.AccountNumber });
+            e.Property(p => p.AccountNumber).HasMaxLength(50).IsUnicode(false);
+            e.Property(p => p.BankName).HasMaxLength(100);
+            e.Property(p => p.AccountName).HasMaxLength(100);
         });
     }
 }

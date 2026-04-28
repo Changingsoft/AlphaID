@@ -163,6 +163,7 @@ builder.Services
 var platform = builder.Services.AddAlphaIdPlatform();
 platform.AddEntityFramework(options =>
 {
+    options.UseLazyLoadingProxies();
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sql =>
     {
         sql.UseNetTopologySuite();

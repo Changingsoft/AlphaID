@@ -12,6 +12,11 @@ public class OrganizationUsedName
     public int Id { get; protected set; }
 
     /// <summary>
+    /// Organization Id.
+    /// </summary>
+    public string OrganizationId { get; protected set; } = null!;
+
+    /// <summary>
     /// 名称。
     /// </summary>
     public string Name { get; set; } = null!;

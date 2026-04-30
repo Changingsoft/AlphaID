@@ -58,5 +58,5 @@ ldifde -i -f "<LDF_FILE>" -s localhost -v
 若开发过程中涉及目录数据变动需要导出，可使用以下命令
 
 ``` powershell
-ldifde -f "<OUTPUT_FILE>" -s localhost -d DC=changingsoft,DC=com -r "(objectClass=user)" -l dn,objectClass,cn,distinguishedName,instanceType,name,objectCategory,msDS-UserAccountDisabled -v
+ldifde -f "<OUTPUT_FILE>" -s localhost -d DC=changingsoft,DC=com -r "(objectClass=user)" -l dn,objectClass,cn,distinguishedName,instanceType,name,objectCategory,msDS-UserAccountDisabled,sn,givenName,displayName,mobile -v
 ```

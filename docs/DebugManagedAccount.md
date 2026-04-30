@@ -19,25 +19,44 @@
 
 ### 2、从开始菜单找到打开“Active Directory轻型目录服务安装向导”
 
-实例名和描述可以随意填写，如下图。
-![](/docs/Toturials/Add-ADLDS-instance-wizard1.png)
+实例名和描述可以随意填写，实例名将用作Windows服务的名称。如下图。
+![实例名称和描述](/docs/Toturials/Add-ADLDS-instance-wizard1.png)
 
 请确保端口号为LDAP常用端口，如下图。
 
 > 如果你计划使用其他端口号，请务必在对应sql脚本中修改Server字段，加上端口号。
 
-![](/docs/Toturials/Add-ADLDS-instance-wizard2.png)
+![端口号](/docs/Toturials/Add-ADLDS-instance-wizard2.png)
 
-### 3、从备份恢复实例状态
+创建一个名为`DC=changingsoft,DC=com`的命名分区
 
-从服务管理找到ADLDS服务，名称是刚刚创建的实例名，停止该服务。
+![命名分区](/docs/Toturials/Add-ADLDS-instance-wizard3.png)
 
-将`/eng/ADLDS/data`文件夹，覆盖到`“C:\Program Files\Microsoft ADAM\<实例名>”`下。
+添加用户类架构
 
-重新启动该服务。
+![用户类架构](/docs/Toturials/Add-ADLDS-instance-wizard4.png)
+
+### 3、从恢复实例状态
+
+请从LDF文件恢复用户条目。它位于`/eng/ADLDS/users.ldf`。
+
+``` powershell
+ldifde -i -f "<LDF_FILE>" -s localhost -v
+```
+
+这将把相关调试用户添加到目录中。要浏览目录内容，可以使用ADSI编辑器或其他目录浏览器程序。
+
 
 ### 4、在调试数据库中执行sql脚本
 
 在调试用数据库中，执行`/eng/ADLDS/AddDirectoryServiceAccounts.sql`脚本。
 
 现在，你就可以开始进行调试，观察和验证托管账户管理的设计行为。
+
+### 5、导出和备份
+
+若开发过程中涉及目录数据变动需要导出，可使用以下命令
+
+``` powershell
+ldifde -f "<OUTPUT_FILE>" -s localhost -d DC=changingsoft,DC=com -r "(objectClass=user)" -l dn,objectClass,cn,distinguishedName,instanceType,name,objectCategory,msDS-UserAccountDisabled -v
+```

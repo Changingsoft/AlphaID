@@ -47,15 +47,19 @@ ldifde -i -f "<LDF_FILE>" -s localhost -v
 这将把相关调试用户添加到目录中。要浏览目录内容，可以使用ADSI编辑器或其他目录浏览器程序。
 
 
-### 4、在调试数据库中执行sql脚本
+### 4、执行DatabaseTool
 
-在调试用数据库中，执行`/eng/ADLDS/AddDirectoryServiceAccounts.sql`脚本。
+若ADLDS服务已就绪，在默认端口389提供服务，那么在`Development`环境下执行DatabaseTool时，将会尝试自动准备目录服务相关的数据。
 
-现在，你就可以开始进行调试，观察和验证托管账户管理的设计行为。
+``` powershell
+.\DatabaseTool.exe --environment Development
+```
+
+要检查是否已经准备好数据，可用`SMSS`打开数据库，检查表`DirectoryService`和`LogonAccount`中是否存在数据行。
 
 ### 5、导出和备份
 
-若开发过程中涉及目录数据变动需要导出，可使用以下命令
+若要导出目录数据，可使用以下命令，这将生成可用来恢复实例状态的可导入的ldf文件。
 
 ``` powershell
 ldifde -f "<OUTPUT_FILE>" -s localhost -d DC=changingsoft,DC=com -r "(objectClass=user)" -l dn,objectClass,cn,distinguishedName,instanceType,name,objectCategory,msDS-UserAccountDisabled,sn,givenName,displayName,mobile -v

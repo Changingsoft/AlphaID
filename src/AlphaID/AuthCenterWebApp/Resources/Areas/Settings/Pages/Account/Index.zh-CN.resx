@@ -127,27 +127,27 @@
     <value>更改手机号</value>
   </data>
   <data name="Change your user name" xml:space="preserve">
-    <value>更改账户名</value>
+    <value>更改用户名</value>
   </data>
   <data name="Directory service" xml:space="preserve">
-	  <value>目录服务</value>
+    <value>目录服务</value>
   </data>
   <data name="Manage personal data" xml:space="preserve">
     <value>管理个人数据</value>
   </data>
   <data name="Managed directory accounts" xml:space="preserve">
-	  <value>托管的目录账户</value>
+    <value>托管的目录账户</value>
   </data>
   <data name="Object Id" xml:space="preserve">
-	  <value>对象ID</value>
+    <value>对象ID</value>
   </data>
   <data name="Personal data" xml:space="preserve">
     <value>个人数据</value>
   </data>
   <data name="Directory account not found." xml:space="preserve">
-	  <value>没有目录账户。</value>
+    <value>没有目录账户。</value>
   </data>
   <data name="Delete Account" xml:space="preserve">
-	  <value>删除账户</value>
+    <value>删除账户</value>
   </data>
 </root>

@@ -55,6 +55,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Account\Mobile.zh-cn.resx">
+	    <DependentUpon>Mobile.resx</DependentUpon>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Areas\Settings\Pages\Organizations\JoinRequests\Index.zh-cn.resx">
 	    <DependentUpon>Index.resx</DependentUpon>
 	  </EmbeddedResource>

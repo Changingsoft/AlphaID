@@ -143,4 +143,13 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
             Description = Resources.PasswordRequiresUniqueChars,
         };
     }
+
+    public override IdentityError DuplicateUserName(string userName)
+    {
+        return new IdentityError()
+        {
+            Code = nameof(DuplicateUserName),
+            Description = Resources.DuplicateUserName,
+        }; 
+    }
 }

@@ -67,6 +67,7 @@ public class ChangePasswordModel(
         [Display(Name = "New password")]
         public string NewPassword { get; set; } = null!;
 
+        [Required(ErrorMessage = "Validate_Required")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "Validate_PasswordConfirm")]

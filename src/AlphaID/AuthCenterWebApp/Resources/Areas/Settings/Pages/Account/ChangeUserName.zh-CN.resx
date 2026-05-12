@@ -101,6 +101,6 @@
     <value>更改</value>
   </data>
   <data name="Change user name" xml:space="preserve">
-    <value>更改账户名</value>
+	  <value>更改用户名</value>
   </data>
 </root>

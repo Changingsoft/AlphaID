@@ -13,8 +13,7 @@ public class ChangeUserNameModel(
 {
     [BindProperty]
     [Display(Name = "User name")]
-    [StringLength(50, MinimumLength = 4, ErrorMessage = "Validate_StringLength")]
-    [PageRemote(HttpMethod = "Post", PageHandler = "CheckName", AdditionalFields = "__RequestVerificationToken")]
+    [StringLength(50, MinimumLength = 1, ErrorMessage = "Validate_StringLength")]
     public string UserName { get; set; } = null!;
 
     public IdentityResult? Result { get; set; }
@@ -27,7 +26,7 @@ public class ChangeUserNameModel(
             logger?.LogWarning("从用户的登录信息无法查询到用户");
             return NotFound();
         }
-
+        UserName = person.UserName ?? string.Empty;
         return Page();
     }
 
@@ -48,8 +47,4 @@ public class ChangeUserNameModel(
         return Page();
     }
 
-    public IActionResult OnPostCheckName(string userName)
-    {
-        return new JsonResult(true); //todo 用户输入用户名时实时验证用户名是否可用
-    }
 }

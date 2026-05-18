@@ -88,13 +88,6 @@
                 <select asp-for="Input.Gender" asp-items="EnumHelper.GetSelectListItems<Gender>()" class="form-select"></select>
                 <span asp-description-for="Input.Gender"></span>
             </div>
-            <div class="mb-3">
-                <label asp-for="Input.Website" class="form-label"></label>
-                <input asp-for="Input.Website" class="form-control" />
-                <span asp-description-for="Input.Website"></span>
-                <span asp-validation-for="Input.Website" class="text-danger"></span>
-            </div>
-
             <div asp-validation-summary="All" class="text-danger"></div>
             <button type="submit" class="btn btn-primary">@L["Update profile"]</button>
         </form>

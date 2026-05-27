@@ -24,7 +24,6 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, Sig
         Input = new InputModel
         {
             Bio = person.Bio,
-            Website = person.WebSite,
             Gender = person.Gender ?? Gender.Other,
             DateOfBirth = person.DateOfBirth?.ToDateTime(TimeOnly.MinValue)
         };
@@ -41,7 +40,6 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, Sig
             return Page();
 
         person.Bio = Input.Bio;
-        person.WebSite = Input.Website;
         person.Gender = Input.Gender;
 
         Result = await naturalPersonService.UpdateAsync(person);
@@ -85,11 +83,6 @@ public class IndexModel(ApplicationUserManager<NaturalPerson> personManager, Sig
         [Display(Name = "Bio", Description = "Short description about yourself.")]
         [StringLength(200, ErrorMessage = "Validate_StringLength")]
         public string? Bio { get; set; }
-
-        [Display(Name = "Website")]
-        [DataType(DataType.Url)]
-        [StringLength(256, ErrorMessage = "Validate_StringLength")]
-        public string? Website { get; set; }
 
         [Display(Name = "Gender")]
         public Gender? Gender { get; set; }

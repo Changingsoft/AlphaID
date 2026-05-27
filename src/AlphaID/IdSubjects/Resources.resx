@@ -177,4 +177,7 @@
   <data name="PasswordRequiresUniqueChars" xml:space="preserve">
     <value>Password requires unique chars.</value>
   </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>Username '{0}' is already taken.</value>
+  </data>
 </root>

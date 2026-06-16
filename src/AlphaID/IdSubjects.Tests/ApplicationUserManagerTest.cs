@@ -203,7 +203,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         Assert.True(result.Succeeded);
         Assert.Equal("+8613812345678", user.PhoneNumber);
 
-        result = await manager.SetPhoneNumberAsync(user, "", true);
+        result = await manager.SetPhoneNumberAsync(user, null, true);
         Assert.True(result.Succeeded);
         Assert.Null(user.PhoneNumber);
         Assert.False(user.PhoneNumberConfirmed);

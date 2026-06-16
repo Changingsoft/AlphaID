@@ -20,7 +20,7 @@ where T : ApplicationUser
                                                     throw new InvalidOperationException(
                                                         "无法转换UserManger到ApplicationUserManager。");
         var errors = new List<IdentityError>();
-        string? phoneNumber = await applicationUserManager.GetPhoneNumberAsync(user);
+        var phoneNumber = await applicationUserManager.GetPhoneNumberAsync(user);
         if (phoneNumber == null) return errors.Count > 0 ? IdentityResult.Failed([.. errors]) : IdentityResult.Success;
 
         if (MobilePhoneNumber.TryParse(phoneNumber, out MobilePhoneNumber number))

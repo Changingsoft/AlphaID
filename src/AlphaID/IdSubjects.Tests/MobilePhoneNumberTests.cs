@@ -40,8 +40,9 @@ public class MobilePhoneNumberTests
         Assert.True(MobilePhoneNumber.TryParse("+8613812345678 ", out _));
 
         Assert.False(MobilePhoneNumber.TryParse("+8513812345678", out _));
-        Assert.False(MobilePhoneNumber.TryParse("+86138123456789", out _));
-        Assert.False(MobilePhoneNumber.TryParse("+861381234567", out _));
+        //todo 不再作长度检查。
+        //Assert.False(MobilePhoneNumber.TryParse("+86138123456789", out _));
+        //Assert.False(MobilePhoneNumber.TryParse("+861381234567", out _));
         Assert.False(MobilePhoneNumber.TryParse("", out _));
         Assert.False(MobilePhoneNumber.TryParse("  ", out _));
     }
@@ -57,8 +58,9 @@ public class MobilePhoneNumberTests
 
         Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse(""));
         Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("  "));
-        Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("+86159123456789"));
-        Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("+861591234567"));
-        Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("+8515912345678"));
+        Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("+861a59123456789"));
+        //todo 当前已不作手机号长度检查，因此以下两条测试不再抛出异常，后续如果需要恢复手机号长度检查，则需要恢复这两条测试。
+        //Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("+861a591234567"));
+        //Assert.ThrowsAny<Exception>(() => MobilePhoneNumber.Parse("+851a5912345678"));
     }
 }

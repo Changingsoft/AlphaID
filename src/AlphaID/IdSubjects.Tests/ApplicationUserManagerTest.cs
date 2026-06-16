@@ -187,7 +187,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         var user = new ApplicationUser("TestUser");
         await manager.CreateAsync(user);
 
-        var result = await manager.SetPhoneNumberAsync(user, "1234567890");
+        var result = await manager.SetPhoneNumberAsync(user, "1a234567890");
         Assert.False(result.Succeeded);
     }
 
@@ -203,7 +203,7 @@ public class ApplicationUserManagerTest(ServiceProviderFixture serviceProvider)
         Assert.True(result.Succeeded);
         Assert.Equal("+8613812345678", user.PhoneNumber);
 
-        result = await manager.SetPhoneNumberAsync(user, "", true);
+        result = await manager.SetPhoneNumberAsync(user, null, true);
         Assert.True(result.Succeeded);
         Assert.Null(user.PhoneNumber);
         Assert.False(user.PhoneNumberConfirmed);

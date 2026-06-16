@@ -452,19 +452,6 @@ where T : ApplicationUser
         return result;
     }
 
-    /// <inheritdoc />
-    public override async Task<IdentityResult> SetPhoneNumberAsync(T user, string? phoneNumber)
-    {
-        if (string.IsNullOrEmpty(phoneNumber))
-            return await base.SetPhoneNumberAsync(user, null);
-
-        if (!MobilePhoneNumber.TryParse(phoneNumber, out _))
-        {
-            return IdentityResult.Failed(AppErrorDescriber.InvalidPhoneNumberFormat());
-        }
-        return await base.SetPhoneNumberAsync(user, phoneNumber);
-    }
-
     /// <summary>
     /// 设置指定用户的手机号，并可选地标记为已确认。
     /// </summary>

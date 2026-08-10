@@ -62,7 +62,7 @@ public static class ClaimsPrincipalExtensions
         Claim[] roleClaims = [.. principal.Claims.Where(c => c.Type == claimsIdentity.RoleClaimType)];
         if (roleClaims.Length == 0)
             return string.Empty;
-        return roleClaims.Select(p => p.Value).Aggregate((x, y) => $"{x},{y}");
+        return string.Join(", ", roleClaims.Select(p => p.Value));
     }
 
     /// <summary>

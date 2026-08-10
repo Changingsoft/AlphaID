@@ -47,7 +47,7 @@ public class NewModel(
         OrganizationOperationResult result = await organizationManager.CreateAsync(organization);
         if (!result.Succeeded)
         {
-            ModelState.AddModelError("", result.Errors.Aggregate((x, y) => $"{x}, {y}"));
+            ModelState.AddModelError("", string.Join(", ", result.Errors ?? System.Array.Empty<string>()));
             return Page();
         }
 
@@ -68,7 +68,7 @@ public class NewModel(
             var joinResult = await store.UpdateAsync(organization);
             if (!joinResult.Succeeded)
             {
-                ModelState.AddModelError("", joinResult.Errors.Aggregate((x, y) => $"{x}, {y}"));
+                ModelState.AddModelError("", string.Join(", ", joinResult.Errors ?? System.Array.Empty<string>()));
                 return Page();
             }
         }

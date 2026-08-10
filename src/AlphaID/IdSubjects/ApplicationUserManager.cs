@@ -304,13 +304,13 @@ where T : ApplicationUser
         if (!result.Succeeded)
         {
             await EventService.RaiseAsync(
-                new ChangePasswordFailureEvent(user.UserName, result.Errors.Select(e => e.Description)
-                    .Aggregate((x, y) => $"{x},{y}")));
+                new ChangePasswordFailureEvent(user.UserName, string.Join(", ", result.Errors.Select(e => e.Description))));
             return result;
         }
 
 
         await EventService.RaiseAsync(new ChangePasswordSuccessEvent(user.UserName, "用户重置了密码。"));
+
         return result;
     }
 
@@ -327,8 +327,7 @@ where T : ApplicationUser
         if (!result.Succeeded)
         {
             await EventService.RaiseAsync(
-                new ChangePasswordFailureEvent(user.UserName, result.Errors.Select(e => e.Description)
-                    .Aggregate((x, y) => $"{x},{y}")));
+                new ChangePasswordFailureEvent(user.UserName, string.Join(", ", result.Errors.Select(e => e.Description))));
             return result;
         }
 
@@ -362,7 +361,7 @@ where T : ApplicationUser
             result = await UnlockUserAsync(user);
         if (!result.Succeeded)
         {
-            string errMessage = result.Errors.Select(p => p.Description).Aggregate((a, b) => $"{a}, {b}");
+            string errMessage = string.Join(", ", result.Errors.Select(p => p.Description));
             await EventService.RaiseAsync(new ChangePasswordFailureEvent(user.UserName, errMessage));
         }
         else

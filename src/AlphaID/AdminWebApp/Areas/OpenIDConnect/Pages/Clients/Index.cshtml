@@ -66,10 +66,10 @@
                             </div>
                         </td>
                         <td>
-                            @Html.Raw(client.AllowedGrantTypes.Aggregate((x, y) => $"{x}, {y}"))
+                            @Html.Raw(string.Join(", ", client.AllowedGrantTypes))
                         </td>
                         <td>
-                            @Html.Raw(client.AllowedScopes.Aggregate((x, y) => $"{x}, {y}"))
+                            @Html.Raw(string.Join(", ", client.AllowedScopes))
                         </td>
                     </tr>
                 }

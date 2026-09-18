@@ -1,4 +1,4 @@
-using Duende.IdentityModel;
+using System.Buffers.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,7 @@ public class Index(IWebHostEnvironment env) : PageModel
 
             if (encoded == null) return;
 
-            byte[] bytes = Base64Url.Decode(encoded);
+            byte[] bytes = Base64Url.DecodeFromChars(encoded);
             string value = Encoding.UTF8.GetString(bytes);
 
             Clients = JsonSerializer.Deserialize<string[]>(value)!;

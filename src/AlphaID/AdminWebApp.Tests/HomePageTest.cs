@@ -13,7 +13,7 @@ public class HomePageTest(AdminWebAppFactory factory)
         {
             AllowAutoRedirect = false
         });
-        HttpResponseMessage response = await client.GetAsync("/");
+        HttpResponseMessage response = await client.GetAsync("/", TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
     }
 
@@ -22,7 +22,7 @@ public class HomePageTest(AdminWebAppFactory factory)
     {
         HttpClient client = factory.CreateAuthenticatedClient();
 
-        HttpResponseMessage response = await client.GetAsync("/");
+        HttpResponseMessage response = await client.GetAsync("/", TestContext.Current.CancellationToken);
         Assert.True(response.IsSuccessStatusCode);
     }
 }

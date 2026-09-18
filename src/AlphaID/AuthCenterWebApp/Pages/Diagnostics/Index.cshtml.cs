@@ -30,12 +30,12 @@ public class Index(IWebHostEnvironment env) : PageModel
             AuthenticateResult = result;
             if (result.Properties == null) return;
 
-            if (!result.Properties.Items.TryGetValue("client_list", out string? encoded)) return;
+            if (!result.Properties.Items.TryGetValue("client_list", out var encoded)) return;
 
             if (encoded == null) return;
 
-            byte[] bytes = Base64Url.DecodeFromChars(encoded);
-            string value = Encoding.UTF8.GetString(bytes);
+            var bytes = Base64Url.DecodeFromChars(encoded);
+            var value = Encoding.UTF8.GetString(bytes);
 
             Clients = JsonSerializer.Deserialize<string[]>(value)!;
         }

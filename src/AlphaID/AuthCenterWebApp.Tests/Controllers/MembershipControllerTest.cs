@@ -9,9 +9,9 @@ public class MembershipControllerTest
         var factory = new AuthCenterWebAppFactory();
         var client = factory.CreateBearerTokenClient();
 
-        var response = await client.GetAsync("/api/membership");
+        var response = await client.GetAsync("/api/membership", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
-        var dataResult = await response.Content.ReadFromJsonAsync<IEnumerable<MembershipModel>>();
+        var dataResult = await response.Content.ReadFromJsonAsync<IEnumerable<MembershipModel>>(TestContext.Current.CancellationToken);
         var membership = dataResult!.First();
         Assert.NotNull(membership.OrganizationName);
     }

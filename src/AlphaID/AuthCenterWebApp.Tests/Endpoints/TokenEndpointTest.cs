@@ -19,7 +19,7 @@ public class TokenEndpointTest(AuthCenterWebAppFactory factory)
         HttpResponseMessage response = null!;
         for (int i = 0; i < 50; i++)
         {
-            response = await client.PostAsync("/connect/token", new FormUrlEncodedContent(forms));
+            response = await client.PostAsync("/connect/token", new FormUrlEncodedContent(forms), TestContext.Current.CancellationToken);
         }
         Assert.Equal(HttpStatusCode.TooManyRequests, response.StatusCode);
     }

@@ -11,10 +11,10 @@ public class ClientControllerTests(AuthCenterWebAppFactory factory)
     {
         HttpClient client = factory.CreateBearerTokenClient();
 
-        HttpResponseMessage response = await client.GetAsync("api/OAuth/Client/43670b09-b161-46ca-b59a-c0fbde526394");
+        HttpResponseMessage response = await client.GetAsync("api/OAuth/Client/43670b09-b161-46ca-b59a-c0fbde526394", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
 
-        var result = await response.Content.ReadFromJsonAsync<ClientModel>();
+        var result = await response.Content.ReadFromJsonAsync<ClientModel>(TestContext.Current.CancellationToken);
         Assert.Equal("AlphaID AuthCenter Swagger UI", result!.Name);
     }
 
@@ -23,7 +23,7 @@ public class ClientControllerTests(AuthCenterWebAppFactory factory)
     {
         HttpClient client = factory.CreateBearerTokenClient();
 
-        HttpResponseMessage response = await client.GetAsync("api/OAuth/Client/non-exists-client-id");
+        HttpResponseMessage response = await client.GetAsync("api/OAuth/Client/non-exists-client-id", TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 

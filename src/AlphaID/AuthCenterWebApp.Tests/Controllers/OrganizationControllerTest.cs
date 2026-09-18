@@ -14,9 +14,9 @@ public class OrganizationControllerTest
     {
         var webFactory = new AuthCenterWebAppFactory();
         HttpClient client = webFactory.CreateBearerTokenClient();
-        HttpResponseMessage response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5");
+        HttpResponseMessage response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
-        var data = await response.Content.ReadFromJsonAsync<OrganizationModel>();
+        var data = await response.Content.ReadFromJsonAsync<OrganizationModel>(TestContext.Current.CancellationToken);
         Assert.True(Uri.TryCreate(data!.ProfileUrl, UriKind.Absolute, out _));
         Assert.True(Uri.TryCreate(data.ProfilePictureUrl, UriKind.Absolute, out _));
     }
@@ -27,9 +27,9 @@ public class OrganizationControllerTest
         var webFactory = new AuthCenterWebAppFactory();
         HttpClient client = webFactory.CreateBearerTokenClient();
         HttpResponseMessage response =
-            await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("蜀汉")}");
+            await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("蜀汉")}", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
-        var result = await response.Content.ReadFromJsonAsync<IEnumerable<OrganizationSearchModel>>();
+        var result = await response.Content.ReadFromJsonAsync<IEnumerable<OrganizationSearchModel>>(TestContext.Current.CancellationToken);
         var firstItem = result!.First();
         Assert.True(Uri.TryCreate(firstItem.ProfilePictureUrl, UriKind.Absolute, out _));
     }
@@ -44,9 +44,9 @@ public class OrganizationControllerTest
         var webFactory = new AuthCenterWebAppFactory();
         HttpClient client = webFactory.CreateBearerTokenClient();
         HttpResponseMessage response =
-            await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("改名后的有限公司")}");
+            await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("改名后的有限公司")}", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadFromJsonAsync<IEnumerable<OrganizationSearchModel>>();
+        var json = await response.Content.ReadFromJsonAsync<IEnumerable<OrganizationSearchModel>>(TestContext.Current.CancellationToken);
         Assert.Empty(json!);
     }
 
@@ -58,7 +58,7 @@ public class OrganizationControllerTest
         HttpResponseMessage response = null!;
         for (var i = 0; i < 300; i++)
         {
-            response = await client.GetAsync("/api/Organization/Suggestions?q=测试");
+            response = await client.GetAsync("/api/Organization/Suggestions?q=测试", TestContext.Current.CancellationToken);
         }
         Assert.Equal(HttpStatusCode.TooManyRequests, response.StatusCode);
     }
@@ -68,7 +68,7 @@ public class OrganizationControllerTest
     {
         var factory = new AuthCenterWebAppFactory();
         HttpClient client = factory.CreateClient();
-        HttpResponseMessage response = await client.GetAsync("/Organization/蜀汉集团/Picture");
+        HttpResponseMessage response = await client.GetAsync("/Organization/蜀汉集团/Picture", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
         var contentType = response.Content.Headers.ContentType?.MediaType;
         Assert.Equal("image/png", contentType);

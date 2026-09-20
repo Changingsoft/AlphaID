@@ -26,9 +26,4 @@
 		<ProjectReference Include="..\IdSubjects.DirectoryLogon\IdSubjects.DirectoryLogon.csproj" />
 		<ProjectReference Include="..\IdSubjects.Tests\IdSubjects.Tests.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="MinVer" Version="8.0.0" />
-	</ItemGroup>
-
 </Project>

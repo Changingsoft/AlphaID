@@ -23,9 +23,4 @@
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="MinVer" Version="8.0.0" />
-	</ItemGroup>
-
 </Project>

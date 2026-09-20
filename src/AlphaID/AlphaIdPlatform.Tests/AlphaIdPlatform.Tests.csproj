@@ -24,9 +24,4 @@
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 		<ProjectReference Include="..\IntegrationTestUtilities\IntegrationTestUtilities.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="MinVer" Version="8.0.0" />
-	</ItemGroup>
-
 </Project>

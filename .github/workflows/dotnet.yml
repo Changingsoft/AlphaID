@@ -20,17 +20,18 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
+    - name: Install SQL Server LocalDB
+      uses: potatoqualitee/mssqlsuite@v1.8
+      with:
+        # The apps to install
+        install: localdb
+        version: 2019
     - name: Restore dependencies
       run: dotnet restore AlphaID.slnx -v m
       working-directory: src/AlphaID
     - name: Build
       run: dotnet build AlphaID.slnx --no-restore --configuration Release -v m
       working-directory: src/AlphaID
-    - name: Install SQL Server LocalDB
-      uses: potatoqualitee/mssqlsuite@v1.8
-      with:
-        # The apps to install
-        install: localdb
     - name: Run database tool
       run: ./DatabaseTool.exe NonInteractive --environment Development
       working-directory: src/AlphaID/DatabaseTool/bin/Release/net10.0/

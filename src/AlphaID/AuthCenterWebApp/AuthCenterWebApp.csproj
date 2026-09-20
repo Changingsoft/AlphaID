@@ -18,8 +18,8 @@
 		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.3.0" />
 		<PackageReference Include="AspNet.Security.OAuth.WorkWeixin" Version="8.3.0" />
 		<PackageReference Include="Captcha" Version="4.4.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.16" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
 		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="10.0.0" />

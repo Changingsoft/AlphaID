@@ -332,3 +332,4 @@ ASALocalRun/
 # WorkBuddy local state (agent memory, session data, local caches)
 # Machine- and developer-specific, same reasoning as .vs/ and *.user
 .workbuddy/
+.mcp

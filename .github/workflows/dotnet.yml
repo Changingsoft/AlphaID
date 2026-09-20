@@ -21,10 +21,10 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Restore dependencies
-      run: dotnet restore AlphaID.slnx
+      run: dotnet restore AlphaID.slnx -v m
       working-directory: src/AlphaID
     - name: Build
-      run: dotnet build AlphaID.slnx --no-restore --configuration Release --verbosity normal
+      run: dotnet build AlphaID.slnx --no-restore --configuration Release -v m
       working-directory: src/AlphaID
     - name: Install SQL Server LocalDB
       uses: potatoqualitee/mssqlsuite@v1.8
@@ -33,7 +33,7 @@ jobs:
         install: localdb
     - name: Run database tool
       run: ./DatabaseTool.exe NonInteractive --environment Development
-      working-directory: src/AlphaID/DatabaseTool/bin/Debug/net10.0/
+      working-directory: src/AlphaID/DatabaseTool/bin/Release/net10.0/
     - name: Test
-      run: dotnet test AlphaID.slnx --no-build --verbosity normal
+      run: dotnet test AlphaID.slnx --no-build -v m
       working-directory: src/AlphaID

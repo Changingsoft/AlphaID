@@ -1,11 +1,12 @@
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web;
+using AuthCenterWebApp.CaptchaValidation;
 using ChineseName;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using IdSubjects;
+using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -26,9 +27,15 @@ public class SignUpModel(
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,
     SignInManager<NaturalPerson> signInManager,
-    IStringLocalizer<SignUpModel> stringLocalizer) : PageModel
+    IStringLocalizer<SignUpModel> stringLocalizer,
+    ICaptcha captcha) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
+
+    /// <summary>
+    /// 本页图形验证码实例 ID，与 <c>/captcha?id=</c> 及验证码图片元素的 <c>data-captcha-id</c> 一致。
+    /// </summary>
+    private const string CaptchaId = "SignUp";
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -95,6 +102,11 @@ public class SignUpModel(
 
     public async Task<IActionResult> OnPost()
     {
+        //图形验证码校验。放在最前面，确保任何 return Page() 之前验证码都已被消费，
+        //以维持视图 _CaptchaScripts 中「页面重新渲染即换图」的约定。
+        if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
+            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+
         if (!Input.Agree)
         {
             ModelState.AddModelError("Input.Agree", $"您必须了解并同意服务协议，才能继续创建{_production.Name}。");
@@ -107,11 +119,6 @@ public class SignUpModel(
         if (!ModelState.IsValid)
             return Page();
 
-        var captchaInstance = Captcha.Load("LoginCaptcha");
-        if (!captchaInstance.Validate(CaptchaCode))
-        {
-            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
-        }
         var phoneNumberConfirmed = false;
         if (VerificationCodeService is not null)
         {
@@ -178,16 +185,20 @@ public class SignUpModel(
         return Page();
     }
 
-    public async Task<IActionResult> OnPostSendVerificationCode(string instanceId)
+    /// <summary>
+    /// 发送短信验证码。图形验证码校验成功时保留验证码，使随后的表单提交仍能校验通过；
+    /// 校验失败时消费验证码，并由前端据 <c>captchaFailed</c> 刷新验证码图片。
+    /// </summary>
+    public async Task<IActionResult> OnPostSendVerificationCode()
     {
-        var captchaResult = Captcha.AjaxValidate("LoginCaptcha", CaptchaCode, instanceId);
-        if (!captchaResult)
-        {
-            return new JsonResult(Resources.SharedResource.Captcha_Invalid);
-        }
-        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber)) return new JsonResult(Resources.SharedResource.PhoneNumberInvalid);
+        if (!CaptchaValidator.ValidateKeepingOnSuccess(captcha, CaptchaId, CaptchaCode))
+            return new JsonResult(new { ok = false, captchaFailed = true, message = Resources.SharedResource.Captcha_Invalid });
+
+        if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
+            return new JsonResult(new { ok = false, captchaFailed = false, message = Resources.SharedResource.PhoneNumberInvalid });
+
         await VerificationCodeService!.SendAsync(phoneNumber.ToString());
-        return new JsonResult(true);
+        return new JsonResult(new { ok = true, captchaFailed = false, message = (string?)null });
     }
 
     public class InputModel

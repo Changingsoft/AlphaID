@@ -46,8 +46,8 @@
                 <div class="mb-3">
                     <label asp-for="CaptchaCode" class="form-label required"></label>
                     <div class="input-group">
-                        <img id="CaptchaImage" src="/captcha?id=PhoneLogin" alt="captcha"
-                             style="cursor:pointer;height:38px" onclick="reloadCaptcha();" />
+                        <img id="CaptchaImage" src="/captcha?id=PhoneLogin" data-captcha-id="PhoneLogin"
+                             alt="captcha" style="cursor:pointer;height:38px" onclick="reloadCaptcha();" />
                         <input asp-for="CaptchaCode" id="CaptchaCode" class="form-control"
                                autocomplete="off" tabindex="3" />
                     </div>
@@ -103,17 +103,7 @@
 
 @section Scripts
 {
-    <script>
-        function reloadCaptcha() {
-            var img = document.getElementById('CaptchaImage');
-            img.src = '/captcha?id=PhoneLogin&t=' + Date.now();
-        }
-    </script>
-    @* 验证码一次性使用，提交失败回发后必须刷新图片。 *@
-    @if (!ViewContext.ModelState.IsValid)
-    {
-        <script>reloadCaptcha();</script>
-    }
+    <partial name="_CaptchaScripts" />
     <script>
         var countdown = 60;
         function SendVerificationCode(obj) {

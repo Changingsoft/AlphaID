@@ -1,7 +1,8 @@
 using AlphaIdPlatform;
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web.Mvc;
+using AuthCenterWebApp.CaptchaValidation;
+using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,15 @@ namespace AuthCenterWebApp.Pages.Account;
 public class FindPasswordByEmailModel(
     IEmailSender emailSender,
     UserManager<NaturalPerson> userManager,
-    IOptions<ProductInfo> production) : PageModel
+    IOptions<ProductInfo> production,
+    ICaptcha captcha) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
+
+    /// <summary>
+    /// 本页图形验证码实例 ID，与 <c>/captcha?id=</c> 及验证码图片元素的 <c>data-captcha-id</c> 一致。
+    /// </summary>
+    private const string CaptchaId = "FindPasswordByEmail";
 
     [BindProperty]
     public InputModel Input { get; set; } = null!;
@@ -31,6 +38,11 @@ public class FindPasswordByEmailModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
+        //图形验证码校验。必须早于任何 return Page()，以维持视图 _CaptchaScripts 中
+        //「页面重新渲染即换图」的约定。
+        if (!CaptchaValidator.Validate(captcha, CaptchaId, Input.CaptchaCode))
+            ModelState.AddModelError("Input.CaptchaCode", Resources.SharedResource.Captcha_Invalid);
+
         if (ModelState.IsValid)
         {
             NaturalPerson? user = await userManager.FindByEmailAsync(Input.Email);
@@ -75,7 +87,6 @@ public class FindPasswordByEmailModel(
 
         [Display(Name = "Captcha code")]
         [Required(ErrorMessage = "Validate_Required")]
-        [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
         public string CaptchaCode { get; set; } = null!;
     }
 }

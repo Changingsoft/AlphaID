@@ -1,0 +1,7 @@
+@* 验证码脚本。Lazy.Captcha.Core 的验证码一次性使用，且各页面的表单 POST 处理器都会先校验验证码，
+   因此只要回发后重新渲染页面（ModelState 无效），浏览器上那张图对应的验证码就已失效，必须换一张。 *@
+<script src="~/js/captcha.js"></script>
+@if (!ViewContext.ModelState.IsValid)
+{
+    <script>reloadCaptcha();</script>
+}

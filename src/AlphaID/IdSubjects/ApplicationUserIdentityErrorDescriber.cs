@@ -144,6 +144,7 @@ public class ApplicationUserIdentityErrorDescriber : IdentityErrorDescriber
         };
     }
 
+    /// <inheritdoc />
     public override IdentityError DuplicateUserName(string userName)
     {
         return new IdentityError()

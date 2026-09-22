@@ -1,4 +1,4 @@
-﻿namespace AuthCenterWebApp.Tests.Endpoints;
+namespace AuthCenterWebApp.Tests.Endpoints;
 
 [Collection(nameof(TestServerCollection))]
 public class DiscoveryDocumentTest(AuthCenterWebAppFactory factory)
@@ -7,7 +7,7 @@ public class DiscoveryDocumentTest(AuthCenterWebAppFactory factory)
     public async Task DocumentOk()
     {
         HttpClient client = factory.CreateClient();
-        HttpResponseMessage response = await client.GetAsync("/.well-known/openid-configuration");
+        HttpResponseMessage response = await client.GetAsync("/.well-known/openid-configuration", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
         Assert.Equal("application/json", response.Content.Headers.ContentType?.MediaType);
     }

@@ -60,7 +60,7 @@ builder.Host.UseSerilog((ctx, configuration) =>
                 {
                     if (log.Properties.TryGetValue("SourceContext", out var pv))
                     {
-                        string? source = JsonConvert.DeserializeObject<string>(pv.ToString());
+                        var source = JsonConvert.DeserializeObject<string>(pv.ToString());
                         if (source == "Duende.IdentityServer.Events.DefaultEventService" ||
                             source == "IdSubjects.SecurityAuditing.DefaultEventService")
                         {
@@ -327,7 +327,11 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
     //默认只接受来自本地主机的反向代理。
     //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
+#if NET10_0
+    options.KnownIPNetworks.Clear();
+#else
     options.KnownNetworks.Clear();
+#endif
     options.KnownProxies.Clear();
 
 });
@@ -338,10 +342,10 @@ builder.Services.AddRateLimiter(options =>
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
     options.AddPolicy("token-endpoint-limit", httpContext =>
     {
-        string path = httpContext.Request.Path.Value!;
+        var path = httpContext.Request.Path.Value!;
         if (string.Equals(path, "/connect/token", StringComparison.OrdinalIgnoreCase))
         {
-            string ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
             return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 10, // 每窗口允许的请求数
@@ -354,7 +358,7 @@ builder.Services.AddRateLimiter(options =>
     });
     options.AddPolicy("ip-fixed", httpContext =>
     {
-        string ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
         return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
         {
             PermitLimit = 100, // 每窗口允许的请求数
@@ -371,7 +375,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     var info = builder.Configuration.GetSection("OpenApiInfo").Get<OpenApiInfo>();
     options.SwaggerDoc("v1", info);
-    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
     options.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
     {

@@ -1,4 +1,4 @@
-﻿using AlphaIdPlatform;
+using AlphaIdPlatform;
 using AngleSharp.Html.Dom;
 using IntegrationTestUtilities.Helpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +17,7 @@ public class HomePageTest(AuthCenterWebAppFactory factory)
         HttpClient client = factory.CreateClient();
         var productInfo = factory.Services.GetRequiredService<IOptions<ProductInfo>>();
 
-        HttpResponseMessage response = await client.GetAsync(url);
+        HttpResponseMessage response = await client.GetAsync(url, TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
 
         IHtmlDocument doc = await HtmlHelpers.GetDocumentAsync(response);

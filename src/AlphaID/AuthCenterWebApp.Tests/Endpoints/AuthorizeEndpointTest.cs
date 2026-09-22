@@ -42,7 +42,7 @@ public class AuthorizeEndpointTest
 
         string urlWithQuery = QueryHelpers.AddQueryString("/connect/authorize", queryParams);
 
-        HttpResponseMessage response = await client.GetAsync(urlWithQuery);
+        HttpResponseMessage response = await client.GetAsync(urlWithQuery, TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.Found, response.StatusCode);
         var location = response.Headers.Location;
         var isOptions = factory.Services.GetRequiredService<IOptions<IdentityServerOptions>>();

@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# WorkBuddy local state (agent memory, session data, local caches)
+# Machine- and developer-specific, same reasoning as .vs/ and *.user
+.workbuddy/
+.mcp

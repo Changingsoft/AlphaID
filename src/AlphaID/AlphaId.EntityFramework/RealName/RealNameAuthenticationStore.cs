@@ -36,7 +36,12 @@ internal class RealNameAuthenticationStore(RealNameDbContext dbContext) : IRealN
 
     public async Task<IdOperationResult> DeleteByPersonIdAsync(string personId)
     {
-        await dbContext.RealNameAuthentications.Where(a => a.PersonId == personId).ExecuteDeleteAsync();
+        // EF Core 9 同时在 EntityFrameworkQueryableExtensions 和 RelationalQueryableExtensions 中
+        // 提供了 ExecuteDeleteAsync，直接调用会报 CS0121 歧义（EF Core 10 已移除后者，故仅 net8.0 目标报错）。
+        // 显式限定为 EntityFrameworkQueryableExtensions，使 net8.0(EF9) 与 net10.0(EF10) 都能编译。
+        IQueryable<RealNameAuthentication> query =
+            dbContext.RealNameAuthentications.Where(a => a.PersonId == personId);
+        await EntityFrameworkQueryableExtensions.ExecuteDeleteAsync(query);
         return IdOperationResult.Success;
     }
 

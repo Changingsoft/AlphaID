@@ -6,7 +6,7 @@ public class PeopleControllerTest
     {
         var factory = new AuthCenterWebAppFactory();
         HttpClient client = factory.CreateClient();
-        HttpResponseMessage response = await client.GetAsync("/People/liubei/Avatar");
+        HttpResponseMessage response = await client.GetAsync("/People/liubei/Avatar", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
     }
 }

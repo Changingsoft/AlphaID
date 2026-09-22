@@ -1,20 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.16" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.16" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(IdentityEntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="$(EntityFrameworkCoreVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 		<ProjectReference Include="..\IdSubjects\IdSubjects.csproj" />
 	</ItemGroup>
-
 </Project>

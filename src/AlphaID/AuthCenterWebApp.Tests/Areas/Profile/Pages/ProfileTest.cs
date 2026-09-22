@@ -8,7 +8,7 @@ public class ProfileTest(AuthCenterWebAppFactory factory)
     {
         HttpClient client = factory.CreateClient();
 
-        HttpResponseMessage response = await client.GetAsync("People/unknown-user/Avatar");
+        HttpResponseMessage response = await client.GetAsync("People/unknown-user/Avatar", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
         Assert.Equal("image/png", response.Content.Headers.ContentType?.ToString());
     }
@@ -18,7 +18,7 @@ public class ProfileTest(AuthCenterWebAppFactory factory)
     public async Task GetAvatar(string anchor)
     {
         HttpClient client = factory.CreateClient();
-        HttpResponseMessage response = await client.GetAsync($"People/{anchor}/Avatar");
+        HttpResponseMessage response = await client.GetAsync($"People/{anchor}/Avatar", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
         Assert.Equal("image/jpeg", response.Content.Headers.ContentType?.ToString());
     }

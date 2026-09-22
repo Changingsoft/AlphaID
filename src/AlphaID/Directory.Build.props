@@ -1,6 +1,6 @@
 <Project>
 	<ItemGroup>
-		<PackageReference Include="MinVer" Version="6.0.0">
+		<PackageReference Include="MinVer" Version="8.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -10,5 +10,39 @@
 		<Product>AlphaID</Product>
 		<Company>Changingsoft</Company>
 		<NoWarn>CA1416</NoWarn>
+	</PropertyGroup>
+
+	<!--
+		EF Core 相关包必须按目标框架分别指定版本，不能统一钉一个版本。
+
+		Duende.IdentityServer.EntityFramework.Storage 7.4.12 对 EF Core 的最低要求：
+			net8.0  → Microsoft.EntityFrameworkCore.Relational >= 9.0.18
+			net9.0  → Microsoft.EntityFrameworkCore.Relational >= 9.0.18
+			net10.0 → Microsoft.EntityFrameworkCore.Relational >= 10.0.7
+
+		NuGet 取「所有最低要求中的最大值」，于是 Relational 被抬到 9/10，
+		而 Microsoft.EntityFrameworkCore.SqlServer 仍停在自身引用的 8.0.16，
+		形成「SqlServer 8.0.16 配 Relational 10.0.7」的混合状态，运行时报：
+			System.TypeLoadException: Method 'get_LockReleaseBehavior' in type
+			'...SqlServerHistoryRepository' ... does not have an implementation.
+
+		EntityFrameworkCoreVersion —— 纯 EF 包（SqlServer、Proxies、Design、NetTopologySuite）
+		IdentityEntityFrameworkCoreVersion —— Microsoft.AspNetCore.Identity.EntityFrameworkCore
+		    该包跟随 ASP.NET Core 版本发布，9.0.x 只支持 net9.0，故 net8.0 只能用 8.0.x。
+		AspNetCoreMvcTestingVersion —— Microsoft.AspNetCore.Mvc.Testing
+		    同样跟随 ASP.NET Core 版本发布，必须按 TFM 对齐。若在 net10.0 下用 8.0.x，
+		    其 TestServer 提供的 ResponseBodyPipeWriter 未实现 .NET 9 才引入的
+		    PipeWriter.UnflushedBytes，而 net10.0 的 System.Text.Json 写入时要求该属性，
+		    于是 MVC 返回 JSON 的接口会在测试中抛 InvalidOperationException → 500。
+	-->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<EntityFrameworkCoreVersion>9.0.18</EntityFrameworkCoreVersion>
+		<IdentityEntityFrameworkCoreVersion>8.0.16</IdentityEntityFrameworkCoreVersion>
+		<AspNetCoreMvcTestingVersion>8.0.16</AspNetCoreMvcTestingVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<EntityFrameworkCoreVersion>10.0.7</EntityFrameworkCoreVersion>
+		<IdentityEntityFrameworkCoreVersion>10.0.7</IdentityEntityFrameworkCoreVersion>
+		<AspNetCoreMvcTestingVersion>10.0.7</AspNetCoreMvcTestingVersion>
 	</PropertyGroup>
 </Project>

@@ -1,0 +1,52 @@
+<Solution>
+  <Folder Name="/Applications/">
+    <Project Path="AdminWebApp/AdminWebApp.csproj" />
+    <Project Path="AlphaIdWebAPI/AlphaIdWebAPI.csproj" />
+    <Project Path="AspNetWebLib/AspNetWebLib.csproj" />
+    <Project Path="AuthCenterWebApp/AuthCenterWebApp.csproj" />
+  </Folder>
+  <Folder Name="/Applications/tests/">
+    <Project Path="AdminWebApp.Tests/AdminWebApp.Tests.csproj" />
+    <Project Path="AspNetWebLib.Tests/AspNetWebLib.Tests.csproj" />
+    <Project Path="AuthCenterWebApp.Tests/AuthCenterWebApp.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Business/">
+    <Project Path="AlphaIdPlatform/AlphaIdPlatform.csproj" />
+  </Folder>
+  <Folder Name="/Business/tests/">
+    <Project Path="AlphaIdPlatform.Tests/AlphaIdPlatform.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="ChineseName/ChineseName.csproj" />
+    <Project Path="IdSubjects.DirectoryLogon/IdSubjects.DirectoryLogon.csproj" />
+    <Project Path="IdSubjects.Identity/IdSubjects.Identity.csproj" />
+    <Project Path="IdSubjects.RealName/IdSubjects.RealName.csproj" />
+    <Project Path="IdSubjects/IdSubjects.csproj" />
+    <Project Path="IntegrationTestUtilities/IntegrationTestUtilities.csproj" />
+    <Project Path="Organizational.Tests/Organizational.Tests.csproj" />
+    <Project Path="Organizational/Organizational.csproj" />
+  </Folder>
+  <Folder Name="/Domain/tests/">
+    <Project Path="ChineseName.Tests/ChineseName.Tests.csproj" />
+    <Project Path="IdSubjects.DirectoryLogon.Tests/IdSubjects.DirectoryLogon.Tests.csproj" />
+    <Project Path="IdSubjects.Identity.Tests/IdSubjects.Identity.Tests.csproj" />
+    <Project Path="IdSubjects.RealName.Tests/IdSubjects.RealName.Tests.csproj" />
+    <Project Path="IdSubjects.Tests/IdSubjects.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="AlphaId.EntityFramework/AlphaId.EntityFramework.csproj" />
+    <Project Path="AlphaId.PlatformServices/AlphaId.PlatformServices.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/Tools/">
+    <Project Path="DatabaseTool/DatabaseTool.csproj" />
+  </Folder>
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_CodeReferences" Value="{&quot;Items&quot;:[{&quot;Expression&quot;:&quot;\\W($File.$Key)\\W&quot;,&quot;Extensions&quot;:&quot;.cs,.xaml,.cshtml&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:&quot;\/\/&quot;},{&quot;Expression&quot;:&quot;\\W($File.$Key)\\W&quot;,&quot;Extensions&quot;:&quot;.vbhtml&quot;,&quot;IsCaseSensitive&quot;:false,&quot;SingleLineComment&quot;:null},{&quot;Expression&quot;:&quot;ResourceManager.GetString\\(\&quot;($Key)\&quot;\\)&quot;,&quot;Extensions&quot;:&quot;.cs&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:&quot;\/\/&quot;},{&quot;Expression&quot;:&quot;typeof\\((\\w+\\.)*($File)\\).+\&quot;($Key)\&quot;|\&quot;($Key)\&quot;.+typeof\\((\\w+\\.)*($File)\\)&quot;,&quot;Extensions&quot;:&quot;.cs&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:&quot;\/\/&quot;},{&quot;Expression&quot;:&quot;\\W($Key)\\W&quot;,&quot;Extensions&quot;:&quot;.vb&quot;,&quot;IsCaseSensitive&quot;:false,&quot;SingleLineComment&quot;:&quot;'&quot;},{&quot;Expression&quot;:&quot;\\W($File::$Key)\\W&quot;,&quot;Extensions&quot;:&quot;.cpp,.c,.hxx,.h&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:&quot;\/\/&quot;},{&quot;Expression&quot;:&quot;&amp;lt;%\\$\\s+Resources:\\s*($File)\\s*,\\s*($Key)\\s*%&amp;gt;&quot;,&quot;Extensions&quot;:&quot;.aspx,.ascx,.master&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:null},{&quot;Expression&quot;:&quot;StringResourceKey\\.($Key)&quot;,&quot;Extensions&quot;:&quot;.cs&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:&quot;\/\/&quot;},{&quot;Expression&quot;:&quot;\\.($Key)&quot;,&quot;Extensions&quot;:&quot;.ts,.html&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:&quot;\/\/&quot;},{&quot;Expression&quot;:&quot;L\\[\\\&quot;($Key)\\\&quot;\\]&quot;,&quot;Extensions&quot;:&quot;.cshtml&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:null},{&quot;Expression&quot;:&quot;SL\\[\\\&quot;($Key)\\\&quot;\\]&quot;,&quot;Extensions&quot;:&quot;.cshtml&quot;,&quot;IsCaseSensitive&quot;:true,&quot;SingleLineComment&quot;:null}]}" />
+    <Property Name="RESX_SaveFilesImmediatelyUponChange" Value="True" />
+    <Property Name="RESX_SortFileContentOnSave" Value="True" />
+    <Property Name="RESX_TaskErrorCategory" Value="Message" />
+  </Properties>
+</Solution>

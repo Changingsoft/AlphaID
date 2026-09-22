@@ -8,7 +8,7 @@ public class SiteScopeFuncTest
     {
         var factory = new AdminWebAppFactory();
         var client = factory.CreateClient();
-        var response = await client.GetAsync("/robots.txt");
+        var response = await client.GetAsync("/robots.txt", TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("text/plain", response.Content.Headers.ContentType!.MediaType);
     }

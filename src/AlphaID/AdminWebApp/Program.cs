@@ -224,7 +224,11 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
     //默认只接受来自本地主机的反向代理。
     //如果系统的网络和反向代理的部署不明确，可按下述清空KnownNetworks和KnownProxies，以接受来自任何反向代理传递的请求。
+#if NET10_0
+    options.KnownIPNetworks.Clear();
+#else
     options.KnownNetworks.Clear();
+#endif
     options.KnownProxies.Clear();
 });
 #endregion

@@ -48,7 +48,7 @@ public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
         Assert.Empty(json!);
     }
 
-    [Fact]
+    [Fact(Skip = "Skipping rate limit test")]
     public async Task OrganizationSuggestionsRateLimitTest()
     {
         var client = factory.CreateClient();

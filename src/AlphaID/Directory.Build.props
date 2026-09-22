@@ -29,13 +29,20 @@
 		EntityFrameworkCoreVersion —— 纯 EF 包（SqlServer、Proxies、Design、NetTopologySuite）
 		IdentityEntityFrameworkCoreVersion —— Microsoft.AspNetCore.Identity.EntityFrameworkCore
 		    该包跟随 ASP.NET Core 版本发布，9.0.x 只支持 net9.0，故 net8.0 只能用 8.0.x。
+		AspNetCoreMvcTestingVersion —— Microsoft.AspNetCore.Mvc.Testing
+		    同样跟随 ASP.NET Core 版本发布，必须按 TFM 对齐。若在 net10.0 下用 8.0.x，
+		    其 TestServer 提供的 ResponseBodyPipeWriter 未实现 .NET 9 才引入的
+		    PipeWriter.UnflushedBytes，而 net10.0 的 System.Text.Json 写入时要求该属性，
+		    于是 MVC 返回 JSON 的接口会在测试中抛 InvalidOperationException → 500。
 	-->
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<EntityFrameworkCoreVersion>9.0.18</EntityFrameworkCoreVersion>
 		<IdentityEntityFrameworkCoreVersion>8.0.16</IdentityEntityFrameworkCoreVersion>
+		<AspNetCoreMvcTestingVersion>8.0.16</AspNetCoreMvcTestingVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<EntityFrameworkCoreVersion>10.0.7</EntityFrameworkCoreVersion>
 		<IdentityEntityFrameworkCoreVersion>10.0.7</IdentityEntityFrameworkCoreVersion>
+		<AspNetCoreMvcTestingVersion>10.0.7</AspNetCoreMvcTestingVersion>
 	</PropertyGroup>
 </Project>

@@ -60,6 +60,27 @@ Alpha ID 数据库迁移工具。用于初始化数据库，升级迁移数据�
 - AddTestingData阶段，此阶段用于插入适合开发调试的测试数据。
 
 应为每个DbContext编写迁移器DatabaseMigrator，并在其中处理每个阶段的特定任务。
+
+### 2.1.1 测试数据的位置
+
+测试数据本身定义在 `AlphaId.TestingData` 项目中：`SampleData.*.cs` 描述数据（自然人、组织、角色分配），
+`SampleDataSeeder.SeedAsync` 负责把数据写入数据库。迁移器只需在自己的 `AddTestingDataAsync` 中调用对应的重载：
+
+```csharp
+public override Task AddTestingDataAsync()
+{
+    return SampleDataSeeder.SeedAsync(db);
+}
+```
+
+`SampleDataSeeder.SeedAsync` 有按 `DbContext` 区分的三个重载，集成测试也可以只传入需要的那几条数据
+（例如 `SampleDataSeeder.SeedAsync(db, [SampleData.LiuBei])`）。
+
+请不要再往 `TestingData` 目录里新增 T-SQL 脚本：脚本依赖运行时当前目录、只有 SQL Server 能执行，
+且二进制字段必须以十六进制文本内嵌。数据是 C# 常量后，集成测试可以自行灌库，不再依赖 `DatabaseTool`。
+
+修改 `SampleData` 中的数值时请注意：这些数据与历史 SQL 脚本灌出的数据库是逐字节一致的，
+连经纬度的小数位都被刻意保留，不要为了「好看」而取整。
  
 初始化环境后，创建 DatabaseExecutor，根据 DatabaseExecutorOptions 的设置，按阶段顺序分阶段调用迁移器。最终完成数据库和数据的初始化工作。
 

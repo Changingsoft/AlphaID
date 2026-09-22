@@ -12,11 +12,4 @@ internal class IdServerConfigurationDbMigrator(ConfigurationDbContext db) : Data
         foreach (string file in files)
             await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
     }
-
-    public override async Task AddTestingDataAsync()
-    {
-        string[] files = Directory.GetFiles("./TestingData/ConfigurationDbContext", "*.sql");
-        foreach (string file in files)
-            await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
-    }
 }

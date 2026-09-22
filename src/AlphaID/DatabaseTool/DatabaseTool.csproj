@@ -21,23 +21,11 @@
 		<None Update="InitData\IdentityServerConfiguration\20250113075027_Init.sql">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="TestingData\AdminWebAppData\202310300137.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\ConfigurationDbContext\202303281102.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\IdSubjectsDbContext\202303291105.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="TestingData\AdminWebAppData\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
 </Project>

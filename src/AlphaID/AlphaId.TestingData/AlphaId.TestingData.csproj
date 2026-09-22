@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<!--
+		样例头像以资源文件形式随程序集发布。此前它们以十六进制字面量内嵌在
+		TestingData/IdSubjectsDbContext/*.sql 里（884 KB 文本），改存二进制资源后体积减半，
+		也不再依赖「运行时当前目录下必须有 TestingData 文件夹」这一隐式约定。
+	-->
+	<ItemGroup>
+		<EmbeddedResource Include="Avatars\*.png" />
+		<EmbeddedResource Include="Avatars\*.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
+		<ProjectReference Include="..\Organizational\Organizational.csproj" />
+	</ItemGroup>
+
+</Project>

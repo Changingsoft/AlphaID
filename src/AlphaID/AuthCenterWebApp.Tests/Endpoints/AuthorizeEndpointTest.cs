@@ -9,12 +9,12 @@ using System.Text;
 
 namespace AuthCenterWebApp.Tests.Endpoints;
 
-public class AuthorizeEndpointTest
+[Collection<TestServerCollection>]
+public class AuthorizeEndpointTest(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task RedirectForAuthentication()
     {
-        var factory = new AuthCenterWebAppFactory();
         HttpClient client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false

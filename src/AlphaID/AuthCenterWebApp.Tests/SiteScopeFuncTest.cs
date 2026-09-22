@@ -1,12 +1,13 @@
 using System.Net;
 
 namespace AuthCenterWebApp.Tests;
-public class SiteScopeFuncTest
+
+[Collection<TestServerCollection>]
+public class SiteScopeFuncTest(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task RobotsExistsAsync()
     {
-        var factory = new AuthCenterWebAppFactory();
         var client = factory.CreateClient();
         var response = await client.GetAsync("/robots.txt", TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);

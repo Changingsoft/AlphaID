@@ -13,7 +13,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- ReSharper disable once VulnerablePackage -->
 		<PackageReference Include="AspNet.Security.OAuth.QQ" Version="8.3.0" />
 		<PackageReference Include="AspNet.Security.OAuth.Weixin" Version="8.3.0" />
 		<PackageReference Include="AspNet.Security.OAuth.WorkWeixin" Version="8.3.0" />

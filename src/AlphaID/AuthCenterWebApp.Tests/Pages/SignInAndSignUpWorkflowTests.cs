@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 
 namespace AuthCenterWebApp.Tests.Pages;
-public class SignInAndSignUpWorkflowTests
+
+[Collection<TestServerCollection>]
+public class SignInAndSignUpWorkflowTests(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task UserSignInOrSignUpWhenProvideVerificationCodeService()
     {
-        var factory = new AuthCenterWebAppFactory();
         var client = factory.CreateClient(new WebApplicationFactoryClientOptions()
         {
             AllowAutoRedirect = false,
@@ -20,7 +21,6 @@ public class SignInAndSignUpWorkflowTests
     [Fact]
     public async Task UseWeixinMpAsExternalLogin()
     {
-        var factory = new AuthCenterWebAppFactory();
         var client = factory.CreateClient(new WebApplicationFactoryClientOptions()
         {
             AllowAutoRedirect = false,

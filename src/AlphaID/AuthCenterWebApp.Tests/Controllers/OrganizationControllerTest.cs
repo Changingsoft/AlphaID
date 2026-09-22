@@ -3,7 +3,8 @@ using System.Net.Http.Json;
 
 namespace AuthCenterWebApp.Tests.Controllers;
 
-public class OrganizationControllerTest
+[Collection<TestServerCollection>]
+public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
 {
     /// <summary>
     /// 使用OrganizationId查询一个已存在的组织。
@@ -12,8 +13,7 @@ public class OrganizationControllerTest
     [Fact]
     public async Task GetExistsOrganization()
     {
-        var webFactory = new AuthCenterWebAppFactory();
-        HttpClient client = webFactory.CreateBearerTokenClient();
+        HttpClient client = factory.CreateBearerTokenClient();
         HttpResponseMessage response = await client.GetAsync("/api/Organization/a7be43af-8b49-450e-a600-90a8748e48a5", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
         var data = await response.Content.ReadFromJsonAsync<OrganizationModel>(TestContext.Current.CancellationToken);
@@ -24,8 +24,7 @@ public class OrganizationControllerTest
     [Fact]
     public async Task SearchOrganizations()
     {
-        var webFactory = new AuthCenterWebAppFactory();
-        HttpClient client = webFactory.CreateBearerTokenClient();
+        HttpClient client = factory.CreateBearerTokenClient();
         HttpResponseMessage response =
             await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("蜀汉")}", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
@@ -41,8 +40,7 @@ public class OrganizationControllerTest
     [Fact]
     public async Task SearchWillExcludeDisabledOrgs()
     {
-        var webFactory = new AuthCenterWebAppFactory();
-        HttpClient client = webFactory.CreateBearerTokenClient();
+        HttpClient client = factory.CreateBearerTokenClient();
         HttpResponseMessage response =
             await client.GetAsync($"/api/Organization/Suggestions?q={WebUtility.UrlEncode("改名后的有限公司")}", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
@@ -53,8 +51,7 @@ public class OrganizationControllerTest
     [Fact]
     public async Task OrganizationSuggestionsRateLimitTest()
     {
-        var webFactory = new AuthCenterWebAppFactory();
-        var client = webFactory.CreateClient();
+        var client = factory.CreateClient();
         HttpResponseMessage response = null!;
         for (var i = 0; i < 300; i++)
         {

@@ -1,10 +1,11 @@
 namespace AuthCenterWebApp.Tests.Controllers;
-public class PeopleControllerTest
+
+[Collection<TestServerCollection>]
+public class PeopleControllerTest(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task GetAvatar()
     {
-        var factory = new AuthCenterWebAppFactory();
         HttpClient client = factory.CreateClient();
         HttpResponseMessage response = await client.GetAsync("/People/liubei/Avatar", TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();

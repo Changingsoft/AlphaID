@@ -1,6 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web.Mvc;
+using AuthCenterWebApp.CaptchaValidation;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -53,7 +53,7 @@ public class PhoneLoginModel(
 
     [Display(Name = "Captcha code")]
     [Required(ErrorMessage = "Validate_Required")]
-    [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
+    [CaptchaValidation("PhoneLogin", ErrorMessage = "Captcha_Invalid")]
     [BindProperty]
     public string CaptchaCode { get; set; } = null!;
 

@@ -1,15 +1,9 @@
 @page
-@using BotDetect.Web
 @using AspNetWebLib.Helpers
 @using IdSubjects
 @model SignUpModel
 @{
     ViewBag.Title = L["Create your {0}", Product.Value.Name];
-}
-
-@section head
-{
-    <link href="@CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
 }
 
 <div class="text-center mb-4">
@@ -95,8 +89,11 @@
         <hr />
         <div class="mb-3">
             <label asp-for="CaptchaCode" class="form-label required"></label>
-            <captcha id="LoginCaptcha" locale="@System.Globalization.CultureInfo.CurrentUICulture.Name" />
-            <input asp-for="CaptchaCode" class="form-control captchaVal" />
+            <div class="input-group">
+                <img id="CaptchaImage" src="/captcha?id=SignUp" data-captcha-id="SignUp" alt="captcha"
+                     style="cursor:pointer;height:38px" onclick="reloadCaptcha();" />
+                <input asp-for="CaptchaCode" class="form-control" autocomplete="off" />
+            </div>
             <span asp-validation-for="CaptchaCode" class="text-danger"></span>
             <span id="CaptchaError" class="text-danger"></span>
         </div>
@@ -120,6 +117,7 @@
 
 @section Scripts
 {
+    <partial name="_CaptchaScripts" />
     <partial name="_ValidationScriptsPartial" />
     <script>
         var sendCodeText = "@L["Send code"]";
@@ -148,21 +146,20 @@
                 },
                 data: {
                     PhoneNumber: mobile,
-                    CaptchaCode: $("#CaptchaCode").val(),
-                    InstanceId: $("#BDC_VCID_LoginCaptcha").val()
+                    CaptchaCode: $("#CaptchaCode").val()
                 },
                 success: function (data) {
-                    //$("#CaptchaError").text(data);
-                    if(data != true)
-                    {
-                        $("#CaptchaError").text(data);
-                    }else
-                    {
-
+                    if (!data.ok) {
+                        $("#CaptchaError").text(data.message);
+                        // 验证码校验失败时服务端已消费该验证码，必须换一张。
+                        if (data.captchaFailed) reloadCaptcha();
                     }
                 },
                 error: function (error) {
-                    $("CaptchaError").text(error.responseJSON.message || "发送验证码失败");
+                    var message = error.responseJSON && error.responseJSON.message
+                        ? error.responseJSON.message
+                        : "发送验证码失败";
+                    $("#CaptchaError").text(message);
                 }
             });
         }

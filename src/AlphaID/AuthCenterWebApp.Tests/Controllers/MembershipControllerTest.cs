@@ -1,12 +1,13 @@
 using System.Net.Http.Json;
 
 namespace AuthCenterWebApp.Tests.Controllers;
-public class MembershipControllerTest
+
+[Collection<TestServerCollection>]
+public class MembershipControllerTest(AuthCenterWebAppFactory factory)
 {
     [Fact]
     public async Task GetMembership()
     {
-        var factory = new AuthCenterWebAppFactory();
         var client = factory.CreateBearerTokenClient();
 
         var response = await client.GetAsync("/api/membership", TestContext.Current.CancellationToken);

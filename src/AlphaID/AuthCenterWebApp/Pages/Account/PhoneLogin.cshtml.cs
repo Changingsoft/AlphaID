@@ -1,6 +1,6 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web.Mvc;
+using AuthCenterWebApp.CaptchaValidation;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -8,6 +8,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using IdSubjects;
+using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -27,8 +28,14 @@ public class PhoneLoginModel(
     IEventService events,
     ApplicationUserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
-    IOptions<LoginOptions> loginOptions) : PageModel
+    IOptions<LoginOptions> loginOptions,
+    ICaptcha captcha) : PageModel
 {
+    /// <summary>
+    /// 本页图形验证码实例 ID，与 <c>/captcha?id=</c> 及验证码图片元素的 <c>data-captcha-id</c> 一致。
+    /// </summary>
+    private const string CaptchaId = "PhoneLogin";
+
     public LoginOptionsModel Model { get; set; } = null!;
 
     public AuthenticateResult ExternalLoginResult { get; set; } = null!;
@@ -53,7 +60,6 @@ public class PhoneLoginModel(
 
     [Display(Name = "Captcha code")]
     [Required(ErrorMessage = "Validate_Required")]
-    [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
     [BindProperty]
     public string CaptchaCode { get; set; } = null!;
 
@@ -120,6 +126,10 @@ public class PhoneLoginModel(
             //由于我们没有有效的上下文，那么我们只需返回主页
             return Redirect("~/");
         }
+
+        //图形验证码校验。必须早于任何 return Page()，以便「重新渲染」与「验证码已消费」等价。
+        if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
+            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
 
         if (ModelState.IsValid)
         {

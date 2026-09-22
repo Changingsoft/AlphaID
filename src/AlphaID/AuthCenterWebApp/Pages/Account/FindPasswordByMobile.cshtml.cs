@@ -1,7 +1,8 @@
 using AlphaIdPlatform.Identity;
 using AlphaIdPlatform.Platform;
-using BotDetect.Web.Mvc;
+using AuthCenterWebApp.CaptchaValidation;
 using IdSubjects;
+using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,8 +13,14 @@ namespace AuthCenterWebApp.Pages.Account;
 [AllowAnonymous]
 public class FindPasswordByMobileModel(
     ApplicationUserManager<NaturalPerson> userManager,
-    IServiceProvider serviceProvider) : PageModel
+    IServiceProvider serviceProvider,
+    ICaptcha captcha) : PageModel
 {
+    /// <summary>
+    /// 本页图形验证码实例 ID，与 <c>/captcha?id=</c> 及验证码图片元素的 <c>data-captcha-id</c> 一致。
+    /// </summary>
+    private const string CaptchaId = "FindPasswordByMobile";
+
     [BindProperty]
     [Display(Name = "Phone number")]
     [Required(ErrorMessage = "Validate_Required")]
@@ -22,7 +29,6 @@ public class FindPasswordByMobileModel(
 
     [Display(Name = "Captcha code")]
     [Required(ErrorMessage = "Validate_Required")]
-    [CaptchaModelStateValidation("LoginCaptcha", ErrorMessage = "Captcha_Invalid")]
     [BindProperty]
     public string CaptchaCode { get; set; } = null!;
 
@@ -39,6 +45,11 @@ public class FindPasswordByMobileModel(
 
     public async Task<IActionResult> OnPostAsync()
     {
+        //图形验证码校验。必须早于任何 return Page()，以维持视图 _CaptchaScripts 中
+        //「页面重新渲染即换图」的约定。
+        if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
+            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+
         if (!ModelState.IsValid)
             return Page();
 

@@ -1,12 +1,7 @@
 @page
-@using BotDetect.Web
 @model PhoneLoginModel
 @{
     ViewBag.Title = L["Sign in"];
-}
-@section head
-{
-    <link href="@CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
 }
 <div class="text-center mb-4">
     <a asp-area="" asp-page="/Index" class="navbar-brand navbar-brand-autodark">
@@ -50,8 +45,13 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="CaptchaCode" class="form-label required"></label>
-                    <captcha id="LoginCaptcha" user-input-id="CaptchaCode" />
-                    <input asp-for="CaptchaCode" id="CaptchaCode" class="form-control captchaVal" />
+                    <div class="input-group">
+                        <img id="CaptchaImage" src="/captcha?id=PhoneLogin" data-captcha-id="PhoneLogin"
+                             alt="captcha" style="cursor:pointer;height:38px" onclick="reloadCaptcha();" />
+                        <input asp-for="CaptchaCode" id="CaptchaCode" class="form-control"
+                               autocomplete="off" tabindex="3" />
+                    </div>
+                    <span asp-validation-for="CaptchaCode" class="text-danger"></span>
                 </div>
                 <partial name="_ValidationSummary" />
                 <div class="form-footer">
@@ -103,7 +103,7 @@
 
 @section Scripts
 {
-    <script src="~/js/captcha.validate.js"></script>
+    <partial name="_CaptchaScripts" />
     <script>
         var countdown = 60;
         function SendVerificationCode(obj) {

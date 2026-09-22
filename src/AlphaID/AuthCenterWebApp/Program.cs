@@ -10,7 +10,6 @@ using AuthCenterWebApp.Middlewares;
 using AuthCenterWebApp.Services;
 using AuthCenterWebApp.Services.Authorization;
 using AuthCenterWebApp.Services.WechatMp;
-using BotDetect.Web;
 using ChineseName;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
@@ -18,13 +17,15 @@ using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.EntityFramework.Stores;
 using IdSubjects;
 using IdSubjects.SecurityAuditing;
+using Lazy.Captcha.Core;
+using Lazy.Captcha.Core.Generator;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -310,9 +311,13 @@ builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinu
 //身份证OCR
 builder.Services.AddScoped<IChineseIdCardOcrService, AliyunChineseIdCardOcrService>();
 
-//xxx 由于BotDetect Captcha需要支持同步流，应改进此配置。
-builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
-    .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
+//图形验证码。
+builder.Services.AddCaptcha(options =>
+{
+    options.CaptchaType = CaptchaType.NUMBER;
+    options.CodeLength = builder.Configuration.GetValue("Captcha:CodeLength", 4);
+    options.ExpirySeconds = builder.Configuration.GetValue("Captcha:ExpirySeconds", 300);
+});
 
 builder.Services.AddMarkdown(config =>
 {
@@ -449,7 +454,14 @@ app.UseSwaggerUI(options =>
     options.OAuthClientSecret(app.Configuration["SwaggerOauthOptions:ClientSecret"]!);
 });
 app.UseSession();
-app.UseCaptcha(app.Configuration);
+//验证码图片端点。id 用于区分验证码实例（存储键），须与各页面的 CaptchaId 一致。
+app.MapGet("/captcha", (string? id, [FromServices] ICaptcha captcha, HttpContext httpContext) =>
+{
+    httpContext.Response.Headers.CacheControl = "no-store, no-cache, must-revalidate";
+    httpContext.Response.Headers.Pragma = "no-cache";
+    CaptchaData data = captcha.Generate(id ?? "default");
+    return Results.File(data.Bytes, "image/png");
+});
 app.MapRazorPages();
 app.MapControllers();
 

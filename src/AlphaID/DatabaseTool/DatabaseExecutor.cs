@@ -30,12 +30,18 @@ internal class DatabaseExecutor(
 
         //Step3: PostMigrations
         logger?.LogDebug("正在准备执行第3阶段（迁移后处理）");
-        if (_options.ApplyMigrations)
+        if (_options.ExecutePostMigrations)
             foreach (DatabaseMigrator migrator in Migrators)
                 await migrator.PostMigrationAsync();
 
-        //Step4: AddTestingData
-        logger?.LogDebug("正在准备执行第4阶段（准备测试数据）");
+        //Step4: AddInitData
+        logger?.LogDebug("正在准备执行第4阶段（补齐内置数据）");
+        if (_options.AddInitData)
+            foreach (DatabaseMigrator migrator in Migrators)
+                await migrator.AddInitDataAsync();
+
+        //Step5: AddTestingData
+        logger?.LogDebug("正在准备执行第5阶段（准备测试数据）");
         if (_options.AddTestingData)
             foreach (DatabaseMigrator migrator in Migrators)
                 await migrator.AddTestingDataAsync();

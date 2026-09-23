@@ -1,6 +1,9 @@
 # Alpha ID 样例数据
 
 使用DatabaseTool创建数据库将会创建部分样例数据，以供开发调试和集成回归测试时使用。
+数据本身定义在 `AlphaId.TestingData` 项目（参见 [DatabaseTool/README.md](../src/AlphaID/DatabaseTool/README.md) §2.1.2）。
+
+集成测试会自建数据库并自动灌入这些样例数据，无需事先执行 DatabaseTool，也不需要手工准备数据。
 
 ## 自然人
 

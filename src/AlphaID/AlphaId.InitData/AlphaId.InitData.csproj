@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<!--
+		只依赖 IdentityServer 的 EF 包（实体类型与 ConfigurationDbContext），
+		不依赖领域模型，也不依赖 AlphaId.TestingData：
+		内置数据是「生产必需」的，样例数据是「仅测试用」的，两者的生命周期和引用方都不同。
+	-->
+	<ItemGroup>
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.12" />
+	</ItemGroup>
+
+</Project>

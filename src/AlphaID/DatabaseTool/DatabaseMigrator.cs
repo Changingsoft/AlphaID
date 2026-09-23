@@ -22,6 +22,11 @@ internal abstract class DatabaseMigrator(DbContext dbContext)
         return Task.CompletedTask;
     }
 
+    public virtual Task AddInitDataAsync()
+    {
+        return Task.CompletedTask;
+    }
+
     public virtual Task AddTestingDataAsync()
     {
         return Task.CompletedTask;

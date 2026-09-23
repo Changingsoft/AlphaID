@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<!--
+		这里只放 EF Core 迁移。
+
+		迁移原本住在 DatabaseTool（一个 Exe）里，于是「测试要自己建库」就必须引用一个命令行工具。
+		抽出来之后，DatabaseTool 与集成测试都只是这个库的消费者，两边共用同一份迁移，
+		不会出现「工具建的库和测试建的库 schema 不一样」这种最难查的问题。
+	-->
+	<ItemGroup>
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkCoreVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,22 +1,28 @@
+using AlphaId.InitData;
 using Duende.IdentityServer.EntityFramework.DbContexts;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
+using Microsoft.Extensions.Options;
 
 namespace DatabaseTool.Migrators;
 
-internal class IdServerConfigurationDbMigrator(ConfigurationDbContext db) : DatabaseMigrator(db)
+internal class IdServerConfigurationDbMigrator(
+    ConfigurationDbContext db,
+    IOptions<DatabaseExecutorOptions> options,
+    ILogger<IdServerConfigurationDbMigrator> logger)
+    : DatabaseMigrator(db)
 {
-    public override async Task PostMigrationAsync()
+    public override async Task AddInitDataAsync()
     {
-        string[] files = Directory.GetFiles("./InitData/IdentityServerConfiguration", "*.sql");
-        foreach (string file in files)
-            await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
-    }
+        InitDataResult result = await InitDataSeeder.EnsureAsync(db, new InitDataEnsureOptions
+        {
+            OverwriteExisting = options.Value.OverwriteInitData,
+        });
 
-    public override async Task AddTestingDataAsync()
-    {
-        string[] files = Directory.GetFiles("./TestingData/ConfigurationDbContext", "*.sql");
-        foreach (string file in files)
-            await db.Database.ExecuteSqlRawAsync(await File.ReadAllTextAsync(file, Encoding.UTF8));
+        if (result.Inserted > 0)
+            logger.LogInformation("已补齐 {Count} 项 IdentityServer 内置数据。", result.Inserted);
+        else
+            logger.LogInformation("IdentityServer 内置数据已存在，无需写入。");
+
+        foreach (string warning in result.Warnings)
+            logger.LogWarning("{Warning}", warning);
     }
 }

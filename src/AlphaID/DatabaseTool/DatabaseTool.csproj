@@ -9,47 +9,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkCoreVersion)">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="InitData\IdentityServerConfiguration\20250113075027_Init.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\AdminWebAppData\202310300137.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\AlphaIdData\Default.sql">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\ConfigurationDbContext\202303281102.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\DirectoryLogonData\202304211625.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\IdSubjectsDbContext\202303291105.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\PersistedGrantDbContext\202303281103.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="TestingData\RealNameDbContext\0.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="TestingData\AdminWebAppData\" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<ProjectReference Include="..\AlphaId.Migrations\AlphaId.Migrations.csproj" />
 		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaId.InitData\AlphaId.InitData.csproj" />
+		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>
 </Project>

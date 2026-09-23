@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AlphaIdIdentityDb
+namespace AlphaId.Migrations.AlphaIdIdentityDb
 {
     [DbContext(typeof(AlphaIdIdentityDbContext))]
     [Migration("20251228172149_Init")]

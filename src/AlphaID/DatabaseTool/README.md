@@ -32,7 +32,7 @@ Alpha ID 数据库迁移工具。用于初始化数据库，升级迁移数据�
 
 `AddInitData = <false:true>` 指示是否补齐内置数据。默认为true。
 
-内置数据是系统运行所必需的（IdentityServer 的客户端、API 范围、标识资源），详见 [`docs/InitData.md`](../../docs/InitData.md)。
+内置数据是系统运行所必需的（IdentityServer 的客户端、API 范围、标识资源），详见 [`docs/InitData.md`](../../../docs/InitData.md)。
 此阶段的写入是**幂等**的：以自然键查找，缺失则插入、已存在则跳过，因此重复执行不会报错。**一般情况下不要关闭此开关。**
 
 `OverwriteInitData = <false:true>` 指示当数据库中已存在的内置数据与代码不一致时，是否用代码中的定义覆盖它。默认为false。
@@ -42,9 +42,8 @@ Alpha ID 数据库迁移工具。用于初始化数据库，升级迁移数据�
 
 `AddTestingData = <false:true>` 指示是否添加测试数据。默认为false。此开关主要用于在开发环境调试或在预览环境评估时使用。
 
-集成测试需要使用该测试数据，在执行集成测试前，应使用此开关填充测试数据。
-
-> 注意：集成测试会自动补齐**内置数据**，但**不会**自动灌入测试数据（测试数据包含自然人、组织等，体量大且属于调试素材）。
+集成测试既不依赖内置数据也不依赖测试数据预先存在：它会自己建库、自行应用迁移，并自行补齐这两类数据，
+无需在执行集成测试前运行本工具。详见 [`docs/Development.md`](../../../docs/Development.md) 的「集成测试」一节。
 
 > `ExecutePostMigrations` 开关在本次改动前未被实际读取（第3阶段的判断条件误用了 `ApplyMigrations`），因此当时该开关不生效；现已修正。`Program.cs` 会把各开关的最终取值打印出来，可作为确认依据。
 
@@ -74,7 +73,7 @@ Alpha ID 数据库迁移工具。用于初始化数据库，升级迁移数据�
 - AddInitData阶段，此阶段用于补齐系统运行所必需的内置数据。
 - AddTestingData阶段，此阶段用于插入适合开发调试的测试数据。
 
-应为每个DbContext编写迁移器DatabaseMigrator，并在其中处理每个阶段的特定任务。
+应为每个DbContext编写迁移器DatabaseMigrator，并在其中处理每个阶段的特定任务。迁移代码本身位于类库项目 `AlphaId.Migrations`（见 2.3）。
 
 初始化环境后，创建 DatabaseExecutor，根据 DatabaseExecutorOptions 的设置，按阶段顺序分阶段调用迁移器。最终完成数据库和数据的初始化工作。
 
@@ -150,19 +149,38 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 
 ### 2.3 创建迁移
 
-本项目包括多个DbContext，在创建迁移时，需使用参数`-c`指定DbContext，需使用`-o`参数置顶迁移代码的输出位置，以方便管理。
+> **迁移代码位于类库项目 `AlphaId.Migrations`，不在 DatabaseTool 中。** 这样做是为了让集成测试能够自行建库，
+> 而不必引用一个命令行工具。请不要再把迁移写回 DatabaseTool：`MigrationsAssembly` 已改为引用该项目的程序集名
+> （`AlphaId.Migrations.MigrationAssembly.Name`），用字符串字面量写错位置时 `Migrate()` 只会建出空库且不报错。
 
-创建迁移的详细命令如下：
+本项目包括多个DbContext，在创建迁移时，需使用参数 `--context` 指定DbContext，需使用 `--output-dir` 指定迁移代码的输出位置，以方便管理。
+由于 `AlphaId.Migrations` 多目标（`net8.0;net10.0`），`dotnet ef` 还必须显式指定 `--framework`；
+并用 `--project` / `--startup-project` 分别指向迁移工程与启动工程（`--startup-project` 仍需是 DatabaseTool，由它提供各 `DbContext` 的装配）。
+
+创建迁移的详细命令如下（以 `net10.0` 为例）：
 
 ``` powershell
-dotnet ef migrations add <Migration Title> -c OperationalDbContext -o Migrations/AdminWebAppDb
-dotnet ef migrations add <Migration Title> -c ConfigurationDbContext -o Migrations/ConfigurationDb
-dotnet ef migrations add <Migration Title> -c DirectoryLogonDbContext -o Migrations/DirectoryLogonDb
-dotnet ef migrations add <Migration Title> -c AlphaIdIdentityDbContext -o Migrations/AlphaIdIdentityDb
-dotnet ef migrations add <Migration Title> -c LoggingDbContext -o Migrations/LoggingDb
-dotnet ef migrations add <Migration Title> -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
-dotnet ef migrations add <Migration Title> -c RealNameDbContext -o Migrations/RealNameDb
-dotnet ef migrations add <Migration Title> -c AlphaIdDbContext -o Migrations/AlphaIdDb
+dotnet ef migrations add <Migration Title> --context OperationalDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/AdminWebAppDb
+dotnet ef migrations add <Migration Title> --context ConfigurationDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/ConfigurationDb
+dotnet ef migrations add <Migration Title> --context DirectoryLogonDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/DirectoryLogonDb
+dotnet ef migrations add <Migration Title> --context AlphaIdIdentityDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/AlphaIdIdentityDb
+dotnet ef migrations add <Migration Title> --context LoggingDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/LoggingDb
+dotnet ef migrations add <Migration Title> --context PersistedGrantDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/PersistedGrantDb
+dotnet ef migrations add <Migration Title> --context RealNameDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/RealNameDb
+dotnet ef migrations add <Migration Title> --context AlphaIdDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --output-dir Migrations/AlphaIdDb
+```
+
+本目录提供的 `Add-Migrations.ps1` 保存了同一份 `DbContext` → 输出目录 映射，可一次性生成全部 8 条迁移，无需逐条输入：
+
+``` powershell
+.\Add-Migrations.ps1 <Migration Title>
+.\Add-Migrations.ps1 <Migration Title> -Framework net8.0
+```
+
+要查看某个 `DbContext` 已应用的迁移，可用 `migrations list`（注意同样需要 `--project` / `--startup-project` / `--framework` 三个参数）：
+
+``` powershell
+dotnet ef migrations list --context AlphaIdDbContext --project ../AlphaId.Migrations/AlphaId.Migrations.csproj --startup-project DatabaseTool.csproj --framework net10.0 --no-build
 ```
 
 ### 2.4 数据初始化

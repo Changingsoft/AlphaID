@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AdminWebAppDb
+namespace AlphaId.Migrations.AdminWebAppDb
 {
     [DbContext(typeof(OperationalDbContext))]
     [Migration("20251228172135_Init")]

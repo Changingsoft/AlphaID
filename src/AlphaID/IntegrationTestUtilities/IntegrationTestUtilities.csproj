@@ -10,11 +10,21 @@
 
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="1.8.1" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
 		<PackageReference Include="xunit.v3.assert" Version="4.0.1" />
 	</ItemGroup>
 
+	<!--
+		TestDatabase 要自己建库、自己跑迁移、自己灌内置数据与样例数据，
+		所以这里依赖迁移、内置数据、样例数据三件套。被引用的都是测试项目，不会污染产品代码。
+	-->
 	<ItemGroup>
+		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
 		<ProjectReference Include="..\AlphaId.InitData\AlphaId.InitData.csproj" />
+		<ProjectReference Include="..\AlphaId.Migrations\AlphaId.Migrations.csproj" />
+		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
 	</ItemGroup>
 
 </Project>

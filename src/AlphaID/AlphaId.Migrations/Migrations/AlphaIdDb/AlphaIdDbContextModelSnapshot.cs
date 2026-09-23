@@ -9,7 +9,7 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AlphaIdDb
+namespace AlphaId.Migrations.AlphaIdDb
 {
     [DbContext(typeof(AlphaIdDbContext))]
     partial class AlphaIdDbContextModelSnapshot : ModelSnapshot

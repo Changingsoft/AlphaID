@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AlphaIdDb
+namespace AlphaId.Migrations.AlphaIdDb
 {
     /// <inheritdoc />
     public partial class Init : Migration

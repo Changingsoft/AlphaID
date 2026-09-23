@@ -12,7 +12,7 @@ platform.AddEntityFramework(options =>
         sql =>
         {
             sql.UseNetTopologySuite();
-            sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
+            sql.MigrationsAssembly(AlphaId.Migrations.MigrationAssembly.Name);
         });
 });
 
@@ -22,14 +22,14 @@ builder.Services.AddIdentityServer()
     {
         options.ConfigureDbContext = b =>
             b.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-                sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
+                sql => sql.MigrationsAssembly(AlphaId.Migrations.MigrationAssembly.Name));
     })
     .AddOperationalStore(options =>
     {
         options.ConfigureDbContext = b =>
             b.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),
-                sql => sql.MigrationsAssembly(typeof(Program).Assembly.GetName().Name));
+                sql => sql.MigrationsAssembly(AlphaId.Migrations.MigrationAssembly.Name));
     });
 
 

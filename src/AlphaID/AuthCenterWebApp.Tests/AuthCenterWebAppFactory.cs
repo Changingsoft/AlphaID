@@ -6,26 +6,28 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Net.Http.Headers;
 
 namespace AuthCenterWebApp.Tests;
 
 public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
 {
-    protected override IHost CreateHost(IHostBuilder builder)
-    {
-        IHost host = base.CreateHost(builder);
-        //内置数据（IdentityServer 的客户端、API 范围、标识资源）是令牌端点与授权码流程的前提，
-        //测试不应再依赖「数据库碰巧被 DatabaseTool 灌过」。这里只补齐缺失的部分，不建库、不删库。
-        host.Services.EnsureInitData();
-        return host;
-    }
+    /// <summary>
+    /// 本测试项目独占的测试数据库。测试自己建库、跑迁移、灌数据，不依赖开发库，也不需要先跑 DatabaseTool。
+    /// </summary>
+    public TestDatabase Database { get; } = TestDatabase.For(typeof(AuthCenterWebAppFactory).Assembly);
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         base.ConfigureWebHost(builder);
+
+        // 保留 Development 环境（NopEmailSender、验证码放宽、令牌清理关闭等都依赖它），
+        // 但把数据库整体换成测试自建库，否则会读到 appsettings.Development.json 指向的开发库。
+        builder.ConfigureAppConfiguration((_, configuration) =>
+            configuration.AddInMemoryCollection(Database.ConnectionStringOverrides()));
+
         builder.ConfigureTestServices(services =>
         {
             services.Configure<IdentityServerOptions>(options =>

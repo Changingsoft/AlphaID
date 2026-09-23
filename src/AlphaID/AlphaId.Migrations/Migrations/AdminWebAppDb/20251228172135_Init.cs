@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AdminWebAppDb
+namespace AlphaId.Migrations.AdminWebAppDb
 {
     /// <inheritdoc />
     public partial class Init : Migration

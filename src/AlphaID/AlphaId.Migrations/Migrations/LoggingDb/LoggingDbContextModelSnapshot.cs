@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.LoggingDb
+namespace AlphaId.Migrations.LoggingDb
 {
     [DbContext(typeof(LoggingDbContext))]
     partial class LoggingDbContextModelSnapshot : ModelSnapshot

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.PersistedGrantDb
+namespace AlphaId.Migrations.PersistedGrantDb
 {
     /// <inheritdoc />
     public partial class Init : Migration

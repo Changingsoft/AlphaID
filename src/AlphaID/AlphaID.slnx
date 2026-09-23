@@ -36,6 +36,7 @@
   <Folder Name="/Infrastructure/">
     <Project Path="AlphaId.EntityFramework/AlphaId.EntityFramework.csproj" />
     <Project Path="AlphaId.InitData/AlphaId.InitData.csproj" />
+    <Project Path="AlphaId.Migrations/AlphaId.Migrations.csproj" />
     <Project Path="AlphaId.PlatformServices/AlphaId.PlatformServices.csproj" />
     <Project Path="AlphaId.TestingData/AlphaId.TestingData.csproj" />
   </Folder>

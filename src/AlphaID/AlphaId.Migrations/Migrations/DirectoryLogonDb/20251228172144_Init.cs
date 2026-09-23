@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.DirectoryLogonDb
+namespace AlphaId.Migrations.DirectoryLogonDb
 {
     /// <inheritdoc />
     public partial class Init : Migration

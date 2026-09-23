@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.RealNameDb
+namespace AlphaId.Migrations.RealNameDb
 {
     [DbContext(typeof(RealNameDbContext))]
     partial class RealNameDbContextModelSnapshot : ModelSnapshot

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AlphaIdIdentityDb
+namespace AlphaId.Migrations.AlphaIdIdentityDb
 {
     [DbContext(typeof(AlphaIdIdentityDbContext))]
     partial class AlphaIdIdentityDbContextModelSnapshot : ModelSnapshot

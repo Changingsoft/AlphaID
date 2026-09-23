@@ -83,7 +83,30 @@ dotnet build -c
 
 ### 集成测试
 
-集成测试时，使用Development环境，与开发调试环境一致，使用[示例数据](SampleData.md)。
+集成测试**不需要预先准备数据库**，也不需要先运行 `DatabaseTool`：测试会自己建库、自己应用迁移、自己灌数据，
+并在进程退出时删除该库。因此每次运行都从同一个已知状态出发，具备回归性。
+
+实现位于 `IntegrationTestUtilities` 项目的 `TestDatabase`，由 `TestDatabase.For(测试程序集)` 取得当前测试项目的实例。
+
+* **库名固定**而非随机：`AlphaIdTest-{测试程序集}-net{主版本}`，例如 `AlphaIdTest-AuthCenterWebApp_Tests-net10`。
+  重复运行会重建同一个库，既不积累垃圾库，也不会残留上一次运行的脏数据。
+* **建库流程**：删除同名库 → 按各 `DbContext` 应用迁移 → 补齐内置数据并做一次往返校验 → 灌入[示例数据](SampleData.md)。
+* **迁移工程**：迁移已抽到类库 `AlphaId.Migrations`，测试直接引用它，不依赖 `DatabaseTool`。
+* **环境**：测试仍以 `Development` 环境启动，以复用开发期的模拟外部服务（不实际发信/发短信、验证码总是通过、不实际执行 OCR）；
+  但连接字符串被整体重定向到自建库，**不会读写 `appsettings.Development.json` 中的开发库**。
+
+两个可选环境变量：
+
+| 环境变量 | 作用 |
+|---|---|
+| `ALPHAID_TEST_CONNECTION_STRING` | 覆盖测试库所在的数据库服务器，默认使用本机 LocalDB。连接串中的 `{Database}` 是库名占位符。 |
+| `ALPHAID_TEST_KEEP_DATABASE` | 设为非空时，进程退出**不删除**测试库，便于事后排查；下次运行仍会先删除同名库再重建。 |
+
+> 同一项目的多个测试进程（例如并行启动同一测试程序集两次）会竞争同一个库，请避免。不同测试项目因库名含程序集名而互不干扰。
+
+> 在本机直接执行 `dotnet test` 可能报告「运行了零个测试」（退出代码 5），这是 .NET 10 SDK 配合 Microsoft.Testing.Platform 的环境问题，
+> 与集成测试的设计无关（未改动的测试项目同样如此）。请直接运行生成的测试可执行文件，例如
+> `src/AlphaID/AuthCenterWebApp.Tests/bin/Debug/net10.0/AuthCenterWebApp.Tests.exe`，或为 `dotnet test` 显式指定 `--framework net10.0`。
 
 ## 打包和发布
 

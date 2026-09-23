@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.DirectoryLogonDb
+namespace AlphaId.Migrations.DirectoryLogonDb
 {
     [DbContext(typeof(DirectoryLogonDbContext))]
     partial class DirectoryLogonDbContextModelSnapshot : ModelSnapshot

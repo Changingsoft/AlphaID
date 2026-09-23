@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.RealNameDb
+namespace AlphaId.Migrations.RealNameDb
 {
     [DbContext(typeof(RealNameDbContext))]
     [Migration("20251228172203_Init")]

@@ -10,7 +10,7 @@ using NetTopologySuite.Geometries;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.AlphaIdDb
+namespace AlphaId.Migrations.AlphaIdDb
 {
     [DbContext(typeof(AlphaIdDbContext))]
     [Migration("20251228172207_Init")]

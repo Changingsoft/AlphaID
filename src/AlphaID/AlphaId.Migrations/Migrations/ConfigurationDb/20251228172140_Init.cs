@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DatabaseTool.Migrations.ConfigurationDb
+namespace AlphaId.Migrations.ConfigurationDb
 {
     /// <inheritdoc />
     public partial class Init : Migration

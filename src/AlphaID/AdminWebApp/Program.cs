@@ -183,7 +183,7 @@ builder.Services.AddDbContext<PersistedGrantDbContext>(options =>
 
 builder.Services.AddDbContext<OperationalDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(OperationalDbContext)));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 #endregion
 

@@ -59,6 +59,8 @@ Console.WriteLine($@"- 数据库连接字符串: {connectionString}");
 Console.WriteLine($@"- 删除数据库: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.DropDatabase}");
 Console.WriteLine($@"- 应用迁移: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.ApplyMigrations}");
 Console.WriteLine($@"- 迁移后处理: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.ExecutePostMigrations}");
+Console.WriteLine($@"- 添加初始化数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.AddInitData}");
+Console.WriteLine($@"- 强制对齐内置数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.OverwriteInitData}");
 Console.WriteLine($@"- 添加测试数据: {scope.ServiceProvider.GetRequiredService<IOptions<DatabaseExecutorOptions>>().Value.AddTestingData}");
 if (!args.Contains("NonInteractive", StringComparer.OrdinalIgnoreCase))
 {

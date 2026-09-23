@@ -18,13 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="InitData\IdentityServerConfiguration\20250113075027_Init.sql">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<ProjectReference Include="..\AlphaId.InitData\AlphaId.InitData.csproj" />
 		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
 		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
 	</ItemGroup>

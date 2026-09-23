@@ -23,5 +23,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\AdminWebApp\AdminWebApp.csproj" />
+		<ProjectReference Include="..\IntegrationTestUtilities\IntegrationTestUtilities.csproj" />
 	</ItemGroup>
 </Project>

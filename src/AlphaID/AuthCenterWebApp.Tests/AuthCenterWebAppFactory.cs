@@ -1,4 +1,5 @@
 using Duende.IdentityServer.Configuration;
+using IntegrationTestUtilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -6,12 +7,22 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Net.Http.Headers;
 
 namespace AuthCenterWebApp.Tests;
 
 public class AuthCenterWebAppFactory : WebApplicationFactory<Program>
 {
+    protected override IHost CreateHost(IHostBuilder builder)
+    {
+        IHost host = base.CreateHost(builder);
+        //内置数据（IdentityServer 的客户端、API 范围、标识资源）是令牌端点与授权码流程的前提，
+        //测试不应再依赖「数据库碰巧被 DatabaseTool 灌过」。这里只补齐缺失的部分，不建库、不删库。
+        host.Services.EnsureInitData();
+        return host;
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         base.ConfigureWebHost(builder);

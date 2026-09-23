@@ -32,9 +32,9 @@ jobs:
     - name: Build
       run: dotnet build AlphaID.slnx --no-restore --configuration Release -v m
       working-directory: src/AlphaID
-    - name: Run database tool
-      run: ./DatabaseTool.exe NonInteractive --environment Development
-      working-directory: src/AlphaID/DatabaseTool/bin/Release/net10.0/
+    # - name: Run database tool
+    #   run: ./DatabaseTool.exe NonInteractive --environment Development
+    #   working-directory: src/AlphaID/DatabaseTool/bin/Release/net10.0/
     - name: Test
       # .NET 10 SDK 下 dotnet test 必须显式选用 MTP runner（见仓库根目录 global.json 的 test.runner），
       # 否则 MTP 测试应用走 VSTest target 会直接报错。

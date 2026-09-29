@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -20,6 +21,7 @@ public class FindPasswordByEmailModel(
     IEmailSender emailSender,
     UserManager<NaturalPerson> userManager,
     IOptions<ProductInfo> production,
+    IStringLocalizer<SharedResource> sharedLocalizer,
     ICaptcha captcha) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -41,7 +43,7 @@ public class FindPasswordByEmailModel(
         //图形验证码校验。必须早于任何 return Page()，以维持视图 _CaptchaScripts 中
         //「页面重新渲染即换图」的约定。
         if (!CaptchaValidator.Validate(captcha, CaptchaId, Input.CaptchaCode))
-            ModelState.AddModelError("Input.CaptchaCode", Resources.SharedResource.Captcha_Invalid);
+            ModelState.AddModelError("Input.CaptchaCode", sharedLocalizer["Captcha_Invalid"]);
 
         if (ModelState.IsValid)
         {

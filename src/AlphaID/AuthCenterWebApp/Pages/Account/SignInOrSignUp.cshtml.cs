@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
@@ -30,6 +31,7 @@ namespace AuthCenterWebApp.Pages.Account
         SignInManager<NaturalPerson> signInManager,
         IOptions<WeixinMpSettings> weixinMpSettings,
         IOptions<LoginOptions> loginOptions,
+        IStringLocalizer<SharedResource> sharedLocalizer,
         ICaptcha captcha) : PageModel
     {
         /// <summary>
@@ -146,7 +148,7 @@ namespace AuthCenterWebApp.Pages.Account
             //图形验证码校验。必须早于任何 return Page()，以维持视图 _CaptchaScripts 中
             //「页面重新渲染即换图」的约定。
             if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
-                ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+                ModelState.AddModelError(nameof(CaptchaCode), sharedLocalizer["Captcha_Invalid"]);
 
             if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber number))
             {
@@ -253,10 +255,12 @@ namespace AuthCenterWebApp.Pages.Account
         public async Task<IActionResult> OnPostSendVerificationCode()
         {
             if (!CaptchaValidator.ValidateKeepingOnSuccess(captcha, CaptchaId, CaptchaCode))
-                return new JsonResult(new { ok = false, captchaFailed = true, message = Resources.SharedResource.Captcha_Invalid });
+                // 匿名类型的成员类型按表达式推断，直接赋 LocalizedString 会让 JSON 从字符串变成对象，故显式取 .Value。
+                return new JsonResult(new { ok = false, captchaFailed = true, message = sharedLocalizer["Captcha_Invalid"].Value });
 
             if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
-                return new JsonResult(new { ok = false, captchaFailed = false, message = Resources.SharedResource.PhoneNumberInvalid });
+                // 匿名类型的成员类型按表达式推断，直接赋 LocalizedString 会让 JSON 从字符串变成对象，故显式取 .Value。
+                return new JsonResult(new { ok = false, captchaFailed = false, message = sharedLocalizer["PhoneNumberInvalid"].Value });
 
             await VerificationCodeService!.SendAsync(phoneNumber.ToString());
             return new JsonResult(new { ok = true, captchaFailed = false, message = (string?)null });

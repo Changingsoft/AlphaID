@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -29,7 +30,8 @@ public class LoginModel(
     ApplicationUserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
     IServiceProvider serviceProvider,
-    IOptions<LoginOptions> loginOptions) : PageModel
+    IOptions<LoginOptions> loginOptions,
+    IStringLocalizer<SharedResource> sharedLocalizer) : PageModel
 {
     public LoginOptionsModel Model { get; set; } = null!;
 
@@ -170,7 +172,7 @@ public class LoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, Resources.SharedResource.Invalid_Credentials);
+            ModelState.AddModelError(string.Empty, sharedLocalizer["Invalid_Credentials"]);
         }
 
         // something went wrong, show form with error

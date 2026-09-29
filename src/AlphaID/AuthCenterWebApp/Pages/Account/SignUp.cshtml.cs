@@ -27,7 +27,7 @@ public class SignUpModel(
     ChinesePersonNamePinyinConverter chinesePersonNamePinyinConverter,
     IOptions<ProductInfo> production,
     SignInManager<NaturalPerson> signInManager,
-    IStringLocalizer<SignUpModel> stringLocalizer,
+    IStringLocalizer<SharedResource> sharedLocalizer,
     ICaptcha captcha) : PageModel
 {
     private readonly ProductInfo _production = production.Value;
@@ -105,7 +105,7 @@ public class SignUpModel(
         //图形验证码校验。放在最前面，确保任何 return Page() 之前验证码都已被消费，
         //以维持视图 _CaptchaScripts 中「页面重新渲染即换图」的约定。
         if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
-            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+            ModelState.AddModelError(nameof(CaptchaCode), sharedLocalizer["Captcha_Invalid"]);
 
         if (!Input.Agree)
         {
@@ -114,7 +114,7 @@ public class SignUpModel(
         }
 
         if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
-            ModelState.AddModelError("Input.PhoneNumber", stringLocalizer["Invalid mobile phone number."]);
+            ModelState.AddModelError("Input.PhoneNumber", sharedLocalizer["PhoneNumberInvalid"]);
 
         if (!ModelState.IsValid)
             return Page();
@@ -192,10 +192,12 @@ public class SignUpModel(
     public async Task<IActionResult> OnPostSendVerificationCode()
     {
         if (!CaptchaValidator.ValidateKeepingOnSuccess(captcha, CaptchaId, CaptchaCode))
-            return new JsonResult(new { ok = false, captchaFailed = true, message = Resources.SharedResource.Captcha_Invalid });
+            // 匿名类型的成员类型按表达式推断，直接赋 LocalizedString 会让 JSON 从字符串变成对象，故显式取 .Value。
+            return new JsonResult(new { ok = false, captchaFailed = true, message = sharedLocalizer["Captcha_Invalid"].Value });
 
         if (!MobilePhoneNumber.TryParse(PhoneNumber, out MobilePhoneNumber phoneNumber))
-            return new JsonResult(new { ok = false, captchaFailed = false, message = Resources.SharedResource.PhoneNumberInvalid });
+            // 匿名类型的成员类型按表达式推断，直接赋 LocalizedString 会让 JSON 从字符串变成对象，故显式取 .Value。
+            return new JsonResult(new { ok = false, captchaFailed = false, message = sharedLocalizer["PhoneNumberInvalid"].Value });
 
         await VerificationCodeService!.SendAsync(phoneNumber.ToString());
         return new JsonResult(new { ok = true, captchaFailed = false, message = (string?)null });

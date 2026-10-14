@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<!--
+		可复用的「数据库准备」抽象：把建库流程拆成按 DbContext 装配的初始化单元，
+		再由统一执行器按阶段顺序驱动。
+
+		本工程刻意**不依赖任何业务工程**（不引用 PushCenterPlatform / ShortMessageServiceEF），
+		也不引用任何数据库提供程序包：
+		- 删库与迁移只用 EF Core 的 DatabaseFacade，具体是 SQL Server 还是别的由调用方决定；
+		- 「灌什么内置数据 / 样例数据」通过委托从外部注入，业务概念不进来。
+		因此整个目录可以直接复制到其他解决方案，或作为独立 NuGet 包发布。
+	-->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.12" />
+		<!-- EnsureDeletedAsync / MigrateAsync 属于关系型扩展。 -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.12" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
+	</ItemGroup>
+
+</Project>

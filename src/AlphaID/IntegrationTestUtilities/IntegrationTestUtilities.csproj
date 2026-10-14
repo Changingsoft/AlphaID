@@ -17,13 +17,17 @@
 	</ItemGroup>
 
 	<!--
-		TestDatabase 要自己建库、自己跑迁移、自己灌内置数据与样例数据，
-		所以这里依赖迁移、内置数据、样例数据三件套。被引用的都是测试项目，不会污染产品代码。
+		TestDatabase 自己建库、自己跑迁移、自己灌内置数据与样例数据。
+		这些全部由 AlphaId.DatabasePreparation 提供——它与 DatabaseTool 用的是同一份实现，
+		因此测试不需要（也不该）再自己引用迁移、内置数据、样例数据三个工程。
+
+		保留对 AlphaId.EntityFramework 的直接引用，是因为 VerifyInitDataRoundTrip 要用
+		InitDataSeeder 做一次往返校验；对 AlphaId.TestingData 的引用，是为了让
+		「本工程间接依赖样例数据」这件事在项目文件里一目了然。被引用的都是测试侧工程，不会污染产品代码。
 	-->
 	<ItemGroup>
+		<ProjectReference Include="..\AlphaId.DatabasePreparation\AlphaId.DatabasePreparation.csproj" />
 		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaId.InitData\AlphaId.InitData.csproj" />
-		<ProjectReference Include="..\AlphaId.Migrations\AlphaId.Migrations.csproj" />
 		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
 	</ItemGroup>
 

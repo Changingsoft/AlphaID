@@ -7,17 +7,24 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<!--
+		本工具不含任何建库逻辑，只引用 AlphaId.DatabasePreparation 这一层适配：
+		上下文装配、迁移、内置数据与样例数据都由它提供，与集成测试共用同一份实现。
+		样例数据（AlphaId.TestingData）经由它间接引用，仅在 AddTestingData 打开时才会写入。
+	-->
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
+		<ProjectReference Include="..\AlphaId.DatabasePreparation\AlphaId.DatabasePreparation.csproj" />
 	</ItemGroup>
 
+	<!--
+		本工程是 Add-Migrations.ps1 的启动工程：dotnet ef 靠它构造设计时服务，
+		因此需要 Microsoft.EntityFrameworkCore.Design（不流向引用者）。
+		上下文与迁移所需的其他包经 AlphaId.DatabasePreparation 传递而来。
+	-->
 	<ItemGroup>
-		<ProjectReference Include="..\AlphaId.Migrations\AlphaId.Migrations.csproj" />
-		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
-		<ProjectReference Include="..\AlphaId.InitData\AlphaId.InitData.csproj" />
-		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
-		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkCoreVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 </Project>

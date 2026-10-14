@@ -18,12 +18,14 @@ namespace DatabasePreparation;
 /// </code>
 /// <para>
 /// 只有当某个上下文还有内置数据要补齐时才多传一个委托。
-/// 本类<b>不引用</b>任何推送中心特有的类型，因此在别的解决方案里可以直接使用。
+/// 内置数据委托多收一个 <see cref="DatabasePrepareOptions"/> 参数，
+/// 因为「是否覆盖已存在的内置数据」这类写入策略是<b>本次执行</b>的开关，
+/// 不该在装配时就被固化下来。
 /// </para>
 /// </remarks>
 public sealed class DbContextInitializer<TContext>(
     TContext context,
-    Func<TContext, CancellationToken, Task>? seedInitData = null,
+    Func<TContext, DatabasePrepareOptions, CancellationToken, Task>? seedInitData = null,
     Func<TContext, CancellationToken, Task>? seedTestingData = null,
     string? name = null)
     : IDatabaseInitializer
@@ -63,8 +65,8 @@ public sealed class DbContextInitializer<TContext>(
     /// （例如短信库只有短信任务与验证码会话），全局开关 <c>AddInitData</c> 打开时
     /// 不应该要求每个上下文都能写内置数据。
     /// </remarks>
-    public Task SeedInitDataAsync(CancellationToken cancellationToken = default)
-        => seedInitData is null ? Task.CompletedTask : seedInitData(TypedContext, cancellationToken);
+    public Task SeedInitDataAsync(DatabasePrepareOptions options, CancellationToken cancellationToken = default)
+        => seedInitData is null ? Task.CompletedTask : seedInitData(TypedContext, options, cancellationToken);
 
     /// <inheritdoc />
     /// <remarks>
@@ -93,5 +95,4 @@ public static class DbContextInitializer
     /// <returns>初始化单元。</returns>
     public static IDatabaseInitializer For<TContext>(TContext context, string? name = null)
         where TContext : DbContext
-        => new DbContextInitializer<TContext>(context, name: name);
-}
+        => new DbContextInitializer<TContext>(context, name: name);}

@@ -17,8 +17,8 @@ namespace DatabasePreparation;
 /// 一个只提供迁移的上下文，实现 <see cref="MigrateAsync"/> 即可。
 /// </para>
 /// <para>
-/// 这套抽象不依赖推送中心的任何具体类型：短信客户端登记、样例数据等业务概念
-/// 都通过委托从外部注入，因此可以直接复制到其他项目复用。
+/// 这套抽象不依赖任何业务工程：内置数据与样例数据等业务概念都通过委托从外部注入，
+/// 因此可以直接复制到其他项目复用。
 /// </para>
 /// </remarks>
 public interface IDatabaseInitializer
@@ -84,11 +84,12 @@ public interface IDatabaseInitializer
     /// <summary>
     /// 补齐本上下文所属的<b>内置数据</b>（<b>幂等</b>：缺失则插入、已存在则跳过）。
     /// </summary>
+    /// <param name="options">本次执行的阶段开关，内置数据的写入策略（如是否覆盖）从中读取。</param>
     /// <param name="cancellationToken">取消标记。</param>
     /// <remarks>
     /// 默认不写任何内置数据——大多数上下文本来就没有。
     /// </remarks>
-    Task SeedInitDataAsync(CancellationToken cancellationToken = default)
+    Task SeedInitDataAsync(DatabasePrepareOptions options, CancellationToken cancellationToken = default)
         => Task.CompletedTask;
 
     /// <summary>

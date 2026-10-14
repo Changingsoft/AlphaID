@@ -97,7 +97,7 @@ public sealed class DatabasePreparationExecutor(
             logger?.LogInformation("第3阶段：正在补齐内置数据。");
             foreach (IDatabaseInitializer initializer in _initializers)
             {
-                await initializer.SeedInitDataAsync(cancellationToken).ConfigureAwait(false);
+                await initializer.SeedInitDataAsync(options, cancellationToken).ConfigureAwait(false);
             }
         }
 

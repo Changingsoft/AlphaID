@@ -90,8 +90,16 @@ dotnet build -c
 
 * **库名固定**而非随机：`AlphaIdTest-{测试程序集}-net{主版本}`，例如 `AlphaIdTest-AuthCenterWebApp_Tests-net10`。
   重复运行会重建同一个库，既不积累垃圾库，也不会残留上一次运行的脏数据。
-* **建库流程**：删除同名库 → 按各 `DbContext` 应用迁移 → 补齐内置数据并做一次往返校验 → 灌入[示例数据](SampleData.md)。
-* **迁移工程**：迁移已抽到类库 `AlphaId.Migrations`，测试直接引用它，不依赖 `DatabaseTool`。
+* **与工具共用一套逻辑**：建库走的是 `AlphaId.DatabasePreparation` 里的 `AddAlphaIdDatabasePreparation` +
+  `DatabasePreparationExecutor`，与 `DatabaseTool` **完全同一份实现**。通用的抽象层在 `DatabasePreparation`，
+  它保持零业务依赖以便将来整目录剥离复用。二者唯一的差别是传入的
+  `DatabasePrepareOptions` 取值（测试是 `DropDatabase=false, ApplyMigrations/AddInitData/AddTestingData=true`，
+  且删库改用强制 `SINGLE_USER` 方式以踢掉残留连接）。因此「工具建的库」与「测试建的库」在 schema 与数据上必然一致。
+* **迁移与 DbContext 同居**：迁移在 `AlphaId.EntityFramework/Migrations`，内置数据在 `AlphaId.EntityFramework/InitData`，
+  两者都与各自的 `DbContext` 同处一个程序集，因此 EF Core 无需 `MigrationsAssembly(...)` 即可找到迁移
+  （Duende 的两个上下文除外，它们统一经 `UseAlphaIdSqlServer(...)` 指定）。
+* **额外校验**：灌完内置数据后会再跑一次 `EnsureAsync`，要求零插入、零告警——证明数据经数据库往返后仍与代码定义一致；
+  同时逐个确认八个上下文都已装配且可连接。
 * **环境**：测试仍以 `Development` 环境启动，以复用开发期的模拟外部服务（不实际发信/发短信、验证码总是通过、不实际执行 OCR）；
   但连接字符串被整体重定向到自建库，**不会读写 `appsettings.Development.json` 中的开发库**。
 
@@ -104,9 +112,10 @@ dotnet build -c
 
 > 同一项目的多个测试进程（例如并行启动同一测试程序集两次）会竞争同一个库，请避免。不同测试项目因库名含程序集名而互不干扰。
 
-> 在本机直接执行 `dotnet test` 可能报告「运行了零个测试」（退出代码 5），这是 .NET 10 SDK 配合 Microsoft.Testing.Platform 的环境问题，
-> 与集成测试的设计无关（未改动的测试项目同样如此）。请直接运行生成的测试可执行文件，例如
-> `src/AlphaID/AuthCenterWebApp.Tests/bin/Debug/net10.0/AuthCenterWebApp.Tests.exe`，或为 `dotnet test` 显式指定 `--framework net10.0`。
+> 运行测试请用 MTP 模式：`dotnet test --solution src/AlphaID/AlphaID.slnx -c Release --no-build`。
+> 命令行里出现任何 MTP 不认的选项（例如 `--nologo`、`--logger trx`），`dotnet test` 会**静默回退**到
+> legacy VSTest runner，逐模块报「运行了零个测试」并以退出码 5 结束——那不是测试失败，是 runner 选错了。
+> 在 `global.json` 生效的目录执行 `dotnet test --help` 可以看到当前 runner 真正支持的选项。
 
 ## 打包和发布
 

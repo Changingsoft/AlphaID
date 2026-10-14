@@ -7,9 +7,39 @@
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
+	<!--
+		本工程同时住着三样必须彼此紧邻的东西：
+
+		1. DbContext 本身；
+		2. 它们的 EF Core 迁移（Migrations/）；
+		3. 内置数据的定义与幂等写入（InitData/）。
+
+		把迁移与 DbContext 放进同一程序集后，EF Core 无需 `MigrationsAssembly(...)` 就能找到迁移。
+		此前它们分属两个工程，每一处 `UseSqlServer` 都必须显式指定迁移程序集；
+		而**漏写不会报错，只会让 Migrate() 建出一个空库**，是最难查的一类故障。
+	-->
 	<ItemGroup>
+		<!--
+			只引 Storage，不引完整的 Duende.IdentityServer.EntityFramework。
+
+			迁移与内置数据只需要 ConfigurationDbContext / PersistedGrantDbContext 及其实体
+			（都在 Storage 里）；而完整的包会传递 Duende.IdentityServer 宿主包 ->
+			Microsoft.AspNetCore.Authentication.OpenIdConnect >= 8.0.29，与 AdminWebApp
+			钉死的 8.0.16 冲突（NU1605 降级）。
+
+			需要 AddConfigurationStore / AddOperationalStore 的地方（DatabasePreparation）
+			自己引完整的包——那里不被任何产品程序集引用，不会波及它们。
+		-->
+		<PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.4.12" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(IdentityEntityFrameworkCoreVersion)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="$(EntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
+		<!-- dotnet ef 需要它来构造设计时服务；它不该流向引用本工程的其它工程。 -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkCoreVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>

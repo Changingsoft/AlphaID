@@ -6,7 +6,8 @@ Alpha ID 正常工作需要一些内置数据。没有系统工具支持编辑�
 
 ## 内置数据在哪里
 
-内置数据（IdentityServer 的客户端、API 范围、标识资源）以 C# 常量的形式定义在 `AlphaId.InitData` 项目中：
+内置数据（IdentityServer 的客户端、API 范围、标识资源）以 C# 常量的形式定义在
+`AlphaId.EntityFramework/InitData` 目录下——与它所属的 `ConfigurationDbContext` 同居一个工程：
 
 |文件|内容|
 |---|---|
@@ -15,15 +16,15 @@ Alpha ID 正常工作需要一些内置数据。没有系统工具支持编辑�
 |`InitData.IdentityResources.cs`|标识资源（`IdentityResources` 表）|
 |`InitDataSeeder.cs`|负责把上述数据幂等地写入数据库|
 
-写入由两个入口触发：
+写入由 `AlphaId.DatabasePreparation` 装配的初始化单元触发，两个入口跑的是**同一段代码**：
 
 - 运行 `DatabaseTool` 时，在 `AddInitData` 阶段写入（`AddInitData` 默认为 `true`）。
-- 运行集成测试时，测试宿主通过 `InitDataTestExtensions.EnsureInitData()` 自行补齐。测试不再依赖「数据库碰巧被 `DatabaseTool` 灌过」。
+- 运行集成测试时，测试自建库后同样跑这一个阶段。测试不再依赖「数据库碰巧被 `DatabaseTool` 灌过」。
 
 两个入口都是**幂等**的：以自然键（`Client.ClientId`、`ApiScope.Name`、`IdentityResource.Name`）查找，缺失则插入，已存在则跳过。
 已存在但与代码不一致的行只会产生告警，不会被覆盖，除非显式打开 `OverwriteInitData`。
 
-因此**若要修改内置数据，请改 `AlphaId.InitData` 里的常量，然后重新运行 `DatabaseTool`**，而不要直接改数据库：
+因此**若要修改内置数据，请改 `AlphaId.EntityFramework/InitData` 里的常量，然后重新运行 `DatabaseTool`**，而不要直接改数据库：
 直接改数据库不会同步到其他环境，而且会在下次运行 `DatabaseTool` 时被报为「与代码不一致」。
 
 ## 客户端

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<!--
+		通用抽象与 AlphaID 之间的适配层。
+
+		DatabaseTool 与集成测试都只调用本工程暴露的 AddAlphaIdDatabasePreparation(...)，
+		因此两者的建库流程不可能长偏。
+
+		本工程刻意承担全部业务耦合，好让 DatabasePreparation 保持零业务依赖：
+		它是「有哪些上下文 / 灌什么数据」的唯一所在地，也是被产品程序集之外的两个入口
+		（DatabaseTool 与 IntegrationTestUtilities）引用的那一层。
+	-->
+	<ItemGroup>
+		<!-- 通用抽象：阶段顺序、删库与迁移、初始化单元的装配契约。不含任何业务概念。 -->
+		<ProjectReference Include="..\DatabasePreparation\DatabasePreparation.csproj" />
+		<!-- 八个 DbContext、它们的迁移（AlphaId.EntityFramework/Migrations）与内置数据（InitData）。 -->
+		<ProjectReference Include="..\AlphaId.EntityFramework\AlphaId.EntityFramework.csproj" />
+		<!-- 样例数据。仅在 AddTestingData 打开时被写入；产品程序集不引用本工程。 -->
+		<ProjectReference Include="..\AlphaId.TestingData\AlphaId.TestingData.csproj" />
+		<ProjectReference Include="..\AlphaIdPlatform\AlphaIdPlatform.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- IdentityServer 的配置库与授权库需要 AddConfigurationStore / AddOperationalStore。 -->
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFrameworkCoreVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFrameworkCoreVersion)" />
+	</ItemGroup>
+
+</Project>

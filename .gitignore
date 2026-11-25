@@ -330,6 +330,9 @@ ASALocalRun/
 .mfractor/
 
 # WorkBuddy local state (agent memory, session data, local caches)
-# Machine- and developer-specific, same reasoning as .vs/ and *.user
-.workbuddy/
 .mcp
+
+# WorkBuddy：整体忽略，仅保留团队共享的技能
+.workbuddy/*
+!.workbuddy/skills/
+!.workbuddy/skills/**

@@ -48,18 +48,6 @@ public class OrganizationControllerTest(AuthCenterWebAppFactory factory)
         Assert.Empty(json!);
     }
 
-    [Fact(Skip = "Skipping rate limit test")]
-    public async Task OrganizationSuggestionsRateLimitTest()
-    {
-        var client = factory.CreateClient();
-        HttpResponseMessage response = null!;
-        for (var i = 0; i < 300; i++)
-        {
-            response = await client.GetAsync("/api/Organization/Suggestions?q=测试", TestContext.Current.CancellationToken);
-        }
-        Assert.Equal(HttpStatusCode.TooManyRequests, response.StatusCode);
-    }
-
     [Fact]
     public async Task GetProfilePicture()
     {

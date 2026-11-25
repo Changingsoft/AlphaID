@@ -345,22 +345,10 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests; //当拒绝时返回429TooManyRequests状态码
-    options.AddPolicy("token-endpoint-limit", httpContext =>
-    {
-        var path = httpContext.Request.Path.Value!;
-        if (string.Equals(path, "/connect/token", StringComparison.OrdinalIgnoreCase))
-        {
-            var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-            return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
-            {
-                PermitLimit = 10, // 每窗口允许的请求数
-                Window = TimeSpan.FromMinutes(1), // 窗口大小
-                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                QueueLimit = 0 // 队列限制
-            });
-        }
-        return RateLimitPartition.GetNoLimiter("none");
-    });
+    //注意：此处曾有一个名为 "token-endpoint-limit" 的策略，但它从未被任何端点引用——
+    ///connect/token 由 Duende IdentityServer 映射，没有控制器可挂 [EnableRateLimiting]，
+    //该策略因此从未生效，是一段会误导人的死代码，已删除。
+    ///connect/token 的限速改由 TokenRateLimitMiddleware 承担（其配额可通过配置节覆盖）。
     options.AddPolicy("ip-fixed", httpContext =>
     {
         var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
@@ -373,6 +361,11 @@ builder.Services.AddRateLimiter(options =>
         });
     });
 });
+
+// /connect/token 的限速配额。做成可配置是为了让集成测试能覆盖成很小的值，
+// 否则测试只能去撞生产的 10 次/分钟。
+builder.Services.Configure<TokenRateLimitOptions>(
+    builder.Configuration.GetSection(TokenRateLimitOptions.SectionName));
 #endregion
 
 #region Swagger配置

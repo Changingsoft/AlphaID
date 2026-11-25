@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
@@ -29,6 +30,7 @@ public class PhoneLoginModel(
     ApplicationUserManager<NaturalPerson> userManager,
     SignInManager<NaturalPerson> signInManager,
     IOptions<LoginOptions> loginOptions,
+    IStringLocalizer<SharedResource> sharedLocalizer,
     ICaptcha captcha) : PageModel
 {
     /// <summary>
@@ -129,7 +131,7 @@ public class PhoneLoginModel(
 
         //图形验证码校验。必须早于任何 return Page()，以便「重新渲染」与「验证码已消费」等价。
         if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
-            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+            ModelState.AddModelError(nameof(CaptchaCode), sharedLocalizer["Captcha_Invalid"]);
 
         if (ModelState.IsValid)
         {
@@ -195,7 +197,7 @@ public class PhoneLoginModel(
 
             await events.RaiseAsync(new UserLoginFailureEvent(PhoneNumber, "invalid credentials",
                 clientId: context?.Client.ClientId));
-            ModelState.AddModelError(string.Empty, Resources.SharedResource.Invalid_Credentials);
+            ModelState.AddModelError(string.Empty, sharedLocalizer["Invalid_Credentials"]);
         }
 
         // something went wrong, show form with error

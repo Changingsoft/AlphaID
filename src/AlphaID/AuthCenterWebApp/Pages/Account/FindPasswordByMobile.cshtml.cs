@@ -6,6 +6,7 @@ using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthCenterWebApp.Pages.Account;
@@ -14,6 +15,7 @@ namespace AuthCenterWebApp.Pages.Account;
 public class FindPasswordByMobileModel(
     ApplicationUserManager<NaturalPerson> userManager,
     IServiceProvider serviceProvider,
+    IStringLocalizer<SharedResource> sharedLocalizer,
     ICaptcha captcha) : PageModel
 {
     /// <summary>
@@ -48,7 +50,7 @@ public class FindPasswordByMobileModel(
         //图形验证码校验。必须早于任何 return Page()，以维持视图 _CaptchaScripts 中
         //「页面重新渲染即换图」的约定。
         if (!CaptchaValidator.Validate(captcha, CaptchaId, CaptchaCode))
-            ModelState.AddModelError(nameof(CaptchaCode), Resources.SharedResource.Captcha_Invalid);
+            ModelState.AddModelError(nameof(CaptchaCode), sharedLocalizer["Captcha_Invalid"]);
 
         if (!ModelState.IsValid)
             return Page();

@@ -4,6 +4,10 @@
 数据本身定义在 `AlphaId.TestingData` 项目（参见 [DatabaseTool/README.md](../src/AlphaID/DatabaseTool/README.md) §2.1.2）。
 
 集成测试会自建数据库并自动灌入这些样例数据，无需事先执行 DatabaseTool，也不需要手工准备数据。
+两者跑的是同一套装配（`AlphaId.DatabasePreparation`），差别只是 `AddTestingData` 开关。
+
+> `AlphaId.TestingData` **仅供开发调试与集成测试使用**：它只被 `AlphaId.DatabasePreparation` 引用，
+> 而产品程序集（WebApp / WebAPI）不引用那一层，因此样例数据不会进入生产。
 
 ## 自然人
 
